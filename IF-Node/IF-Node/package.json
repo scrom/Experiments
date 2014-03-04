@@ -1,0 +1,14 @@
+{
+  "name": "IF_Node",
+  "version": "0.0.0",
+  "description": "IF-Node",
+  "main": "server.js",
+  "author": {
+    "name": "simon.cromarty",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "^3.4.8",
+    "path": "^0.4.9"
+  }
+}

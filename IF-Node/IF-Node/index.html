@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>MVTA</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/main.css">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+        <script type="text/javascript" src="js/client/main.js"></script>
+        <script type="text/javascript" src="js/client/client.js"></script>
+        <script type="text/javascript" src="js/client/ui.js"></script>
+    </head>
+    <body>
+        <header id="page_header">
+        Minimum Viable Text Adventure
+        <hr>
+        </header>
+
+	    <section id="current_state">
+	        you are...
+	    </section>  
+	    
+	    <section id="user_input">
+	        &gt;
+		    <input type="text" id="input"  />	    	    
+	    </section>  
+	    
+	    <section id = "interaction">
+	        &gt;
+	    </section>
+	    
+	    <section id = "game_console">
+	    	<hr>
+	    </section>
+	    	    
+	    <footer id="page_footer">
+	        <hr>(C) 2014 Red Gate Software
+	    </footer>
+	    
+	    <script type="text/javascript">
+            //initialise game UI - pass doc structures
+	        init($("#current_state"), $("#input"), $("#interaction"), $("#game_console"));
+		</script> 
+    </body>
+</html>
