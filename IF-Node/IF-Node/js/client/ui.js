@@ -30,13 +30,15 @@ function Ui(aStateArea, anInputField, aninteractionArea, aConsoleArea) {
             input.keyup(function(e){
 	    	var keycode = e.which;
             if(keycode==13) {
+
                 var callbackValue = input.val();
 		    	interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
 		        input.val("");
+
                 if (callback && typeof(callback) === "function") {
                     callback(callbackValue);
                 } else { 
-                    alert(typeof(callback));
+                    alert('Unexpected callback object type in UI: '+typeof(callback));
                 }
 		    }
             });
