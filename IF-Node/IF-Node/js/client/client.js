@@ -22,8 +22,10 @@ function Client(aServerHost, aServerPort, aUi) {
     var untangleResponse = function(someJSONData) {
         var response = new Response(someJSONData, console);
         response.untangle();
-        game = response.getGame();
-        username = response.getUsername();
+
+        if (typeof game == 'undefined'){ game = response.getGame();}
+        if (username == ''){username = response.getUsername();}
+
         ui.setState(response.getDescription());
     }
 
