@@ -82,8 +82,6 @@ exports.Interpreter = function Interpreter(aGameModule) {
         return '{"game":'+gameJSON+',"config":'+configJSON+',"response":'+actionResponseJSON+'}';
         }
 
-
-
     var addGame = function(aUsername) {
         var game = new gameModule.Game(aUsername,userGames.length+1)               
         userGames.push({"player":aUsername, "game":game});
@@ -93,6 +91,16 @@ exports.Interpreter = function Interpreter(aGameModule) {
         var actionResponseJSON = buildActionResponseJSON('Welcome, adventurer '+aUsername+'.','sword','ogre');
         var configJSON = buildConfigJSON(9999,'host',999);
         return assembleResponseObject(gameJson,configJSON, actionResponseJSON);
+    }
+
+    var processResponse = function(action) {        
+        //var gameJson = buildGameJSON(game);
+        console.log('verb: '+action.verb+' object1: '+action.object0);
+        var actionString = 'You '+action.verb+' the '+action.object0;
+        if (action.object1) {actionString+= ' with the '+action.object1;}
+        var actionResponseJSON = buildActionResponseJSON(actionString,'','');
+        //var configJSON = buildConfigJSON(9999,'host',999);
+        return assembleResponseObject(0,0, actionResponseJSON);
     }
 
     /*top level interpeter command creation*/
@@ -114,8 +122,9 @@ exports.Interpreter = function Interpreter(aGameModule) {
                 //add new user game
                 return addGame(actionString);
             case 'action':
-                var action = convertActionToElements(actionString);
-                return('{"ActionObject":'+action+'}');
+                var action = JSON.parse(convertActionToElements(actionString));
+                //return('{"ActionObject":'+action+'}');
+                return processResponse(action);
             case 'events':
                 //respond to event requests
                 return 'ping.';
