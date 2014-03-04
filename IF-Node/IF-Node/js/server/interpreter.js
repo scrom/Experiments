@@ -107,6 +107,9 @@ exports.Interpreter = function Interpreter(aGameModule) {
         {
             case 'config':
                 return('' + JSON.stringify(someTempConfig));
+            case 'list':
+                //list active games
+                return('' + JSON.stringify(userGames));
             case 'new':
                 //add new user game
                 return addGame(actionString);

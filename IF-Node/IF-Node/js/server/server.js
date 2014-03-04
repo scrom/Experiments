@@ -29,6 +29,10 @@ exports.Server = function Server(anInterpreter) {
                 response.send(interpreter.translate(request.url,config));
             });
 
+           webServer.get('/list*', function (request, response) {
+                response.send(interpreter.translate(request.url,config));
+            });
+
             webServer.get('/action/*', function (request, response) {
                 response.send(interpreter.translate(request.url,config));
             });
