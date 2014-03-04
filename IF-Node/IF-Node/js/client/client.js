@@ -19,31 +19,17 @@ function Client(aServerHost, aServerPort, aUi) {
     //private functions
 
     //are we getting sensible JSON back? Do something sensible with the results
-    var untangle = function(someJSONData) {
-        try{
-            var jsonObject= jQuery.parseJSON(someJSONData);
-            //we only expect one of 3 types of response object - action/new/config
-            game = jsonObject.game;
-            try {
-                username = game.player;
-                console.append('username: '+username+'<br>');
-            }
-            catch(err){}//do nothing if we can't obtain username
-            //config = jsonObject.config;
-
-            //var response = jsonObject.response;//do something useful with this later
-            
-            //console.append('JSON objects: '+JSON.stringify(jsonObject)+'<br>');
-        }
-        catch(err) {
-	        console.append('Malformed JSON object: '+err);
-        }
+    var untangleResponse = function(someJSONData) {
+        var response = new Response(someJSONData, console);
+        response.untangle();
+        game = response.getGame();
+        username = response.getUsername();
     }
 
     //callback from server request (split out for readability)
     var serverRequestCallback = function(someData) {
 	        console.append('Server Response: '+someData+'<br>');
-            untangle(someData);
+            untangleResponse(someData);
     }
 
     //make a get request to the server. Might change to POST in future. Uses a callback for async responses.
