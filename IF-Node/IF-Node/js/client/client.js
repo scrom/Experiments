@@ -24,6 +24,7 @@ function Client(aServerHost, aServerPort, aUi) {
         response.untangle();
         game = response.getGame();
         username = response.getUsername();
+        ui.setState(response.getDescription());
     }
 
     //callback from server request (split out for readability)

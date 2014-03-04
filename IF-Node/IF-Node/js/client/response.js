@@ -47,4 +47,8 @@ function Response(someJsonData, aConsole) {
     Response.prototype.getGame = function() {
         return game;
     }
+    
+    Response.prototype.getDescription = function() {
+        return response.description;
+    }
 }

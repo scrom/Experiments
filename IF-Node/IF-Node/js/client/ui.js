@@ -7,7 +7,7 @@ function Ui(aStateArea, anInputField, aninteractionArea, aConsoleArea) {
         var state = aStateArea;
         var input = anInputField;
         var interaction = aninteractionArea;
-        state.append('Welcome To MVTA, please enter your name');
+        state.append('Welcome To MVTA.<br>Please enter your name');
         console.append(objectName+" Initiated<br>");
     //end try
     }
@@ -18,6 +18,12 @@ function Ui(aStateArea, anInputField, aninteractionArea, aConsoleArea) {
     //main UI input listener
     Ui.prototype.getConsole = function() {
         return console;
+    }
+    
+    //interaction with client
+    Ui.prototype.setState = function(stateData) {
+        console.append('setting state: '+stateData);
+        state.text(stateData);
     }
 
     Ui.prototype.listenForInput = function(callback) {

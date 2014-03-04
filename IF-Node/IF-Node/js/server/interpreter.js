@@ -90,7 +90,7 @@ exports.Interpreter = function Interpreter(aGameModule) {
         console.log('game added: '+userGames.length);
         
         var gameJson = buildGameJSON(game);
-        var actionResponseJSON = buildActionResponseJSON('You see','sword','ogre');
+        var actionResponseJSON = buildActionResponseJSON('Welcome, adventurer '+aUsername+'.','sword','ogre');
         var configJSON = buildConfigJSON(9999,'host',999);
         return assembleResponseObject(gameJson,configJSON, actionResponseJSON);
     }
