@@ -1,9 +1,8 @@
 //main user interface interactions
-function Ui(aClient, aStateArea, anInputField, aninteractionArea, aConsoleArea) {
+function Ui(aStateArea, anInputField, aninteractionArea, aConsoleArea) {
     try{
 	    var thisUi = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Ui";
-        var client = aClient;
         var console = aConsoleArea;
         var state = aStateArea;
         var input = anInputField;
@@ -17,14 +16,22 @@ function Ui(aClient, aStateArea, anInputField, aninteractionArea, aConsoleArea) 
     }	
     
     //main UI input listener
-    Ui.prototype.listenForInput = function() {
+    Ui.prototype.getConsole = function() {
+        return console;
+    }
+
+    Ui.prototype.listenForInput = function(callback) {
             input.keyup(function(e){
 	    	var keycode = e.which;
             if(keycode==13) {
-
+                var callbackValue = input.val();
 		    	interaction.append(input.val()+"<br>");
-                client.request(input.val());
 		        input.val("");
+                if (callback && typeof(callback) === "function") {
+                    callback(callbackValue);
+                } else { 
+                    alert(typeof(callback));
+                }
 		    }
             });
     }

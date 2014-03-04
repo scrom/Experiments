@@ -7,11 +7,13 @@
 	var player;
 	
 function init(state, input, interaction, console) {
-    //create client
-    client = new Client(serverHost, serverPort, console);
-    client.readServerConfig();
-
     //create UI
-	ui = new Ui(client, state, input, interaction, console);
-    ui.listenForInput();
+	ui = new Ui(state, input, interaction, console);
+    
+    //create client
+    client = new Client(serverHost, serverPort, ui);
+    //client.readServerConfig();
+
+    //start listening
+    client.listenForInput();
 }

@@ -88,13 +88,11 @@ exports.Interpreter = function Interpreter(aGameModule) {
         var game = new gameModule.Game(aUsername,userGames.length+1)               
         userGames.push({"player":aUsername, "game":game});
         console.log('game added: '+userGames.length);
-         
+        
         var gameJson = buildGameJSON(game);
         var actionResponseJSON = buildActionResponseJSON('You see','sword','ogre');
         var configJSON = buildConfigJSON(9999,'host',999);
         return assembleResponseObject(gameJson,configJSON, actionResponseJSON);
-
-                //return userGames[0].game.state();
     }
 
     /*top level interpeter command creation*/
@@ -117,6 +115,7 @@ exports.Interpreter = function Interpreter(aGameModule) {
                 return('{"ActionObject":'+action+'}');
             default:
                 return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
-        }
+        }              
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿//main user interface interactions
-function Client(aServerHost, aServerPort, aConsoleArea) {
+function Client(aServerHost, aServerPort, aUi) {
     try{
 	    var thisClient = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Client";
@@ -7,7 +7,8 @@ function Client(aServerHost, aServerPort, aConsoleArea) {
         var serverAddress = 'http://'+aServerHost+':'+aServerPort+'/'; 
         var game;
         var config;
-        var console = aConsoleArea;
+        var ui = aUi;
+        var console = aUi.getConsole();
         console.append(objectName+" Initiated<br>");
     //end try
     }
@@ -32,7 +33,7 @@ function Client(aServerHost, aServerPort, aConsoleArea) {
 
             //var response = jsonObject.response;//do something useful with this later
             
-            console.append('JSON objects: '+JSON.stringify(jsonObject)+'<br>');
+            //console.append('JSON objects: '+JSON.stringify(jsonObject)+'<br>');
         }
         catch(err) {
 	        console.append('Malformed JSON object: '+err);
@@ -61,19 +62,24 @@ function Client(aServerHost, aServerPort, aConsoleArea) {
         serverRequest('new/'+aUsername);
     }
     
+    //generic client request
+    var request = function(someUserInput) {
+        if (username == ''){
+            requestGame(someUserInput);
+        } else {
+            sendRequest(someUserInput);
+        }
+    }
+    
     //member functions
     //can I talk to the server? If so, return the config
     Client.prototype.readServerConfig = function() { 
         serverRequest('config');    
     }
 
-    //generic client request
-    Client.prototype.request = function(someUserInput) {
-        if (username == ''){
-            requestGame(someUserInput);
-        } else {
-            sendRequest(someUserInput);
-        }
+    //start UI listening with callcabk to client
+    Client.prototype.listenForInput = function() {
+        ui.listenForInput(request);
     }
 
 }
