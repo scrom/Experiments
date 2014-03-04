@@ -1,10 +1,11 @@
 //main user interface interactions
-function Ui(aStateArea, anInputField, aninteractionArea, aConsoleArea) {
+function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleArea) {
     try{
 	    var thisUi = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Ui";
         var console = aConsoleArea;
         var state = aStateArea;
+        var events = anEventArea;
         var input = anInputField;
         var interaction = aninteractionArea;
         state.append('Welcome To MVTA.<br>Please enter your name');
@@ -24,6 +25,10 @@ function Ui(aStateArea, anInputField, aninteractionArea, aConsoleArea) {
     Ui.prototype.setState = function(stateData) {
         console.append('setting state: '+stateData);
         state.text(stateData);
+    }
+
+    Ui.prototype.setEvent = function(eventData) {
+        events.append(eventData+'<br>');
     }
 
     Ui.prototype.listenForInput = function(callback) {

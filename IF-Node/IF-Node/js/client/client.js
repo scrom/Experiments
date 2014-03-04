@@ -71,4 +71,15 @@ function Client(aServerHost, aServerPort, aUi) {
         ui.listenForInput(request);
     }
 
+    //start Event Listening
+    Client.prototype.listenForEvents = function() {
+        var esurl = serverAddress+"events";
+        //console.append('esurl='+esurl+'<br>');
+        var source = new EventSource(esurl);
+        source.addEventListener('message', function(e) { //listen for message type events
+                //console.append(e.data + ' (message id: ' + e.lastEventId+')');
+                ui.setEvent(e.data);
+        }, false);
+    }
+
 }

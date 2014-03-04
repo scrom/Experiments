@@ -6,9 +6,9 @@
 	var game;
 	var player;
 	
-function init(state, input, interaction, console) {
+function init(state, input, interaction, events, console) {
     //create UI
-	ui = new Ui(state, input, interaction, console);
+	ui = new Ui(state, input, interaction, events, console);
     
     //create client
     client = new Client(serverHost, serverPort, ui);
@@ -16,4 +16,5 @@ function init(state, input, interaction, console) {
 
     //start listening
     client.listenForInput();
+    client.listenForEvents();
 }

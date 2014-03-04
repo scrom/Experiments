@@ -116,6 +116,9 @@ exports.Interpreter = function Interpreter(aGameModule) {
             case 'action':
                 var action = convertActionToElements(actionString);
                 return('{"ActionObject":'+action+'}');
+            case 'events':
+                //respond to event requests
+                return 'ping.';
             default:
                 return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
         }              
