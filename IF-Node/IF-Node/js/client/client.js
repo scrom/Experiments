@@ -77,7 +77,7 @@ function Client(aServerHost, aServerPort, aUi) {
         serverRequest('config');    
     }
 
-    //start UI listening with callcabk to client
+    //start UI listening with callback to client
     Client.prototype.listenForInput = function() {
         ui.listenForInput(request);
     }
