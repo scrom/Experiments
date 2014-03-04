@@ -22,22 +22,21 @@ exports.Server = function Server(anInterpreter) {
             webServer.use(express.static(__dirname + '/../../'));
 
             webServer.get('/config', function (request, response) {
-                response.send('' + JSON.stringify(config));
+                response.send(interpreter.translate(request.url,config));
             });
 
            webServer.get('/new/*', function (request, response) {
-                response.send('New Game requested for xxx');
+                response.send(interpreter.translate(request.url,config));
             });
 
             webServer.get('/action/*', function (request, response) {
-                response.send('Action requested: xxx');
+                response.send(interpreter.translate(request.url,config));
             });
 
             //serve default dynamic
             webServer.get('*', function (request, response) {
-                var requestUrl = 'Request: ' + request.url;
-                    response.send(requestUrl);
-            });
+                response.send(interpreter.translate(request.url,config));
+                });
         });
 
         console.log(objectName + ' successfully created');
