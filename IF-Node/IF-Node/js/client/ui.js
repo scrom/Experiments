@@ -31,7 +31,7 @@ function Ui(aStateArea, anInputField, aninteractionArea, aConsoleArea) {
 	    	var keycode = e.which;
             if(keycode==13) {
                 var callbackValue = input.val();
-		    	interaction.append(input.val()+"<br>");
+		    	interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
 		        input.val("");
                 if (callback && typeof(callback) === "function") {
                     callback(callbackValue);

@@ -6,7 +6,7 @@ exports.Game = function Game(aPlayer,aGameID) {
         this.id = aGameID;
 	    var objectName = "Game";
         //console.log(objectName+' successfully created for '+player);	
-        console.log(objectName+' successfully created for '+this.player);	
+        console.log(objectName+' created for '+this.player);	
     }
     catch(err) {
 	    alert('Unable to create Game object: '+err);
