@@ -1,6 +1,7 @@
 ﻿//main bootstrap code for node server
-serverObjectModule = require('./server');
-interpreterObjectModule = require('./interpreter');
-var interpreter = new interpreterObjectModule.Interpreter();
+var serverObjectModule = require('./server');
+var interpreterObjectModule = require('./interpreter');
+var gameObjectModule = require('./game');
+var interpreter = new interpreterObjectModule.Interpreter(gameObjectModule);
 var server = new serverObjectModule.Server(interpreter);
 server.listen();

@@ -5,8 +5,10 @@ function Ui(aClient, aStateArea, anInputField, aninteractionArea, aConsoleArea) 
 	    var objectName = "Ui";
         var client = aClient;
         var console = aConsoleArea;
+        var state = aStateArea;
         var input = anInputField;
         var interaction = aninteractionArea;
+        state.append('Welcome To MVTA, please enter your name');
         console.append(objectName+" Initiated<br>");
     //end try
     }
@@ -21,7 +23,7 @@ function Ui(aClient, aStateArea, anInputField, aninteractionArea, aConsoleArea) 
             if(keycode==13) {
 
 		    	interaction.append(input.val()+"<br>");
-                client.sendRequest(input.val());
+                client.request(input.val());
 		        input.val("");
 		    }
             });
