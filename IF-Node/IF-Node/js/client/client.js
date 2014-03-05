@@ -43,12 +43,12 @@ function Client(aServerHost, aServerPort, aUi) {
 
     //request an action
     var sendRequest = function(someUserInput) {
-        serverRequest('action/'+someUserInput);
+        serverRequest('action/'+someUserInput+'/'+username+'/'+gameId);
     }
 
     //request a new game
     var requestGame = function(aUsername) {
-        serverRequest('new/'+aUsername);
+        serverRequest('new/new/'+aUsername);
     }
     
     //generic client request

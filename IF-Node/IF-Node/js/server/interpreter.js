@@ -29,6 +29,34 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
         }
         return stringArgs.split("/")[0]; 
     }
+
+    /*convert the tail of incoming request into username.
+      the commands are in the format /command/commandcontent/username/<username>/id/id 
+      Anything after that is the content of the command */   
+    var extractUsername = function(aString) {
+
+        var stringArgs = aString.trim();
+
+        //trim leading / if it exists
+        if (stringArgs.substring(0, 1) == '/') { 
+            stringArgs = stringArgs.substring(1);
+        }
+        return stringArgs.split("/")[2]; 
+    }
+
+    /*convert the tail of incoming request into ID.
+      the commands are in the format /command/commandcontent/username/id 
+      Anything after that is the content of the command */   
+    var extractGameId = function(aString) {
+
+        var stringArgs = aString.trim();
+
+        //trim leading / if it exists
+        if (stringArgs.substring(0, 1) == '/') { 
+            stringArgs = stringArgs.substring(1);
+        }
+        return stringArgs.split("/")[3]; 
+    }
     
     /*convert the incoming request into action string.
     the first word on the string is the command. 
@@ -61,6 +89,9 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
         var command = extractCommand(aRequestUrl);
         var commandJson = '{"command":"'+command+'"}';
         var actionString = extractAction(aRequestUrl);
+        var username = extractUsername(aRequestUrl);
+        var gameId = extractGameId(aRequestUrl);
+        console.log('username: '+username+', gameId:'+gameId);
 
         switch(command)
         {
@@ -71,7 +102,7 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
                 return('' + JSON.stringify(userGames));
             case 'new':
                 //add new user game
-                gameID = gameController.addGame(actionString);
+                gameID = gameController.addGame(username);
                 return assembleResponse(commandJson,gameController.getGameState(gameID));//addGame(actionString);
             case 'action':
                 var action = new actionObjectModule.Action(actionString);
