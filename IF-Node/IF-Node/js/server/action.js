@@ -40,7 +40,7 @@ exports.Action = function Action(anActionString) {
         console.log(objectName + ' successfully created');
     }
     catch(err) {
-	    alert('Unable to create Action object: '+err);
+	    console.log('Unable to create Action object: '+err);
     }	
 
     exports.Action.prototype.getActionString = function() {

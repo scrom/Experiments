@@ -13,7 +13,7 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
         console.log(objectName+' successfully created');
     }
     catch(err) {
-	    alert('Unable to create Interpreter object: '+err);
+	    console.log('Unable to create Interpreter object: '+err);
     }
 
     /*convert the incoming request into command.

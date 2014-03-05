@@ -11,14 +11,14 @@ exports.GameController = function GameController() {
         console.log(objectName + ' successfully created');
     }
     catch(err) {
-	    alert('Unable to create GameController object: '+err);
+	    console.log('Unable to create GameController object: '+err);
     }	
 
     exports.GameController.prototype.addGame = function(aUsername) {
         var game = new gameObjectModule.Game(aUsername,games.length+1)               
         games.push(game);
 
-        console.log('game ID: '+games.length+' added to controller: '+games.length);
+        console.log('game ID: '+games.length+' added to controller. Open games: '+games.length);
         //return GameID
         return games.length-1;
         

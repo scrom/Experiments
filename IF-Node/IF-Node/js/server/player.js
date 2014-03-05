@@ -6,6 +6,6 @@ try{
 	
 }
 catch(err) {
-	alert('Unable to create Player object: '+err);
+	console.log('Unable to create Player object: '+err);
 }	
 }
