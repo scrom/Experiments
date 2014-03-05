@@ -6,11 +6,15 @@ exports.Interpreter = function Interpreter(aGameModule) {
 	    var objectName = "Interpreter";
         var userGames = []; //collection of active user games
 
+        //module deps
+        var actionObjectModule = require('./action');
+
         console.log(objectName+' successfully created');
     }
     catch(err) {
 	    alert('Unable to create Interpreter object: '+err);
     }
+
     /*convert the incoming request into command.
       the first word on the string is the command. 
       Anything after that is the content of the command */   
@@ -42,28 +46,6 @@ exports.Interpreter = function Interpreter(aGameModule) {
         } else {
             return '';
         }
-    }
-
-    /* an action consists of either 2 or 4 elements in the form
-    [verb] [object]  or [verb] [object] with [object]
-    a verb will always be a single word, an object may be multiple words
-    if the first object is not defined, we'll try to use the last referenced object later
-    e.g. "eat with fork" vs "eat bacon with fork" and "eat bacon" vs "eat"*/
-    var convertActionToElements = function(aString){
-
-        var verb = aString.trim().split(' ')[0];
-        
-        var remainder = aString.replace(verb,'').trim();       
-        var objectPair = remainder.split('with')
-
-        var object0 = ''+objectPair[0];
-        var object1 = '';
-        if (objectPair.length>1) {
-            object1 = ''+objectPair[1];
-        }
-
-
-        return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'"}';
     }
 
     var buildGameJSON = function(game){
@@ -122,9 +104,9 @@ exports.Interpreter = function Interpreter(aGameModule) {
                 //add new user game
                 return addGame(actionString);
             case 'action':
-                var action = JSON.parse(convertActionToElements(actionString));
+                var action = new actionObjectModule.Action(actionString);
                 //return('{"ActionObject":'+action+'}');
-                return processResponse(action);
+                return processResponse(action.getActionJson());
             case 'events':
                 //respond to event requests
                 return 'ping.';
