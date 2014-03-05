@@ -2,6 +2,7 @@
 exports.Action = function Action(anActionString) {
     try{
 	    var thisAction = this; //closure so we don't lose thisUi refernce in callbacks
+        var actionJsonString = '';
         var action = {} //JSON representation of last user action {verb, object0, object1}
 	    var objectName = "Action";
 
@@ -24,12 +25,17 @@ exports.Action = function Action(anActionString) {
                 object1 = ''+objectPair[1];
             }
 
+            var description = 'You '+verb;
+            if (object0) {description+= ' the '+object0;}
+            if (object1) {description+= ' with the '+object1;}
 
-            return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'"}';
+
+            return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'","description":"'+description+ '."}'; //,"description":"'+description+ '."
         }
 
         //store action JSON
-        action = JSON.parse(convertActionToElements(anActionString));
+        actionJsonString = convertActionToElements(anActionString);
+        action = JSON.parse(actionJsonString);
 
         console.log(objectName + ' successfully created');
     }
@@ -37,8 +43,8 @@ exports.Action = function Action(anActionString) {
 	    alert('Unable to create Action object: '+err);
     }	
 
-    exports.Action.prototype.getActionJson = function() {
-        return action;
+    exports.Action.prototype.getActionString = function() {
+        return actionJsonString;
     }
 
 }

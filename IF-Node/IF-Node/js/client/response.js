@@ -3,13 +3,14 @@ function Response(someJsonData, aConsole) {
     try{
 	    var thisResponse = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Response";
-        var data = someJsonData;
+        var data = jQuery.parseJSON(someJsonData);
         var console = aConsole;
-        var game;
-        var config;
-        var response;
+        
+        //we expect a single data object containing 2 specific other objects: request and response
+        var request = data.request;
+        var response = data.response;
 
-        console.append(objectName+" Initiated<br>");
+        console.append(objectName+' Initiated: '+JSON.stringify(data)+'<br>');
     //end try
     }
     catch(err) {
@@ -17,35 +18,39 @@ function Response(someJsonData, aConsole) {
     }	
     
     //Untangle response object into component parts
-    Response.prototype.untangle = function() {
-        try{
-            var jsonObject= jQuery.parseJSON(data);
-            //we expect a single response object containing 3 specific other objects: game, config and response
-            game = jsonObject.game;
-
-            config = jsonObject.config;
-
-            response = jsonObject.response;
-            
-            console.append('Response object untangled: '+JSON.stringify(jsonObject)+'<br>');
-        }
-        catch(err) {
-	        console.append('Malformed JSON Response object: '+err);
-        }
-    }
+    /*Response.prototype.untangle = function() {
+        switch(request.command) {
+            case 'config':
+                return request.command;
+            case 'list':
+                return request.command;
+            case 'new':
+                return response.username;
+            case 'action':
+                return request.command;
+            case 'events':
+                return request.command;
+            default:
+                return request.command;
+        }   
+    }*/
 
     //public methods
     Response.prototype.getUsername = function() {
             try {
-                return game.player;
+                return response.username;
             }
             catch(err){
                 return ''; //send empty string if we can't obtain username
             }
     }
-    
-    Response.prototype.getGame = function() {
-        return game;
+    Response.prototype.getGameId = function() {
+            try {
+                return response.id;
+            }
+            catch(err){
+                return ''; //send empty string if we can't obtain username
+            }
     }
     
     Response.prototype.getDescription = function() {

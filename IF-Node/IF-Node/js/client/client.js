@@ -4,8 +4,8 @@ function Client(aServerHost, aServerPort, aUi) {
 	    var thisClient = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Client";
         var username = '';
+        var gameId;
         var serverAddress = 'http://'+aServerHost+':'+aServerPort+'/'; 
-        var game;
         var config;
         var ui = aUi;
         var console = aUi.getConsole();
@@ -21,10 +21,10 @@ function Client(aServerHost, aServerPort, aUi) {
     //are we getting sensible JSON back? Do something sensible with the results
     var untangleResponse = function(someJSONData) {
         var response = new Response(someJSONData, console);
-        response.untangle();
-
-        if (typeof game == 'undefined'){ game = response.getGame();}
-        if (username == ''){username = response.getUsername();}
+        if (username == ''){
+            username = response.getUsername();
+            gameId = response.getGameId();
+        }
 
         ui.setState(response.getDescription());
     }

@@ -1,13 +1,14 @@
 //main game interpreter
-exports.Interpreter = function Interpreter(aGameModule) {
+exports.Interpreter = function Interpreter(aGameControllerModule) {
     try{
-	    var thisInterpreter = this; //closure so we don't lose thisUi refernce in callbacks
-        var gameModule = aGameModule;
+	    var thisInterpreter = this; //closure so we don't lose this refernce in callbacks
 	    var objectName = "Interpreter";
         var userGames = []; //collection of active user games
 
         //module deps
         var actionObjectModule = require('./action');
+        var gameControllerModule = aGameControllerModule;
+        var gameController = new gameControllerModule.GameController();
 
         console.log(objectName+' successfully created');
     }
@@ -48,42 +49,9 @@ exports.Interpreter = function Interpreter(aGameModule) {
         }
     }
 
-    var buildGameJSON = function(game){
-         return '{"id":'+game.id+
-                ',"player":"'+game.player+'"'+
-                '}'; 
+    var assembleResponse =function(requestJson, responseJSON){
+        return '{"request":'+requestJson+',"response":'+responseJSON+'}';
         }
-    var buildConfigJSON = function(port, hostname, sessionLimit){
-        return '{"port":'+port+',"hostname":"'+hostname+'","sessionLimit":'+sessionLimit+'}';
-        }
-    var buildActionResponseJSON = function(description, objects, creatures){
-        return '{"description":"'+description+'","objects":"'+objects+'","creatures":"'+creatures+'"}';
-        }
-
-    var assembleResponseObject =function(gameJSON, configJSON, actionResponseJSON){
-        return '{"game":'+gameJSON+',"config":'+configJSON+',"response":'+actionResponseJSON+'}';
-        }
-
-    var addGame = function(aUsername) {
-        var game = new gameModule.Game(aUsername,userGames.length+1)               
-        userGames.push({"player":aUsername, "game":game});
-        console.log('game added: '+userGames.length);
-        
-        var gameJson = buildGameJSON(game);
-        var actionResponseJSON = buildActionResponseJSON('Welcome, adventurer '+aUsername+'.','sword','ogre');
-        var configJSON = buildConfigJSON(9999,'host',999);
-        return assembleResponseObject(gameJson,configJSON, actionResponseJSON);
-    }
-
-    var processResponse = function(action) {        
-        //var gameJson = buildGameJSON(game);
-        console.log('verb: '+action.verb+' object1: '+action.object0);
-        var actionString = 'You '+action.verb+' the '+action.object0;
-        if (action.object1) {actionString+= ' with the '+action.object1;}
-        var actionResponseJSON = buildActionResponseJSON(actionString,'','');
-        //var configJSON = buildConfigJSON(9999,'host',999);
-        return assembleResponseObject(0,0, actionResponseJSON);
-    }
 
     /*top level interpeter command creation*/
     exports.Interpreter.prototype.translate = function(aRequestUrl,someTempConfig) {
@@ -91,6 +59,7 @@ exports.Interpreter = function Interpreter(aGameModule) {
         //note - only passing config in here until controlling game object is accessible
         
         var command = extractCommand(aRequestUrl);
+        var commandJson = '{"command":"'+command+'"}';
         var actionString = extractAction(aRequestUrl);
 
         switch(command)
@@ -102,11 +71,12 @@ exports.Interpreter = function Interpreter(aGameModule) {
                 return('' + JSON.stringify(userGames));
             case 'new':
                 //add new user game
-                return addGame(actionString);
+                gameID = gameController.addGame(actionString);
+                return assembleResponse(commandJson,gameController.getGameState(gameID));//addGame(actionString);
             case 'action':
                 var action = new actionObjectModule.Action(actionString);
                 //return('{"ActionObject":'+action+'}');
-                return processResponse(action.getActionJson());
+                return assembleResponse(commandJson, action.getActionString());
             case 'events':
                 //respond to event requests
                 return 'ping.';
