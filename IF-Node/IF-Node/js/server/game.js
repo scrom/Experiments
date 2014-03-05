@@ -4,9 +4,10 @@ exports.Game = function Game(aUsername,aGameID) {
         //module deps
         var locationObjectModule = require('./location');
         var actionObjectModule = require('./action');
+        var playerObjectModule = require('./player');
 
 	    var thisGame = this; //closure so we don't lose thisUi refernce in callbacks
-        var username = aUsername;
+        var player = new playerObjectModule.Player(aUsername);
         var id = aGameID;
         var log = ''; //log of game script
         var inventory = []; //array of game inventory
@@ -16,25 +17,25 @@ exports.Game = function Game(aUsername,aGameID) {
 
 	    var objectName = "Game";
 
-        var addLocation = function(description){
-            locations.push(new locationObjectModule.Location(description));
+        var addLocation = function(aDescription){
+            locations.push(new locationObjectModule.Location(aDescription));
         }
 
-        addLocation('Welcome, adventurer '+username+ '.');
+        addLocation('Welcome, adventurer '+player.getUsername()+ '.');
         currentLocation=0;
-        console.log(objectName+' created for '+username);	
+        console.log(objectName+' created for '+player.getUsername());	
     }
     catch(err) {
 	    console.log('Unable to create Game object: '+err);
     }
     
     exports.Game.prototype.checkUser = function(aUsername, anId) {
-        if ((aUsername == username) && (anId == id)) {return true};
+        if ((player.getUsername() == aUsername) && (anId == id)) {return true};
         return false;
     }	
 
     exports.Game.prototype.state = function() {
-        return '{"username":"'+username+ '","id":"'+id+'","description":"'+locations[currentLocation].getDescription()+'"}';
+        return '{"username":"'+player.getUsername()+ '","id":"'+id+'","description":"'+locations[currentLocation].getDescription()+'"}';
     }
 
     exports.Game.prototype.userAction = function(actionString) {
