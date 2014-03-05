@@ -3,7 +3,6 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
     try{
 	    var thisInterpreter = this; //closure so we don't lose this refernce in callbacks
 	    var objectName = "Interpreter";
-        var userGames = []; //collection of active user games
 
         //module deps
         var actionObjectModule = require('./action');
@@ -99,14 +98,13 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
                 return('' + JSON.stringify(someTempConfig));
             case 'list':
                 //list active games
-                return('' + JSON.stringify(userGames));
+                return('' + JSON.stringify(gameController.listGames()));
             case 'new':
                 //add new user game
                 gameID = gameController.addGame(username);
-                return assembleResponse(commandJson,gameController.getGameState(gameID));//addGame(actionString);
+                return assembleResponse(commandJson,gameController.getGameState(username, gameID));//addGame(actionString);
             case 'action':
                 var action = new actionObjectModule.Action(actionString);
-                //return('{"ActionObject":'+action+'}');
                 return assembleResponse(commandJson, action.getActionString());
             case 'events':
                 //respond to event requests

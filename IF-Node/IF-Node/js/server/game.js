@@ -25,6 +25,11 @@ exports.Game = function Game(aUsername,aGameID) {
     }
     catch(err) {
 	    console.log('Unable to create Game object: '+err);
+    }
+    
+    exports.Game.prototype.checkUser = function(aUsername, anId) {
+        if ((aUsername == username) && (anId == id)) {return true};
+        return false;
     }	
 
     exports.Game.prototype.state = function() {

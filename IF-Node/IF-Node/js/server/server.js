@@ -91,7 +91,7 @@ exports.Server = function Server(anInterpreter) {
             //serve default dynamic
             webServer.get('*', function (request, response) {
                 response.send(interpreter.translate(request.url,config));
-                });
+            });
         });
 
         console.log(objectName + ' successfully created');

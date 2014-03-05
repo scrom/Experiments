@@ -15,17 +15,13 @@ exports.GameController = function GameController() {
     }	
 
     exports.GameController.prototype.addGame = function(aUsername) {
-        var game = new gameObjectModule.Game(aUsername,games.length+1)               
+        var gameId = games.length;
+        var game = new gameObjectModule.Game(aUsername,gameId)               
         games.push(game);
 
-        console.log('game ID: '+games.length+' added to controller. Open games: '+games.length);
+        console.log('game ID: '+gameId+' added to controller. Open games: '+games.length);
         //return GameID
-        return games.length-1;
-        
-        //var gameJson = buildGameJSON(game);
-        //var actionResponseJSON = buildActionResponseJSON('Welcome, adventurer '+aUsername+'.','sword','ogre');
-        //var configJSON = buildConfigJSON(9999,'host',999);
-        //return assembleResponseObject(gameJson,configJSON, actionResponseJSON);
+        return gameId;
    }
 
     exports.GameController.prototype.removeGame = function(aGame) {
@@ -36,8 +32,18 @@ exports.GameController = function GameController() {
 
     }
 
-    exports.GameController.prototype.getGameState = function(aGameId) {
-        return games[aGameId].state();
+    exports.GameController.prototype.getGameState = function(aUsername, aGameId) {
+        if (games[aGameId].checkUser(aUsername, aGameId)) {
+            return games[aGameId].state();
+        }
+    }
+
+    exports.GameController.prototype.listGames = function() {
+        return games; //doesn't work at the moment
+    }
+
+    exports.GameController.prototype.userAction = function(aGameId) {
+        return games; //doesn't work at the moment
     }
 
 }
