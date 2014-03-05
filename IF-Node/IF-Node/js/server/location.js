@@ -21,8 +21,40 @@ exports.Location = function Location(aDescription,aLocationID) { //inputs for co
     exports.Location.prototype.addExit = function(anExit, aLocation) {
         exits.push('{"exit":+'+anExit+'","location":'+aLocation+'"}');
     }
+    exports.Location.prototype.addObject = function(anObject) {
+        objects.push(anObject);
+        console.log(anObject+' added to location');
+    }
+    exports.Location.prototype.removeObject = function(anObject) {
+        var index = objects.indexOf(anObject);
+        if (index > -1) {
+            objects.splice(index,1);
+            console.log(anObject+' removed from location');
+        }
+    }
+    exports.Location.prototype.objectExists = function(anObject) {
+        //check if passed in object is in inventory
+        if(objects.indexOf(anObject) > -1){ return true;}
+        return false;
+    }	
+
     exports.Location.prototype.getDescription = function() {
         return description;
+    }
+    
+    exports.Location.prototype.describe = function() {
+        fullDescription = description;
+        if (objects.length > 0) {
+            fullDescription+='<br>You see: '+objects.toString()+' here.';
+        }
+        if (exits.length > 0) {
+            fullDescription+='<br>Exits are: '+exits.toString()+'.';
+        }
+        if (creatures.length > 0) {
+            fullDescription+='<br>You also see: '+creatures.toString()+'.';
+        }
+
+        return fullDescription;
     }
 
 }

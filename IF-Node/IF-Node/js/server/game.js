@@ -22,6 +22,7 @@ exports.Game = function Game(aUsername,aGameID) {
         }
 
         addLocation('Welcome, adventurer '+player.getUsername()+ '.',currentLocation);
+        locations[currentLocation].addObject('sword');
         console.log(objectName+' created for '+player.getUsername());	
     }
     catch(err) {
@@ -34,11 +35,11 @@ exports.Game = function Game(aUsername,aGameID) {
     }	
 
     exports.Game.prototype.state = function() {
-        return '{"username":"'+player.getUsername()+ '","id":"'+id+'","description":"'+locations[currentLocation].getDescription()+'"}';
+        return '{"username":"'+player.getUsername()+ '","id":"'+id+'","description":"'+locations[currentLocation].describe()+'"}';
     }
 
     exports.Game.prototype.userAction = function(actionString) {
-        lastAction = new actionObjectModule.Action(actionString, player);
+        lastAction = new actionObjectModule.Action(actionString, player, locations[currentLocation]);
         return lastAction.getActionString();
     }
 }

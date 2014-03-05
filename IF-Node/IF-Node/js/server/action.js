@@ -1,10 +1,11 @@
 ﻿//action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, someExits) {
+exports.Action = function Action(anActionString, aPlayer, aLocation) {
     try{
 	    var thisAction = this; //closure so we don't lose thisUi refernce in callbacks
         var actionJsonString = '';
         var action = {}; //JSON representation of action {verb, object0, object1}
         var player = aPlayer; //sometimes actions impact the player
+        var location = aLocation;
 	    var objectName = "Action";
 
         //private functions
@@ -31,8 +32,21 @@ exports.Action = function Action(anActionString, aPlayer, someExits) {
             if (object1) {description+= ' with the '+object1;}
 
             if (verb == 'inv') {description = player.getInventory();}
-            if (verb == 'get') {description = player.addToInventory(object0);}
-            if (verb == 'drop') {description = player.removeFromInventory(object0);}
+            if (verb == 'get') {
+                if (location.objectExists(object0)) {
+                    description = player.addToInventory(object0);
+                    location.removeObject(object0);
+                }
+            }
+            if (verb == 'drop') {
+                if (player.checkInventory(object0)) {
+                    description = player.removeFromInventory(object0);
+                    location.addObject(object0);
+                }
+            }
+
+
+            if (verb == 'look') {description = location.describe();}
 
 
             return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'","description":"'+description+ '."}'; //,"description":"'+description+ '."
