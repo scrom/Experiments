@@ -1,9 +1,10 @@
 ﻿//action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString) {
+exports.Action = function Action(anActionString, aPlayer) {
     try{
 	    var thisAction = this; //closure so we don't lose thisUi refernce in callbacks
         var actionJsonString = '';
-        var action = {} //JSON representation of last user action {verb, object0, object1}
+        var action = {}; //JSON representation of action {verb, object0, object1}
+        var player = aPlayer; //sometimes actions impact the player
 	    var objectName = "Action";
 
         //private functions
@@ -28,6 +29,9 @@ exports.Action = function Action(anActionString) {
             var description = 'You '+verb;
             if (object0) {description+= ' the '+object0;}
             if (object1) {description+= ' with the '+object1;}
+
+            if (verb == 'get') {player.addToInventory(object0);}
+            if (verb == 'drop') {player.removeFromInventory(object0);}
 
 
             return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'","description":"'+description+ '."}'; //,"description":"'+description+ '."

@@ -24,6 +24,21 @@ exports.Player = function Player(aUsername) {
         return inventory;
     }	
     
+    exports.Player.prototype.addToInventory = function(anObject) {
+        inventory.push(anObject);
+        console.log(anObject+' added to inventory');
+    }
+    
+    exports.Player.prototype.removeFromInventory = function(anObject) {
+        var index = inventory.indexOf(anObject);
+        if (index >=0) {
+            inventory.splice(index,1);
+            console.log(anObject+' removed from inventory');
+        } else {
+            console.log('player is not carrying '+anObject);
+        }
+    }
+    
     exports.Player.prototype.checkInventory = function(anObject) {
         //check if passed in object is in inventory
         return true;
@@ -32,5 +47,6 @@ exports.Player = function Player(aUsername) {
     exports.Player.prototype.hit = function(pointsToRemove) {
         hitPoints -= pointsToRemove;
         if (hitPoints <=0) {killPlayer();}
+        console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+hitPoints);
     }	
 }

@@ -39,7 +39,7 @@ exports.Game = function Game(aUsername,aGameID) {
     }
 
     exports.Game.prototype.userAction = function(actionString) {
-        lastAction = new actionObjectModule.Action(actionString);
+        lastAction = new actionObjectModule.Action(actionString, player);
         return lastAction.getActionString();
     }
 }
