@@ -24,7 +24,7 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
     //interaction with client
     Ui.prototype.setState = function(stateData) {
         //console.append('setting state: '+stateData);
-        state.text(stateData);
+        state.html(stateData);
     }
 
     Ui.prototype.setEvent = function(eventData) {
