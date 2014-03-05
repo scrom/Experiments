@@ -3,6 +3,7 @@ exports.Game = function Game(aUsername,aGameID) {
     try{
         //module deps
         var locationObjectModule = require('./location');
+        var actionObjectModule = require('./action');
 
 	    var thisGame = this; //closure so we don't lose thisUi refernce in callbacks
         var username = aUsername;
@@ -36,7 +37,8 @@ exports.Game = function Game(aUsername,aGameID) {
         return '{"username":"'+username+ '","id":"'+id+'","description":"'+locations[currentLocation].getDescription()+'"}';
     }
 
-    //exports.Game.prototype.getGameJson(aGameID, aUsername) {
-    //    return {"player":aUsername, "game":game}
-    //}
+    exports.Game.prototype.userAction = function(actionString) {
+        lastAction = new actionObjectModule.Action(actionString);
+        return lastAction.getActionString();
+    }
 }

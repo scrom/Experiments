@@ -5,7 +5,6 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
 	    var objectName = "Interpreter";
 
         //module deps
-        var actionObjectModule = require('./action');
         var gameControllerModule = aGameControllerModule;
         var gameController = new gameControllerModule.GameController();
 
@@ -104,8 +103,9 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
                 gameID = gameController.addGame(username);
                 return assembleResponse(commandJson,gameController.getGameState(username, gameID));//addGame(actionString);
             case 'action':
-                var action = new actionObjectModule.Action(actionString);
-                return assembleResponse(commandJson, action.getActionString());
+                //var action = new actionObjectModule.Action(actionString);
+                //return assembleResponse(commandJson, action.getActionString());
+                return assembleResponse(commandJson, gameController.userAction(username, gameID,actionString));
             case 'events':
                 //respond to event requests
                 return 'ping.';

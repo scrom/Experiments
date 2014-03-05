@@ -42,8 +42,10 @@ exports.GameController = function GameController() {
         return games; //doesn't work at the moment
     }
 
-    exports.GameController.prototype.userAction = function(aGameId) {
-        return games; //doesn't work at the moment
+    exports.GameController.prototype.userAction = function(aUsername, aGameId,anAction) {
+        if (games[aGameId].checkUser(aUsername, aGameId)) {
+            return games[aGameId].userAction(anAction);
+        }
     }
 
 }
