@@ -1,5 +1,5 @@
 ﻿//action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer) {
+exports.Action = function Action(anActionString, aPlayer, someExits) {
     try{
 	    var thisAction = this; //closure so we don't lose thisUi refernce in callbacks
         var actionJsonString = '';
@@ -30,8 +30,9 @@ exports.Action = function Action(anActionString, aPlayer) {
             if (object0) {description+= ' the '+object0;}
             if (object1) {description+= ' with the '+object1;}
 
-            if (verb == 'get') {player.addToInventory(object0);}
-            if (verb == 'drop') {player.removeFromInventory(object0);}
+            if (verb == 'inv') {description = player.getInventory();}
+            if (verb == 'get') {description = player.addToInventory(object0);}
+            if (verb == 'drop') {description = player.removeFromInventory(object0);}
 
 
             return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'","description":"'+description+ '."}'; //,"description":"'+description+ '."

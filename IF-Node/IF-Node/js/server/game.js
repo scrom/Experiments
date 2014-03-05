@@ -12,17 +12,16 @@ exports.Game = function Game(aUsername,aGameID) {
         var log = ''; //log of game script
         var inventory = []; //array of game inventory
         var locations = []; //all game locations
-        var currentLocation; //id of current location
+        var currentLocation = 0; //id of current location
         var lastAction = {} //JSON representation of last user action {verb, object0, object1}
 
 	    var objectName = "Game";
 
-        var addLocation = function(aDescription){
-            locations.push(new locationObjectModule.Location(aDescription));
+        var addLocation = function(aDescription,aLocationID){
+            locations.push(new locationObjectModule.Location(aDescription,aLocationID));
         }
 
-        addLocation('Welcome, adventurer '+player.getUsername()+ '.');
-        currentLocation=0;
+        addLocation('Welcome, adventurer '+player.getUsername()+ '.',currentLocation);
         console.log(objectName+' created for '+player.getUsername());	
     }
     catch(err) {

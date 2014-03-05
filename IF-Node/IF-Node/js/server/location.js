@@ -1,5 +1,5 @@
 ﻿//location object - manage location details and pack/unpack JSON equivalents
-exports.Location = function Location(aDescription) { //inputs for constructor TBC
+exports.Location = function Location(aDescription,aLocationID) { //inputs for constructor TBC
     try{      
 	    var thisLocation = this; //closure so we don't lose thisUi refernce in callbacks
         var location = {}; //JSON representation of location {description, objects, exits, creatures}
@@ -17,6 +17,9 @@ exports.Location = function Location(aDescription) { //inputs for constructor TB
 
     exports.Location.prototype.setDescription = function(aDescription) {
         description=aDescription;
+    }
+    exports.Location.prototype.addExit = function(anExit, aLocation) {
+        exits.push('{"exit":+'+anExit+'","location":'+aLocation+'"}');
     }
     exports.Location.prototype.getDescription = function() {
         return description;

@@ -21,27 +21,32 @@ exports.Player = function Player(aUsername) {
     }
 
     exports.Player.prototype.getInventory = function() {
-        return inventory;
+        return 'you are carrying: '+inventory.toString();
     }	
     
     exports.Player.prototype.addToInventory = function(anObject) {
         inventory.push(anObject);
         console.log(anObject+' added to inventory');
+        return 'You are now carrying: '+anObject;
     }
     
     exports.Player.prototype.removeFromInventory = function(anObject) {
         var index = inventory.indexOf(anObject);
-        if (index >=0) {
+        if (index > -1) {
             inventory.splice(index,1);
             console.log(anObject+' removed from inventory');
+            return 'You dropped: '+anObject;
+
         } else {
             console.log('player is not carrying '+anObject);
+            return 'You are not carrying: '+anObject;
         }
     }
     
     exports.Player.prototype.checkInventory = function(anObject) {
         //check if passed in object is in inventory
-        return true;
+        if(inventory.indexOf(anObject) > -1){ return true;}
+        return false;
     }	
 
     exports.Player.prototype.hit = function(pointsToRemove) {
