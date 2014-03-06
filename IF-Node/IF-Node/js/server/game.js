@@ -13,17 +13,26 @@ exports.Game = function Game(aUsername,aGameID) {
         self.id = aGameID;
         self.log = ''; //log of game script
         self.locations = []; //all game locations
-        self.currentLocation = 0; //id of current location
+        self.currentLocation; //id of current location
         self.lastAction = {} //JSON representation of last user action {verb, object0, object1}
 
 	    var objectName = "Game";
 
-        var addLocation = function(aName,aDescription,aLocationID){
-            self.locations.push(new locationObjectModule.Location(aName,aDescription,aLocationID));
+        var addLocation = function(aName,aDescription){
+            //self.locations.push(new locationObjectModule.Location(aName,aDescription));
+            self.lastAction = new actionObjectModule.Action('+location '+aName+' with '+aDescription,self.player, null);
+            var newLocation = self.lastAction.getActionResultObject();
+            console.log('game-location: '+newLocation.toString());
+
+            self.locations.push(newLocation);
+            return self.locations.length-1;
         }
 
-        addLocation('start','Welcome, adventurer '+self.player.getUsername()+ '.',self.currentLocation);
+        self.currentLocation = addLocation('start','Welcome, adventurer '+self.player.getUsername()+ '.');
+        console.log('currentlocation: '+self.currentLocation+' : '+self.locations[self.currentLocation].toString());	
         self.locations[self.currentLocation].addObject('sword');
+
+        //log game created
         console.log(objectName+' id: '+self.id+' created for '+self.player.getUsername());	
     }
     catch(err) {
@@ -43,7 +52,7 @@ exports.Game = function Game(aUsername,aGameID) {
 
     Game.prototype.userAction = function(actionString) {
         self = this
-        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations, self.currentLocation);
+        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations[self.currentLocation]);
         return self.lastAction.getActionString();
     }
 
@@ -55,7 +64,7 @@ exports.Game = function Game(aUsername,aGameID) {
     
     Game.prototype.toString = function() {
         self = this
-        return 'toString: this.username: '+this.username+' username: '+self.username;
+        return 'toString: username: '+self.username;
     }
 
     return this;

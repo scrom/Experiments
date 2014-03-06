@@ -1,13 +1,13 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, aLocations, aCurrentLocation) {
+exports.Action = function Action(anActionString, aPlayer, aCurrentLocation) {
     try{
+        var locationObjectModule = require('./location');
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
-        self.actionJsonString = '';
+        self.actionJsonString;
         self.action = {}; //JSON representation of action {verb, object0, object1}
         self.player = aPlayer; //sometimes actions impact the player
-        self.location = aLocations[aCurrentLocation];
-        self.locations = aLocations;
+        self.location = aCurrentLocation;
 	    var objectName = "Action";
 
         //private functions
@@ -23,10 +23,10 @@ exports.Action = function Action(anActionString, aPlayer, aLocations, aCurrentLo
             var remainder = aString.replace(verb,'').trim();       
             var objectPair = remainder.split('with')
 
-            var object0 = ''+objectPair[0];
+            var object0 = ''+objectPair[0].trim();
             var object1 = '';
             if (objectPair.length>1) {
-                object1 = ''+objectPair[1];
+                object1 = ''+objectPair[1].trim();
             }
 
             var description = 'You '+verb;
@@ -55,6 +55,11 @@ exports.Action = function Action(anActionString, aPlayer, aLocations, aCurrentLo
             if (verb == 'look') {description = self.location.describe();}
 
             //admin commands
+            if (verb == '+location') {
+                var newLocation = new locationObjectModule.Location(object0,object1);
+                console.log('action-location: '+newLocation.toString());
+                return newLocation;
+            }
             if (verb == '+object') {description = self.location.addObject(object0);}
             if (verb == '-object') {description = self.location.removeObject(object0);}
             if ((verb == '+n')||(verb == '+north')) {
@@ -71,7 +76,8 @@ exports.Action = function Action(anActionString, aPlayer, aLocations, aCurrentLo
 
         //store action JSON
         self.actionJsonString = convertActionToElements(anActionString);
-        self.action = JSON.parse(self.actionJsonString);
+        try {self.action = JSON.parse(self.actionJsonString);}
+        catch(err){null;} //sometimes we don't care
 
         console.log(objectName + ' successfully created');
     }
@@ -83,6 +89,10 @@ exports.Action = function Action(anActionString, aPlayer, aLocations, aCurrentLo
         self = this;
         return self.actionJsonString;
     }
-
+    
+    Action.prototype.getActionResultObject = function() {
+        self = this;
+        return self.actionJsonString;
+    }
 return this;
 }

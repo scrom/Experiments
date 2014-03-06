@@ -1,11 +1,10 @@
 ﻿"use strict";
 //location object - manage location details and pack/unpack JSON equivalents
-exports.Location = function Location(aName, aDescription,aLocationID) { //inputs for constructor TBC
+exports.Location = function Location(aName, aDescription) { //inputs for constructor TBC
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.location = {}; //JSON representation of location {description, objects, exits, creatures}
         self.uniqueName = aName;
-        self.id = aLocationID;
         self.visits = 0;
         self.description = aDescription;
         self.objects = [];
@@ -13,7 +12,7 @@ exports.Location = function Location(aName, aDescription,aLocationID) { //inputs
         self.creatures = [];
 
 	    var objectName = "Location";
-        console.log(objectName + ' successfully created: '+self.description);
+        console.log(objectName + ' successfully created: '+self.uniqueName+', '+self.description);
     }
     catch(err) {
 	    console.log('Unable to create Location object: '+err);
@@ -69,6 +68,11 @@ exports.Location = function Location(aName, aDescription,aLocationID) { //inputs
         }
 
         return fullDescription;
+    }
+
+    Location.prototype.toString = function() {
+        self = this
+        return 'toString: name: '+self.uniqueName;
     }
 return this;
 }
