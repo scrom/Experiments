@@ -1,6 +1,6 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, aCurrentLocation) {
+exports.Action = function Action(anActionString, aPlayer, aCurrentLocation, allLocations) {
     try{
         var locationObjectModule = require('./location');
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
@@ -9,9 +9,21 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation) {
         self.resultJson;
         self.player = aPlayer; //sometimes actions impact the player
         self.location = aCurrentLocation;
+        self.locations = allLocations;
 	    var objectName = "Action";
 
         //private functions
+        var getIndexIfObjectExists = function(array, attr, value) {
+            for(var i = 0; i < array.length; i++) {
+                if(array[i].hasOwnProperty(attr) && array[i][attr] === value) {
+                    console.log('found: '+value);
+                    return i;
+                }
+            }
+            console.log('notfound: '+value);
+            return -1;
+        }
+
         /* an action consists of either 2 or 4 elements in the form
         [verb] [object]  or [verb] [object] with [object]
         a verb will always be a single word, an object may be multiple words
@@ -57,18 +69,53 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation) {
 
             //admin commands
             if (verb == '+location') {
-                self.resultObject = new locationObjectModule.Location(object0,object1);
-                description = 'new location: '+self.resultObject.toString()+' created';
-                console.log('action-location: '+self.resultObject.toString());
+                if ((object0)&&(object1)) {                                    
+                    self.resultObject = new locationObjectModule.Location(object0,object1);
+                    description = 'new location: '+self.resultObject.toString()+' created';
+                    console.log('action-location: '+self.resultObject.toString());
+                } else {
+                    description = 'cannot create location: '+verb+' without name and description';
+                }
             }
             if (verb == '+object') {description = self.location.addObject(object0);}
             if (verb == '-object') {description = self.location.removeObject(object0);}
-            if ((verb == '+n')||(verb == '+north')) {
+            if ((verb == '+n')||(verb == '+north')/*||
+                (verb == '+s')||(verb == '+south')||
+                (verb == '+e')||(verb == '+east')||
+                (verb == '+w')||(verb == '+west')||
+                (verb == '+i')||(verb == '+in')||
+                (verb == '+o')||(verb == '+out')||
+                (verb == '+u')||(verb == '+up')||
+                (verb == '+d')||(verb == '+down')*/
+                ) {
                 if (object0.length>0) {
-                    description = self.location.addExit('n',object0,self.locations);
+
+                    var index = getIndexIfObjectExists(self.locations,"name", object0);
+                    if (index > -1) {
+                        var temp = self.location.addExit('n',object0);
+                        temp = self.locations[index].addExit('s',self.location.name);
+
+                        console.log('locations linked');
+                        description = 'location linked to : '+object0;
+
+                    } else {
+                        console.log('could not link to location '+object0);
+                        description = 'could not link to location '+object0;
+                    }
                 } else {
                     description = 'cannot create exit: '+verb+' without destination location';
                 }
+            }
+            if ((verb == 'n')||(verb == 'north')||
+                (verb == 's')||(verb == 'south')||
+                (verb == 'e')||(verb == 'east')||
+                (verb == 'w')||(verb == 'west')||
+                (verb == 'i')||(verb == 'in')||
+                (verb == 'o')||(verb == 'out')||
+                (verb == 'u')||(verb == 'up')||
+                (verb == 'd')||(verb == 'down')
+                ) {
+                description = self.location.go(verb);
             }
 
             self.resultString = description;

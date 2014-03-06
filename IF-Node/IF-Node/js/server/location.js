@@ -4,7 +4,7 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.location = {}; //JSON representation of location {description, objects, exits, creatures}
-        self.uniqueName = aName;
+        self.name = aName;
         self.visits = 0;
         self.description = aDescription;
         self.objects = [];
@@ -12,7 +12,27 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         self.creatures = [];
 
 	    var objectName = "Location";
-        console.log(objectName + ' successfully created: '+self.uniqueName+', '+self.description);
+        console.log(objectName + ' successfully created: '+self.name+', '+self.description);
+
+        var getIndexIfObjectExists = function(array, attr, value) {
+            for(var i = 0; i < array.length; i++) {
+                if(array[i].hasOwnProperty(attr) && array[i][attr] === value) {
+                    console.log('found: '+value);
+                    return i;
+                }
+            }
+            console.log('notfound: '+value);
+            return -1;
+        }
+
+        var getExit = function(aDirection) {
+            var index = getIndexIfObjectExists(self.exits,'exit',aDirection);
+            if (index > -1) {
+                return self.exits[index].locationname;
+            } else {
+                return 'no exit : '+aDirection;
+            }
+        }
     }
     catch(err) {
 	    console.log('Unable to create Location object: '+err);
@@ -22,9 +42,11 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         self = this;
         self.description=aDescription;
     }
-    Location.prototype.addExit = function(anExit, aLocationName,aLocationArray) {
+    Location.prototype.addExit = function(anExit, aLocationName) {
         self = this;
-        self.exits.push('{"exit":+'+anExit+'","locationname":'+aLocationName+'"}');       
+        var newExit = JSON.parse('{"exit":"'+anExit+'","locationname":"'+aLocationName+'"}')
+        self.exits.push(newExit);    
+        console.log('Exit:'+newExit.exit+' towards '+newExit.locationname+' added to current location');   
         return 'Exit:'+anExit+' towards '+aLocationName+' added to current location';
     }
     Location.prototype.addObject = function(anObject) {
@@ -49,6 +71,10 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         return false;
     }	
 
+    Location.prototype.go = function(aDirection) {
+        return 'You move '+getExit(aDirection);
+    }	
+
     Location.prototype.getDescription = function() {
         self = this;
         return self.description;
@@ -69,10 +95,9 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
 
         return fullDescription;
     }
-
     Location.prototype.toString = function() {
         self = this
-        return 'toString: name: '+self.uniqueName;
+        return 'name: '+self.name+' description: '+self.description;
     }
 return this;
 }

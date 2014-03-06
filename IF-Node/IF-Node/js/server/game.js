@@ -52,10 +52,16 @@ exports.Game = function Game(aUsername,aGameID) {
 
     Game.prototype.userAction = function(actionString) {
         self = this
-        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations[self.currentLocation]);
-        var response = self.lastAction.getResultJson();
-        console.log('response: '+response);
-        return response;
+        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations[self.currentLocation], self.locations);
+        var responseJson = self.lastAction.getResultJson();
+        var responseObject = self.lastAction.getResultObject();
+        if (responseObject != undefined) {
+            self.locations.push(responseObject);
+            console.log('Locations: '+self.locations);
+            
+        };
+        console.log('responseJson: '+responseJson+' responseObject: '+typeof responseObject);
+        return responseJson;
     }
 
     Game.prototype.getNameAndId = function() {
@@ -70,4 +76,4 @@ exports.Game = function Game(aUsername,aGameID) {
     }
 
     return this;
-} //temp
+} 
