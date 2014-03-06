@@ -12,18 +12,17 @@ exports.Game = function Game(aUsername,aGameID) {
         self.username = aUsername; //temp expose username publicly
         self.id = aGameID;
         self.log = ''; //log of game script
-        self.inventory = []; //array of game inventory
         self.locations = []; //all game locations
         self.currentLocation = 0; //id of current location
         self.lastAction = {} //JSON representation of last user action {verb, object0, object1}
 
 	    var objectName = "Game";
 
-        var addLocation = function(aDescription,aLocationID){
-            self.locations.push(new locationObjectModule.Location(aDescription,aLocationID));
+        var addLocation = function(aName,aDescription,aLocationID){
+            self.locations.push(new locationObjectModule.Location(aName,aDescription,aLocationID));
         }
 
-        addLocation('Welcome, adventurer '+self.player.getUsername()+ '.',self.currentLocation);
+        addLocation('start','Welcome, adventurer '+self.player.getUsername()+ '.',self.currentLocation);
         self.locations[self.currentLocation].addObject('sword');
         console.log(objectName+' id: '+self.id+' created for '+self.player.getUsername());	
     }
@@ -44,7 +43,7 @@ exports.Game = function Game(aUsername,aGameID) {
 
     Game.prototype.userAction = function(actionString) {
         self = this
-        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations[self.currentLocation]);
+        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations, self.currentLocation);
         return self.lastAction.getActionString();
     }
 

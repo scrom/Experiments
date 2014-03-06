@@ -1,12 +1,13 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, aLocation) {
+exports.Action = function Action(anActionString, aPlayer, aLocations, aCurrentLocation) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.actionJsonString = '';
         self.action = {}; //JSON representation of action {verb, object0, object1}
         self.player = aPlayer; //sometimes actions impact the player
-        self.location = aLocation;
+        self.location = aLocations[aCurrentLocation];
+        self.locations = aLocations;
 	    var objectName = "Action";
 
         //private functions
@@ -32,6 +33,7 @@ exports.Action = function Action(anActionString, aPlayer, aLocation) {
             if (object0) {description+= ' the '+object0;}
             if (object1) {description+= ' with the '+object1;}
 
+            //user commands
             if (verb == 'inv') {description = self.player.getInventory();}
             if (verb == 'get') {
                 if (self.location.objectExists(object0)) {
@@ -51,6 +53,17 @@ exports.Action = function Action(anActionString, aPlayer, aLocation) {
             }
 
             if (verb == 'look') {description = self.location.describe();}
+
+            //admin commands
+            if (verb == '+object') {description = self.location.addObject(object0);}
+            if (verb == '-object') {description = self.location.removeObject(object0);}
+            if ((verb == '+n')||(verb == '+north')) {
+                if (object0.length>0) {
+                    description = self.location.addExit('n',object0,self.locations);
+                } else {
+                    description = 'cannot create exit: '+verb+' without destination location';
+                }
+            }
 
 
             return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'","description":"'+description+ '."}'; //,"description":"'+description+ '."

@@ -1,9 +1,12 @@
 ﻿"use strict";
 //location object - manage location details and pack/unpack JSON equivalents
-exports.Location = function Location(aDescription,aLocationID) { //inputs for constructor TBC
+exports.Location = function Location(aName, aDescription,aLocationID) { //inputs for constructor TBC
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.location = {}; //JSON representation of location {description, objects, exits, creatures}
+        self.uniqueName = aName;
+        self.id = aLocationID;
+        self.visits = 0;
         self.description = aDescription;
         self.objects = [];
         self.exits = [];
@@ -17,20 +20,27 @@ exports.Location = function Location(aDescription,aLocationID) { //inputs for co
     }	
 
     Location.prototype.setDescription = function(aDescription) {
+        self = this;
         self.description=aDescription;
     }
-    Location.prototype.addExit = function(anExit, aLocation) {
-        self.exits.push('{"exit":+'+anExit+'","location":'+aLocation+'"}');
+    Location.prototype.addExit = function(anExit, aLocationName,aLocationArray) {
+        self = this;
+        self.exits.push('{"exit":+'+anExit+'","locationname":'+aLocationName+'"}');       
+        return 'Exit:'+anExit+' towards '+aLocationName+' added to current location';
     }
     Location.prototype.addObject = function(anObject) {
+        self = this;
         self.objects.push(anObject);
         console.log(anObject+' added to location');
+        return anObject+' added to location';
     }
     Location.prototype.removeObject = function(anObject) {
+        self = this;
         var index = self.objects.indexOf(anObject);
         if (index > -1) {
             self.objects.splice(index,1);
             console.log(anObject+' removed from location');
+            return anObject+' removed from location';
         }
     }
     Location.prototype.objectExists = function(anObject) {
