@@ -1,10 +1,9 @@
+"use strict";
 //main bootstrap code for game client
     var serverHost = 'pm-simonc'
     var serverPort = 1337
 	var ui;
     var client;
-	var game;
-	var player;
 	
 function init(state, input, interaction, events, console) {
     //create UI

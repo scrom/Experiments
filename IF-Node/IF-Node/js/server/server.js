@@ -1,6 +1,7 @@
+"use strict";
 exports.Server = function Server(anInterpreter) {
     try{
-        var thisServer = this; //closure so we don't lose thisUi refernce in callbacks
+        var self = this; //closure so we don't lose thisUi refernce in callbacks
         var objectName = 'Server'; //for reference
         var interpreter = anInterpreter;
 
@@ -105,5 +106,5 @@ exports.Server = function Server(anInterpreter) {
         webServer.listen(config.port)
         console.log(objectName + ' '+config.hostname+' listening on port ' + config.port);
     };
-
+return this;
 }

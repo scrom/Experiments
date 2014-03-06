@@ -1,3 +1,4 @@
+"use strict";
 //main user interface interactions
 function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleArea) {
     try{
@@ -48,4 +49,5 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
 		    }
             });
     }
+return this;
 }

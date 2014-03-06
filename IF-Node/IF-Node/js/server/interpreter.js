@@ -1,11 +1,12 @@
+"use strict";
 //main game interpreter
-exports.Interpreter = function Interpreter(aGameControllerModule) {
+exports.Interpreter = function Interpreter() {
     try{
-	    var thisInterpreter = this; //closure so we don't lose this refernce in callbacks
+	    var self = this; //closure so we don't lose this refernce in callbacks
 	    var objectName = "Interpreter";
 
         //module deps
-        var gameControllerModule = aGameControllerModule;
+        var gameControllerModule = require('./gamecontroller');
         var gameController = new gameControllerModule.GameController();
 
         console.log(objectName+' successfully created');
@@ -80,7 +81,7 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
         }
 
     /*top level interpeter command creation*/
-    exports.Interpreter.prototype.translate = function(aRequestUrl,someTempConfig) {
+    Interpreter.prototype.translate = function(aRequestUrl,someTempConfig) {
         console.log('translate called: '+aRequestUrl);
         //note - only passing config in here until controlling game object is accessible
         
@@ -89,7 +90,7 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
         var actionString = extractAction(aRequestUrl);
         var username = extractUsername(aRequestUrl);
         var gameId = extractGameId(aRequestUrl);
-        console.log('username: '+username+', gameId:'+gameId);
+        console.log('command: '+command+' username: '+username+', gameId:'+gameId);
 
         switch(command)
         {
@@ -97,15 +98,13 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
                 return('' + JSON.stringify(someTempConfig));
             case 'list':
                 //list active games
-                return('' + JSON.stringify(gameController.listGames()));
+                return assembleResponse(commandJson,gameController.listGames());
             case 'new':
                 //add new user game
-                gameID = gameController.addGame(username);
-                return assembleResponse(commandJson,gameController.getGameState(username, gameID));//addGame(actionString);
+                var aGameId = gameController.addGame(username);
+                return assembleResponse(commandJson,gameController.getGameState(username, aGameId));
             case 'action':
-                //var action = new actionObjectModule.Action(actionString);
-                //return assembleResponse(commandJson, action.getActionString());
-                return assembleResponse(commandJson, gameController.userAction(username, gameID,actionString));
+                return assembleResponse(commandJson, gameController.userAction(username, gameId,actionString));
             case 'events':
                 //respond to event requests
                 return 'ping.';
@@ -114,4 +113,5 @@ exports.Interpreter = function Interpreter(aGameControllerModule) {
         }              
 
     }
+return this;
 }

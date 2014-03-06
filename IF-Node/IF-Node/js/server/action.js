@@ -1,7 +1,8 @@
-﻿//action object - manager user actions and pack/unpack JSON equivalents
+﻿"use strict";
+//action object - manager user actions and pack/unpack JSON equivalents
 exports.Action = function Action(anActionString, aPlayer, aLocation) {
     try{
-	    var thisAction = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         var actionJsonString = '';
         var action = {}; //JSON representation of action {verb, object0, object1}
         var player = aPlayer; //sometimes actions impact the player
@@ -36,15 +37,18 @@ exports.Action = function Action(anActionString, aPlayer, aLocation) {
                 if (location.objectExists(object0)) {
                     description = player.addToInventory(object0);
                     location.removeObject(object0);
+                } else {
+                    description = 'There is no '+object0+' here';
                 }
             }
             if (verb == 'drop') {
                 if (player.checkInventory(object0)) {
                     description = player.removeFromInventory(object0);
                     location.addObject(object0);
+                } else {
+                    description = 'You are not carrying: '+object0;
                 }
             }
-
 
             if (verb == 'look') {description = location.describe();}
 
@@ -62,8 +66,9 @@ exports.Action = function Action(anActionString, aPlayer, aLocation) {
 	    console.log('Unable to create Action object: '+err);
     }	
 
-    exports.Action.prototype.getActionString = function() {
+    Action.prototype.getActionString = function() {
         return actionJsonString;
     }
 
+return this;
 }

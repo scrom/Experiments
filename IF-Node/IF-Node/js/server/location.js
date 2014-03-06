@@ -1,7 +1,8 @@
-﻿//location object - manage location details and pack/unpack JSON equivalents
+﻿"use strict";
+//location object - manage location details and pack/unpack JSON equivalents
 exports.Location = function Location(aDescription,aLocationID) { //inputs for constructor TBC
     try{      
-	    var thisLocation = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose this reference in callbacks
         var location = {}; //JSON representation of location {description, objects, exits, creatures}
         var description = aDescription;
         var objects = [];
@@ -15,35 +16,35 @@ exports.Location = function Location(aDescription,aLocationID) { //inputs for co
 	    console.log('Unable to create Location object: '+err);
     }	
 
-    exports.Location.prototype.setDescription = function(aDescription) {
+    Location.prototype.setDescription = function(aDescription) {
         description=aDescription;
     }
-    exports.Location.prototype.addExit = function(anExit, aLocation) {
+    Location.prototype.addExit = function(anExit, aLocation) {
         exits.push('{"exit":+'+anExit+'","location":'+aLocation+'"}');
     }
-    exports.Location.prototype.addObject = function(anObject) {
+    Location.prototype.addObject = function(anObject) {
         objects.push(anObject);
         console.log(anObject+' added to location');
     }
-    exports.Location.prototype.removeObject = function(anObject) {
+    Location.prototype.removeObject = function(anObject) {
         var index = objects.indexOf(anObject);
         if (index > -1) {
             objects.splice(index,1);
             console.log(anObject+' removed from location');
         }
     }
-    exports.Location.prototype.objectExists = function(anObject) {
-        //check if passed in object is in inventory
+    Location.prototype.objectExists = function(anObject) {
+        //check if passed in object is in location
         if(objects.indexOf(anObject) > -1){ return true;}
         return false;
     }	
 
-    exports.Location.prototype.getDescription = function() {
+    Location.prototype.getDescription = function() {
         return description;
     }
     
-    exports.Location.prototype.describe = function() {
-        fullDescription = description;
+    Location.prototype.describe = function() {
+        var fullDescription = description;
         if (objects.length > 0) {
             fullDescription+='<br>You see: '+objects.toString()+' here.';
         }
@@ -56,5 +57,5 @@ exports.Location = function Location(aDescription,aLocationID) { //inputs for co
 
         return fullDescription;
     }
-
+return this;
 }

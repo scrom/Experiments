@@ -1,13 +1,16 @@
+"use strict";
 //game object
-exports.Game = function Game(aUsername,aGameID) {
+module.exports.Game = function Game(aUsername,aGameID) {
     try{
         //module deps
         var locationObjectModule = require('./location');
         var actionObjectModule = require('./action');
         var playerObjectModule = require('./player');
 
-	    var thisGame = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose this reference in callbacks
         var player = new playerObjectModule.Player(aUsername);
+        this.username = aUsername; //temp expose username publicly
+        var anUsername = aUsername; //temp internal username
         var id = aGameID;
         var log = ''; //log of game script
         var inventory = []; //array of game inventory
@@ -23,23 +26,34 @@ exports.Game = function Game(aUsername,aGameID) {
 
         addLocation('Welcome, adventurer '+player.getUsername()+ '.',currentLocation);
         locations[currentLocation].addObject('sword');
-        console.log(objectName+' created for '+player.getUsername());	
+        console.log(objectName+' id: '+id+' created for '+player.getUsername());	
     }
     catch(err) {
 	    console.log('Unable to create Game object: '+err);
     }
-    
-    exports.Game.prototype.checkUser = function(aUsername, anId) {
+//} //temp    
+    Game.prototype.checkUser = function(aUsername, anId) {
         if ((player.getUsername() == aUsername) && (anId == id)) {return true};
         return false;
     }	
 
-    exports.Game.prototype.state = function() {
+    Game.prototype.state = function() {
         return '{"username":"'+player.getUsername()+ '","id":"'+id+'","description":"'+locations[currentLocation].describe()+'"}';
     }
 
-    exports.Game.prototype.userAction = function(actionString) {
+    Game.prototype.userAction = function(actionString) {
         lastAction = new actionObjectModule.Action(actionString, player, locations[currentLocation]);
         return lastAction.getActionString();
     }
-}
+
+    Game.prototype.getNameAndId = function() {
+        //console.log('returning game data: {"username":"'+player.getUsername()+'","id":"'+id+'"}');
+        return '{"username":"'+player.getUsername()+'","id":"'+id+'"}';
+    }
+    
+    Game.prototype.toString = function() {
+        return 'toString: this.username: '+this.username+' username: '+anUsername;
+    }
+
+    return this;
+} //temp

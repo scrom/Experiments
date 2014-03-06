@@ -1,4 +1,5 @@
-﻿//response object - for handling server responses
+﻿"use strict";
+//response object - for handling server responses
 function Response(someJsonData, aConsole) {
     try{
 	    var thisResponse = this; //closure so we don't lose thisUi refernce in callbacks
@@ -56,4 +57,5 @@ function Response(someJsonData, aConsole) {
     Response.prototype.getDescription = function() {
         return response.description;
     }
+return this;
 }

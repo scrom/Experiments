@@ -1,4 +1,5 @@
-﻿//main user interface interactions
+﻿"use strict";
+//main user interface interactions
 function Client(aServerHost, aServerPort, aUi) {
     try{
 	    var thisClient = this; //closure so we don't lose thisUi refernce in callbacks
@@ -50,13 +51,22 @@ function Client(aServerHost, aServerPort, aUi) {
     var requestGame = function(aUsername) {
         serverRequest('new/new/'+aUsername);
     }
+
+    //request game list
+    var requestGameList = function() {
+        serverRequest('list/list/watcher');
+    }
     
     //generic client request
     var request = function(someUserInput) {
-        if (username == ''){
-            requestGame(someUserInput);
+        if (someUserInput == 'list') {
+            requestGameList();
         } else {
-            sendRequest(someUserInput);
+            if (username == ''){
+                requestGame(someUserInput);
+            } else {
+                sendRequest(someUserInput);
+            }
         }
     }
     
@@ -81,5 +91,5 @@ function Client(aServerHost, aServerPort, aUi) {
                 ui.setEvent(e.data);
         }, false);
     }
-
+return this;
 }
