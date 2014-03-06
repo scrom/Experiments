@@ -82,6 +82,7 @@ exports.Interpreter = function Interpreter() {
 
     /*top level interpeter command creation*/
     Interpreter.prototype.translate = function(aRequestUrl,someTempConfig) {
+        self = this;
         console.log('translate called: '+aRequestUrl);
         //note - only passing config in here until controlling game object is accessible
         

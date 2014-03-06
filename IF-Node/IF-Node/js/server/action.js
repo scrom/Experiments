@@ -3,10 +3,10 @@
 exports.Action = function Action(anActionString, aPlayer, aLocation) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
-        var actionJsonString = '';
-        var action = {}; //JSON representation of action {verb, object0, object1}
-        var player = aPlayer; //sometimes actions impact the player
-        var location = aLocation;
+        self.actionJsonString = '';
+        self.action = {}; //JSON representation of action {verb, object0, object1}
+        self.player = aPlayer; //sometimes actions impact the player
+        self.location = aLocation;
 	    var objectName = "Action";
 
         //private functions
@@ -32,33 +32,33 @@ exports.Action = function Action(anActionString, aPlayer, aLocation) {
             if (object0) {description+= ' the '+object0;}
             if (object1) {description+= ' with the '+object1;}
 
-            if (verb == 'inv') {description = player.getInventory();}
+            if (verb == 'inv') {description = self.player.getInventory();}
             if (verb == 'get') {
-                if (location.objectExists(object0)) {
-                    description = player.addToInventory(object0);
-                    location.removeObject(object0);
+                if (self.location.objectExists(object0)) {
+                    description = self.player.addToInventory(object0);
+                    self.location.removeObject(object0);
                 } else {
                     description = 'There is no '+object0+' here';
                 }
             }
             if (verb == 'drop') {
-                if (player.checkInventory(object0)) {
-                    description = player.removeFromInventory(object0);
-                    location.addObject(object0);
+                if (self.player.checkInventory(object0)) {
+                    description = self.player.removeFromInventory(object0);
+                    self.location.addObject(object0);
                 } else {
                     description = 'You are not carrying: '+object0;
                 }
             }
 
-            if (verb == 'look') {description = location.describe();}
+            if (verb == 'look') {description = self.location.describe();}
 
 
             return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'","description":"'+description+ '."}'; //,"description":"'+description+ '."
         }
 
         //store action JSON
-        actionJsonString = convertActionToElements(anActionString);
-        action = JSON.parse(actionJsonString);
+        self.actionJsonString = convertActionToElements(anActionString);
+        self.action = JSON.parse(self.actionJsonString);
 
         console.log(objectName + ' successfully created');
     }
@@ -67,7 +67,8 @@ exports.Action = function Action(anActionString, aPlayer, aLocation) {
     }	
 
     Action.prototype.getActionString = function() {
-        return actionJsonString;
+        self = this;
+        return self.actionJsonString;
     }
 
 return this;

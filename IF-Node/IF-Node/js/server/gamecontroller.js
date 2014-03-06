@@ -3,7 +3,7 @@
 exports.GameController = function GameController() {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
-        var games = [];
+        self.games = [];
 	    var objectName = "GameController";
 
         //module deps
@@ -16,13 +16,13 @@ exports.GameController = function GameController() {
     }	
 
     GameController.prototype.addGame = function(anotherUsername) {
-        
+        self = this
         /*if (games.length>0) {           
           console.log('check1 previous game: '+this.getGame(games.length-1).getNameAndId());
           console.log('check1 game array: '+games[games.length-1].toString());
         }*/
 
-        var newGameId = games.length;
+        var newGameId = self.games.length;
         var game = new gameObjectModule.Game(anotherUsername,newGameId);//Object.create(null,gameObjectModule.Game(anotherUsername,newGameId));
         console.log('new game: '+game.toString());     
 
@@ -31,17 +31,17 @@ exports.GameController = function GameController() {
           console.log('check2 previous game toString: '+games[games.length-1].toString());
         }*/
           
-        games.push(game);
+        self.games.push(game);
 
-        console.log('game ID: '+newGameId+' added to controller. Open games: '+games.length);
+        console.log('game ID: '+newGameId+' added to controller. Open games: '+self.games.length);
 
         return newGameId;
    }
 
     GameController.prototype.removeGame = function(aGameId) {
-        var index = games.indexOf(aGameId);
+        var index = self.games.indexOf(aGameId);
         if (index > -1) {
-            games.splice(index,1);
+            self.games.splice(index,1);
             console.log(aGameId+' removed from games list');
 
         } else {
@@ -51,22 +51,23 @@ exports.GameController = function GameController() {
 
     GameController.prototype.getGame = function(aGameId) {
         //console.log('retrieving game: '+aGameId);
-        return games[aGameId];
+        return self.games[aGameId];
     }
 
     GameController.prototype.getGameState = function(aUsername, aGameId) {
-        if (games[aGameId].checkUser(aUsername, aGameId)) {
-            return games[aGameId].state();
+        if (self.games[aGameId].checkUser(aUsername, aGameId)) {
+            return self.games[aGameId].state();
         }
     }
 
     GameController.prototype.listGames = function() {
+        self = this
         var gamelist ='{"games":[';
-        for (var i = 0; i < games.length; i++) {
+        for (var i = 0; i < self.games.length; i++) {
             if (i>0) {gamelist +=','};
-            var aGame = this.getGame(i).getNameAndId();
+            var aGame = self.getGame(i).getNameAndId();
             gamelist += aGame;
-            console.log('game: '+i+' details: '+this.getGame(i).getNameAndId()+' toString: '+this.getGame(i).toString());
+            console.log('game: '+i+' details: '+self.getGame(i).getNameAndId()+' toString: '+self.getGame(i).toString());
         }
         gamelist += ']}';
         //console.log(gamelist);
@@ -74,8 +75,9 @@ exports.GameController = function GameController() {
     }
 
     GameController.prototype.userAction = function(aUsername, aGameId,anAction) {
-        if (games[aGameId].checkUser(aUsername, aGameId)) {
-            return games[aGameId].userAction(anAction);
+        self = this
+        if (self.games[aGameId].checkUser(aUsername, aGameId)) {
+            return self.games[aGameId].userAction(anAction);
         } else {
             console.log('invalid user:'+aUsername);
         }

@@ -3,7 +3,7 @@ exports.Server = function Server(anInterpreter) {
     try{
         var self = this; //closure so we don't lose thisUi refernce in callbacks
         var objectName = 'Server'; //for reference
-        var interpreter = anInterpreter;
+        self.interpreter = anInterpreter;
 
         //module deps
         var root = __dirname+'/';
@@ -11,24 +11,24 @@ exports.Server = function Server(anInterpreter) {
         var path = require('path');
         var configObjectModule = require('./config');
 
-        var webServer = express();
+        self.webServer = express();
         //Array of responses awaiting replies
-        var waitingResponses=[];
+        self.waitingResponses=[];
 
         //log requests
-        webServer.use(express.logger('dev'));
+        self.webServer.use(express.logger('dev'));
 
-        var config = new configObjectModule.Config();
+        self.config = new configObjectModule.Config();
 
         //Function that will send a message to each waiting response
-        var sendToWaitingResponses = function() {
+        self.sendToWaitingResponses = function() {
  
             //If there are some waiting responses
-            if (waitingResponses.length) {
+            if (self.waitingResponses.length) {
      
                 //For each one - respond with 'Hello World - <current timestamp>'
-                for (var i = 0; i < waitingResponses.length; i++) {
-                    var res = waitingResponses.pop();
+                for (var i = 0; i < self.waitingResponses.length; i++) {
+                    var res = self.waitingResponses.pop();
                     //res.write('id: ' + messageCount + '\n');
                     res.writeHead(200, {//'Content-type':'text/plain'
                         'Content-Type': 'text/event-stream',
@@ -42,56 +42,56 @@ exports.Server = function Server(anInterpreter) {
             }
         }
 
-        webServer.configure(function () {
+        self.webServer.configure(function () {
             //serve static files from project root
-            webServer.use(express.static(__dirname + '/../../'));
+            self.webServer.use(express.static(__dirname + '/../../'));
 
-            webServer.get('/config', function (request, response) {
-                response.send(interpreter.translate(request.url,config));
+            self.webServer.get('/config', function (request, response) {
+                response.send(self.interpreter.translate(request.url,self.config));
             });
 
-           webServer.get('/new/*', function (request, response) {
-                response.send(interpreter.translate(request.url,config));
+           self.webServer.get('/new/*', function (request, response) {
+                response.send(self.interpreter.translate(request.url,self.config));
             });
 
-           webServer.get('/list*', function (request, response) {
-                response.send(interpreter.translate(request.url,config));
+           self.webServer.get('/list*', function (request, response) {
+                response.send(self.interpreter.translate(request.url,self.config));
             });
 
-            webServer.get('/action/*', function (request, response) {
-                response.send(interpreter.translate(request.url,config));
+            self.webServer.get('/action/*', function (request, response) {
+                response.send(self.interpreter.translate(request.url,self.config));
             });
 
             //event source handler(!ooh) 
-            webServer.get('/events*', function (request, response) {
+            self.webServer.get('/events*', function (request, response) {
                 request.socket.setTimeout(0);
 
                 //var messagecount = 0;
                 
                 //Add the response object to the array of waiting responses
                 //To be replied to at some point by the sendToWaitingResponses() method
-                waitingResponses.push(response); 
+                self.waitingResponses.push(response); 
 
                 //response.send(interpreter.translate(request.url,config));
 
             });
 
             //fire an event
-            webServer.get('/fire*', function (request, response) {
+            self.webServer.get('/fire*', function (request, response) {
                 response.writeHead(200, {'Content-type':'text/plain'});
-                response.write('firing '+waitingResponses.length+' messages...');  
+                response.write('firing '+self.waitingResponses.length+' messages...');  
                               
-                sendToWaitingResponses();
+                self.sendToWaitingResponses();
                 //#'hack = this never seems to work on the first fire
-                sendToWaitingResponses();
+                self.sendToWaitingResponses();
 
                 response.write(' ...fired');
                 response.end();
             });
 
             //serve default dynamic
-            webServer.get('*', function (request, response) {
-                response.send(interpreter.translate(request.url,config));
+            self.webServer.get('*', function (request, response) {
+                response.send(self.interpreter.translate(request.url,self.config));
             });
         });
 
@@ -103,8 +103,9 @@ exports.Server = function Server(anInterpreter) {
 
     //initiate listening with port from config
     Server.prototype.listen = function () {
-        webServer.listen(config.port)
-        console.log(objectName + ' '+config.hostname+' listening on port ' + config.port);
+        self = this;
+        self.webServer.listen(self.config.port)
+        console.log(objectName + ' '+self.config.hostname+' listening on port ' + self.config.port);
     };
 return this;
 }

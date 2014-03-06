@@ -3,9 +3,9 @@
 exports.Player = function Player(aUsername) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
-        var username = aUsername;
-        var inventory = [];
-        var hitPoints = 100;
+        self.username = aUsername;
+        self.inventory = [];
+        self.hitPoints = 100;
 	    var objectName = "Player";
 	    console.log(objectName + ' successfully created');
 
@@ -18,23 +18,27 @@ exports.Player = function Player(aUsername) {
     }
     
     Player.prototype.getUsername = function() {
-        return username;
+        self = this;
+        return self.username;
     }
 
     Player.prototype.getInventory = function() {
-        return 'you are carrying: '+inventory.toString();
+        self = this;
+        return 'you are carrying: '+self.inventory.toString();
     }	
     
     Player.prototype.addToInventory = function(anObject) {
-        inventory.push(anObject);
+        self = this;
+        self.inventory.push(anObject);
         console.log(anObject+' added to inventory');
         return 'You are now carrying: '+anObject;
     }
     
     Player.prototype.removeFromInventory = function(anObject) {
-        var index = inventory.indexOf(anObject);
+        self = this;
+        var index = self.inventory.indexOf(anObject);
         if (index > -1) {
-            inventory.splice(index,1);
+            self.inventory.splice(index,1);
             console.log(anObject+' removed from inventory');
             return 'You dropped: '+anObject;
 
@@ -45,15 +49,17 @@ exports.Player = function Player(aUsername) {
     }
     
     Player.prototype.checkInventory = function(anObject) {
+        self = this;
         //check if passed in object is in inventory
-        if(inventory.indexOf(anObject) > -1){ return true;}
+        if(self.inventory.indexOf(anObject) > -1){ return true;}
         return false;
     }	
 
     Player.prototype.hit = function(pointsToRemove) {
-        hitPoints -= pointsToRemove;
-        if (hitPoints <=0) {killPlayer();}
-        console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+hitPoints);
+        self = this;
+        self.hitPoints -= pointsToRemove;
+        if (self.hitPoints <=0) {killPlayer();}
+        console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+self.hitPoints);
     }
 return this;	
 }

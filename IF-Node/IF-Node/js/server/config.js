@@ -2,6 +2,7 @@
 //server side config
 exports.Config = function Config() {
     try{
+        //@todo - fix closures here (using self) and lock down private/public
         //private class vars until I actually use them
 	    var thisConfig = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Config";

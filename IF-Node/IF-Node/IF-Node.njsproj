@@ -43,6 +43,8 @@
     <Compile Include="js\server\main.js" />
     <Compile Include="js\server\player.js" />
     <Compile Include="js\server\server.js" />
+    <Compile Include="js\server\simpleObject.js" />
+    <Compile Include="js\server\tests.js" />
     <Content Include="css\main.css" />
     <Content Include="index.html" />
     <Content Include="package.json" />
