@@ -4,8 +4,9 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation) {
     try{
         var locationObjectModule = require('./location');
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
-        self.actionJsonString;
-        self.action = {}; //JSON representation of action {verb, object0, object1}
+        self.resultString;
+        self.resultObject;
+        self.resultJson;
         self.player = aPlayer; //sometimes actions impact the player
         self.location = aCurrentLocation;
 	    var objectName = "Action";
@@ -56,9 +57,9 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation) {
 
             //admin commands
             if (verb == '+location') {
-                var newLocation = new locationObjectModule.Location(object0,object1);
-                console.log('action-location: '+newLocation.toString());
-                return newLocation;
+                self.resultObject = new locationObjectModule.Location(object0,object1);
+                description = 'new location: '+self.resultObject.toString()+' created';
+                console.log('action-location: '+self.resultObject.toString());
             }
             if (verb == '+object') {description = self.location.addObject(object0);}
             if (verb == '-object') {description = self.location.removeObject(object0);}
@@ -70,29 +71,37 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation) {
                 }
             }
 
-
-            return '{"verb":"'+verb+ '","object0":"'+object0+'","object1":"'+object1+'","description":"'+description+ '."}'; //,"description":"'+description+ '."
+            self.resultString = description;
+            //self.resultObject;
+            self.resultJson = '{"verb":"'+verb+
+                                               '","object0":"'+object0+
+                                               '","object1":"'+object1+
+                                               '","description":"'+description+ '."}';
+           //just check the result is valid JSON 
+           //console.log(Debug.Assert(JSON.parse(self.resultJson)));
         }
 
-        //store action JSON
-        self.actionJsonString = convertActionToElements(anActionString);
-        try {self.action = JSON.parse(self.actionJsonString);}
-        catch(err){null;} //sometimes we don't care
-
+        //unpack action results JSON
+        convertActionToElements(anActionString); //extract object, description, json
         console.log(objectName + ' successfully created');
     }
     catch(err) {
 	    console.log('Unable to create Action object: '+err);
     }	
 
-    Action.prototype.getActionString = function() {
+    Action.prototype.getResultString = function() {
         self = this;
-        return self.actionJsonString;
+        return self.resultString;
+    }
+
+    Action.prototype.getResultJson = function() {
+        self = this;
+        return self.resultJson;
     }
     
-    Action.prototype.getActionResultObject = function() {
+    Action.prototype.getResultObject = function() {
         self = this;
-        return self.actionJsonString;
+        return self.resultObject;
     }
 return this;
 }

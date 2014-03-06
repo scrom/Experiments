@@ -21,7 +21,7 @@ exports.Game = function Game(aUsername,aGameID) {
         var addLocation = function(aName,aDescription){
             //self.locations.push(new locationObjectModule.Location(aName,aDescription));
             self.lastAction = new actionObjectModule.Action('+location '+aName+' with '+aDescription,self.player, null);
-            var newLocation = self.lastAction.getActionResultObject();
+            var newLocation = self.lastAction.getResultObject();
             console.log('game-location: '+newLocation.toString());
 
             self.locations.push(newLocation);
@@ -53,7 +53,9 @@ exports.Game = function Game(aUsername,aGameID) {
     Game.prototype.userAction = function(actionString) {
         self = this
         self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations[self.currentLocation]);
-        return self.lastAction.getActionString();
+        var response = self.lastAction.getResultJson();
+        console.log('response: '+response);
+        return response;
     }
 
     Game.prototype.getNameAndId = function() {
