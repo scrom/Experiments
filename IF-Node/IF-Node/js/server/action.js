@@ -124,24 +124,29 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 (verb == 'u')||(verb == 'up')||
                 (verb == 'd')||(verb == 'down')
                 ) {
+                    //trim verb down to first letter...
+                    verb = verb.substring(0, 1);
 
+                    //self.location.go(verb);
+                    var exit = self.player.getLocation().getExit(verb);
+                    if ((exit)&&(exit.isVisible())) {
+                        var exitName = self.player.getLocation().getExitDestination(verb);
+                        var index = getIndexIfObjectExists(self.map.getLocations(),"name", exitName);
+                            if (index > -1) {
+                                var newLocation = self.map.getLocations()[index];
 
-                //trim verb down to first letter...
-                verb = verb.substring(0, 1);
+                                console.log('found location: '+exitName);
 
-                //self.location.go(verb);
-                var exitName = self.player.getLocation().getExit(verb);
-                var index = getIndexIfObjectExists(self.map.getLocations(),"name", exitName);
-                    if (index > -1) {
-                        var newLocation = self.map.getLocations()[index];
-
-                        console.log('found location: '+exitName);
-
+                            } else {
+                                console.log('location: '+exitName+' not found');                  
+                        }
+                    
+                        description = self.player.go(verb,newLocation);
                     } else {
-                        console.log('location: '+exitName+' not found');                  
+                        description = 'no exit '+verb;
+                    }
+
                 }
-                description = self.player.go(verb,newLocation);
-            }
 
             self.resultString = description;
             //self.resultObject;

@@ -64,13 +64,29 @@ exports.Map = function Map() { //inputs for constructor TBC
 
     Map.prototype.init = function(aPlayer){
         self=this;
-        var initialLocation = self.addLocation('start','Welcome, adventurer '+aPlayer.getUsername()+ '.')
+        var startName = 'start';
+        var location2Name = 'house';
+        var location3Name = 'hall'
+
+        //great 3 rooms
+        var initialLocation = self.addLocation(startName,'Welcome, adventurer '+aPlayer.getUsername()+ '.');
+        var location2 = self.addLocation(location2Name,'You are standing outside a rather pretty house.');
+        var location3 = self.addLocation(location3Name,'You are in a grand hall.');
+
+        //link rooms
+        self.link('n', startName, location2Name);
+        self.link('i', location2Name, location3Name);
+
+        //hide exit
+        var exitToHide = self.locations[location2].getExit('i');
+        exitToHide.hide();
+
+
+        //populate objects
         self.locations[initialLocation].addObject('sword');
 
-        var location2 = self.addLocation('house','You are standing outside a rather pretty house.');
-
-        self.locations[initialLocation].addExit('n',self.locations[location2].getName());
-        self.locations[location2].addExit('s',self.locations[initialLocation].getName());
+        //self.locations[initialLocation].addExit('n',self.locations[location2].getName());
+        //self.locations[location2].addExit('s',self.locations[initialLocation].getName());
 
         console.log('initialLocation: '+self.locations[initialLocation].getName()+' exits:'+self.locations[initialLocation].listExits());
         console.log('location2: '+self.locations[location2].getName()+' exits:'+self.locations[location2].listExits());

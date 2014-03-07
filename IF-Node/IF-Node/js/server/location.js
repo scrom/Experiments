@@ -46,12 +46,20 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         console.log('Exit from '+self.name+', '+storedExit.getName()+' to '+storedExit.getDestinationName()+' added.');   
         return 'Exit from '+self.name+', '+newExit.getName()+' to '+newExit.getDestinationName()+' added.';
     }
-
-    Location.prototype.getExit = function(aDirection) {
+    Location.prototype.getExitDestination = function(aDirection) {
         self = this;
             var index = getIndexIfObjectExists(self.exits,'name',aDirection);
             if (index > -1) {
                 return self.exits[index].getDestinationName();
+            } else {
+                return self.name;
+            }
+    }
+    Location.prototype.getExit = function(aDirection) {
+        self = this;
+            var index = getIndexIfObjectExists(self.exits,'name',aDirection);
+            if (index > -1) {
+                return self.exits[index];//.getDestinationName();
             } else {
                 return self.name;
             }
@@ -110,8 +118,10 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         self = this
         var exitList = ''
         for(var i = 0; i < self.exits.length; i++) {
-            if (i>0){exitList+=', ';}
+            if (self.exits[i].isVisible()){
+                if (i>0){exitList+=', ';}
                 exitList+=self.exits[i].getName();
+            }
         }
 
         return exitList;

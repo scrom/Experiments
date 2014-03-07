@@ -20,7 +20,8 @@ exports.Tests = function Tests() {
         console.log(m0.findLocation('test2'));
         console.log(m0.link('u','start','test2'));
         //console.log(p0.go(null,l0));
-        //l0.addExit('n',l1);
+        l0.addExit('n',l1);
+        console.log(l0.getExit());
         //l1.addExit('s',l0); //this seems to overwrite the previous
         //console.log(p0.go(null,l0));
         //

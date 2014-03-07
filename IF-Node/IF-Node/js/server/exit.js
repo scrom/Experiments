@@ -5,6 +5,7 @@ exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.name = aName;
         self.visits = 0;
+        self.visible = true;
         self.destinationName = aDestinationName;
 
 	    var objectName = "Exit";
@@ -28,6 +29,22 @@ exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor
         self = this;
         return self.destinationName;
     }
+
+    Exit.prototype.isVisible = function() {
+        self = this;
+        return self.visible;
+    }
+
+    Exit.prototype.hide = function() {
+        self = this;
+        self.visible = false;
+    }
+
+    Exit.prototype.show = function() {
+        self = this;
+        self.visible = true;
+    }
+
 return this;
 }
 
