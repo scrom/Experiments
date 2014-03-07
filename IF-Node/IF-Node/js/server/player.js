@@ -119,9 +119,11 @@ exports.Player = function Player(aUsername) {
         self = this;
         //drop all objects and return to start
         for(var i = 0; i < self.inventory.length; i++) {
-            self.currentLocation.addObject(self.removeFromInventory(self.inventory[i]));
+            self.currentLocation.addObject(self.removeFromInventory(self.inventory[i].getName()));
         } 
-            self.go(null,self.startLocation);
+        return '<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>'+
+               'Fortunately, here at MVTA we have a special on infinite reincarnation. At least until Simon figures out how to kill you properly.'+
+               "You'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" +self.go(null,self.startLocation);
      }
 
     Player.prototype.health = function() {
