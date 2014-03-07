@@ -43,6 +43,7 @@ exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor
     Exit.prototype.show = function() {
         self = this;
         self.visible = true;
+        return 'you reveal a new exit';
     }
 
 return this;
