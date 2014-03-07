@@ -4,6 +4,8 @@ exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.name = aName;
+        self.directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
+        self.longName = self.directions[self.directions.indexOf(aName)+1]
         self.visits = 0;
         self.visible = true;
         self.destinationName = aDestinationName;
@@ -23,6 +25,11 @@ exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor
     Exit.prototype.getName = function() {
         self = this;
         return self.name;
+    }
+
+    Exit.prototype.getLongName = function() {
+        self = this;
+        return self.longName;
     }
 
     Exit.prototype.getDestinationName = function() {

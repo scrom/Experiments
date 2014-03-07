@@ -53,9 +53,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         e.g. "eat with fork" vs "eat bacon with fork" and "eat bacon" vs "eat"*/
         var convertActionToElements = function(aString){
 
-            var verb = aString.trim().split(' ')[0];
+            var verb = aString.trim().split(' ')[0].toLowerCase();
         
-            var remainder = aString.replace(verb,'').trim();       
+            var remainder = aString.replace(verb,'').trim().toLowerCase();       
             var objectPair = remainder.split('with')
 
             var object0 = ''+objectPair[0].trim();

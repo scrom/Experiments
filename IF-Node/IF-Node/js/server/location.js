@@ -133,7 +133,7 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         for(var i = 0; i < self.exits.length; i++) {
             if (self.exits[i].isVisible()){
                 if (i>0){exitList+=', ';}
-                exitList+=self.exits[i].getName();
+                exitList+=self.exits[i].getLongName();
             }
         }
 
