@@ -82,7 +82,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     if (self.location.objectExists(object0)) {
                         description = self.player.addToInventory(self.location.removeObject(object0));
                     } else {
-                        description = 'There is no '+object0+' here';
+                        if ((object0!="")) {
+                            description = "There is no "+object0+" here.";
+                        } else {
+                            description = verb+' what?'
+                        }
                     }
                     break;
                 case 'drop':
@@ -90,7 +94,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         self.location.addObject(self.player.removeFromInventory(object0));
                         description = 'You dropped: '+object0;
                     } else {
-                        description = 'You are not carrying: '+object0;
+                        if ((object0!="")) {
+                            description = 'You are not carrying: '+object0;
+                        } else {
+                            description = verb+' what?'
+                        }
                     }
                     break;
 
@@ -100,7 +108,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         var anObject = self.location.getObject(object0);
                         description = anObject.moveOrOpen(verb);
                     } else {
-                        description = 'There is no '+object0+' here';
+                        if ((object0!="")) {
+                            description = "There is no "+object0+" here.";
+                        } else {
+                            description = verb+' what?'
+                        }
                     }
                     break;
                 case 'close':
@@ -108,7 +120,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         var anObject = self.location.getObject(object0);
                         description = anObject.close();
                     } else {
-                        description = 'There is no '+object0+' here';
+                        if ((object0!="")) {
+                            description = "There is no "+object0+" here.";
+                        } else {
+                            description = verb+' what?'
+                        }
                     }
                     break;
                 case 'examine':
@@ -120,7 +136,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         anObject = self.player.getObject(object0);
                         description = anObject.getDetailedDescription();
                     } else {
-                        description = "There is no "+object0+" here and you're not carrying one either";
+                        if ((object0!="")) {
+                            description = "There is no "+object0+" here and you're not carrying any either.";
+                        } else {
+                            description = verb+' what?'
+                        }
                     }
                     break;
                 case 'eat':
@@ -131,15 +151,33 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         anObject = self.player.getObject(object0);
                         description = anObject.eat();
                     } else {
-                        description = "There is no "+object0+" here and you're not carrying one either";
+                        if ((object0!="")) {
+                            description = "There is no "+object0+" here and you're not carrying any either.";
+                        } else {
+                            description = verb+' what?'
+                        }
                     }
                     break;
                 case 'hit':
+                    if (self.location.objectExists(object0)||self.player.checkInventory(object0)) {
+                        if (object1 == "") {
+                            description = "Ouch. If you're going to do that again, you might want to hit it _with_ something.";
+                        } else {
+                            description = "Dingggggg! Well, that was satisfying."
+                        }
+
+                    } else {
+                        if ((object0!="")) {
+                            description = "There is no "+object0+" here and you're not carrying any either. You find yourself frantically lashing at thin air.";
+                        } else {
+                            description = "You find yourself frantically lashing at thin air.";
+                        }
+                    }
+                    break;
                 case 'rub':
                 case 'pull':
 
                 default:
-                    description = swearCheck(verb);
                     if (description == undefined){
                         description = 'You '+verb;
                         if (object0) {description+= ' the '+object0;}
@@ -206,6 +244,12 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 }
             }
 
+            //fall-through checks...
+            //swearCheck(verb);
+            //selfreferencing objects isn't going to do anything
+            if ((object0 == object1)&&(object0!="")) {
+                description = 'Are you a tester?<br> You try to make the '+object0+' interact with itself but you grow tired and bored quite quickly.'
+            }
 
             self.resultString = description;
             //self.resultObject;
