@@ -6,8 +6,9 @@ exports.Player = function Player(aUsername) {
         self.username = aUsername;
         self.inventory = [];
         self.hitPoints = 100;
+        self.currentLocation;
 	    var objectName = "Player";
-	    console.log(objectName + ' successfully created');
+	    console.log(objectName + ' created');
 
         var killPlayer = function(){//
             //do something here
@@ -53,6 +54,22 @@ exports.Player = function Player(aUsername) {
         //check if passed in object is in inventory
         if(self.inventory.indexOf(anObject) > -1){ return true;}
         return false;
+    }	
+
+    Player.prototype.go = function(aDirection, aLocation) {
+        self = this;
+        self.currentLocation = aLocation;
+        var returnMessage ='';
+        //if (aDirection != undefined) {
+            returnMessage = 'Current location: '+self.currentLocation.name+'<br>';
+        //}
+        console.log('GO: '+returnMessage);
+        return returnMessage+self.currentLocation.describe();
+    }	
+
+    Player.prototype.getLocation = function() {
+        self = this;
+        return self.currentLocation;
     }	
 
     Player.prototype.hit = function(pointsToRemove) {

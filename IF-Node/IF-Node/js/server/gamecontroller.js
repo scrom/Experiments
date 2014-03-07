@@ -9,7 +9,7 @@ exports.GameController = function GameController() {
         //module deps
         var gameObjectModule = require('./game');
 
-        console.log(objectName + ' successfully created');
+        console.log(objectName + ' created');
     }
     catch(err) {
 	    console.log('Unable to create GameController object: '+err);

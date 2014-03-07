@@ -18,19 +18,30 @@ exports.Game = function Game(aUsername,aGameID) {
 
 	    var objectName = "Game";
 
-        var addLocation = function(aName,aDescription){
+        self.addLocation = function(aName,aDescription){
             //self.locations.push(new locationObjectModule.Location(aName,aDescription));
             self.lastAction = new actionObjectModule.Action('+location '+aName+' with '+aDescription,self.player, null);
             var newLocation = self.lastAction.getResultObject();
-            console.log('game-location: '+newLocation.toString());
-
             self.locations.push(newLocation);
             return self.locations.length-1;
         }
 
-        self.currentLocation = addLocation('start','Welcome, adventurer '+self.player.getUsername()+ '.');
-        console.log('currentlocation: '+self.currentLocation+' : '+self.locations[self.currentLocation].toString());	
-        self.locations[self.currentLocation].addObject('sword');
+        var initialLocation = self.addLocation('start','Welcome, adventurer '+self.player.getUsername()+ '.')
+
+        self.player.go(null,self.locations[initialLocation]);
+        self.locations[initialLocation].addObject('sword');
+
+        var location2 = self.addLocation('house','You are standing outside a rather pretty house.');
+
+        
+        //console.log('initialLocation: '+self.locations[initialLocation].getName());
+        //console.log('location2: '+self.locations[location2].getName());
+
+        self.locations[initialLocation].addExit('n',self.locations[location2].getName());
+        self.locations[location2].addExit('s',self.locations[initialLocation].getName());
+
+        console.log('initialLocation: '+self.locations[initialLocation].getName()+' exits:'+self.locations[initialLocation].listExits());
+        console.log('location2: '+self.locations[location2].getName()+' exits:'+self.locations[location2].listExits());
 
         //log game created
         console.log(objectName+' id: '+self.id+' created for '+self.player.getUsername());	
@@ -47,12 +58,12 @@ exports.Game = function Game(aUsername,aGameID) {
 
     Game.prototype.state = function() {
         self = this
-        return '{"username":"'+self.player.getUsername()+ '","id":"'+self.id+'","description":"'+self.locations[self.currentLocation].describe()+'"}';
+        return '{"username":"'+self.player.getUsername()+ '","id":"'+self.id+'","description":"'+self.player.getLocation().describe()+'"}';
     }
 
     Game.prototype.userAction = function(actionString) {
         self = this
-        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations[self.currentLocation], self.locations);
+        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.locations);
         var responseJson = self.lastAction.getResultJson();
         var responseObject = self.lastAction.getResultObject();
         if (responseObject != undefined) {

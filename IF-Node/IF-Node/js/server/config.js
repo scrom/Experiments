@@ -19,7 +19,7 @@ exports.Config = function Config() {
         this.hostname = 'PM-SIMONC';
 	    this.sessionLimit = gameLimit*(gameUserLimit+gameWatcherLimit); //max number of sessions games*(players + watchers)
 
-        console.log(objectName+' successfully created');
+        console.log(objectName+' created');
     }
     catch(err) {
 	    console.log('Unable to create Config object: '+err);

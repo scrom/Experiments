@@ -1,6 +1,6 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, aCurrentLocation, allLocations) {
+exports.Action = function Action(anActionString, aPlayer, allLocations) {
     try{
         var locationObjectModule = require('./location');
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
@@ -8,7 +8,7 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation, allL
         self.resultObject;
         self.resultJson;
         self.player = aPlayer; //sometimes actions impact the player
-        self.location = aCurrentLocation;
+        self.location = self.player.getLocation();
         self.locations = allLocations;
 	    var objectName = "Action";
 
@@ -72,7 +72,7 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation, allL
                 if ((object0)&&(object1)) {                                    
                     self.resultObject = new locationObjectModule.Location(object0,object1);
                     description = 'new location: '+self.resultObject.toString()+' created';
-                    console.log('action-location: '+self.resultObject.toString());
+                    //console.log('action-location: '+self.resultObject.toString());
                 } else {
                     description = 'cannot create location: '+verb+' without name and description';
                 }
@@ -92,8 +92,8 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation, allL
 
                     var index = getIndexIfObjectExists(self.locations,"name", object0);
                     if (index > -1) {
-                        var temp = self.location.addExit('n',object0);
-                        temp = self.locations[index].addExit('s',self.location.name);
+                        var temp = self.location.addExit('n',self.locations[index]);
+                        var temp2 = self.locations[index].addExit('s',self.location);
 
                         console.log('locations linked');
                         description = 'location linked to : '+object0;
@@ -115,7 +115,22 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation, allL
                 (verb == 'u')||(verb == 'up')||
                 (verb == 'd')||(verb == 'down')
                 ) {
-                description = self.location.go(verb);
+
+                //trim verb down to first letter...
+                verb = verb.substring(0, 1);
+
+                //self.location.go(verb);
+                var exitName = self.player.getLocation().getExit(verb);
+                var index = getIndexIfObjectExists(self.locations,"name", exitName);
+                    if (index > -1) {
+                        var newLocation = self.locations[index];
+
+                        console.log('found location: '+exitName);
+
+                    } else {
+                        console.log('location: '+exitName+' not found');                  
+                }
+                description = self.player.go(verb,newLocation);
             }
 
             self.resultString = description;
@@ -130,7 +145,7 @@ exports.Action = function Action(anActionString, aPlayer, aCurrentLocation, allL
 
         //unpack action results JSON
         convertActionToElements(anActionString); //extract object, description, json
-        console.log(objectName + ' successfully created');
+        console.log(objectName + ' created');
     }
     catch(err) {
 	    console.log('Unable to create Action object: '+err);

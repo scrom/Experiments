@@ -2,15 +2,29 @@
 //self-test
 exports.Tests = function Tests() {
         console.log('====TESTING====');
+        //test module deps
         var location = require('./location.js');
+        var player = require('./player.js');
+        var exit = require('./exit.js');
+
+        //test player and location creation, can player move frmo one location to another?
+        var p0 = new player.Player('tester');
         var l0 = new location.Location('test0','a test location');
         var l1 = new location.Location('test1','another test location');
-        l0.addExit('n','test1');
-        l1.addExit('s','test0');
-        console.log(l0.go('n'));
-        console.log(l0.go('s'));
-        console.log(l1.go('n'));
-        console.log(l1.go('s'));
+        console.log(p0.go(null,l0));
+        l0.addExit('n',l1);
+        //l1.addExit('s',l0); //this seems to overwrite the previous
+        console.log(p0.go(null,l0));
+        //
+        //test exit creation
+        //var e0 = new exit.Exit('n',l1);
+        //console.log(e0.getName());
+        console.log(l0.listExits());
+
+        //console.log(l0.go('n'));
+        //console.log(l0.go('s'));
+        //console.log(l1.go('n'));
+        //console.log(l1.go('s'));
 /*        var SimpleObject = require('./simpleObject');
         var o0 = SimpleObject('test0');
         console.log(o0.toString());

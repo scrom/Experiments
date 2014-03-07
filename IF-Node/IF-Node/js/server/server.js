@@ -95,7 +95,7 @@ exports.Server = function Server(anInterpreter) {
             });
         });
 
-        console.log(objectName + ' successfully created');
+        console.log(objectName + ' created');
     }
     catch (err) {
         console.log('Unable to create Server object: ' + err);

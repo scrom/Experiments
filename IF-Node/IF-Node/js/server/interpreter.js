@@ -9,7 +9,7 @@ exports.Interpreter = function Interpreter() {
         var gameControllerModule = require('./gamecontroller');
         var gameController = new gameControllerModule.GameController();
 
-        console.log(objectName+' successfully created');
+        console.log(objectName+' created');
     }
     catch(err) {
 	    console.log('Unable to create Interpreter object: '+err);
