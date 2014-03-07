@@ -72,6 +72,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
             //user commands
             switch(verb) {
+                case 'health':
+                    description = self.player.health();
+                    break;
                 case 'inv':
                     description = self.player.getInventory();
                     break;
@@ -146,10 +149,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'eat':
                     if (self.location.objectExists(object0)) {
                         anObject = self.location.getObject(object0);
-                        description = anObject.eat();
+                        description = anObject.eat(self.player);
                     } else if (self.player.checkInventory(object0)) {
                         anObject = self.player.getObject(object0);
-                        description = anObject.eat();
+                        description = anObject.eat(self.player);
                     } else {
                         if ((object0!="")) {
                             description = "There is no "+object0+" here and you're not carrying any either.";
@@ -162,6 +165,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     if (self.location.objectExists(object0)||self.player.checkInventory(object0)) {
                         if (object1 == "") {
                             description = "Ouch. If you're going to do that again, you might want to hit it _with_ something.";
+                            description += self.player.hit(25);
                         } else {
                             description = "Dingggggg! Well, that was satisfying."
                         }
@@ -176,6 +180,14 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     break;
                 case 'rub':
                 case 'pull':
+                case 'drink':
+                case 'unlock':
+                case 'lock':
+                case 'on':
+                case 'off':
+                case 'light':
+                case 'extinguish':
+                case 'unlight':
 
                 default:
                     if (description == undefined){

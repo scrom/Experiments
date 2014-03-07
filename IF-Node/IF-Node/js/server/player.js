@@ -6,6 +6,7 @@ exports.Player = function Player(aUsername) {
         self.username = aUsername;
         self.inventory = [];
         self.hitPoints = 100;
+        self.startLocation;
         self.currentLocation;
 	    var objectName = "Player";
 	    console.log(objectName + ' created');
@@ -21,9 +22,6 @@ exports.Player = function Player(aUsername) {
             return -1;
         }
 
-        var killPlayer = function(){//
-            //do something here
-        }
     }
     catch(err) {
 	    console.log('Unable to create Player object: '+err);
@@ -86,6 +84,9 @@ exports.Player = function Player(aUsername) {
     Player.prototype.go = function(aDirection, aLocation) {
         self = this;
         self.currentLocation = aLocation;
+        if (self.startLocation == undefined) {
+            self.startLocation = self.currentLocation;
+        }
         var returnMessage ='';
         //if (aDirection != undefined) {
             returnMessage = 'Current location: '+self.currentLocation.name+'<br>';
@@ -102,8 +103,52 @@ exports.Player = function Player(aUsername) {
     Player.prototype.hit = function(pointsToRemove) {
         self = this;
         self.hitPoints -= pointsToRemove;
-        if (self.hitPoints <=0) {killPlayer();}
+        if (self.hitPoints <=0) {return self.killPlayer();}
+        return 'You are injured.'
         console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+self.hitPoints);
+    }
+
+    Player.prototype.heal = function(pointsToAdd) {
+        self = this;
+        self.hitPoints += pointsToAdd;
+        if (self.hitPoints <100) {self.hitPoints += pointsToAdd;}
+        console.log('player healed, gains '+pointsToAdd+' HP. HP remaining: '+self.hitPoints);
+    }
+
+    Player.prototype.killPlayer = function(){//
+        self = this;
+        //drop all objects and return to start
+        for(var i = 0; i < self.inventory.length; i++) {
+            self.currentLocation.addObject(self.removeFromInventory(self.inventory[i]));
+        } 
+            self.go(null,self.startLocation);
+     }
+
+    Player.prototype.health = function() {
+        self = this;
+        switch(true) {
+                case (self.hitPoints>99):
+                    return "You're the picture of health.";
+                    break;
+                case (self.hitPoints>80):
+                    return "You're just getting warmed up.";
+                    break;
+                case (self.hitPoints>50):
+                    return "You've taken a fair beating.";
+                    break;
+                case (self.hitPoints>25):
+                    return "You're bleeding heavily and really not in good shape.";
+                    break;
+                case (self.hitPoints>10):
+                    return "You're dying.";
+                    break;
+                case (self.hitPoints>0):
+                    return "You're almost dead.";
+                    break;
+                default:
+                    return "You're dead.";
+        }
+
     }
 return this;	
 }

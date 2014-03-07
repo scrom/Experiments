@@ -56,18 +56,20 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         } else {return 'nothing happens'}
     }
 
-    Artefact.prototype.eat = function() {
+    Artefact.prototype.eat = function(aPlayer) {
         self = this;
         //console.log(self.name+' edible:'+self.edible+' chewed:'+self.chewed);
         if (!(self.chewed)) {
             self.chewed = true; 
             if (self.edible){
                 self.weight = 0;
+                aPlayer.heal(25);
                 self.description = 'the remains of a well-chewed '+self.name;
                 self.detailedDescription = "All that's left are a few dirty-looking crumbs.";
                 return 'You eat a little of the '+self.name+'. You feel fitter, happier and healthier.';
             } else {
                 self.detailedDescription += ' and shows signs of being chewed.';
+                aPlayer.hit(5);
                 return "You try and try but just can't seem to keep it in your mouth without doing yourself harm."
             }
         } else {
