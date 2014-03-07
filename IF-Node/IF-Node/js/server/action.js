@@ -1,6 +1,6 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, allLocations) {
+exports.Action = function Action(anActionString, aPlayer, aMap) {
     try{
         var locationObjectModule = require('./location');
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
@@ -9,7 +9,7 @@ exports.Action = function Action(anActionString, aPlayer, allLocations) {
         self.resultJson;
         self.player = aPlayer; //sometimes actions impact the player
         self.location = self.player.getLocation();
-        self.locations = allLocations;
+        self.map = aMap;
 	    var objectName = "Action";
 
         //private functions
@@ -22,6 +22,12 @@ exports.Action = function Action(anActionString, aPlayer, allLocations) {
             }
             console.log('notfound: '+value);
             return -1;
+        }
+
+        var swearCheck = function(aWord) {
+            //be polite
+            //if (aWord
+            null;
         }
 
         /* an action consists of either 2 or 4 elements in the form
@@ -41,6 +47,11 @@ exports.Action = function Action(anActionString, aPlayer, allLocations) {
             if (objectPair.length>1) {
                 object1 = ''+objectPair[1].trim();
             }
+
+            swearCheck(verb);
+            swearCheck(object0);
+            swearCheck(object1);
+
 
             var description = 'You '+verb;
             if (object0) {description+= ' the '+object0;}
@@ -79,25 +90,22 @@ exports.Action = function Action(anActionString, aPlayer, allLocations) {
             }
             if (verb == '+object') {description = self.location.addObject(object0);}
             if (verb == '-object') {description = self.location.removeObject(object0);}
-            if ((verb == '+n')||(verb == '+north')/*||
+            if ((verb == '+n')||(verb == '+north')||
                 (verb == '+s')||(verb == '+south')||
                 (verb == '+e')||(verb == '+east')||
                 (verb == '+w')||(verb == '+west')||
                 (verb == '+i')||(verb == '+in')||
                 (verb == '+o')||(verb == '+out')||
                 (verb == '+u')||(verb == '+up')||
-                (verb == '+d')||(verb == '+down')*/
+                (verb == '+d')||(verb == '+down')
                 ) {
+
                 if (object0.length>0) {
+                    verb = verb.substring(1,2);
 
-                    var index = getIndexIfObjectExists(self.locations,"name", object0);
+                    var index = self.map.findLocation(object0);
                     if (index > -1) {
-                        var temp = self.location.addExit('n',self.locations[index]);
-                        var temp2 = self.locations[index].addExit('s',self.location);
-
-                        console.log('locations linked');
-                        description = 'location linked to : '+object0;
-
+                        description = self.map.link(verb, self.location.getName(), object0);
                     } else {
                         console.log('could not link to location '+object0);
                         description = 'could not link to location '+object0;
@@ -116,14 +124,15 @@ exports.Action = function Action(anActionString, aPlayer, allLocations) {
                 (verb == 'd')||(verb == 'down')
                 ) {
 
+
                 //trim verb down to first letter...
                 verb = verb.substring(0, 1);
 
                 //self.location.go(verb);
                 var exitName = self.player.getLocation().getExit(verb);
-                var index = getIndexIfObjectExists(self.locations,"name", exitName);
+                var index = getIndexIfObjectExists(self.map.getLocations(),"name", exitName);
                     if (index > -1) {
-                        var newLocation = self.locations[index];
+                        var newLocation = self.map.getLocations()[index];
 
                         console.log('found location: '+exitName);
 
