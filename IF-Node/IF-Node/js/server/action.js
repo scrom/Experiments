@@ -80,9 +80,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
 
             //admin commands
             if (verb == '+location') {
-                if ((object0)&&(object1)) {                                    
-                    self.resultObject = new locationObjectModule.Location(object0,object1);
-                    description = 'new location: '+self.resultObject.toString()+' created';
+                if ((object0)&&(object1)) { 
+                    var newLocationIndex = self.map.addLocation(object0, object1);                                   
+                    //self.resultObject = new locationObjectModule.Location(object0,object1);
+                    description = 'new location: '+self.map.getLocationByIndex(newLocationIndex).toString()+' created';
                     //console.log('action-location: '+self.resultObject.toString());
                 } else {
                     description = 'cannot create location: '+verb+' without name and description';
@@ -101,11 +102,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 ) {
 
                 if (object0.length>0) {
-                    verb = verb.substring(1,2);
+                    var trimmedVerb = verb.substring(1,2);
 
                     var index = self.map.findLocation(object0);
                     if (index > -1) {
-                        description = self.map.link(verb, self.location.getName(), object0);
+                        description = self.map.link(trimmedVerb, self.location.getName(), object0);
                     } else {
                         console.log('could not link to location '+object0);
                         description = 'could not link to location '+object0;

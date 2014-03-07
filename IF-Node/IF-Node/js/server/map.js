@@ -81,6 +81,10 @@ exports.Map = function Map() { //inputs for constructor TBC
         return self.locations[0];
     }
 
+    Map.prototype.getLocationByIndex = function(index) {
+        self=this;
+        return self.locations[index];
+    }
     Map.prototype.getLocations = function() {
         self=this;
         return self.locations;
@@ -88,13 +92,12 @@ exports.Map = function Map() { //inputs for constructor TBC
 
     Map.prototype.link = function(fromDirection, fromLocation, toLocation) {
          self=this;
-         toDirection = oppositeOf(fromDirection);
-         fromLocationIndex = self.findLocation(fromLocation);
-         toLocationIndex = self.findLocation(toLocation);
-         fromLocationObject = self.findLocation(fromLocation);
-         toLocationObject = self.findLocation(toLocation);
+         var toDirection = oppositeOf(fromDirection);
+         console.log('from:'+fromDirection+' to:'+toDirection);
+         var fromLocationIndex = self.findLocation(fromLocation);
+         var toLocationIndex = self.findLocation(toLocation);
          var temp = self.locations[fromLocationIndex].addExit(fromDirection,self.locations[toLocationIndex].getName());
-         var temp2 = self.locations[toLocationIndex].addExit(fromDirection,self.locations[fromLocationIndex].getName());
+         var temp2 = self.locations[toLocationIndex].addExit(toDirection,self.locations[fromLocationIndex].getName());
          console.log('locations linked');
          return fromLocation+' linked '+fromDirection+'/'+toDirection+' to '+toLocation;
     }
