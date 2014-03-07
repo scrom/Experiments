@@ -10,6 +10,17 @@ exports.Player = function Player(aUsername) {
 	    var objectName = "Player";
 	    console.log(objectName + ' created');
 
+        var getIndexIfObjectExists = function(array, attr, value) {
+            for(var i = 0; i < array.length; i++) {
+                if(array[i].hasOwnProperty(attr) && array[i][attr] === value) {
+                    console.log('found: '+value);
+                    return i;
+                }
+            }
+            console.log('notfound: '+value);
+            return -1;
+        }
+
         var killPlayer = function(){//
             //do something here
         }
@@ -25,23 +36,31 @@ exports.Player = function Player(aUsername) {
 
     Player.prototype.getInventory = function() {
         self = this;
-        return 'you are carrying: '+self.inventory.toString();
+        var list = ''
+        for(var i = 0; i < self.inventory.length; i++) {
+                if (i>0){list+=', ';}
+                list+=self.inventory[i].getName();
+        }
+
+        return 'you are carrying: '+list;
     }	
     
     Player.prototype.addToInventory = function(anObject) {
         self = this;
         self.inventory.push(anObject);
         console.log(anObject+' added to inventory');
-        return 'You are now carrying: '+anObject;
+        return 'You are now carrying: '+anObject.getName();
     }
     
     Player.prototype.removeFromInventory = function(anObject) {
         self = this;
-        var index = self.inventory.indexOf(anObject);
+        var index = getIndexIfObjectExists(self.inventory,'name',anObject);//var index = self.inventory.indexOf(anObject);
         if (index > -1) {
+            var returnObject = self.inventory[index];
             self.inventory.splice(index,1);
             console.log(anObject+' removed from inventory');
-            return 'You dropped: '+anObject;
+            //return 'You dropped: '+anObject;
+            return returnObject;
 
         } else {
             console.log('player is not carrying '+anObject);
@@ -52,7 +71,7 @@ exports.Player = function Player(aUsername) {
     Player.prototype.checkInventory = function(anObject) {
         self = this;
         //check if passed in object is in inventory
-        if(self.inventory.indexOf(anObject) > -1){ return true;}
+        if(getIndexIfObjectExists(self.inventory,'name',anObject) > -1){ return true;}
         return false;
     }	
 

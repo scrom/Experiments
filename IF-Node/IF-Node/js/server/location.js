@@ -3,6 +3,7 @@
 exports.Location = function Location(aName, aDescription) { //inputs for constructor TBC
     try{
         //module deps
+        var artefactObjectModule = require('./artefact');
         var exitObjectModule = require('./exit');
               
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -64,27 +65,37 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
                 return self.name;
             }
     }
-    Location.prototype.addObject = function(anObject) {
+    Location.prototype.addObject = function(anObject) { //wraps artefact for now and dummies in unused slots
         self = this;
+        //var newArtefact = new artefactObjectModule.Artefact(anObject, anObject, anObject, true, false, false, null); 
         self.objects.push(anObject);
         console.log(anObject+' added to location');
-        return anObject+' added to location';
+        return anObject.getName()+' added to location';
     }
     Location.prototype.removeObject = function(anObject) {
         self = this;
-        var index = self.objects.indexOf(anObject);
+        var index = getIndexIfObjectExists(self.objects,'name',anObject);//self.objects.indexOf(anObject);
         if (index > -1) {
+            var returnObject = self.objects[index];
             self.objects.splice(index,1);
             console.log(anObject+' removed from location');
-            return anObject+' removed from location';
+            return returnObject;//+' removed from location';
         }
     }
+
     Location.prototype.objectExists = function(anObject) {
         self = this;
         //check if passed in object is in location
-        if(self.objects.indexOf(anObject) > -1){ return true;}
+        if(getIndexIfObjectExists(self.objects,'name',anObject) > -1){ return true;}
         return false;
-    }	
+    }
+    /*
+    Location.prototype.getObject = function(anObject) {
+        self = this;
+        //check if passed in object is in location
+        index = getIndexIfObjectExists(self.objects,'name',anObject);
+        return self.objects[index];
+    }*/
 
     Location.prototype.getDescription = function() {
         self = this;
@@ -95,7 +106,7 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         self = this;
         var fullDescription = self.description;
         if (self.objects.length > 0) {
-            fullDescription+='<br>You see: '+self.objects.toString()+' here.';
+            fullDescription+='<br>You see: '+self.listObjects()+' here.';
         }
         if (self.exits.length > 0) {
             fullDescription+='<br>Exits are: '+self.listExits()+'.';
@@ -125,6 +136,16 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         }
 
         return exitList;
+    }
+    Location.prototype.listObjects = function() {
+        self = this
+        var list = ''
+        for(var i = 0; i < self.objects.length; i++) {
+                if (i>0){list+=', ';}
+                list+=self.objects[i].getName();
+        }
+
+        return list;
     }
 return this;
 }

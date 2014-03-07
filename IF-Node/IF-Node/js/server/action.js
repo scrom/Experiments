@@ -3,6 +3,7 @@
 exports.Action = function Action(anActionString, aPlayer, aMap) {
     try{
         var locationObjectModule = require('./location');
+        var artefactObjectModule = require('./artefact');
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.resultString;
         self.resultObject;
@@ -61,16 +62,17 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
             if (verb == 'inv') {description = self.player.getInventory();}
             if (verb == 'get') {
                 if (self.location.objectExists(object0)) {
-                    description = self.player.addToInventory(object0);
-                    self.location.removeObject(object0);
+                    //var artefact = self.location.
+                    description = self.player.addToInventory(self.location.removeObject(object0));
+                    //self.location.removeObject(object0);
                 } else {
                     description = 'There is no '+object0+' here';
                 }
             }
             if (verb == 'drop') {
                 if (self.player.checkInventory(object0)) {
-                    description = self.player.removeFromInventory(object0);
-                    self.location.addObject(object0);
+                    self.location.addObject(self.player.removeFromInventory(object0));
+                    description = 'You dropped: '+object0;
                 } else {
                     description = 'You are not carrying: '+object0;
                 }
@@ -89,7 +91,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                     description = 'cannot create location: '+verb+' without name and description';
                 }
             }
-            if (verb == '+object') {description = self.location.addObject(object0);}
+            if (verb == '+object') {
+                description = self.location.addObject(new artefactObjectModule.Artefact(object0,object0,object0,true, false, false, null));
+            }
             if (verb == '-object') {description = self.location.removeObject(object0);}
             if ((verb == '+n')||(verb == '+north')||
                 (verb == '+s')||(verb == '+south')||
