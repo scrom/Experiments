@@ -1,6 +1,6 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, aMap) {
+exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
     try{
         var locationObjectModule = require('./location');
         var artefactObjectModule = require('./artefact');
@@ -11,7 +11,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         self.player = aPlayer; //sometimes actions impact the player
         self.location = self.player.getLocation();
         self.map = aMap;
+        self.dictionary = aDictionary;
 	    var objectName = "Action";
+
+        self.directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
 
         //private functions
         var getIndexIfObjectExists = function(array, attr, value) {
@@ -26,7 +29,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         }
 
         var swearCheck = function(aWord) {
-            null;
+            var badWords = []; //put any bad language you want to filter in here
+            var checkWord = aWord.substring(0,4);
+            if (badWords.indexOf(checkWord)>-1) { 
+                 return aWord+" to you too. That's not very nice now, is it. Save that language for the office.";
+            } else {return null;}
         }
 
         /* an action consists of either 2 or 4 elements in the form
@@ -47,17 +54,21 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 object1 = ''+objectPair[1].trim();
             }
 
-            //switch(verb) {
-            //    case: 'inv' {
+            var description; //describe what happens
+///////////////////////
+            console.log(verb+' Check: '+self.directions.indexOf(verb));
 
-            var description = 'You '+verb;
-            if (object0) {description+= ' the '+object0;}
-            if (object1) {description+= ' with the '+object1;}
-            description+='. Nothing much happens.';
-
-            //swearCheck(verb);
-            //swearCheck(object0);
-            //swearCheck(object1);
+            switch(verb) {
+                //case 'inv':
+                default:
+                    description = swearCheck(verb);
+                    if (description == undefined){
+                        description = 'You '+verb;
+                        if (object0) {description+= ' the '+object0;}
+                        if (object1) {description+= ' with the '+object1;}
+                        description+='. Nothing much happens.';
+                    }
+            }
 
             //user commands
             if (verb == 'inv') {description = self.player.getInventory();}
@@ -125,15 +136,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 description = self.location.addObject(new artefactObjectModule.Artefact(object0,object0,object0,true, false, false, null));
             }
             if (verb == '-object') {description = self.location.removeObject(object0);}
-            if ((verb == '+n')||(verb == '+north')||
-                (verb == '+s')||(verb == '+south')||
-                (verb == '+e')||(verb == '+east')||
-                (verb == '+w')||(verb == '+west')||
-                (verb == '+i')||(verb == '+in')||
-                (verb == '+o')||(verb == '+out')||
-                (verb == '+u')||(verb == '+up')||
-                (verb == '+d')||(verb == '+down')
-                ) {
+
+            if ((verb.substring(0,1) == '+') && (self.directions.indexOf(verb.substring(1)>-1))) //we're forcing a direction
+                {
 
                 if (object0.length>0) {
                     var trimmedVerb = verb.substring(1,2);
@@ -149,15 +154,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                     description = 'cannot create exit: '+verb+' without destination location';
                 }
             }
-            if ((verb == 'n')||(verb == 'north')||
-                (verb == 's')||(verb == 'south')||
-                (verb == 'e')||(verb == 'east')||
-                (verb == 'w')||(verb == 'west')||
-                (verb == 'i')||(verb == 'in')||
-                (verb == 'o')||(verb == 'out')||
-                (verb == 'u')||(verb == 'up')||
-                (verb == 'd')||(verb == 'down')
-                ) {
+            if (self.directions.indexOf(verb)>-1) {
                     //trim verb down to first letter...
                     verb = verb.substring(0, 1);
 

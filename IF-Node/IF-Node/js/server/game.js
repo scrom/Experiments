@@ -5,6 +5,7 @@ exports.Game = function Game(aUsername,aGameID) {
         //module deps
         var actionObjectModule = require('./action');
         var playerObjectModule = require('./player');
+        var dictionaryObjectModule = require('./dictionary');
         var mapObjectModule = require('./map');
 
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -12,6 +13,7 @@ exports.Game = function Game(aUsername,aGameID) {
         self.id = aGameID;
         self.log = ''; //log of game script
         self.map = new mapObjectModule.Map(); //map of game locations
+        self.dictionary = new dictionaryObjectModule.Dictionary(); //
         self.currentLocation; //id of current location
         self.lastAction = {} //JSON representation of last user action {verb, object0, object1}
 
@@ -41,7 +43,7 @@ exports.Game = function Game(aUsername,aGameID) {
 
     Game.prototype.userAction = function(actionString) {
         self = this
-        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.map);
+        self.lastAction = new actionObjectModule.Action(actionString, self.player, self.map, self.dictionary);
         var responseJson = self.lastAction.getResultJson();
         var responseObject = self.lastAction.getResultObject();
         if (responseObject != undefined) {

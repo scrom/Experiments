@@ -57,4 +57,5 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self = this;
         return self.collectable;
     }
+return this;
 }
