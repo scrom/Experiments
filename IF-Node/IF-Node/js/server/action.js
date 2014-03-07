@@ -28,6 +28,16 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             return -1;
         }
 
+        /*var getObject = function(anObjectString) {
+            var anObject;
+            if (self.location.objectExists(object0)) {
+                return self.location.getObject(object0);
+            } else if (self.player.checkInventory(object0)) {
+                return self.player.getObject(object0);
+            } 
+            return null;
+        }*/
+
         var swearCheck = function(aWord) {
             var badWords = []; //put any bad language you want to filter in here
             var checkWord = aWord.substring(0,4);
@@ -49,9 +59,13 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             var objectPair = remainder.split('with')
 
             var object0 = ''+objectPair[0].trim();
+            //var artefact0 = getObject(object0);
+            //var artefact1;
+
             var object1 = '';
             if (objectPair.length>1) {
                 object1 = ''+objectPair[1].trim();
+            //    artefact1 = getObject(object1)
             }
 
             var description; //describe what happens
@@ -60,6 +74,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             switch(verb) {
                 case 'inv':
                     description = self.player.getInventory();
+                    break;
+                case 'look':
+                    description = self.location.describe();
                     break;
                 case 'get':
                     if (self.location.objectExists(object0)) {
@@ -76,9 +93,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         description = 'You are not carrying: '+object0;
                     }
                     break;
-                case 'look':
-                    description = self.location.describe();
-                    break;
+
                 case 'open': 
                 case 'push':
                     if (self.location.objectExists(object0)) {
@@ -108,6 +123,21 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         description = "There is no "+object0+" here and you're not carrying one either";
                     }
                     break;
+                case 'eat':
+                    if (self.location.objectExists(object0)) {
+                        anObject = self.location.getObject(object0);
+                        description = anObject.eat();
+                    } else if (self.player.checkInventory(object0)) {
+                        anObject = self.player.getObject(object0);
+                        description = anObject.eat();
+                    } else {
+                        description = "There is no "+object0+" here and you're not carrying one either";
+                    }
+                    break;
+                case 'hit':
+                case 'rub':
+                case 'pull':
+
                 default:
                     description = swearCheck(verb);
                     if (description == undefined){
@@ -182,7 +212,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             self.resultJson = '{"verb":"'+verb+
                                                '","object0":"'+object0+
                                                '","object1":"'+object1+
-                                               '","description":"'+description+ '."}';
+                                               '","description":"'+description+ '"}';
            //just check the result is valid JSON 
            //console.log(Debug.Assert(JSON.parse(self.resultJson)));
         }
