@@ -161,10 +161,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         }
                     }
                     break;
+                case 'attack':
                 case 'hit':
                     if (self.location.objectExists(object0)||self.player.checkInventory(object0)) {
                         if (object1 == "") {
-                            description = "Ouch. If you're going to do that again, you might want to hit it _with_ something.";
+                            description = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something.";
                             description += self.player.hit(25);
                         } else {
                             description = "Dingggggg! Well, that was satisfying."
