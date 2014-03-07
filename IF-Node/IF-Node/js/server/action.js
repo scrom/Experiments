@@ -55,11 +55,59 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             }
 
             var description; //describe what happens
-///////////////////////
-            console.log(verb+' Check: '+self.directions.indexOf(verb));
 
+            //user commands
             switch(verb) {
-                //case 'inv':
+                case 'inv':
+                    description = self.player.getInventory();
+                    break;
+                case 'get':
+                    if (self.location.objectExists(object0)) {
+                        description = self.player.addToInventory(self.location.removeObject(object0));
+                    } else {
+                        description = 'There is no '+object0+' here';
+                    }
+                    break;
+                case 'drop':
+                    if (self.player.checkInventory(object0)) {
+                        self.location.addObject(self.player.removeFromInventory(object0));
+                        description = 'You dropped: '+object0;
+                    } else {
+                        description = 'You are not carrying: '+object0;
+                    }
+                    break;
+                case 'look':
+                    description = self.location.describe();
+                    break;
+                case 'open': 
+                case 'push':
+                    if (self.location.objectExists(object0)) {
+                        var anObject = self.location.getObject(object0);
+                        description = anObject.moveOrOpen(verb);
+                    } else {
+                        description = 'There is no '+object0+' here';
+                    }
+                    break;
+                case 'close':
+                    if (self.location.objectExists(object0)) {
+                        var anObject = self.location.getObject(object0);
+                        description = anObject.close();
+                    } else {
+                        description = 'There is no '+object0+' here';
+                    }
+                    break;
+                case 'examine':
+                    var anObject;
+                    if (self.location.objectExists(object0)) {
+                        anObject = self.location.getObject(object0);
+                        description = anObject.getDetailedDescription();
+                    } else if (self.player.checkInventory(object0)) {
+                        anObject = self.player.getObject(object0);
+                        description = anObject.getDetailedDescription();
+                    } else {
+                        description = "There is no "+object0+" here and you're not carrying one either";
+                    }
+                    break;
                 default:
                     description = swearCheck(verb);
                     if (description == undefined){
@@ -69,56 +117,29 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         description+='. Nothing much happens.';
                     }
             }
+            //navigation
+            if (self.directions.indexOf(verb)>-1) {
+                    //trim verb down to first letter...
+                    var aDirection = verb.substring(0, 1);
 
-            //user commands
-            if (verb == 'inv') {description = self.player.getInventory();}
-            if (verb == 'get') {
-                if (self.location.objectExists(object0)) {
-                    description = self.player.addToInventory(self.location.removeObject(object0));
-                } else {
-                    description = 'There is no '+object0+' here';
-                }
-            }
+                    //self.location.go(verb);
+                    var exit = self.player.getLocation().getExit(aDirection);
+                    if ((exit)&&(exit.isVisible())) {
+                        var exitName = self.player.getLocation().getExitDestination(aDirection);
+                        var index = getIndexIfObjectExists(self.map.getLocations(),"name", exitName);
+                            if (index > -1) {
+                                var newLocation = self.map.getLocations()[index];
 
-            if (verb == 'drop') {
-                if (self.player.checkInventory(object0)) {
-                    self.location.addObject(self.player.removeFromInventory(object0));
-                    description = 'You dropped: '+object0;
-                } else {
-                    description = 'You are not carrying: '+object0;
-                }
-            }
+                                console.log('found location: '+exitName);
 
-            if (verb == 'look') {description = self.location.describe();}
-
-            if (verb == 'open'||verb == 'push') {
-                if (self.location.objectExists(object0)) {
-                    var anObject = self.location.getObject(object0);
-                    description = anObject.moveOrOpen(verb);
-                } else {
-                    description = 'There is no '+object0+' here';
-                }
-            }
-            if (verb == 'close') {
-                if (self.location.objectExists(object0)) {
-                    var anObject = self.location.getObject(object0);
-                    description = anObject.close();
-                } else {
-                    description = 'There is no '+object0+' here';
-                }
-            }
-
-            if (verb == 'examine') {
-                var anObject;
-                if (self.location.objectExists(object0)) {
-                    anObject = self.location.getObject(object0);
-                    description = anObject.getDetailedDescription();
-                } else if (self.player.checkInventory(object0)) {
-                    anObject = self.player.getObject(object0);
-                    description = anObject.getDetailedDescription();
-                } else {
-                    description = "There is no "+object0+" here and you're not carrying one either";
-                }
+                            } else {
+                                console.log('location: '+exitName+' not found');                  
+                        }
+                    
+                        description = self.player.go(aDirection,newLocation);
+                    } else {
+                        description = 'no exit '+verb;
+                    }
             }
 
             //admin commands
@@ -154,30 +175,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     description = 'cannot create exit: '+verb+' without destination location';
                 }
             }
-            if (self.directions.indexOf(verb)>-1) {
-                    //trim verb down to first letter...
-                    verb = verb.substring(0, 1);
 
-                    //self.location.go(verb);
-                    var exit = self.player.getLocation().getExit(verb);
-                    if ((exit)&&(exit.isVisible())) {
-                        var exitName = self.player.getLocation().getExitDestination(verb);
-                        var index = getIndexIfObjectExists(self.map.getLocations(),"name", exitName);
-                            if (index > -1) {
-                                var newLocation = self.map.getLocations()[index];
-
-                                console.log('found location: '+exitName);
-
-                            } else {
-                                console.log('location: '+exitName+' not found');                  
-                        }
-                    
-                        description = self.player.go(verb,newLocation);
-                    } else {
-                        description = 'no exit '+verb;
-                    }
-
-                }
 
             self.resultString = description;
             //self.resultObject;
