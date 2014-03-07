@@ -7,10 +7,10 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self.description = aDescription;
         self.detailedDescription = aDetailedDescription;
         self.weight = 0;
-        self.linkedExit;
-        this.collectable = canCollect;
-        this.mobile = canMove;
-        this.opens = canOpen;
+        self.linkedExit = linkedExit;
+        self.collectable = canCollect;
+        self.mobile = canMove;
+        self.opens = canOpen;
 
 	    var objectName = "Artefact";
         console.log(objectName + ' created: '+self.name+', '+self.destinationName);
@@ -29,8 +29,32 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         return self.name;
     }
 
-    Artefact.prototype.moveOrOpen = function() {
+    Artefact.prototype.getDescription = function() {
         self = this;
-        return self.linkedExit.show();
+        return self.description;
+    }
+
+    Artefact.prototype.getDetailedDescription = function() {
+        self = this;
+        return self.detailedDescription;
+    }
+
+    Artefact.prototype.moveOrOpen = function(aVerb) {
+        self = this;
+        if (self.mobile||self.opens){
+            return 'you '+aVerb+' the '+self.name+'. '+self.linkedExit.show();
+        } else {return 'nothing happens'}
+    }
+    Artefact.prototype.close = function() {
+        self = this;
+        if (self.opens){
+            self.linkedExit.hide();
+            return 'you closed the '+self.name;
+        } else {return 'nothing happens'}
+    }
+
+    Artefact.prototype.isCollectable = function() {
+        self = this;
+        return self.collectable;
     }
 }

@@ -77,9 +77,11 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         var index = getIndexIfObjectExists(self.objects,'name',anObject);//self.objects.indexOf(anObject);
         if (index > -1) {
             var returnObject = self.objects[index];
-            self.objects.splice(index,1);
-            console.log(anObject+' removed from location');
-            return returnObject;//+' removed from location';
+            if (returnObject.isCollectable()) {
+                self.objects.splice(index,1);
+                console.log(anObject+' removed from location');
+                return returnObject;//+' removed from location';
+            } else {console.log(anObject+' is not collectable');}
         }
     }
 
@@ -89,13 +91,13 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         if(getIndexIfObjectExists(self.objects,'name',anObject) > -1){ return true;}
         return false;
     }
-    /*
+
     Location.prototype.getObject = function(anObject) {
         self = this;
         //check if passed in object is in location
-        index = getIndexIfObjectExists(self.objects,'name',anObject);
+        var index = getIndexIfObjectExists(self.objects,'name',anObject);
         return self.objects[index];
-    }*/
+    }
 
     Location.prototype.getDescription = function() {
         self = this;
@@ -142,7 +144,7 @@ exports.Location = function Location(aName, aDescription) { //inputs for constru
         var list = ''
         for(var i = 0; i < self.objects.length; i++) {
                 if (i>0){list+=', ';}
-                list+=self.objects[i].getName();
+                list+=self.objects[i].getDescription();
         }
 
         return list;

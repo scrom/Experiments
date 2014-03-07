@@ -26,8 +26,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         }
 
         var swearCheck = function(aWord) {
-            //be polite
-            //if (aWord
             null;
         }
 
@@ -49,26 +47,28 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 object1 = ''+objectPair[1].trim();
             }
 
-            swearCheck(verb);
-            swearCheck(object0);
-            swearCheck(object1);
-
+            //switch(verb) {
+            //    case: 'inv' {
 
             var description = 'You '+verb;
             if (object0) {description+= ' the '+object0;}
             if (object1) {description+= ' with the '+object1;}
+            description+='. Nothing much happens.';
+
+            //swearCheck(verb);
+            //swearCheck(object0);
+            //swearCheck(object1);
 
             //user commands
             if (verb == 'inv') {description = self.player.getInventory();}
             if (verb == 'get') {
                 if (self.location.objectExists(object0)) {
-                    //var artefact = self.location.
                     description = self.player.addToInventory(self.location.removeObject(object0));
-                    //self.location.removeObject(object0);
                 } else {
                     description = 'There is no '+object0+' here';
                 }
             }
+
             if (verb == 'drop') {
                 if (self.player.checkInventory(object0)) {
                     self.location.addObject(self.player.removeFromInventory(object0));
@@ -79,6 +79,36 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
             }
 
             if (verb == 'look') {description = self.location.describe();}
+
+            if (verb == 'open'||verb == 'push') {
+                if (self.location.objectExists(object0)) {
+                    var anObject = self.location.getObject(object0);
+                    description = anObject.moveOrOpen(verb);
+                } else {
+                    description = 'There is no '+object0+' here';
+                }
+            }
+            if (verb == 'close') {
+                if (self.location.objectExists(object0)) {
+                    var anObject = self.location.getObject(object0);
+                    description = anObject.close();
+                } else {
+                    description = 'There is no '+object0+' here';
+                }
+            }
+
+            if (verb == 'examine') {
+                var anObject;
+                if (self.location.objectExists(object0)) {
+                    anObject = self.location.getObject(object0);
+                    description = anObject.getDetailedDescription();
+                } else if (self.player.checkInventory(object0)) {
+                    anObject = self.player.getObject(object0);
+                    description = anObject.getDetailedDescription();
+                } else {
+                    description = "There is no "+object0+" here and you're not carrying one either";
+                }
+            }
 
             //admin commands
             if (verb == '+location') {

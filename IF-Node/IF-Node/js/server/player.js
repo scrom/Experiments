@@ -39,7 +39,7 @@ exports.Player = function Player(aUsername) {
         var list = ''
         for(var i = 0; i < self.inventory.length; i++) {
                 if (i>0){list+=', ';}
-                list+=self.inventory[i].getName();
+                list+=self.inventory[i].getDescription();
         }
 
         return 'you are carrying: '+list;
@@ -47,9 +47,11 @@ exports.Player = function Player(aUsername) {
     
     Player.prototype.addToInventory = function(anObject) {
         self = this;
-        self.inventory.push(anObject);
-        console.log(anObject+' added to inventory');
-        return 'You are now carrying: '+anObject.getName();
+        if (anObject != undefined) {
+            self.inventory.push(anObject);
+            console.log(anObject+' added to inventory');
+            return 'You are now carrying: '+anObject.getDescription();
+        } else {return "sorry, couldn't pick it up.";}
     }
     
     Player.prototype.removeFromInventory = function(anObject) {
@@ -73,7 +75,13 @@ exports.Player = function Player(aUsername) {
         //check if passed in object is in inventory
         if(getIndexIfObjectExists(self.inventory,'name',anObject) > -1){ return true;}
         return false;
-    }	
+    }
+
+    Player.prototype.getObject = function(anObject) {
+        self = this;
+        var index = (getIndexIfObjectExists(self.inventory,'name',anObject));
+        return self.inventory[index];
+    }
 
     Player.prototype.go = function(aDirection, aLocation) {
         self = this;
