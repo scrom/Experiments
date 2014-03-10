@@ -100,6 +100,15 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     self.object0 = ''+objectPair[1].trim();
                 }
             }
+            if (objectPair == remainder) { //we didn't find 'for' either
+                objectPair = remainder.split(' at ')
+                //part 1 will be object, part 2 will be object *or* creature!
+                self.object0 = ''+objectPair[0].trim();
+                if (objectPair.length>1) {
+                    self.object1 = ''+objectPair[1].trim();
+                    self.creature = ''+objectPair[1].trim();
+                }
+            }
         }
 
         //unpack action results JSON
@@ -226,6 +235,31 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         }
                     }
                     break;
+                case 'ask':
+                        //improve this once creatures are implemented
+                        //trap when object or creature don't exist
+                        description = 'You '+self.verb;
+                        if (self.object0) {description+= ' the '+self.creature;}
+                        if (self.object1) {description+= ' for the '+self.object0;}
+                        description+='. Nothing much happens.';                    
+                    break;
+                case 'give':
+                        //improve this once creatures are implemented
+                        //trap when object or creature don't exist
+                        description = 'You try to '+self.verb;
+                        if (self.object0) {description+= ' the '+self.creature;}
+                        if (self.object1) {description+= ' your '+self.object0;}
+                        description+=". They politely resuse and insist that it's yours.";     
+                    break;
+
+                case 'wave':
+                        //improve this once creatures are implemented
+                        //trap when object or creature don't exist
+                        description = 'You '+self.verb;
+                        if (self.object0) {description+= ' the '+self.object0;}
+                        if (self.object1) {description+= ' at the '+self.object1} //note combined object/creature here
+                        description+=". Your arms get tired and you feel slightly awkward.";   
+                    break;
                 case 'rub':
                 case 'pull':
                 case 'drink':
@@ -236,15 +270,12 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'light':
                 case 'extinguish':
                 case 'unlight':
-                case 'ask':
                 case 'say':
-                case 'sing':
-                case 'shout':
+                case 'sing': //will need to support "sing to creature" and "sing to object" 
+                case 'shout': //will need to support "shout at creature" and "shout at object" 
                 case 'read':
-                case 'give':
                 case 'climb':
                 case 'jump':
-                case 'wave':
 
                 default:
                     if (description == undefined){
