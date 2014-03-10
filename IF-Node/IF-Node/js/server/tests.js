@@ -2,6 +2,7 @@
 //self-test
 exports.Tests = function Tests() {
         console.log('====TESTING====');
+
         //test module deps
         var location = require('./location.js');
         var player = require('./player.js');

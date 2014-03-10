@@ -6,6 +6,7 @@ exports.Player = function Player(aUsername) {
         self.username = aUsername;
         self.inventory = [];
         self.hitPoints = 100;
+        self.bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
         self.startLocation;
         self.currentLocation;
         self.moves = 0; //only incremented when moving between locations but not yet used elsewhere

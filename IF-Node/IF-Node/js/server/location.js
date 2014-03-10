@@ -1,6 +1,6 @@
 ﻿"use strict";
-//location object - manage location details and pack/unpack JSON equivalents
-exports.Location = function Location(aName, aDescription) { //inputs for constructor TBC
+//location object - manage location details
+exports.Location = function Location(aName, aDescription) { 
     try{
         //module deps
         var artefactObjectModule = require('./artefact');

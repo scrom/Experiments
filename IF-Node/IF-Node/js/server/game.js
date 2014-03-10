@@ -44,13 +44,8 @@ exports.Game = function Game(aUsername,aGameID) {
     Game.prototype.userAction = function(actionString) {
         self = this
         self.lastAction = new actionObjectModule.Action(actionString, self.player, self.map, self.dictionary);
-        var responseJson = self.lastAction.getResultJson();
-        var responseObject = self.lastAction.getResultObject();
-        if (responseObject != undefined) {
-            //self.map.addLocation(responseObject);
-            console.log('Locations: '+self.map.getLocations());
-            
-        };
+        var responseJson = self.lastAction.act();
+        //var responseJson = self.lastAction.getResultJson();
         console.log('responseJson: '+responseJson+' responseObject: '+typeof responseObject);
         return responseJson;
     }

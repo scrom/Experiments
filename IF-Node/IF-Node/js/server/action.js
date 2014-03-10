@@ -6,12 +6,18 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         var artefactObjectModule = require('./artefact');
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.resultString;
-        self.resultObject;
         self.resultJson;
         self.player = aPlayer; //sometimes actions impact the player
         self.location = self.player.getLocation();
         self.map = aMap;
         self.dictionary = aDictionary;
+
+        //action string components
+        self.verb = '';
+        self.object0 = '';
+        self.object1 = '';
+        self.creature = '';
+
 	    var objectName = "Action";
 
         self.directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
@@ -30,10 +36,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
         /*var getObject = function(anObjectString) {
             var anObject;
-            if (self.location.objectExists(object0)) {
-                return self.location.getObject(object0);
-            } else if (self.player.checkInventory(object0)) {
-                return self.player.getObject(object0);
+            if (self.location.objectExists(self.object0)) {
+                return self.location.getObject(self.object0);
+            } else if (self.player.checkInventory(self.object0)) {
+                return self.player.getObject(self.object0);
             } 
             return null;
         }*/
@@ -47,31 +53,71 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         }
 
         /* an action consists of either 2 or 4 elements in the form
-        [verb] [object]  or [verb] [object] with [object]
+        [verb] [object]  or [verb] [object] with/to/from/for [object]
         a verb will always be a single word, an object may be multiple words
         if the first object is not defined, we'll try to use the last referenced object later
         e.g. "eat with fork" vs "eat bacon with fork" and "eat bacon" vs "eat"*/
         var convertActionToElements = function(aString){
 
-            var verb = aString.trim().split(' ')[0].toLowerCase();
-        
-            var remainder = aString.replace(verb,'').trim().toLowerCase();       
-            var objectPair = remainder.split('with')
+            //collect verb (first word in string)
+            self.verb = aString.trim().split(' ')[0].toLowerCase();
 
-            var object0 = ''+objectPair[0].trim();
-            //var artefact0 = getObject(object0);
-            //var artefact1;
+            //replace first instance of verb with '' then trim spaces
+            var remainder = aString.replace(self.verb,'').trim().toLowerCase();  
+            //figure out split word we're looking for - with, to, from, for
+                             
+            var objectPair = remainder.split(' with ')
 
-            var object1 = '';
-            if (objectPair.length>1) {
-                object1 = ''+objectPair[1].trim();
-            //    artefact1 = getObject(object1)
+            if (objectPair != remainder) { //split on "with" was successful
+                //we have 2 objects
+                self.object0 = ''+objectPair[0].trim();
+                if (objectPair.length>1) {
+                    self.object1 = ''+objectPair[1].trim();
+                }
             }
+
+            if (objectPair == remainder) { //we didn't find 'with'
+                objectPair = remainder.split(' to ')
+                //part 1 will be object, part 2 will be creature
+                self.object0 = ''+objectPair[0].trim();
+                if (objectPair.length>1) {
+                    self.creature = ''+objectPair[1].trim();
+                }
+            }
+            if (objectPair == remainder) { //we didn't find 'to' either
+                objectPair = remainder.split(' from ')
+                //part 1 will be object, part 2 will be creature
+                self.object0 = ''+objectPair[0].trim();
+                if (objectPair.length>1) {
+                    self.creature = ''+objectPair[1].trim();
+                }
+            }
+            if (objectPair == remainder) { //we didn't find 'from' either
+                objectPair = remainder.split(' for ')
+                //part 1 will be creature, part 2 will be object
+                self.creature = ''+objectPair[0].trim();
+                if (objectPair.length>1) {
+                    self.object0 = ''+objectPair[1].trim();
+                }
+            }
+        }
+
+        //unpack action results JSON
+        convertActionToElements(anActionString); //extract object, description, json
+        console.log(objectName + ' created');
+    }
+    catch(err) {
+	    console.log('Unable to create Action object: '+err);
+    }	
+  
+    Action.prototype.act = function() {
+        self = this;
+        //do stuff
 
             var description; //describe what happens
 
             //user commands
-            switch(verb) {
+            switch(self.verb) {
                 case 'health':
                     description = self.player.health();
                     break;
@@ -81,90 +127,91 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'look':
                     description = self.location.describe();
                     break;
+                case 'take':
                 case 'get':
-                    if (self.location.objectExists(object0)) {
-                        description = self.player.addToInventory(self.location.removeObject(object0));
+                    if (self.location.objectExists(self.object0)) {
+                        description = self.player.addToInventory(self.location.removeObject(self.object0));
                     } else {
-                        if ((object0!="")) {
-                            description = "There is no "+object0+" here.";
+                        if ((self.object0!="")) {
+                            description = "There is no "+self.object0+" here.";
                         } else {
-                            description = verb+' what?'
+                            description = self.verb+' what?'
                         }
                     }
                     break;
                 case 'drop':
-                    if (self.player.checkInventory(object0)) {
-                        self.location.addObject(self.player.removeFromInventory(object0));
-                        description = 'You dropped: '+object0;
+                    if (self.player.checkInventory(self.object0)) {
+                        self.location.addObject(self.player.removeFromInventory(self.object0));
+                        description = 'You dropped: '+self.object0;
                     } else {
-                        if ((object0!="")) {
-                            description = 'You are not carrying: '+object0;
+                        if ((self.object0!="")) {
+                            description = 'You are not carrying: '+self.object0;
                         } else {
-                            description = verb+' what?'
+                            description = self.verb+' what?'
                         }
                     }
                     break;
 
                 case 'open': 
                 case 'push':
-                    if (self.location.objectExists(object0)) {
-                        var anObject = self.location.getObject(object0);
-                        description = anObject.moveOrOpen(verb);
+                    if (self.location.objectExists(self.object0)) {
+                        var anObject = self.location.getObject(self.object0);
+                        description = anObject.moveOrOpen(self.verb);
                     } else {
-                        if ((object0!="")) {
-                            description = "There is no "+object0+" here.";
+                        if ((self.object0!="")) {
+                            description = "There is no "+self.object0+" here.";
                         } else {
-                            description = verb+' what?'
+                            description = self.verb+' what?'
                         }
                     }
                     break;
                 case 'close':
-                    if (self.location.objectExists(object0)) {
-                        var anObject = self.location.getObject(object0);
+                    if (self.location.objectExists(self.object0)) {
+                        var anObject = self.location.getObject(self.object0);
                         description = anObject.close();
                     } else {
-                        if ((object0!="")) {
-                            description = "There is no "+object0+" here.";
+                        if ((self.object0!="")) {
+                            description = "There is no "+self.object0+" here.";
                         } else {
-                            description = verb+' what?'
+                            description = self.verb+' what?'
                         }
                     }
                     break;
                 case 'examine':
                     var anObject;
-                    if (self.location.objectExists(object0)) {
-                        anObject = self.location.getObject(object0);
+                    if (self.location.objectExists(self.object0)) {
+                        anObject = self.location.getObject(self.object0);
                         description = anObject.getDetailedDescription();
-                    } else if (self.player.checkInventory(object0)) {
-                        anObject = self.player.getObject(object0);
+                    } else if (self.player.checkInventory(self.object0)) {
+                        anObject = self.player.getObject(self.object0);
                         description = anObject.getDetailedDescription();
                     } else {
-                        if ((object0!="")) {
-                            description = "There is no "+object0+" here and you're not carrying any either.";
+                        if ((self.object0!="")) {
+                            description = "There is no "+self.object0+" here and you're not carrying any either.";
                         } else {
-                            description = verb+' what?'
+                            description = self.verb+' what?'
                         }
                     }
                     break;
                 case 'eat':
-                    if (self.location.objectExists(object0)) {
-                        anObject = self.location.getObject(object0);
+                    if (self.location.objectExists(self.object0)) {
+                        anObject = self.location.getObject(self.object0);
                         description = anObject.eat(self.player);
-                    } else if (self.player.checkInventory(object0)) {
-                        anObject = self.player.getObject(object0);
+                    } else if (self.player.checkInventory(self.object0)) {
+                        anObject = self.player.getObject(self.object0);
                         description = anObject.eat(self.player);
                     } else {
-                        if ((object0!="")) {
-                            description = "There is no "+object0+" here and you're not carrying any either.";
+                        if ((self.object0!="")) {
+                            description = "There is no "+self.object0+" here and you're not carrying any either.";
                         } else {
-                            description = verb+' what?'
+                            description = self.verb+' what?'
                         }
                     }
                     break;
                 case 'attack':
                 case 'hit':
-                    if (self.location.objectExists(object0)||self.player.checkInventory(object0)) {
-                        if (object1 == "") {
+                    if (self.location.objectExists(self.object0)||self.player.checkInventory(self.object0)) {
+                        if (self.object1 == "") {
                             description = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something.";
                             description += self.player.hit(25);
                         } else {
@@ -172,8 +219,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         }
 
                     } else {
-                        if ((object0!="")) {
-                            description = "There is no "+object0+" here and you're not carrying any either. You find yourself frantically lashing at thin air.";
+                        if ((self.object0!="")) {
+                            description = "There is no "+self.object0+" here and you're not carrying any either. You find yourself frantically lashing at thin air.";
                         } else {
                             description = "You find yourself frantically lashing at thin air.";
                         }
@@ -189,21 +236,30 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'light':
                 case 'extinguish':
                 case 'unlight':
+                case 'ask':
+                case 'say':
+                case 'sing':
+                case 'shout':
+                case 'read':
+                case 'give':
+                case 'climb':
+                case 'jump':
+                case 'wave':
 
                 default:
                     if (description == undefined){
-                        description = 'You '+verb;
-                        if (object0) {description+= ' the '+object0;}
-                        if (object1) {description+= ' with the '+object1;}
+                        description = 'You '+self.verb;
+                        if (self.object0) {description+= ' the '+self.object0;}
+                        if (self.object1) {description+= ' with the '+self.object1;}
                         description+='. Nothing much happens.';
                     }
             }
             //navigation
-            if (self.directions.indexOf(verb)>-1) {
+            if (self.directions.indexOf(self.verb)>-1) {
                     //trim verb down to first letter...
-                    var aDirection = verb.substring(0, 1);
+                    var aDirection = self.verb.substring(0, 1);
 
-                    //self.location.go(verb);
+                    //self.location.go(self.verb);
                     var exit = self.player.getLocation().getExit(aDirection);
                     if ((exit)&&(exit.isVisible())) {
                         var exitName = self.player.getLocation().getExitDestination(aDirection);
@@ -219,68 +275,61 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     
                         description = self.player.go(aDirection,newLocation);
                     } else {
-                        description = 'no exit '+verb;
+                        description = 'no exit '+self.verb;
                     }
             }
 
             //admin commands
-            if (verb == '+location') {
-                if ((object0)&&(object1)) { 
-                    var newLocationIndex = self.map.addLocation(object0, object1);                                   
-                    //self.resultObject = new locationObjectModule.Location(object0,object1);
+            if (self.verb == '+location') {
+                if ((self.object0)&&(self.object1)) { 
+                    var newLocationIndex = self.map.addLocation(self.object0, self.object1);                                   
                     description = 'new location: '+self.map.getLocationByIndex(newLocationIndex).toString()+' created';
-                    //console.log('action-location: '+self.resultObject.toString());
                 } else {
-                    description = 'cannot create location: '+verb+' without name and description';
+                    description = 'cannot create location: '+self.verb+' without name and description';
                 }
             }
-            if (verb == '+object') {
-                description = self.location.addObject(new artefactObjectModule.Artefact(object0,object0,object0,true, false, false, null));
+            if (self.verb == '+object') {
+                description = self.location.addObject(new artefactObjectModule.Artefact(self.object0,self.object0,self.object0,true, false, false, null));
             }
-            if (verb == '-object') {description = self.location.removeObject(object0);}
+            if (self.verb == '-object') {description = self.location.removeObject(self.object0);}
 
-            if ((verb.substring(0,1) == '+') && (self.directions.indexOf(verb.substring(1)>-1))) //we're forcing a direction
+            if ((self.verb.substring(0,1) == '+') && (self.directions.indexOf(self.verb.substring(1)>-1))) //we're forcing a direction
                 {
 
-                if (object0.length>0) {
-                    var trimmedVerb = verb.substring(1,2);
+                if (self.object0.length>0) {
+                    var trimmedVerb = self.verb.substring(1,2);
 
-                    var index = self.map.findLocation(object0);
+                    var index = self.map.findLocation(self.object0);
                     if (index > -1) {
-                        description = self.map.link(trimmedVerb, self.location.getName(), object0);
+                        description = self.map.link(trimmedVerb, self.location.getName(), self.object0);
                     } else {
-                        console.log('could not link to location '+object0);
-                        description = 'could not link to location '+object0;
+                        console.log('could not link to location '+self.object0);
+                        description = 'could not link to location '+self.object0;
                     }
                 } else {
-                    description = 'cannot create exit: '+verb+' without destination location';
+                    description = 'cannot create exit: '+self.verb+' without destination location';
                 }
             }
 
             //fall-through checks...
-            //swearCheck(verb);
+            //swearCheck(self.verb);
             //selfreferencing objects isn't going to do anything
-            if ((object0 == object1)&&(object0!="")) {
-                description = 'Are you a tester?<br> You try to make the '+object0+' interact with itself but you grow tired and bored quite quickly.'
+            if ((self.object0 == self.object1)&&(self.object0!="")) {
+                description = 'Are you a tester?<br> You try to make the '+self.object0+' interact with itself but you grow tired and bored quite quickly.'
             }
 
+        //we're done processing, build the results...
             self.resultString = description;
-            //self.resultObject;
-            self.resultJson = '{"verb":"'+verb+
-                                               '","object0":"'+object0+
-                                               '","object1":"'+object1+
+            self.resultJson = '{"verb":"'+self.verb+
+                                               '","object0":"'+self.object0+
+                                               '","object1":"'+self.object1+
+                                               '","creature":"'+self.creature+
                                                '","description":"'+description+ '"}';
            //just check the result is valid JSON 
            //console.log(Debug.Assert(JSON.parse(self.resultJson)));
-        }
 
-        //unpack action results JSON
-        convertActionToElements(anActionString); //extract object, description, json
-        console.log(objectName + ' created');
+        return self.getResultJson();
     }
-    catch(err) {
-	    console.log('Unable to create Action object: '+err);
-    }	
 
     Action.prototype.getResultString = function() {
         self = this;
@@ -292,9 +341,5 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         return self.resultJson;
     }
     
-    Action.prototype.getResultObject = function() {
-        self = this;
-        return self.resultObject;
-    }
 return this;
 }
