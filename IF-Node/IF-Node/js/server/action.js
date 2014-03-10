@@ -127,8 +127,21 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
             //user commands
             switch(self.verb) {
+                case '':
+                    description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
+                    break;
+                case 'help':
+                    description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
+                                  "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
+                                  "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
+                                  "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
+                    break;
                 case 'health':
                     description = self.player.health();
+                    break;
+                case 'stats':
+                case 'status':
+                    description = self.player.status()+'<br><br>'+self.location.describe();
                     break;
                 case 'inv':
                     description = self.player.getInventory();

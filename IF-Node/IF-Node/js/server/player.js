@@ -6,10 +6,12 @@ exports.Player = function Player(aUsername) {
         self.username = aUsername;
         self.inventory = [];
         self.hitPoints = 100;
+        self.eatenRecently = true; // support for hunger and sickness
         self.bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
         self.startLocation;
         self.currentLocation;
-        self.moves = 0; //only incremented when moving between locations but not yet used elsewhere
+        self.moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
+        self.movesSinceEating = 0; //only incremented when moving between locations but not yet used elsewhere
         self.score = 0; //not used yet
 	    var objectName = "Player";
 	    console.log(objectName + ' created');
@@ -87,6 +89,12 @@ exports.Player = function Player(aUsername) {
     Player.prototype.go = function(aDirection, aLocation) {
         self = this;
         self.moves++;
+        if (self.eatenRecently) {
+            self.movesSinceEating++
+            if (self.movesSinceEating >=20) {
+                null;//hungry //unflag eaten recently at 30? then start decrementing health when starving or thirsty?
+            } 
+        }
         self.currentLocation = aLocation;
         if (self.startLocation == undefined) {
             self.startLocation = self.currentLocation;
@@ -116,7 +124,17 @@ exports.Player = function Player(aUsername) {
         self = this;
         self.hitPoints += pointsToAdd;
         if (self.hitPoints <100) {self.hitPoints += pointsToAdd;}
+        //limit to 100
+        if (self.hitPoints >100) {self.hitPoints = 100;}
+        if (self.hitPoints > 50) {self.bleeding = false};
         console.log('player healed, gains '+pointsToAdd+' HP. HP remaining: '+self.hitPoints);
+    }
+
+    Player.prototype.eat = function(pointsToAdd) {
+        self = this;
+        self.heal(pointsToAdd);
+        self.eatenRecently = true;
+        console.log('player eats some food.');
     }
 
     Player.prototype.killPlayer = function(){//
@@ -144,18 +162,33 @@ exports.Player = function Player(aUsername) {
                     return "You've taken a fair beating.";
                     break;
                 case (self.hitPoints>25):
+                    self.bleeding = true;
                     return "You're bleeding heavily and really not in good shape.";
                     break;
                 case (self.hitPoints>10):
+                    self.bleeding = true;
                     return "You're dying.";
                     break;
                 case (self.hitPoints>0):
+                    self.bleeding = true;
                     return "You're almost dead.";
                     break;
                 default:
                     return "You're dead.";
         }
 
+    }
+
+    Player.prototype.status = function() {
+        self = this;
+        var status = '';
+        status += 'Your score is '+self.score+'.<br>';
+        status += 'You have taken '+self.moves+' moves so far.<br>'; 
+        if (!(self.eatenRecently)) { status += 'You are hungry.<br>'};
+        if (self.bleeding) { status += 'You are bleeding and need healing.<br>'};
+        status += self.health();
+
+        return status;
     }
 return this;	
 }
