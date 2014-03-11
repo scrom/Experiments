@@ -139,7 +139,7 @@ exports.Location = function Location(aName, aDescription) {
         var list = ''
         for(var i = 0; i < self.objects.length; i++) {
                 if (i>0){list+=', ';}
-                if (i==self.objects.length-1){list+='and ';}
+                if ((i==self.objects.length-1)&&(i>0)){list+='and ';}
                 list+=self.objects[i].getDescription();
         }
 

@@ -43,6 +43,7 @@ exports.Player = function Player(aUsername) {
         var list = ''
         for(var i = 0; i < self.inventory.length; i++) {
                 if (i>0){list+=', ';}
+                if ((i==self.inventory.length-1)&&(i>0)){list+='and ';}
                 list+=self.inventory[i].getDescription();
         }
 

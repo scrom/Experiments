@@ -46,18 +46,20 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.getDetailedDescription = function() {
         self = this;
-        return self.detailedDescription;
+        return self.getInventory()+'. '+self.detailedDescription;
     }
 
     Creature.prototype.getInventory = function() {
         self = this;
+        if (self.inventory.length==0){return null};
         var list = ''
         for(var i = 0; i < self.inventory.length; i++) {
                 if (i>0){list+=', ';}
+                if ((i==self.inventory.length-1)&&(i>0)){list+='and ';}
                 list+=self.inventory[i].getDescription();
         }
 
-        return 'Creature is carrying: '+list;
+        return self.description+' is carrying: '+list;
     }	
     
     Creature.prototype.addToInventory = function(anObject) {
@@ -160,6 +162,13 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.description = 'a dead '+self.name;
         return "The "+self.name+" is dead. Now you can steal all their stuff.";
      }
+
+    Creature.prototype.moveOrOpen = function(aVerb) {
+        self = this;
+        if (aVerb == 'push'||aVerb == 'pull') {return "The "+self.name+" really doesn't appreciate being pushed around."};
+        //open
+        return "I suggest you don't try to "+aVerb+" the "+self.name+" again, it's not going to end well.";
+    }
 
     Creature.prototype.isCollectable = function() {
         self = this;

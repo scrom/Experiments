@@ -162,6 +162,25 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         }
                     }
                     break;
+                case 'give':
+                    if ((self.location.objectExists(self.object0)||self.player.checkInventory(self.object0))&&(self.object1!='')) {
+                        if (self.location.getObject(self.object1).type() == 'Creature') { //@bug = if object 1 isn't in the location, this will blow up
+                            if (self.location.objectExists(self.object0)) {
+                                description = self.location.getObject(self.object1).addToInventory((self.location.removeObject(self.object0)));
+                            } else {//assume you must be carrying it instead...
+                                description = self.location.getObject(self.object1).addToInventory((self.player.removeFromInventory(self.object0)));
+                            }
+                        } else {description = "Whilst the "+self.object1+", deep in it's inanimate psyche would love to receive your kind gift. It feels in appropriate to do so.";}
+                    } else {
+                        if (self.object0!="") {
+                            description = "There is no "+self.object0+" here.";
+                        } else if(self.object1=="") {
+                            description = self.verb+' '+self.object0+' to what?';
+                        } else {
+                            description = self.verb+' what?';
+                        }
+                    }
+                    break;
                 case 'drop':
                     if (self.player.checkInventory(self.object0)) {
                         self.location.addObject(self.player.removeFromInventory(self.object0));
@@ -262,15 +281,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         if (self.object1) {description+= ' for the '+self.object0;}
                         description+='. Nothing much happens.';                    
                     break;
-                case 'give':
-                        //improve this once creatures are implemented
-                        //trap when object or creature don't exist
-                        description = 'You try to '+self.verb;
-                        if (self.object0) {description+= ' the '+self.object1;}
-                        if (self.object1) {description+= ' your '+self.object0;}
-                        description+=". They politely resuse and insist that it's yours.";     
-                    break;
-
                 case 'wave':
                         //improve this once creatures are implemented
                         //trap when object or creature don't exist
@@ -279,6 +289,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         if (self.object1) {description+= ' at the '+self.object1} //note combined object/creature here
                         description+=". Your arms get tired and you feel slightly awkward.";   
                     break;
+                case 'kill':
                 case 'throw':
                 case 'rub':
                 case 'drink':
@@ -309,6 +320,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'dismount':
                 case 'unmount': //don't think this is a real verb but still...
                 case 'go': //link this with location moves
+                case 'take':
+                case 'steal':
                 default:
                     if (description == undefined){
                         description = 'You '+self.verb;
