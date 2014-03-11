@@ -5,6 +5,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         //module deps
         var locationObjectModule = require('./location'); 
         var artefactObjectModule = require('./artefact');
+        var creatureObjectModule = require('./creature.js');
           
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.locations = [];
@@ -87,6 +88,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('sword', 'a short sword', "It's kind of rusty and crappy-looking", true, false, false, false, null));
         self.locations[location2].addObject(new artefactObjectModule.Artefact('door', 'a large door', 'It looks unlocked', false, false, true, false, exitToHide));
         self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it", true, false, false, true, null));
+        self.locations[location3].addCreature(new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry", 500));
         //self.locations[initialLocation].addExit('n',self.locations[location2].getName());
         //self.locations[location2].addExit('s',self.locations[initialLocation].getName());
 

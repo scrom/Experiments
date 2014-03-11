@@ -1,26 +1,53 @@
 ﻿"use strict";
 //self-test
+//var nodeunit = require('nodeunit');
+//var reporter = require('nodeunit').reporters.default;
+//reporter.run(['test']);
 exports.Tests = function Tests() {
         console.log('====TESTING====');
 
         //test module deps
-        var location = require('./location.js');
-        var player = require('./player.js');
+        var action = require('./action');
+        var artefact = require('./artefact');
+        var creature = require('./creature.js');
         var exit = require('./exit.js');
+        var game = require('./game');
+        var location = require('./location.js');
         var map = require('./map');
+        var player = require('./player.js');
 
-        //test player and location creation, can player move frmo one location to another?
-        var p0 = new player.Player('tester');
+        //test player, creature, location and artefact creation.
+        console.log('====Game Object Creation tests====');
+        var a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really', true, false, false, false, null);
+        var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',120);
+        var e0 = new exit.Exit('north','test0'); //note we can name a location that doesn't exist at the moment - should probably prevent this.
         var l0 = new location.Location('test0','a test location');
-        var l1 = new location.Location('test1','another test location');
+        var m0 = new map.Map();
+        var p0 = new player.Player('tester');
+
+        console.log('====Creature tests====');
+        //test creature interactions //name, inv*4, go, getlocation, hit, heal, eat, kill
+        console.log('Name: '+c0.getName());
+        console.log('Add to inventory:'+c0.addToInventory(a0));
+        console.log('Check Inventory: '+c0.checkInventory(a0.getName()));
+        console.log('List Inventory: '+c0.getInventory());
+        console.log('Remove from inventory: '+c0.removeFromInventory(a0.getName()));
+        console.log('List Inventory: '+c0.getInventory());
+        console.log(c0.kill());
+        console.log(c0.heal(50));
+        console.log(l0.addCreature(c0));
+        console.log(l0.removeCreature(c0.getName()));
+        console.log('====End of Creature tests====');
+
+
 
         //test maps
-        var m0 = new map.Map();
         m0.init(p0);
         m0.addLocation('test2','yet another test location');
         console.log(m0.findLocation('test2'));
         console.log(m0.link('u','start','test2'));
         //console.log(p0.go(null,l0));
+        var l1 = new location.Location('test1','another test location');
         l0.addExit('n',l1);
         console.log(l0.getExit());
         //l1.addExit('s',l0); //this seems to overwrite the previous

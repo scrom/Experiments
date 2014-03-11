@@ -60,21 +60,20 @@ exports.Location = function Location(aName, aDescription) {
         self = this;
             var index = getIndexIfObjectExists(self.exits,'name',aDirection);
             if (index > -1) {
-                return self.exits[index];//.getDestinationName();
+                return self.exits[index];
             } else {
                 return self.name;
             }
     }
-    Location.prototype.addObject = function(anObject) { //wraps artefact for now and dummies in unused slots
+    Location.prototype.addObject = function(anObject) {
         self = this;
-        //var newArtefact = new artefactObjectModule.Artefact(anObject, anObject, anObject, true, false, false, null); 
         self.objects.push(anObject);
         console.log(anObject+' added to location');
         return anObject.getName()+' added to location';
     }
     Location.prototype.removeObject = function(anObject) {
         self = this;
-        var index = getIndexIfObjectExists(self.objects,'name',anObject);//self.objects.indexOf(anObject);
+        var index = getIndexIfObjectExists(self.objects,'name',anObject);
         if (index > -1) {
             var returnObject = self.objects[index];
             if (returnObject.isCollectable()) {
@@ -99,6 +98,37 @@ exports.Location = function Location(aName, aDescription) {
         return self.objects[index];
     }
 
+    Location.prototype.addCreature = function(aCreature) {
+        self = this;
+        self.creatures.push(aCreature);
+        console.log(aCreature+' added to location');
+        return aCreature.getName()+' added to location';
+    }
+    Location.prototype.removeCreature = function(aCreature) {
+        self = this;
+        var index = getIndexIfObjectExists(self.creatures,'name',aCreature);
+        if (index > -1) {
+            var returnCreature = self.creatures[index];
+                self.creatures.splice(index,1);
+                console.log(aCreature+' removed from location');
+                return returnCreature;//+' removed from location';
+        }
+    }
+
+    Location.prototype.creatureExists = function(aCreature) {
+        self = this;
+        //check if passed in object is in location
+        if(getIndexIfObjectExists(self.creatures,'name',aCreature) > -1){ return true;}
+        return false;
+    }
+
+    Location.prototype.getCreature = function(aCreature) {
+        self = this;
+        //check if passed in object is in location
+        var index = getIndexIfObjectExists(self.creatures,'name',aCreature);
+        return self.creatures[index];
+    }
+
     Location.prototype.getDescription = function() {
         self = this;
         return self.description;
@@ -114,7 +144,7 @@ exports.Location = function Location(aName, aDescription) {
             fullDescription+='<br>Exits are: '+self.listExits()+'.';
         }
         if (self.creatures.length > 0) {
-            fullDescription+='<br>You also see: '+self.creatures.toString()+'.';
+            fullDescription+='<br>You also see: '+self.listCreatures()+'.';
         }
 
         return fullDescription;
@@ -145,6 +175,16 @@ exports.Location = function Location(aName, aDescription) {
         for(var i = 0; i < self.objects.length; i++) {
                 if (i>0){list+=', ';}
                 list+=self.objects[i].getDescription();
+        }
+
+        return list;
+    }
+    Location.prototype.listCreatures = function() {
+        self = this
+        var list = ''
+        for(var i = 0; i < self.creatures.length; i++) {
+                if (i>0){list+=', ';}
+                list+=self.creatures[i].getDescription();
         }
 
         return list;

@@ -6,6 +6,7 @@ exports.Player = function Player(aUsername) {
         self.username = aUsername;
         self.inventory = [];
         self.hitPoints = 100;
+        self.killedCount = 0;
         self.eatenRecently = true; // support for hunger and sickness
         self.bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
         self.startLocation;
@@ -14,7 +15,7 @@ exports.Player = function Player(aUsername) {
         self.movesSinceEating = 0; //only incremented when moving between locations but not yet used elsewhere
         self.score = 0; //not used yet
 	    var objectName = "Player";
-	    console.log(objectName + ' created');
+	    console.log(objectName + ' created: '+self.username);
 
         var getIndexIfObjectExists = function(array, attr, value) {
             for(var i = 0; i < array.length; i++) {
@@ -139,6 +140,9 @@ exports.Player = function Player(aUsername) {
 
     Player.prototype.killPlayer = function(){//
         self = this;
+        self.killedCount ++;
+        //reset hp before healing
+        self.hitPoints = 0;
         //drop all objects and return to start
         for(var i = 0; i < self.inventory.length; i++) {
             self.currentLocation.addObject(self.removeFromInventory(self.inventory[i].getName()));
@@ -183,6 +187,7 @@ exports.Player = function Player(aUsername) {
         self = this;
         var status = '';
         status += 'Your score is '+self.score+'.<br>';
+        if (!(self.killedCount>0)) { status += 'You have been killed '+self.killedCount+' times.<br>'};
         status += 'You have taken '+self.moves+' moves so far.<br>'; 
         if (!(self.eatenRecently)) { status += 'You are hungry.<br>'};
         if (self.bleeding) { status += 'You are bleeding and need healing.<br>'};
