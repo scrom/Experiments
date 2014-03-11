@@ -109,6 +109,14 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     self.creature = ''+objectPair[1].trim();
                 }
             }
+            if (objectPair == remainder) { //we didn't find 'at'
+                objectPair = remainder.split(' on ')
+                //we have 2 objects
+                self.object0 = ''+objectPair[0].trim();
+                if (objectPair.length>1) {
+                    self.object1 = ''+objectPair[1].trim();
+                }
+            }
         }
 
         //unpack action results JSON
@@ -135,6 +143,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                                   "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
                                   "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
                                   "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
+                    break;
+                case 'wait':
+                    description = 'time passes...';
                     break;
                 case 'health':
                     description = self.player.health();
@@ -173,9 +184,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         }
                     }
                     break;
-
-                case 'open': 
                 case 'push':
+                case 'pull':
+                case 'open': 
                     if (self.location.objectExists(self.object0)) {
                         var anObject = self.location.getObject(self.object0);
                         description = anObject.moveOrOpen(self.verb);
@@ -253,7 +264,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         //trap when object or creature don't exist
                         description = 'You '+self.verb;
                         if (self.object0) {description+= ' the '+self.creature;}
-                        if (self.object1) {description+= ' for the '+self.object0;}
+                        if (self.creature) {description+= ' for the '+self.object0;}
                         description+='. Nothing much happens.';                    
                     break;
                 case 'give':
@@ -261,7 +272,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         //trap when object or creature don't exist
                         description = 'You try to '+self.verb;
                         if (self.object0) {description+= ' the '+self.creature;}
-                        if (self.object1) {description+= ' your '+self.object0;}
+                        if (self.creature) {description+= ' your '+self.object0;}
                         description+=". They politely resuse and insist that it's yours.";     
                     break;
 
@@ -273,8 +284,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         if (self.object1) {description+= ' at the '+self.object1} //note combined object/creature here
                         description+=". Your arms get tired and you feel slightly awkward.";   
                     break;
+                case 'throw':
                 case 'rub':
-                case 'pull':
                 case 'drink':
                 case 'unlock':
                 case 'lock':
@@ -289,7 +300,20 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'read':
                 case 'climb':
                 case 'jump':
-
+                case 'run':
+                case 'put':
+                case 'attach':
+                case 'combine':
+                case 'dismantle':
+                case 'destroy':
+                case 'smash':
+                case 'break':
+                case 'kick':
+                case 'ride':
+                case 'mount':
+                case 'dismount':
+                case 'unmount': //don't think this is a real verb but still...
+                case 'go': //link this with location moves
                 default:
                     if (description == undefined){
                         description = 'You '+self.verb;
