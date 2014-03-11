@@ -144,11 +144,26 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         console.log('Creature healed, gains '+pointsToAdd+' HP. HP remaining: '+self.hitPoints);
     }
 
-    Creature.prototype.eat = function(pointsToAdd) {
+    Creature.prototype.feed = function(pointsToAdd) {
         self = this;
         self.heal(pointsToAdd);
         console.log('Creature eats some food.');
     }
+
+    Creature.prototype.eat = function(aPlayer) {
+        self = this;
+        //console.log(self.name+' edible:'+self.edible+' chewed:'+self.chewed);
+            if (self.edible){
+                self.weight = 0;
+                aPlayer.heal(50);
+                self.description = 'the remains of a well-chewed '+self.name;
+                self.detailedDescription = "All that's left are a few scraps of skin and hair.";
+                return 'You tear into the raw flesh of the '+self.name+'. It was a bit messy but you feel fitter, happier and healthier.';
+            } else {
+                aPlayer.hit(10);
+                return "You try biting the "+self.name+" but it dodges out of the way and bites you back."
+            }
+     } 
 
     Creature.prototype.kill = function(){//
         self = this;

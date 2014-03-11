@@ -235,6 +235,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         }
                     }
                     break;
+                case 'bite':
+                case 'chew':
                 case 'eat':
                     if (self.location.objectExists(self.object0)) {
                         anObject = self.location.getObject(self.object0);
@@ -322,6 +324,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'go': //link this with location moves
                 case 'take':
                 case 'steal':
+                case 'feed':
                 default:
                     if (description == undefined){
                         description = 'You '+self.verb;
