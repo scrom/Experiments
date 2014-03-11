@@ -14,9 +14,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
         //action string components
         self.verb = '';
+        self.objects = []; //objects and creatures
         self.object0 = '';
         self.object1 = '';
-        self.creature = '';
 
 	    var objectName = "Action";
 
@@ -52,6 +52,43 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             } else {return null;}
         }
 
+        /*
+        for a passed in string, split it and return an array containing 0, 1 or 2 elements.
+        each elemet will be either an object or creature - we'll figure out which later.
+        we're using "split" and exiting on the first successful split so we'll only ever get a maximum of 2 objects
+        we'll also only support one instance of each of these words - need to be cautious here
+        */
+        var splitRemainderString = function(aString){
+            var splitWordArray = ['with', 'to', 'from', 'for', 'at', 'on', 'in']; //the words we'll try to split on.
+            for (var i=0; i<=splitWordArray.length; i++) {
+                var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
+                if (objectPair != aString) { //split successful
+                    console.log('split using "'+splitWordArray[i]+'".');
+                    switch(splitWordArray[i]) {
+                        case 'with':
+                        break;
+                        case 'to':
+                        break;
+                        case 'from':
+                        break;
+                        case 'for':
+                        break;
+                        case 'at':
+                        break;
+                        case 'on':
+                        break;
+                        case 'in':
+                        break;
+                        default:
+                    }                   
+                    return objectPair; //exit the loop early
+                } //end if
+             }
+            //no match, return what we started with
+            console.log('no split');
+            return [aString,'']; //we add in a dummy second element for now
+        }
+
         /* an action consists of either 2 or 4 elements in the form
         [verb] [object]  or [verb] [object] with/to/from/for [object]
         a verb will always be a single word, an object may be multiple words
@@ -64,59 +101,12 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
             //replace first instance of verb with '' then trim spaces
             var remainder = aString.replace(self.verb,'').trim().toLowerCase();  
-            //figure out split word we're looking for - with, to, from, for
-                             
-            var objectPair = remainder.split(' with ')
 
-            if (objectPair != remainder) { //split on "with" was successful
-                //we have 2 objects
-                self.object0 = ''+objectPair[0].trim();
-                if (objectPair.length>1) {
-                    self.object1 = ''+objectPair[1].trim();
-                }
-            }
+            //figure out split word we're looking for - with, to, from, for, at, on
+            self.objects = splitRemainderString(remainder);
+            self.object0 = self.objects[0]; 
+            self.object1 = self.objects[1]; 
 
-            if (objectPair == remainder) { //we didn't find 'with'
-                objectPair = remainder.split(' to ')
-                //part 1 will be object, part 2 will be creature
-                self.object0 = ''+objectPair[0].trim();
-                if (objectPair.length>1) {
-                    self.creature = ''+objectPair[1].trim();
-                }
-            }
-            if (objectPair == remainder) { //we didn't find 'to' either
-                objectPair = remainder.split(' from ')
-                //part 1 will be object, part 2 will be creature
-                self.object0 = ''+objectPair[0].trim();
-                if (objectPair.length>1) {
-                    self.creature = ''+objectPair[1].trim();
-                }
-            }
-            if (objectPair == remainder) { //we didn't find 'from' either
-                objectPair = remainder.split(' for ')
-                //part 1 will be creature, part 2 will be object
-                self.creature = ''+objectPair[0].trim();
-                if (objectPair.length>1) {
-                    self.object0 = ''+objectPair[1].trim();
-                }
-            }
-            if (objectPair == remainder) { //we didn't find 'for' either
-                objectPair = remainder.split(' at ')
-                //part 1 will be object, part 2 will be object *or* creature!
-                self.object0 = ''+objectPair[0].trim();
-                if (objectPair.length>1) {
-                    self.object1 = ''+objectPair[1].trim();
-                    self.creature = ''+objectPair[1].trim();
-                }
-            }
-            if (objectPair == remainder) { //we didn't find 'at'
-                objectPair = remainder.split(' on ')
-                //we have 2 objects
-                self.object0 = ''+objectPair[0].trim();
-                if (objectPair.length>1) {
-                    self.object1 = ''+objectPair[1].trim();
-                }
-            }
         }
 
         //unpack action results JSON
@@ -161,7 +151,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     description = self.location.describe();
                     break;
                 case 'take':
-                case 'get':
+                case 'get': //add support for "all" later
                     if (self.location.objectExists(self.object0)) {
                         description = self.player.addToInventory(self.location.removeObject(self.object0));
                     } else {
@@ -211,13 +201,13 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     }
                     break;
                 case 'examine':
-                    var anObject;
+                    var anObjectOrCreature;
                     if (self.location.objectExists(self.object0)) {
-                        anObject = self.location.getObject(self.object0);
-                        description = anObject.getDetailedDescription();
+                        anObjectOrCreature = self.location.getObject(self.object0);
+                        description = anObjectOrCreature.getDetailedDescription();
                     } else if (self.player.checkInventory(self.object0)) {
-                        anObject = self.player.getObject(self.object0);
-                        description = anObject.getDetailedDescription();
+                        anObjectOrCreature = self.player.getObject(self.object0);
+                        description = anObjectOrCreature.getDetailedDescription();
                     } else {
                         if ((self.object0!="")) {
                             description = "There is no "+self.object0+" here and you're not carrying any either.";
@@ -244,11 +234,16 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'attack':
                 case 'hit':
                     if (self.location.objectExists(self.object0)||self.player.checkInventory(self.object0)) {
-                        if (self.object1 == "") {
+                        console.log('hitting '+self.object0+' with '+self.object1);
+                        if ((self.object1 == "")||(self.object1 == undefined)) {
                             description = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something.";
                             description += self.player.hit(25);
                         } else {
-                            description = "Dingggggg! Well, that was satisfying."
+                            if (self.location.objectExists(self.object1)||self.player.checkInventory(self.object1)) {
+                                description = "Dingggggg! Well, that was satisfying."
+                            } else {
+                                description = "There is no "+self.object1+" here and you're not carrying any either.";
+                            }
                         }
 
                     } else {
@@ -263,16 +258,16 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         //improve this once creatures are implemented
                         //trap when object or creature don't exist
                         description = 'You '+self.verb;
-                        if (self.object0) {description+= ' the '+self.creature;}
-                        if (self.creature) {description+= ' for the '+self.object0;}
+                        if (self.object0) {description+= ' the '+self.object1;}
+                        if (self.object1) {description+= ' for the '+self.object0;}
                         description+='. Nothing much happens.';                    
                     break;
                 case 'give':
                         //improve this once creatures are implemented
                         //trap when object or creature don't exist
                         description = 'You try to '+self.verb;
-                        if (self.object0) {description+= ' the '+self.creature;}
-                        if (self.creature) {description+= ' your '+self.object0;}
+                        if (self.object0) {description+= ' the '+self.object1;}
+                        if (self.object1) {description+= ' your '+self.object0;}
                         description+=". They politely resuse and insist that it's yours.";     
                     break;
 
@@ -391,7 +386,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             self.resultJson = '{"verb":"'+self.verb+
                                                '","object0":"'+self.object0+
                                                '","object1":"'+self.object1+
-                                               '","creature":"'+self.creature+
                                                '","description":"'+description+ '"}';
            //just check the result is valid JSON 
            //console.log(Debug.Assert(JSON.parse(self.resultJson)));
@@ -407,6 +401,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
     Action.prototype.getResultJson = function() {
         self = this;
         return self.resultJson;
+    }
+
+    Action.prototype.testStringSplit = function(aTestString) {
+        self = this;
+        return splitRemainderString(aTestString);
     }
     
 return this;

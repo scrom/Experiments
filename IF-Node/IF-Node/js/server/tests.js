@@ -1,7 +1,7 @@
 ﻿"use strict";
 //self-test
-//var nodeunit = require('nodeunit');
-//var reporter = require('nodeunit').reporters.default;
+var nodeunit = require('nodeunit');
+var reporter = require('nodeunit').reporters.default;
 //reporter.run(['test']);
 exports.Tests = function Tests() {
         console.log('====TESTING====');
@@ -25,6 +25,21 @@ exports.Tests = function Tests() {
         var m0 = new map.Map();
         var p0 = new player.Player('tester');
 
+        console.log('====Action tests====');
+        var act0 = new action.Action('test action', p0, m0, null); //last param is a dictionary
+        //test string splitting on 'with', 'to', 'from', 'for', 'at', 'on', 'in'
+        console.log('Split results: '+ act0.testStringSplit('eat some food with a fork on a stick'));  //test with
+        console.log('Split results: '+ act0.testStringSplit('give some tofu to the vegan within the well')); //test to
+        console.log('Split results: '+ act0.testStringSplit('take the fromage frais from the man from del monte')); //test from
+        console.log('Split results: '+ act0.testStringSplit('draw a forest for the forest shrew')); //test for
+        console.log('Split results: '+ act0.testStringSplit('throw the cat hairball at the patch of mud')); //test at
+        console.log('Split results: '+ act0.testStringSplit('put one penny on the money counter')); //test on
+        console.log('Split results: '+ act0.testStringSplit('put 50 indian rupees in the savings jar')); //test in
+        console.log('Split results: '+ act0.testStringSplit('eat a slice of chocolate orange')); //test no split
+        console.log('Split results: '+ act0.testStringSplit('')); //test empty string
+
+        console.log('====End of Action tests====');
+
         console.log('====Creature tests====');
         //test creature interactions //name, inv*4, go, getlocation, hit, heal, eat, kill
         console.log('Name: '+c0.getName());
@@ -35,8 +50,8 @@ exports.Tests = function Tests() {
         console.log('List Inventory: '+c0.getInventory());
         console.log(c0.kill());
         console.log(c0.heal(50));
-        console.log(l0.addCreature(c0));
-        console.log(l0.removeCreature(c0.getName()));
+        console.log(l0.addObject(c0));
+        console.log(l0.removeObject(c0.getName()));
         console.log('====End of Creature tests====');
 
 

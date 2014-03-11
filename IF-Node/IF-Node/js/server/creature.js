@@ -1,6 +1,6 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someHealth) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someHealth, someWeight) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.name = aname;
@@ -8,6 +8,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.detailedDescription = aDetailedDescription;
         self.inventory = [];
         self.hitPoints = someHealth;
+        self.weight = someWeight;
+        self.collectable = false; //can't carry a living creature
+        self.edible = false; //can't eat a living creature
         self.startLocation;
         self.currentLocation;
         self.moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
@@ -148,6 +151,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.kill = function(){//
         self = this;
         self.hitPoints = 0;
+        self.collectable = true; 
         //drop all objects
         for(var i = 0; i < self.inventory.length; i++) {
             self.currentLocation.addObject(self.removeFromInventory(self.inventory[i].getName()));
@@ -155,6 +159,15 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.detailedDescription = "It's dead.";
         self.description = 'a dead '+self.name;
         return "The "+self.name+" is dead. Now you can steal all their stuff.";
+     }
+
+    Creature.prototype.isCollectable = function() {
+        self = this;
+        return self.collectable;
+    }
+
+     Creature.prototype.type = function(){//
+        return objectName;
      }
 
 return this;	
