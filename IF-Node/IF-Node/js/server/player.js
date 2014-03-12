@@ -55,7 +55,7 @@ exports.Player = function Player(aUsername) {
         if (anObject != undefined) {
             self.inventory.push(anObject);
             console.log(anObject+' added to inventory');
-            return 'You are now carrying: '+anObject.getDescription();
+            return 'You are now carrying '+anObject.getDescription();
         } else {return "sorry, couldn't pick it up.";}
     }
     
@@ -71,7 +71,7 @@ exports.Player = function Player(aUsername) {
 
         } else {
             console.log('player is not carrying '+anObject);
-            return 'You are not carrying: '+anObject;
+            return 'You are not carrying '+anObject;
         }
     }
     

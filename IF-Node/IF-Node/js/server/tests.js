@@ -5,6 +5,11 @@ var reporter = require('nodeunit').reporters.default;
 //reporter.run(['test']);
 exports.Tests = function Tests() {
         console.log('====TESTING====');
+        //simple coding experiments
+        console.log('====Experiments====');
+        var SimpleObject = require('./simpleObject');
+        var o0 = new SimpleObject.SimpleObject('test0');
+        console.log('====End of Experiments====');
 
         //test module deps
         var action = require('./action');
@@ -77,8 +82,8 @@ exports.Tests = function Tests() {
         //console.log(l0.go('s'));
         //console.log(l1.go('n'));
         //console.log(l1.go('s'));
-/*        var SimpleObject = require('./simpleObject');
-        var o0 = SimpleObject('test0');
+
+        /*
         console.log(o0.toString());
         var o1 = SimpleObject('test1');
         console.log(o0.toString()); //this one gets partially overwritten

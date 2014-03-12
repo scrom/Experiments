@@ -111,24 +111,24 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         self = this;
         //do stuff
         var description = ''
-        var performAction = self.dictionary.lookup(self.verb); //retrieve correct function
-        if (performAction) {
-            description = performAction(self, self.object0, self.object1);
-        }
+        //var performAction = self.dictionary.lookup(self.verb); //retrieve correct function
+        //if (performAction) {
+        //    description = performAction(self, self.object0, self.object1);
+        //}
 
             //var description; //describe what happens
 
             //user commands
             switch(self.verb) {
                 case '':
-                    //description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
+                    description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
                     break;
                 case 'help':
-                    /*description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
+                    description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
                                   "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
                                   "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
                                   "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
-                    */break;
+                    break;
                 case 'wait':/*
                     description = 'time passes...';*/
                     break;
@@ -236,13 +236,13 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     if (self.location.objectExists(self.object0)) {
                         anObject = self.location.getObject(self.object0);
                         description = anObject.eat(self.player);
-                        if (anObject.isEdible) {
+                        if (anObject.isEdible()) {
                             self.location.removeObject(self.object0);
                         }
                     } else if (self.player.checkInventory(self.object0)) {
                         anObject = self.player.getObject(self.object0);
                         description = anObject.eat(self.player);
-                        if (anObject.isEdible) {
+                        if (anObject.isEdible()) {
                             self.player.removeFromInventory(self.object0);
                         }
                     } else {
@@ -329,7 +329,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'steal':
                 case 'feed':
                 default:
-                    if (description == undefined){
+                    console.log('verb: '+self.verb+' default response');
+                    if ((description == undefined)||(description == '')){
                         description = 'You '+self.verb;
                         if (self.object0) {description+= ' the '+self.object0;}
                         if (self.object1) {description+= ' with the '+self.object1;}

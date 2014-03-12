@@ -46,12 +46,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.getDetailedDescription = function() {
         self = this;
-        return self.getInventory()+'. '+self.detailedDescription;
+        return self.getInventory()+' '+self.detailedDescription;
     }
 
     Creature.prototype.getInventory = function() {
         self = this;
-        if (self.inventory.length==0){return null};
+        if (self.inventory.length==0){return ''};
         var list = ''
         for(var i = 0; i < self.inventory.length; i++) {
                 if (i>0){list+=', ';}
@@ -59,7 +59,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 list+=self.inventory[i].getDescription();
         }
 
-        return self.description+' is carrying: '+list;
+        return self.description+' is carrying: '+list+'.';
     }	
     
     Creature.prototype.addToInventory = function(anObject) {
@@ -67,7 +67,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         if ((anObject != undefined)&&(self.hitPoints >0)) {
             self.inventory.push(anObject);
             console.log(anObject+' added to inventory');
-            return 'The '+self.name+' is now carrying: '+anObject.getDescription();
+            return 'The '+self.name+' is now carrying '+anObject.getDescription();
         } else {return "sorry, the "+self.name+" can't hold that.";}
     }
     
