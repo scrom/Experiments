@@ -20,7 +20,7 @@ exports.Game = function Game(aUsername,aGameID) {
 	    var objectName = "Game";
 
         ////var initialLocation = map.add
-        self.map.init(self.player);
+        self.map.init();
         self.player.go(null,self.map.getStartLocation());
 
         //log game created

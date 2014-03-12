@@ -64,14 +64,14 @@ exports.Map = function Map() { //inputs for constructor TBC
         return getIndexIfObjectExists(self.locations,"name", aName);
     }
 
-    Map.prototype.init = function(aPlayer){
+    Map.prototype.init = function(){
         self=this;
         var startName = 'start';
         var location2Name = 'house';
         var location3Name = 'hall'
 
         //great 3 rooms
-        var initialLocation = self.addLocation(startName,'Welcome, adventurer '+aPlayer.getUsername()+ '.');
+        var initialLocation = self.addLocation(startName,'Welcome, adventurer.');
         var location2 = self.addLocation(location2Name,'You are standing outside a rather pretty house.');
         var location3 = self.addLocation(location3Name,'You are in a grand hall.');
 
