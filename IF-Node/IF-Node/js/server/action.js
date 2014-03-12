@@ -34,16 +34,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             return -1;
         }
 
-        /*var getObject = function(anObjectString) {
-            var anObject;
-            if (self.location.objectExists(self.object0)) {
-                return self.location.getObject(self.object0);
-            } else if (self.player.checkInventory(self.object0)) {
-                return self.player.getObject(self.object0);
-            } 
-            return null;
-        }*/
-
         var swearCheck = function(aWord) {
             var badWords = []; //put any bad language you want to filter in here
             var checkWord = aWord.substring(0,4);
@@ -120,22 +110,27 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
     Action.prototype.act = function() {
         self = this;
         //do stuff
+        var description = ''
+        var performAction = self.dictionary.lookup(self.verb); //retrieve correct function
+        if (performAction) {
+            description = performAction(self, self.object0, self.object1);
+        }
 
-            var description; //describe what happens
+            //var description; //describe what happens
 
             //user commands
             switch(self.verb) {
                 case '':
-                    description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
+                    //description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
                     break;
                 case 'help':
-                    description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
+                    /*description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
                                   "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
                                   "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
                                   "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
-                    break;
-                case 'wait':
-                    description = 'time passes...';
+                    */break;
+                case 'wait':/*
+                    description = 'time passes...';*/
                     break;
                 case 'health':
                     description = self.player.health();
@@ -241,9 +236,15 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     if (self.location.objectExists(self.object0)) {
                         anObject = self.location.getObject(self.object0);
                         description = anObject.eat(self.player);
+                        if (anObject.isEdible) {
+                            self.location.removeObject(self.object0);
+                        }
                     } else if (self.player.checkInventory(self.object0)) {
                         anObject = self.player.getObject(self.object0);
                         description = anObject.eat(self.player);
+                        if (anObject.isEdible) {
+                            self.player.removeFromInventory(self.object0);
+                        }
                     } else {
                         if ((self.object0!="")) {
                             description = "There is no "+self.object0+" here and you're not carrying any either.";
@@ -261,7 +262,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                             description += self.player.hit(25);
                         } else {
                             if (self.location.objectExists(self.object1)||self.player.checkInventory(self.object1)) {
-                                description = "Dingggggg! Well, that was satisfying."
+                                var anObject = self.player.getObject(self.object0);
+                                if (!(anObject)) {anObject = self.location.getObject(self.object0);}
+                                description = anObject.hit(25);
                             } else {
                                 description = "There is no "+self.object1+" here and you're not carrying any either.";
                             }

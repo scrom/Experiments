@@ -64,7 +64,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     
     Creature.prototype.addToInventory = function(anObject) {
         self = this;
-        if (anObject != undefined) {
+        if ((anObject != undefined)&&(self.hitPoints >0)) {
             self.inventory.push(anObject);
             console.log(anObject+' added to inventory');
             return 'The '+self.name+' is now carrying: '+anObject.getDescription();
@@ -132,9 +132,10 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.hit = function(pointsToRemove) {
         self = this;
+        if (self.hitPoints <=0) {return "It's dead already."};
         self.hitPoints -= pointsToRemove;
         if (self.hitPoints <=0) {return self.kill();}
-        return 'The '+self.name+' is injured.'
+        return 'You attack the '+self.name+'. '+self.health()
         console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+self.hitPoints);
     }
 
@@ -165,6 +166,36 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             }
      } 
 
+    Creature.prototype.health = function() {
+        self = this;
+        switch(true) {
+                case (self.hitPoints>99):
+                    return "It's the picture of health.";
+                    break;
+                case (self.hitPoints>80):
+                    return "It's just getting warmed up.";
+                    break;
+                case (self.hitPoints>50):
+                    return "It's taken a fair beating.";
+                    break;
+                case (self.hitPoints>25):
+                    self.bleeding = true;
+                    return "It's bleeding heavily and really not in good shape.";
+                    break;
+                case (self.hitPoints>10):
+                    self.bleeding = true;
+                    return "It's dying.";
+                    break;
+                case (self.hitPoints>0):
+                    self.bleeding = true;
+                    return "It's almost dead.";
+                    break;
+                default:
+                    return "It's dead.";
+        }
+
+    }
+
     Creature.prototype.kill = function(){//
         self = this;
         self.hitPoints = 0;
@@ -188,6 +219,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.isCollectable = function() {
         self = this;
         return self.collectable;
+    }
+
+    Creature.prototype.isEdible = function() {
+        self = this;
+        return self.edible;
     }
 
      Creature.prototype.type = function(){//

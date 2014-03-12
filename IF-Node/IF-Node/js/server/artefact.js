@@ -13,6 +13,7 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self.opens = canOpen;
         self.edible = isEdible;
         self.chewed = false;
+        self.damaged = false;
 
 	    var objectName = "Artefact";
         console.log(objectName + ' created: '+self.name+', '+self.destinationName);
@@ -41,6 +42,15 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         return self.detailedDescription;
     }
 
+    Artefact.prototype.hit = function(pointsToRemove) {
+        self = this;
+        if (!(self.damaged)) {
+            self.damaged = true;
+            self.detailedDescription += ' and shows signs of damage beyond normal expected wear and tear.';
+        }
+        return "Ding! You repeatedly bash the "+self.name+". It feels good in a gratuitously violent sort of way."
+    }
+
     Artefact.prototype.moveOrOpen = function(aVerb) {
         self = this;
         if (self.mobile||self.opens){
@@ -64,9 +74,7 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
             if (self.edible){
                 self.weight = 0;
                 aPlayer.heal(25);
-                self.description = 'the remains of a well-chewed '+self.name;
-                self.detailedDescription = "All that's left are a few dirty-looking crumbs.";
-                return 'You eat a little of the '+self.name+'. You feel fitter, happier and healthier.';
+                return 'You eat the '+self.name+'. You feel fitter, happier and healthier.';
             } else {
                 self.detailedDescription += ' and shows signs of being chewed.';
                 aPlayer.hit(5);
@@ -80,6 +88,11 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
     Artefact.prototype.isCollectable = function() {
         self = this;
         return self.collectable;
+    }
+
+    Artefact.prototype.isEdible = function() {
+        self = this;
+        return self.edible;
     }
 
      Artefact.prototype.type = function(){//
