@@ -199,6 +199,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.kill = function(){//
         self = this;
         self.hitPoints = 0;
+        self.edible = true;
         self.collectable = true; 
         //drop all objects
         for(var i = 0; i < self.inventory.length; i++) {
