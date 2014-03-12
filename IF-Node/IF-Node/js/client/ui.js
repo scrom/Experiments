@@ -8,7 +8,8 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
         var state = aStateArea;
         var events = anEventArea;
         var input = anInputField;
-        var lastInput = '';
+        var inputHistory = [];
+        var inputHistoryIndex = 0;
         var interaction = aninteractionArea;
         state.append('Welcome To MVTA.<br>Please enter your name');
         console.append(objectName+" Initiated<br>");
@@ -37,10 +38,18 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
             input.keyup(function(e){
 	    	var keycode = e.which;
             if (keycode ==38) {//up arrow
-                input.val(lastInput);
+                input.val(inputHistory[inputHistoryIndex]);
+                if (inputHistoryIndex >0) {inputHistoryIndex--;}
+            }
+            if (keycode ==40) {//down arrow
+                input.val(inputHistory[inputHistoryIndex]);
+                if (inputHistoryIndex < inputHistory.length) {inputHistoryIndex++;}
             }
             if(keycode==13) {//enter
-                lastInput = input.val(); //save last input command
+                inputHistory.push(input.val());
+                inputHistoryIndex = inputHistory.length-1;
+                console.append(inputHistoryIndex+' '+inputHistory.length+' '+inputHistory);
+
                 var callbackValue = input.val();
 		    	interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
 		        input.val("");
