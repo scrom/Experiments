@@ -1,6 +1,6 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someHealth, someWeight) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someWeight, someHealth, carrying) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.name = aname;
@@ -16,6 +16,15 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
 	    var objectName = "Creature";
 	    console.log(objectName + ' created: '+self.name);
+
+        if (carrying != undefined) {
+            //load inventory
+            if (carrying instanceof Array) {
+                self.inventory = carrying; //overwrite inital inventory
+            } else { //just one object
+                self.inventory.push(carrying);
+            }
+        }
 
         var getIndexIfObjectExists = function(array, attr, value) {
             for(var i = 0; i < array.length; i++) {
@@ -59,7 +68,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 list+=self.inventory[i].getDescription();
         }
 
-        return self.description+' is carrying: '+list+'.';
+        return self.description+' is carrying '+list+'.';
     }	
     
     Creature.prototype.addToInventory = function(anObject) {

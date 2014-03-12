@@ -1,12 +1,12 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, canCollect, canMove, canOpen, isEdible, linkedExit) { 
+exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, someWeight, canCollect, canMove, canOpen, isEdible, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.name = aName;
         self.description = aDescription;
         self.detailedDescription = aDetailedDescription;
-        self.weight = 1;
+        self.weight = someWeight;
         self.linkedExit = linkedExit;
         self.collectable = canCollect;
         self.mobile = canMove;

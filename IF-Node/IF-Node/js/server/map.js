@@ -85,10 +85,12 @@ exports.Map = function Map() { //inputs for constructor TBC
 
 
         //populate objects
-        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('sword', 'a short sword', "It's kind of rusty and crappy-looking", true, false, false, false, null));
-        self.locations[location2].addObject(new artefactObjectModule.Artefact('door', 'a large door', 'It looks unlocked', false, false, true, false, exitToHide));
-        self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it", true, false, false, true, null));
-        self.locations[location3].addObject(new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry", 115, 120));
+        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('sword', 'a short sword', "It's kind of rusty and crappy-looking", 3, true, false, false, false, null));
+        self.locations[location2].addObject(new artefactObjectModule.Artefact('door', 'a large door', 'It looks unlocked', 500, false, false, true, false, exitToHide));
+        self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it", 1, true, false, false, true, null));
+        
+        var trollTreasure = new artefactObjectModule.Artefact('gold', 'a few gold coins', "Enough to buy some food", 1, true, false, false, false, null)
+        self.locations[location3].addObject(new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry", 120, 115, [trollTreasure]));
         //self.locations[initialLocation].addExit('n',self.locations[location2].getName());
         //self.locations[location2].addExit('s',self.locations[initialLocation].getName());
 
