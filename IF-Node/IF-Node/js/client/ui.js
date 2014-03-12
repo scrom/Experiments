@@ -8,6 +8,7 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
         var state = aStateArea;
         var events = anEventArea;
         var input = anInputField;
+        var lastInput = '';
         var interaction = aninteractionArea;
         state.append('Welcome To MVTA.<br>Please enter your name');
         console.append(objectName+" Initiated<br>");
@@ -35,8 +36,11 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
     Ui.prototype.listenForInput = function(callback) {
             input.keyup(function(e){
 	    	var keycode = e.which;
-            if(keycode==13) {
-
+            if (keycode ==38) {//up arrow
+                input.val(lastInput);
+            }
+            if(keycode==13) {//enter
+                lastInput = input.val(); //save last input command
                 var callbackValue = input.val();
 		    	interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
 		        input.val("");
