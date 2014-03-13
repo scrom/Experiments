@@ -86,6 +86,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         //populate objects
         self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('sword', 'a short sword', "It's kind of rusty and crappy-looking", 3, true, false, false, false, null));
+        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('chest', 'a treasure chest', "It's locked, very heavy and smells of fish", 50, true, false, false, false, null));
         self.locations[location2].addObject(new artefactObjectModule.Artefact('door', 'a large door', 'It looks unlocked', 500, false, false, true, false, exitToHide));
         self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it", 1, true, false, false, true, null));
         

@@ -58,6 +58,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         return self.getInventory()+' '+self.detailedDescription;
     }
 
+    Creature.prototype.getWeight = function() {
+        self = this;
+        return  self.weight+self.getInventoryWeight(); //to be honest, the creature drops everything when it's dead but still sensible to do this.
+    }
+
     Creature.prototype.getInventory = function() {
         self = this;
         if (self.inventory.length==0){return ''};
@@ -70,9 +75,20 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         return self.description+' is carrying '+list+'.';
     }	
+
+    Creature.prototype.getInventoryWeight = function() {
+        self = this;
+        if (self.inventory.length==0){return ''};
+        var inventoryWeight = 0
+        for(var i = 0; i < self.inventory.length; i++) {
+                inventoryWeight+=self.inventory[i].getWeight();
+        }
+        return inventoryWeight;
+    }
     
     Creature.prototype.addToInventory = function(anObject) {
         self = this;
+        //note, creatures don't have a defined carrying limit so we don't check inventory weight here
         if ((anObject != undefined)&&(self.hitPoints >0)) {
             self.inventory.push(anObject);
             console.log(anObject+' added to inventory');

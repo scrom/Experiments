@@ -6,6 +6,7 @@ exports.Player = function Player(aUsername) {
         self.username = aUsername;
         self.inventory = [];
         self.hitPoints = 100;
+        self.maxCarryingWeight = 50;
         self.killedCount = 0;
         self.eatenRecently = true; // support for hunger and sickness
         self.bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
@@ -49,10 +50,23 @@ exports.Player = function Player(aUsername) {
 
         return 'you are carrying: '+list;
     }	
+
+    Player.prototype.getInventoryWeight = function() {
+        self = this;
+        if (self.inventory.length==0){return ''};
+        var inventoryWeight = 0
+        for(var i = 0; i < self.inventory.length; i++) {
+                inventoryWeight+=self.inventory[i].getWeight();
+        }
+        return inventoryWeight;
+    }
     
     Player.prototype.addToInventory = function(anObject) {
         self = this;
         if (anObject != undefined) {
+            if ((anObject.getWeight()+self.getInventoryWeight())>self.maxCarryingWeight) {
+                return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+anObject.getName();
+            }
             self.inventory.push(anObject);
             console.log(anObject+' added to inventory');
             return 'You are now carrying '+anObject.getDescription();

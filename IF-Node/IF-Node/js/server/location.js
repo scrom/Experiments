@@ -106,9 +106,11 @@ exports.Location = function Location(aName, aDescription) {
         self = this;
         var fullDescription = self.description;
         if (self.objects.length > 0) {
-            fullDescription+='<br>You see: '+self.listObjects()+' here.';
+            //clean up grammar here (there is/there are)
+            fullDescription+='<br>You can see '+self.listObjects()+'.';
         }
         if (self.exits.length > 0) {
+            //clean the grammar up here.
             fullDescription+='<br>Exits are: '+self.listExits()+'.';
         }
 
@@ -127,7 +129,8 @@ exports.Location = function Location(aName, aDescription) {
         var exitList = ''
         for(var i = 0; i < self.exits.length; i++) {
             if (self.exits[i].isVisible()){
-                if (i>0){exitList+=', ';}
+                if ((i>0)&&(i<self.exits.length-1)){exitList+=', ';}
+                if ((i==self.exits.length-1)&&(i>0)){exitList+=' and ';}
                 exitList+=self.exits[i].getLongName();
             }
         }
@@ -138,8 +141,8 @@ exports.Location = function Location(aName, aDescription) {
         self = this
         var list = ''
         for(var i = 0; i < self.objects.length; i++) {
-                if (i>0){list+=', ';}
-                if ((i==self.objects.length-1)&&(i>0)){list+='and ';}
+                if ((i>0)&&(i<self.objects.length-1)){list+=', ';}
+                if ((i==self.objects.length-1)&&(i>0)){list+=' and ';}
                 list+=self.objects[i].getDescription();
         }
 

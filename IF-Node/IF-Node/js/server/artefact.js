@@ -42,6 +42,10 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         return self.detailedDescription;
     }
 
+    Artefact.prototype.getWeight = function() {
+        self = this;
+        return self.weight;
+    }
     Artefact.prototype.hit = function(pointsToRemove) {
         self = this;
         if (!(self.damaged)) {
