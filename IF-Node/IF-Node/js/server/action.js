@@ -161,7 +161,12 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     if ((self.location.objectExists(self.object0)||self.player.checkInventory(self.object0))&&(self.object1!='')) {
                         if (self.location.getObject(self.object1).getType() == 'creature') { //@bug = if object 1 isn't in the location, this will blow up
                             if (self.location.objectExists(self.object0)) {
-                                description = self.location.getObject(self.object1).give((self.location.removeObject(self.object0)));
+                                var objectToGive = self.location.removeObject(self.object0);
+                                if (objectToGive) {
+                                    description = self.location.getObject(self.object1).give(objectToGive);
+                                } else {
+                                    description = "You can't give that to the "+self.object1;
+                                }
                             } else {//assume you must be carrying it instead...
                                 description = self.location.getObject(self.object1).give((self.player.removeFromInventory(self.object0)));
                             }
@@ -291,11 +296,16 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                                 description = self.player.addToInventory((self.location.removeObject(self.object1)));
                             } else {//assume creature must be carrying it instead...
                                 if (self.location.getObject(self.object0).checkInventory(self.object1)) {
-                                    var objectToReceive = self.location.getObject(self.object0).take(self.object1);
-                                    if (objectToReceive) {
-                                        description = self.player.addToInventory((objectToReceive));
+                                    var testObject = self.location.getObject(self.object0).getObject(self.object1);
+                                    if (self.player.canCarry(testObject)) {
+                                        var objectToReceive = self.location.getObject(self.object0).take(self.object1);
+                                        if (objectToReceive) {
+                                            description = self.player.addToInventory((objectToReceive));
+                                        } else {
+                                            description = "The "+self.object0+" doesn't want to share with you.";
+                                        }
                                     } else {
-                                        description = "The "+self.object0+" doesn't want to share with you.";
+                                        description = "It's too heavy. You may need to get rid of some things you're carrying first.";
                                     }
                                 } else {
                                     description = "The "+self.object0+" has no "+self.object1+" to give.";

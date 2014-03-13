@@ -60,6 +60,16 @@ exports.Player = function Player(aUsername) {
         }
         return inventoryWeight;
     }
+
+    Player.prototype.canCarry = function(anObject) {
+        self = this;
+        if (anObject != undefined) {
+            if ((anObject.getWeight()+self.getInventoryWeight())>self.maxCarryingWeight) {
+                return false;
+            }
+            return true;
+        } else {return false;}
+    }
     
     Player.prototype.addToInventory = function(anObject) {
         self = this;

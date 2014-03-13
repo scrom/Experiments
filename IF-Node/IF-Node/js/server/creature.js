@@ -116,7 +116,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             self.inventory.push(anObject);
             console.log(anObject+' added to inventory');
             return 'The '+self.name+' is now carrying '+anObject.getDescription();
-        } else {return "sorry, the "+self.name+" can't hold that.";}
+        } else {return "Sorry, the "+self.name+" can't carry that.";}
     }
     
     Creature.prototype.removeFromInventory = function(anObject) {
@@ -136,8 +136,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.give = function(anObject) {
         self = this;
-        self.affinity++;
-        return 'That was kind. '+self.addToInventory(anObject);
+        if(anObject) { 
+            self.affinity++;
+            return 'That was kind. '+self.addToInventory(anObject);
+        }
+        return '';
     }
     Creature.prototype.take = function(anObject) {
         self = this;
