@@ -1,6 +1,6 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someWeight, aType, someHealth, carrying) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someWeight, aType, someHealth, attitude, carrying) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.name = aname;
@@ -9,6 +9,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.weight = someWeight;
         self.type = aType;
         self.hitPoints = someHealth;
+        self.affinity = attitude //goes up if you're nice to the creature, goes down if you're not.
         self.inventory = [];
         self.collectable = false; //can't carry a living creature
         self.edible = false; //can't eat a living creature
@@ -58,9 +59,16 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         return self.description;
     }
 
+    Creature.prototype.getAffinity = function() {
+        self = this;
+        if (self.affinity >0) {return 'It seems to like you.'};
+        if (self.affinity <0) {return 'It appears to be unhappy with you for some reason.'};
+        return ''; //neutral
+    }
+
     Creature.prototype.getDetailedDescription = function() {
         self = this;
-        return self.getInventory()+' '+self.detailedDescription;
+        return self.getInventory()+' '+self.detailedDescription+' '+self.getAffinity();
     }
 
     Creature.prototype.getType = function() {
@@ -120,6 +128,20 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return "The "+self.name+"+ isn't carrying: "+anObject;
         }
     }
+
+    Creature.prototype.give = function(anObject) {
+        self = this;
+        self.affinity++;
+        return 'That was kind. '+self.addToInventory(anObject);
+    }
+    Creature.prototype.take = function(anObject) {
+        self = this;
+        if (self.affinity >0) {
+            self.affinity--;
+            return self.removeFromInventory(anObject);
+        }
+        return null;
+    }
      
     Creature.prototype.checkInventory = function(anObject) {
         self = this;
@@ -168,6 +190,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.hit = function(pointsToRemove) {
         self = this;
         if (self.hitPoints <=0) {return "It's dead already."};
+        self.affinity--;
         self.hitPoints -= pointsToRemove;
         if (self.hitPoints <=0) {return self.kill();}
         return 'You attack the '+self.name+'. '+self.health()
@@ -176,12 +199,14 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.heal = function(pointsToAdd) {
         self = this;
+        self.affinity++;
         self.hitPoints += pointsToAdd;
         console.log('Creature healed, gains '+pointsToAdd+' HP. HP remaining: '+self.hitPoints);
     }
 
     Creature.prototype.feed = function(pointsToAdd) {
         self = this;
+        self.affinity++;
         self.heal(pointsToAdd);
         console.log('Creature eats some food.');
     }
@@ -247,6 +272,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.moveOrOpen = function(aVerb) {
         self = this;
+        self.affinity--;
         if (aVerb == 'push'||aVerb == 'pull') {return "The "+self.name+" really doesn't appreciate being pushed around."};
         //open
         return "I suggest you don't try to "+aVerb+" the "+self.name+" again, it's not going to end well.";
@@ -261,10 +287,6 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self = this;
         return self.edible;
     }
-
-     Creature.prototype.type = function(){//
-        return objectName;
-     }
 
 return this;	
 }

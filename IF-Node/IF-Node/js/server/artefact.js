@@ -114,8 +114,5 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         return self.edible;
     }
 
-     Artefact.prototype.type = function(){//
-        return objectName;
-     }
 return this;
 }
