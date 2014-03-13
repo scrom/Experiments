@@ -132,7 +132,7 @@ exports.Player = function Player(aUsername) {
         self = this;
         var index = (getIndexIfObjectExists(self.inventory,'type','weapon'));
         if (index>-1) {
-            console.log('Player is carrying weapon: '+self.inventory[index].name);
+            console.log('Player is carrying weapon: '+self.inventory[index].getName());
             return true;
         }
         return false;

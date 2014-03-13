@@ -59,16 +59,21 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         return self.description;
     }
 
-    Creature.prototype.getAffinity = function() {
+    Creature.prototype.getAffinityDescription = function() {
         self = this;
         if (self.affinity >0) {return 'It seems to like you.'};
         if (self.affinity <0) {return 'It appears to be unhappy with you for some reason.'};
         return ''; //neutral
     }
 
+    Creature.prototype.getAffinity = function() {
+        self = this;
+        return self.affinity; 
+    }
+
     Creature.prototype.getDetailedDescription = function() {
         self = this;
-        return self.getInventory()+' '+self.detailedDescription+' '+self.getAffinity();
+        return self.getInventory()+' '+self.detailedDescription+' '+self.getAffinityDescription();
     }
 
     Creature.prototype.getType = function() {
@@ -162,7 +167,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         //remove self from current location (if set)
         if (self.currentLocation != undefined){
-            self.currentLocation.removeCreature(self.getName());
+            self.currentLocation.removeObject(self.getName());
         }
         //change current location
         self.currentLocation = aLocation;
@@ -172,14 +177,14 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         }
 
         //add to new location
-        self.currentLocation.addCreature(self.getName());
+        self.currentLocation.addObject(self);
 
         var returnMessage ='';
         //if (aDirection != undefined) {
-            returnMessage = 'Current location: '+self.currentLocation.name+'<br>';
+            returnMessage = 'The '+self.name+' wanders to the '+self.currentLocation.name+'<br>';
         //}
         console.log('Creature GO: '+returnMessage);
-        return returnMessage+self.currentLocation.describe();
+        return returnMessage;
     }	
 
     Creature.prototype.getLocation = function() {
@@ -233,7 +238,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                     return "It's the picture of health.";
                     break;
                 case (self.hitPoints>80):
-                    return "It's just getting warmed up.";
+                    return "It's not happy.";
                     break;
                 case (self.hitPoints>50):
                     return "It's taken a fair beating.";

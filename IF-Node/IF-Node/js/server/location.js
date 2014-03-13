@@ -149,10 +149,31 @@ exports.Location = function Location(aName, aDescription) {
         return list;
     }
 
+    Location.prototype.creaturesExist = function() {
+        self = this;
+        var index = (getIndexIfObjectExists(self.objects,'type','creature'));
+        if (index>-1) {
+            console.log('Location contains at least one creature: '+self.objects[index].getName());
+            return true;
+        }
+        return false;
+    }
+
+    Location.prototype.getFriendlyCreature = function() {
+        self = this;
+        var index = (getIndexIfObjectExists(self.objects,'type','creature'));
+        if (index>-1) {
+            if (self.objects[index].getAffinity() > 0) {
+                return self.objects[index];
+            }
+        }
+        return null;
+    }
+
     Location.prototype.identifyThing = function(anObjectOrCreature) {
         self = this
         var anObject = self.getObject(anObjectOrCreature);
-        if (anObject != undefined) {return aCreature.type();}
+        if (anObject != undefined) {return aCreature.getType();}
         return null;
     }
 return this;

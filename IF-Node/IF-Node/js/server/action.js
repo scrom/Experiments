@@ -387,8 +387,15 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                             } else {
                                 console.log('location: '+exitName+' not found');                  
                         }
-                    
-                        description = self.player.go(aDirection,newLocation);
+
+                        //implement creature following here
+                        var friend = self.location.getFriendlyCreature();
+                        if (friend) {
+                            description = friend.go(aDirection,newLocation);
+                        }  
+                                          
+                        description += self.player.go(aDirection,newLocation);                      
+
                     } else {
                         description = 'no exit '+self.verb;
                     }
