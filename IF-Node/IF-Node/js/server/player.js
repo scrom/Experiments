@@ -122,12 +122,13 @@ exports.Player = function Player(aUsername) {
             } 
         }
         self.currentLocation = aLocation;
+        self.currentLocation.addVisit();
         if (self.startLocation == undefined) {
             self.startLocation = self.currentLocation;
         }
         var returnMessage ='';
         //if (aDirection != undefined) {
-            returnMessage = 'Current location: '+self.currentLocation.name+'<br>';
+            returnMessage = 'Current location: '+self.currentLocation.getName()+'<br>';
         //}
         console.log('GO: '+returnMessage);
         return returnMessage+self.currentLocation.describe();

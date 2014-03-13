@@ -139,6 +139,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'status':
                     description = self.player.status()+'<br><br>'+self.location.describe();
                     break;
+                case 'visits':
+                    description = self.location.getVisits();
+                    break;
                 case 'inv':
                     description = self.player.getInventory();
                     break;

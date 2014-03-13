@@ -124,6 +124,17 @@ exports.Location = function Location(aName, aDescription) {
         self = this
         return self.name;
     }
+    Location.prototype.addVisit = function() {
+        self = this
+        self.visits++;
+    }
+    Location.prototype.getVisits = function() {
+        self = this
+        var returnString = "You have visited this location ";
+        if (self.visits == 1) {return returnString+"once."}
+        if (self.visits == 2) {return returnString+"twice."}
+        return returnString+self.visits+" times.";
+    }
     Location.prototype.listExits = function() {
         self = this
         var exitList = ''
