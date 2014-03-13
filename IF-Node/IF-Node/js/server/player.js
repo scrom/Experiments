@@ -128,6 +128,16 @@ exports.Player = function Player(aUsername) {
         return self.currentLocation;
     }	
 
+    Player.prototype.isArmed = function() {
+        self = this;
+        var index = (getIndexIfObjectExists(self.inventory,'type','weapon'));
+        if (index>-1) {
+            console.log('Player is carrying weapon: '+self.inventory[index].name);
+            return true;
+        }
+        return false;
+    }
+
     Player.prototype.hit = function(pointsToRemove) {
         self = this;
         self.hitPoints -= pointsToRemove;

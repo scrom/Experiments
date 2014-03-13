@@ -1,14 +1,15 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someWeight, someHealth, carrying) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someWeight, aType, someHealth, carrying) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.name = aname;
         self.description = aDescription;
         self.detailedDescription = aDetailedDescription;
-        self.inventory = [];
-        self.hitPoints = someHealth;
         self.weight = someWeight;
+        self.type = aType;
+        self.hitPoints = someHealth;
+        self.inventory = [];
         self.collectable = false; //can't carry a living creature
         self.edible = false; //can't eat a living creature
         self.startLocation;
@@ -41,7 +42,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     catch(err) {
 	    console.log('Unable to create Creature object: '+err);
     }
- 
+
+    Creature.prototype.toString = function() {
+        self = this;
+        return '{"name":"'+self.name+'"}';
+    } 
       
     Creature.prototype.getName = function() {
         self = this;
@@ -56,6 +61,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.getDetailedDescription = function() {
         self = this;
         return self.getInventory()+' '+self.detailedDescription;
+    }
+
+    Creature.prototype.getType = function() {
+        self = this;
+        return self.type;
     }
 
     Creature.prototype.getWeight = function() {

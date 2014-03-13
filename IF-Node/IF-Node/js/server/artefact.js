@@ -1,12 +1,13 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, someWeight, canCollect, canMove, canOpen, isEdible, linkedExit) { 
+exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, someWeight, aType, canCollect, canMove, canOpen, isEdible, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.name = aName;
         self.description = aDescription;
         self.detailedDescription = aDetailedDescription;
         self.weight = someWeight;
+        self.type = aType;
         self.linkedExit = linkedExit;
         self.collectable = canCollect;
         self.mobile = canMove;
@@ -16,6 +17,15 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self.damaged = false;
 
 	    var objectName = "Artefact";
+
+        var validateType = function() {
+            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container'];
+            if (validobjectTypes.indexOf(self.type) == -1) { throw self.type+" is not a valid artefact type."}//
+            console.log(self.name+' type validated: '+self.type);
+        }
+
+        validateType();
+
         console.log(objectName + ' created: '+self.name+', '+self.destinationName);
     }
     catch(err) {
@@ -40,6 +50,11 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
     Artefact.prototype.getDetailedDescription = function() {
         self = this;
         return self.detailedDescription;
+    }
+
+    Artefact.prototype.getType = function() {
+        self = this;
+        return self.type;
     }
 
     Artefact.prototype.getWeight = function() {

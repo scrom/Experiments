@@ -258,8 +258,14 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     if (self.location.objectExists(self.object0)||self.player.checkInventory(self.object0)) {
                         console.log('hitting '+self.object0+' with '+self.object1);
                         if ((self.object1 == "")||(self.object1 == undefined)) {
-                            description = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something.";
-                            description += self.player.hit(25);
+                            if (self.player.isArmed()) {
+                                var anObject = self.player.getObject(self.object0);
+                                if (!(anObject)) {anObject = self.location.getObject(self.object0);}
+                                description = anObject.hit(25); //
+                            } else {
+                                description = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something or be carrying a weapon.";
+                                description += self.player.hit(25);
+                            }
                         } else {
                             if (self.location.objectExists(self.object1)||self.player.checkInventory(self.object1)) {
                                 var anObject = self.player.getObject(self.object0);
