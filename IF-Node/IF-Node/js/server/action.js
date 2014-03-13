@@ -392,7 +392,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         var friend = self.location.getFriendlyCreature();
                         if (friend) {
                             description = friend.go(aDirection,newLocation);
-                        }  
+                        }  else {
+                            description = ''; //clear description
+                        }
                                           
                         description += self.player.go(aDirection,newLocation);                      
 
