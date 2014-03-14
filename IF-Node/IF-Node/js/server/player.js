@@ -282,11 +282,28 @@ exports.Player = function Player(aUsername) {
         console.log('player healed, gains '+pointsToAdd+' HP. HP remaining: '+self.hitPoints);
     }
 
-    Player.prototype.eat = function(pointsToAdd) {
+    Player.prototype.eat = function(verb, artefactName) {
         self = this;
-        self.heal(pointsToAdd);
-        self.eatenRecently = true;
-        console.log('player eats some food.');
+        if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
+    
+        var objectExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+        if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";}
+
+        //the object does exist
+        var locationArtefact = self.currentLocation.getObject(artefactName);
+        var playerArtefact = self.getObject(artefactName);
+        var artefact;
+        if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+        var result = artefact.eat(self); //trying to eat some things give interesting results.
+        if (artefact.isEdible()) {
+            //consume it
+            if (locationArtefact){self.currentLocation.removeObject(artefactName)};
+            if (playerArtefact){self.removeFromInventory(artefactName)};
+            self.eatenRecently = true;
+            console.log('player eats some food.');
+        }
+
+        return result;
     }
 
     Player.prototype.killPlayer = function(){//

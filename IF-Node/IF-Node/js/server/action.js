@@ -156,13 +156,13 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     break;
                 case 'take':
                 case 'get': //add support for "all" later
-                        description = self.player.get(self.verb, self.object0);
+                    description = self.player.get(self.verb, self.object0);
                     break;
                 case 'give':
-                        description = self.player.give(self.verb, self.object0,self.object1);
+                    description = self.player.give(self.verb, self.object0,self.object1);
                     break;
                 case 'drop':
-                        description = self.player.drop(self.verb, self.object0);
+                    description = self.player.drop(self.verb, self.object0);
                     break;
                 case 'push':
                 case 'pull':
@@ -178,25 +178,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'bite':
                 case 'chew':
                 case 'eat':
-                    if (self.location.objectExists(self.object0)) {
-                        anObject = self.location.getObject(self.object0);
-                        description = anObject.eat(self.player);
-                        if (anObject.isEdible()) {
-                            self.location.removeObject(self.object0);
-                        }
-                    } else if (self.player.checkInventory(self.object0)) {
-                        anObject = self.player.getObject(self.object0);
-                        description = anObject.eat(self.player);
-                        if (anObject.isEdible()) {
-                            self.player.removeFromInventory(self.object0);
-                        }
-                    } else {
-                        if ((self.object0!="")) {
-                            description = "There is no "+self.object0+" here and you're not carrying any either.";
-                        } else {
-                            description = self.verb+' what?'
-                        }
-                    }
+                    description = self.player.eat(self.verb, self.object0);
                     break;
                 case 'attack':
                 case 'hit':
