@@ -50,6 +50,8 @@
     <Compile Include="js\server\server.js" />
     <Compile Include="js\server\simpleObject.js" />
     <Compile Include="js\server\tests.js" />
+    <Compile Include="js\server\test\test-creature.test.js" />
+    <Compile Include="js\server\test\test-simpleObject.test.js" />
     <Content Include="css\main.css" />
     <Content Include="index.html" />
     <Content Include="package.json" />
@@ -60,6 +62,7 @@
     <Folder Include="js\" />
     <Folder Include="js\client\" />
     <Folder Include="js\server\" />
+    <Folder Include="js\server\test\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
   <ProjectExtensions>

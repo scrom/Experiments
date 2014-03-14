@@ -73,7 +73,13 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     }                   
                     return objectPair; //exit the loop early
                 } //end if
-             }
+
+                //support case where first word of string is a "split" word
+                if (aString.indexOf(splitWordArray[i]+' ') == 0) {
+                    return ["",aString.substr(aString.indexOf(' '))];
+                }
+
+            }
             //no match, return what we started with
             console.log('no split');
             return [aString,'']; //we add in a dummy second element for now
@@ -99,6 +105,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
         }
 
+        /*Allow player to give an object to a recipient
+        */
         var give = function(artefactName, receiverName){
             if ((artefactName == "")||(artefactName == undefined)) { return self.verb+" what?"};
             if(receiverName==""||(receiverName == undefined)) {return self.verb+" "+artefactName+" to what?"};
@@ -138,6 +146,18 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             if (playerArtefact) {
                 return receiver.give((self.player.removeFromInventory(artefactName)));
             }
+        }
+
+        var say = function(speech, receiverName){
+            if ((speech == "")||(speech == undefined)) { return self.verb+" what?"};
+            if(receiverName==""||(receiverName == undefined)) {return self.verb+" "+speech+" to what?"};
+
+            //check receiver exists and is a creature
+            var receiver = self.location.getObject(receiverName);
+            if (!(receiver)) {return "There is no "+receiverName+" here.";}
+
+            //we'll only get this far if there is a valid receiver
+            return receiver.reply(speech);
         }
 
         //unpack action results JSON
@@ -359,6 +379,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         if (self.object1) {description+= ' at the '+self.object1} //note combined object/creature here
                         description+=". Your arms get tired and you feel slightly awkward.";   
                     break;
+                case 'say':
+                case 'sing': //will need to support "sing to creature" and "sing to object" 
+                case 'shout': //will need to support "shout at creature" and "shout at object" 
+                    description = say(self.object0,self.object1);
+                    break;
                 case 'kill':
                 case 'throw':
                 case 'rub':
@@ -370,9 +395,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'light':
                 case 'extinguish':
                 case 'unlight':
-                case 'say':
-                case 'sing': //will need to support "sing to creature" and "sing to object" 
-                case 'shout': //will need to support "shout at creature" and "shout at object" 
                 case 'read':
                 case 'climb':
                 case 'jump':

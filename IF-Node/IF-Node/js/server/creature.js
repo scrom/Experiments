@@ -136,7 +136,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             }
             self.inventory.push(anObject);
             console.log(anObject+' added to '+self.name+' inventory');
-            return 'The '+self.name+' is now carrying '+anObject.getDescription();
+            return "The "+self.name+" is now carrying "+anObject.getDescription();
         } else {return "Sorry, the "+self.name+" can't carry that.";}
     }
     
@@ -305,6 +305,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         if (aVerb == 'push'||aVerb == 'pull') {return "The "+self.name+" really doesn't appreciate being pushed around."};
         //open
         return "I suggest you don't try to "+aVerb+" the "+self.name+" again, it's not going to end well.";
+    }
+
+    Creature.prototype.reply = function(someSpeech) {
+        self = this;
+        //self.affinity--; (would be good to respond based on positive or hostile words here)
+        return "The "+self.name+" says '"+someSpeech+"' to you too.";
     }
 
     Creature.prototype.isCollectable = function() {

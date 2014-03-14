@@ -119,6 +119,11 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         }
     }
 
+    Artefact.prototype.reply = function(someSpeech) {
+        self = this;
+        return "The "+self.name+", is quietly aware of the sound of your voice but shows no sign of response.";
+    }
+
     Artefact.prototype.isCollectable = function() {
         self = this;
         return self.collectable;
