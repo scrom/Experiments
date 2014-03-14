@@ -1,7 +1,7 @@
 ﻿"use strict";
 //exit object - manage exists from locations
                                     //aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying
-exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, linkedExit) { 
+exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.name = aName;
@@ -17,9 +17,9 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self.edible = isEdible;
         self.chewed = false;
         self.damaged = false;
-        /*
-        self.breakable = breakable;
+        self.breakable = isBreakable;
         self.broken = false;
+        /*
         self.mendable = mendable;
         self.uses = uses;
         self.rechargable = rechargable;
@@ -76,11 +76,31 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self = this;
         return false; //at the moment objects can't carry anything
     }
-    Artefact.prototype.hit = function(pointsToRemove) {
+
+    Artefact.prototype.bash = function() {
         self = this;
+        //if you mistreat something breakable more than once it breaks.
+        if ((self.breakable)&&(self.damaged)) {
+            self.broken = true;
+            self.detailedDescription += " It's broken.";
+            return "You broke it!"
+        }
         if (!(self.damaged)) {
             self.damaged = true;
-            self.detailedDescription += ' and shows signs of damage beyond normal expected wear and tear.';
+            self.detailedDescription += " It shows signs of being dropped.";
+        }
+        return "";
+    }
+    Artefact.prototype.hit = function(pointsToRemove) {
+        self = this;
+        if (self.breakable) {
+            self.broken = true;
+            self.detailedDescription += " It's broken.";
+            return "You broke it!"
+        }
+        if (!(self.damaged)) {
+            self.damaged = true;
+            self.detailedDescription += " and shows signs of damage beyond normal expected wear and tear.";
         }
         return "Ding! You repeatedly bash the "+self.name+". It feels good in a gratuitously violent sort of way."
     }

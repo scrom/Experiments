@@ -41,6 +41,7 @@ exports.Player = function Player(aUsername) {
 
     Player.prototype.getInventory = function() {
         self = this;
+        if (self.inventory.length == 0) {return "You're not carrying anything."}
         var list = ''
         for(var i = 0; i < self.inventory.length; i++) {
                 if (i>0){list+=', ';}
@@ -48,7 +49,7 @@ exports.Player = function Player(aUsername) {
                 list+=self.inventory[i].getDescription();
         }
 
-        return 'you are carrying: '+list;
+        return "You're carrying "+list+".";
     }	
 
     Player.prototype.getInventoryWeight = function() {
@@ -129,6 +130,15 @@ exports.Player = function Player(aUsername) {
         
         return self.addToInventory(collectedArtefact);
           
+    }
+
+    /*allow player to drop an object*/
+    Player.prototype.drop = function(verb, artefactName) {
+        if ((artefactName=="")||(artefactName==undefined)) {return verb+" what?";};
+        if (!(self.checkInventory(artefactName))) {return "You're not carrying any "+artefactName;}
+        var artefactDamage = self.getObject(artefactName).bash(); //should be careful dropping things
+        self.currentLocation.addObject(self.removeFromInventory(artefactName));
+        return "You dropped the "+artefactName+". "+artefactDamage;
     }
 
     /*Allow player to give an object to a recipient*/

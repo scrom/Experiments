@@ -174,16 +174,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         description = self.player.give(self.verb, self.object0,self.object1);
                     break;
                 case 'drop':
-                    if (self.player.checkInventory(self.object0)) {
-                        self.location.addObject(self.player.removeFromInventory(self.object0));
-                        description = 'You dropped: '+self.object0;
-                    } else {
-                        if ((self.object0!="")) {
-                            description = 'You are not carrying: '+self.object0;
-                        } else {
-                            description = self.verb+' what?'
-                        }
-                    }
+                        description = self.player.drop(self.verb, self.object0);
                     break;
                 case 'push':
                 case 'pull':

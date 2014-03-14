@@ -85,14 +85,15 @@ exports.Map = function Map() { //inputs for constructor TBC
 
 
         //populate objects
-        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('sword', 'a short sword', "It's kind of rusty and crappy-looking", 3, 'weapon', true, false, false, false, null));
-        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('chest', 'a treasure chest', "It's locked, very heavy and smells of fish", 50, 'junk', true, false, false, false, null));
-        self.locations[location2].addObject(new artefactObjectModule.Artefact('door', 'a large door', 'It looks unlocked', 500, 'door', false, false, true, false, exitToHide));
-        self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it", 1, 'food', true, false, false, true, null));
+        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('sword', 'a short sword', "It's kind of rusty and crappy-looking.", 3, 'weapon', true, false, false, false, false, null));
+        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('ball', 'a glass ball', "It looks fragile.", 3, 'treasure', true, false, false, false, true, null));
+        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('chest', 'a treasure chest', "It's locked, very heavy and smells of fish.", 50, 'junk', true, false, false, false, false, null));
+        self.locations[location2].addObject(new artefactObjectModule.Artefact('door', 'a large door', 'It looks unlocked.', 500, 'door', false, false, true, false, false, exitToHide));
+        self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it.", 1, 'food', true, false, false, true, false, null));
         
-        var trollTreasure = new artefactObjectModule.Artefact('coins', 'a few gold coins', "Enough to buy some food", 1, 'money', true, false, false, false, null)
+        var trollTreasure = new artefactObjectModule.Artefact('coins', 'a few gold coins', "Enough to buy some food.", 1, 'money', true, false, false, false, false, null)
                                                    //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-        var troll = new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry", 120, 'creature', 51, 115, 0, [trollTreasure]);
+        var troll = new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry.", 120, 'creature', 51, 115, 0, [trollTreasure]);
         troll.go(null,self.locations[location3]);
         //self.locations[initialLocation].addExit('n',self.locations[location2].getName());
         //self.locations[location2].addExit('s',self.locations[initialLocation].getName());
