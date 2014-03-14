@@ -105,18 +105,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
         }
 
-        var say = function(speech, receiverName){
-            if ((speech == "")||(speech == undefined)) { return self.verb+" what?"};
-            if(receiverName==""||(receiverName == undefined)) {return self.verb+" "+speech+" to what?"};
-
-            //check receiver exists and is a creature
-            var receiver = self.location.getObject(receiverName);
-            if (!(receiver)) {return "There is no "+receiverName+" here.";}
-
-            //we'll only get this far if there is a valid receiver
-            return receiver.reply(speech);
-        }
-
         //unpack action results JSON
         convertActionToElements(anActionString); //extract object, description, json
         console.log(objectName + ' created');
@@ -179,16 +167,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'push':
                 case 'pull':
                 case 'open': 
-                    if (self.location.objectExists(self.object0)) {
-                        var anObject = self.location.getObject(self.object0);
-                        description = anObject.moveOrOpen(self.verb);
-                    } else {
-                        if ((self.object0!="")) {
-                            description = "There is no "+self.object0+" here.";
-                        } else {
-                            description = self.verb+' what?'
-                        }
-                    }
+                    description = self.player.open(self.verb, self.object0);
                     break;
                 case 'close':
                     if (self.location.objectExists(self.object0)) {
@@ -322,7 +301,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'say':
                 case 'sing': //will need to support "sing to creature" and "sing to object" 
                 case 'shout': //will need to support "shout at creature" and "shout at object" 
-                    description = say(self.object0,self.object1);
+                    description = self.player.say(self.verb, self.object0,self.object1);
                     break;
                 case 'kill':
                 case 'throw':

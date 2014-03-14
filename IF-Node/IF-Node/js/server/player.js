@@ -185,6 +185,26 @@ exports.Player = function Player(aUsername) {
             }
         }
 
+    Player.prototype.say = function(verb, speech, receiver) {
+            if ((speech == "")||(speech == undefined)) { return verb+" what?"};
+            if(receiverName==""||(receiverName == undefined)) {return verb+" "+speech+" to what?"};
+
+            //check receiver exists
+            var receiver = self.currentLocation.getObject(receiverName);
+            if (!(receiver)) {return "There is no "+receiverName+" here.";}
+
+            //we'll only get this far if there is a valid receiver
+            return receiver.reply(speech);
+    }
+
+    Player.prototype.open = function(verb,artefactName) {
+        //note artefact could be a creature!
+        if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?"};
+        var artefact = self.currentLocation.getObject(artefactName);
+        if (!(artefact)) { return "There is no "+artefactName+" here."}
+        return artefact.moveOrOpen(verb);
+    }
+
     Player.prototype.go = function(aDirection, aLocation) {
         self = this;
         self.moves++;
