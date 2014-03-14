@@ -74,6 +74,7 @@ exports.Player = function Player(aUsername) {
     Player.prototype.addToInventory = function(anObject) {
         self = this;
         if (anObject != undefined) {
+            //this "if" statement is a redundant safety net ("get" traps the same issue)
             if ((anObject.getWeight()+self.getInventoryWeight())>self.maxCarryingWeight) {
                 return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+anObject.getName();
             }
@@ -111,6 +112,68 @@ exports.Player = function Player(aUsername) {
         var index = (getIndexIfObjectExists(self.inventory,'name',anObject));
         return self.inventory[index];
     }
+
+    /*Allow player to get an object from a location*/
+    Player.prototype.get = function(verb, artefactName) {
+        if ((artefactName=="")||(artefactName==undefined)) {return verb+' what?';};
+        if (!(self.currentLocation.objectExists(artefactName))) {return "There is no "+artefactName+" here.";}
+
+        var artefact = self.currentLocation.getObject(artefactName); 
+
+        //we'll only get this far if there is an object to collect note the object *could* be a live creature!
+        if (!(artefact.isCollectable())) {return  "Sorry, you can't pick that up.";}
+        if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName; }  
+        
+        var collectedArtefact = self.currentLocation.removeObject(artefactName);
+        if (!(collectedArtefact)) { return  "Sorry, you can't pick that up."; } //just in case it fails for any other reason.
+        
+        return self.addToInventory(collectedArtefact);
+          
+    }
+
+    /*Allow player to give an object to a recipient*/
+    Player.prototype.give = function(verb, artefactName, receiverName){
+            if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?"};
+            if(receiverName==""||(receiverName == undefined)) {return verb+" "+artefactName+" to what?"};
+
+            var objectExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+            if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either."};
+
+            //the object does exist
+            var locationArtefact = self.currentLocation.getObject(artefactName);
+            var playerArtefact = self.getObject(artefactName);
+            var artefact;
+            if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+
+            //check receiver exists and is a creature
+            var receiver = self.currentLocation.getObject(receiverName);
+            var creatureExists = false;
+            if (receiver) { 
+                if (receiver.getType() == 'creature') {
+                    creatureExists = true
+                } else {
+                    return  "Whilst the "+receiverName+", deep in it's inanimate psyche would love to receive your kind gift. It feels in appropriate to do so."; 
+                };
+            } else {
+                return "There is no "+receiverName+" here.";
+            };
+
+            //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
+            if (!(receiver.canCarry(artefact))) { return  "Sorry, the "+receiverName+" can't carry that. It's too heavy for them at the moment."; }
+
+            //we know they *can* carry it...
+            if (locationArtefact) {
+                if (!(artefact.isCollectable())) {return  "Sorry, the "+receiverName+" can't pick that up.";}
+
+                var collectedArtefact = self.currentLocation.removeObject(artefactName);
+                if (!(collectedArtefact)) { return  "Sorry, the "+receiverName+" can't pick that up."; }
+                    return receiver.give(collectedArtefact);
+                }
+
+            if (playerArtefact) {
+                return receiver.give((self.removeFromInventory(artefactName)));
+            }
+        }
 
     Player.prototype.go = function(aDirection, aLocation) {
         self = this;

@@ -105,7 +105,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 list+=self.inventory[i].getDescription();
         }
 
-        return self.description+' is carrying '+list+'.';
+        return "It's carrying "+list+".";
     }	
 
     Creature.prototype.getInventoryWeight = function() {

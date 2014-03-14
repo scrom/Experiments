@@ -105,49 +105,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
 
         }
 
-        /*Allow player to give an object to a recipient
-        */
-        var give = function(artefactName, receiverName){
-            if ((artefactName == "")||(artefactName == undefined)) { return self.verb+" what?"};
-            if(receiverName==""||(receiverName == undefined)) {return self.verb+" "+artefactName+" to what?"};
-
-            var objectExists = (self.location.objectExists(artefactName)||self.player.checkInventory(artefactName));
-            if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either."};
-
-            //the object does exist
-            var locationArtefact = self.location.getObject(artefactName);
-            var playerArtefact = self.player.getObject(artefactName);
-            var artefact;
-            if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
-
-            //check receiver exists and is a creature
-            var receiver = self.location.getObject(receiverName);
-            var creatureExists = false;
-            if (receiver) { 
-                if (receiver.getType() == 'creature') {
-                    creatureExists = true
-                } else {
-                    return  "Whilst the "+receiverName+", deep in it's inanimate psyche would love to receive your kind gift. It feels in appropriate to do so."; 
-                };
-            } else {
-                return "There is no "+receiverName+" here.";
-            };
-
-            //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-            if (!(receiver.canCarry(artefact))) { return  "Sorry, the "+receiverName+" can't carry that. It's too heavy for them at the moment."; }
-
-            //we know they *can* carry it...
-            if (locationArtefact) {
-                var collectedArtefact = self.location.removeObject(artefactName);
-                if (!(collectedArtefact)) { return  "Sorry, the "+receiverName+" can't pick that up."; }
-                    return receiver.give(collectedArtefact);
-                }
-
-            if (playerArtefact) {
-                return receiver.give((self.player.removeFromInventory(artefactName)));
-            }
-        }
-
         var say = function(speech, receiverName){
             if ((speech == "")||(speech == undefined)) { return self.verb+" what?"};
             if(receiverName==""||(receiverName == undefined)) {return self.verb+" "+speech+" to what?"};
@@ -211,18 +168,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     break;
                 case 'take':
                 case 'get': //add support for "all" later
-                    if (self.location.objectExists(self.object0)) {
-                        description = self.player.addToInventory(self.location.removeObject(self.object0));
-                    } else {
-                        if ((self.object0!="")) {
-                            description = "There is no "+self.object0+" here.";
-                        } else {
-                            description = self.verb+' what?'
-                        }
-                    }
+                        description = self.player.get(self.verb, self.object0);
                     break;
                 case 'give':
-                        description = give(self.object0,self.object1);
+                        description = self.player.give(self.verb, self.object0,self.object1);
                     break;
                 case 'drop':
                     if (self.player.checkInventory(self.object0)) {
