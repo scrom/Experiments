@@ -91,7 +91,9 @@ exports.Map = function Map() { //inputs for constructor TBC
         self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it", 1, 'food', true, false, false, true, null));
         
         var trollTreasure = new artefactObjectModule.Artefact('coins', 'a few gold coins', "Enough to buy some food", 1, 'money', true, false, false, false, null)
-        self.locations[location3].addObject(new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry", 120, 'creature', 115, 0, [trollTreasure]));
+                                                   //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
+        var troll = new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry", 120, 'creature', 51, 115, 0, [trollTreasure]);
+        troll.go(null,self.locations[location3]);
         //self.locations[initialLocation].addExit('n',self.locations[location2].getName());
         //self.locations[location2].addExit('s',self.locations[initialLocation].getName());
 

@@ -1,15 +1,16 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, someWeight, aType, someHealth, attitude, carrying) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.name = aname;
         self.description = aDescription;
         self.detailedDescription = aDetailedDescription;
-        self.weight = someWeight;
+        self.weight = weight;
+        self.maxCarryingWeight = carryWeight;
         self.type = aType;
-        self.hitPoints = someHealth;
-        self.affinity = attitude //goes up if you're nice to the creature, goes down if you're not.
+        self.hitPoints = health;
+        self.affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
         self.inventory = [];
         self.collectable = false; //can't carry a living creature
         self.edible = false; //can't eat a living creature
@@ -27,6 +28,14 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 self.inventory.push(carrying);
             }
         }
+
+        var validateType = function() {
+            var validobjectTypes = ['creature'];
+            if (validobjectTypes.indexOf(self.type) == -1) { throw self.type+" is not a valid creature type."}//
+            console.log(self.name+' type validated: '+self.type);
+        }
+
+        validateType();
 
         var getIndexIfObjectExists = function(array, attr, value) {
             for(var i = 0; i < array.length; i++) {
@@ -73,7 +82,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.getDetailedDescription = function() {
         self = this;
-        return self.getInventory()+' '+self.detailedDescription+' '+self.getAffinityDescription();
+        return self.getInventory()+' '+self.detailedDescription+'. '+self.getAffinityDescription();
     }
 
     Creature.prototype.getType = function() {
@@ -108,13 +117,25 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         }
         return inventoryWeight;
     }
+
+    Creature.prototype.canCarry = function(anObject) {
+        self = this;
+        if (anObject != undefined) {
+            if ((anObject.getWeight()+self.getInventoryWeight())>self.maxCarryingWeight) {
+                return false;
+            }
+            return true;
+        } else {return false;}
+    }
     
     Creature.prototype.addToInventory = function(anObject) {
         self = this;
-        //note, creatures don't have a defined carrying limit so we don't check inventory weight here
         if ((anObject != undefined)&&(self.hitPoints >0)) {
+            if ((anObject.getWeight()+self.getInventoryWeight())>self.maxCarryingWeight) {
+                return "It's too heavy for them to carry.";
+            }
             self.inventory.push(anObject);
-            console.log(anObject+' added to inventory');
+            console.log(anObject+' added to '+self.name+' inventory');
             return 'The '+self.name+' is now carrying '+anObject.getDescription();
         } else {return "Sorry, the "+self.name+" can't carry that.";}
     }
@@ -125,12 +146,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         if (index > -1) {
             var returnObject = self.inventory[index];
             self.inventory.splice(index,1);
-            console.log(anObject+' removed from creature inventory');
+            console.log(anObject+' removed from '+self.name+' inventory');
             return returnObject;
 
         } else {
-            console.log('Creature is not carrying '+anObject);
-            return "The "+self.name+"+ isn't carrying: "+anObject;
+            console.log( self.name+' is not carrying '+anObject);
+            return "The "+self.name+"+ isn't carrying: "+anObject;//this return value may cause problems
         }
     }
 

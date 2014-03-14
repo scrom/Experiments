@@ -95,7 +95,7 @@ exports.Player = function Player(aUsername) {
 
         } else {
             console.log('player is not carrying '+anObject);
-            return 'You are not carrying '+anObject;
+            return 'You are not carrying '+anObject; //this return value may cause problems
         }
     }
     

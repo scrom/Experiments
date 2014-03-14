@@ -1,12 +1,14 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, someWeight, aType, canCollect, canMove, canOpen, isEdible, linkedExit) { 
+                                    //aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying
+exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.name = aName;
         self.description = aDescription;
         self.detailedDescription = aDetailedDescription;
-        self.weight = someWeight;
+        self.weight = weight;
+        self.maxCarryingWeight = 0;//carryWeight;
         self.type = aType;
         self.linkedExit = linkedExit;
         self.collectable = canCollect;
@@ -15,6 +17,14 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self.edible = isEdible;
         self.chewed = false;
         self.damaged = false;
+        /*
+        self.breakable = breakable;
+        self.broken = false;
+        self.mendable = mendable;
+        self.uses = uses;
+        self.rechargable = rechargable;
+        self.inventory = [];
+        */
 
 	    var objectName = "Artefact";
 
@@ -60,6 +70,11 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
     Artefact.prototype.getWeight = function() {
         self = this;
         return self.weight;
+    }
+
+    Artefact.prototype.canCarry = function(anObject) {
+        self = this;
+        return false; //at the moment objects can't carry anything
     }
     Artefact.prototype.hit = function(pointsToRemove) {
         self = this;

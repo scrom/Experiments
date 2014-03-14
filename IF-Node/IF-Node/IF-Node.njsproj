@@ -35,12 +35,17 @@
     <Compile Include="js\client\main.js" />
     <Compile Include="js\client\ui.js" />
     <Compile Include="js\server\action.js" />
+    <Compile Include="js\server\artefact.js" />
     <Compile Include="js\server\config.js" />
+    <Compile Include="js\server\dictionary.js" />
+    <Compile Include="js\server\exit.js" />
     <Compile Include="js\server\game.js" />
     <Compile Include="js\server\interpreter.js" />
     <Compile Include="js\server\gamecontroller.js" />
     <Compile Include="js\server\location.js" />
     <Compile Include="js\server\main.js" />
+    <Compile Include="js\server\map.js" />
+    <Compile Include="js\server\creature.js" />
     <Compile Include="js\server\player.js" />
     <Compile Include="js\server\server.js" />
     <Compile Include="js\server\simpleObject.js" />
