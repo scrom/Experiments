@@ -116,17 +116,17 @@ exports.Player = function Player(aUsername) {
 
     /*Allow player to get an object from a location*/
     Player.prototype.get = function(verb, artefactName) {
-        if ((artefactName=="")||(artefactName==undefined)) {return verb+' what?';};
+        if ((artefactName=="")||(artefactName==undefined)) {return verb+' what?';}
         if (!(self.currentLocation.objectExists(artefactName))) {return "There is no "+artefactName+" here.";}
 
         var artefact = self.currentLocation.getObject(artefactName); 
 
         //we'll only get this far if there is an object to collect note the object *could* be a live creature!
         if (!(artefact.isCollectable())) {return  "Sorry, you can't pick that up.";}
-        if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName; }  
+        if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName;}  
         
         var collectedArtefact = self.currentLocation.removeObject(artefactName);
-        if (!(collectedArtefact)) { return  "Sorry, you can't pick that up."; } //just in case it fails for any other reason.
+        if (!(collectedArtefact)) { return  "Sorry, you can't pick that up.";} //just in case it fails for any other reason.
         
         return self.addToInventory(collectedArtefact);
           
@@ -134,7 +134,7 @@ exports.Player = function Player(aUsername) {
 
     /*allow player to drop an object*/
     Player.prototype.drop = function(verb, artefactName) {
-        if ((artefactName=="")||(artefactName==undefined)) {return verb+" what?";};
+        if ((artefactName=="")||(artefactName==undefined)) {return verb+" what?";}
         if (!(self.checkInventory(artefactName))) {return "You're not carrying any "+artefactName;}
         var artefactDamage = self.getObject(artefactName).bash(); //should be careful dropping things
         self.currentLocation.addObject(self.removeFromInventory(artefactName));
@@ -143,11 +143,11 @@ exports.Player = function Player(aUsername) {
 
     /*Allow player to give an object to a recipient*/
     Player.prototype.give = function(verb, artefactName, receiverName){
-            if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?"};
-            if(receiverName==""||(receiverName == undefined)) {return verb+" "+artefactName+" to what?"};
+            if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
+            if(receiverName==""||(receiverName == undefined)) {return verb+" "+artefactName+" to what?";}
 
             var objectExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
-            if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either."};
+            if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";}
 
             //the object does exist
             var locationArtefact = self.currentLocation.getObject(artefactName);
@@ -160,7 +160,7 @@ exports.Player = function Player(aUsername) {
             var creatureExists = false;
             if (receiver) { 
                 if (receiver.getType() == 'creature') {
-                    creatureExists = true
+                    creatureExists = true;
                 } else {
                     return  "Whilst the "+receiverName+", deep in it's inanimate psyche would love to receive your kind gift. It feels in appropriate to do so."; 
                 };
@@ -169,14 +169,14 @@ exports.Player = function Player(aUsername) {
             };
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-            if (!(receiver.canCarry(artefact))) { return  "Sorry, the "+receiverName+" can't carry that. It's too heavy for them at the moment."; }
+            if (!(receiver.canCarry(artefact))) { return  "Sorry, the "+receiverName+" can't carry that. It's too heavy for them at the moment.";}
 
             //we know they *can* carry it...
             if (locationArtefact) {
                 if (!(artefact.isCollectable())) {return  "Sorry, the "+receiverName+" can't pick that up.";}
 
                 var collectedArtefact = self.currentLocation.removeObject(artefactName);
-                if (!(collectedArtefact)) { return  "Sorry, the "+receiverName+" can't pick that up."; }
+                if (!(collectedArtefact)) { return  "Sorry, the "+receiverName+" can't pick that up.";}
                     return receiver.give(collectedArtefact);
                 }
 
@@ -185,9 +185,9 @@ exports.Player = function Player(aUsername) {
             }
         }
 
-    Player.prototype.say = function(verb, speech, receiver) {
-            if ((speech == "")||(speech == undefined)) { return verb+" what?"};
-            if(receiverName==""||(receiverName == undefined)) {return verb+" "+speech+" to what?"};
+    Player.prototype.say = function(verb, speech, receiverName) {
+            if ((speech == "")||(speech == undefined)) { return verb+" what?";}
+            if(receiverName==""||(receiverName == undefined)) {return "'"+speech+"'";}
 
             //check receiver exists
             var receiver = self.currentLocation.getObject(receiverName);
@@ -199,24 +199,24 @@ exports.Player = function Player(aUsername) {
 
     Player.prototype.open = function(verb, artefactName) {
         //note artefact could be a creature!
-        if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?"};
+        if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
         var artefact = self.currentLocation.getObject(artefactName);
         if (!(artefact)) { return "There is no "+artefactName+" here."}
         return artefact.moveOrOpen(verb);
     }
 
     Player.prototype.close = function(verb, artefactName) {
-        if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?"};
+        if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
         var artefact = self.currentLocation.getObject(artefactName);
-        if (!(artefact)) { return "There is no "+artefactName+" here."}
+        if (!(artefact)) { return "There is no "+artefactName+" here.";}
         return artefact.close();
     }
 
     Player.prototype.go = function(aDirection, aLocation) {
         self = this;
-        self.moves++;
+        self.moves++;;
         if (self.eatenRecently) {
-            self.movesSinceEating++
+            self.movesSinceEating++;
             if (self.movesSinceEating >=20) {
                 null;//hungry //unflag eaten recently at 30? then start decrementing health when starving or thirsty?
             } 
