@@ -187,6 +187,7 @@ exports.Player = function Player(aUsername) {
 
     Player.prototype.say = function(verb, speech, receiverName) {
             if ((speech == "")||(speech == undefined)) { return verb+" what?";}
+            if (verb == "shout") {speech = speech.toUpperCase();}
             if(receiverName==""||(receiverName == undefined)) {return "'"+speech+"'";}
 
             //check receiver exists
