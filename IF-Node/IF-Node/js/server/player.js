@@ -198,6 +198,20 @@ exports.Player = function Player(aUsername) {
             return receiver.reply(speech);
     }
 
+    Player.prototype.examine = function(verb, artefactName) {
+        if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
+    
+        var objectExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+        if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";}
+
+        //the object does exist
+        var locationArtefact = self.currentLocation.getObject(artefactName);
+        var playerArtefact = self.getObject(artefactName);
+        var artefact;
+        if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+        return artefact.getDetailedDescription();
+    }
+
     Player.prototype.open = function(verb, artefactName) {
         //note artefact could be a creature!
         if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}

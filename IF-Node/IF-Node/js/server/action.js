@@ -173,20 +173,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     description = self.player.close(self.verb, self.object0);
                     break;
                 case 'examine':
-                    var anObjectOrCreature;
-                    if (self.location.objectExists(self.object0)) {
-                        anObjectOrCreature = self.location.getObject(self.object0);
-                        description = anObjectOrCreature.getDetailedDescription();
-                    } else if (self.player.checkInventory(self.object0)) {
-                        anObjectOrCreature = self.player.getObject(self.object0);
-                        description = anObjectOrCreature.getDetailedDescription();
-                    } else {
-                        if ((self.object0!="")) {
-                            description = "There is no "+self.object0+" here and you're not carrying any either.";
-                        } else {
-                            description = self.verb+' what?'
-                        }
-                    }
+                    description = self.player.examine(self.verb, self.object0);
                     break;
                 case 'bite':
                 case 'chew':
