@@ -70,6 +70,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.getAffinityDescription = function() {
         self = this;
+        if (self.hitPoints == 0) {return ""};
         if (self.affinity >0) {return 'It seems to like you.'};
         if (self.affinity <0) {return 'It appears to be unhappy with you for some reason.'};
         return ''; //neutral
@@ -82,7 +83,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.getDetailedDescription = function() {
         self = this;
-        return self.getInventory()+' '+self.detailedDescription+'. '+self.getAffinityDescription();
+        return self.getInventory()+' '+self.detailedDescription+' '+self.getAffinityDescription();
     }
 
     Creature.prototype.getType = function() {
@@ -157,6 +158,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.give = function(anObject) {
         self = this;
+        if (self.hitPoints == 0) {return "It's dead. Save your kindness for someone who'll appreciate it."};
         if(anObject) { 
             self.affinity++;
             return 'That was kind. '+self.addToInventory(anObject);
@@ -165,6 +167,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     }
     Creature.prototype.take = function(anObject) {
         self = this;
+        if (self.hitPoints == 0) {return "It's dead. You've taken the most valuable thing it had left."};
         if (self.affinity >0) {
             self.affinity--;
             return self.removeFromInventory(anObject);
@@ -187,6 +190,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.go = function(aDirection, aLocation) {
         self = this;
+        if (self.hitPoints == 0) {return null};
         self.moves++;
 
         //remove self from current location (if set)
@@ -288,6 +292,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.kill = function(){//
         self = this;
         self.hitPoints = 0;
+        if (self.affinity >=0) {self.affinity=-1;} //just in case!
         self.edible = true;
         self.collectable = true; 
         //drop all objects
@@ -316,6 +321,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.reply = function(someSpeech) {
         self = this;
+        if (self.hitPoints == 0) {return "It's dead. Your prayer and song can't save it now."};
         //self.affinity--; (would be good to respond based on positive or hostile words here)
         return "The "+self.name+" says '"+someSpeech+"' to you too.";
     }
