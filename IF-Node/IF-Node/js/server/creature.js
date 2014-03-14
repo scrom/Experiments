@@ -99,10 +99,10 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.getInventory = function() {
         self = this;
         if (self.inventory.length==0){return ''};
-        var list = ''
+        var list = "";
         for(var i = 0; i < self.inventory.length; i++) {
-                if (i>0){list+=', ';}
-                if ((i==self.inventory.length-1)&&(i>0)){list+='and ';}
+                if (i>0){list+=", ";}
+                if ((i==self.inventory.length-1)&&(i>0)){list+="and ";}
                 list+=self.inventory[i].getDescription();
         }
 
@@ -161,7 +161,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         if (self.hitPoints == 0) {return "It's dead. Save your kindness for someone who'll appreciate it."};
         if(anObject) { 
             self.affinity++;
-            return 'That was kind. '+self.addToInventory(anObject);
+            return "That was kind. "+self.addToInventory(anObject);
         }
         return '';
     }
@@ -209,7 +209,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         var returnMessage ='';
         //if (aDirection != undefined) {
-            returnMessage = 'The '+self.name+' wanders to the '+self.currentLocation.name+'<br>';
+            returnMessage = "The "+self.name+" wanders to the "+self.currentLocation.name+"<br>";
         //}
         console.log('Creature GO: '+returnMessage);
         return returnMessage;
@@ -226,7 +226,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.affinity--;
         self.hitPoints -= pointsToRemove;
         if (self.hitPoints <=0) {return self.kill();}
-        return 'You attack the '+self.name+'. '+self.health()
+        return "You attack the "+self.name+". "+self.health()
         console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+self.hitPoints);
     }
 
@@ -250,9 +250,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             if (self.edible){
                 self.weight = 0;
                 aPlayer.heal(50);
-                self.description = 'the remains of a well-chewed '+self.name;
+                self.description = "the remains of a well-chewed "+self.name;
                 self.detailedDescription = "All that's left are a few scraps of skin and hair.";
-                return 'You tear into the raw flesh of the '+self.name+'. It was a bit messy but you feel fitter, happier and healthier.';
+                return "You tear into the raw flesh of the "+self.name+". It was a bit messy but you feel fitter, happier and healthier.";
             } else {
                 aPlayer.hit(10);
                 return "You try biting the "+self.name+" but it dodges out of the way and bites you back."

@@ -212,43 +212,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     }
                     break;
                 case 'ask':
-                    if (self.location.objectExists(self.object0)&&(self.object1!='')) {
-                        if (self.location.getObject(self.object0).getType() == 'creature') {
-                            if (self.location.objectExists(self.object1)) {
-                                description = self.player.addToInventory((self.location.removeObject(self.object1)));
-                            } else {//assume creature must be carrying it instead...
-                                if (self.location.getObject(self.object0).checkInventory(self.object1)) {
-                                    var testObject = self.location.getObject(self.object0).getObject(self.object1);
-                                    if (self.player.canCarry(testObject)) {
-                                        var objectToReceive = self.location.getObject(self.object0).take(self.object1);
-                                        if (objectToReceive) {
-                                            description = self.player.addToInventory((objectToReceive));
-                                        } else {
-                                            description = "The "+self.object0+" doesn't want to share with you.";
-                                        }
-                                    } else {
-                                        description = "It's too heavy. You may need to get rid of some things you're carrying first.";
-                                    }
-                                } else {
-                                    description = "The "+self.object0+" has no "+self.object1+" to give.";
-                                }
-                            }
-                        } else {description = "It's not alive, it can't give you anything."}
-                    } else {
-                        if (self.object0!="") {
-                            description = "There is no "+self.object0+" here.";
-                        } else if(self.object1=="") {
-                            description = self.verb+' '+self.object0+' for what?';
-                        } else {
-                            description = self.verb+' what?';
-                        }
-                    }
-                        //improve this once creatures are implemented
-                        //trap when object or creature don't exist
-                        //description = 'You '+self.verb;
-                        //if (self.object0) {description+= ' the '+self.object1;}
-                        //if (self.object1) {description+= ' for the '+self.object0;}
-                        //description+='. Nothing much happens.';                    
+                    description = self.player.ask(self.verb, self.object1, self.object0);            
                     break;
                 case 'wave':
                         //improve this once creatures are implemented
@@ -259,8 +223,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                         description+=". Your arms get tired and you feel slightly awkward.";   
                     break;
                 case 'say':
-                case 'sing': //will need to support "sing to creature" and "sing to object" 
-                case 'shout': //will need to support "shout at creature" and "shout at object" 
+                case 'sing':
+                case 'shout':
                     description = self.player.say(self.verb, self.object0,self.object1);
                     break;
                 case 'kill':

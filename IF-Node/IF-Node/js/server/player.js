@@ -122,11 +122,11 @@ exports.Player = function Player(aUsername) {
         var artefact = self.currentLocation.getObject(artefactName); 
 
         //we'll only get this far if there is an object to collect note the object *could* be a live creature!
-        if (!(artefact.isCollectable())) {return  "Sorry, you can't pick that up.";}
+        if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";}
         if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName;}  
         
         var collectedArtefact = self.currentLocation.removeObject(artefactName);
-        if (!(collectedArtefact)) { return  "Sorry, you can't pick that up.";} //just in case it fails for any other reason.
+        if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";} //just in case it fails for any other reason.
         
         return self.addToInventory(collectedArtefact);
           
@@ -184,6 +184,39 @@ exports.Player = function Player(aUsername) {
                 return receiver.give((self.removeFromInventory(artefactName)));
             }
         }
+
+    Player.prototype.ask = function(verb, artefactName, giverName){
+        if(giverName==""||(giverName == undefined)) {return verb+" what?";}
+        var giver = self.currentLocation.getObject(giverName);
+        if (!(giver)) {return "There is no "+giverName+" here.";}
+        if (giver.getType() != 'creature') {return "It's not alive, it can't give you anything.";}
+        if ((artefactName == "")||(artefactName == undefined)) { return verb+" "+giverName+" for what?";}
+
+        var objectExists = (self.currentLocation.objectExists(artefactName)||giver.checkInventory(artefactName));
+        if (!(objectExists)) {return "There is no "+artefactName+" here and the "+giverName+" isn't carrying one either.";}
+        
+        //the object does exist
+        var locationArtefact = self.currentLocation.getObject(artefactName);
+        var giverArtefact = giver.getObject(artefactName);
+        var artefact;
+        if (locationArtefact) {artefact = locationArtefact} else {artefact = giverArtefact};        
+
+        //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
+        if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";}
+
+            //we know player *can* carry it...
+            if (locationArtefact) {
+                console.log('locationartefact');
+                if (!(artefact.isCollectable())) {return  "Sorry, the "+giverName+" can't pick it up.";}
+                return self.get('get',artefactName);
+            }
+
+            if (giverArtefact) {
+                var objectToReceive = giver.take(artefactName);
+                if (!(objectToReceive)) {return "The "+giverName+" doesn't want to share with you.";}
+                return self.addToInventory(objectToReceive);
+            }
+    }
 
     Player.prototype.say = function(verb, speech, receiverName) {
             if ((speech == "")||(speech == undefined)) { return verb+" what?";}
