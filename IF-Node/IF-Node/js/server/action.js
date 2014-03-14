@@ -170,16 +170,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     description = self.player.open(self.verb, self.object0);
                     break;
                 case 'close':
-                    if (self.location.objectExists(self.object0)) {
-                        var anObject = self.location.getObject(self.object0);
-                        description = anObject.close();
-                    } else {
-                        if ((self.object0!="")) {
-                            description = "There is no "+self.object0+" here.";
-                        } else {
-                            description = self.verb+' what?'
-                        }
-                    }
+                    description = self.player.close(self.verb, self.object0);
                     break;
                 case 'examine':
                     var anObjectOrCreature;

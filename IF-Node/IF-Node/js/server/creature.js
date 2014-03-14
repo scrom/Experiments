@@ -301,10 +301,17 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.moveOrOpen = function(aVerb) {
         self = this;
+        if (self.hitPoints == 0) {return "You're a bit sick aren't you.<br>You prod and pull at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
         self.affinity--;
         if (aVerb == 'push'||aVerb == 'pull') {return "The "+self.name+" really doesn't appreciate being pushed around."};
         //open
         return "I suggest you don't try to "+aVerb+" the "+self.name+" again, it's not going to end well.";
+    }
+
+    Creature.prototype.close = function() {
+        self = this;
+        if (self.hitPoints == 0) {return "Seriously. Stop interfering with corpses."};
+        return "Unless you've performed surgery on it recently, you can't close a living thing";
     }
 
     Creature.prototype.reply = function(someSpeech) {
