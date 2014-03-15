@@ -129,6 +129,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         } else {return false;}
     }
 
+    Creature.prototype.wave = function(anObject) {
+        //we may wave this at another object or creature
+        self = this;
+        return "Nothing happens.";
+    }
+
     Creature.prototype.bash = function() {
         self = this;
         //no damage - it's a creature

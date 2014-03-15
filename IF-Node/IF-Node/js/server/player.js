@@ -143,6 +143,51 @@ exports.Player = function Player(aUsername) {
         return "You dropped the "+artefactName+". "+artefactDamage;
     }
 
+    /*Allow player to wave an object - potentially at another*/
+    Player.prototype.wave = function(verb, firstArtefactName, secondArtefactName) {
+        self = this                        
+        //improve this once creatures are implemented
+        //trap when object or creature don't exist
+        var returnString = 'You '+verb;
+
+        if ((firstArtefactName == "")||(firstArtefactName == undefined)) {return returnString+"."}
+
+        var objectExists = (self.currentLocation.objectExists(firstArtefactName)||self.checkInventory(firstArtefactName));
+        if (!(objectExists)) {return "There is no "+firstArtefactName+" here and you're not carrying one either.";}
+
+        //we have at least one artefact...
+        //the object does exist
+        var locationFirstArtefact = self.currentLocation.getObject(firstArtefactName);
+        var playerFirstArtefact = self.getObject(firstArtefactName);
+        var firstArtefact;
+        if (locationFirstArtefact) {firstArtefact = locationFirstArtefact} else {firstArtefact = playerFirstArtefact};
+
+        //build return string
+        returnString+= ' the '+firstArtefactName;
+
+        if ((secondArtefactName != "")&& secondArtefactName != undefined) {
+            var secondObjectExists = (self.currentLocation.objectExists(secondArtefactName)||self.checkInventory(secondArtefactName));
+            if (!(secondObjectExists)) {return "There is no "+secondArtefactName+" here and you're not carrying one either.";}
+
+            //the second object does exist
+            var locationSecondArtefact = self.currentLocation.getObject(secondArtefactName);
+            var playerSecondArtefact = self.getObject(secondArtefactName);
+            var secondArtefact;
+            if (locationSecondArtefact) {secondArtefact = locationSecondArtefact} else {secondArtefact = playerSecondArtefact};
+
+            //build return string
+            returnString+= ' at the '+secondArtefactName
+        } 
+
+        returnString+=". "
+
+        returnString+= firstArtefact.wave(secondArtefact);
+
+        returnString += "<br>Your arms get tired and you feel slightly awkward.";   
+
+        return returnString;
+    }
+
     /*Allow player to give an object to a recipient*/
     Player.prototype.give = function(verb, artefactName, receiverName){
         self = this;
@@ -188,7 +233,7 @@ exports.Player = function Player(aUsername) {
             }
         }
 
-    Player.prototype.ask = function(verb, artefactName, giverName){
+    Player.prototype.ask = function(verb, giverName, artefactName){
         self = this;
         if(giverName==""||(giverName == undefined)) {return verb+" what?";}
         var giver = self.currentLocation.getObject(giverName);

@@ -80,6 +80,13 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         return false; //at the moment objects can't carry anything
     }
 
+
+    Artefact.prototype.wave = function(anObject) {
+        //we may wave this at another object or creature
+        self = this;
+        return "Nothing happens.";
+    }
+
     Artefact.prototype.bash = function() {
         self = this;
         //if you mistreat something breakable more than once it breaks.

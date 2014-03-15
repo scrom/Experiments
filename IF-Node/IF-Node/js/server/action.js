@@ -212,15 +212,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     }
                     break;
                 case 'ask':
-                    description = self.player.ask(self.verb, self.object1, self.object0);            
+                    description = self.player.ask(self.verb, self.object0, self.object1);            
                     break;
                 case 'wave':
-                        //improve this once creatures are implemented
-                        //trap when object or creature don't exist
-                        description = 'You '+self.verb;
-                        if (self.object0) {description+= ' the '+self.object0;}
-                        if (self.object1) {description+= ' at the '+self.object1} //note combined object/creature here
-                        description+=". Your arms get tired and you feel slightly awkward.";   
+                    description = self.player.wave(self.verb, self.object0, self.object1);
                     break;
                 case 'say':
                 case 'sing':
