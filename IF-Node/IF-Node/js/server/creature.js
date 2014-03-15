@@ -128,6 +128,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return true;
         } else {return false;}
     }
+
+    Creature.prototype.bash = function() {
+        self = this;
+        //no damage - it's a creature
+        return "";
+    }
     
     Creature.prototype.addToInventory = function(anObject) {
         self = this;

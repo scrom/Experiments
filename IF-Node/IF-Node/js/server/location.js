@@ -61,7 +61,7 @@ exports.Location = function Location(aName, aDescription) {
             if (index > -1) {
                 return self.exits[index];
             } else {
-                return self.name;
+                return null;
             }
     }
     Location.prototype.addObject = function(anObject) {

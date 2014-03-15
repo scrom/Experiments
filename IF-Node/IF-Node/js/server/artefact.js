@@ -24,12 +24,15 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         self.uses = uses;
         self.rechargable = rechargable;
         self.inventory = [];
+        self.locakable = false;
+        self.lock = false;
+        self.unlocks = unlocks; //unique name of the object it unlocks
         */
 
 	    var objectName = "Artefact";
 
         var validateType = function() {
-            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container'];
+            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key'];
             if (validobjectTypes.indexOf(self.type) == -1) { throw self.type+" is not a valid artefact type."}//
             console.log(self.name+' type validated: '+self.type);
         }

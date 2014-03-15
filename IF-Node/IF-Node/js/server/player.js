@@ -116,6 +116,7 @@ exports.Player = function Player(aUsername) {
 
     /*Allow player to get an object from a location*/
     Player.prototype.get = function(verb, artefactName) {
+        self = this;
         if ((artefactName=="")||(artefactName==undefined)) {return verb+' what?';}
         if (!(self.currentLocation.objectExists(artefactName))) {return "There is no "+artefactName+" here.";}
 
@@ -134,6 +135,7 @@ exports.Player = function Player(aUsername) {
 
     /*allow player to drop an object*/
     Player.prototype.drop = function(verb, artefactName) {
+        self = this;
         if ((artefactName=="")||(artefactName==undefined)) {return verb+" what?";}
         if (!(self.checkInventory(artefactName))) {return "You're not carrying any "+artefactName;}
         var artefactDamage = self.getObject(artefactName).bash(); //should be careful dropping things
@@ -143,6 +145,7 @@ exports.Player = function Player(aUsername) {
 
     /*Allow player to give an object to a recipient*/
     Player.prototype.give = function(verb, artefactName, receiverName){
+        self = this;
             if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
             if(receiverName==""||(receiverName == undefined)) {return verb+" "+artefactName+" to what?";}
 
@@ -186,6 +189,7 @@ exports.Player = function Player(aUsername) {
         }
 
     Player.prototype.ask = function(verb, artefactName, giverName){
+        self = this;
         if(giverName==""||(giverName == undefined)) {return verb+" what?";}
         var giver = self.currentLocation.getObject(giverName);
         if (!(giver)) {return "There is no "+giverName+" here.";}
@@ -219,6 +223,7 @@ exports.Player = function Player(aUsername) {
     }
 
     Player.prototype.say = function(verb, speech, receiverName) {
+        self = this;
             if ((speech == "")||(speech == undefined)) { return verb+" what?";}
             if (verb == "shout") {speech = speech.toUpperCase();}
             if(receiverName==""||(receiverName == undefined)) {return "'"+speech+"'";}
@@ -232,6 +237,7 @@ exports.Player = function Player(aUsername) {
     }
 
     Player.prototype.examine = function(verb, artefactName) {
+        self = this;
         if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
     
         var objectExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
@@ -246,6 +252,7 @@ exports.Player = function Player(aUsername) {
     }
 
     Player.prototype.open = function(verb, artefactName) {
+        self = this;
         //note artefact could be a creature!
         if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
         var artefact = self.currentLocation.getObject(artefactName);
@@ -254,32 +261,66 @@ exports.Player = function Player(aUsername) {
     }
 
     Player.prototype.close = function(verb, artefactName) {
+        self = this;
         if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";}
         var artefact = self.currentLocation.getObject(artefactName);
         if (!(artefact)) { return "There is no "+artefactName+" here.";}
         return artefact.close();
     }
 
-    Player.prototype.go = function(aDirection, aLocation) {
+    //maily used for setting initial location but could also be used for warping even if no exit/direction
+    Player.prototype.setLocation = function(location) { //param is a loction object, not a name.
+        self = this;        
+        self.currentLocation = location;
+        self.currentLocation.addVisit();
+        if (self.startLocation == undefined) {
+            self.startLocation = self.currentLocation;
+        }
+
+        return 'Current location: '+self.currentLocation.getName()+'<br>'+self.currentLocation.describe();
+    }
+
+    Player.prototype.go = function(verb, map) {//(aDirection, aLocation) {
         self = this;
+        
+        //trim verb down to first letter...
+        var direction = verb.substring(0, 1);
+        var exit = self.currentLocation.getExit(direction);
+        if (!(exit)) {return "There's no exit "+verb;}
+        if (!(exit.isVisible())) {return "Your way '"+verb+"'is blocked "+verb;} //this might be too obvious;
+
+        var exitName = self.currentLocation.getExitDestination(direction);
+        var index = getIndexIfObjectExists(map.getLocations(),"name", exitName);
+        if (index > -1) {
+            var newLocation = map.getLocations()[index];
+            console.log('found location: '+exitName);
+        } else {
+            console.log('location: '+exitName+' not found');
+            return "That exit doesn't seem to go anywhere at the moment. Try again later.";                  
+        }
+
+        //build up return message:
+        var returnMessage ='';
+
+        //implement creature following here (note, the creature goes first so that it comes first in the output.)
+        var friend = self.currentLocation.getFriendlyCreature();
+        if (friend) {returnMessage += friend.go(direction,newLocation);}
+
+        //now move self
         self.moves++;;
         if (self.eatenRecently) {
+            //not fully implemented yet
             self.movesSinceEating++;
             if (self.movesSinceEating >=20) {
                 null;//hungry //unflag eaten recently at 30? then start decrementing health when starving or thirsty?
             } 
         }
-        self.currentLocation = aLocation;
-        self.currentLocation.addVisit();
-        if (self.startLocation == undefined) {
-            self.startLocation = self.currentLocation;
-        }
-        var returnMessage ='';
-        //if (aDirection != undefined) {
-            returnMessage = 'Current location: '+self.currentLocation.getName()+'<br>';
-        //}
+
+        //set player's current location
+        returnMessage += self.setLocation(newLocation);
+
         console.log('GO: '+returnMessage);
-        return returnMessage+self.currentLocation.describe();
+        return returnMessage;
     }	
 
     Player.prototype.getLocation = function() {

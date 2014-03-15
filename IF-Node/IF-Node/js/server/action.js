@@ -270,36 +270,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             }
             //navigation
             if (self.directions.indexOf(self.verb)>-1) {
-                    //trim verb down to first letter...
-                    var aDirection = self.verb.substring(0, 1);
-
-                    //self.location.go(self.verb);
-                    var exit = self.player.getLocation().getExit(aDirection);
-                    if ((exit)&&(exit.isVisible())) {
-                        var exitName = self.player.getLocation().getExitDestination(aDirection);
-                        var index = getIndexIfObjectExists(self.map.getLocations(),"name", exitName);
-                            if (index > -1) {
-                                var newLocation = self.map.getLocations()[index];
-
-                                console.log('found location: '+exitName);
-
-                            } else {
-                                console.log('location: '+exitName+' not found');                  
-                        }
-
-                        //implement creature following here
-                        var friend = self.location.getFriendlyCreature();
-                        if (friend) {
-                            description = friend.go(aDirection,newLocation);
-                        }  else {
-                            description = ''; //clear description
-                        }
-                                          
-                        description += self.player.go(aDirection,newLocation);                      
-
-                    } else {
-                        description = 'no exit '+self.verb;
-                    }
+                description = self.player.go(self.verb, self.map);
             }
 
             //admin commands
