@@ -81,7 +81,7 @@ exports.Player = function Player(aUsername) {
             }
             self.inventory.push(anObject);
             console.log(anObject+' added to inventory');
-            return 'You are now carrying '+anObject.getDescription();
+            return "You are now carrying "+anObject.getDescription()+".";
         } else {return "sorry, couldn't pick it up.";}
     }
     
@@ -114,11 +114,21 @@ exports.Player = function Player(aUsername) {
         return self.inventory[index];
     }
 
+    Player.prototype.getAllObjects = function() {
+        self = this;
+        return self.inventory;
+    }
+
     /*Allow player to get an object from a location*/
     Player.prototype.get = function(verb, artefactName) {
         self = this;
         if ((artefactName=="")||(artefactName==undefined)) {return verb+' what?';}
-        if (!(self.currentLocation.objectExists(artefactName))) {return "There is no "+artefactName+" here.";}
+        if (artefactName=="all") {return self.getAll(verb);}
+        if (artefactName=="everything") {return self.getAll(verb);}
+        if (!(self.currentLocation.objectExists(artefactName))) {
+            if (self.checkInventory(artefactName)) {return "You're carrying it already.";}
+            return "There is no "+artefactName+" here.";
+        }
 
         var artefact = self.currentLocation.getObject(artefactName); 
 
@@ -129,8 +139,36 @@ exports.Player = function Player(aUsername) {
         var collectedArtefact = self.currentLocation.removeObject(artefactName);
         if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";} //just in case it fails for any other reason.
         
-        return self.addToInventory(collectedArtefact);
-          
+        return self.addToInventory(collectedArtefact);          
+    }
+
+    /*Allow player to get all available objects from a location*/
+    Player.prototype.getAll = function(verb) {
+        self = this;
+
+        var artefacts = self.currentLocation.getAllObjects();
+        var collectedArtefacts = [];
+        var artefactCount = artefacts.length;
+        var successCount = 0;
+
+        artefacts.forEach(function(artefact) {
+            if((artefact.isCollectable()) && (self.canCarry(artefact))) {
+                var artefactToCollect = self.currentLocation.getObject(artefact.getName());
+                self.addToInventory(artefactToCollect);
+                collectedArtefacts.push(artefactToCollect);
+                successCount ++;
+            }
+        });
+        
+        //as we're passing the original object array around, must "remove" from location after collection
+        collectedArtefacts.forEach(function(artefact) {
+                self.currentLocation.removeObject(artefact.getName());
+        });
+
+        if (successCount==0) {return  "There's nothing here that you can carry at the moment.";}
+        var returnString = "You collected "+successCount+" item(s).";
+        if (successCount < artefactCount)  {returnString += "You can't pick the rest up at the moment."}
+        return returnString;          
     }
 
     /*allow player to drop an object*/

@@ -97,6 +97,11 @@ exports.Location = function Location(aName, aDescription) {
         return self.objects[index];
     }
 
+    Location.prototype.getAllObjects = function() {
+        self = this;
+        return self.objects;
+    }
+
     Location.prototype.getDescription = function() {
         self = this;
         return self.description;

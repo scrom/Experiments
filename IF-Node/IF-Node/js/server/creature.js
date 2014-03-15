@@ -200,6 +200,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         return self.inventory[index];
     }
 
+    Creature.prototype.getAllObjects = function() {
+        self = this;
+        return self.inventory;
+    }
+
     Creature.prototype.go = function(aDirection, aLocation) {
         self = this;
         if (self.hitPoints == 0) {return null};

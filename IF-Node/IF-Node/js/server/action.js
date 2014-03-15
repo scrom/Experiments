@@ -4,7 +4,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
     try{
         var locationObjectModule = require('./location');
         var artefactObjectModule = require('./artefact');
-	    var self = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose this reference in callbacks
         self.resultString;
         self.resultJson;
         self.player = aPlayer; //sometimes actions impact the player
@@ -13,6 +13,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         self.dictionary = aDictionary;
 
         //action string components
+        self.actionString = anActionString; //preserve the original string - we'll likely need it for special cases.
         self.verb = '';
         self.objects = []; //objects and creatures
         self.object0 = '';
@@ -155,6 +156,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     description = self.location.describe();
                     break;
                 case 'take':
+                case 'collect':
                 case 'get': //add support for "all" later
                     description = self.player.get(self.verb, self.object0);
                     break;
@@ -228,6 +230,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'drink':
                 case 'unlock':
                 case 'lock':
+                case 'switch': //(this is a special one) - could be switch off light or switch light on.
                 case 'on':
                 case 'off':
                 case 'light':
