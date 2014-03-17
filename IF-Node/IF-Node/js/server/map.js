@@ -66,40 +66,39 @@ exports.Map = function Map() { //inputs for constructor TBC
 
     Map.prototype.init = function(){
         self=this;
-        var startName = 'start';
-        var location2Name = 'house';
-        var location3Name = 'hall'
+        var atrium = self.addLocation('atrium',"You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br>It's your first day in the office, time to figure out what you need to do!");
+        //['weapon','junk','treasure','food','money','tool','door','container', 'key']; aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit)
+        self.locations[atrium].addObject(new artefactObjectModule.Artefact('screen', 'a flat-panel screen', "It's cycling through news, traffic reports and the names of visitors for the day.<br>"+
+                                                                                                            "Apparently the A14 is broken again.<br>Ooh! It has your name up there too. "+
+                                                                                                            "At least *someone* is expecting you.", 35, 'junk', false, false, false, false, true, null));
 
-        //great 3 rooms
-        var initialLocation = self.addLocation(startName,'Welcome, adventurer.');
-        var location2 = self.addLocation(location2Name,'You are standing outside a rather pretty house.');
-        var location3 = self.addLocation(location3Name,'You are in a grand hall.');
+        var reception = self.addLocation('reception',"You are stood by the big red reception desk in the Red Gate office atrium.");
+        var toilet = self.addLocation('toilet-ground-floor',"You stare at yourself in the mirror of that bathroom and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.");
+        var lift = self.addLocation('lift-ground-floor',"The lift doors close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.");
 
-        //link rooms
-        self.link('n', startName, location2Name);
-        self.link('i', location2Name, location3Name);
+        self.link('e', self.locations[atrium].getName(), self.locations[reception].getName());
+        self.link('s', self.locations[atrium].getName(), self.locations[toilet].getName());
+        self.link('i', self.locations[atrium].getName(), self.locations[lift].getName());
 
-        //hide exit
-        var exitToHide = self.locations[location2].getExit('i');
-        exitToHide.hide();
+        var liftEntrance = self.locations[atrium].getExit('i');
+        liftEntrance.hide();
 
+        self.locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", 250, 'door', false, false, true, false, false, liftEntrance));
+        self.locations[atrium].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 'weapon', true, false, false, false, false, null));
+        self.locations[atrium].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 'food', true, false, false, true, false, null));        
+        var liftExit = self.locations[lift].getExit('o');
+        liftExit.hide();
 
-        //populate objects
-        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('sword', 'a short sword', "It's kind of rusty and crappy-looking.", 3, 'weapon', true, false, false, false, false, null));
-        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('ball', 'a glass ball', "It looks fragile.", 3, 'treasure', true, false, false, false, true, null));
-        self.locations[initialLocation].addObject(new artefactObjectModule.Artefact('chest', 'a treasure chest', "It's locked, very heavy and smells of fish.", 50, 'junk', true, false, false, false, false, null));
-        self.locations[location2].addObject(new artefactObjectModule.Artefact('door', 'a large door', 'It looks unlocked.', 500, 'door', false, false, true, false, false, exitToHide));
-        self.locations[location3].addObject(new artefactObjectModule.Artefact('apple', 'a nice juicy apple', "Well I'd eat it.", 1, 'food', true, false, false, true, false, null));
-        
-        var trollTreasure = new artefactObjectModule.Artefact('coins', 'a few gold coins', "Enough to buy some food.", 1, 'money', true, false, false, false, false, null)
+        self.locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", 250, 'door', false, false, true, false, false, liftExit));
+
+        var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", 2, 'treasure', true, false, false, false, true, null); //breakable!
                                                    //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-        var troll = new creatureObjectModule.Creature('troll', 'a really nasty, grumpy looking troll', "I think it's hungry.", 120, 'creature', 51, 115, 0, [trollTreasure]);
-        troll.go(null,self.locations[location3]);
-        //self.locations[initialLocation].addExit('n',self.locations[location2].getName());
-        //self.locations[location2].addExit('s',self.locations[initialLocation].getName());
-
-        console.log('initialLocation: '+self.locations[initialLocation].getName()+' exits:'+self.locations[initialLocation].listExits());
-        console.log('location2: '+self.locations[location2].getName()+' exits:'+self.locations[location2].listExits());
+        var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<be> She looks out for everyone here. Be nice to her.", 120, 'female','friendly', 51, 215, 0, [heidiPackage]);
+        heidi.go(null,self.locations[reception]);     
+ 
+        var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belong to Red Gate", 2, 'junk', true, false, false, false, true, null); //breakable!               
+        var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 'male','creature', 51, 215, 0, [stolenHardDrive]);
+        spy.go(null,self.locations[lift]);   
     }
 
     Map.prototype.getStartLocation = function() {
