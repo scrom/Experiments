@@ -7,8 +7,8 @@ exports.Tests = function Tests() {
         console.log('====TESTING====');
         //simple coding experiments
         console.log('====Experiments====');
-        var SimpleObject = require('./simpleObject');
-        var o0 = new SimpleObject.SimpleObject('test0');
+        //var SimpleObject = require('./simpleObject');
+        //var o0 = new SimpleObject.SimpleObject('test0');
         console.log('====End of Experiments====');
 
         //test module deps
@@ -60,8 +60,6 @@ exports.Tests = function Tests() {
         console.log(l0.removeObject(c0.getName()));
         console.log('====End of Creature tests====');
 
-
-
         //test maps
         //m0.init(p0);
         //m0.addLocation('test2','yet another test location');
@@ -83,30 +81,6 @@ exports.Tests = function Tests() {
         //console.log(l0.go('s'));
         //console.log(l1.go('n'));
         //console.log(l1.go('s'));
-
-        /*
-        console.log(o0.toString());
-        var o1 = SimpleObject('test1');
-        console.log(o0.toString()); //this one gets partially overwritten
-        console.log(o1.toString());
-*/
-        var  testSimpleObjectModule = require('./simpleObject');
-
-        var o0 = new testSimpleObjectModule.SimpleObject('test0');
-        var o1 = new testSimpleObjectModule.SimpleObject('test1');
-        console.log(o0.nestedOverwrite(o1));
-        console.log(o1.nestedOverwrite(o0));
-
         console.log('=================');
-
-
-/*      var  testGameObjectModule = require('./game');
-        var game0 = new testGameObjectModule.Game('test0',0);
-        console.log(game0.toString());
-        var game1 = new testGameObjectModule.Game('test1',1);
-        console.log(game0.toString()); //this one gets overwritten
-        console.log(game1.toString());
-*/
-
 }
 //end self test

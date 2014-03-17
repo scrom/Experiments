@@ -96,8 +96,8 @@ exports.Map = function Map() { //inputs for constructor TBC
         var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<be> She looks out for everyone here. Be nice to her.", 120, 'female','friendly', 51, 215, 0, [heidiPackage]);
         heidi.go(null,self.locations[reception]);     
  
-        var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belong to Red Gate", 2, 'junk', true, false, false, false, true, null); //breakable!               
-        var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 'male','creature', 51, 215, 0, [stolenHardDrive]);
+        var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", 2, 'junk', true, false, false, false, true, null); //breakable!               
+        var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 'male','creature', 51, 215, -10, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
         spy.go(null,self.locations[lift]);   
     }
 
