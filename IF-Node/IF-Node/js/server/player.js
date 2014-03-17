@@ -338,12 +338,40 @@ exports.Player = function Player(aUsername) {
         return false;
     }
 
-    Player.prototype.hit = function(pointsToRemove) {
+    Player.prototype.hurt = function(pointsToRemove) {
         self = this;
         self.hitPoints -= pointsToRemove;
         if (self.hitPoints <=0) {return self.killPlayer();}
         return 'You are injured.'
         console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+self.hitPoints);
+    }
+
+    Player.prototype.hit = function(verb, receiverName, artefactName){
+        self = this;
+        if ((receiverName == "")||(receiverName == undefined)) { return "You find yourself frantically lashing at thin air.";}
+
+        var artefactExists = false;
+        if ((artefactName != "")&&(artefactName != undefined)) { 
+            artefactExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+            if (!(artefactExists)) {return "You prepare your most aggressive stance and then realise there's no "+artefactName+" here and you're not carrying one either.<br>Fortunately, I don't think anyone noticed.";}
+        }
+
+        var receiverExists = (self.currentLocation.objectExists(receiverName)||self.checkInventory(receiverName));
+        if (!(receiverExists)) {return "There is no "+receiverName+" here and you're not carrying one either.<br>You feel slightly foolish for trying to attack something that isn't here.";}
+
+        if ((!(artefactExists))&&(!(self.isArmed()))) {
+            var returnString = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something or be carrying a weapon.";
+            returnString += self.hurt(25);
+            return returnString;
+        }
+
+        //the we know the recipient does exist and the player hs a means of hitting it
+        var locationReceiver = self.currentLocation.getObject(receiverName);
+        var playerReceiver = self.getObject(receiverName);
+        var receiver;
+        if (locationReceiver) {receiver = locationReceiver} else {receiver = playerReceiver};
+
+        return receiver.hurt(25);
     }
 
     Player.prototype.heal = function(pointsToAdd) {

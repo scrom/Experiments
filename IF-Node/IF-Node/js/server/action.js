@@ -182,34 +182,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                     break;
                 case 'attack':
                 case 'hit':
-                    if (self.location.objectExists(self.object0)||self.player.checkInventory(self.object0)) {
-                        console.log('hitting '+self.object0+' with '+self.object1);
-                        if ((self.object1 == "")||(self.object1 == undefined)) {
-                            if (self.player.isArmed()) {
-                                var anObject = self.player.getObject(self.object0);
-                                if (!(anObject)) {anObject = self.location.getObject(self.object0);}
-                                description = anObject.hit(25); //
-                            } else {
-                                description = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something or be carrying a weapon.";
-                                description += self.player.hit(25);
-                            }
-                        } else {
-                            if (self.location.objectExists(self.object1)||self.player.checkInventory(self.object1)) {
-                                var anObject = self.player.getObject(self.object0);
-                                if (!(anObject)) {anObject = self.location.getObject(self.object0);}
-                                description = anObject.hit(25);
-                            } else {
-                                description = "There is no "+self.object1+" here and you're not carrying any either.";
-                            }
-                        }
-
-                    } else {
-                        if ((self.object0!="")) {
-                            description = "There is no "+self.object0+" here and you're not carrying any either. You find yourself frantically lashing at thin air.";
-                        } else {
-                            description = "You find yourself frantically lashing at thin air.";
-                        }
-                    }
+                    description = self.player.hit(self.verb, self.object0, self.object1);
                     break;
                 case 'ask':
                     description = self.player.ask(self.verb, self.object1, self.object0);            
