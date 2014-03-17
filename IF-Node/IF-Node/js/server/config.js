@@ -4,7 +4,7 @@ exports.Config = function Config() {
     try{
         //@todo - fix closures here (using self) and lock down private/public
         //private class vars until I actually use them
-	    var thisConfig = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Config";
 	    var locationLimit = 100; //max locations
 	    var objectLimit = 25; //max objects
@@ -23,6 +23,5 @@ exports.Config = function Config() {
     }
     catch(err) {
 	    console.log('Unable to create Config object: '+err);
-    }
-return this;
-}
+    };
+};
