@@ -370,7 +370,7 @@ module.exports.Player = function Player(aUsername) {
         var direction = verb.substring(0, 1);
         var exit = self.currentLocation.getExit(direction);
         if (!(exit)) {return "There's no exit "+verb;}
-        if (!(exit.isVisible())) {return "Your way '"+verb+"'is blocked "+verb;} //this might be too obvious;
+        if (!(exit.isVisible())) {return "Your way '"+verb+"'is blocked.";} //this might be too obvious;
 
         var exitName = self.currentLocation.getExitDestination(direction);
         var index = getIndexIfObjectExists(map.getLocations(),"name", exitName);

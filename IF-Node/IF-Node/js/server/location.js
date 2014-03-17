@@ -48,22 +48,21 @@ exports.Location = function Location(aName, aDescription) {
     }
     Location.prototype.getExitDestination = function(aDirection) {
         self = this;
-            var index = getIndexIfObjectExists(self.exits,'name',aDirection);
-            if (index > -1) {
-                return self.exits[index].getDestinationName();
-            } else {
-                return self.name;
-            }
+            var exit = self.getExit(aDirection);
+            if (exit) {return exit.getDestinationName();} 
+            return self.name; //
     }
     Location.prototype.getExit = function(aDirection) {
         self = this;
-            var index = getIndexIfObjectExists(self.exits,'name',aDirection);
-            if (index > -1) {
-                return self.exits[index];
-            } else {
-                return null;
-            }
-    }
+        for(var i = 0; i < self.exits.length; i++) {
+            if(self.exits[i].getName() == aDirection) {
+                console.log('found: '+aDirection);
+                return self.exits[i];
+            };
+        };       
+        return null;
+    };
+
     Location.prototype.addObject = function(anObject) {
         self = this;
         self.objects.push(anObject);
@@ -115,7 +114,7 @@ exports.Location = function Location(aName, aDescription) {
             fullDescription+='<br>You can see '+self.listObjects()+'.';
         }
         if (self.exits.length > 0) {
-            //clean the grammar up here.
+            //clean the grammar up here. (in particular - better answer when there are no exits)
             fullDescription+='<br>Exits are: '+self.listExits()+'.';
         }
 

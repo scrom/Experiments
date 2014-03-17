@@ -3,67 +3,51 @@
 exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor TBC
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
-        self.name = aName;
-        self.directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
-        self.longName = self.directions[self.directions.indexOf(aName)+1]
-        self.visits = 0;
-        self.visible = true;
-        self.destinationName = aDestinationName;
+        var _name = aName;
+        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
+        
+        //long names are in an array with short names, just 1 index later - pretty crappy but does the job
+        var _longName = _directions[_directions.indexOf(_name)+1];
+        //self.visits = 0;
+        var _visible = true;
+        var _destinationName = aDestinationName;
 
-	    var objectName = "Exit";
-        console.log(objectName + ' created: '+self.name+', '+self.destinationName);
+	    var _objectName = "Exit";
+        console.log(_objectName + ' created: '+_name+', '+_destinationName);
+
+        ////public methods
+        self.toString = function() {
+            return '{"name":"'+_name+'","location":"'+_destinationName+'"}';
+        };
+
+        self.getName = function() {
+            return _name;
+        };
+
+        self.getLongName = function() {
+            return _longName;
+        };
+
+        self.getDestinationName = function() {
+            return _destinationName;
+        };
+
+        self.isVisible = function() {
+            return _visible;
+        };
+
+        self.hide = function() {
+            _visible = false;
+        };
+
+        self.show = function() {
+            _visible = true;
+            return "You reveal a new exit: '"+_longName+"'.";
+        };
+
+        ////end public methods
     }
     catch(err) {
 	    console.log('Unable to create Exit object: '+err);
-    }	
-
-    Exit.prototype.toString = function() {
-        self = this;
-        return '{"name":"'+self.name+'","location":"'+self.destinationName+'"}';
-    }
-
-    Exit.prototype.getName = function() {
-        self = this;
-        return self.name;
-    }
-
-    Exit.prototype.getLongName = function() {
-        self = this;
-        return self.longName;
-    }
-
-    Exit.prototype.getDestinationName = function() {
-        self = this;
-        return self.destinationName;
-    }
-
-    Exit.prototype.isVisible = function() {
-        self = this;
-        return self.visible;
-    }
-
-    Exit.prototype.hide = function() {
-        self = this;
-        self.visible = false;
-    }
-
-    Exit.prototype.show = function() {
-        self = this;
-        self.visible = true;
-        return "You reveal a new exit: '"+self.longName+"'.";
-    }
-
-return this;
-}
-
-/*
-    Location.prototype.getExit = function(aDirection) {
-        self = this;
-            var index = getIndexIfObjectExists(self.exits,'exit',aDirection);
-            if (index > -1) {
-                return self.exits[index].locationname;
-            } else {
-                return self.name;
-            }
-    }
-*/
+    };	
+};
