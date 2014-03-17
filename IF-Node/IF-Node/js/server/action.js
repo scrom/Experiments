@@ -184,6 +184,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
                 case 'drop':
                     description = self.player.drop(self.verb, self.object0);
                     break;
+                case 'press':
                 case 'push':
                 case 'pull':
                 case 'open': 
