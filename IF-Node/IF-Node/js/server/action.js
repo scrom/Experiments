@@ -35,6 +35,24 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             return -1;
         }
 
+        //private - store results in class variables
+        self.buildResult = function(resultDescription) {
+            self = this;
+            self.resultString = resultDescription;
+            self.resultJson = '{"verb":"'+self.verb+
+                              '","object0":"'+self.object0+
+                              '","object1":"'+self.object1+
+                              '","description":"'+resultDescription+ '"}';
+        }
+
+        //private - build and return result
+        self.returnResultAsJson = function(resultDescription) {
+            self = this;
+            self.buildResult(resultDescription);
+            return self.getResultJson();
+        }
+
+        //ready for bad words to be added
         var swearCheck = function(aWord) {
             var badWords = []; //put any bad language you want to filter in here
             var checkWord = aWord.substring(0,4);
@@ -284,15 +302,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
             }
 
         //we're done processing, build the results...
-            self.resultString = description;
-            self.resultJson = '{"verb":"'+self.verb+
-                                               '","object0":"'+self.object0+
-                                               '","object1":"'+self.object1+
-                                               '","description":"'+description+ '"}';
-           //just check the result is valid JSON 
-           //console.log(Debug.Assert(JSON.parse(self.resultJson)));
-
-        return self.getResultJson();
+        return self.returnResultAsJson(description);
     }
 
     Action.prototype.getResultString = function() {
@@ -300,14 +310,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         return self.resultString;
     }
 
+    //allows for public re-request if needed
     Action.prototype.getResultJson = function() {
         self = this;
         return self.resultJson;
-    }
-
-    Action.prototype.testStringSplit = function(aTestString) {
-        self = this;
-        return splitRemainderString(aTestString);
     }
     
 return this;
