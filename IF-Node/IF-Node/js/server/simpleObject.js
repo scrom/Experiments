@@ -1,21 +1,24 @@
-﻿"use strict";
-//simple object
-module.exports.SimpleObject = function SimpleObject(inputName) {
-    try{
-	    var self = this; //closure so we don't lose this reference in callbacks
-        this.name = inputName; 
-        self.selfName = inputName; 
-        var aName = inputName; 
+﻿    "use strict";
+    //simple object
+    module.exports.SimpleObject = function SimpleObject(inputName) {
+        try{
+	        var self = this; //closure so we don't lose this reference in callbacks
+            self.name = inputName; 
 
-    }
-    catch(err) {
-	    console.log('Unable to create SimpleObject: '+err);
-    }
+        }
+        catch(err) {
+	        console.log('Unable to create SimpleObject: '+err);
+        }
     
-    SimpleObject.prototype.toString = function() { //testing closure behaviour with multiple instances
-        self = this;
-        return 'toString: this.name: '+this.name+' aname: '+aName+' self.selfName: '+self.selfName;
-    }
+        this.getName = function() {
+            self = this;
+            return self.name;
+        }
 
-    return this;
-} 
+        this.nestedOverwrite = function(anObject) {
+            self = this;
+            return "#1 self.name: "+self.name+" ObjectName: "+anObject.getName()+"#2 self.selfName: "+self.name;
+        }
+
+        return this;
+    } 
