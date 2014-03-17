@@ -2,7 +2,7 @@
 //main user interface interactions
 function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleArea) {
     try{
-	    var thisUi = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Ui";
         var console = aConsoleArea;
         var state = aStateArea;
@@ -17,23 +17,23 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
     }
     catch(err) {
 	    alert('Unable to create Ui object: '+err);
-    }	
+    };	
     
     //main UI input listener
     Ui.prototype.getConsole = function() {
         return console;
-    }
+    };
     
     //interaction with client
     Ui.prototype.setState = function(stateData) {
         //console.append('setting state: '+stateData);
         state.html(stateData);
         input.focus();
-    }
+    };
 
     Ui.prototype.setEvent = function(eventData) {
         events.append(eventData+'<br>');
-    }
+    };
 
     Ui.prototype.listenForInput = function(callback) {
             input.keyup(function(e){
@@ -42,16 +42,15 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
                 input.val(inputHistory[inputHistoryIndex]);
                 if (inputHistoryIndex >0) {inputHistoryIndex--;}
                 input.focus();
-            }
+            };
             if (keycode ==40) {//down arrow
                 input.val(inputHistory[inputHistoryIndex]);
                 if (inputHistoryIndex < inputHistory.length) {inputHistoryIndex++;}
                 input.focus();
-            }
+            };
             if(keycode==13) {//enter
                 inputHistory.push(input.val());
                 inputHistoryIndex = inputHistory.length-1;
-                console.append(inputHistoryIndex+' '+inputHistory.length+' '+inputHistory);
 
                 var callbackValue = input.val();
 		    	interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
@@ -62,9 +61,8 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
                     callback(callbackValue);
                 } else { 
                     alert('Unexpected callback object type in UI: '+typeof(callback));
-                }
-		    }
+                };
+		    };
             });
-    }
-return this;
-}
+    };
+};

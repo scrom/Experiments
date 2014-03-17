@@ -2,7 +2,7 @@
 //main user interface interactions
 function Client(aServerHost, aServerPort, aUi) {
     try{
-	    var thisClient = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Client";
         var username = '';
         var gameId;
@@ -15,47 +15,54 @@ function Client(aServerHost, aServerPort, aUi) {
     }
     catch(err) {
 	    alert('Unable to create Client object: '+err);
-    }	
+    };
 
     //private functions
 
     //are we getting sensible JSON back? Do something sensible with the results
+    /* Currently we'll get 3 types of responses back: 
+        {"request":{"command":"new"},"response":{"username":"simon","id":"0","description":"some text."}}
+        {"request":{"command":"action"},"response":{"verb":"s","object0":"","object1":"","description":"some text."}}
+        {"request":{"command":"list"},"response":{"games":[{"username":"simon","id":"0"}]}}
+
+        We'll need to uncomment the console log from serverRequestCallback when trying to make this work
+    */
     var untangleResponse = function(someJSONData) {
         var response = new Response(someJSONData, console);
         if (username == ''){
             username = response.getUsername();
             gameId = response.getGameId();
-        }
+        };
 
         ui.setState(response.getDescription());
-    }
+    };
 
     //callback from server request (split out for readability)
     var serverRequestCallback = function(someData) {
-	        console.append('Server Response: '+someData+'<br>');
-            untangleResponse(someData);
-    }
+	    //console.append('Server Response: '+someData+'<br>');
+        untangleResponse(someData);
+    };
 
     //make a get request to the server. Might change to POST in future. Uses a callback for async responses.
     var serverRequest = function(requestString) {
-        console.append('Client Request: '+requestString+'<br>');
+        //console.append('Client Request: '+requestString+'<br>');
         var serverResponse = $.get(serverAddress + requestString, function(data){serverRequestCallback(data);});
-    }
+    };
 
     //request an action
     var sendRequest = function(someUserInput) {
         serverRequest('action/'+someUserInput+'/'+username+'/'+gameId);
-    }
+    };
 
     //request a new game
     var requestGame = function(aUsername) {
         serverRequest('new/new/'+aUsername);
-    }
+    };
 
     //request game list
     var requestGameList = function() {
         serverRequest('list/list/watcher');
-    }
+    };
     
     //generic client request
     var request = function(someUserInput) {
@@ -66,20 +73,20 @@ function Client(aServerHost, aServerPort, aUi) {
                 requestGame(someUserInput);
             } else {
                 sendRequest(someUserInput);
-            }
-        }
-    }
+            };
+        };
+    };
     
     //member functions
     //can I talk to the server? If so, return the config
     Client.prototype.readServerConfig = function() { 
         serverRequest('config');    
-    }
+    };
 
     //start UI listening with callback to client
     Client.prototype.listenForInput = function() {
         ui.listenForInput(request);
-    }
+    };
 
     //start Event Listening
     Client.prototype.listenForEvents = function() {
@@ -90,6 +97,5 @@ function Client(aServerHost, aServerPort, aUi) {
                 //console.append(e.data + ' (message id: ' + e.lastEventId+')');
                 ui.setEvent(e.data);
         }, false);
-    }
-return this;
-}
+    };
+};
