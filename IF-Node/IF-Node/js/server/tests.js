@@ -90,14 +90,13 @@ exports.Tests = function Tests() {
         console.log(o0.toString()); //this one gets partially overwritten
         console.log(o1.toString());
 */
-/*
         var  testSimpleObjectModule = require('./simpleObject');
+
         var o0 = new testSimpleObjectModule.SimpleObject('test0');
-        console.log(o0.toString());
         var o1 = new testSimpleObjectModule.SimpleObject('test1');
-        console.log(o0.toString()); //this one gets partially overwritten
-        console.log(o1.toString());
-*/
+        console.log(o0.nestedOverwrite(o1));
+        console.log(o1.nestedOverwrite(o0));
+
         console.log('=================');
 
 
