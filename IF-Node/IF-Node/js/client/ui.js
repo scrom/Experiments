@@ -28,6 +28,7 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
     Ui.prototype.setState = function(stateData) {
         //console.append('setting state: '+stateData);
         state.html(stateData);
+        input.focus();
     }
 
     Ui.prototype.setEvent = function(eventData) {
