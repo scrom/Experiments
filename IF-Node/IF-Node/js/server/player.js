@@ -1,8 +1,8 @@
 "use strict";
 //player object
-exports.Player = function Player(aUsername) {
+module.exports.Player = function Player(aUsername) {
     try{
-	    var self = this; //closure so we don't lose thisUi refernce in callbacks
+	    var self = this; //closure so we don't lose this reference in callbacks
         self.username = aUsername;
         self.inventory = [];
         self.hitPoints = 100;
@@ -421,6 +421,17 @@ exports.Player = function Player(aUsername) {
         return false;
     }
 
+    Player.prototype.getWeapon = function() {
+        self = this;
+        var index = (getIndexIfObjectExists(self.inventory,'type','weapon'));
+        if (index>-1) {
+            console.log('Player is carrying weapon: '+self.inventory[index].getName());
+            return self.inventory[index];
+        }
+        return null;
+    }
+
+    //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!
     Player.prototype.hurt = function(pointsToRemove) {
         self = this;
         self.hitPoints -= pointsToRemove;
@@ -436,17 +447,11 @@ exports.Player = function Player(aUsername) {
         var artefactExists = false;
         if ((artefactName != "")&&(artefactName != undefined)) { 
             artefactExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
-            if (!(artefactExists)) {return "You prepare your most aggressive stance and then realise there's no "+artefactName+" here and you're not carrying one either.<br>Fortunately, I don't think anyone noticed.";}
+            if (!(artefactExists)) {return "You prepare your most aggressive stance and then realise there's no "+artefactName+" here and you don't have one on your person.<br>Fortunately, I don't think anyone noticed.";}
         }
 
         var receiverExists = (self.currentLocation.objectExists(receiverName)||self.checkInventory(receiverName));
         if (!(receiverExists)) {return "There is no "+receiverName+" here and you're not carrying one either.<br>You feel slightly foolish for trying to attack something that isn't here.";}
-
-        if ((!(artefactExists))&&(!(self.isArmed()))) {
-            var returnString = "Ouch, that really hurt. If you're going to do that again, you might want to hit it _with_ something or be carrying a weapon.";
-            returnString += self.hurt(25);
-            return returnString;
-        }
 
         //the we know the recipient does exist and the player hs a means of hitting it
         var locationReceiver = self.currentLocation.getObject(receiverName);
@@ -454,7 +459,18 @@ exports.Player = function Player(aUsername) {
         var receiver;
         if (locationReceiver) {receiver = locationReceiver} else {receiver = playerReceiver};
 
-        return receiver.hurt(25);
+        //we know a weapon exists somewhere
+        var locationWeapon = self.currentLocation.getObject(artefactName);
+        var playerNamedWeapon = self.getObject(artefactName);
+        var playerCarryingWeapon = self.getWeapon();
+        var weapon;
+
+        if (locationWeapon) {weapon = locationWeapon} 
+        else if (playerNamedWeapon) {weapon = playerNamedWeapon}
+        else {weapon = playerCarryingWeapon};
+
+        //try to hurt the receiver
+        return receiver.hurt(self, weapon);
     }
 
     Player.prototype.heal = function(pointsToAdd) {

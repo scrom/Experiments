@@ -1,9 +1,12 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, gender, aType, carryWeight, health, affinity, carrying) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         self.name = aname;
+        self.genderPrefix;
+        self.genderSuffix;
+        self.genderPossessiveSuffix;
         self.description = aDescription;
         self.detailedDescription = aDetailedDescription;
         self.weight = weight;
@@ -29,8 +32,28 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             }
         }
 
+        //set gender for more sensible responses
+        if ((gender == "f")||(gender == "female")) {
+            self.gender == "female";
+            self.genderPrefix = "She";
+            self.genderSuffix = "her";
+            self.genderPossessiveSuffix = "her";
+        }
+        else if ((gender == "m")||(gender == "male")) {
+            self.gender == "male";
+            self.genderPrefix = "He";
+            self.genderSuffix = "him";
+            self.genderPossessiveSuffix = "his";
+        }
+        else {
+            self.gender == "unknown"
+            self.genderPrefix = "It"
+            self.genderSuffix = "it"
+            self.genderPossessiveSuffix = "its";
+        }
+
         var validateType = function() {
-            var validobjectTypes = ['creature'];
+            var validobjectTypes = ['creature','friendly'];
             if (validobjectTypes.indexOf(self.type) == -1) { throw self.type+" is not a valid creature type."}//
             console.log(self.name+' type validated: '+self.type);
         }
@@ -71,8 +94,8 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.getAffinityDescription = function() {
         self = this;
         if (self.hitPoints == 0) {return ""};
-        if (self.affinity >0) {return 'It seems to like you.'};
-        if (self.affinity <0) {return 'It appears to be unhappy with you for some reason.'};
+        if (self.affinity >0) {return self.genderPrefix+' seems to like you.'};
+        if (self.affinity <0) {return self.genderPrefix+' appears to be unhappy with you for some reason.'};
         return ''; //neutral
     }
 
@@ -87,6 +110,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     }
 
     Creature.prototype.getType = function() {
+        self = this;
+        return 'creature';
+    }
+
+    Creature.prototype.getSubType = function() {
         self = this;
         return self.type;
     }
@@ -105,8 +133,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 if ((i==self.inventory.length-1)&&(i>0)){list+="and ";}
                 list+=self.inventory[i].getDescription();
         }
-
-        return "It's carrying "+list+".";
+        return self.genderPrefix+"'s carrying "+list+".";
     }	
 
     Creature.prototype.getInventoryWeight = function() {
@@ -145,12 +172,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self = this;
         if ((anObject != undefined)&&(self.hitPoints >0)) {
             if ((anObject.getWeight()+self.getInventoryWeight())>self.maxCarryingWeight) {
-                return "It's too heavy for them to carry.";
+                return "It's too heavy for "+self.genderSuffix+" to carry.";
             }
             self.inventory.push(anObject);
             console.log(anObject+' added to '+self.name+' inventory');
-            return "The "+self.name+" is now carrying "+anObject.getDescription();
-        } else {return "Sorry, the "+self.name+" can't carry that.";}
+            return self.genderPrefix+" is now carrying "+anObject.getDescription();
+        } else {return "Sorry, "+self.genderPrefix+" can't carry that.";}
     }
     
     Creature.prototype.removeFromInventory = function(anObject) {
@@ -159,18 +186,18 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         if (index > -1) {
             var returnObject = self.inventory[index];
             self.inventory.splice(index,1);
-            console.log(anObject+' removed from '+self.name+' inventory');
+            console.log(anObject+" removed from "+self.name+"'s inventory");
             return returnObject;
 
         } else {
-            console.log( self.name+' is not carrying '+anObject);
-            return "The "+self.name+"+ isn't carrying: "+anObject;//this return value may cause problems
+            console.log( self.genderPrefix+"'s not carrying "+anObject);
+            return self.genderPrefix+" isn't carrying: "+anObject;//this return value may cause problems
         }
     }
 
     Creature.prototype.give = function(anObject) {
         self = this;
-        if (self.hitPoints == 0) {return "It's dead. Save your kindness for someone who'll appreciate it."};
+        if (self.hitPoints == 0) {return self.genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
         if(anObject) { 
             self.affinity++;
             return "That was kind. "+self.addToInventory(anObject);
@@ -179,7 +206,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     }
     Creature.prototype.take = function(anObject) {
         self = this;
-        if (self.hitPoints == 0) {return "It's dead. You've taken the most valuable thing it had left."};
+        if (self.hitPoints == 0) {return self.genderPrefix+"'s dead. You've taken the most valuable thing "+self.genderPrefix.toLowerCase()+" had left."};
         if (self.affinity >0) {
             self.affinity--;
             return self.removeFromInventory(anObject);
@@ -226,7 +253,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         var returnMessage ='';
         //if (aDirection != undefined) {
-            returnMessage = "The "+self.name+" wanders to the "+self.currentLocation.name+"<br>";
+            returnMessage = self.name+" wanders to the "+self.currentLocation.name+"<br>";
         //}
         console.log('Creature GO: '+returnMessage);
         return returnMessage;
@@ -237,13 +264,32 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         return self.currentLocation;
     }	
 
-    Creature.prototype.hurt = function(pointsToRemove) {
+    this.hurt = function(player, weapon) {
         self = this;
-        if (self.hitPoints <=0) {return "It's dead already."};
+        if (self.hitPoints <=0) {return self.genderPrefix+"'s dead already."};
+        //regardless of outcome, you're not making yourself popular
         self.affinity--;
+
+        if (self.type == 'friendly') {return self.genderPrefix+" takes exception to your violent conduct. Fortunately for you, you missed. Don't do that again."}
+
+        if (!(weapon)) {
+            var returnString = "You attempt a bare-knuckle fight with "+self.name+". You do no visible damage and end up coming worse-off."; 
+            returnString += player.hurt(25);
+            return returnString;
+        }
+
+        //need to validate that artefact is a weapon (or at least is mobile)
+        if (!(weapon.isCollectable())) {
+            return "You try hitting "+self.name+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
+            returnString += player.hurt(5);
+        }
+
+        var pointsToRemove = 25; //hard-coded for now.
+
         self.hitPoints -= pointsToRemove;
+
         if (self.hitPoints <=0) {return self.kill();}
-        return "You attack the "+self.name+". "+self.health()
+        return "You attack "+self.name+". "+self.health()
         console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+self.hitPoints);
     }
 
@@ -269,10 +315,10 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 aPlayer.heal(50);
                 self.description = "the remains of a well-chewed "+self.name;
                 self.detailedDescription = "All that's left are a few scraps of skin and hair.";
-                return "You tear into the raw flesh of the "+self.name+". It was a bit messy but you feel fitter, happier and healthier.";
+                return "You tear into the raw flesh of "+self.name+". It was a bit messy but you feel fitter, happier and healthier.";
             } else {
                 aPlayer.hurt(10);
-                return "You try biting the "+self.name+" but it dodges out of the way and bites you back."
+                return "You try biting "+self.name+" but "+self.genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
             }
      } 
 
@@ -280,28 +326,28 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self = this;
         switch(true) {
                 case (self.hitPoints>99):
-                    return "It's the picture of health.";
+                    return self.genderPrefix+"'s still the picture of health.";
                     break;
                 case (self.hitPoints>80):
-                    return "It's not happy.";
+                    return self.genderPrefix+"'s not happy.";
                     break;
                 case (self.hitPoints>50):
-                    return "It's taken a fair beating.";
+                    return self.genderPrefix+"'s taken a fair beating.";
                     break;
                 case (self.hitPoints>25):
                     self.bleeding = true;
-                    return "It's bleeding heavily and really not in good shape.";
+                    return self.genderPrefix+"'s bleeding heavily and really not in good shape.";
                     break;
                 case (self.hitPoints>10):
                     self.bleeding = true;
-                    return "It's dying.";
+                    return self.genderPrefix+"'s dying.";
                     break;
                 case (self.hitPoints>0):
                     self.bleeding = true;
-                    return "It's almost dead.";
+                    return self.genderPrefix+"'s almost dead.";
                     break;
                 default:
-                    return "It's dead.";
+                    return self.genderPrefix+"'s dead.";
         }
 
     }
@@ -316,18 +362,18 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         for(var i = 0; i < self.inventory.length; i++) {
             self.currentLocation.addObject(self.removeFromInventory(self.inventory[i].getName()));
         } 
-        self.detailedDescription = "It's dead.";
+        self.detailedDescription = self.namePrefix+"'s dead.";
         self.description = 'a dead '+self.name;
-        return "The "+self.name+" is dead. Now you can steal all their stuff.";
+        return self.name+" is dead. Now you can steal all "+self.genderPossessiveSuffix+" stuff.";
      }
 
     Creature.prototype.moveOrOpen = function(aVerb) {
         self = this;
         if (self.hitPoints == 0) {return "You're a bit sick aren't you.<br>You prod and pull at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
         self.affinity--;
-        if (aVerb == 'push'||aVerb == 'pull') {return "The "+self.name+" really doesn't appreciate being pushed around."};
+        if (aVerb == 'push'||aVerb == 'pull') {return self.name+" really doesn't appreciate being pushed around."};
         //open
-        return "I suggest you don't try to "+aVerb+" the "+self.name+" again, it's not going to end well.";
+        return "I suggest you don't try to "+aVerb+" "+self.name+" again, it's not going to end well.";
     }
 
     Creature.prototype.close = function() {
@@ -338,9 +384,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
     Creature.prototype.reply = function(someSpeech) {
         self = this;
-        if (self.hitPoints == 0) {return "It's dead. Your prayer and song can't save it now."};
+        if (self.hitPoints == 0) {return self.genderPrefix+"'s dead. Your prayer and song can't save it now."};
         //self.affinity--; (would be good to respond based on positive or hostile words here)
-        return "The "+self.name+" says '"+someSpeech+"' to you too.";
+        return self.name+" says '"+someSpeech+"' to you too.";
     }
 
     Creature.prototype.isCollectable = function() {

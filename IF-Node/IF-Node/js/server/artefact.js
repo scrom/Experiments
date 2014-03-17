@@ -1,7 +1,7 @@
 ﻿"use strict";
 //exit object - manage exists from locations
                                     //aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying
-exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit) { 
+module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         self.name = aName;
@@ -101,8 +101,20 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         }
         return "";
     }
-    Artefact.prototype.hurt = function(pointsToRemove) {
+    this.hurt = function(player, weapon) {
         self = this;
+        
+        if (!(weapon)) {
+            var returnString = "Ouch, that hurt. If you're going to do that again, you might want to hit the "+self.name+" _with_ something."; 
+            returnString += player.hurt(15);
+            return returnString;
+        }
+        
+        //need to validate that artefact is a weapon (or at least is mobile)
+        if (!(weapon.isCollectable())) {
+            return "You try hitting the "+self.getName()+". Unfortunately you can't move the "+weapon.getName()+" to use as a weapon.";
+        }
+        
         if (self.breakable) {
             self.broken = true;
             self.detailedDescription += " It's broken.";
@@ -112,7 +124,7 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
             self.damaged = true;
             self.detailedDescription += " and shows signs of damage beyond normal expected wear and tear.";
         }
-        return "Ding! You repeatedly bash the "+self.name+". It feels good in a gratuitously violent sort of way."
+        return "Ding! You repeatedly bash the "+self.name+". with the "+weapon.getName()+" It feels good in a gratuitously violent sort of way."
     }
 
     Artefact.prototype.moveOrOpen = function(aVerb) {
