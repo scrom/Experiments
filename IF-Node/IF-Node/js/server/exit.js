@@ -1,6 +1,6 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor TBC
+module.exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor TBC
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aName;

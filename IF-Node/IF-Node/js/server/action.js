@@ -1,6 +1,6 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
+exports.Action = function Action(anActionString, aPlayer, aMap) {
     try{
         var locationObjectModule = require('./location');
         var artefactObjectModule = require('./artefact');
@@ -10,7 +10,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         self.player = aPlayer; //sometimes actions impact the player
         self.location = self.player.getLocation();
         self.map = aMap;
-        self.dictionary = aDictionary;
 
         //action string components
         self.actionString = anActionString; //preserve the original string - we'll likely need it for special cases.
@@ -136,12 +135,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap, aDictionary) {
         self = this;
         //do stuff
         var description = ''
-        //var performAction = self.dictionary.lookup(self.verb); //retrieve correct function
-        //if (performAction) {
-        //    description = performAction(self, self.object0, self.object1);
-        //}
-
-            //var description; //describe what happens
 
             //user commands
             switch(self.verb) {

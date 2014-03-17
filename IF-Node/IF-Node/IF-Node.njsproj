@@ -37,7 +37,6 @@
     <Compile Include="js\server\action.js" />
     <Compile Include="js\server\artefact.js" />
     <Compile Include="js\server\config.js" />
-    <Compile Include="js\server\dictionary.js" />
     <Compile Include="js\server\exit.js" />
     <Compile Include="js\server\game.js" />
     <Compile Include="js\server\interpreter.js" />

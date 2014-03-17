@@ -32,7 +32,7 @@ exports.Tests = function Tests() {
         var p0 = new player.Player('tester');
 
         console.log('====Action tests====');
-        var act0 = new action.Action('test action', p0, m0, null); //last param is a dictionary
+        var act0 = new action.Action('test action', p0, m0);
         //test string splitting on 'with', 'to', 'from', 'for', 'at', 'on', 'in'
         //console.log('Split results: '+ act0.testStringSplit('eat some food with a fork on a stick'));  //test with
         //console.log('Split results: '+ act0.testStringSplit('give some tofu to the vegan within the well')); //test to
