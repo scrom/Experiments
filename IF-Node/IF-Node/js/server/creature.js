@@ -237,7 +237,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         return self.currentLocation;
     }	
 
-    Creature.prototype.hit = function(pointsToRemove) {
+    Creature.prototype.hurt = function(pointsToRemove) {
         self = this;
         if (self.hitPoints <=0) {return "It's dead already."};
         self.affinity--;
@@ -271,7 +271,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 self.detailedDescription = "All that's left are a few scraps of skin and hair.";
                 return "You tear into the raw flesh of the "+self.name+". It was a bit messy but you feel fitter, happier and healthier.";
             } else {
-                aPlayer.hit(10);
+                aPlayer.hurt(10);
                 return "You try biting the "+self.name+" but it dodges out of the way and bites you back."
             }
      } 

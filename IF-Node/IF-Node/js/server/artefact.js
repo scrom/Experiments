@@ -101,7 +101,7 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
         }
         return "";
     }
-    Artefact.prototype.hit = function(pointsToRemove) {
+    Artefact.prototype.hurt = function(pointsToRemove) {
         self = this;
         if (self.breakable) {
             self.broken = true;
@@ -141,7 +141,7 @@ exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, 
                 return 'You eat the '+self.name+'. You feel fitter, happier and healthier.';
             } else {
                 self.detailedDescription += ' and shows signs of being chewed.';
-                aPlayer.hit(5);
+                aPlayer.hurt(5);
                 return "You try and try but just can't seem to keep it in your mouth without doing yourself harm."
             }
         } else {

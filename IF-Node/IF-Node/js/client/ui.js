@@ -40,10 +40,12 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
             if (keycode ==38) {//up arrow
                 input.val(inputHistory[inputHistoryIndex]);
                 if (inputHistoryIndex >0) {inputHistoryIndex--;}
+                input.focus();
             }
             if (keycode ==40) {//down arrow
                 input.val(inputHistory[inputHistoryIndex]);
                 if (inputHistoryIndex < inputHistory.length) {inputHistoryIndex++;}
+                input.focus();
             }
             if(keycode==13) {//enter
                 inputHistory.push(input.val());
@@ -53,6 +55,7 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
                 var callbackValue = input.val();
 		    	interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
 		        input.val("");
+                input.focus();
 
                 if (callback && typeof(callback) === "function") {
                     callback(callbackValue);
