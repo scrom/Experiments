@@ -34,8 +34,8 @@ Server Configuration
 1: Ensure NodeJS is installed and the relevant module dependencies are installed unsing NPM.
 
 2: Modify /server/js/config.js to set the correct server hostname and chosen listening port:
-	this.port = process.env.port || 1337; //port to use
-        this.hostname = 'Your-Server';
+- 	this.port = process.env.port || 1337; //port to use
+-         this.hostname = 'Your-Server';
 
 3: (not yet implemented) In order to prevent server overloading and abuse, 
     you can throttle the number of players, watchers, and games. 
@@ -48,13 +48,13 @@ Running the server
 ------------------
 Whilst there are "better" ways to run the server, 
 the simplest is to write a batch file that sets the working directory to 
-	<your drive>\<your installation location>\IF-Node\js\server
+- 	<your drive>\<your installation location>\IF-Node\js\server
 
 Once at the working location, the game runs from the file "main.js". E.g.
-	node main.js 
+- 	node main.js 
 
 I generally include a "pause" at the end of the batch file so that should there be a bug that causes the game to crash you can see the diagnostic output before the window quits.
-	pause
+- 	pause
 
 
 Client Configuration
@@ -67,8 +67,8 @@ You can either host the index.html page and associated /js/client folder on a se
 The client runs over http and assumes the game is running from the "root" of the node server on the node listening port.
 
 1: Modify /js/client/main.js to set the node Server name and port number:
-    var serverHost = 'Your-Server'
-    var serverPort = 1337
+-     var serverHost = 'Your-Server'
+-     var serverPort = 1337
 
 These must match the entries supplied in config.js on the server.
 That's it. You're ready to go!
@@ -92,7 +92,7 @@ On the server side, I'm trying to keep the main game engine away from node-speci
 
 Platform
 --------
-- This game is deliberately developed on Windows and as a result, will not use any UNIX/LINUX-only Node features or packages.
+This game is deliberately developed on Windows and as a result, will not use any UNIX/LINUX-only Node features or packages.
 
 Whilst the game was originally developed in Visual Studio 2012, when I'm not in the office I've been updating and testing from a standard Windows laptop running Sublime Text or a similar basic JS editor plus command-line tooling. 
 
@@ -115,14 +115,14 @@ Node Module dependencies are defined in \IF-Node\package.json
 At the time of writing this readme, they are...
 
 For the server:
-    "path": "^0.4.9",
-    "express": "^3.4.8",
+-     "path": "^0.4.9",
+-     "express": "^3.4.8",
 
 For running NodeUnit:
-    "nodeunit": "^0.8.6",
-    "coffee-script": "^1.7.1",
-    "iced-coffee-script": "^1.7.1-a",
-    "streamline": "^0.10.8"
+-     "nodeunit": "^0.8.6",
+-     "coffee-script": "^1.7.1",
+-     "iced-coffee-script": "^1.7.1-a",
+-     "streamline": "^0.10.8"
 
 
 End. Thanks for reading! ;)
