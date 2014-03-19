@@ -94,9 +94,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
     Creature.prototype.getAffinityDescription = function() {
         self = this;
         if (self.hitPoints == 0) {return ""};
-        if (self.affinity >0) {return self.genderPrefix+' seems to like you.'};
-        if (self.affinity <0) {return self.genderPrefix+' appears to be unhappy with you for some reason.'};
-        return ''; //neutral
+        if (self.affinity >0) {return self.genderPrefix+" seems to like you."};
+        if (self.affinity <=5) {return self.genderPrefix+" really doesn't like you."};        
+        if (self.affinity <=2) {return self.genderPrefix+" doesn't seem to like you."};
+        if (self.affinity <0) {return self.genderPrefix+" seems wary of you."};
+        return ""; //neutral
     }
 
     Creature.prototype.getAffinity = function() {
@@ -273,7 +275,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         if (self.type == 'friendly') {return self.genderPrefix+" takes exception to your violent conduct. Fortunately for you, you missed. Don't do that again."}
 
         if (!(weapon)) {
-            var returnString = "You attempt a bare-knuckle fight with "+self.name+". You do no visible damage and end up coming worse-off."; 
+            var returnString = "You attempt a bare-knuckle fight with "+self.name+". You do no visible damage and end up coming worse-off. "; 
             returnString += player.hurt(25);
             return returnString;
         }
@@ -398,6 +400,4 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self = this;
         return self.edible;
     }
-
-return this;	
 }
