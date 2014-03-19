@@ -23,16 +23,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         self.directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
 
         //private functions
-        var getIndexIfObjectExists = function(array, attr, value) {
-            for(var i = 0; i < array.length; i++) {
-                if(array[i].hasOwnProperty(attr) && array[i][attr] === value) {
-                    console.log('found: '+value);
-                    return i;
-                }
-            }
-            console.log('notfound: '+value);
-            return -1;
-        }
 
         //private - store results in class variables
         self.buildResult = function(resultDescription) {
