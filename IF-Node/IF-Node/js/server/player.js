@@ -87,31 +87,43 @@ module.exports.Player = function Player(aUsername) {
     
     Player.prototype.removeFromInventory = function(anObject) {
         self = this;
-        var index = getIndexIfObjectExists(self.inventory,'name',anObject);//var index = self.inventory.indexOf(anObject);
-        if (index > -1) {
-            var returnObject = self.inventory[index];
-            self.inventory.splice(index,1);
-            console.log(anObject+' removed from inventory');
-            //return 'You dropped: '+anObject;
-            return returnObject;
+            //we don't have name exposed any more...
+            for(var index = 0; index < self.inventory.length; index++) {
+                if(self.inventory[index].getName() == anObject) {
+                    console.log('creature/object found: '+anObject+' index: '+index);
+                    var returnObject = self.inventory[index];
+                    self.inventory.splice(index,1);
+                    console.log(anObject+" removed from player inventory");
+                    return returnObject;
+                };
+            };
 
-        } else {
             console.log('player is not carrying '+anObject);
             return 'You are not carrying '+anObject; //this return value may cause problems
-        }
-    }
+    };
     
     Player.prototype.checkInventory = function(anObject) {
         self = this;
         //check if passed in object is in inventory
-        if(getIndexIfObjectExists(self.inventory,'name',anObject) > -1){ return true;}
+        //we don't have name exposed any more...
+        for(var index = 0; index < self.inventory.length; index++) {
+            if(self.inventory[index].getName() == anObject) {
+                console.log('creature/object found: '+anObject+' index: '+index);
+                return true;
+            };
+        };
         return false;
-    }
+    };
 
     Player.prototype.getObject = function(anObject) {
         self = this;
-        var index = (getIndexIfObjectExists(self.inventory,'name',anObject));
-        return self.inventory[index];
+        //we don't have name exposed any more...
+        for(var index = 0; index < self.inventory.length; index++) {
+            if(self.inventory[index].getName() == anObject) {
+                console.log('creature/object found: '+anObject+' index: '+index);
+                return self.inventory[index];
+            };
+       };
     }
 
     Player.prototype.getAllObjects = function() {
@@ -416,23 +428,27 @@ module.exports.Player = function Player(aUsername) {
 
     Player.prototype.isArmed = function() {
         self = this;
-        var index = (getIndexIfObjectExists(self.inventory,'type','weapon'));
-        if (index>-1) {
-            console.log('Player is carrying weapon: '+self.inventory[index].getName());
-            return true;
-        }
+        //we don't have type exposed any more...
+        for(var index = 0; index < self.inventory.length; index++) {
+            if(self.inventory[index].getType() == 'weapon') {
+                console.log('Player is carrying weapon: '+self.inventory[index].getName());
+                return true;
+            };
+        };
         return false;
-    }
+    };
 
     Player.prototype.getWeapon = function() {
         self = this;
-        var index = (getIndexIfObjectExists(self.inventory,'type','weapon'));
-        if (index>-1) {
-            console.log('Player is carrying weapon: '+self.inventory[index].getName());
-            return self.inventory[index];
-        }
+        //we don't have type exposed any more...
+        for(var index = 0; index < self.inventory.length; index++) {
+            if(self.inventory[index].getType() == 'weapon') {
+                console.log('Player is carrying weapon: '+self.inventory[index].getName());
+                return self.inventory[index];
+            };
+        };
         return null;
-    }
+    };
 
     //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!
     Player.prototype.hurt = function(pointsToRemove) {

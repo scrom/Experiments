@@ -17,17 +17,6 @@ exports.Location = function Location(aName, aDescription) {
 	    var objectName = "Location";
         console.log(objectName + ' created: '+self.name+', '+self.description);
 
-        var getIndexIfObjectExists = function(array, attr, value) {
-            for(var i = 0; i < array.length; i++) {
-                if(array[i].hasOwnProperty(attr) && array[i][attr] === value) {
-                    console.log('found: '+value);
-                    return i;
-                }
-            }
-            console.log('notfound: '+value);
-            return -1;
-        }
-
     }
     catch(err) {
 	    console.log('Unable to create Location object: '+err);
@@ -72,40 +61,31 @@ exports.Location = function Location(aName, aDescription) {
     Location.prototype.removeObject = function(anObject) {
         self = this;
         console.log('removing '+anObject+' from '+self.name);
-        var index = getIndexIfObjectExists(self.objects,'name',anObject);
 
-        if (index == -1) {
-            //creatures don't have name exposed any more...
-            for(var i = 0; i < self.objects.length; i++) {
-                if(self.objects[i].getName() == anObject) {
-                    index = i;
-                    console.log('creature found: '+anObject+' index: '+index);
-                };
+        //we don't have name exposed any more...
+        for(var index = 0; index < self.objects.length; index++) {
+            if(self.objects[index].getName() == anObject) {
+                console.log('creature/object found: '+anObject+' index: '+index);
+                var returnObject = self.objects[index];
+                if (returnObject.isCollectable()||returnObject.willFollow()) {
+                    self.objects.splice(index,1);
+                    console.log(anObject+' removed from location');
+                    if (returnObject.isCollectable()) {
+                        return returnObject;//+' removed from location';
+                    }
+                } else {console.log(anObject+" is not collectable or won't follow");}
             };
         };
-
-        if (index > -1) {
-            var returnObject = self.objects[index];
-            if (returnObject.isCollectable()||returnObject.willFollow()) {
-                self.objects.splice(index,1);
-                console.log(anObject+' removed from location');
-                if (returnObject.isCollectable()) {
-                    return returnObject;//+' removed from location';
-                }
-            } else {console.log(anObject+" is not collectable or won't follow");}
-        };
-    }
+    };
 
     Location.prototype.objectExists = function(anObject) {
         self = this;
         //check if passed in object is in location
-        if(getIndexIfObjectExists(self.objects,'name',anObject) > -1){ return true;};
-
-        //creatures don't have name exposed any more...
+        //we don't have name exposed any more...
         for(var i = 0; i < self.objects.length; i++) {
             if(self.objects[i].getName() == anObject) {
                 console.log('found: '+anObject);
-                return true;//self.objects[i];
+                return true;
             };
         };
         return false;
@@ -114,17 +94,13 @@ exports.Location = function Location(aName, aDescription) {
     Location.prototype.getObject = function(anObject) {
         self = this;
         //check if passed in object is in location
-        var index = getIndexIfObjectExists(self.objects,'name',anObject);
-        if (index == -1) {
-            //creatures don't have name exposed any more...
-            for(var i = 0; i < self.objects.length; i++) {
-                if(self.objects[i].getName() == anObject) {
-                    console.log('found: '+anObject);
-                    return self.objects[i];
-                };
+        //we don't have name exposed any more...
+        for(var i = 0; i < self.objects.length; i++) {
+            if(self.objects[i].getName() == anObject) {
+                console.log('found: '+anObject);
+                return self.objects[i];
             };
-        };
-        return self.objects[index];
+       };
     };
 
     Location.prototype.getAllObjects = function() {
@@ -197,7 +173,6 @@ exports.Location = function Location(aName, aDescription) {
 
     Location.prototype.creaturesExist = function() {
         self = this;
-        //creatures don't have name exposed any more...
         for(var i = 0; i < self.objects.length; i++) {
             if(self.objects[i].getType() == 'creature') {
                 console.log('Location contains at least one creature: '+self.objects[i].getName());
@@ -209,7 +184,6 @@ exports.Location = function Location(aName, aDescription) {
 
     Location.prototype.getFriendlyCreatures = function() {
         self = this;
-        //creatures don't have name exposed any more...
         var friends = []
         for(var i = 0; i < self.objects.length; i++) {
             if(self.objects[i].getType() == 'creature') {

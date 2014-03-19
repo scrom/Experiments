@@ -63,17 +63,6 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         validateType();
 
-        var getIndexIfObjectExists = function(array, attr, value) {
-            for(var i = 0; i < array.length; i++) {
-                if(array[i].hasOwnProperty(attr) && array[i][attr] === value) {
-                    console.log('found: '+value);
-                    return i;
-                };
-            };
-            console.log('notfound: '+value);
-            return -1;
-        };
-
         //// instance methods
 
         self.toString = function() {
@@ -169,17 +158,19 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
     
         self.removeFromInventory = function(anObject) {
-              var index = getIndexIfObjectExists(_inventory,'name',anObject);
-            if (index > -1) {
-                var returnObject = _inventory[index];
-                _inventory.splice(index,1);
-                console.log(anObject+" removed from "+_name+"'s inventory");
-                return returnObject;
-
-            } else {
-                console.log( _genderPrefix+"'s not carrying "+anObject);
-                return _genderPrefix+" isn't carrying: "+anObject;//this return value may cause problems
+            //we don't have name exposed any more...
+            for(var index = 0; index < _inventory.length; index++) {
+                if(_inventory[index].getName() == anObject) {
+                    console.log('creature/object found: '+anObject+' index: '+index);
+                    var returnObject = _inventory[index];
+                    _inventory.splice(index,1);
+                    console.log(anObject+" removed from "+_name+"'s inventory");
+                    return returnObject;
+                };
             };
+
+            console.log( _genderPrefix+"'s not carrying "+anObject);
+            return _genderPrefix+" isn't carrying: "+anObject;//this return value may cause problems
         };
 
         self.give = function(anObject) {
@@ -201,14 +192,26 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
      
         self.checkInventory = function(anObject) {
-             //check if passed in object is in inventory
-            if(getIndexIfObjectExists(_inventory,'name',anObject) > -1){ return true;};
+            //check if passed in object is in inventory
+            //we don't have name exposed any more...
+            for(var index = 0; index < _inventory.length; index++) {
+                if(_inventory[index].getName() == anObject) {
+                    console.log('creature/object found: '+anObject+' index: '+index);
+                    return true;
+                };
+            };
+
             return false;
         };
 
         self.getObject = function(anObject) {
-            var index = (getIndexIfObjectExists(_inventory,'name',anObject));
-            return _inventory[index];
+            //we don't have name exposed any more...
+            for(var index = 0; index < _inventory.length; index++) {
+                if(_inventory[index].getName() == anObject) {
+                    console.log('creature/object found: '+anObject+' index: '+index);
+                    return _inventory[index];
+                };
+            };
         };
 
         self.getAllObjects = function() {
