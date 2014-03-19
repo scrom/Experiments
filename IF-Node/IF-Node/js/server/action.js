@@ -147,6 +147,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                                   "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
                                   "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
                     break;
+                case 'rest':
+                case 'sleep':
                 case 'wait':/*
                     description = 'time passes...';*/
                     break;
@@ -168,13 +170,13 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                     break;
                 case 'take':
                 case 'collect':
-                case 'get': //add support for "all" later
+                case 'get': 
                     description = self.player.get(self.verb, self.object0);
                     break;
                 case 'give':
                     description = self.player.give(self.verb, self.object0,self.object1);
                     break;
-                case 'drop':
+                case 'drop': //add support for "all" later
                     description = self.player.drop(self.verb, self.object0);
                     break;
                 case 'press':
@@ -191,9 +193,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                     break;
                 case 'bite':
                 case 'chew':
+                case 'feast':
                 case 'eat':
                     description = self.player.eat(self.verb, self.object0);
                     break;
+                case 'shoot': //will need to explicitly support projectile weapons
                 case 'attack':
                 case 'hit':
                     description = self.player.hit(self.verb, self.object0, self.object1);
@@ -209,6 +213,9 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 case 'shout':
                     description = self.player.say(self.verb, self.object0,self.object1);
                     break;
+                case 'save':
+                case 'load':
+                case 'talk':
                 case 'kill':
                 case 'throw':
                 case 'rub':
@@ -228,7 +235,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 case 'put':
                 case 'attach':
                 case 'combine':
+                case 'join':
                 case 'dismantle':
+                case 'delete':
+                case 'remove':
+                case 'add':
                 case 'destroy':
                 case 'smash':
                 case 'break':
@@ -242,6 +253,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 case 'steal':
                 case 'feed':
                 case 'mend':
+                case 'fix':
                 default:
                     console.log('verb: '+self.verb+' default response');
                     if ((description == undefined)||(description == '')){
