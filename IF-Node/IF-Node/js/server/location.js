@@ -71,30 +71,61 @@ exports.Location = function Location(aName, aDescription) {
     }
     Location.prototype.removeObject = function(anObject) {
         self = this;
+        console.log('removing '+anObject+' from '+self.name);
         var index = getIndexIfObjectExists(self.objects,'name',anObject);
+
+        if (index == -1) {
+            //creatures don't have name exposed any more...
+            for(var i = 0; i < self.objects.length; i++) {
+                if(self.objects[i].getName() == anObject) {
+                    index = i;
+                    console.log('creature found: '+anObject+' index: '+index);
+                };
+            };
+        };
+
         if (index > -1) {
             var returnObject = self.objects[index];
-            if (returnObject.isCollectable()) {
+            if (returnObject.isCollectable()||returnObject.willFollow()) {
                 self.objects.splice(index,1);
                 console.log(anObject+' removed from location');
-                return returnObject;//+' removed from location';
-            } else {console.log(anObject+' is not collectable');}
-        }
+                if (returnObject.isCollectable()) {
+                    return returnObject;//+' removed from location';
+                }
+            } else {console.log(anObject+" is not collectable or won't follow");}
+        };
     }
 
     Location.prototype.objectExists = function(anObject) {
         self = this;
         //check if passed in object is in location
-        if(getIndexIfObjectExists(self.objects,'name',anObject) > -1){ return true;}
+        if(getIndexIfObjectExists(self.objects,'name',anObject) > -1){ return true;};
+
+        //creatures don't have name exposed any more...
+        for(var i = 0; i < self.objects.length; i++) {
+            if(self.objects[i].getName() == anObject) {
+                console.log('found: '+anObject);
+                return true;//self.objects[i];
+            };
+        };
         return false;
-    }
+    };
 
     Location.prototype.getObject = function(anObject) {
         self = this;
         //check if passed in object is in location
         var index = getIndexIfObjectExists(self.objects,'name',anObject);
+        if (index == -1) {
+            //creatures don't have name exposed any more...
+            for(var i = 0; i < self.objects.length; i++) {
+                if(self.objects[i].getName() == anObject) {
+                    console.log('found: '+anObject);
+                    return self.objects[i];
+                };
+            };
+        };
         return self.objects[index];
-    }
+    };
 
     Location.prototype.getAllObjects = function() {
         self = this;
@@ -166,24 +197,30 @@ exports.Location = function Location(aName, aDescription) {
 
     Location.prototype.creaturesExist = function() {
         self = this;
-        var index = (getIndexIfObjectExists(self.objects,'type','creature'));
-        if (index>-1) {
-            console.log('Location contains at least one creature: '+self.objects[index].getName());
-            return true;
-        }
+        //creatures don't have name exposed any more...
+        for(var i = 0; i < self.objects.length; i++) {
+            if(self.objects[i].getType() == 'creature') {
+                console.log('Location contains at least one creature: '+self.objects[i].getName());
+                    return true;
+            };
+        };
         return false;
-    }
+    };
 
-    Location.prototype.getFriendlyCreature = function() {
+    Location.prototype.getFriendlyCreatures = function() {
         self = this;
-        var index = (getIndexIfObjectExists(self.objects,'type','creature'));
-        if (index>-1) {
-            if (self.objects[index].getAffinity() > 0) {
-                return self.objects[index];
-            }
-        }
-        return null;
-    }
+        //creatures don't have name exposed any more...
+        var friends = []
+        for(var i = 0; i < self.objects.length; i++) {
+            if(self.objects[i].getType() == 'creature') {
+                if (self.objects[i].getAffinity() > 0) {
+                     console.log('Friendly creature found: '+self.objects[i].getName());
+                     friends.push(self.objects[i]);
+                };
+            };
+        };
+        return friends;
+    };
 
     Location.prototype.identifyThing = function(anObjectOrCreature) {
         self = this

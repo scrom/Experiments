@@ -4,6 +4,7 @@
     var serverPort = 1337;
 	var ui;
     var client;
+    var debug = true;
 	
 function init(state, input, interaction, events, console) {
     //create UI

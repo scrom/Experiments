@@ -300,7 +300,7 @@ module.exports.Player = function Player(aUsername) {
 
             if (giverArtefact) {
                 var objectToReceive = giver.take(artefactName);
-                if (!(objectToReceive)) {return "The "+giverName+" doesn't want to share with you.";}
+                if ((typeof objectToReceive != 'object')) {return objectToReceive;} //it not an object, we get a string back instead
                 return self.addToInventory(objectToReceive);
             }
     }
@@ -386,8 +386,11 @@ module.exports.Player = function Player(aUsername) {
         var returnMessage ='';
 
         //implement creature following here (note, the creature goes first so that it comes first in the output.)
-        var friend = self.currentLocation.getFriendlyCreature();
-        if (friend) {returnMessage += friend.go(direction,newLocation);}
+        //rewrite this so that creature does this automagically
+        var friends = self.currentLocation.getFriendlyCreatures();
+        for(var i = 0; i < friends.length; i++) {
+            returnMessage += friends[i].followPlayer(direction,newLocation);
+        }
 
         //now move self
         self.moves++;;

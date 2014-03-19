@@ -39,13 +39,13 @@ function Client(aServerHost, aServerPort, aUi) {
 
     //callback from server request (split out for readability)
     var serverRequestCallback = function(someData) {
-	    //console.append('Server Response: '+someData+'<br>');
+	    if(debug) {console.append('Server Response: '+someData+'<br>');};
         untangleResponse(someData);
     };
 
     //make a get request to the server. Might change to POST in future. Uses a callback for async responses.
     var serverRequest = function(requestString) {
-        //console.append('Client Request: '+requestString+'<br>');
+        if(debug) {console.append('Client Request: '+requestString+'<br>');}
         var serverResponse = $.get(serverAddress + requestString, function(data){serverRequestCallback(data);});
     };
 

@@ -93,12 +93,15 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", 2, 'treasure', true, false, false, false, true, null); //breakable!
                                                    //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-        var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<be> She looks out for everyone here. Be nice to her.", 120, 'female','friendly', 51, 215, 0, [heidiPackage]);
+        var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
         heidi.go(null,self.locations[reception]);     
  
         var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", 2, 'junk', true, false, false, false, true, null); //breakable!               
-        var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 'male','creature', 51, 215, -10, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
+        var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
         spy.go(null,self.locations[lift]);   
+
+        var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 'male','friendly', 71, 515, 0, true, null);
+        simong.go(null,self.locations[atrium]);    
     }
 
     Map.prototype.getStartLocation = function() {

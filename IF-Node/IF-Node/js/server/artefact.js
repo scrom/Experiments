@@ -176,5 +176,10 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
         return self.edible;
     }
 
+    Artefact.prototype.willFollow = function() {
+        self = this;
+        return false;
+    };
+
 return this;
 }
