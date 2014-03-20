@@ -54,10 +54,10 @@ exports.Tests = function Tests() {
         console.log('List Inventory: '+c0.getInventory());
         console.log('Remove from inventory: '+c0.removeFromInventory(a0.getName()));
         console.log('List Inventory: '+c0.getInventory());
-        console.log(c0.kill());
-        console.log(c0.heal(50));
-        console.log(l0.addObject(c0));
-        console.log(l0.removeObject(c0.getName()));
+        console.log('Kill :'+c0.kill());
+        console.log('Heal:'+c0.heal(50));
+        console.log('Add Creature to location: '+l0.addObject(c0));
+        console.log('remove Creature from location: '+l0.removeObject(c0.getName()));
         console.log('====End of Creature tests====');
 
         //test maps

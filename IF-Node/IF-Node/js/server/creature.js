@@ -363,7 +363,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.isCollectable = function() {
-            console.log("collcectabl = "+_collectable);
+            console.log("collectable = "+_collectable);
             return _collectable;
         };
 

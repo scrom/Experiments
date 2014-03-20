@@ -5,41 +5,39 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         var locationObjectModule = require('./location');
         var artefactObjectModule = require('./artefact');
 	    var self = this; //closure so we don't lose this reference in callbacks
-        self.resultString;
-        self.resultJson;
-        self.player = aPlayer; //sometimes actions impact the player
-        self.location = self.player.getLocation();
-        self.map = aMap;
+        var _resultString = '';
+        var _resultJson = '';
+        var _player = aPlayer; //sometimes actions impact the player
+        var _location = _player.getLocation();
+        var _map = aMap;
 
         //action string components
-        self.actionString = anActionString; //preserve the original string - we'll likely need it for special cases.
-        self.verb = '';
-        self.objects = []; //objects and creatures
-        self.object0 = '';
-        self.object1 = '';
+        var _actionString = anActionString; //preserve the original string - we'll likely need it for special cases.
+        var _verb = '';
+        var _objects = []; //objects and creatures
+        var _object0 = '';
+        var _object1 = '';
 
 	    var objectName = "Action";
 
-        self.directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
+        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
 
         //private functions
 
         //private - store results in class variables
-        self.buildResult = function(resultDescription) {
-            self = this;
-            self.resultString = resultDescription;
-            self.resultJson = '{"verb":"'+self.verb+
-                              '","object0":"'+self.object0+
-                              '","object1":"'+self.object1+
+        var buildResult = function(resultDescription) {
+            _resultString = resultDescription;
+            _resultJson = '{"verb":"'+_verb+
+                              '","object0":"'+_object0+
+                              '","object1":"'+_object1+
                               '","description":"'+resultDescription+ '"}';
-        }
+        };
 
-        //private - build and return result
-        self.returnResultAsJson = function(resultDescription) {
-            self = this;
-            self.buildResult(resultDescription);
-            return self.getResultJson();
-        }
+        //- build and return result
+        var returnResultAsJson = function(resultDescription) {
+            buildResult(resultDescription);
+            return _resultJson;
+        };
 
         //ready for bad words to be added
         var swearCheck = function(aWord) {
@@ -47,8 +45,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
             var checkWord = aWord.substring(0,4);
             if (badWords.indexOf(checkWord)>-1) { 
                  return aWord+" to you too. That's not very nice now, is it. Save that language for the office.";
-            } else {return null;}
-        }
+            } else {return null;};
+        };
 
         /*
         for a passed in string, split it and return an array containing 0, 1 or 2 elements.
@@ -78,20 +76,20 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                         case 'in':
                         break;
                         default:
-                    }                   
+                    };                   
                     return objectPair; //exit the loop early
-                } //end if
+                }; //end if
 
                 //support case where first word of string is a "split" word
                 if (aString.indexOf(splitWordArray[i]+' ') == 0) {
                     return ["",aString.substr(aString.indexOf(' '))];
-                }
+                };
 
-            }
+            };
             //no match, return what we started with
             console.log('no split');
             return [aString,'']; //we add in a dummy second element for now
-        }
+        };
 
         /* an action consists of either 2 or 4 elements in the form
         [verb] [object]  or [verb] [object] with/to/from/for [object]
@@ -101,216 +99,213 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         var convertActionToElements = function(aString){
 
             //collect verb (first word in string)
-            self.verb = aString.trim().split(' ')[0].toLowerCase();
+            _verb = aString.trim().split(' ')[0].toLowerCase();
 
             //replace first instance of verb with '' then trim spaces
-            var remainder = aString.replace(self.verb,'').trim().toLowerCase();  
+            var remainder = aString.replace(_verb,'').trim().toLowerCase();  
 
             //figure out split word we're looking for - with, to, from, for, at, on
-            self.objects = splitRemainderString(remainder);
-            self.object0 = self.objects[0]; 
-            self.object1 = self.objects[1]; 
+            _objects = splitRemainderString(remainder);
+            _object0 = _objects[0]; 
+            _object1 = _objects[1]; 
 
-        }
+        };
 
+        //end private functions
+
+        //public member functions
+  
+        self.act = function() {
+            //do stuff
+            var description = ''
+
+                //user commands
+                switch(_verb) {
+                    case '':
+                        description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
+                        break;
+                    case 'help':
+                        description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
+                                      "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
+                                      "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
+                                      "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
+                        break;
+                    case 'rest':
+                    case 'sleep':
+                    case 'wait':/*
+                        description = 'time passes...';*/
+                        break;
+                    case 'health':
+                        description = _player.health();
+                        break;
+                    case 'stats':
+                    case 'status':
+                        description = _player.status()+'<br><br>'+_location.describe();
+                        break;
+                    case 'visits':
+                        description = _location.getVisits();
+                        break;
+                    case 'inv':
+                        description = _player.getInventory();
+                        break;
+                    case 'look':
+                        description = _location.describe();
+                        break;
+                    case 'take':
+                    case 'collect':
+                    case 'get': 
+                        description = _player.get(_verb, _object0);
+                        break;
+                    case 'give':
+                        description = _player.give(_verb, _object0,_object1);
+                        break;
+                    case 'drop': //add support for "all" later
+                        description = _player.drop(_verb, _object0);
+                        break;
+                    case 'press':
+                    case 'push':
+                    case 'pull':
+                    case 'open': 
+                        description = _player.open(_verb, _object0);
+                        break;
+                    case 'close':
+                        description = _player.close(_verb, _object0);
+                        break;
+                    case 'examine':
+                        description = _player.examine(_verb, _object0);
+                        break;
+                    case 'bite':
+                    case 'chew':
+                    case 'feast':
+                    case 'eat':
+                        description = _player.eat(_verb, _object0);
+                        break;
+                    case 'shoot': //will need to explicitly support projectile weapons
+                    case 'attack':
+                    case 'hit':
+                        description = _player.hit(_verb, _object0, _object1);
+                        break;
+                    case 'ask':
+                        description = _player.ask(_verb, _object0, _object1);            
+                        break;
+                    case 'wave':
+                        description = _player.wave(_verb, _object0, _object1);
+                        break;
+                    case 'say':
+                    case 'sing':
+                    case 'shout':
+                        description = _player.say(_verb, _object0,_object1);
+                        break;
+                    case 'save':
+                    case 'load':
+                    case 'talk':
+                    case 'kill':
+                    case 'throw':
+                    case 'rub':
+                    case 'drink':
+                    case 'unlock':
+                    case 'lock':
+                    case 'switch': //(this is a special one) - could be switch off light or switch light on.
+                    case 'on':
+                    case 'off':
+                    case 'light':
+                    case 'extinguish':
+                    case 'unlight':
+                    case 'read':
+                    case 'climb':
+                    case 'jump':
+                    case 'run':
+                    case 'put':
+                    case 'attach':
+                    case 'combine':
+                    case 'join':
+                    case 'dismantle':
+                    case 'delete':
+                    case 'remove':
+                    case 'add':
+                    case 'destroy':
+                    case 'smash':
+                    case 'break':
+                    case 'kick':
+                    case 'ride':
+                    case 'mount':
+                    case 'dismount':
+                    case 'unmount': //don't think this is a real verb but still...
+                    case 'go': //link this with location moves
+                    case 'take':
+                    case 'steal':
+                    case 'feed':
+                    case 'mend':
+                    case 'fix':
+                    default:
+                        console.log('verb: '+_verb+' default response');
+                        if ((description == undefined)||(description == '')){
+                            description = 'You '+_verb;
+                            if (_object0) {description+= ' the '+_object0;}
+                            if (_object1) {description+= ' with the '+_object1;}
+                            description+='. Nothing much happens.';
+                        }
+                }
+                //navigation
+                if (_directions.indexOf(_verb)>-1) {
+                    description = _player.go(_verb, _map);
+                }
+
+                //admin commands
+                if (_verb == '+location') {
+                    if ((_object0)&&(_object1)) { 
+                        var newLocationIndex = _map.addLocation(_object0, _object1);                                   
+                        description = 'new location: '+_map.getLocationByIndex(newLocationIndex).toString()+' created';
+                    } else {
+                        description = 'cannot create location: '+_verb+' without name and description';
+                    }
+                }
+                if (_verb == '+object') {
+                    description = _location.addObject(new artefactObjectModule.Artefact(_object0,_object0,_object0,true, false, false, null));
+                }
+                if (_verb == '-object') {description = _location.removeObject(_object0);}
+
+                if ((_verb.substring(0,1) == '+') && (_directions.indexOf(_verb.substring(1)>-1))) //we're forcing a direction
+                    {
+
+                    if (_object0.length>0) {
+                        var trimmedVerb = _verb.substring(1,2);
+
+                        var destination = _map.getLocation(_object0);
+                        if (destination) {
+                            description = _map.link(trimmedVerb, _location.getName(), _object0);
+                        } else {
+                            console.log('could not link to location '+_object0);
+                            description = 'could not link to location '+_object0;
+                        }
+                    } else {
+                        description = 'cannot create exit: '+_verb+' without destination location';
+                    }
+                }
+
+                //fall-through checks...
+                //swearCheck(_verb);
+                //selfreferencing objects isn't going to do anything
+                if ((_object0 == _object1)&&(_object0!="")) {
+                    description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.'
+                }
+
+            //we're done processing, build the results...
+            return returnResultAsJson(description);
+        };
+
+        self.getResultString = function() {
+            return _resultString;
+        };
+
+        //end public member functions
+
+        //finish construction
         //unpack action results JSON
-        convertActionToElements(anActionString); //extract object, description, json
+        convertActionToElements(_actionString); //extract object, description, json
         console.log(objectName + ' created');
     }
     catch(err) {
 	    console.log('Unable to create Action object: '+err);
-    }	
-  
-    Action.prototype.act = function() {
-        self = this;
-        //do stuff
-        var description = ''
-
-            //user commands
-            switch(self.verb) {
-                case '':
-                    description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
-                    break;
-                case 'help':
-                    description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
-                                  "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
-                                  "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
-                                  "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
-                    break;
-                case 'rest':
-                case 'sleep':
-                case 'wait':/*
-                    description = 'time passes...';*/
-                    break;
-                case 'health':
-                    description = self.player.health();
-                    break;
-                case 'stats':
-                case 'status':
-                    description = self.player.status()+'<br><br>'+self.location.describe();
-                    break;
-                case 'visits':
-                    description = self.location.getVisits();
-                    break;
-                case 'inv':
-                    description = self.player.getInventory();
-                    break;
-                case 'look':
-                    description = self.location.describe();
-                    break;
-                case 'take':
-                case 'collect':
-                case 'get': 
-                    description = self.player.get(self.verb, self.object0);
-                    break;
-                case 'give':
-                    description = self.player.give(self.verb, self.object0,self.object1);
-                    break;
-                case 'drop': //add support for "all" later
-                    description = self.player.drop(self.verb, self.object0);
-                    break;
-                case 'press':
-                case 'push':
-                case 'pull':
-                case 'open': 
-                    description = self.player.open(self.verb, self.object0);
-                    break;
-                case 'close':
-                    description = self.player.close(self.verb, self.object0);
-                    break;
-                case 'examine':
-                    description = self.player.examine(self.verb, self.object0);
-                    break;
-                case 'bite':
-                case 'chew':
-                case 'feast':
-                case 'eat':
-                    description = self.player.eat(self.verb, self.object0);
-                    break;
-                case 'shoot': //will need to explicitly support projectile weapons
-                case 'attack':
-                case 'hit':
-                    description = self.player.hit(self.verb, self.object0, self.object1);
-                    break;
-                case 'ask':
-                    description = self.player.ask(self.verb, self.object0, self.object1);            
-                    break;
-                case 'wave':
-                    description = self.player.wave(self.verb, self.object0, self.object1);
-                    break;
-                case 'say':
-                case 'sing':
-                case 'shout':
-                    description = self.player.say(self.verb, self.object0,self.object1);
-                    break;
-                case 'save':
-                case 'load':
-                case 'talk':
-                case 'kill':
-                case 'throw':
-                case 'rub':
-                case 'drink':
-                case 'unlock':
-                case 'lock':
-                case 'switch': //(this is a special one) - could be switch off light or switch light on.
-                case 'on':
-                case 'off':
-                case 'light':
-                case 'extinguish':
-                case 'unlight':
-                case 'read':
-                case 'climb':
-                case 'jump':
-                case 'run':
-                case 'put':
-                case 'attach':
-                case 'combine':
-                case 'join':
-                case 'dismantle':
-                case 'delete':
-                case 'remove':
-                case 'add':
-                case 'destroy':
-                case 'smash':
-                case 'break':
-                case 'kick':
-                case 'ride':
-                case 'mount':
-                case 'dismount':
-                case 'unmount': //don't think this is a real verb but still...
-                case 'go': //link this with location moves
-                case 'take':
-                case 'steal':
-                case 'feed':
-                case 'mend':
-                case 'fix':
-                default:
-                    console.log('verb: '+self.verb+' default response');
-                    if ((description == undefined)||(description == '')){
-                        description = 'You '+self.verb;
-                        if (self.object0) {description+= ' the '+self.object0;}
-                        if (self.object1) {description+= ' with the '+self.object1;}
-                        description+='. Nothing much happens.';
-                    }
-            }
-            //navigation
-            if (self.directions.indexOf(self.verb)>-1) {
-                description = self.player.go(self.verb, self.map);
-            }
-
-            //admin commands
-            if (self.verb == '+location') {
-                if ((self.object0)&&(self.object1)) { 
-                    var newLocationIndex = self.map.addLocation(self.object0, self.object1);                                   
-                    description = 'new location: '+self.map.getLocationByIndex(newLocationIndex).toString()+' created';
-                } else {
-                    description = 'cannot create location: '+self.verb+' without name and description';
-                }
-            }
-            if (self.verb == '+object') {
-                description = self.location.addObject(new artefactObjectModule.Artefact(self.object0,self.object0,self.object0,true, false, false, null));
-            }
-            if (self.verb == '-object') {description = self.location.removeObject(self.object0);}
-
-            if ((self.verb.substring(0,1) == '+') && (self.directions.indexOf(self.verb.substring(1)>-1))) //we're forcing a direction
-                {
-
-                if (self.object0.length>0) {
-                    var trimmedVerb = self.verb.substring(1,2);
-
-                    var destination = self.map.getLocation(self.object0);
-                    if (!(destination)) {
-                        description = self.map.link(trimmedVerb, self.location.getName(), self.object0);
-                    } else {
-                        console.log('could not link to location '+self.object0);
-                        description = 'could not link to location '+self.object0;
-                    }
-                } else {
-                    description = 'cannot create exit: '+self.verb+' without destination location';
-                }
-            }
-
-            //fall-through checks...
-            //swearCheck(self.verb);
-            //selfreferencing objects isn't going to do anything
-            if ((self.object0 == self.object1)&&(self.object0!="")) {
-                description = 'Are you a tester?<br> You try to make the '+self.object0+' interact with itself but you grow tired and bored quite quickly.'
-            }
-
-        //we're done processing, build the results...
-        return self.returnResultAsJson(description);
-    }
-
-    Action.prototype.getResultString = function() {
-        self = this;
-        return self.resultString;
-    }
-
-    //allows for public re-request if needed
-    Action.prototype.getResultJson = function() {
-        self = this;
-        return self.resultJson;
-    }
-    
-return this;
-}
+    };	    
+};

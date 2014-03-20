@@ -52,6 +52,7 @@ exports.Map = function Map() { //inputs for constructor TBC
                     return _locations[index];
                 };
            };
+           console.log('location not found: '+aName);
         };
 
         self.init = function(){
@@ -113,7 +114,7 @@ exports.Map = function Map() { //inputs for constructor TBC
              var temp = fromLocation.addExit(fromDirection,toLocation.getName());
              var temp2 = toLocation.addExit(toDirection,fromLocation.getName());
              console.log('locations linked');
-             return fromLocation+' linked '+fromDirection+'/'+toDirection+' to '+toLocation;
+             return fromLocation.getName()+' linked '+fromDirection+'/'+toDirection+' to '+toLocation.getName();
         };
 
 
