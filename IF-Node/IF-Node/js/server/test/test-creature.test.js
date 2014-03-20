@@ -27,8 +27,11 @@ exports.createCreatureWithSingleObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
     var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1, 1,'junk', true, false, false, false);
-    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50,'unknown', 'creature', 50, 150, 0, a0);
-    test.equal(c0.getDetailedDescription(), "It's carrying "+artefactDescription+'. '+creatureDetailedDescription);
+    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50,'unknown', 'creature', 50, 150, 0, false, a0);
+    console.log('actual: '+c0.getDetailedDescription());
+    var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+'.';
+    console.log("expect: "+expectedResult);
+       test.equal(c0.getDetailedDescription(), expectedResult);
     test.done();
 };
 
@@ -44,10 +47,11 @@ exports.createCreatureWithMultipleObjects = function (test) {
     var anotherArtefactName = 'another artefact'
     var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false);
     var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',1,1,'junk', true, false, false, false);
-    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50, 'unknown', 'creature', 50, 150, 0, [a0,a1]);
+    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50, 'unknown', 'creature', 50, 150, 0, false, [a0,a1]);
     console.log('actual: '+c0.getDetailedDescription());
-    console.log("expect: It's carrying "+artefactDescription+", and "+anotherArtefactDescription+". "+creatureDetailedDescription);
-    test.equal(c0.getDetailedDescription(), "It's carrying "+artefactDescription+", and "+anotherArtefactDescription+". "+creatureDetailedDescription);
+    var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+", and "+anotherArtefactDescription+".";
+    console.log("expect: "+expectedResult);
+    test.equal(c0.getDetailedDescription(), expectedResult);
     test.done();
 };
 
