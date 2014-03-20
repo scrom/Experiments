@@ -1,6 +1,6 @@
 ﻿"use strict";
-//exit object - manage exists from locations
-                                    //aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying
+//artefact object 
+                                    
 module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks

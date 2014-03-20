@@ -106,12 +106,7 @@ module.exports.Player = function Player(aUsername) {
         self = this;
         //check if passed in object is in inventory
         //we don't have name exposed any more...
-        for(var index = 0; index < self.inventory.length; index++) {
-            if(self.inventory[index].getName() == anObject) {
-                console.log('creature/object found: '+anObject+' index: '+index);
-                return true;
-            };
-        };
+        if (self.getInventory(anObject)){return true;};
         return false;
     };
 
@@ -385,9 +380,8 @@ module.exports.Player = function Player(aUsername) {
         if (!(exit.isVisible())) {return "Your way '"+verb+"' is blocked.";} //this might be too obvious;
 
         var exitName = self.currentLocation.getExitDestination(direction);
-        var index = getIndexIfObjectExists(map.getLocations(),"name", exitName);
-        if (index > -1) {
-            var newLocation = map.getLocations()[index];
+        var newLocation = map.getLocation(exitName);
+        if (newLocation) {
             console.log('found location: '+exitName);
         } else {
             console.log('location: '+exitName+' not found');

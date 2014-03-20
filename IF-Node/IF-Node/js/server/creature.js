@@ -194,13 +194,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.checkInventory = function(anObject) {
             //check if passed in object is in inventory
             //we don't have name exposed any more...
-            for(var index = 0; index < _inventory.length; index++) {
-                if(_inventory[index].getName() == anObject) {
-                    console.log('creature/object found: '+anObject+' index: '+index);
-                    return true;
-                };
-            };
-
+            if (self.getObject(anObject)) {return true;};
             return false;
         };
 
@@ -243,7 +237,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
             var returnMessage ='';
             //if (aDirection != undefined) {
-                returnMessage = _name+" wanders to the "+_currentLocation.name+"<br>";
+                returnMessage = _name+" follows you to the "+_currentLocation.getName()+"<br>";
             //}
             console.log('Creature GO: '+returnMessage);
             return returnMessage;

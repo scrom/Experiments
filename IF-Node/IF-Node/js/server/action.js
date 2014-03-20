@@ -278,8 +278,8 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                 if (self.object0.length>0) {
                     var trimmedVerb = self.verb.substring(1,2);
 
-                    var index = self.map.findLocation(self.object0);
-                    if (index > -1) {
+                    var destination = self.map.getLocation(self.object0);
+                    if (!(destination)) {
                         description = self.map.link(trimmedVerb, self.location.getName(), self.object0);
                     } else {
                         console.log('could not link to location '+self.object0);
