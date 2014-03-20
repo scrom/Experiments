@@ -1,13 +1,14 @@
 ﻿"use strict";
 //artefact object 
                                     
-module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit) { 
+module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, attackStrength, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aName;
         var _description = aDescription;
         var _detailedDescription = aDetailedDescription;
         var _weight = weight;
+        var _attackStrength = attackStrength;
         var _maxCarryingWeight = 0;//carryWeight;
         var _type = aType;
         var _linkedExit = linkedExit;
@@ -64,6 +65,10 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             return _weight;
         };
 
+        self.getAttackStrength = function() {
+            return attackStrength;
+        };
+
         self.isCollectable = function() {
             return _collectable;
         };
@@ -90,7 +95,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             };
             if (!(_damaged)) {
                 _damaged = true;
-                _detailedDescription += " It shows signs of being dropped.";
+                _detailedDescription += " It shows signs of being dropped or abused.";
             };
             return "";
         };

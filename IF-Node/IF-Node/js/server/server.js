@@ -25,19 +25,35 @@ exports.Server = function Server(anInterpreter) {
             _webServer.use(express.static(_root + '../../'));
 
             _webServer.get('/config', function (request, response) {
-                response.send(_interpreter.translate(request.url,_config));
+                request.socket.setTimeout(120);
+                response.writeHead(200, {'Content-type':'text/plain'});
+                //response.send(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(request.url,_config));
+                response.end();
             });
 
            _webServer.get('/new/*', function (request, response) {
-                response.send(_interpreter.translate(request.url,_config));
+                request.socket.setTimeout(120);
+                response.writeHead(200, {'Content-type':'text/plain'});
+                //response.send(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(request.url,_config));
+                response.end();
             });
 
            _webServer.get('/list*', function (request, response) {
-                response.send(_interpreter.translate(request.url,_config));
+                request.socket.setTimeout(120);
+                response.writeHead(200, {'Content-type':'text/plain'});
+                //response.send(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(request.url,_config));
+                response.end();
             });
 
             _webServer.get('/action/*', function (request, response) {
-                response.send(_interpreter.translate(request.url,_config));
+                request.socket.setTimeout(120);
+                response.writeHead(200, {'Content-type':'text/plain'});
+                //response.send(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(request.url,_config));
+                response.end();
             });
 
             //event source handler(!ooh) 

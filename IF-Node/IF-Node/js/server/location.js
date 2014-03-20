@@ -93,6 +93,7 @@ exports.Location = function Location(aName, aDescription) {
                     return _objects[i];
                 };
            };
+           return null;
         };
 
         self.getAllObjects = function() {

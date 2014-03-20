@@ -60,7 +60,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             //['weapon','junk','treasure','food','money','tool','door','container', 'key']; aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit)
             _locations[atrium].addObject(new artefactObjectModule.Artefact('screen', 'a flat-panel screen', "It's cycling through news, traffic reports and the names of visitors for the day.<br>"+
                                                                                                                 "Apparently the A14 is broken again.<br>Ooh! It has your name up there too. "+
-                                                                                                                "At least *someone* is expecting you.", 35, 'junk', false, false, false, false, true, null));
+                                                                                                                "At least *someone* is expecting you.", 35, 0, 'junk', false, false, false, false, true, null));
 
             var reception = self.addLocation('reception',"You are stood by the big red reception desk in the Red Gate office atrium.");
             var toilet = self.addLocation('toilet-ground-floor',"You stare at yourself in the mirror of that bathroom and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.");
@@ -73,24 +73,24 @@ exports.Map = function Map() { //inputs for constructor TBC
             var liftEntrance = _locations[atrium].getExit('i');
             liftEntrance.hide();
 
-            _locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", 250, 'door', false, false, true, false, false, liftEntrance));
-            _locations[atrium].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 'weapon', true, false, false, false, false, null));
-            _locations[atrium].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 'food', true, false, false, true, false, null));        
+            _locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", 250, 0,'door', false, false, true, false, false, liftEntrance));
+            _locations[atrium].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 25, 'weapon', true, false, false, false, false, null));
+            _locations[atrium].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 3, 'food', true, false, false, true, false, null));        
             var liftExit = _locations[lift].getExit('o');
             liftExit.hide();
 
-            _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", 250, 'door', false, false, true, false, false, liftExit));
+            _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", 250, 0, 'door', false, false, true, false, false, liftExit));
 
-            var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", 2, 'treasure', true, false, false, false, true, null); //breakable!
+            var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", 2, 0, 'treasure', true, false, false, false, true, null); //breakable!
                                                        //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-            var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
+            var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
             heidi.go(null,_locations[reception]);     
  
-            var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", 2, 'junk', true, false, false, false, true, null); //breakable!               
-            var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
+            var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", 2, 1,'junk', true, false, false, false, true, null); //breakable!               
+            var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 35, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
             spy.go(null,_locations[lift]);   
 
-            var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 'male','friendly', 71, 515, 0, true, null);
+            var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, null);
             simong.go(null,_locations[atrium]);    
         };
 

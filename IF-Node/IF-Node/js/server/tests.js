@@ -23,9 +23,9 @@ exports.Tests = function Tests() {
 
         //test player, creature, location and artefact creation.
         console.log('====Game Object Creation tests====');
-        var a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',1,'junk', true, false, false, false, null);
+        var a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',1,1,'junk', true, false, false, false, null);
         //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-        var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',120, 'unknown','creature', 50, 150, 0);
+        var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',120,1, 'unknown','creature', 50, 150, 0);
         var e0 = new exit.Exit('north','test0'); //note we can name a location that doesn't exist at the moment - should probably prevent this.
         var l0 = new location.Location('test0','a test location');
         var m0 = new map.Map();

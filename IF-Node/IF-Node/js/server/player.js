@@ -95,7 +95,7 @@ module.exports.Player = function Player(aUsername) {
         self = this;
         //check if passed in object is in inventory
         //we don't have name exposed any more...
-        if (self.getInventory(anObject)){return true;};
+        if (self.getObject(anObject)){return true;};
         return false;
     };
 
@@ -321,7 +321,6 @@ module.exports.Player = function Player(aUsername) {
     
         var objectExists = (self.currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
         if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";}
-
         //the object does exist
         var locationArtefact = self.currentLocation.getObject(artefactName);
         var playerArtefact = self.getObject(artefactName);

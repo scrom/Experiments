@@ -1,6 +1,6 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, gender, aType, carryWeight, health, affinity, couldFollow, carrying) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, couldFollow, carrying) {
     try{
 	    var self=this; //closure so we don't lose thisUi refernce in callbacks
         var _name = aname;
@@ -11,6 +11,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         var _description = aDescription;
         var _detailedDescription = aDetailedDescription;
         var _weight = weight;
+        var _attackStrength = attackStrength;
         var _maxCarryingWeight = carryWeight;
         var _type = aType;
         var _hitPoints = health;
@@ -105,6 +106,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         self.getWeight = function() {
              return  _weight+self.getInventoryWeight(); //to be honest, the creature drops everything when it's dead but still sensible to do this.
+        };
+
+        self.getAttackStrength = function() {
+            if (_hitPoints == 0) {return 0;};
+            return 25;
         };
 
         self.getInventory = function() {
@@ -256,20 +262,22 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
             if (!(weapon)) {
                 var returnString = "You attempt a bare-knuckle fight with "+_name+". You do no visible damage and end up coming worse-off. "; 
-                returnString += player.hurt(25);
+                returnString += player.hurt(self.getAttackStrength());
                 return returnString;
             };
 
             //need to validate that artefact is a weapon (or at least is mobile)
-            if (!(weapon.isCollectable())) {
-                return "You try hitting "+_name+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
-                returnString += player.hurt(5);
+            if (!(weapon.isCollectable())||(weapon.getAttackStrength()<1)) {
+                returnString = "You try hitting "+_name+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
+                returnString += weapon.bash();
+                returnString += player.hurt(self.getAttackStrength()/5); //return 20% damage
+                return returnString;
             };
 
-            var pointsToRemove = 25; //hard-coded for now.
+            var pointsToRemove = weapon.getAttackStrength();
 
             _hitPoints -= pointsToRemove;
-
+            //should really bash weapon here in case it's breakable too.
             if (_hitPoints <=0) {return self.kill();};
             return "You attack "+_name+". "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
@@ -302,6 +310,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
          }; 
 
         self.health = function() {
+            console.log('creature health: '+_hitPoints);
             switch(true) {
                     case (_hitPoints>99):
                         return _genderPrefix+"'s still the picture of health.";
