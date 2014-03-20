@@ -18,17 +18,6 @@ module.exports.Player = function Player(aUsername) {
 	    var objectName = "Player";
 	    console.log(objectName + ' created: '+self.username);
 
-        var getIndexIfObjectExists = function(array, attr, value) {
-            for(var i = 0; i < array.length; i++) {
-                if(array[i].hasOwnProperty(attr) && array[i][attr] === value) {
-                    console.log('found: '+value);
-                    return i;
-                }
-            }
-            console.log('notfound: '+value);
-            return -1;
-        }
-
     }
     catch(err) {
 	    console.log('Unable to create Player object: '+err);
