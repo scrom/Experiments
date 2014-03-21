@@ -117,7 +117,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
   
         self.act = function() {
             //do stuff
-            var description = ''
+            var description = '';
 
                 //user commands
                 switch(_verb) {
@@ -241,15 +241,15 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                         console.log('verb: '+_verb+' default response');
                         if ((description == undefined)||(description == '')){
                             description = 'You '+_verb;
-                            if (_object0) {description+= ' the '+_object0;}
-                            if (_object1) {description+= ' with the '+_object1;}
+                            if (_object0) {description+= ' the '+_object0;};
+                            if (_object1) {description+= ' with the '+_object1;};
                             description+='. Nothing much happens.';
-                        }
-                }
+                        };
+                };
                 //navigation
                 if (_directions.indexOf(_verb)>-1) {
                     description = _player.go(_verb, _map);
-                }
+                };
 
                 //admin commands
                 if (_verb == '+location') {
@@ -258,12 +258,12 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                         description = 'new location: '+_map.getLocationByIndex(newLocationIndex).toString()+' created';
                     } else {
                         description = 'cannot create location: '+_verb+' without name and description';
-                    }
-                }
+                    };
+                };
                 if (_verb == '+object') {
                     description = _location.addObject(new artefactObjectModule.Artefact(_object0,_object0,_object0,true, false, false, null));
-                }
-                if (_verb == '-object') {description = _location.removeObject(_object0);}
+                };
+                if (_verb == '-object') {description = _location.removeObject(_object0);};
 
                 if ((_verb.substring(0,1) == '+') && (_directions.indexOf(_verb.substring(1)>-1))) //we're forcing a direction
                     {
@@ -277,18 +277,18 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
                         } else {
                             console.log('could not link to location '+_object0);
                             description = 'could not link to location '+_object0;
-                        }
+                        };
                     } else {
                         description = 'cannot create exit: '+_verb+' without destination location';
-                    }
-                }
+                    };
+                };
 
                 //fall-through checks...
                 //swearCheck(_verb);
                 //selfreferencing objects isn't going to do anything
                 if ((_object0 == _object1)&&(_object0!="")) {
-                    description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.'
-                }
+                    description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.';
+                };
 
             //we're done processing, build the results...
             return returnResultAsJson(description);

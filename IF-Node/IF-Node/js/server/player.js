@@ -101,6 +101,7 @@ module.exports.Player = function Player(aUsername) {
                     return _inventory[index];
                 };
            };
+           return null;
         };
 
         self.getAllObjects = function() {
