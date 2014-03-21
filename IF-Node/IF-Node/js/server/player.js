@@ -7,6 +7,7 @@ module.exports.Player = function Player(aUsername) {
         var _inventory = [];
         var _hitPoints = 100;
         var _maxCarryingWeight = 50;
+        var _aggression = 0;
         var _killedCount = 0;
         var _eatenRecently = true; // support for hunger and sickness
         var _bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
@@ -28,6 +29,10 @@ module.exports.Player = function Player(aUsername) {
             return _username;
         };
 
+        self.getAggression = function() {
+            //possibly replace the value with a "level" string 
+            return _aggression;
+        };
         self.getInventory = function() {
             if (_inventory.length == 0) {return "You're not carrying anything."};
             var list = ''
@@ -246,10 +251,14 @@ module.exports.Player = function Player(aUsername) {
 
                     var collectedArtefact = _currentLocation.removeObject(artefactName);
                     if (!(collectedArtefact)) { return  "Sorry, the "+receiverName+" can't pick that up.";};
+                        //treat this as a kind act (if successful)
+                        if (_aggression >0) {_aggression--;};
                         return receiver.give(collectedArtefact);
-                    };
+                };
 
                 if (playerArtefact) {
+                    //treat this as a kind act (if successful)
+                    _aggression --;
                     return receiver.give((self.removeFromInventory(artefactName)));
                 };
             };
@@ -330,13 +339,17 @@ module.exports.Player = function Player(aUsername) {
 
         //mainly used for setting initial location but could also be used for warping even if no exit/direction
         self.setLocation = function(location) { //param is a loction object, not a name.
+            //fire "leave" trigger for current location (if location is set and player not dead)
+            var returnString = "";
+            if (_currentLocation) {returnString += _currentLocation.fireExitTrigger()}; //possible add line break here
             _currentLocation = location;
-            _currentLocation.addVisit();
+            returnString += _currentLocation.addVisit();
             if (_startLocation == undefined) {
                 _startLocation = _currentLocation;
             };
 
-            return 'Current location: '+_currentLocation.getName()+'<br>'+_currentLocation.describe();
+            returnString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
+            return returnString;
         };
 
         self.go = function(verb, map) {//(aDirection, aLocation) {
@@ -368,6 +381,10 @@ module.exports.Player = function Player(aUsername) {
 
             //now move self
             _moves++;;
+
+            //reduce built up aggression every 3 moves
+            if ((_moves%3 == 0) && (_aggression>0)) {_aggression--;};
+
             if (_eatenRecently) {
                 //not fully implemented yet
                 _movesSinceEating++;
@@ -455,6 +472,10 @@ module.exports.Player = function Player(aUsername) {
             else if (playerNamedWeapon) {weapon = playerNamedWeapon}
             else {weapon = self.getWeapon();}; //try to get whatever the player might be armed with instead.
 
+            //regardless of whether this is successful, 
+            //by this point this is definitely an aggressive act. Increase aggression
+            _aggression ++;
+
             //try to hurt the receiver
             return receiver.hurt(self, weapon);
         }
@@ -495,6 +516,8 @@ module.exports.Player = function Player(aUsername) {
             _killedCount ++;
             //reset hp before healing
             _hitPoints = 0;
+            //reset aggression
+            _aggression = 0;
             //drop all objects and return to start
             for(var i = 0; i < _inventory.length; i++) {
                 _currentLocation.addObject(self.removeFromInventory(_inventory[i].getName()));
@@ -534,12 +557,13 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.status = function() {
-            var status = '';
-            status += 'Your score is '+_score+'.<br>';
-            if (!(_killedCount>0)) { status += 'You have been killed '+_killedCount+' times.<br>'};
-            status += 'You have taken '+_moves+' moves so far.<br>'; 
-            if (!(_eatenRecently)) { status += 'You are hungry.<br>'};
-            if (_bleeding) { status += 'You are bleeding and need healing.<br>'};
+            var status = "";
+            status += "Your score is "+_score+".<br>";
+            if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
+            status += "You have taken "+_moves+" moves so far.<br>"; 
+            if (!(_eatenRecently)) { status += "You are hungry.<br>"};
+            if (_bleeding) { status += "You are bleeding and need healing.<br>"};
+            if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
             status += self.health();
 
             return status;

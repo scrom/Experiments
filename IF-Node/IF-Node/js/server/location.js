@@ -125,7 +125,18 @@ exports.Location = function Location(aName, aDescription) {
 
         self.addVisit = function() {
             _visits++;
+            return (self.fireEntryTrigger());
         };
+
+        self.fireEntryTrigger = function() {
+            console.log('Entry trigger fired from '+self.getName()); 
+            return "";   
+        }; 
+
+        self.fireExitTrigger = function() {
+            console.log('Exit trigger fired from '+self.getName());
+            return "";                 
+        }; 
 
         self.getVisits = function() {
             var returnString = "You have visited this location ";
