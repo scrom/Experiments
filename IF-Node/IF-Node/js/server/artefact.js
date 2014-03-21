@@ -77,6 +77,10 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             return _edible;
         };
 
+        self.isBreakable = function() {
+            return _breakable;
+        };
+
         self.canCarry = function(anObject) {
             return false; //at the moment objects can't carry anything
         };

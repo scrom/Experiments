@@ -381,6 +381,10 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return _edible;
         };
 
+        self.isBreakable = function() {
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes if the game)
+        };
+
         self.willFollow = function() {
             console.log("willFollow = "+_follow);
             return _follow;

@@ -399,14 +399,25 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.getWeapon = function() {
-            //we don't have type exposed any more...
+            //find the strongest non-breakable weapon the player is carrying.
+            var selectedWeaponStrength = 0;
+            var selectedWeapon = null;
             for(var index = 0; index < _inventory.length; index++) {
-                if(_inventory[index].getType() == 'weapon') {
-                    console.log('Player is carrying weapon: '+_inventory[index].getName());
-                    return _inventory[index];
+                //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones.
+                if((_inventory[index].getType() == 'weapon') && (!(_inventory[index].isBreakable()))) {
+                    var weaponStrength = _inventory[index].getAttackStrength();
+                    console.log('Player is carrying weapon: '+_inventory[index].getName()+' strength: '+weaponStrength);
+                    if (weaponStrength > selectedWeaponStrength) {
+                        selectedWeapon = _inventory[index];
+                        selectedWeaponStrength = weaponStrength;
+                    };
+                    
                 };
             };
-            return null;
+            if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getName());}
+            else {console.log('Player is not carrying an automatically usable weapon')};
+
+            return selectedWeapon;
         };
 
         //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!
@@ -435,15 +446,14 @@ module.exports.Player = function Player(aUsername) {
             var receiver;
             if (locationReceiver) {receiver = locationReceiver} else {receiver = playerReceiver};
 
-            //we know a weapon exists somewhere
+            //arm with named weapon
             var locationWeapon = _currentLocation.getObject(artefactName);
             var playerNamedWeapon = self.getObject(artefactName);
-            var playerCarryingWeapon = self.getWeapon();
             var weapon;
 
             if (locationWeapon) {weapon = locationWeapon}
             else if (playerNamedWeapon) {weapon = playerNamedWeapon}
-            else {weapon = playerCarryingWeapon};
+            else {weapon = self.getWeapon();}; //try to get whatever the player might be armed with instead.
 
             //try to hurt the receiver
             return receiver.hurt(self, weapon);
