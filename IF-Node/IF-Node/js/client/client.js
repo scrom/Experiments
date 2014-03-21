@@ -46,7 +46,8 @@ function Client(aServerHost, aServerPort, aUi) {
     //make a get request to the server. Might change to POST in future. Uses a callback for async responses.
     var serverRequest = function(requestString) {
         if(debug) {console.append('Client Request: '+requestString+'<br>');}
-        var serverResponse = $.get(serverAddress + requestString, function(data){serverRequestCallback(data);});
+        var timestamp = new Date().getTime(); //used to avoid caching
+        var serverResponse = $.get(serverAddress + requestString+'/'+timestamp, function(data){serverRequestCallback(data);});
     };
 
     //request an action
