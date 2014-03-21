@@ -61,8 +61,7 @@ Client Configuration
 --------------------
 The client consists of an index.html page in the root of the project and a series of referenced JS files under the js/client folder.
 There's also a css folder (although currently there's nothing in there)
-You can either host the index.html page and associated /js/client folder on a server somewhere (remember to use a different port to the node server) or simply fire up the index form the filesystem. 
-
+The express server coded into the server.js file will automatically server static files from the root of the node project (where the index.html file lives). 
 
 The client runs over http and assumes the game is running from the "root" of the node server on the node listening port.
 
@@ -76,7 +75,7 @@ That's it. You're ready to go!
 
 Launching the client
 --------------------
-Use your favourite browser to navigate to the location of index.html (either on web server or filesystem)
+Use your favourite browser to navigate to the webroot and port of the node server: e.g. http://your-server:1337/ 
 Upon successful launch, the console of the client should show the client and UI successfully initiated.
 (I'll also add a server communication test here so that we can see the server is accessible and running)
 
