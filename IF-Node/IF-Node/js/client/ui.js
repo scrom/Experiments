@@ -26,8 +26,13 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
     
     //interaction with client
     Ui.prototype.setState = function(stateData) {
+        interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
+        input.val("");
         //console.append('setting state: '+stateData);
         state.html(stateData);
+        //re-enable input. 
+        //we check this state on the keyboard input listener to prevent repeated keypresses if server response is slow
+        input.disabled = false;
         input.focus();
     };
 
@@ -37,32 +42,33 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
 
     Ui.prototype.listenForInput = function(callback) {
             input.keyup(function(e){
-	    	var keycode = e.which;
-            if (keycode ==38) {//up arrow
-                input.val(inputHistory[inputHistoryIndex]);
-                if (inputHistoryIndex >0) {inputHistoryIndex--;}
-                input.focus();
-            };
-            if (keycode ==40) {//down arrow
-                input.val(inputHistory[inputHistoryIndex]);
-                if (inputHistoryIndex < inputHistory.length) {inputHistoryIndex++;}
-                input.focus();
-            };
-            if(keycode==13) {//enter
-                inputHistory.push(input.val());
-                inputHistoryIndex = inputHistory.length-1;
-
-                var callbackValue = input.val();
-		    	interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
-		        input.val("");
-                input.focus();
-
-                if (callback && typeof(callback) === "function") {
-                    callback(callbackValue);
-                } else { 
-                    alert('Unexpected callback object type in UI: '+typeof(callback));
+                //we disable input when awaiting a callback server response. We also need to ignore keystrokes
+                if (input.disabled) {return null;} 
+    	    	var keycode = e.which;
+                if (keycode ==38) {//up arrow
+                    input.val(inputHistory[inputHistoryIndex]);
+                    if (inputHistoryIndex >0) {inputHistoryIndex--;}
+                    input.focus();
                 };
-		    };
+                if (keycode ==40) {//down arrow
+                    input.val(inputHistory[inputHistoryIndex]);
+                    if (inputHistoryIndex < inputHistory.length) {inputHistoryIndex++;}
+                    input.focus();
+                };
+                if(keycode==13) {//enter
+                    inputHistory.push(input.val());
+                    inputHistoryIndex = inputHistory.length-1;
+
+                    var callbackValue = input.val();
+                    input.disabled = true;
+                    input.focus();
+
+                    if (callback && typeof(callback) === "function") {
+                        callback(callbackValue);
+                    } else { 
+                        alert('Unexpected callback object type in UI: '+typeof(callback));
+                    };
+    		    };
             });
     };
 };
