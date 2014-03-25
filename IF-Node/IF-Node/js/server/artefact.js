@@ -101,7 +101,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             //if you mistreat something breakable more than once it breaks, if you do it again, you lose it.
             if (((_broken) && (_breakable) && (_damaged))) {
                 //if it's damaged, broken and breakable return a message that it's destroyed. 
-                _description = " Someone destroyed it.";
+                _description = "some wreckage that was once "+_description;
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game!
                 _destroyed = true;
@@ -134,7 +134,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
 
             if (((_broken) && (_breakable) && (_damaged))) {
                 //if it's damaged, broken and breakable return a message that it's destroyed.
-                _description = " Someone destroyed it."; 
+                _description = "some wreckage that was once "+_description;
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will attempt to remove object from game!
                 _destroyed = true;
@@ -144,7 +144,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             if (_breakable) {
                 _damaged = true;
                 _broken = true;
-                _description += "(broken)";
+                _description += " (broken)";
                 _detailedDescription = "It's broken.";
                 return "You broke it!"
             };
