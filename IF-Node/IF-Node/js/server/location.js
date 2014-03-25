@@ -177,11 +177,11 @@ exports.Location = function Location(aName, aDescription) {
             return false;
         };
 
-        self.getFriendlyCreatures = function() {
+        self.getFriendlyCreatures = function(playerAggression) {
             var friends = []
             for(var i = 0; i < _objects.length; i++) {
                 if(_objects[i].getType() == 'creature') {
-                    if (_objects[i].getAffinity() > 0) {
+                    if (_objects[i].isFriendly(playerAggression)) {
                          console.log('Friendly creature found: '+_objects[i].getName());
                          friends.push(_objects[i]);
                     };

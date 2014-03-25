@@ -88,8 +88,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return ""; //neutral
         };
 
-        self.getAffinity = function() {
-            return _affinity; 
+        self.isFriendly = function(playerAggression) {
+            if ((_affinity >0) && (playerAggression <=_affinity)) {return true;};
+            return false;
         };
 
         self.getDetailedDescription = function() {
@@ -188,9 +189,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return '';
         };
 
-        self.take = function(anObject) {
+        self.take = function(anObject,playerAggression) {
             if (_hitPoints == 0) {return _genderPrefix+"'s dead. You've taken the most valuable thing "+_genderPrefix.toLowerCase()+" had left."}; //this may not work
-            if (_affinity >0) {
+            if (self.isFriendly(playerAggression)) {
                 _affinity--;
                 return self.removeFromInventory(anObject);
             };

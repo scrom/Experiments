@@ -297,7 +297,7 @@ module.exports.Player = function Player(aUsername) {
                 };
 
                 if (giverArtefact) {
-                    var objectToReceive = giver.take(artefactName);
+                    var objectToReceive = giver.take(artefactName, _aggression);
                     if ((typeof objectToReceive != 'object')) {return objectToReceive;}; //it not an object, we get a string back instead
                     return self.addToInventory(objectToReceive);
                 };
@@ -381,7 +381,7 @@ module.exports.Player = function Player(aUsername) {
 
             //implement creature following here (note, the creature goes first so that it comes first in the output.)
             //rewrite this so that creature does this automagically
-            var friends = _currentLocation.getFriendlyCreatures();
+            var friends = _currentLocation.getFriendlyCreatures(_aggression);
             for(var i = 0; i < friends.length; i++) {
                 returnMessage += friends[i].followPlayer(direction,newLocation);
             };
