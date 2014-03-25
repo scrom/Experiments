@@ -10,10 +10,10 @@ module.exports.Game = function Game(aUsername,aGameID) {
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _player = new playerObjectModule.Player(aUsername);
         var _id = aGameID;
-        var _log = ''; //log of game script
+        var _log = ''; //log of game script - not currently used
         var _map = new mapObjectModule.Map(); //map of game locations
         var _currentLocation; //id of current location
-        var _lastAction = {} //JSON representation of last user action {verb, object0, object1}
+        var _playerActions = null; //player action object (sort of singleton)
 
 	    var _objectName = "Game";
 
@@ -35,8 +35,11 @@ module.exports.Game = function Game(aUsername,aGameID) {
         };
 
         self.userAction = function(actionString) {
-            _lastAction = new actionObjectModule.Action(actionString, _player, _map);
-            var responseJson = _lastAction.act();
+            //create singe instance of player actions is not previously set
+            if (!(_playerActions)) {
+                _playerActions = new actionObjectModule.Action(_player, _map);
+            };
+            var responseJson = _playerActions.act(actionString);
             console.log('responseJson: '+responseJson+' responseObject: '+typeof responseObject);
             return responseJson;
         };

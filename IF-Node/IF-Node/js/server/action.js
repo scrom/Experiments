@@ -1,6 +1,6 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(anActionString, aPlayer, aMap) {
+exports.Action = function Action(aPlayer, aMap) {
     try{
         var locationObjectModule = require('./location');
         var artefactObjectModule = require('./artefact');
@@ -12,7 +12,7 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         var _map = aMap;
 
         //action string components
-        var _actionString = anActionString; //preserve the original string - we'll likely need it for special cases.
+        var _actionString = '';
         var _verb = '';
         var _objects = []; //objects and creatures
         var _object0 = '';
@@ -106,7 +106,11 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
 
             //figure out split word we're looking for - with, to, from, for, at, on
             _objects = splitRemainderString(remainder);
-            _object0 = _objects[0]; 
+
+            //only overwrite object0 if it's an object. If it's "it", we use the last object string instead.
+            if (_objects[0] != 'it') {
+                _object0 = _objects[0]; 
+            }
             _object1 = _objects[1]; 
 
         };
@@ -115,7 +119,10 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
 
         //public member functions
   
-        self.act = function() {
+        self.act = function(anActionString) {
+            _actionString = anActionString; //preserve the original string - we'll likely need it for special cases.
+            //unpack action results JSON
+            convertActionToElements(_actionString); //extract object, description, json
             //do stuff
             var description = '';
 
@@ -301,8 +308,6 @@ exports.Action = function Action(anActionString, aPlayer, aMap) {
         //end public member functions
 
         //finish construction
-        //unpack action results JSON
-        convertActionToElements(_actionString); //extract object, description, json
         console.log(objectName + ' created');
     }
     catch(err) {
