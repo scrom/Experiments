@@ -168,7 +168,13 @@ module.exports.Player = function Player(aUsername) {
             if ((artefactName=="")||(artefactName==undefined)) {return verb+" what?";};
             if (!(self.checkInventory(artefactName))) {return "You're not carrying any "+artefactName;};
             var artefactDamage = self.getObject(artefactName).bash(); //should be careful dropping things
-            _currentLocation.addObject(self.removeFromInventory(artefactName));
+            var droppedObject = self.removeFromInventory(artefactName);
+
+            //return "You destroyed it!"
+            if (droppedObject.isDestroyed()) { return "Oops. "+artefactDamage;}; 
+
+            //not destroyed
+            _currentLocation.addObject(droppedObject);
             return "You dropped the "+artefactName+". "+artefactDamage;
         };
 
@@ -478,7 +484,15 @@ module.exports.Player = function Player(aUsername) {
             _aggression ++;
 
             //try to hurt the receiver
-            return receiver.hurt(self, weapon);
+            var returnString = receiver.hurt(self, weapon);
+
+            if (receiver.isDestroyed()) { 
+                if(locationReceiver) {_currentLocation.removeObject(receiverName)};
+                if(playerReceiver) { self.removeFromInventory(receiverName);};
+                return "Oops. "+returnString;
+            }; 
+
+            return returnString;
         }
 
         self.heal = function(pointsToAdd) {

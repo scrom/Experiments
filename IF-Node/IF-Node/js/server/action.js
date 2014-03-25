@@ -8,7 +8,6 @@ exports.Action = function Action(aPlayer, aMap) {
         var _resultString = '';
         var _resultJson = '';
         var _player = aPlayer; //sometimes actions impact the player
-        var _location = _player.getLocation();
         var _map = aMap;
 
         //action string components
@@ -147,16 +146,16 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'stats':
                     case 'status':
-                        description = _player.status()+'<br><br>'+_location.describe();
+                        description = _player.status()+'<br><br>'+_player.getLocation().describe();
                         break;
                     case 'visits':
-                        description = _location.getVisits();
+                        description = _player.getLocation().getVisits();
                         break;
                     case 'inv':
                         description = _player.getInventory();
                         break;
                     case 'look':
-                        description = _location.describe();
+                        description = _player.getLocation().describe();
                         break;
                     case 'take':
                     case 'collect':
@@ -189,6 +188,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'shoot': //will need to explicitly support projectile weapons
                     case 'attack':
+                    case 'smash':
                     case 'hit':
                         description = _player.hit(_verb, _object0, _object1);
                         break;
@@ -231,7 +231,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'remove':
                     case 'add':
                     case 'destroy':
-                    case 'smash':
                     case 'break':
                     case 'kick':
                     case 'ride':
@@ -268,9 +267,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     };
                 };
                 if (_verb == '+object') {
-                    description = _location.addObject(new artefactObjectModule.Artefact(_object0,_object0,_object0,true, false, false, null));
+                    description = _player.getLocation().addObject(new artefactObjectModule.Artefact(_object0,_object0,_object0,true, false, false, null));
                 };
-                if (_verb == '-object') {description = _location.removeObject(_object0);};
+                if (_verb == '-object') {description = _player.getLocation().removeObject(_object0);};
 
                 if ((_verb.substring(0,1) == '+') && (_directions.indexOf(_verb.substring(1)>-1))) //we're forcing a direction
                     {
@@ -280,7 +279,7 @@ exports.Action = function Action(aPlayer, aMap) {
 
                         var destination = _map.getLocation(_object0);
                         if (destination) {
-                            description = _map.link(trimmedVerb, _location.getName(), _object0);
+                            description = _map.link(trimmedVerb, _player.getLocation().getName(), _object0);
                         } else {
                             console.log('could not link to location '+_object0);
                             description = 'could not link to location '+_object0;

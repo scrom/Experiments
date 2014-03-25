@@ -57,11 +57,6 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         self.init = function(){
             var atrium = self.addLocation('atrium',"You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br>It's your first day in the office, time to figure out what you need to do!");
-            //['weapon','junk','treasure','food','money','tool','door','container', 'key']; aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit)
-            _locations[atrium].addObject(new artefactObjectModule.Artefact('screen', 'a flat-panel screen', "It's cycling through news, traffic reports and the names of visitors for the day.<br>"+
-                                                                                                                "Apparently the A14 is broken again.<br>Ooh! It has your name up there too. "+
-                                                                                                                "At least *someone* is expecting you.", 35, 0, 'junk', false, false, false, false, true, null));
-
             var reception = self.addLocation('reception',"You are stood by the big red reception desk in the Red Gate office atrium.");
             var toilet = self.addLocation('toilet-ground-floor',"You stare at yourself in the mirror of that bathroom and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.");
             var lift = self.addLocation('lift-ground-floor',"The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.");
@@ -125,17 +120,19 @@ exports.Map = function Map() { //inputs for constructor TBC
             self.link('e', _locations[groundEastCorridor].getName(), _locations[signpost].getName());
             self.link('e', _locations[groundNorthEastCorridor].getName(), _locations[buenosAires].getName());
 
-            
-
-
-
             var liftEntrance = _locations[atrium].getExit('i');
             liftEntrance.hide();
 
+            //['weapon','junk','treasure','food','money','tool','door','container', 'key']; aName, aDescription, aDetailedDescription, weight, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit)
+            _locations[atrium].addObject(new artefactObjectModule.Artefact('screen', 'a flat-panel screen', "It's cycling through news, traffic reports and the names of visitors for the day.<br>"+
+                                                                                                                "Apparently the A14 is broken again.<br>Ooh! It has your name up there too. "+
+                                                                                                                "At least *someone* is expecting you.", 35, 0, 'junk', false, false, false, false, true, null));
+
             _locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", 250, 0,'door', false, false, true, false, false, liftEntrance));
-            _locations[atrium].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 25, 'weapon', true, false, false, false, false, null));
+            _locations[library].addObject(new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", 50, 0, 'junk', false, false, false, false, true, null));
+            _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 25, 'weapon', true, false, false, false, false, null));
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", 2, 15, 'weapon', true, false, false, false, false, null));
-            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 3, 'food', true, false, false, true, false, null));        
+            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 3, 'food', true, false, false, true, true, null));        
             var liftExit = _locations[lift].getExit('o');
             liftExit.hide();
 

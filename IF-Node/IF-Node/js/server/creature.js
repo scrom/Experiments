@@ -385,6 +385,10 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return false; //it's hard to "break" a creature or corpse (at least for the purposes if the game)
         };
 
+        self.isDestroyed = function() {
+            return false; //it's hard to "destroy" a creature or corpse (at least for the purposes if the game)
+        };
+
         self.willFollow = function() {
             console.log("willFollow = "+_follow);
             return _follow;

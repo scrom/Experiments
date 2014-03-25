@@ -5,7 +5,9 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aName;
+        var _initialDescription = aDescription; //save this for repairing later
         var _description = aDescription;
+        var _initialDetailedDescription = aDetailedDescription; //save this for repairing later
         var _detailedDescription = aDetailedDescription;
         var _weight = weight;
         var _attackStrength = attackStrength;
@@ -20,6 +22,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
         var _damaged = false;
         var _breakable = isBreakable;
         var _broken = false;
+        var _destroyed = false; //broken beyond repair
         /*
         self.mendable = mendable;
         self.uses = uses;
@@ -81,6 +84,10 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             return _breakable;
         };
 
+        self.isDestroyed = function() {
+            return _destroyed;
+        };
+
         self.canCarry = function(anObject) {
             return false; //at the moment objects can't carry anything
         };
@@ -91,10 +98,19 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
         };
 
         self.bash = function() {
-            //if you mistreat something breakable more than once it breaks.
+            //if you mistreat something breakable more than once it breaks, if you do it again, you lose it.
+            if (((_broken) && (_breakable) && (_damaged))) {
+                //if it's damaged, broken and breakable return a message that it's destroyed. 
+                _description = " Someone destroyed it.";
+                _detailedDescription = " There's nothing left but a few useless fragments.";
+                //note, player will remove object from game!
+                _destroyed = true;
+                return "You destroyed it!"
+            };
             if ((_breakable)&&(_damaged)) {
                 _broken = true;
-                _detailedDescription += " It's broken.";
+                _description += " (broken)";
+                _detailedDescription = "It's broken.";
                 return "You broke it!"
             };
             if (!(_damaged)) {
@@ -115,10 +131,21 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             if (!(weapon.isCollectable())) {
                 return "You try hitting the "+self.getName()+". Unfortunately you can't move the "+weapon.getName()+" to use as a weapon.";
             };
+
+            if (((_broken) && (_breakable) && (_damaged))) {
+                //if it's damaged, broken and breakable return a message that it's destroyed.
+                _description = " Someone destroyed it."; 
+                _detailedDescription = " There's nothing left but a few useless fragments.";
+                //note, player will attempt to remove object from game!
+                _destroyed = true;
+                return "You destroyed it!"
+            };
         
             if (_breakable) {
+                _damaged = true;
                 _broken = true;
-                _detailedDescription += " It's broken.";
+                _description += "(broken)";
+                _detailedDescription = "It's broken.";
                 return "You broke it!"
             };
             if (!(_damaged)) {
