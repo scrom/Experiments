@@ -487,6 +487,9 @@ module.exports.Player = function Player(aUsername) {
             var returnString = receiver.hurt(self, weapon);
 
             if (receiver.isDestroyed()) { 
+                //wilful destruction of objects increases aggression further...
+                _aggression ++;
+
                 if(locationReceiver) {_currentLocation.removeObject(receiverName)};
                 if(playerReceiver) { self.removeFromInventory(receiverName);};
                 return "Oops. "+returnString;
