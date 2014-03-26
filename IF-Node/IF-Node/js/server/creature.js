@@ -213,6 +213,14 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return '';
         };
 
+        self.willAcceptGifts = function(playerAggression) {
+            //more tolerant than fight or flight but not by much...
+            //this allows a moderate bribe to get a flighty creature to stick around
+            //but prevents them taking something and running away immediately afterward
+            if ((_affinity <-1) && (playerAggression>1)) {return false;};
+            return true;
+        };
+
         self.take = function(anObject,playerAggression) {
             if (_hitPoints <= 0) {return _genderPrefix+"'s dead. You've taken the most valuable thing "+_genderPrefix.toLowerCase()+" had left."}; //this may not work
             if (self.isFriendly(playerAggression)) {

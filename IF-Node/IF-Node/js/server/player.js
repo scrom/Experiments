@@ -250,7 +250,8 @@ module.exports.Player = function Player(aUsername) {
                 };
 
                 //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-                if (!(receiver.canCarry(artefact))) { return  "Sorry, the "+receiverName+" can't carry that. It's too heavy for them at the moment.";};
+                if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiverName+" can't carry that. It's too heavy for them at the moment.";};
+                if (!(receiver.willAcceptGifts(_aggression))) { return  "Sorry, "+receiverName+" is unwilling to take gifts from you at the moment.";};
 
                 //we know they *can* carry it...
                 if (locationArtefact) {
