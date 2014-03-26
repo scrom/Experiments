@@ -13,7 +13,7 @@ module.exports.Player = function Player(aUsername) {
         var _bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
         var _startLocation;
         var _currentLocation;
-        var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
+        var _moves = 0; //only incremented when moving between locations but not yet used elsewhere
         var _movesSinceEating = 0; //only incremented when moving between locations but not yet used elsewhere
         var _score = 0; //not used yet
 	    var _objectName = "Player";
@@ -265,7 +265,7 @@ module.exports.Player = function Player(aUsername) {
 
                 if (playerArtefact) {
                     //treat this as a kind act (if successful)
-                    _aggression --;
+                    if (_aggression >0) {_aggression--;};
                     return receiver.give((self.removeFromInventory(artefactName)));
                 };
             };
@@ -313,7 +313,7 @@ module.exports.Player = function Player(aUsername) {
                 if (!(receiver)) {return "There is no "+receiverName+" here.";};
 
                 //we'll only get this far if there is a valid receiver
-                return receiver.reply(speech);
+                return receiver.reply(speech, _aggression);
         };
 
         self.examine = function(verb, artefactName) {
@@ -381,16 +381,17 @@ module.exports.Player = function Player(aUsername) {
 
             //implement creature following here (note, the creature goes first so that it comes first in the output.)
             //rewrite this so that creature does this automagically
-            var friends = _currentLocation.getFriendlyCreatures(_aggression);
-            for(var i = 0; i < friends.length; i++) {
-                returnMessage += friends[i].followPlayer(direction,newLocation);
+            var creatures = _currentLocation.getCreatures();
+            for(var i = 0; i < creatures.length; i++) {
+                if ((creatures[i].isHostile(_aggression)) || (creatures[i].isFriendly(_aggression)))
+                returnMessage += creatures[i].followPlayer(direction,newLocation);
             };
 
             //now move self
             _moves++;;
 
-            //reduce built up aggression every 3 moves
-            if ((_moves%3 == 0) && (_aggression>0)) {_aggression--;};
+            //reduce built up aggression every 2 moves
+            if ((_moves%2 == 0) && (_aggression>0)) {_aggression--;};
 
             if (_eatenRecently) {
                 //not fully implemented yet
@@ -447,6 +448,8 @@ module.exports.Player = function Player(aUsername) {
         //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!
         self.hurt = function(pointsToRemove) {
             _hitPoints -= pointsToRemove;
+            //reduce aggression
+            if (_aggression >0) {_aggression--;};
             if (_hitPoints <=0) {return self.killPlayer();}
             return 'You are injured.'
             console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);

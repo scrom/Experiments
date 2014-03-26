@@ -16,7 +16,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         var _type = aType;
         var _hitPoints = health;
         var _affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
-        var _follow = couldFollow; //if true, may follow if friendly. If false, won't follow a player.
+        var _follow = couldFollow; //if true, may follow if friendly or aggressive. If false, won't follow a player.
         var _inventory = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
@@ -89,7 +89,27 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.isFriendly = function(playerAggression) {
+            //friendly if affinity is greater than or equal to aggression
             if ((_affinity >0) && (playerAggression <=_affinity)) {return true;};
+            return false;
+        };
+
+        self.isHostile = function(playerAggression) {
+            //hostile if affinity is less than 0 and is less than players -ve equivalent of aggression.
+            //but only if you are also aggressive
+            //will therefore *not* be hostile if you're _more_ aggressive than their negative affinity
+            //in other words, to avoid very hostile creatures attacking you, you need to be super-aggressive.
+            //but without equally reducing their affinity!
+            if ((_affinity <0) && (playerAggression>0) && (_affinity < playerAggression*-1)) {return true;};
+            return false;
+        };
+
+        self.willFlee = function(playerAggression) {
+            if (!(_follow)) { return false;} 
+
+            //will run away if affinity is less than 0 and player aggression is between 0 and the point where they turn hostile.
+            //this makes a very small window where you can interact with unfriendly creatures. (you must not be hostile)
+            if ((_affinity <0) && (playerAggression>0) && (_affinity >= playerAggression*-1)) {return true;};
             return false;
         };
 
@@ -111,7 +131,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         self.getAttackStrength = function() {
             if (_hitPoints == 0) {return 0;};
-            return 25;
+            return _attackStrength;
         };
 
         self.getInventory = function() {
@@ -219,6 +239,40 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return _inventory;
         };
 
+        self.fightOrFlight = function(map,player) {
+            var playerAggression = player.getAggression();
+            //for each frightened creature, try to flee (choose first available exit if more than 1 available).
+            //otherwise they try to flee but can't get past you
+            if(self.willFlee(playerAggression)) {
+                return "<br>"+self.flee(map, playerAggression);
+            };
+
+            //for each hostile creature, attack the player
+            if(self.isHostile(playerAggression)) {
+                return "<br>"+self.getName()+" attacks you. " + player.hurt(self.getAttackStrength());
+            };
+
+        return "";
+        };
+
+        self.flee = function(map, playerAggression) {
+            //run away the number of moves of player aggression vs (-ve)affinity difference
+            var fearLevel = Math.floor(_affinity+playerAggression);
+            var returnString = "";
+            //if creature is mobile
+            if (_follow) {
+                for (var i=0; i<fearLevel; i++) {
+                    var exit = _currentLocation.getRandomExit();
+                    if (exit) {
+                        self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
+                        if (i==0) {returnString = _name+" heads "+exit.getLongName()+"<br>";};
+                    };
+                };
+            };
+            console.log('Creature flees. Fear = '+fearLevel+'. End location = '+ _currentLocation.getName());
+            return returnString;
+        };
+
         self.followPlayer = function(aDirection, aLocation) {
             if (_follow) {return self.go(aDirection, aLocation)};
             return "";
@@ -242,12 +296,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //add to new location
             _currentLocation.addObject(self);
 
-            var returnMessage ='';
-            //if (aDirection != undefined) {
-                returnMessage = _name+" follows you to the "+_currentLocation.getName()+"<br>";
-            //}
-            console.log('Creature GO: '+returnMessage);
-            return returnMessage;
+            return _name+" follows you to the "+_currentLocation.getName()+"<br>";
         };	
 
         self.getLocation = function() {
@@ -363,11 +412,13 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         self.close = function() {
              if (_hitPoints == 0) {return "Seriously. Stop interfering with corpses."};
-            return "Unless you've performed surgery on it recently, you can't close a living thing";
+            return "Unless you've performed surgery on "+_genderSuffix+" recently, you can't close a living thing";
         };
 
-        self.reply = function(someSpeech) {
-            if (_hitPoints == 0) {return _genderPrefix+"'s dead. Your prayer and song can't save it now."};
+        self.reply = function(someSpeech,playerAggression) {
+            if (_hitPoints == 0) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
+            if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
+
             //_affinity--; (would be good to respond based on positive or hostile words here)
             return _name+" says '"+someSpeech+"' to you too.";
         };

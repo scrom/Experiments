@@ -168,7 +168,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             } else {return 'nothing happens'};
         };
 
-        self.reply = function(someSpeech) {
+        self.reply = function(someSpeech,playerAggression) {
             return "The "+_name+", is quietly aware of the sound of your voice but shows no sign of response.";
         };
 

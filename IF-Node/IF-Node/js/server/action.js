@@ -113,6 +113,19 @@ exports.Action = function Action(aPlayer, aMap) {
             _object1 = _objects[1]; 
 
         };
+        
+        var processCreatureFightOrFlight = function(time) {
+            var resultString = "";
+            //make this repeat for number of ticks
+            if (time>0) {
+                var creatures = _player.getLocation().getCreatures();
+                for(var i=0; i < creatures.length; i++) {
+                    resultString += creatures[i].fightOrFlight(_map, _player);
+                };
+            }
+
+            return resultString;
+        };
 
         //end private functions
 
@@ -122,40 +135,55 @@ exports.Action = function Action(aPlayer, aMap) {
             _actionString = anActionString; //preserve the original string - we'll likely need it for special cases.
             //unpack action results JSON
             convertActionToElements(_actionString); //extract object, description, json
+            
+            //assume a move passes time. Some won't - for these, ticks will be 0.
+            var ticks = 1;
+
             //do stuff
             var description = '';
 
                 //user commands
                 switch(_verb) {
                     case '':
+                        ticks = 0;
                         description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
                         break;
                     case 'help':
+                        ticks = 0;
                         description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
                                       "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
                                       "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
                                       "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
                         break;
-                    case 'rest':
-                    case 'sleep':
-                    case 'wait':/*
-                        description = 'time passes...';*/
-                        break;
                     case 'health':
+                        ticks = 0;
                         description = _player.health();
                         break;
                     case 'stats':
                     case 'status':
+                        ticks = 0;
                         description = _player.status()+'<br><br>'+_player.getLocation().describe();
                         break;
                     case 'visits':
+                        ticks = 0;
                         description = _player.getLocation().getVisits();
                         break;
                     case 'inv':
+                        ticks = 0;
                         description = _player.getInventory();
                         break;
                     case 'look':
+                        ticks = 0;
                         description = _player.getLocation().describe();
+                        break;
+                    case 'examine':
+                        ticks = 0;
+                        description = _player.examine(_verb, _object0);
+                        break;
+                    case 'rest':
+                    case 'sleep':
+                    case 'wait':/*
+                        description = 'time passes...';*/
                         break;
                     case 'take':
                     case 'collect':
@@ -176,9 +204,6 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'close':
                         description = _player.close(_verb, _object0);
-                        break;
-                    case 'examine':
-                        description = _player.examine(_verb, _object0);
                         break;
                     case 'bite':
                     case 'chew':
@@ -244,6 +269,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'mend':
                     case 'fix':
                     default:
+                        ticks = 0; //for now
                         console.log('verb: '+_verb+' default response');
                         if ((description == undefined)||(description == '')){
                             description = 'You '+_verb;
@@ -295,6 +321,9 @@ exports.Action = function Action(aPlayer, aMap) {
                 if ((_object0 == _object1)&&(_object0!="")) {
                     description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.';
                 };
+
+            //check creatures for fightOrFlight
+            description += processCreatureFightOrFlight(ticks);///////////////////////////////////////////////
 
             //we're done processing, build the results...
             return returnResultAsJson(description);

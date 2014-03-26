@@ -31,6 +31,12 @@ exports.Tests = function Tests() {
         var m0 = new map.Map();
         var p0 = new player.Player('tester');
 
+        console.log('===== Location tests =====');
+        m0.init();
+        var l0 = m0.getLocation('atrium');
+        console.log(l0.getAvailableExits());
+        console.log(l0.getRandomExit());
+
         console.log('====Action tests====');
         var act0 = new action.Action(p0, m0);
         //test string splitting on 'with', 'to', 'from', 'for', 'at', 'on', 'in'

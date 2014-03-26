@@ -51,6 +51,24 @@ exports.Location = function Location(aName, aDescription) {
             return null;
         };
 
+
+        self.getAvailableExits = function() {
+            var exitArray = [];
+            for(var i = 0; i < _exits.length; i++) {
+                if (_exits[i].isVisible()){exitArray.push(_exits[i]);};
+            };
+            return exitArray;
+        };
+
+        self.getRandomExit = function() {
+            var availableExits = self.getAvailableExits();
+            if (availableExits.length <= 1) {return null;};
+
+            var randomInt = Math.floor(Math.random() * (availableExits.length));
+            console.log('Random exit selected: '+availableExits[randomInt].getName());
+            return availableExits[randomInt];
+        };
+
         self.addObject = function(anObject) {
             _objects.push(anObject);
             console.log(anObject+' added to location');
@@ -113,7 +131,7 @@ exports.Location = function Location(aName, aDescription) {
             };
             if (_exits.length > 0) {
                 //clean the grammar up here. (in particular - better answer when there are no exits)
-                fullDescription+='<br>Exits are: '+self.listExits()+'.';
+                fullDescription+='<br>Exits are: '+self.listExits()+'.<br>';
             };
 
             return fullDescription;
@@ -177,17 +195,14 @@ exports.Location = function Location(aName, aDescription) {
             return false;
         };
 
-        self.getFriendlyCreatures = function(playerAggression) {
-            var friends = []
+        self.getCreatures = function() {
+            var creatures = []
             for(var i = 0; i < _objects.length; i++) {
                 if(_objects[i].getType() == 'creature') {
-                    if (_objects[i].isFriendly(playerAggression)) {
-                         console.log('Friendly creature found: '+_objects[i].getName());
-                         friends.push(_objects[i]);
-                    };
+                         creatures.push(_objects[i]);;
                 };
             };
-            return friends;
+            return creatures;
         };
 
         self.identifyThing = function(anObjectOrCreature) {

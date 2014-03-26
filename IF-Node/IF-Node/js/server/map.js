@@ -139,14 +139,14 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", 250, 0, 'door', false, false, true, false, false, liftExit));
 
             var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", 2, 0, 'treasure', true, false, false, false, true, null); //breakable!
-                                                       //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
+                                                       
             var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
             heidi.go(null,_locations[reception]);     
  
             var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", 2, 1,'junk', true, false, false, false, true, null); //breakable!               
-            var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 35, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
+            var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
             spy.go(null,_locations[lift]);   
-
+                                                                                             //, weight, attackStrength, gender, aType, carryWeight, health, affinity, couldFollow, carrying
             var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, null);
             simong.go(null,_locations[atrium]);    
         };
