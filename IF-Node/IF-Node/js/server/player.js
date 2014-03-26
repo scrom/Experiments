@@ -501,11 +501,25 @@ module.exports.Player = function Player(aUsername) {
 
                 if(locationReceiver) {_currentLocation.removeObject(receiverName)};
                 if(playerReceiver) { self.removeFromInventory(receiverName);};
-                return "Oops. "+returnString;
+                returnString = "Oops. "+returnString;
             }; 
 
+            //did you use something fragile as a weapon?
+            if (weapon.isBreakable()) {
+                weapon.bash();
+                if (weapon.isDestroyed()) {
+                    returnString +="<br>Oh dear. You destroyed the "+weapon.getName()+" that you decided to use as a weapon.";
+                    //remove destroyed item
+                    if (locationWeapon) {_currentLocation.removeObject(artefactName);}
+                    else if (playerNamedWeapon) {self.removeFromInventory(artefactName);};
+                     
+                } else {
+                    returnString +="<br>You damaged the "+weapon.getName()+"."
+                };
+            };
+
             return returnString;
-        }
+        };
 
         self.heal = function(pointsToAdd) {
             _hitPoints += pointsToAdd;

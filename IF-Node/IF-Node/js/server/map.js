@@ -132,7 +132,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[library].addObject(new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", 50, 0, 'junk', false, false, false, true, null));
             _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 25, 'weapon', true, false, false, false, null));
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", 2, 15, 'weapon', true, false, false, false, null));
-            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 3, 'food', true, false, true, false, null));        
+            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 3, 'food', true, false, true, true, null));        
             var liftExit = _locations[lift].getExit('o');
             liftExit.hide();
 
