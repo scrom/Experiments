@@ -156,11 +156,15 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         self.canCarry = function(anObject) {
              if (anObject != undefined) {
+                if (_hitPoints <=0) { //dead
+                    return false;
+                };
                 if ((anObject.getWeight()+self.getInventoryWeight())>_maxCarryingWeight) {
                     return false;
                 };
                 return true;
-            } else {return false;};
+            }; 
+            return false;
         };
 
         self.wave = function(anObject) {
@@ -201,7 +205,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.give = function(anObject) {
-             if (_hitPoints == 0) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
+             if (_hitPoints <= 0) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if(anObject) { 
                 _affinity++;
                 return "That was kind. "+self.addToInventory(anObject);
@@ -210,7 +214,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.take = function(anObject,playerAggression) {
-            if (_hitPoints == 0) {return _genderPrefix+"'s dead. You've taken the most valuable thing "+_genderPrefix.toLowerCase()+" had left."}; //this may not work
+            if (_hitPoints <= 0) {return _genderPrefix+"'s dead. You've taken the most valuable thing "+_genderPrefix.toLowerCase()+" had left."}; //this may not work
             if (self.isFriendly(playerAggression)) {
                 _affinity--;
                 return self.removeFromInventory(anObject);
