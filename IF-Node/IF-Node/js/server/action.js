@@ -117,13 +117,13 @@ exports.Action = function Action(aPlayer, aMap) {
         //after player has performed an action, each creature in the room has an opportunuty to react
         var processCreatureFightOrFlight = function(time) {
             var resultString = "";
-            //make this repeat for number of ticks
-            if (time>0) {
+            //repeat for number of ticks
+            for (var t=0; t < time; t++) {
                 var creatures = _player.getLocation().getCreatures();
                 for(var i=0; i < creatures.length; i++) {
                     resultString += creatures[i].fightOrFlight(_map, _player);
                 };
-            }
+            };
 
             return resultString;
         };
