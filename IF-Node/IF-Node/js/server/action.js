@@ -114,6 +114,7 @@ exports.Action = function Action(aPlayer, aMap) {
 
         };
         
+        //after player has performed an action, each creature in the room has an opportunuty to react
         var processCreatureFightOrFlight = function(time) {
             var resultString = "";
             //make this repeat for number of ticks
@@ -185,9 +186,15 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.examine(_verb, _object0);
                         break;
                     case 'rest':
+                        ticks = 5;
+                        description = "you rest but it doesn't seem to make to feel any better.";
+                        break;
                     case 'sleep':
-                    case 'wait':/*
-                        description = 'time passes...';*/
+                        ticks = 10;
+                        description = "you sleep for a while.";
+                        break;
+                    case 'wait':
+                        description = "time passes... ...slowly";
                         break;
                     case 'take':
                     case 'collect':
@@ -327,7 +334,7 @@ exports.Action = function Action(aPlayer, aMap) {
                 };
 
             //check creatures for fightOrFlight
-            description += processCreatureFightOrFlight(ticks);///////////////////////////////////////////////
+            description += processCreatureFightOrFlight(ticks);
 
             //we're done processing, build the results...
             return returnResultAsJson(description);
