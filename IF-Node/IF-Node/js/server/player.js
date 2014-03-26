@@ -483,6 +483,11 @@ module.exports.Player = function Player(aUsername) {
             else if (playerNamedWeapon) {weapon = playerNamedWeapon}
             else {weapon = self.getWeapon();}; //try to get whatever the player might be armed with instead.
 
+            //just check it's not *already* destroyed...
+            if (receiver.isDestroyed()) {
+                return "Don't you think you've done enough damage already?<br>There's nothing of it left worth breaking.";
+            };
+
             //regardless of whether this is successful, 
             //by this point this is definitely an aggressive act. Increase aggression
             _aggression ++;
