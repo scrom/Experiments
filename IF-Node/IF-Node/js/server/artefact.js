@@ -1,7 +1,7 @@
 ﻿"use strict";
 //artefact object 
                                     
-module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, attackStrength, aType, canCollect, canMove, canOpen, isEdible, isBreakable, linkedExit) { 
+module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, attackStrength, aType, canCollect, canOpen, isEdible, isBreakable, linkedExit) { 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aName;
@@ -15,7 +15,6 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
         var _type = aType;
         var _linkedExit = linkedExit;
         var _collectable = canCollect;
-        var _mobile = canMove;
         var _opens = canOpen;
         var _edible = isEdible;
         var _chewed = false;
@@ -156,7 +155,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
         };
 
         self.moveOrOpen = function(verb) {
-            if (_mobile||_opens){
+            if (_opens){
                 return 'you '+verb+' the '+_name+'. '+_linkedExit.show();
             } else {return 'nothing happens'};
         };
@@ -172,7 +171,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
             return "The "+_name+", is quietly aware of the sound of your voice but shows no sign of response.";
         };
 
-        self.willFollow = function() {
+        self.canTravel = function() {
             return false;
         };
 

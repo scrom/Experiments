@@ -155,6 +155,10 @@ exports.Action = function Action(aPlayer, aMap) {
                                       "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
                                       "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
                         break;
+                    case 'map':
+                        ticks = 0;
+                        description = "Oh dear, are you lost? This is a text adventure you know. Time to get some graph paper, a pencil and start drawing!";
+                        break;
                     case 'health':
                         ticks = 0;
                         description = _player.health();

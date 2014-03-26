@@ -1,6 +1,6 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, couldFollow, carrying) {
+exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying) {
     try{
 	    var self=this; //closure so we don't lose thisUi refernce in callbacks
         var _name = aname;
@@ -16,7 +16,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         var _type = aType;
         var _hitPoints = health;
         var _affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
-        var _follow = couldFollow; //if true, may follow if friendly or aggressive. If false, won't follow a player.
+        var _canTravel = canTravel; //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
         var _inventory = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
@@ -105,7 +105,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.willFlee = function(playerAggression) {
-            if (!(_follow)) { return false;} 
+            if (!(self.canTravel())) { return false;} 
 
             //will run away if affinity is less than 0 and player aggression is between 0 and the point where they turn hostile.
             //this makes a very small window where you can interact with unfriendly creatures. (you must not be hostile)
@@ -264,7 +264,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             var fearLevel = Math.floor(_affinity+playerAggression);
             var returnString = "";
             //if creature is mobile
-            if (_follow) {
+            if (self.canTravel()) {
                 for (var i=0; i<fearLevel; i++) {
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
@@ -278,7 +278,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.followPlayer = function(aDirection, aLocation) {
-            if (_follow) {return self.go(aDirection, aLocation)};
+            if (self.canTravel()) {return self.go(aDirection, aLocation)};
             return "";
         };
 
@@ -335,6 +335,8 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             if (_hitPoints <=0) {return self.kill();};
             return "You attack "+_name+". "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+
+            //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
         };
 
         self.heal = function(pointsToAdd) {
@@ -445,9 +447,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return false; //it's hard to "destroy" a creature or corpse (at least for the purposes if the game)
         };
 
-        self.willFollow = function() {
-            console.log("willFollow = "+_follow);
-            return _follow;
+        self.canTravel = function() {
+            console.log("canTravel = "+_canTravel);
+            return _canTravel;
         };
         //// end instance methods
 

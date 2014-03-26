@@ -83,12 +83,12 @@ exports.Location = function Location(aName, aDescription) {
                 if(_objects[index].getName() == anObject) {
                     console.log('creature/object found: '+anObject+' index: '+index);
                     var returnObject = _objects[index];
-                    if (returnObject.isCollectable()||returnObject.willFollow()) {
+                    if (returnObject.isCollectable()||returnObject.canTravel()) {
                         _objects.splice(index,1);
                         console.log(anObject+' removed from location');
                         if (returnObject.isCollectable()) {
                             return returnObject;//+' removed from location';
-                        }
+                        };
                     } else {console.log(anObject+" is not collectable or won't follow");}
                 };
             };
