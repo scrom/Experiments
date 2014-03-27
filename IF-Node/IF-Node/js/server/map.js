@@ -131,7 +131,11 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", 250, 0,'door', false, true, false, false, liftEntrance));
             _locations[library].addObject(new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", 50, 0, 'junk', false, false, false, true, null));
             _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 25, 'weapon', true, false, false, false, null));
+            _locations[library].addObject(new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", 3, 1, 'junk', true, false, false, false, null));
             _locations[seatingArea].addObject(new artefactObjectModule.Artefact('cake', 'a slice of cake', "Mmmm tasty *and* healthy. If only there were more.", 1, 0, 'food', true, false, true, false, null));        
+            _locations[restArea].addObject(new artefactObjectModule.Artefact('chocolate', 'a bar of chocolate', "Mmmm tasty and loaded with calories.", 1, 0, 'food', true, false, true, false, null));        
+            _locations[restArea].addObject(new artefactObjectModule.Artefact('crisps', 'a packet of crisps', "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.", 1, 0, 'food', true, false, true, false, null));        
+
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", 2, 15, 'weapon', true, false, false, false, null));
             _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 3, 'food', true, false, true, true, null));        
             var liftExit = _locations[lift].getExit('o');
@@ -148,8 +152,13 @@ exports.Map = function Map() { //inputs for constructor TBC
             var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
             spy.go(null,_locations[lift]);   
                                                                                              //, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
-            var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, null);
-            simong.go(null,_locations[atrium]);    
+            var sketchbook = new artefactObjectModule.Artefact('sketchbook', 'an A3 sketch book', "It looks like it contains all Simon's plans.", 2, 1,'treasure', true, false, false, false, null);               
+            var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, [sketchbook]);            
+            simong.go(null,_locations[poppy]);   
+            
+            var money = new artefactObjectModule.Artefact('money', 'a big sack of money', "It's all the profits from the Opportunities projects.", 3, 1,'treasure', true, false, false, false, null);               
+            var jamesm = new creatureObjectModule.Creature('james', 'James Moore', "He pwns the Opportunities division.", 190, 45, 'male','friendly', 30, 415, -1, true, [money]);            
+            jamesm.go(null,_locations[opportunitiesNorth]);    
         };
 
         self.getStartLocation = function() {
