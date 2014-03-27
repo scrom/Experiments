@@ -495,7 +495,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //consider fleeing here if not quite dead
             if (_hitPoints <=0) {return resultString+self.kill();};
             if (_hitPoints <=50) {_bleeding = true;};
-            if (_bleeding) {resultString+=self.getName()+" is bleeding. ";};    
+            if (_bleeding) {resultString+="<br>"+self.getName()+" is bleeding. ";};    
 
             return resultString;
         };
