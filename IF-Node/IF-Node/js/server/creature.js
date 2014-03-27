@@ -459,6 +459,16 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             console.log("canTravel = "+_canTravel);
             return _canTravel;
         };
+
+        self.tick = function(time, map, player) {
+            var resultString = "";
+            //repeat for number of ticks
+            for (var t=0; t < time; t++) {
+                console.log("Creature tick...");
+                resultString += self.fightOrFlight(map, player);
+            };
+            return resultString;
+        };
         //// end instance methods
 
     }

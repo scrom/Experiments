@@ -9,12 +9,11 @@ module.exports.Player = function Player(aUsername) {
         var _maxCarryingWeight = 50;
         var _aggression = 0;
         var _killedCount = 0;
-        var _eatenRecently = true; // support for hunger and sickness
         var _bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
         var _startLocation;
         var _currentLocation;
         var _moves = 0; //only incremented when moving between locations but not yet used elsewhere
-        var _movesSinceEating = 0; //only incremented when moving between locations but not yet used elsewhere
+        var _timeSinceEating = 0; //only incremented when moving between locations but not yet used elsewhere
         var _score = 0; //not used yet
 	    var _objectName = "Player";
 
@@ -394,14 +393,6 @@ module.exports.Player = function Player(aUsername) {
             //reduce built up aggression every 2 moves
             if ((_moves%2 == 0) && (_aggression>0)) {_aggression--;};
 
-            if (_eatenRecently) {
-                //not fully implemented yet
-                _movesSinceEating++;
-                if (_movesSinceEating >=20) {
-                    null;//hungry //unflag eaten recently at 30? then start decrementing health when starving or thirsty?
-                };
-            };
-
             //set player's current location
             returnMessage += self.setLocation(newLocation);
 
@@ -452,7 +443,8 @@ module.exports.Player = function Player(aUsername) {
             //reduce aggression
             if (_aggression >0) {_aggression--;};
             if (_hitPoints <=0) {return self.killPlayer();}
-            return 'You are injured.'
+            if (_hitPoints <=50) {_bleeding = true;}
+            return 'You feel weaker.'
             console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
         };
 
@@ -546,7 +538,7 @@ module.exports.Player = function Player(aUsername) {
                 //consume it
                 if (locationArtefact){_currentLocation.removeObject(artefactName)};
                 if (playerArtefact){self.removeFromInventory(artefactName)};
-                _eatenRecently = true;
+                _timeSinceEating = 0;
                 console.log('player eats some food.');
             };
 
@@ -559,6 +551,8 @@ module.exports.Player = function Player(aUsername) {
             _hitPoints = 0;
             //reset aggression
             _aggression = 0;
+            //reset hunger
+            _timeSinceEating = 0;
             //drop all objects and return to start
             for(var i = 0; i < _inventory.length; i++) {
                 _currentLocation.addObject(self.removeFromInventory(_inventory[i].getName()));
@@ -581,15 +575,12 @@ module.exports.Player = function Player(aUsername) {
                         return "You've taken a fair beating.";
                         break;
                     case (_hitPoints>25):
-                        _bleeding = true; //@bug - this should be set on "hurt", not when checking health. This would also allow minor healing to stop bleeding
                         return "You're bleeding heavily and really not in good shape.";
                         break;
                     case (_hitPoints>10):
-                        _bleeding = true;
                         return "You're dying.";
                         break;
                     case (_hitPoints>0):
-                        _bleeding = true;
                         return "You're almost dead.";
                         break;
                     default:
@@ -597,12 +588,48 @@ module.exports.Player = function Player(aUsername) {
             };
         };
 
+        self.tick = function(time) {
+            var returnString = "";
+            var damage = 0;
+            var healPoints = 0;
+
+            //time passing
+            for (var t=0; t < time; t++) {
+                console.log("Player tick...");
+
+                //bleed?
+                if (_bleeding) {
+                    damage+=2;
+                } else {
+                    //slowly recover health (this makes rest and sleep work nicely)
+                    healPoints++;
+                };
+
+                //feed?
+                _timeSinceEating++;
+                if (_timeSinceEating>=30) {damage+=2;}; //(if not bleeding, this will actually only go down by 1);
+            };
+
+            if (self.isHungry()) {returnString+="<br>You're hungry.";};
+            if (_bleeding) {returnString+="<br>You're bleeding. ";};           
+
+            if (damage>0) {returnString+= self.hurt(damage);};
+            if (healPoints>0) {self.heal(healPoints);};           
+
+            return returnString;
+        };
+
+        self.isHungry = function() {
+            if (_timeSinceEating >=20) {return true;};
+            return false;
+        };
+
         self.status = function() {
             var status = "";
             status += "Your score is "+_score+".<br>";
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_moves+" moves so far.<br>"; 
-            if (!(_eatenRecently)) { status += "You are hungry.<br>"};
+            if (self.isHungry()) { status += "You are hungry.<br>"};
             if (_bleeding) { status += "You are bleeding and need healing.<br>"};
             if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
             status += self.health();

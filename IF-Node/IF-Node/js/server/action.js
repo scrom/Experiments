@@ -115,16 +115,12 @@ exports.Action = function Action(aPlayer, aMap) {
         };
         
         //after player has performed an action, each creature in the room has an opportunuty to react
-        var processCreatureFightOrFlight = function(time) {
+        var processCreatureTicks = function(time, map, player) {
             var resultString = "";
-            //repeat for number of ticks
-            for (var t=0; t < time; t++) {
-                var creatures = _player.getLocation().getCreatures();
-                for(var i=0; i < creatures.length; i++) {
-                    resultString += creatures[i].fightOrFlight(_map, _player);
-                };
+            var creatures = _player.getLocation().getCreatures();
+            for(var i=0; i < creatures.length; i++) {
+                resultString += creatures[i].tick(time, map, player);
             };
-
             return resultString;
         };
 
@@ -187,14 +183,14 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'rest':
                         ticks = 5;
-                        description = "you rest but it doesn't seem to make to feel any better.";
+                        description = "You rest but it doesn't seem to make to feel any better.";
                         break;
                     case 'sleep':
                         ticks = 10;
-                        description = "you sleep for a while.";
+                        description = "You sleep for a while.";
                         break;
                     case 'wait':
-                        description = "time passes... ...slowly";
+                        description = "Time passes... ...slowly";
                         break;
                     case 'take':
                     case 'collect':
@@ -280,7 +276,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'mend':
                     case 'fix':
                     default:
-                        ticks = 0; //for now
+                        ticks = 0; //for now 
                         console.log('verb: '+_verb+' default response');
                         if ((description == undefined)||(description == '')){
                             description = 'You '+_verb;
@@ -291,6 +287,7 @@ exports.Action = function Action(aPlayer, aMap) {
                 };
                 //navigation
                 if (_directions.indexOf(_verb)>-1) {
+                    ticks = 1;
                     description = _player.go(_verb, _map);
                 };
 
@@ -334,7 +331,10 @@ exports.Action = function Action(aPlayer, aMap) {
                 };
 
             //check creatures for fightOrFlight
-            description += processCreatureFightOrFlight(ticks);
+            description += processCreatureTicks(ticks, _map, _player);
+
+            //if time is passing, what additional things happen to a player?
+            description += _player.tick(ticks);
 
             //we're done processing, build the results...
             return returnResultAsJson(description);
