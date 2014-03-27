@@ -14,6 +14,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         var _attackStrength = attackStrength;
         var _maxCarryingWeight = carryWeight;
         var _type = aType;
+        var _maxHitPoints = health;
         var _hitPoints = health;
         var _affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
         var _canTravel = canTravel; //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
@@ -110,6 +111,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //will run away if affinity is less than 0 and player aggression is between 0 and the point where they turn hostile.
             //this makes a very small window where you can interact with unfriendly creatures. (you must not be hostile)
             if ((_affinity <0) && (playerAggression>0) && (_affinity >= playerAggression*-1)) {return true;};
+            if (_hitPoints <=10) {return true;}; //flee if nearly dead
             return false;
         };
 
@@ -270,19 +272,24 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.flee = function(map, playerAggression) {
             //run away the number of moves of player aggression vs (-ve)affinity difference
             var fearLevel = Math.floor(_affinity+playerAggression);
-            var returnString = "";
+
+            //if nearly dead - flee the great number of spaces of fear or half of remaining health...
+            if (_hitPoints <=10) {
+                fearLevel = Math.max(fearLevel, Math.floor(_hitPoints/2));
+            };
+            var resultString = "";
             //if creature is mobile
             if (self.canTravel()) {
                 for (var i=0; i<fearLevel; i++) {
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
                         self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
-                        if (i==0) {returnString = _name+" heads "+exit.getLongName()+"<br>";};
+                        if (i==0) {resultString = _name+" heads "+exit.getLongName()+"<br>";};
                     };
                 };
             };
             console.log('Creature flees. Fear = '+fearLevel+'. End location = '+ _currentLocation.getName());
-            return returnString;
+            return resultString;
         };
 
         self.followPlayer = function(aDirection, aLocation) {
@@ -323,17 +330,17 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             if (_type == 'friendly') {return _genderPrefix+" takes exception to your violent conduct. Fortunately for you, you missed. Don't do that again."};
 
             if (!(weapon)) {
-                var returnString = "You attempt a bare-knuckle fight with "+_name+". You do no visible damage and end up coming worse-off. "; 
-                returnString += player.hurt(self.getAttackStrength());
-                return returnString;
+                var resultString = "You attempt a bare-knuckle fight with "+_name+". You do no visible damage and end up coming worse-off. "; 
+                resultString += player.hurt(self.getAttackStrength());
+                return resultString;
             };
 
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())||(weapon.getAttackStrength()<1)) {
-                returnString = "You try hitting "+_name+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
-                returnString += weapon.bash();
-                returnString += player.hurt(self.getAttackStrength()/5); //return 20% damage
-                return returnString;
+                resultString = "You try hitting "+_name+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
+                resultString += weapon.bash();
+                resultString += player.hurt(self.getAttackStrength()/5); //return 20% damage
+                return resultString;
             };
 
             var pointsToRemove = weapon.getAttackStrength();
@@ -341,6 +348,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             _hitPoints -= pointsToRemove;
             //should really bash weapon here in case it's breakable too.
             if (_hitPoints <=0) {return self.kill();};
+            if (_hitPoints <=50) {_bleeding = true;};
             return "You attack "+_name+". "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
@@ -348,9 +356,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.heal = function(pointsToAdd) {
-            _affinity++;
-            _hitPoints += pointsToAdd;
-            console.log('Creature healed, gains '+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            if (_hitPoints < _maxHitPoints) {
+                _hitPoints += pointsToAdd;
+                if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;}
+                if (_hitPoints > 50) {_bleeding = false};
+                console.log('Creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            };
         };
 
         self.feed = function(pointsToAdd) {
@@ -386,15 +397,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                         return _genderPrefix+"'s taken a fair beating.";
                         break;
                     case (_hitPoints>25):
-                        _bleeding = true;
                         return _genderPrefix+"'s bleeding heavily and really not in good shape.";
                         break;
                     case (_hitPoints>10):
-                        _bleeding = true;
                         return _genderPrefix+"'s dying.";
                         break;
                     case (_hitPoints>0):
-                        _bleeding = true;
                         return _genderPrefix+"'s almost dead.";
                         break;
                     default:
@@ -462,11 +470,33 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         self.tick = function(time, map, player) {
             var resultString = "";
+
+            //quick return if already dead
+            if (_hitPoints <=0) {return resultString;};
+
+            var damage = 0;
+            var healPoints = 0;
             //repeat for number of ticks
             for (var t=0; t < time; t++) {
                 console.log("Creature tick...");
                 resultString += self.fightOrFlight(map, player);
-            };
+                //////
+                //bleed?
+                if (_bleeding) {
+                    damage+=2;
+                } else {
+                    //slowly recover health
+                    healPoints++;
+                };
+            };     
+
+            if (healPoints>0) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
+            if (damage>0) {_hitPoints -=damage;};
+            //consider fleeing here if not quite dead
+            if (_hitPoints <=0) {return resultString+self.kill();};
+            if (_hitPoints <=50) {_bleeding = true;};
+            if (_bleeding) {resultString+=self.getName()+" is bleeding. ";};    
+
             return resultString;
         };
         //// end instance methods

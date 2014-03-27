@@ -121,9 +121,9 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
 
         self.hurt = function(player, weapon) {      
             if (!(weapon)) {
-                var returnString = "Ouch, that hurt. If you're going to do that again, you might want to hit the "+_name+" _with_ something."; 
-                returnString += player.hurt(15);
-                return returnString;
+                var resultString = "Ouch, that hurt. If you're going to do that again, you might want to hit the "+_name+" _with_ something."; 
+                resultString += player.hurt(15);
+                return resultString;
             };
         
             //need to validate that artefact is a weapon (or at least is mobile)

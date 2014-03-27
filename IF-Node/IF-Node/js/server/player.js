@@ -157,9 +157,9 @@ module.exports.Player = function Player(aUsername) {
             });
 
             if (successCount==0) {return  "There's nothing here that you can carry at the moment.";};
-            var returnString = "You collected "+successCount+" item(s).";
-            if (successCount < artefactCount)  {returnString += "You can't pick the rest up at the moment."};
-            return returnString;          
+            var resultString = "You collected "+successCount+" item(s).";
+            if (successCount < artefactCount)  {resultString += "You can't pick the rest up at the moment."};
+            return resultString;          
         };
 
         /*allow player to drop an object*/
@@ -181,9 +181,9 @@ module.exports.Player = function Player(aUsername) {
         self.wave = function(verb, firstArtefactName, secondArtefactName) {
             //improve this once creatures are implemented
             //trap when object or creature don't exist
-            var returnString = 'You '+verb;
+            var resultString = 'You '+verb;
 
-            if ((firstArtefactName == "")||(firstArtefactName == undefined)) {return returnString+"."};
+            if ((firstArtefactName == "")||(firstArtefactName == undefined)) {return resultString+"."};
 
             var objectExists = (_currentLocation.objectExists(firstArtefactName)||self.checkInventory(firstArtefactName));
             if (!(objectExists)) {return "There is no "+firstArtefactName+" here and you're not carrying one either.";};
@@ -196,7 +196,7 @@ module.exports.Player = function Player(aUsername) {
             if (locationFirstArtefact) {firstArtefact = locationFirstArtefact} else {firstArtefact = playerFirstArtefact};
 
             //build return string
-            returnString+= ' the '+firstArtefactName;
+            resultString+= ' the '+firstArtefactName;
 
             if ((secondArtefactName != "")&& secondArtefactName != undefined) {
                 var secondObjectExists = (_currentLocation.objectExists(secondArtefactName)||self.checkInventory(secondArtefactName));
@@ -209,16 +209,16 @@ module.exports.Player = function Player(aUsername) {
                 if (locationSecondArtefact) {secondArtefact = locationSecondArtefact} else {secondArtefact = playerSecondArtefact};
 
                 //build return string
-                returnString+= ' at the '+secondArtefactName;
+                resultString+= ' at the '+secondArtefactName;
             }; 
 
-            returnString+=". ";
+            resultString+=". ";
 
-            returnString+= firstArtefact.wave(secondArtefact);
+            resultString+= firstArtefact.wave(secondArtefact);
 
-            returnString += "<br>Your arms get tired and you feel slightly awkward.";   
+            resultString += "<br>Your arms get tired and you feel slightly awkward.";   
 
-            return returnString;
+            return resultString;
         };
 
         /*Allow player to give an object to a recipient*/
@@ -237,11 +237,8 @@ module.exports.Player = function Player(aUsername) {
 
                 //check receiver exists and is a creature
                 var receiver = _currentLocation.getObject(receiverName);
-                var creatureExists = false;
                 if (receiver) { 
-                    if (receiver.getType() == 'creature') {
-                        creatureExists = true;
-                    } else {
+                    if (receiver.getType() != 'creature') {
                         return  "Whilst the "+receiverName+", deep in it's inanimate psyche would love to receive your kind gift. It feels in appropriate to do so."; 
                     };
                 } else {
@@ -347,16 +344,16 @@ module.exports.Player = function Player(aUsername) {
         //mainly used for setting initial location but could also be used for warping even if no exit/direction
         self.setLocation = function(location) { //param is a loction object, not a name.
             //fire "leave" trigger for current location (if location is set and player not dead)
-            var returnString = "";
-            if (_currentLocation) {returnString += _currentLocation.fireExitTrigger()}; //possible add line break here
+            var resultString = "";
+            if (_currentLocation) {resultString += _currentLocation.fireExitTrigger()}; //possible add line break here
             _currentLocation = location;
-            returnString += _currentLocation.addVisit();
+            resultString += _currentLocation.addVisit();
             if (_startLocation == undefined) {
                 _startLocation = _currentLocation;
             };
 
-            returnString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
-            return returnString;
+            resultString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
+            return resultString;
         };
 
         self.go = function(verb, map) {//(aDirection, aLocation) {
@@ -442,8 +439,8 @@ module.exports.Player = function Player(aUsername) {
             _hitPoints -= pointsToRemove;
             //reduce aggression
             if (_aggression >0) {_aggression--;};
-            if (_hitPoints <=0) {return self.killPlayer();}
-            if (_hitPoints <=50) {_bleeding = true;}
+            if (_hitPoints <=0) {return self.killPlayer();};
+            if (_hitPoints <=50) {_bleeding = true;};
             return 'You feel weaker.'
             console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
         };
@@ -485,7 +482,7 @@ module.exports.Player = function Player(aUsername) {
             _aggression ++;
 
             //try to hurt the receiver
-            var returnString = receiver.hurt(self, weapon);
+            var resultString = receiver.hurt(self, weapon);
 
             if (receiver.isDestroyed()) { 
                 //wilful destruction of objects increases aggression further...
@@ -493,24 +490,24 @@ module.exports.Player = function Player(aUsername) {
 
                 if(locationReceiver) {_currentLocation.removeObject(receiverName)};
                 if(playerReceiver) { self.removeFromInventory(receiverName);};
-                returnString = "Oops. "+returnString;
+                resultString = "Oops. "+resultString;
             }; 
 
             //did you use something fragile as a weapon?
             if (weapon.isBreakable()) {
                 weapon.bash();
                 if (weapon.isDestroyed()) {
-                    returnString +="<br>Oh dear. You destroyed the "+weapon.getName()+" that you decided to use as a weapon.";
+                    resultString +="<br>Oh dear. You destroyed the "+weapon.getName()+" that you decided to use as a weapon.";
                     //remove destroyed item
                     if (locationWeapon) {_currentLocation.removeObject(artefactName);}
                     else if (playerNamedWeapon) {self.removeFromInventory(artefactName);};
                      
                 } else {
-                    returnString +="<br>You damaged the "+weapon.getName()+"."
+                    resultString +="<br>You damaged the "+weapon.getName()+"."
                 };
             };
 
-            return returnString;
+            return resultString;
         };
 
         self.heal = function(pointsToAdd) {
@@ -519,7 +516,7 @@ module.exports.Player = function Player(aUsername) {
             //limit to 100
             if (_hitPoints >100) {_hitPoints = 100;}
             if (_hitPoints > 50) {_bleeding = false};
-            console.log('player healed, gains '+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
         self.eat = function(verb, artefactName) {
@@ -589,7 +586,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.tick = function(time) {
-            var returnString = "";
+            var resultString = "";
             var damage = 0;
             var healPoints = 0;
 
@@ -610,13 +607,13 @@ module.exports.Player = function Player(aUsername) {
                 if (_timeSinceEating>=30) {damage+=2;}; //(if not bleeding, this will actually only go down by 1);
             };
 
-            if (self.isHungry()) {returnString+="<br>You're hungry.";};
-            if (_bleeding) {returnString+="<br>You're bleeding. ";};           
+            if (self.isHungry()) {resultString+="<br>You're hungry.";};
+            if (_bleeding) {resultString+="<br>You're bleeding. ";};           
 
-            if (damage>0) {returnString+= self.hurt(damage);};
-            if (healPoints>0) {self.heal(healPoints);};           
+            if (healPoints>0) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
+            if (damage>0) {resultString+= self.hurt(damage);};        
 
-            return returnString;
+            return resultString;
         };
 
         self.isHungry = function() {
