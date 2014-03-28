@@ -238,6 +238,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'say':
                     case 'sing':
                     case 'shout':
+                    case 'talk':
                         description = _player.say(_verb, _object0,_object1);
                         break;
                     case 'run':
