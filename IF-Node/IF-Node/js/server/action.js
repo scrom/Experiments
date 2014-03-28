@@ -60,7 +60,7 @@ exports.Action = function Action(aPlayer, aMap) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
                     console.log('split using "'+splitWordArray[i]+'".');
-                    _splitword = splitWordArray[i];
+                    _splitWord = splitWordArray[i];
                     switch(splitWordArray[i]) {
                         case 'with':
                         break;
