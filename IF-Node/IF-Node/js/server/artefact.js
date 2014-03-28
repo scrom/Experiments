@@ -36,7 +36,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 	    var objectName = "Artefact";
 
         var validateType = function() {
-            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key'];
+            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key', 'bed'];
             if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid artefact type."}//
             console.log(_name+' type validated: '+_type);
         }

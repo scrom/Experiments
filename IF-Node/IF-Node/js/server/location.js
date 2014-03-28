@@ -114,6 +114,16 @@ exports.Location = function Location(aName, aDescription) {
            return null;
         };
 
+        self.getObjectByType = function(anObjectType) {
+            for(var i = 0; i < _objects.length; i++) {
+                if(_objects[i].getType() == anObjectType) {
+                    console.log('found: '+anObjectType);
+                    return _objects[i];
+                };
+           };
+           return null;
+        };
+
         self.getAllObjects = function() {
             self = this;
             return _objects;

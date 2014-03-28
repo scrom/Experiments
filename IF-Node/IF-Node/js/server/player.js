@@ -510,6 +510,19 @@ module.exports.Player = function Player(aUsername) {
             return resultString;
         };
 
+
+        self.rest = function(verb, duration) {
+            if (!(_currentLocation.getObjectByType('bed'))) {return "There's nothing to rest on here.";};
+            _hitPoints += duration*3;
+            _aggression -= duration;
+            if (_aggression <0) {_aggression=0;}; //don't reduce aggression too far.
+            //limit to 100
+            if (_hitPoints >100) {_hitPoints = 100;}
+            if (_hitPoints > 50) {_bleeding = false};
+            console.log('player rested. HP remaining: '+_hitPoints);
+            return "You "+verb+" for a while. You feel better in many ways for taking some time out.";
+        };
+
         self.heal = function(pointsToAdd) {
             _hitPoints += pointsToAdd;
             if (_hitPoints <100) {_hitPoints += pointsToAdd;}
@@ -596,15 +609,18 @@ module.exports.Player = function Player(aUsername) {
 
                 //bleed?
                 if (_bleeding) {
-                    damage+=2;
+                    damage+=2*time; //if you rest or sleep whilst bleeding, this will be very bad
                 } else {
-                    //slowly recover health (this makes rest and sleep work nicely)
+                    //slowly recover health (this makes rest and sleep work nicely although we'll give them a boost)
                     healPoints++;
                 };
 
                 //feed?
                 _timeSinceEating++;
-                if (_timeSinceEating>=60) {damage+=2;}; //(if not bleeding, this will actually only go down by 1);
+                if (_timeSinceEating>=60) {
+                    if (time > 1) {damage+=4;} //makes resting or sleeping worse
+                    else {damage+=2};
+                }; //(if not bleeding or resting, this will actually only go down by 1);
             };
 
             if (self.isHungry()) {resultString+="<br>You're hungry.";};
@@ -629,7 +645,8 @@ module.exports.Player = function Player(aUsername) {
             if (self.isHungry()) { status += "You are hungry.<br>"};
             if (_bleeding) { status += "You are bleeding and need healing.<br>"};
             if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
-            status += self.health();
+            status += "Your health is at "+_hitPoints+"%.";//remove this in the final game
+            //status += self.health();
 
             return status;
         };

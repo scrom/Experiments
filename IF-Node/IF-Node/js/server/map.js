@@ -145,7 +145,8 @@ exports.Map = function Map() { //inputs for constructor TBC
             var toolAttributes = {weight: 1, carryWeight: 0, attackStrength: 15, type: "tool", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
             var breakableJunkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
             var junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
-            var keyattributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+            var keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+            var bedAttributes = {weight: 80, carryWeight: 0, attackStrength: 0, type: "bed", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
 
             _locations[atrium].addObject(new artefactObjectModule.Artefact('screen', 'a flat-panel screen', "It's cycling through news, traffic reports and the names of visitors for the day.<br>"+
                                                                                                                 "Apparently the A14 is broken again.<br>Ooh! It has your name up there too. "+
@@ -156,8 +157,10 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", weaponAttributes, null));
             _locations[library].addObject(new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", junkAttributes, null));
             _locations[seatingArea].addObject(new artefactObjectModule.Artefact('cake', 'a slice of cake', "Mmmm tasty *and* healthy. If only there were more.", foodAttributes, null));        
+            _locations[seatingArea].addObject(new artefactObjectModule.Artefact('chair', 'a red leather chair', "You expect to find Morpheus sitting in it. IT's surprisingly comfortable.", bedAttributes, null));        
             _locations[restArea].addObject(new artefactObjectModule.Artefact('chocolate', 'a bar of chocolate', "Mmmm tasty and loaded with calories.", foodAttributes, null));        
             _locations[restArea].addObject(new artefactObjectModule.Artefact('crisps', 'a packet of crisps', "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.", foodAttributes, null));        
+            _locations[restArea].addObject(new artefactObjectModule.Artefact('hammock', 'a comfy-looking hammock', "It's a bit of a pig to climb into but well-worth the effort for a rest.", bedAttributes, null));        
 
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
             _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", foodAttributes, null));     //need to make this a cup containing coffee   

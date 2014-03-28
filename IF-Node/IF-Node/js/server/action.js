@@ -183,11 +183,11 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'rest':
                         ticks = 5;
-                        description = "You rest but it doesn't seem to make to feel any better.";
+                        description = _player.rest(_verb, ticks);
                         break;
                     case 'sleep':
                         ticks = 10;
-                        description = "You sleep for a while.";
+                        description = _player.rest(_verb, ticks);
                         break;
                     case 'wait':
                         description = "Time passes... ...slowly";
