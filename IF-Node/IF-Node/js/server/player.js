@@ -494,16 +494,18 @@ module.exports.Player = function Player(aUsername) {
             }; 
 
             //did you use something fragile as a weapon?
-            if (weapon.isBreakable()) {
-                weapon.bash();
-                if (weapon.isDestroyed()) {
-                    resultString +="<br>Oh dear. You destroyed the "+weapon.getName()+" that you decided to use as a weapon.";
-                    //remove destroyed item
-                    if (locationWeapon) {_currentLocation.removeObject(artefactName);}
-                    else if (playerNamedWeapon) {self.removeFromInventory(artefactName);};
+            if (weapon) {
+                if (weapon.isBreakable()) {
+                    weapon.bash();
+                    if (weapon.isDestroyed()) {
+                        resultString +="<br>Oh dear. You destroyed the "+weapon.getName()+" that you decided to use as a weapon.";
+                        //remove destroyed item
+                        if (locationWeapon) {_currentLocation.removeObject(artefactName);}
+                        else if (playerNamedWeapon) {self.removeFromInventory(artefactName);};
                      
-                } else {
-                    resultString +="<br>You damaged the "+weapon.getName()+"."
+                    } else {
+                        resultString +="<br>You damaged the "+weapon.getName()+"."
+                    };
                 };
             };
 
@@ -513,6 +515,24 @@ module.exports.Player = function Player(aUsername) {
 
         self.rest = function(verb, duration) {
             if (!(_currentLocation.getObjectByType('bed'))) {return "There's nothing to rest on here.";};
+
+            //check if there's an unfrindly creature here...
+            var creatures = _currentLocation.getCreatures();
+            var safeLocation = true;
+
+            for(var i = 0; i < creatures.length; i++) {
+                if (creatures[i].isHostile(_aggression)) {safeLocation = false;};
+            };
+
+            if(!(safeLocation)) {return "Sorry, it's not safe to "+verb+" here at the moment."};
+
+            //so we can check if player actually dies or deteriorates whilst resting...
+            var initialKilledCount = _killedCount;
+            var initialHP = _hitPoints;
+
+            //time passes *before* any healing benefits are in place
+            var returnString = "You "+verb+" for a while.<br>"+self.tick(duration);
+
             _hitPoints += duration*3;
             _aggression -= duration;
             if (_aggression <0) {_aggression=0;}; //don't reduce aggression too far.
@@ -520,7 +540,12 @@ module.exports.Player = function Player(aUsername) {
             if (_hitPoints >100) {_hitPoints = 100;}
             if (_hitPoints > 50) {_bleeding = false};
             console.log('player rested. HP remaining: '+_hitPoints);
-            return "You "+verb+" for a while. You feel better in many ways for taking some time out.";
+
+            if  (!((initialKilledCount < _killedCount)|| initialHP >= _hitPoints)) {
+                //if they didn't end up worse off...
+                returnString +=" You feel better in many ways for taking some time out.";
+            };
+            return returnString;
         };
 
         self.heal = function(pointsToAdd) {
@@ -569,7 +594,7 @@ module.exports.Player = function Player(aUsername) {
             }; 
             self.heal(100);
             return '<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>'+
-                   'Fortunately, here at MVTA we have a special on infinite reincarnation. At least until Simon figures out how to kill you properly.'+
+                   'Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>'+
                    "You'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" +self.setLocation(_startLocation);
          };
 
@@ -603,6 +628,9 @@ module.exports.Player = function Player(aUsername) {
             var damage = 0;
             var healPoints = 0;
 
+            //if no time passes
+            if (time <=0) {return resultString;};
+
             //time passing
             for (var t=0; t < time; t++) {
                 console.log("Player tick...");
@@ -617,10 +645,7 @@ module.exports.Player = function Player(aUsername) {
 
                 //feed?
                 _timeSinceEating++;
-                if (_timeSinceEating>=60) {
-                    if (time > 1) {damage+=4;} //makes resting or sleeping worse
-                    else {damage+=2};
-                }; //(if not bleeding or resting, this will actually only go down by 1);
+                if (_timeSinceEating>60) {damage+=_timeSinceEating-60;}; //gets worse the longer it's left.
             };
 
             if (self.isHungry()) {resultString+="<br>You're hungry.";};
@@ -649,6 +674,11 @@ module.exports.Player = function Player(aUsername) {
             //status += self.health();
 
             return status;
+        };
+
+        self.setAggression = function(aggressionLevel) {
+            _aggression = aggressionLevel;
+            return _aggression;
         };
 
         //end public member functions

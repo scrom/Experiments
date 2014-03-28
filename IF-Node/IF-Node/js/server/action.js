@@ -182,12 +182,12 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.examine(_verb, _object0);
                         break;
                     case 'rest':
-                        ticks = 5;
-                        description = _player.rest(_verb, ticks);
+                        ticks = 0;
+                        description = _player.rest(_verb, 5);
                         break;
                     case 'sleep':
-                        ticks = 10;
-                        description = _player.rest(_verb, ticks);
+                        ticks = 0;
+                        description = _player.rest(_verb, 10);
                         break;
                     case 'wait':
                         description = "Time passes... ...slowly";
@@ -301,6 +301,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     } else {
                         description = 'cannot create location: '+_verb+' without name and description';
                     };
+                };
+                if (_verb == '+aggression') {
+                    description = "Player Aggression set: "+_player.setAggression(_object0);
                 };
                 if (_verb == '+object') {
                     description = _player.getLocation().addObject(new artefactObjectModule.Artefact(_object0,_object0,_object0,true, false, false, null));
