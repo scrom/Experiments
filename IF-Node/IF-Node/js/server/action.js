@@ -13,6 +13,7 @@ exports.Action = function Action(aPlayer, aMap) {
         //action string components
         var _actionString = '';
         var _verb = '';
+        var _splitWord = '';
         var _objects = []; //objects and creatures
         var _object0 = '';
         var _object1 = '';
@@ -59,6 +60,7 @@ exports.Action = function Action(aPlayer, aMap) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
                     console.log('split using "'+splitWordArray[i]+'".');
+                    _splitword = splitWordArray[i];
                     switch(splitWordArray[i]) {
                         case 'with':
                         break;
@@ -81,12 +83,13 @@ exports.Action = function Action(aPlayer, aMap) {
 
                 //support case where first word of string is a "split" word
                 if (aString.indexOf(splitWordArray[i]+' ') == 0) {
-                    return ["",aString.substr(aString.indexOf(' '))];
+                    return ["",aString.substr(aString.indexOf(' ')).trim()];
                 };
 
             };
             //no match, return what we started with
             console.log('no split');
+            _splitWord = "";
             return [aString,'']; //we add in a dummy second element for now
         };
 
@@ -175,7 +178,9 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'look':
                         ticks = 0;
-                        description = _player.getLocation().describe();
+                        //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
+                        if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1)}
+                        else {description = _player.getLocation().describe();};
                         break;
                     case 'examine':
                         ticks = 0;

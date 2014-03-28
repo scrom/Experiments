@@ -4,7 +4,7 @@
     var serverPort = 1337;
 	var ui;
     var client;
-    var debug = true;
+    var debug = false; //enable/disable client console logging
 	
 function init(state, input, interaction, events, console) {
     //create UI
