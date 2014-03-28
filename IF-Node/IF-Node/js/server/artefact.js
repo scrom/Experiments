@@ -1,25 +1,26 @@
 ﻿"use strict";
 //artefact object 
                                     
-module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescription, weight, attackStrength, aType, canCollect, canOpen, isEdible, isBreakable, linkedExit) { 
+module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExit) { 
+    //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable, 
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var _name = aName;
-        var _initialDescription = aDescription; //save this for repairing later
-        var _description = aDescription;
-        var _initialDetailedDescription = aDetailedDescription; //save this for repairing later
-        var _detailedDescription = aDetailedDescription;
-        var _weight = weight;
-        var _attackStrength = attackStrength;
-        var _maxCarryingWeight = 0;//carryWeight;
-        var _type = aType;
+        var _name = name;
+        var _initialDescription = description; //save this for repairing later
+        var _description = description;
+        var _initialDetailedDescription = detailedDescription; //save this for repairing later
+        var _detailedDescription = detailedDescription;
+        var _weight = attributes.weight;
+        var _attackStrength = attributes.attackStrength;
+        var _maxCarryingWeight = attributes.carryWeight;
+        var _type = attributes.type;
         var _linkedExit = linkedExit;
-        var _collectable = canCollect;
-        var _opens = canOpen;
-        var _edible = isEdible;
+        var _collectable = attributes.canCollect;
+        var _opens = attributes.canOpen;
+        var _edible = attributes.isEdible;
         var _chewed = false;
         var _damaged = false;
-        var _breakable = isBreakable;
+        var _breakable = attributes.isBreakable;
         var _broken = false;
         var _destroyed = false; //broken beyond repair
         /*
@@ -68,7 +69,7 @@ module.exports.Artefact = function Artefact(aName, aDescription, aDetailedDescri
         };
 
         self.getAttackStrength = function() {
-            return attackStrength;
+            return _attackStrength;
         };
 
         self.isCollectable = function() {

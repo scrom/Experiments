@@ -123,41 +123,55 @@ exports.Map = function Map() { //inputs for constructor TBC
             var liftEntrance = _locations[atrium].getExit('i');
             liftEntrance.hide();
 
-            //['weapon','junk','treasure','food','money','tool','door','container', 'key'];                                                     //aType, canCollect, canOpen, isEdible, isBreakable, link
+            //['weapon','junk','treasure','food','money','tool','door','container', 'key'];    
+            //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable
+            var foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+            var weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+            var containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
+            var fragileRoomAttributes = {weight: 51, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
+            var doorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: false};
+            var breakableDoorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: true};
+            var treasureAttributes = {weight: 5, carryWeight: 0, attackStrength: 5, type: "treasure", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+            var moneyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "money", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+            var toolAttributes = {weight: 1, carryWeight: 0, attackStrength: 15, type: "tool", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+            var breakableJunkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+            var junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+            var keyattributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+
             _locations[atrium].addObject(new artefactObjectModule.Artefact('screen', 'a flat-panel screen', "It's cycling through news, traffic reports and the names of visitors for the day.<br>"+
                                                                                                                 "Apparently the A14 is broken again.<br>Ooh! It has your name up there too. "+
-                                                                                                                "At least *someone* is expecting you.", 35, 0, 'junk', false, false, false, true, null));
+                                                                                                                "At least *someone* is expecting you.", fragileRoomAttributes, null));
 
-            _locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", 250, 0,'door', false, true, false, false, liftEntrance));
-            _locations[library].addObject(new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", 50, 0, 'junk', false, false, false, true, null));
-            _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", 3, 25, 'weapon', true, false, false, false, null));
-            _locations[library].addObject(new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", 3, 1, 'junk', true, false, false, false, null));
-            _locations[seatingArea].addObject(new artefactObjectModule.Artefact('cake', 'a slice of cake', "Mmmm tasty *and* healthy. If only there were more.", 1, 0, 'food', true, false, true, false, null));        
-            _locations[restArea].addObject(new artefactObjectModule.Artefact('chocolate', 'a bar of chocolate', "Mmmm tasty and loaded with calories.", 1, 0, 'food', true, false, true, false, null));        
-            _locations[restArea].addObject(new artefactObjectModule.Artefact('crisps', 'a packet of crisps', "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.", 1, 0, 'food', true, false, true, false, null));        
+            _locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", doorAttributes, liftEntrance));
+            _locations[library].addObject(new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", fragileRoomAttributes, null));
+            _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", weaponAttributes, null));
+            _locations[library].addObject(new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", junkAttributes, null));
+            _locations[seatingArea].addObject(new artefactObjectModule.Artefact('cake', 'a slice of cake', "Mmmm tasty *and* healthy. If only there were more.", foodAttributes, null));        
+            _locations[restArea].addObject(new artefactObjectModule.Artefact('chocolate', 'a bar of chocolate', "Mmmm tasty and loaded with calories.", foodAttributes, null));        
+            _locations[restArea].addObject(new artefactObjectModule.Artefact('crisps', 'a packet of crisps', "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.", foodAttributes, null));        
 
-            _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", 2, 15, 'weapon', true, false, false, false, null));
-            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", 1, 3, 'food', true, false, true, true, null));        
+            _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
+            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('coffee', 'a cup of coffee', "Well, you could either drink this one or give it to someone else.", foodAttributes, null));     //need to make this a cup containing coffee   
             var liftExit = _locations[lift].getExit('o');
             liftExit.hide();
 
-            _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", 250, 0, 'door', false, true, false, false, liftExit));
+            _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", doorAttributes, liftExit));
  
-            var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", 2, 0, 'treasure', true, true, false, true, null); //breakable!
+            var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
                                                        
             var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
             heidi.go(null,_locations[reception]);     
                                                                                                                                                    
-            var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", 2, 1,'junk', true, false, false, true, null); //breakable!               
+            var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", breakableJunkAttributes, null); //breakable!               
             var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
             spy.go(null,_locations[lift]);   
                                                                                              //, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
-            var sketchbook = new artefactObjectModule.Artefact('sketchbook', 'an A3 sketch book', "It looks like it contains all Simon's plans.", 2, 1,'treasure', true, false, false, false, null);               
+            var sketchbook = new artefactObjectModule.Artefact('sketchbook', 'an A3 sketch book', "It looks like it contains all Simon's plans.", treasureAttributes, null);               
             var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, [sketchbook]);            
             simong.go(null,_locations[poppy]);   
             
-            var money = new artefactObjectModule.Artefact('money', 'a big sack of money', "It's all the profits from the Opportunities projects.", 3, 1,'treasure', true, false, false, false, null);               
-            var jamesm = new creatureObjectModule.Creature('james', 'James Moore', "He pwns the Opportunities division.", 190, 45, 'male','friendly', 30, 415, -1, true, [money]);            
+            var money = new artefactObjectModule.Artefact('money', 'a big sack of money', "It's all the profits from the Opportunities projects.", moneyAttributes, null);               
+            var jamesm = new creatureObjectModule.Creature('james', 'James Moore', "He pwns the Opportunities division.", 190, 45, 'male','friendly', 30, 150, -1, true, [money]);            
             jamesm.go(null,_locations[opportunitiesNorth]);    
         };
 

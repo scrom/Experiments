@@ -604,7 +604,7 @@ module.exports.Player = function Player(aUsername) {
 
                 //feed?
                 _timeSinceEating++;
-                if (_timeSinceEating>=30) {damage+=2;}; //(if not bleeding, this will actually only go down by 1);
+                if (_timeSinceEating>=60) {damage+=2;}; //(if not bleeding, this will actually only go down by 1);
             };
 
             if (self.isHungry()) {resultString+="<br>You're hungry.";};
@@ -617,7 +617,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.isHungry = function() {
-            if (_timeSinceEating >=20) {return true;};
+            if (_timeSinceEating >=50) {return true;};
             return false;
         };
 
