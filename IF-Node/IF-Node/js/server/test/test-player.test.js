@@ -5,18 +5,24 @@ var location = require('../location.js');
 var artefact = require('../artefact.js');
 
 //these are used in setup and teardown - need to be accessible to all tests
+var junkAttributes;
 var playerName;
 var p0; // player object.
+var a0; //artefact object
 
 exports.setUp = function (callback) {
     playerName = 'player';
     p0 = new player.Player(playerName);
+    junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+    a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
     callback(); 
 };
 
 exports.tearDown = function (callback) {
     playerName = null;
     p0 = null;
+    junkAttributes = null;
+    a0 = null;
     callback();
 };  
 
@@ -46,9 +52,8 @@ exports.canGetUsername.meta = { traits: ["Player Test", "Attribute Trait"], desc
 
 
 exports.addToInventoryReturnsMessage = function (test) {
-    var artefactDescription = 'an artefactDescription';
+    var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
     var expectedResult = "You are now carrying "+artefactDescription+".";
     var actualResult = p0.addToInventory(a0);
     console.log("Expected: "+expectedResult);
@@ -62,7 +67,6 @@ exports.addToInventoryReturnsMessage.meta = { traits: ["Player Test", "Inventory
 exports.getObjectAfterAddToInventoryReturnsCorrectObject = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
     p0.addToInventory(a0);
     var expectedResult = artefactName;
     var actualResult = p0.getObject(artefactName).getName();
@@ -77,8 +81,7 @@ exports.getObjectAfterAddToInventoryReturnsCorrectObject.meta = { traits: ["Play
 exports.getObjectAfterAddingTwoToInventoryReturnsCorrectObject = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',1,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     p0.addToInventory(a0);
     var expectedResult = artefactName;
     var actualResult = p0.getObject(artefactName).getName();
@@ -93,8 +96,7 @@ exports.getObjectAfterAddingTwoToInventoryReturnsCorrectObject.meta = { traits: 
 exports.removeFirstObjectFromInventoryReturnsCorrectObject = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',1,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     p0.addToInventory(a0);
     p0.addToInventory(a1);
     var expectedResult = artefactName;
@@ -110,8 +112,7 @@ exports.removeFirstObjectFromInventoryReturnsCorrectObject.meta = { traits: ["Pl
 exports.removeSecondObjectFromInventoryReturnsCorrectObject = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',1,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     p0.addToInventory(a0);
     p0.addToInventory(a1);
     var expectedResult = artefactName+'1';
@@ -127,8 +128,7 @@ exports.removeSecondObjectFromInventoryReturnsCorrectObject.meta = { traits: ["P
 exports.removeFirstObjectFromInventoryRemovesCorrectObject = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',1,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     p0.addToInventory(a0);
     p0.addToInventory(a1);
     p0.removeFromInventory(artefactName);
@@ -147,8 +147,7 @@ exports.removeFirstObjectFromInventoryRemovesCorrectObject.meta = { traits: ["Pl
 exports.removeNonExistentObjectFromInventoryReturnsSensibleMessage = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',1,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     p0.addToInventory(a0);
     p0.addToInventory(a1);
 
@@ -175,16 +174,15 @@ exports.getInventoryWeightReturns0WhenEmpty = function (test) {
 
 exports.getInventoryWeightReturns0WhenEmpty.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
 
-exports.getInventoryWeightReturns8WhenHasObjects = function (test) {
+exports.getInventoryWeightReturns6WhenHasObjects = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',3,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',5,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
  
     p0.addToInventory(a0);
     p0.addToInventory(a1);
 
-    var expectedResult = 8;
+    var expectedResult = 6;
     var actualResult = p0.getInventoryWeight();
 
     console.log("Expected: "+expectedResult);
@@ -193,7 +191,7 @@ exports.getInventoryWeightReturns8WhenHasObjects = function (test) {
     test.done();
 };
 
-exports.getInventoryWeightReturns8WhenHasObjects.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
+exports.getInventoryWeightReturns6WhenHasObjects.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
 
 exports.canCarryHandlesNullObject = function (test) {
     var expectedResult = false;
@@ -210,10 +208,10 @@ exports.canCarryHandlesNullObject.meta = { traits: ["Player Test", "Inventory Tr
 exports.canCarryCorrectlyChecksWeight = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',1,1,'junk', true, false, false, false, null);
- 
-    var a2 = new artefact.Artefact(artefactName+'2', artefactDescription+'1', 'not much to say really',48,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
+
+    junkAttributes.weight=44;
+    var a2 = new artefact.Artefact(artefactName+'2', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     p0.addToInventory(a0);
     p0.addToInventory(a1);
 
@@ -231,10 +229,10 @@ exports.canCarryCorrectlyChecksWeight.meta = { traits: ["Player Test", "Inventor
 exports.canCarryCorrectlyChecksOverWeight = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',1,1,'junk', true, false, false, false, null);
- 
-    var a2 = new artefact.Artefact(artefactName+'2', artefactDescription+'1', 'not much to say really',49,1,'junk', true, false, false, false, null);
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
+
+    junkAttributes.weight=45;
+    var a2 = new artefact.Artefact(artefactName+'2', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     p0.addToInventory(a0);
     p0.addToInventory(a1);
 

@@ -1,13 +1,17 @@
 ﻿"use strict";
 var creature = require('../creature.js');
 var artefact = require('../artefact.js');
+var junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+var a0;
 
 exports.setUp = function (callback) {
     callback(); 
+    a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
 };
 
 exports.tearDown = function (callback) {
     callback();
+    a0 = undefined;
 };  
 
 //creature constructor params are: (aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
@@ -26,7 +30,6 @@ exports.createCreatureWithSingleObject = function (test) {
     var creatureDetailedDescription = "It's a big beastie with teeth.";
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1, 1,'junk', true, false, false, false);
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50,'unknown', 'creature', 50, 150, 0, false, a0);
     console.log('actual: '+c0.getDetailedDescription());
     var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+'.';
@@ -45,8 +48,7 @@ exports.createCreatureWithMultipleObjects = function (test) {
     var anotherArtefactDescription = 'another artefact of little consequence';
     var artefactName = 'artefact'
     var anotherArtefactName = 'another artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false);
-    var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',1,1,'junk', true, false, false, false);
+    var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',junkAttributes, null);
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50, 'unknown', 'creature', 50, 150, 0, false, [a0,a1]);
     console.log('actual: '+c0.getDetailedDescription());
     var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+", and "+anotherArtefactDescription+".";
@@ -62,7 +64,6 @@ exports.addToInventory = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
     test.equal(c0.addToInventory(a0), "It is now carrying "+artefactDescription);
     test.done();
@@ -74,7 +75,6 @@ exports.getObject = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence'
     var artefactName = 'artefact'
-    var a0 = new artefact.Artefact(artefactName, artefactDescription, 'not much to say really',1,1,'junk', true, false, false, false, null);
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50,'unknown', 'creature', 50, 150, 0);
     c0.addToInventory(a0);
     test.equal(c0.getObject(artefactName).getName(), artefactName);
