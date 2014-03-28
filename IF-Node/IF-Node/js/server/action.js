@@ -235,6 +235,12 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'shout':
                         description = _player.say(_verb, _object0,_object1);
                         break;
+                    case 'run':
+                    case 'go':
+                        //translate to "go north" etc. Overwrite the verb with direction. 
+                        //this will fall through to navigation later.
+                        _verb = _object0;
+                        break;
                     case 'save':
                     case 'load':
                     case 'talk':
@@ -253,7 +259,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'read':
                     case 'climb':
                     case 'jump':
-                    case 'run':
                     case 'put':
                     case 'attach':
                     case 'combine':
@@ -279,10 +284,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         ticks = 0; //for now 
                         console.log('verb: '+_verb+' default response');
                         if ((description == undefined)||(description == '')){
-                            description = 'You '+_verb;
-                            if (_object0) {description+= ' the '+_object0;};
-                            if (_object1) {description+= ' with the '+_object1;};
-                            description+='. Nothing much happens.';
+                            description="Sorry, I didn't understand you. Can you try rephrasing that?";
                         };
                 };
                 //navigation
