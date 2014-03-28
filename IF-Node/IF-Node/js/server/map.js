@@ -64,7 +64,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var library = self.addLocation('library',"You're in the atrium Library."); //add comfy sofa and shelves containing books
             var bottomkitchen = self.addLocation('kitchen-ground-floor',"You're in the atrium kitchen."); //add comfy sofa and shelves containing books
             var seatingArea = self.addLocation('atrium-seating',"You're in the atrium seating area."); //add chairs, chess, trees
-            //need to add door to mewburn ellis lawyers
+            //need to add locked door to mewburn ellis lawyers
            // var lawyerEntrance = self.addLocation('lawyer entrance',"You're in the entranece to the resident law firm."); //add chairs, chess, trees
             var groundNorthWestCorridor = self.addLocation('northwest-corridor-ground-floor',"You're in the North-West corridor of the ground floor.");
             var groundShower = self.addLocation('shower-ground-floor',"You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.");
@@ -72,8 +72,12 @@ exports.Map = function Map() { //inputs for constructor TBC
             var groundWestCorridor = self.addLocation('west-corridor-ground-floor',"You're in the West corridor of the ground floor.");//add water cooler
             var opportunitiesSouth = self.addLocation('opportunities-south',"You're in south end of the opportunities and ventures area.");//add horn-rimmed glasses
             var opportunitiesNorth = self.addLocation('opportunities-north',"You're in north end of the opportunities and ventures area.");//add whiteboards
+            var opportunitiesCubbyHole = self.addLocation('opportunities-cubbyhole',"You're in a dead-end room full of clutter in the opportunities and ventures area.");//add whiteboards, keyboard, drums
+            var opportunitiesNorthCorridor = self.addLocation('opportunities-north-corridor',"You're in a corridor at the north end of the opportunities and ventures area.");
+            var opportunitiesNorthEastCorridor = self.addLocation('opportunities-north-east-corridor',"You're at the end of a corridor in the northern part of the opportunities and ventures area.");
+            var peacock = self.addLocation('peacock',"You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.");//add sound desk, PC, microphone
+            var spiderman = self.addLocation('spiderman',"You're in the Spiderman meeting room. (Or is that Spider-man?) There are large windows on 2 walls.<br>You feel somewhat exposed here");//add whiteboard
             var groundBackStairsWest = self.addLocation('back-stairs-ground-floor-west',"You're in the bottom of the west fire escape stairs.");
-            //need to add corridors to peacock and ???
             var groundSouthWestCorridor = self.addLocation('southwest-corridor-ground-floor',"You're in the South-West corridor of the ground floor.");
             var groundWestEndSouthCorridor = self.addLocation('west-end-south-corridor-ground-floor',"You're in the West end of the South corridor on the ground floor.");
             var groundEastEndSouthCorridor = self.addLocation('east-end-south-corridor-ground-floor',"You're in the East end of the South corridor on the ground floor.");
@@ -106,6 +110,11 @@ exports.Map = function Map() { //inputs for constructor TBC
             self.link('w', _locations[groundWestCorridor].getName(), _locations[opportunitiesSouth].getName());
             self.link('n', _locations[opportunitiesSouth].getName(), _locations[opportunitiesNorth].getName());
             self.link('n', _locations[opportunitiesNorth].getName(), _locations[groundBackStairsWest].getName());
+            self.link('w', _locations[opportunitiesNorth].getName(), _locations[opportunitiesCubbyHole].getName());
+            self.link('e', _locations[opportunitiesNorth].getName(), _locations[opportunitiesNorthCorridor].getName());
+            self.link('e', _locations[opportunitiesNorthCorridor].getName(), _locations[opportunitiesNorthEastCorridor].getName());
+            self.link('n', _locations[opportunitiesNorthCorridor].getName(), _locations[peacock].getName());
+            self.link('n', _locations[opportunitiesNorthEastCorridor].getName(), _locations[spiderman].getName());
             self.link('w', _locations[groundSouthWestCorridor].getName(), _locations[poppy].getName());
             self.link('e', _locations[groundSouthWestCorridor].getName(), _locations[groundWestEndSouthCorridor].getName());
             self.link('e', _locations[groundWestEndSouthCorridor].getName(), _locations[groundEastEndSouthCorridor].getName());
