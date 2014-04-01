@@ -92,7 +92,7 @@ exports.canGetObjectFromInventory.meta = { traits: ["Creature Test", "Inventory 
 exports.canRetrieveAffinity = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -5);
-    var expected = "It really doesn't like you.";
+    var expected = "It doesn't like you.";
     var actual = c0.getAffinityDescription();
     console.log("actual:"+actual);
     test.equal(actual, expected);
@@ -122,16 +122,28 @@ exports.creatureIsNotFriendlyWhenPlayerIsAggressive = function (test) {
 };
 exports.creatureIsNotFriendlyWhenPlayerIsAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
 
-exports.creatureIsHostileWhenPlayerIsLessAggressive = function (test) {
+exports.creatureIsHostileLvl6WhenPlayerIsLessAggressive = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -6);
     var expected = true;
-    var actual = c0.isHostile(1);
+    var actual = c0.isHostile(5);
     console.log("actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
-exports.creatureIsHostileWhenPlayerIsLessAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+exports.creatureIsHostileLvl6WhenPlayerIsLessAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+exports.creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -10);
+    var expected = true;
+    var actual = c0.isHostile(0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
 
 exports.creatureIsNotHostileWhenPlayerIsAsAggressive = function (test) {
     var creatureName = 'creature';
