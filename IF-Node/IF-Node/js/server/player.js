@@ -5,6 +5,7 @@ module.exports.Player = function Player(aUsername) {
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = aUsername;
         var _inventory = [];
+        var _missions = []; //player can "carry" missions.
         var _hitPoints = 100;
         var _maxCarryingWeight = 50;
         var _aggression = 0;
@@ -267,6 +268,34 @@ module.exports.Player = function Player(aUsername) {
                 };
             };
 
+        self.steal = function(verb, artefactName, giverName){
+            if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
+            if(giverName==""||(giverName == undefined)) {return verb+" "+artefactName+" from?";};
+            var giver = _currentLocation.getObject(giverName);
+            if (!(giver)) {return "There is no "+giverName+" here.";};
+
+            var objectExists = (giver.checkInventory(artefactName));
+            if (!(objectExists)) {return giverName+" isn't carrying that.";};
+        
+            //the object does exist
+            var artefact = giver.getObject(artefactName);
+
+            //we'll only get this far if there is an object to give and a valid giver - note the object *could* be a live creature!
+            if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
+
+            var objectToReceive;
+            if (artefact) {
+                    if (giver.isDead()) {
+                        objectToReceive = giver.take(artefactName, _aggression);
+                    } else {
+                        _aggression++; //we're stealing!
+                        objectToReceive = giver.theft(artefactName, self);
+                    };
+                    if ((typeof objectToReceive != 'object')) {return objectToReceive;}; //it not an object, we get a string back instead
+                    return self.addToInventory(objectToReceive);
+            };
+        };
+
         self.ask = function(verb, giverName, artefactName){
             if(giverName==""||(giverName == undefined)) {return verb+" what?";};
             var giver = _currentLocation.getObject(giverName);
@@ -290,6 +319,7 @@ module.exports.Player = function Player(aUsername) {
                 if (locationArtefact) {
                     console.log('locationartefact');
                     if (!(artefact.isCollectable())) {return  "Sorry, the "+giverName+" can't pick it up.";};
+                    if (!(giver.canCarry(artefact))) { return  "Sorry, "+giverName+" can't carry it.";};
                     return self.get('get',artefactName);
                 };
 

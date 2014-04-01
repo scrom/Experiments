@@ -19,6 +19,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         var _affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
         var _canTravel = canTravel; //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
         var _inventory = [];
+        var _missions = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
         var _edible = false; //can't eat a living creature
@@ -80,13 +81,18 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.getAffinityDescription = function() {
-              if (_hitPoints == 0) {return ""};
+              if (self.isDead()) {return ""};
             if (_affinity >5) {return _genderPrefix+" really likes you."};
             if (_affinity >0) {return _genderPrefix+" seems to like you."};
-            if (_affinity <=-5) {return _genderPrefix+" really doesn't like you."};        
-            if (_affinity <=-2) {return _genderPrefix+" doesn't like you."};
+            if (_affinity <-5) {return _genderPrefix+" really doesn't like you."};        
+            if (_affinity <-2) {return _genderPrefix+" doesn't like you."};
             if (_affinity <0) {return _genderPrefix+" seems wary of you."};
             return ""; //neutral
+        };
+
+        self.isDead = function() {
+            if (_hitPoints <= 0) {return true;};
+            return false;
         };
 
         self.isFriendly = function(playerAggression) {
@@ -101,7 +107,11 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //will therefore *not* be hostile if you're _more_ aggressive than their negative affinity
             //in other words, to avoid very hostile creatures attacking you, you need to be super-aggressive.
             //but without equally reducing their affinity!
-            if ((_affinity <0) && (playerAggression>0) && (_affinity < playerAggression*-1)) {return true;};
+            //rebalance - allow -5 affinity before attack
+            //if affinity is <=-10, attack regardless of player aggression
+            //this can get a player in to an almost unwinnable situation
+            if ((_affinity <-5) && (playerAggression>0) && (_affinity < playerAggression*-1)) {return true;};
+            if ((_affinity <=-10) && (_affinity < playerAggression*-1)) {return true;};
             return false;
         };
 
@@ -132,7 +142,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.getAttackStrength = function() {
-            if (_hitPoints == 0) {return 0;};
+            if (self.isDead()) {return 0;};
             return _attackStrength;
         };
 
@@ -158,7 +168,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         self.canCarry = function(anObject) {
              if (anObject != undefined) {
-                if (_hitPoints <=0) { //dead
+                if (self.isDead()) { //dead
                     return false;
                 };
                 if ((anObject.getWeight()+self.getInventoryWeight())>_maxCarryingWeight) {
@@ -180,7 +190,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
     
         self.addToInventory = function(anObject) {
-            if ((anObject != undefined)&&(_hitPoints >0)) {
+            if ((anObject != undefined)&&((!self.isDead()))) {
                 if ((anObject.getWeight()+self.getInventoryWeight())>_maxCarryingWeight) {
                     return "It's too heavy for "+_genderSuffix+" to carry.";
                 };
@@ -207,7 +217,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.give = function(anObject) {
-             if (_hitPoints <= 0) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
+             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if(anObject) { 
                 _affinity++;
                 return "That was kind. "+self.addToInventory(anObject);
@@ -223,9 +233,20 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return true;
         };
 
+        self.theft = function(anObject,player) {
+            var randomInt = Math.floor(Math.random() * 7); //will randomly return 0 to 6 (<15% chance of success)
+            if (randomInt == 0) { //success
+                //they didn't notice but reduce affinity slightly (like take)
+                _affinity--;
+                return self.removeFromInventory(anObject);
+            } else {
+                _affinity-=2; //larger dent to affinity
+                return "Not smart! You were caught.";
+            };
+        };
+
         self.take = function(anObject,playerAggression) {
-            if (_hitPoints <= 0) {return _genderPrefix+"'s dead. You've taken the most valuable thing "+_genderPrefix.toLowerCase()+" had left."}; //this may not work
-            if (self.isFriendly(playerAggression)) {
+            if (self.isFriendly(playerAggression)||self.isDead()) {
                 _affinity--;
                 return self.removeFromInventory(anObject);
             };
@@ -255,6 +276,8 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
         self.fightOrFlight = function(map,player) {
             var playerAggression = player.getAggression();
+
+            console.log("Creature FightOrFlight: aggression="+playerAggression+" affinity= "+_affinity);
             //for each frightened creature, try to flee (choose first available exit if more than 1 available).
             //otherwise they try to flee but can't get past you
             if(self.willFlee(playerAggression)) {
@@ -298,7 +321,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.go = function(aDirection, aLocation) {
-            if (_hitPoints == 0) {return null};
+            if (self.isDead()) {return ""};
             _moves++;
 
             //remove self from current location (if set)
@@ -323,7 +346,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };	
 
         self.hurt = function(player, weapon) {
-             if (_hitPoints <=0) {return _genderPrefix+"'s dead already."};
+             if (self.isDead()) {return _genderPrefix+"'s dead already."};
             //regardless of outcome, you're not making yourself popular
             _affinity--;
 
@@ -347,7 +370,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
             _hitPoints -= pointsToRemove;
             //should really bash weapon here in case it's breakable too.
-            if (_hitPoints <=0) {return self.kill();};
+            if (self.isDead()) {return self.kill();};
             if (_hitPoints <=50) {_bleeding = true;};
             return "You attack "+_name+". "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
@@ -416,16 +439,16 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             _edible = true;
             _collectable = true; 
             //drop all objects
-            for(var i = 0; i < _inventory.length; i++) {
-                _currentLocation.addObject(self.removeFromInventory(_inventory[i].getName()));
-            }; 
+            //for(var i = 0; i < _inventory.length; i++) {
+            //    _currentLocation.addObject(self.removeFromInventory(_inventory[i].getName()));
+            //}; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+_name;
             return _name+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
          };
 
         self.moveOrOpen = function(aVerb) {
-            if (_hitPoints == 0) {return "You're a bit sick aren't you.<br>You prod and pull at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
+            if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and pull at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
             _affinity--;
             if (aVerb == 'push'||aVerb == 'pull') {return _name+" really doesn't appreciate being pushed around."};
             //open
@@ -433,12 +456,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.close = function() {
-             if (_hitPoints == 0) {return "Seriously. Stop interfering with corpses."};
+             if (self.isDead()) {return "Seriously. Stop interfering with corpses."};
             return "Unless you've performed surgery on "+_genderSuffix+" recently, you can't close a living thing";
         };
 
         self.reply = function(someSpeech,playerAggression) {
-            if (_hitPoints == 0) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
+            if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
@@ -472,7 +495,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             var resultString = "";
 
             //quick return if already dead
-            if (_hitPoints <=0) {return resultString;};
+            if (self.isDead()) {return resultString;};
 
             var damage = 0;
             var healPoints = 0;
@@ -493,7 +516,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             if (healPoints>0) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
             if (damage>0) {_hitPoints -=damage;};
             //consider fleeing here if not quite dead
-            if (_hitPoints <=0) {return resultString+self.kill();};
+            if (self.isDead()) {return resultString+self.kill();};
             if (_hitPoints <=50) {_bleeding = true;};
             if (_bleeding) {resultString+="<br>"+self.getName()+" is bleeding. ";};    
 

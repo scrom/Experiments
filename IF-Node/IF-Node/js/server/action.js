@@ -197,7 +197,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'wait':
                         description = "Time passes... ...slowly";
                         break;
-                    case 'take':
                     case 'collect':
                     case 'get': 
                         description = _player.get(_verb, _object0);
@@ -228,6 +227,10 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'smash':
                     case 'hit':
                         description = _player.hit(_verb, _object0, _object1);
+                        break;
+                    case 'take':
+                    case 'steal':
+                        description = _player.steal(_verb, _object0, _object1);            
                         break;
                     case 'ask':
                         description = _player.ask(_verb, _object0, _object1);            
@@ -281,8 +284,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
                     case 'go': //link this with location moves
-                    case 'take':
-                    case 'steal':
+
                     case 'feed':
                     case 'mend':
                     case 'fix':

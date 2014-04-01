@@ -6,9 +6,16 @@ exports.Map = function Map() { //inputs for constructor TBC
         var locationObjectModule = require('./location'); 
         var artefactObjectModule = require('./artefact');
         var creatureObjectModule = require('./creature.js');
+        //var missionObjectModule = require('./mission.js');
           
-	    var self = this; //closure so we dfion't lose this reference in callbacks
+	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];
+        var _missions = [];
+        //consider storing all creatures and artefacts on map object (rather than in location, creature or player) 
+        //this will need some major rework and tracking/linking who owns what
+        //but might make all kinds of other work easier.
+        //var creatures
+        //var artefacts
 
 	    var _objectName = "Map";
         console.log(_objectName + ' created');
@@ -175,7 +182,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             heidi.go(null,_locations[reception]);     
                                                                                                                                                    
             var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", breakableJunkAttributes, null); //breakable!               
-            var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, -10, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
+            var spy = new creatureObjectModule.Creature('spy', 'A corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, -4, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
             spy.go(null,_locations[lift]);   
                                                                                              //, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
             var sketchbook = new artefactObjectModule.Artefact('sketchbook', 'an A3 sketch book', "It looks like it contains all Simon's plans.", treasureAttributes, null);               
