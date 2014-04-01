@@ -7,6 +7,7 @@ var a0;
 exports.setUp = function (callback) {
     callback(); 
     a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
+    console.log("artefact setup:"+a0);
 };
 
 exports.tearDown = function (callback) {
@@ -15,16 +16,16 @@ exports.tearDown = function (callback) {
 };  
 
 //creature constructor params are: (aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-exports.createCreature = function (test) {
+exports.canCreateCreature = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
     test.equal(c0.toString(), '{"name":"'+creatureName+'"}');
     test.done();
 };
 
-exports.createCreature.meta = { traits: ["Creature Test", "Constructor Trait"], description: "Test that a creature object can be created." };
+exports.canCreateCreature.meta = { traits: ["Creature Test", "Constructor Trait"], description: "Test that a creature object can be created." };
 
-exports.createCreatureWithSingleObject = function (test) {
+exports.canCreateCreatureWithSingleObject = function (test) {
     var creatureName = 'creature';
     var creatureDescription = 'a beastie'
     var creatureDetailedDescription = "It's a big beastie with teeth.";
@@ -38,9 +39,9 @@ exports.createCreatureWithSingleObject = function (test) {
     test.done();
 };
 
-exports.createCreatureWithSingleObject.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
+exports.canCreateCreatureWithSingleObject.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
 
-exports.createCreatureWithMultipleObjects = function (test) {
+exports.canCreateCreatureWithMultipleObjects = function (test) {
     var creatureName = 'creature';
     var creatureDescription = 'a beastie'
     var creatureDetailedDescription = "It's a big beastie with teeth.";
@@ -57,21 +58,25 @@ exports.createCreatureWithMultipleObjects = function (test) {
     test.done();
 };
 
-exports.createCreatureWithMultipleObjects.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
+exports.canCreateCreatureWithMultipleObjects.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
 
 
-exports.addToInventory = function (test) {
+exports.canAddArtefactToInventory = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
-    test.equal(c0.addToInventory(a0), "It is now carrying "+artefactDescription);
+    var expected = "It is now carrying "+artefactDescription;
+    var actual = c0.addToInventory(a0);
+    console.log("artefact:"+a0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
     test.done();
 }
 
-exports.addToInventory.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature object can receive an object." };
+exports.canAddArtefactToInventory.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature object can receive an object." };
 
-exports.getObject = function (test) {
+exports.canGetObjectFromInventory = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence'
     var artefactName = 'artefact'
@@ -81,7 +86,108 @@ exports.getObject = function (test) {
     test.done();
 }
 
-exports.getObject.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature is carrying an object that has been added after creation." };
+exports.canGetObjectFromInventory.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature is carrying an object that has been added after creation." };
+
+//creature constructor params are: (aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying)
+exports.canRetrieveAffinity = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -5);
+    var expected = "It really doesn't like you.";
+    var actual = c0.getAffinityDescription();
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.canRetrieveAffinity.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a creature will return affinity." };
+
+exports.creatureIsFriendlyWhenAffinityGreaterThanPlayerAggression = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 1);
+    var expected = true;
+    var actual = c0.isFriendly(1);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.creatureIsNotFriendlyWhenPlayerIsAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
+    var expected = false;
+    var actual = c0.isFriendly(1);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureIsNotFriendlyWhenPlayerIsAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+exports.creatureIsHostileWhenPlayerIsLessAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2);
+    var expected = true;
+    var actual = c0.isHostile(1);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureIsHostileWhenPlayerIsLessAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+exports.creatureIsNotHostileWhenPlayerIsAsAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2);
+    var expected = false;
+    var actual = c0.isHostile(2);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureIsNotHostileWhenPlayerIsAsAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+exports.creatureWillFleeWhenPlayerIsAsAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2, true);
+    var expected = true;
+    var actual = c0.willFlee(2);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureWillFleeWhenPlayerIsAsAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 10, -2, true);
+    var expected = true;
+    var actual = c0.willFlee(0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+
+exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2, false);
+    var expected = false;
+    var actual = c0.willFlee(3);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+exports.creatureWillFleeWhenPlayerIsMoreAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2, true);
+    var expected = true;
+    var actual = c0.willFlee(3);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureWillFleeWhenPlayerIsMoreAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
 
 
 /*
