@@ -52,6 +52,7 @@ module.exports.Player = function Player(aUsername) {
 
         /*Allow player to get an object from a location*/
         self.get = function(verb, artefactName) {
+
             if ((artefactName=="")||(artefactName==undefined)) {return verb+' what?';};
             if (artefactName=="all") {return self.getAll(verb);};
             if (artefactName=="everything") {return self.getAll(verb);};
@@ -159,6 +160,74 @@ module.exports.Player = function Player(aUsername) {
             return resultString;
         };
 
+        /*Allow player to put something in an object */
+        self.put = function(verb, artefactName, receiverName){
+                if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
+                if(receiverName==""||(receiverName == undefined)) {return verb+" "+artefactName+" to what?";};
+
+                var objectExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
+                if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+                //the object does exist
+                var locationArtefact = _currentLocation.getObject(artefactName);
+                var playerArtefact = _inventory.getObject(artefactName);
+                var artefact;
+                if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+
+                //check receiver exists and is a container
+                var receiver = _currentLocation.getObject(receiverName);
+                if (!(receiver)) {receiver = _inventory.getObject(receiverName);};
+                if (receiver) { 
+                    if (receiver.getType() == 'creature') {
+                        return  "It's probably better to 'give' it to them."; 
+                    };
+                    if (receiver.getType() != 'container') {
+                        return  "You can't put anything in that."; 
+                    };
+                } else {
+                    return "There is no "+receiverName+" here.";
+                };
+
+                //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
+                if (receiver.isLocked()) { return  "Sorry, "+receiverName+" is locked.";};
+                if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiverName+" can't carry that. It's too heavy for them at the moment.";};
+                
+                //we know they *can* carry it...
+                if (locationArtefact) {
+                    if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};
+
+                    var collectedArtefact = _currentLocation.removeObject(artefactName);
+                    if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";};
+                        return receiver.getName()+" is "+receiver.receive(collectedArtefact);
+                };
+
+                if (playerArtefact) {
+                    return receiver.getName()+" is "+receiver.receive((_inventory.remove(artefactName)));
+                };
+            };
+
+        /*Allow player to remove something from an object */
+        self.remove = function(verb, artefactName, receiverName){
+                if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
+                if(receiverName==""||(receiverName == undefined)) {return verb+" "+artefactName+" from what?";};
+
+                //check receiver exists and is a container
+                var receiver = _currentLocation.getObject(receiverName);
+                if (!(receiver)) {receiver = _inventory.getObject(receiverName);};
+                if (receiver) { 
+                    if (receiver.getType() == 'creature') {
+                        return  "It's probably better to 'ask'."; 
+                    };
+                    if (receiver.getType() != 'container') {
+                        return  "You can't put anything in that."; 
+                    };
+                } else {
+                    return "There is no "+receiverName+" here.";
+                };
+
+                return receiver.relinquish(artefactName, _inventory);
+            };
+
         /*Allow player to give an object to a recipient*/
         self.give = function(verb, artefactName, receiverName){
                 if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
@@ -175,9 +244,10 @@ module.exports.Player = function Player(aUsername) {
 
                 //check receiver exists and is a creature
                 var receiver = _currentLocation.getObject(receiverName);
+                if (!(receiver)) {receiver = _inventory.getObject(receiverName);};
                 if (receiver) { 
                     if (receiver.getType() != 'creature') {
-                        return  "Whilst the "+receiverName+", deep in it's inanimate psyche would love to receive your kind gift. It feels in appropriate to do so."; 
+                        return  "Whilst the "+receiverName+", deep in it's inanimate psyche would love to receive your kind gift. It feels inappropriate to do so. Try 'put' or 'add'."; 
                     };
                 } else {
                     return "There is no "+receiverName+" here.";
@@ -195,15 +265,33 @@ module.exports.Player = function Player(aUsername) {
                     if (!(collectedArtefact)) { return  "Sorry, the "+receiverName+" can't pick that up.";};
                         //treat this as a kind act (if successful)
                         if (_aggression >0) {_aggression--;};
-                        return receiver.give(collectedArtefact);
+                        return receiver.receive(collectedArtefact);
                 };
 
                 if (playerArtefact) {
                     //treat this as a kind act (if successful)
                     if (_aggression >0) {_aggression--;};
-                    return receiver.give((_inventory.remove(artefactName)));
+                    return receiver.receive((_inventory.remove(artefactName)));
                 };
             };
+
+        self.take = function(verb, artefactName, holderName){
+            //use "get" if we're not taking from anything
+            if ((holderName == "" )||(holderName == undefined)) {return self.get(verb, artefactName);};
+
+            //if holderName is a creature - steal
+            //if holderName is not a creature - remove
+            var locationHolder = _currentLocation.getObject(holderName);
+            var giverHolder = _inventory.getObject(holderName);
+            var holder;
+            if (locationHolder) {holder = locationHolder} else {holder = giverHolder};
+            if (!(holder)) {return "Sorry, there's no "+holderName+" here.";};  
+            if (holder.getType() == 'creature') {
+                return self.steal(verb, artefactName, holderName);
+            }  else {
+                return self.remove(verb, artefactName, holderName);
+            };
+        };
 
         self.steal = function(verb, artefactName, giverName){
             if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
@@ -223,7 +311,7 @@ module.exports.Player = function Player(aUsername) {
             var objectToReceive;
             if (artefact) {
                     if (giver.isDead()) {
-                        objectToReceive = giver.take(artefactName, _aggression);
+                        objectToReceive = giver.relinquish(artefactName, _aggression);
                     } else {
                         _aggression++; //we're stealing!
                         objectToReceive = giver.theft(artefactName, self);
@@ -261,7 +349,7 @@ module.exports.Player = function Player(aUsername) {
                 };
 
                 if (giverArtefact) {
-                    var objectToReceive = giver.take(artefactName, _aggression);
+                    var objectToReceive = giver.relinquish(artefactName, _aggression);
                     if ((typeof objectToReceive != 'object')) {return objectToReceive;}; //it not an object, we get a string back instead
                     return "You're "+_inventory.add(objectToReceive);
                 };
@@ -274,6 +362,7 @@ module.exports.Player = function Player(aUsername) {
 
                 //check receiver exists
                 var receiver = _currentLocation.getObject(receiverName);
+                if (!(receiver)) {receiver = _inventory.getObject(receiverName);};
                 if (!(receiver)) {return "There is no "+receiverName+" here.";};
 
                 //we'll only get this far if there is a valid receiver

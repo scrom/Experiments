@@ -15,6 +15,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
             return self.describe;
         };
 
+        self.size = function(ownerName) {
+            return _items.length;
+        };
 
         self.describe = function(ownerName) {
             if (_items.length == 0) {return "nothing"};
@@ -67,7 +70,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
                 };
 
                 console.log("not carrying "+anObject);
-                return "not carrying "+anObject+"."; //this return value may cause problems
+                return "not carrying "+anObject+"." ;
         };
     
         self.check = function(anObject) {

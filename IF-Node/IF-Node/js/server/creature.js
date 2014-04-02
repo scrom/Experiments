@@ -21,7 +21,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         var _hitPoints = health;
         var _affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
         var _canTravel = canTravel; //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
-        var _inventory = [];
+        var _inventory = [];//new inventoryObjectModule.Inventory(carryWeight);
         var _missions = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
@@ -192,6 +192,13 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //no damage - it's a creature
             return "";
         };
+
+        self.offend = function(offenceLevel) {
+            //offending a creature reduces affinity
+            if (offenceLevel >0) {
+                _affinity -= offenceLevel;
+            };            
+        };
     
         self.addToInventory = function(anObject) {
             if ((anObject != undefined)&&((!self.isDead()))) {
@@ -220,7 +227,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return _genderPrefix+" isn't carrying: "+anObject;//this return value may cause problems
         };
 
-        self.give = function(anObject) {
+        self.receive = function(anObject) {
              if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if(anObject) { 
                 _affinity++;
@@ -234,6 +241,8 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //this allows a moderate bribe to get a flighty creature to stick around
             //but prevents them taking something and running away immediately afterward
             if ((_affinity <-1) && (playerAggression>1)) {return false;};
+            if (self.isDead()) {return false;};
+
             return true;
         };
 
@@ -242,7 +251,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             var randomInt = Math.floor(Math.random() * (7/playerStealth)); //will randomly return 0 to 6 by default(<15% chance of success)
             console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
             if (randomInt == 0) { //success
-                //they didn't notice but reduce affinity slightly (like take)
+                //they didn't notice but reduce affinity slightly (like relinquish)
                 _affinity--;
                 return self.removeFromInventory(anObject);
             } else {
@@ -251,8 +260,13 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             };
         };
 
-        self.take = function(anObject,playerAggression) {
-            if (self.isFriendly(playerAggression)||self.isDead()) {
+        self.willShare = function(playerAggression) {
+            if (self.isFriendly(playerAggression)||self.isDead()) {return true;};
+            return false;
+        };
+
+        self.relinquish = function(anObject,playerAggression) {
+            if (self.willShare(playerAggression)) {
                 _affinity--;
                 return self.removeFromInventory(anObject);
             };

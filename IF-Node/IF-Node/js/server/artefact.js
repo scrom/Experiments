@@ -3,7 +3,11 @@
                                     
 module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExit) { 
     //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable, 
-    try{      
+    try{  
+        //module deps
+        var inventoryObjectModule = require('./inventory');    
+
+        //attributes
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name;
         var _initialDescription = description; //save this for repairing later
@@ -12,10 +16,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _detailedDescription = detailedDescription;
         var _weight = attributes.weight;
         var _attackStrength = attributes.attackStrength;
-        var _maxCarryingWeight = attributes.carryWeight;
+        var _inventory =  new inventoryObjectModule.Inventory(attributes.carryWeight);
         var _type = attributes.type;
         var _linkedExit = linkedExit;
         var _collectable = attributes.canCollect;
+        var _missions = [];
         var _opens = attributes.canOpen;
         var _edible = attributes.isEdible;
         var _chewed = false;
@@ -23,14 +28,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _breakable = attributes.isBreakable;
         var _broken = false;
         var _destroyed = false; //broken beyond repair
+        var _locked = false;
+        var _lockable = false;
+        var _unlocks = ""; //unique name of the object that it unlocks. 
         /*
         self.mendable = mendable;
         self.uses = uses;
         self.rechargable = rechargable;
-        self.inventory = [];
-        self.locakable = false;
-        self.lock = false;
-        self.unlocks = unlocks; //unique name of the object it unlocks
         */
 
 	    var objectName = "Artefact";
@@ -61,11 +65,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDetailedDescription = function() {
-            return _detailedDescription;
+            var returnString = _detailedDescription
+            if (_inventory.size() > 0) {
+                returnString += "<br>It contains "+_inventory.describe()+".";
+            };
+            return returnString;
         };
 
         self.getWeight = function() {
-            return _weight;
+            return _weight+_inventory.getWeight();
         };
 
         self.getAttackStrength = function() {
@@ -82,6 +90,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isBreakable = function() {
             return _breakable;
+        };
+
+        self.isIntact = function() {
+            //check if object is completely intact
+            if (_destroyed||_broken||_chewed||_damaged) {return false;};
+            return true;
+        };
+
+        self.getCondition = function() {
+            var condition = 5;
+            //check if object is completely intact
+            if (_destroyed) { return 0;};
+            if (_broken) {condition-=2};
+            if (_chewed) {condition-=1};
+            if (_damaged) {condition-=1};
+            return condition;
         };
 
         self.isDestroyed = function() {
@@ -193,6 +217,36 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             } else {
                 return "It's really not worth trying to eat a second time."
             };
+        };
+
+        self.relinquish = function(anObject, playerInventory) {
+            if (_locked) {return "It's locked.";};
+
+            var objectToGive = _inventory.getObject(anObject);
+            if (!(objectToGive)) {return self.getName()+" doesn't contain "+anObject+".";};
+
+            if (playerInventory.canCarry(objectToGive)) {
+                return "You're "+playerInventory.add(objectToGive);
+                _inventory.remove(anObject);
+            };
+
+            return "Sorry. Can't carry "+anObject+" at the moment."
+        };
+
+        self.receive = function(anObject) {
+            if (!(_locked)) {
+                return _inventory.add(anObject);
+            };
+            return "It's locked.";
+        };
+
+        self.isLocked = function() {
+            if (_locked) {return true;};
+            return false;
+        };
+
+        self.canCarry = function(anObject) {
+            return _inventory.canCarry(anObject);
         };
         //end public member functions
 

@@ -8,6 +8,7 @@ var artefact = require('../artefact.js');
 var junkAttributes;
 var weaponAttributes;
 var foodAttributes;
+var containerAttributes;
 var playerName;
 var p0; // player object.
 var l0; //location object.
@@ -16,6 +17,7 @@ var a1; //artefact object.
 var c0; //creature object.
 var weapon; //weapon object
 var food; //food object
+var container; //container object
 
 exports.setUp = function (callback) {
     playerName = 'player';
@@ -25,9 +27,11 @@ exports.setUp = function (callback) {
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
     a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
     weapon = new artefact.Artefact('sword', 'a mighty sword', 'chop chop chop',weaponAttributes, null);
     food = new artefact.Artefact('cake', 'a slab of sugary goodness', 'nom nom nom',foodAttributes, null);
+    container = new artefact.Artefact('container', 'a container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'a box', 'just a box',junkAttributes, null);
     c0 = new creature.Creature('creature', 'A creature', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, 5, true, [a1]);
     c0.go(null,l0); 
@@ -35,6 +39,7 @@ exports.setUp = function (callback) {
     l0.addObject(a0);
     l0.addObject(weapon);
     l0.addObject(food);
+    l0.addObject(container);
     l0.addObject(c0);
     callback(); 
 };
@@ -46,10 +51,12 @@ exports.tearDown = function (callback) {
     junkAttributes = null;
     weaponAttributes = null;
     foodAttributes = null;
+    containerAttributes = null;
     a0 = null;
     a1 = null;
     weapon = null;
     food = null;
+    container = null;
     c0 = null;
     callback();
 };  
@@ -228,6 +235,56 @@ exports.canHitCreatureWithInventoryWeapon = function (test) {
 };
 
 exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+exports.canPutObjectInContainer = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "container is now carrying a slab of sugary goodness.";
+    var actualResult = p0.put('put','cake', 'container');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canPutObjectInContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into a container." };
+
+exports.cantPutObjectInNonContainer = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "You can't put anything in that.";
+    var actualResult = p0.put('put','cake', 'sword');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cantPutObjectInNonContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into a Non container." };
+
+exports.canRemoveObjectFromContainer = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "You're now carrying a slab of sugary goodness.";
+    p0.put('put','cake', 'container');
+    var actualResult = p0.remove('remove','cake', 'container');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canRemoveObjectFromContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can remove an item from a container." };
+
+
+exports.canExamineContainer = function (test) {
+    var expectedResult = "hold hold hold<br>It contains a slab of sugary goodness.";
+    p0.put('put','cake', container.getName());
+    var actualResult = p0.examine('examine', container.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canExamineContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can examine an object." };
 
 
 /*

@@ -136,11 +136,17 @@ exports.Action = function Action(aPlayer, aMap) {
             //unpack action results JSON
             convertActionToElements(_actionString); //extract object, description, json
             
+            //do stuff
+            var description = '';
+
             //assume a move passes time. Some won't - for these, ticks will be 0.
             var ticks = 1;
 
-            //do stuff
-            var description = '';
+            //trap selfreferencing objects early...
+            if ((_object0 == _object1)&&(_object0!="")) {
+                description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.';
+                return returnResultAsJson(description);
+            };
 
                 //user commands
                 switch(_verb) {
@@ -197,9 +203,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'wait':
                         description = "Time passes... ...slowly";
                         break;
-                    case 'collect':
-                    case 'get': 
-                        description = _player.get(_verb, _object0);
+                    case 'put':
+                    case 'add':
+                        description = _player.put(_verb, _object0, _object1);
                         break;
                     case 'offer':
                     case 'give':
@@ -229,7 +235,12 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'hit':
                         description = _player.hit(_verb, _object0, _object1);
                         break;
+                    case 'get':
+                    case 'collect':
                     case 'take':
+                    case 'remove':
+                        description = _player.take(_verb, _object0, _object1); 
+                        break;
                     case 'steal':
                         description = _player.steal(_verb, _object0, _object1);            
                         break;
@@ -269,14 +280,11 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'read':
                     case 'climb':
                     case 'jump':
-                    case 'put':
                     case 'attach':
                     case 'combine':
                     case 'join':
                     case 'dismantle':
                     case 'delete':
-                    case 'remove':
-                    case 'add':
                     case 'destroy':
                     case 'break':
                     case 'kick':
@@ -339,10 +347,6 @@ exports.Action = function Action(aPlayer, aMap) {
 
                 //fall-through checks...
                 //swearCheck(_verb);
-                //selfreferencing objects isn't going to do anything
-                if ((_object0 == _object1)&&(_object0!="")) {
-                    description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.';
-                };
 
             //check creatures for fightOrFlight
             description += processCreatureTicks(ticks, _map, _player);

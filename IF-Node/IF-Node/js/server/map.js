@@ -177,6 +177,8 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", doorAttributes, liftExit));
  
             var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
+            var coffeeBeans = new artefactObjectModule.Artefact('beans', 'a giant bag of coffee beans', "Developer fuel", junkAttributes, null); 
+            heidiPackage.receive(coffeeBeans);
                                                        
             var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
             heidi.go(null,_locations[reception]);     
