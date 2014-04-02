@@ -201,6 +201,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'get': 
                         description = _player.get(_verb, _object0);
                         break;
+                    case 'offer':
                     case 'give':
                         description = _player.give(_verb, _object0,_object1);
                         break;
