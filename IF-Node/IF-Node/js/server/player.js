@@ -2,13 +2,15 @@
 //player object
 module.exports.Player = function Player(aUsername) {
     try{
+        //module deps
+        var inventoryObjectModule = require('./inventory');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = aUsername;
-        var _inventory = [];
+        var _inventory =  new inventoryObjectModule.Inventory(50);
         var _missions = []; //player can "carry" missions.
         var _hitPoints = 100;
-        var _maxCarryingWeight = 50;
         var _aggression = 0;
+        var _stealth = 1;
         var _killedCount = 0;
         var _bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
         var _startLocation;
@@ -33,85 +35,20 @@ module.exports.Player = function Player(aUsername) {
             //possibly replace the value with a "level" string 
             return _aggression;
         };
+
+        self.setStealth = function(newStealthValue) {
+            //used for stealing
+            _stealth = newStealthValue;
+        };
+
+        self.getStealth = function() {
+            //used for stealing
+            return _stealth;
+        };
+
         self.getInventory = function() {
-            if (_inventory.length == 0) {return "You're not carrying anything."};
-            var list = ''
-            for(var i = 0; i < _inventory.length; i++) {
-                    if (i>0){list+=', ';}
-                    if ((i==_inventory.length-1)&&(i>0)){list+='and ';};
-                    list+=_inventory[i].getDescription();
-            };
-
-            return "You're carrying "+list+".";
+            return "You're carrying "+_inventory.describe()+".";
         };	
-
-        self.getInventoryWeight = function() {
-            if (_inventory.length==0){return ''};
-            var inventoryWeight = 0
-            for(var i = 0; i < _inventory.length; i++) {
-                    inventoryWeight+=_inventory[i].getWeight();
-            };
-            return inventoryWeight;
-        };
-
-        self.canCarry = function(anObject) {
-            if (anObject != undefined) {
-                if ((anObject.getWeight()+self.getInventoryWeight())>_maxCarryingWeight) {
-                    return false;
-                };
-                return true;
-            } else {return false;};
-        };
-    
-        self.addToInventory = function(anObject) {
-            if (anObject != undefined) {
-                //this "if" statement is a redundant safety net ("get" traps the same issue)
-                if ((anObject.getWeight()+self.getInventoryWeight())>_maxCarryingWeight) {
-                    return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+anObject.getName();
-                };
-                _inventory.push(anObject);
-                console.log(anObject+' added to inventory');
-                return "You are now carrying "+anObject.getDescription()+".";
-            } else {return "sorry, couldn't pick it up.";};
-        };
-    
-        self.removeFromInventory = function(anObject) {
-                //we don't have name exposed any more...
-                for(var index = 0; index < _inventory.length; index++) {
-                    if(_inventory[index].getName() == anObject) {
-                        console.log('creature/object found: '+anObject+' index: '+index);
-                        var returnObject = _inventory[index];
-                        _inventory.splice(index,1);
-                        console.log(anObject+" removed from player inventory");
-                        return returnObject;
-                    };
-                };
-
-                console.log('player is not carrying '+anObject);
-                return "You are not carrying "+anObject+"."; //this return value may cause problems
-        };
-    
-        self.checkInventory = function(anObject) {
-            //check if passed in object is in inventory
-            //we don't have name exposed any more...
-            if (self.getObject(anObject)){return true;};
-            return false;
-        };
-
-        self.getObject = function(anObject) {
-            //we don't have name exposed any more...
-            for(var index = 0; index < _inventory.length; index++) {
-                if(_inventory[index].getName() == anObject) {
-                    console.log('creature/object found: '+anObject+' index: '+index);
-                    return _inventory[index];
-                };
-           };
-           return null;
-        };
-
-        self.getAllObjects = function() {
-            return _inventory;
-        };
 
         /*Allow player to get an object from a location*/
         self.get = function(verb, artefactName) {
@@ -119,7 +56,7 @@ module.exports.Player = function Player(aUsername) {
             if (artefactName=="all") {return self.getAll(verb);};
             if (artefactName=="everything") {return self.getAll(verb);};
             if (!(_currentLocation.objectExists(artefactName))) {
-                if (self.checkInventory(artefactName)) {return "You're carrying it already.";};
+                if (_inventory.check(artefactName)) {return "You're carrying it already.";};
                 return "There is no "+artefactName+" here.";
             };
 
@@ -127,12 +64,12 @@ module.exports.Player = function Player(aUsername) {
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
             if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};
-            if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName;};
+            if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName;};
         
             var collectedArtefact = _currentLocation.removeObject(artefactName);
             if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";}; //just in case it fails for any other reason.
         
-            return self.addToInventory(collectedArtefact);          
+            return "You're "+_inventory.add(collectedArtefact);          
         };
 
         /*Allow player to get all available objects from a location*/
@@ -144,9 +81,9 @@ module.exports.Player = function Player(aUsername) {
             var successCount = 0;
 
             artefacts.forEach(function(artefact) {
-                if((artefact.isCollectable()) && (self.canCarry(artefact))) {
+                if((artefact.isCollectable()) && (_inventory.canCarry(artefact))) {
                     var artefactToCollect = _currentLocation.getObject(artefact.getName());
-                    self.addToInventory(artefactToCollect);
+                    _inventory.add(artefactToCollect);
                     collectedArtefacts.push(artefactToCollect);
                     successCount ++;
                 };
@@ -166,9 +103,9 @@ module.exports.Player = function Player(aUsername) {
         /*allow player to drop an object*/
         self.drop = function(verb, artefactName) {
             if ((artefactName=="")||(artefactName==undefined)) {return verb+" what?";};
-            if (!(self.checkInventory(artefactName))) {return "You're not carrying any "+artefactName;};
-            var artefactDamage = self.getObject(artefactName).bash(); //should be careful dropping things
-            var droppedObject = self.removeFromInventory(artefactName);
+            if (!(_inventory.check(artefactName))) {return "You're not carrying any "+artefactName;};
+            var artefactDamage = _inventory.getObject(artefactName).bash(); //should be careful dropping things
+            var droppedObject = _inventory.remove(artefactName);
 
             //return "You destroyed it!"
             if (droppedObject.isDestroyed()) { return "Oops. "+artefactDamage;}; 
@@ -186,13 +123,13 @@ module.exports.Player = function Player(aUsername) {
 
             if ((firstArtefactName == "")||(firstArtefactName == undefined)) {return resultString+"."};
 
-            var objectExists = (_currentLocation.objectExists(firstArtefactName)||self.checkInventory(firstArtefactName));
+            var objectExists = (_currentLocation.objectExists(firstArtefactName)||_inventory.check(firstArtefactName));
             if (!(objectExists)) {return "There is no "+firstArtefactName+" here and you're not carrying one either.";};
 
             //we have at least one artefact...
             //the object does exist
             var locationFirstArtefact = _currentLocation.getObject(firstArtefactName);
-            var playerFirstArtefact = self.getObject(firstArtefactName);
+            var playerFirstArtefact = _inventory.getObject(firstArtefactName);
             var firstArtefact;
             if (locationFirstArtefact) {firstArtefact = locationFirstArtefact} else {firstArtefact = playerFirstArtefact};
 
@@ -200,12 +137,12 @@ module.exports.Player = function Player(aUsername) {
             resultString+= ' the '+firstArtefactName;
 
             if ((secondArtefactName != "")&& secondArtefactName != undefined) {
-                var secondObjectExists = (_currentLocation.objectExists(secondArtefactName)||self.checkInventory(secondArtefactName));
+                var secondObjectExists = (_currentLocation.objectExists(secondArtefactName)||_inventory.check(secondArtefactName));
                 if (!(secondObjectExists)) {return "There is no "+secondArtefactName+" here and you're not carrying one either.";};
 
                 //the second object does exist
                 var locationSecondArtefact = _currentLocation.getObject(secondArtefactName);
-                var playerSecondArtefact = self.getObject(secondArtefactName);
+                var playerSecondArtefact = _inventory.getObject(secondArtefactName);
                 var secondArtefact;
                 if (locationSecondArtefact) {secondArtefact = locationSecondArtefact} else {secondArtefact = playerSecondArtefact};
 
@@ -227,12 +164,12 @@ module.exports.Player = function Player(aUsername) {
                 if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
                 if(receiverName==""||(receiverName == undefined)) {return verb+" "+artefactName+" to what?";};
 
-                var objectExists = (_currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+                var objectExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
                 if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
 
                 //the object does exist
                 var locationArtefact = _currentLocation.getObject(artefactName);
-                var playerArtefact = self.getObject(artefactName);
+                var playerArtefact = _inventory.getObject(artefactName);
                 var artefact;
                 if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
 
@@ -264,7 +201,7 @@ module.exports.Player = function Player(aUsername) {
                 if (playerArtefact) {
                     //treat this as a kind act (if successful)
                     if (_aggression >0) {_aggression--;};
-                    return receiver.give((self.removeFromInventory(artefactName)));
+                    return receiver.give((_inventory.remove(artefactName)));
                 };
             };
 
@@ -281,7 +218,7 @@ module.exports.Player = function Player(aUsername) {
             var artefact = giver.getObject(artefactName);
 
             //we'll only get this far if there is an object to give and a valid giver - note the object *could* be a live creature!
-            if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
+            if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
 
             var objectToReceive;
             if (artefact) {
@@ -292,7 +229,7 @@ module.exports.Player = function Player(aUsername) {
                         objectToReceive = giver.theft(artefactName, self);
                     };
                     if ((typeof objectToReceive != 'object')) {return objectToReceive;}; //it not an object, we get a string back instead
-                    return self.addToInventory(objectToReceive);
+                    return "You're "+_inventory.add(objectToReceive);
             };
         };
 
@@ -300,7 +237,7 @@ module.exports.Player = function Player(aUsername) {
             if(giverName==""||(giverName == undefined)) {return verb+" what?";};
             var giver = _currentLocation.getObject(giverName);
             if (!(giver)) {return "There is no "+giverName+" here.";};
-            if (giver.getType() != 'creature') {return "It's not alive, it can't give you anything.";};
+            if (giver.getType() != 'creature') {return "It's not alive, it can't give you anything.";}; //correct this for dead creatures too
             if ((artefactName == "")||(artefactName == undefined)) { return verb+" "+giverName+" for what?";};
 
             var objectExists = (_currentLocation.objectExists(artefactName)||giver.checkInventory(artefactName));
@@ -313,7 +250,7 @@ module.exports.Player = function Player(aUsername) {
             if (locationArtefact) {artefact = locationArtefact} else {artefact = giverArtefact};        
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-            if (!(self.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
+            if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
 
                 //we know player *can* carry it...
                 if (locationArtefact) {
@@ -326,7 +263,7 @@ module.exports.Player = function Player(aUsername) {
                 if (giverArtefact) {
                     var objectToReceive = giver.take(artefactName, _aggression);
                     if ((typeof objectToReceive != 'object')) {return objectToReceive;}; //it not an object, we get a string back instead
-                    return self.addToInventory(objectToReceive);
+                    return "You're "+_inventory.add(objectToReceive);
                 };
         };
 
@@ -346,11 +283,11 @@ module.exports.Player = function Player(aUsername) {
         self.examine = function(verb, artefactName) {
             if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
     
-            var objectExists = (_currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+            var objectExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
             if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
             //the object does exist
             var locationArtefact = _currentLocation.getObject(artefactName);
-            var playerArtefact = self.getObject(artefactName);
+            var playerArtefact = _inventory.getObject(artefactName);
             var artefact;
             if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
             return artefact.getDetailedDescription();
@@ -432,13 +369,7 @@ module.exports.Player = function Player(aUsername) {
         };	
 
         self.isArmed = function() {
-            //we don't have type exposed any more...
-            for(var index = 0; index < _inventory.length; index++) {
-                if(_inventory[index].getType() == 'weapon') {
-                    console.log('Player is carrying weapon: '+_inventory[index].getName());
-                    return true;
-                };
-            };
+            if (_inventory.getObjectByType('weapon')) {return true;};
             return false;
         };
 
@@ -446,13 +377,14 @@ module.exports.Player = function Player(aUsername) {
             //find the strongest non-breakable weapon the player is carrying.
             var selectedWeaponStrength = 0;
             var selectedWeapon = null;
-            for(var index = 0; index < _inventory.length; index++) {
+            var weapons = _inventory.getAllObjectsOfType('weapon');
+            for(var index = 0; index < weapons.length; index++) {
                 //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones.
-                if((_inventory[index].getType() == 'weapon') && (!(_inventory[index].isBreakable()))) {
-                    var weaponStrength = _inventory[index].getAttackStrength();
-                    console.log('Player is carrying weapon: '+_inventory[index].getName()+' strength: '+weaponStrength);
+                if((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
+                    var weaponStrength = weapons[index].getAttackStrength();
+                    console.log('Player is carrying weapon: '+weapons[index].getName()+' strength: '+weaponStrength);
                     if (weaponStrength > selectedWeaponStrength) {
-                        selectedWeapon = _inventory[index];
+                        selectedWeapon = weapons[index];
                         selectedWeaponStrength = weaponStrength;
                     };
                     
@@ -480,22 +412,22 @@ module.exports.Player = function Player(aUsername) {
 
             var artefactExists = false;
             if ((artefactName != "")&&(artefactName != undefined)) { 
-                artefactExists = (_currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+                artefactExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
                 if (!(artefactExists)) {return "You prepare your most aggressive stance and then realise there's no "+artefactName+" here and you don't have one on your person.<br>Fortunately, I don't think anyone noticed.";};
             };
 
-            var receiverExists = (_currentLocation.objectExists(receiverName)||self.checkInventory(receiverName));
+            var receiverExists = (_currentLocation.objectExists(receiverName)||_inventory.check(receiverName));
             if (!(receiverExists)) {return "There is no "+receiverName+" here and you're not carrying one either.<br>You feel slightly foolish for trying to attack something that isn't here.";};
 
             //the we know the recipient does exist and the player hs a means of hitting it
             var locationReceiver = _currentLocation.getObject(receiverName);
-            var playerReceiver = self.getObject(receiverName);
+            var playerReceiver = _inventory.getObject(receiverName);
             var receiver;
             if (locationReceiver) {receiver = locationReceiver} else {receiver = playerReceiver};
 
             //arm with named weapon
             var locationWeapon = _currentLocation.getObject(artefactName);
-            var playerNamedWeapon = self.getObject(artefactName);
+            var playerNamedWeapon = _inventory.getObject(artefactName);
             var weapon;
 
             if (locationWeapon) {weapon = locationWeapon}
@@ -519,7 +451,7 @@ module.exports.Player = function Player(aUsername) {
                 _aggression ++;
 
                 if(locationReceiver) {_currentLocation.removeObject(receiverName)};
-                if(playerReceiver) { self.removeFromInventory(receiverName);};
+                if(playerReceiver) { _inventory.remove(receiverName);};
                 resultString = "Oops. "+resultString;
             }; 
 
@@ -531,7 +463,7 @@ module.exports.Player = function Player(aUsername) {
                         resultString +="<br>Oh dear. You destroyed the "+weapon.getName()+" that you decided to use as a weapon.";
                         //remove destroyed item
                         if (locationWeapon) {_currentLocation.removeObject(artefactName);}
-                        else if (playerNamedWeapon) {self.removeFromInventory(artefactName);};
+                        else if (playerNamedWeapon) {_inventory.remove(artefactName);};
                      
                     } else {
                         resultString +="<br>You damaged the "+weapon.getName()+"."
@@ -590,19 +522,19 @@ module.exports.Player = function Player(aUsername) {
         self.eat = function(verb, artefactName) {
             if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
     
-            var objectExists = (_currentLocation.objectExists(artefactName)||self.checkInventory(artefactName));
+            var objectExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
             if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
 
             //the object does exist
             var locationArtefact = _currentLocation.getObject(artefactName);
-            var playerArtefact = self.getObject(artefactName);
+            var playerArtefact = _inventory.getObject(artefactName);
             var artefact;
             if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it
                 if (locationArtefact){_currentLocation.removeObject(artefactName)};
-                if (playerArtefact){self.removeFromInventory(artefactName)};
+                if (playerArtefact){_inventory.remove(artefactName)};
                 _timeSinceEating = 0;
                 console.log('player eats some food.');
             };
@@ -619,8 +551,9 @@ module.exports.Player = function Player(aUsername) {
             //reset hunger
             _timeSinceEating = 0;
             //drop all objects and return to start
-            for(var i = 0; i < _inventory.length; i++) {
-                _currentLocation.addObject(self.removeFromInventory(_inventory[i].getName()));
+            var inventoryContents = _inventory.getAllObjects();
+            for(var i = 0; i < inventoryContents.length; i++) {
+                _currentLocation.addObject(_inventory.remove(inventoryContents[i].getName()));
             }; 
             self.heal(100);
             return '<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>'+

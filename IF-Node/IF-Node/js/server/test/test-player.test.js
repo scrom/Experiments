@@ -6,23 +6,51 @@ var artefact = require('../artefact.js');
 
 //these are used in setup and teardown - need to be accessible to all tests
 var junkAttributes;
+var weaponAttributes;
+var foodAttributes;
 var playerName;
 var p0; // player object.
-var a0; //artefact object
+var l0; //location object.
+var a0; //artefact object.
+var a1; //artefact object.
+var c0; //creature object.
+var weapon; //weapon object
+var food; //food object
 
 exports.setUp = function (callback) {
     playerName = 'player';
     p0 = new player.Player(playerName);
+    l0 = new location.Location('home','a home location');
+    p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+    weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+    foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
+    weapon = new artefact.Artefact('sword', 'a mighty sword', 'chop chop chop',weaponAttributes, null);
+    food = new artefact.Artefact('cake', 'a slab of sugary goodness', 'nom nom nom',foodAttributes, null);
+    a1 = new artefact.Artefact('box', 'a box', 'just a box',junkAttributes, null);
+    c0 = new creature.Creature('creature', 'A creature', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, 5, true, [a1]);
+    c0.go(null,l0); 
+
+    l0.addObject(a0);
+    l0.addObject(weapon);
+    l0.addObject(food);
+    l0.addObject(c0);
     callback(); 
 };
 
 exports.tearDown = function (callback) {
     playerName = null;
     p0 = null;
+    l0 = null;
     junkAttributes = null;
+    weaponAttributes = null;
+    foodAttributes = null;
     a0 = null;
+    a1 = null;
+    weapon = null;
+    food = null;
+    c0 = null;
     callback();
 };  
 
@@ -51,201 +79,155 @@ exports.canGetUsername = function (test) {
 exports.canGetUsername.meta = { traits: ["Player Test", "Attribute Trait"], description: "Test that a creature object can be created." };
 
 
-exports.addToInventoryReturnsMessage = function (test) {
+exports.canGetObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var expectedResult = "You are now carrying "+artefactDescription+".";
-    var actualResult = p0.addToInventory(a0);
+    var expectedResult = "You're now carrying "+artefactDescription+".";
+    var actualResult = p0.get('get', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.addToInventoryReturnsMessage.meta = { traits: ["Player Test", "Inventory Trait"], description: "Test that a player can receive an object." };
+exports.canGetObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can get an object." };
 
-exports.getObjectAfterAddToInventoryReturnsCorrectObject = function (test) {
-    var artefactDescription = 'an artefactDescription'
+exports.canGetAndDropObject = function (test) {
+    var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    p0.addToInventory(a0);
-    var expectedResult = artefactName;
-    var actualResult = p0.getObject(artefactName).getName();
+    p0.get('get', a0.getName());
+    var expectedResult = "You dropped the "+artefactName+". ";
+    var actualResult = p0.drop('drop', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.getObjectAfterAddToInventoryReturnsCorrectObject.meta = { traits: ["Player Test", "Inventory Trait"], description: "Test that a player is carrying an object." };
+exports.canGetAndDropObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can drop an object." };
 
-exports.getObjectAfterAddingTwoToInventoryReturnsCorrectObject = function (test) {
-    var artefactDescription = 'an artefactDescription'
+exports.canWaveObject = function (test) {
+    var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-    p0.addToInventory(a0);
-    var expectedResult = artefactName;
-    var actualResult = p0.getObject(artefactName).getName();
+    p0.get('get', a0.getName());
+    var expectedResult = "You wave the "+artefactName+". Nothing happens.<br>Your arms get tired and you feel slightly awkward.";
+    var actualResult = p0.wave('wave', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.getObjectAfterAddingTwoToInventoryReturnsCorrectObject.meta = { traits: ["Player Test", "Inventory Trait"], description: "Test that a player is carrying an object." };
+exports.canWaveObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can wave an object." };
 
-exports.removeFirstObjectFromInventoryReturnsCorrectObject = function (test) {
-    var artefactDescription = 'an artefactDescription'
-    var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-    p0.addToInventory(a0);
-    p0.addToInventory(a1);
-    var expectedResult = artefactName;
-    var actualResult = p0.removeFromInventory(artefactName).getName();
+exports.canExamineObject = function (test) {
+    p0.get('get', a0.getName());
+    var expectedResult = "not much to say really";
+    var actualResult = p0.examine('examine', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.removeFirstObjectFromInventoryReturnsCorrectObject.meta = { traits: ["Player Test", "Inventory Trait"], description: "Test that a player is carrying an object." };
+exports.canExamineObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can examine an object." };
 
-exports.removeSecondObjectFromInventoryReturnsCorrectObject = function (test) {
-    var artefactDescription = 'an artefactDescription'
-    var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-    p0.addToInventory(a0);
-    p0.addToInventory(a1);
-    var expectedResult = artefactName+'1';
-    var actualResult = p0.removeFromInventory(artefactName+'1').getName();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.removeSecondObjectFromInventoryReturnsCorrectObject.meta = { traits: ["Player Test", "Inventory Trait"], description: "Test that a player is carrying an object." };
-
-exports.removeFirstObjectFromInventoryRemovesCorrectObject = function (test) {
-    var artefactDescription = 'an artefactDescription'
-    var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-    p0.addToInventory(a0);
-    p0.addToInventory(a1);
-    p0.removeFromInventory(artefactName);
-
-    var expectedResult = "You're carrying an artefactDescription1.";
-    var actualResult = p0.getInventory();
-
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.removeFirstObjectFromInventoryRemovesCorrectObject.meta = { traits: ["Player Test", "Inventory Trait"], description: "Test that a player is carrying an object." };
-
-exports.removeNonExistentObjectFromInventoryReturnsSensibleMessage = function (test) {
-    var artefactDescription = 'an artefactDescription'
-    var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-    p0.addToInventory(a0);
-    p0.addToInventory(a1);
-
-    var expectedResult = "You are not carrying "+artefactName+"2.";
-    var actualResult = p0.removeFromInventory(artefactName+"2");
-
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.removeNonExistentObjectFromInventoryReturnsSensibleMessage.meta = { traits: ["Player Test", "Inventory Trait"], description: "Test that a player is carrying an object." };
-
-exports.getInventoryWeightReturns0WhenEmpty = function (test) {
-    var expectedResult = 0;
-    var actualResult = p0.getInventoryWeight();
-
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.getInventoryWeightReturns0WhenEmpty.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
-
-exports.getInventoryWeightReturns6WhenHasObjects = function (test) {
-    var artefactDescription = 'an artefactDescription'
-    var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
- 
-    p0.addToInventory(a0);
-    p0.addToInventory(a1);
-
-    var expectedResult = 6;
-    var actualResult = p0.getInventoryWeight();
-
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.getInventoryWeightReturns6WhenHasObjects.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
-
-exports.canCarryHandlesNullObject = function (test) {
-    var expectedResult = false;
-    var actualResult = p0.canCarry(null); //we're carrying weight of 2 and limit is 50 - this should pass
-
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.canCarryHandlesNullObject.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
-
-exports.canCarryCorrectlyChecksWeight = function (test) {
-    var artefactDescription = 'an artefactDescription'
-    var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-
-    junkAttributes.weight=44;
-    var a2 = new artefact.Artefact(artefactName+'2', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-    p0.addToInventory(a0);
-    p0.addToInventory(a1);
-
+exports.canVerifyIsArmed = function (test) {
+    p0.get('get', weapon.getName());
     var expectedResult = true;
-    var actualResult = p0.canCarry(a2); //we're carrying weight of 2 and limit is 50 - this should pass
-
+    var actualResult = p0.isArmed();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.canCarryCorrectlyChecksWeight.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
+exports.canVerifyIsArmed.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Weapon Trait"], description: "Test that a player is carrying a weapon." };
 
-exports.canCarryCorrectlyChecksOverWeight = function (test) {
-    var artefactDescription = 'an artefactDescription'
-    var artefactName = 'artefact'
-    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
 
-    junkAttributes.weight=45;
-    var a2 = new artefact.Artefact(artefactName+'2', artefactDescription+'1', 'not much to say really',junkAttributes, null);
-    p0.addToInventory(a0);
-    p0.addToInventory(a1);
-
-    var expectedResult = false;
-    var actualResult = p0.canCarry(a2); //we're carrying weight of 2 and limit is 50 - this should fail
-
+exports.canGetWeapon = function (test) {
+    p0.get('get', weapon.getName());
+    var expectedResult = 'sword';
+    var actualResult = p0.getWeapon().getName();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.canCarryCorrectlyChecksOverWeight.meta = { traits: ["Player Test", "Inventory Trait", "Weight Trait"], description: "Test that a player is carrying an object." };
+exports.canGetWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Weapon Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+exports.canEatFood = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = 'You eat the cake. You feel fitter, happier and healthier.';
+    var actualResult = p0.eat('eat','cake');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canEatFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+exports.canBeKilledAndDropInventory = function (test) {
+    p0.get('get', food.getName());
+    p0.killPlayer();
+    var expectedResult = 'cake';
+    var actualResult = l0.getObject(food.getName()).getName();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canBeKilledAndDropInventory.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Kill Trait"], description: "Test that a killed player drops inventory." };
+
+exports.canGiveObjectToCreature = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = 'That was kind. He is now carrying a slab of sugary goodness';
+    var actualResult = p0.give('give','cake', c0.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGiveObjectToCreature.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait"], description: "Test that a player can give an item from inventory to a creature." };
+
+exports.canAskCreatureForObject = function (test) {
+    var expectedResult = "You're now carrying a box.";
+    var actualResult = p0.ask('ask',c0.getName(), 'box');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canAskCreatureForObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait"], description: "Test that a player can ask a friendly creature for an object." };
+
+exports.canStealObjectFromCreature = function (test) {
+    p0.setStealth(7); //crank stealth up to guarantee successful steal
+    var expectedResult = "You're now carrying a box.";
+    var actualResult = p0.steal('steal','box',c0.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canStealObjectFromCreature.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait"], description: "Test that a player can steal an item from a creature." };
+
+exports.canHitCreatureWithInventoryWeapon = function (test) {
+    p0.get('get', weapon.getName());
+    var expectedResult = "You attack creature. He's still the picture of health.";
+    var actualResult = p0.hit('hit',c0.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
 
 
 /*

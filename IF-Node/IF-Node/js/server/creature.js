@@ -2,7 +2,10 @@
 //Creature object
 exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying) {
     try{
-	    var self=this; //closure so we don't lose thisUi refernce in callbacks
+        //module deps
+        var inventoryObjectModule = require('./inventory');
+
+	    var self=this; //closure so we don't lose reference in callbacks
         var _name = aname;
         var _gender;
         var _genderPrefix;
@@ -30,6 +33,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 	    console.log(_objectName + ' created: '+_name);
 
         if (carrying != undefined) {
+            console.log('adding creature inventory: '+carrying);
             //load inventory
             if (carrying instanceof Array) {
                 _inventory = carrying; //overwrite inital inventory
@@ -204,7 +208,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //we don't have name exposed any more...
             for(var index = 0; index < _inventory.length; index++) {
                 if(_inventory[index].getName() == anObject) {
-                    console.log('creature/object found: '+anObject+' index: '+index);
+                    console.log('item to remove from creature found: '+anObject+' index: '+index);
                     var returnObject = _inventory[index];
                     _inventory.splice(index,1);
                     console.log(anObject+" removed from "+_name+"'s inventory");
@@ -234,7 +238,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.theft = function(anObject,player) {
-            var randomInt = Math.floor(Math.random() * 7); //will randomly return 0 to 6 (<15% chance of success)
+            var playerStealth = player.getStealth();
+            var randomInt = Math.floor(Math.random() * (7/playerStealth)); //will randomly return 0 to 6 by default(<15% chance of success)
+            console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like take)
                 _affinity--;
@@ -256,7 +262,9 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         self.checkInventory = function(anObject) {
             //check if passed in object is in inventory
             //we don't have name exposed any more...
+            console.log('Creature inventory check: '+anObject);
             if (self.getObject(anObject)) {return true;};
+            console.log(anObject+' not found');
             return false;
         };
 
@@ -264,7 +272,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //we don't have name exposed any more...
             for(var index = 0; index < _inventory.length; index++) {
                 if(_inventory[index].getName() == anObject) {
-                    console.log('creature/object found: '+anObject+' index: '+index);
+                    console.log('item found in creature inventory: '+anObject+' index: '+index);
                     return _inventory[index];
                 };
             };
@@ -438,10 +446,6 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             if (_affinity >=0) {_affinity=-1;}; //just in case!
             _edible = true;
             _collectable = true; 
-            //drop all objects
-            //for(var i = 0; i < _inventory.length; i++) {
-            //    _currentLocation.addObject(self.removeFromInventory(_inventory[i].getName()));
-            //}; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+_name;
             return _name+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
