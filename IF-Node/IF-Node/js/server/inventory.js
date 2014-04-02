@@ -29,7 +29,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
         };	
 
         self.getWeight = function() {
-            if (_items.length==0){return ''};
+            if (_items.length==0){return 0};
             var weight = 0
             for(var i = 0; i < _items.length; i++) {
                     weight+=_items[i].getWeight();
