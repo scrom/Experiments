@@ -81,7 +81,7 @@ exports.Location = function Location(aName, aDescription) {
             //we don't have name exposed any more...
             for(var index = 0; index < _objects.length; index++) {
                 if(_objects[index].getName() == anObject) {
-                    console.log('creature/object found: '+anObject+' index: '+index);
+                    console.log('creature/object found at location: '+anObject+' index: '+index);
                     var returnObject = _objects[index];
                     if (returnObject.isCollectable()||returnObject.canTravel()) {
                         _objects.splice(index,1);
