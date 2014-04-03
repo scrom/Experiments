@@ -1,0 +1,40 @@
+.softBorder
+{
+    border:2px solid;
+    border-radius:5px;
+    padding:3px;
+}
+
+.verticalScroll
+{
+   overflow-y:auto; 
+   overflow-x: hidden;
+}
+
+.spacer
+{
+    height:3px;
+    width:600px
+}
+
+.smallBox
+{
+    height:200px;
+    width:600px
+}
+
+.oneLineBox
+{
+    height:25px;
+    width:600px
+}
+
+.bigBox
+{
+    height:350px;
+    width:600px
+}
+
+.softBorder.smallBox{}
+.softBorder.oneLineBox{}
+.softBorder.bigBox.verticalScroll{}

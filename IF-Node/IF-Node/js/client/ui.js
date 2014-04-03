@@ -27,6 +27,8 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
     //interaction with client
     Ui.prototype.setState = function(stateData) {
         interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
+        //console.append("scrolltop:"+interactionScrollTop+"height: "+interaction[0].scrollHeight);
+        interaction.scrollTop(interaction[0].scrollHeight);
         input.val("");
         //console.append('setting state: '+stateData);
         state.html(stateData);
