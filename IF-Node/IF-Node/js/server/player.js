@@ -257,7 +257,7 @@ module.exports.Player = function Player(aUsername) {
                         return  "It's probably better to 'ask'."; 
                     };
                     if (receiver.getType() != 'container') {
-                        return  "You can't put anything in that."; 
+                        return  "It doesn't contain anything."; 
                     };
                 } else {
                     return "There is no "+receiverName+" here.";

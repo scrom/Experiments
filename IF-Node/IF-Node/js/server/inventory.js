@@ -59,18 +59,25 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
         };
     
         self.remove = function(anObject) {
-                //we don't have name exposed any more...
-                for(var index = 0; index < _items.length; index++) {
-                    if(_items[index].getName() == anObject) {
+                var localInventory = self.getAllObjects();
+                for(var index = 0; index < localInventory.length; index++) {
+                    if(localInventory[index].getName() == anObject) {
                         var returnObject = _items[index];
-                        _items.splice(index,1);
+                        localInventory.splice(index,1);
                         console.log(anObject+" removed from inventory");
                         return returnObject;
                     };
+                    if(localInventory[index].getType() == 'container' && (!(localInventory[index].isLocked()))) {
+                        if (localInventory[index].isOpen()) {
+                            //only remove from open, unlocked containers - this way we know the player has discovered them
+                            var containerInventory = localInventory[index].getInventoryObject()
+                            var object = containerInventory.remove(anObject);
+                        };
+                        if (object) {return object;}; 
+                    };
                 };
-
                 console.log("not carrying "+anObject);
-                return "not carrying "+anObject+"." ;
+                return null;
         };
     
         self.check = function(anObject) {
@@ -84,6 +91,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
                 if(_items[index].getName() == anObject) {
                     console.log("inventory item found: "+anObject+" index: "+index);
                     return _items[index];
+                };
+                if(_items[index].getType() == 'container' && (!(_items[index].isLocked()))) {
+                    if (_items[index].isOpen()) {
+                    //only confirm item from open, unlocked containers - this way we know the player has discovered them
+                        var object = _items[index].getInventoryObject().getObject(anObject);
+                        if (object) {return object}; 
+                    };
                 };
            };
            return null;

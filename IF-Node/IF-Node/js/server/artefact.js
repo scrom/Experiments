@@ -229,7 +229,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return returnString;
                 };
             };
-            if (verb == 'open') {return "It doesn't open";};
+            if (verb == 'open') {
+                if (_opens && (_open)){return "It's already open";};                
+                return "It doesn't open";
+            };
             return "Nothing happens.";
         };
 
@@ -289,6 +292,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "It's locked.";
         };
 
+        self.isOpen = function() {
+            if (_opens && _open) {return true;};
+            return false;
+        };
+
         self.isLocked = function() {
             if (_locked) {return true;};
             return false;
@@ -327,6 +335,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.canCarry = function(anObject) {
             return _inventory.canCarry(anObject);
+        };
+
+        //nasty - expose our internals
+        self.getInventoryObject = function() {
+            return _inventory;
         };
         //end public member functions
 
