@@ -160,6 +160,44 @@ module.exports.Player = function Player(aUsername) {
             return resultString;
         };
 
+        self.unlock = function(verb, artefactName) {
+            if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
+            var objectExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
+            if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+            //the object does exist
+            var locationArtefact = _currentLocation.getObject(artefactName);
+            var playerArtefact = _inventory.getObject(artefactName);
+            var artefact;
+            if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+
+            //find a key
+            var key = self.getMatchingKey(artefact);
+
+            if ((key==undefined)||(key==null)) {return "You don't have a key for it."};
+
+            return artefact.unlock(key);
+        };
+
+        self.lock = function(verb, artefactName) {
+            if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
+            var objectExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
+            if (!(objectExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+            //the object does exist
+            var locationArtefact = _currentLocation.getObject(artefactName);
+            var playerArtefact = _inventory.getObject(artefactName);
+            var artefact;
+            if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+
+            //find a key
+            var key = self.getMatchingKey(artefact);
+
+            if ((key==undefined)||(key==null)) {return "You don't have a key for it."};
+
+            return artefact.lock(key);
+        };
+
         /*Allow player to put something in an object */
         self.put = function(verb, artefactName, receiverName){
                 if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
@@ -385,14 +423,23 @@ module.exports.Player = function Player(aUsername) {
         self.open = function(verb, artefactName) {
             //note artefact could be a creature!
             if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
-            var artefact = _currentLocation.getObject(artefactName);
+            var locationArtefact = _currentLocation.getObject(artefactName);
+            var playerArtefact = _inventory.getObject(artefactName);
+            var artefact;
+            if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+
             if (!(artefact)) { return "There is no "+artefactName+" here."};
             return artefact.moveOrOpen(verb);
         };
 
         self.close = function(verb, artefactName) {
             if ((artefactName == "")||(artefactName == undefined)) { return verb+" what?";};
-            var artefact = _currentLocation.getObject(artefactName);
+
+            var locationArtefact = _currentLocation.getObject(artefactName);
+            var playerArtefact = _inventory.getObject(artefactName);
+            var artefact;
+            if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+
             if (!(artefact)) { return "There is no "+artefactName+" here.";};
             return artefact.close();
         };
@@ -483,6 +530,22 @@ module.exports.Player = function Player(aUsername) {
             else {console.log('Player is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
+        };
+        
+        self.getMatchingKey = function(anObject) {
+            //find the strongest non-breakable weapon the player is carrying.
+            var keys = _inventory.getAllObjectsOfType('key');
+            for(var index = 0; index < keys.length; index++) {
+                //player must explicitly choose to use a breakable key - will only auto-use non-breakable ones.
+                if((keys[index].getType() == 'key') && (!(keys[index].isBreakable()))) {
+                    if (keys[index].keyTo(anObject)) {
+                        console.log('Key found for: '+anObject.getName());
+                        return keys[index];
+                    };                   
+                };
+            };
+            console.log('Matching key not found');
+            return null;
         };
 
         //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!

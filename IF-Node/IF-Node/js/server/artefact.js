@@ -14,23 +14,25 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _description = description;
         var _initialDetailedDescription = detailedDescription; //save this for repairing later
         var _detailedDescription = detailedDescription;
-        var _weight = attributes.weight;
-        var _attackStrength = attributes.attackStrength;
+        var _weight = 0;
+        var _attackStrength = 0;
         var _inventory =  new inventoryObjectModule.Inventory(attributes.carryWeight);
-        var _type = attributes.type;
+        var _type = "";
         var _linkedExit = linkedExit;
-        var _collectable = attributes.canCollect;
+        var _collectable = false;
         var _missions = [];
-        var _opens = attributes.canOpen;
-        var _edible = attributes.isEdible;
+        var _opens = false;
+        var _open = false;
+        var _edible = false;
         var _chewed = false;
         var _damaged = false;
-        var _breakable = attributes.isBreakable;
+        var _breakable = false;
         var _broken = false;
         var _destroyed = false; //broken beyond repair
         var _locked = false;
         var _lockable = false;
         var _unlocks = ""; //unique name of the object that it unlocks. 
+
         /*
         self.mendable = mendable;
         self.uses = uses;
@@ -39,11 +41,34 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
 	    var objectName = "Artefact";
 
+        var processAttributes = function(artefactAttributes) {
+            if (artefactAttributes.lockable != undefined) {_lockable = artefactAttributes.lockable;};
+            if (artefactAttributes.locked != undefined) {_locked = artefactAttributes.locked;};
+            if (artefactAttributes.canCollect != undefined) {_collectable = artefactAttributes.canCollect;};
+            if (artefactAttributes.canOpen != undefined) {
+                //lockable items are openable so ignore "canOpen" attribute.
+                if (_lockable) {_opens = true;}
+                else {_opens = artefactAttributes.canOpen;}
+            };
+            if (artefactAttributes.isOpen != undefined) {_open = artefactAttributes.isOpen;};
+            if (artefactAttributes.isEdible != undefined) {_edible = artefactAttributes.isEdible;};
+            if (artefactAttributes.chewed != undefined) {_chewed = artefactAttributes.chewed;};
+            if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
+            if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
+            if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
+            if (artefactAttributes.isBreakable != undefined) {_breakable = artefactAttributes.isBreakable;};
+            if (artefactAttributes.isBroken != undefined) {_broken = artefactAttributes.isBroken;};
+            if (artefactAttributes.unlocks != undefined) {_unlocks = artefactAttributes.unlocks;};
+        };
+
+        processAttributes(attributes);
+
+
         var validateType = function() {
             var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key', 'bed'];
             if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid artefact type."}//
             console.log(_name+' type validated: '+_type);
-        }
+        };
 
         validateType();
 
@@ -66,7 +91,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getDetailedDescription = function() {
             var returnString = _detailedDescription
-            if (_inventory.size() > 0) {
+            var inventoryIsVisible = true;
+            if (_opens && (!(_open))) { 
+                returnString += " It's closed.";
+                inventoryIsVisible = false;
+            };
+
+            if (_lockable && (_locked)) { 
+                returnString += " It's locked.";
+                inventoryIsVisible = false;
+            };
+
+            if ((_inventory.size() > 0) && inventoryIsVisible) {
                 returnString += "<br>It contains "+_inventory.describe()+".";
             };
             return returnString;
@@ -180,16 +216,29 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.moveOrOpen = function(verb) {
-            if (_opens){
-                return 'you '+verb+' the '+_name+'. '+_linkedExit.show();
-            } else {return 'nothing happens'};
+            if (_locked) {return "It's locked."};
+            if (_opens && (!(_open))){
+                _open = true;
+                if(_linkedExit) {
+                    return "you "+verb+" the "+_name+". "+_linkedExit.show();
+                };
+                if (verb == 'open') {
+                    var returnString = "you "+verb+" the "+_name+".";
+                    if (_inventory.size() > 0) {returnString +=" It contains "+_inventory.describe()+".";}
+                    else {returnString +=" It's empty.";};
+                    return returnString;
+                };
+            };
+            if (verb == 'open') {return "It doesn't open";};
+            return "Nothing happens.";
         };
 
         self.close = function() {
-            if (_opens){
-                _linkedExit.hide();
+            if (_opens && _open){
+                _open = false;
+                if(_linkedExit) {_linkedExit.hide();};
                 return 'you closed the '+_name;
-            } else {return 'nothing happens'};
+            } else {return "It's not open."};
         };
 
         self.reply = function(someSpeech,playerAggression) {
@@ -242,6 +291,37 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isLocked = function() {
             if (_locked) {return true;};
+            return false;
+        };
+
+        self.lock = function(aKey) {
+            if (!(_lockable)) {return "It doesn't have a lock.";};
+            if (!(_locked)) {
+                if (aKey.keyTo(self)) {
+                    _locked = true;
+                    return "You lock the "+self.getName();
+                } else {
+                    return "You need something else to lock this.";
+                };
+            };
+            return "It's already locked";
+        };
+
+        self.unlock = function(aKey) {
+            if (!(_lockable)) {return "It doesn't have a lock.";};
+            if (_locked) {
+                if (aKey.keyTo(self)) {
+                    _locked = false;
+                    return "You unlock the "+self.getName();
+                } else {
+                    return "You need something else to unlock this.";
+                };
+            };
+            return "It's already unlocked";
+        };
+
+        self.keyTo = function(anObject) {
+            if (_unlocks == anObject.getName()) {return true;};
             return false;
         };
 

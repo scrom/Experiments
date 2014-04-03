@@ -262,6 +262,12 @@ exports.Action = function Action(aPlayer, aMap) {
                         //this will fall through to navigation later.
                         _verb = _object0;
                         break;
+                    case 'unlock':
+                        description = _player.unlock(_verb, _object0);
+                        break;
+                    case 'lock':
+                        description = _player.lock(_verb, _object0);
+                        break;
                     case 'save':
                     case 'load':
                     case 'talk':
@@ -269,8 +275,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'throw':
                     case 'rub':
                     case 'drink':
-                    case 'unlock':
-                    case 'lock':
                     case 'switch': //(this is a special one) - could be switch off light or switch light on.
                     case 'on':
                     case 'off':
