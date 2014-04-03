@@ -106,14 +106,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
         };
 
         self.isHostile = function(playerAggression) {
-            //hostile if affinity is less than 0 and is less than players -ve equivalent of aggression.
+            //hostile if affinity is less than -5 (recently rebalanced) and is less than players -ve equivalent of aggression.
             //but only if you are also aggressive
-            //will therefore *not* be hostile if you're _more_ aggressive than their negative affinity
-            //in other words, to avoid very hostile creatures attacking you, you need to be super-aggressive.
-            //but without equally reducing their affinity!
-            //rebalance - allow -5 affinity before attack
-            //if affinity is <=-10, attack regardless of player aggression
-            //this can get a player in to an almost unwinnable situation
+            //will therefore *not* be hostile if you're _more_ aggressive than their negative affinity (will probably run away)
+            //in other words, to avoid very hostile creatures attacking you, you need to be super-aggressive without equally reducing their affinity!
+            //if affinity is <=-10, attack even if player has 0 aggression.
+            //this can potentially get a player in to an almost unwinnable situation with a particularly nasty creature as it will also follow.
             if ((_affinity <-5) && (playerAggression>0) && (_affinity < playerAggression*-1)) {return true;};
             if ((_affinity <=-10) && (_affinity < playerAggression*-1)) {return true;};
             return false;
