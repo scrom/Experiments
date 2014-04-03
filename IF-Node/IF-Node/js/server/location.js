@@ -137,12 +137,12 @@ exports.Location = function Location(aName, aDescription) {
             var fullDescription = _description;
             if (_objects.length > 0) {
                 //clean up grammar here (there is/there are)
-                fullDescription+='<br>You can see '+self.listObjects()+'.';
+                fullDescription+="<br>You can see "+self.listObjects()+".";
             };
-            if (_exits.length > 0) {
+            if (self.getAvailableExits().length > 0) {
                 //clean the grammar up here. (in particular - better answer when there are no exits)
-                fullDescription+='<br>Exits are: '+self.listExits()+'.<br>';
-            };
+                fullDescription+="<br>Exits are: "+self.listExits()+".";
+            } else { fullDescription+= "<br>There are no visible exits.";};
 
             return fullDescription;
         };
@@ -159,7 +159,7 @@ exports.Location = function Location(aName, aDescription) {
         self.fireEntryTrigger = function() {
             console.log('Entry trigger fired from '+self.getName()); 
             return "";   
-        }; 
+        };
 
         self.fireExitTrigger = function() {
             console.log('Exit trigger fired from '+self.getName());
