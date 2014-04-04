@@ -85,20 +85,6 @@ exports.canGetUsername = function (test) {
 
 exports.canGetUsername.meta = { traits: ["Player Test", "Attribute Trait"], description: "Test that a creature object can be created." };
 
-
-exports.canGetObject = function (test) {
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact'
-    var expectedResult = "You're now carrying "+artefactDescription+".";
-    var actualResult = p0.get('get', a0.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.canGetObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can get an object." };
-
 exports.canGetAndDropObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
