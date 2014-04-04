@@ -19,7 +19,7 @@
 
 .smallBox
 {
-    height:200px;
+    height:225px;
     width:600px
 }
 
@@ -31,10 +31,11 @@
 
 .bigBox
 {
-    height:350px;
+    height:325px;
     width:600px
 }
 
 .softBorder.smallBox{}
 .softBorder.oneLineBox{}
 .softBorder.bigBox.verticalScroll{}
+.softBorder.smallBox.verticalScroll{}
