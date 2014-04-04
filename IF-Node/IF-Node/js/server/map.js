@@ -145,6 +145,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
             var containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
             var lockedContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
+            var lockedStaticContainerAttributes = {weight: 51, carryWeight: 25, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
             var fragileRoomAttributes = {weight: 51, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
             var doorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: false};
             var breakableDoorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: true};
@@ -162,11 +163,11 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             _locations[atrium].addObject(new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", doorAttributes, liftEntrance));
             
-            var vendingMachineKeyAttributes = keyAttributes; //buggy - same object
-            vendingMachineKeyAttributes.unlocks = 'machine';
-            _locations[peacock].addObject(new artefactObjectModule.Artefact('key', 'a vending machine key', "Just a plain key.", vendingMachineKeyAttributes));
+            var coffeeMachineKeyAttributes = keyAttributes; //buggy - same object
+            coffeeMachineKeyAttributes.unlocks = 'machine';
+            _locations[peacock].addObject(new artefactObjectModule.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes));
             keyAttributes.unlocks = 'nothing';
-            _locations[pioneer].addObject(new artefactObjectModule.Artefact('key', 'a key', "Just a plain key.", vendingMachineKeyAttributes));
+            _locations[pioneer].addObject(new artefactObjectModule.Artefact('key', 'a key', "Just a plain key.", coffeeMachineKeyAttributes));
 
             _locations[library].addObject(new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", fragileRoomAttributes, null));
             _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", weaponAttributes, null));
@@ -180,8 +181,8 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
             _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in her would be great.", junkAttributes, null));     //need to make this a cup containing coffee   
             
-            var vendingMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "It's empty.", lockedContainerAttributes, null);
-            _locations[bottomkitchen].addObject(vendingMachine); 
+            var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "It's empty.", lockedStaticContainerAttributes, null);
+            _locations[bottomkitchen].addObject(coffeeMachine); 
 
             var liftExit = _locations[lift].getExit('o');
             liftExit.hide();
