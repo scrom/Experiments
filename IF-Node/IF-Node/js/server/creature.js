@@ -453,6 +453,16 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             };
         };
 
+        self.break = function(deliberateAction) {
+            return "The level of physical and emotional torment needed to 'break' someone requires sustained abuse. "+_genderPrefix+" pretends to ignore you but really isn't impressed.";
+            _affinity--;            
+        };
+
+        self.destroy = function(deliberateAction) {
+            return "That's an extremely vindictive thing to want to achieve. If that's really what you want you'll need to find an alternate means to 'destroy' "+_genderSuffix+".";
+            _affinity--; 
+        };
+
         self.kill = function(){//
             _hitPoints = 0;
             if (_affinity >=0) {_affinity=-1;}; //just in case!

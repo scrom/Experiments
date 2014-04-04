@@ -205,14 +205,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.hurt = function(player, weapon) {      
             if (!(weapon)) {
-                var resultString = "Ouch, that hurt. If you're going to do that again, you might want to hit the "+_name+" _with_ something."; 
+                var resultString = "Ouch, that hurt. If you're going to do that again, you might want to "+verb+" the "+_name+" _with_ something."; 
                 resultString += player.hurt(15);
                 return resultString;
             };
         
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())) {
-                return "You try hitting the "+self.getName()+". Unfortunately you can't move the "+weapon.getName()+" to use as a weapon.";
+                return "You attack the "+self.getName()+". Unfortunately you can't move the "+weapon.getName()+" to use as a weapon.";
+            };
+
+            //need to validate that artefact will do some damage
+            if (weapon.getAttackStrength()<1) {
+                resultString = "You attack the "+self.getName()+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
+                resultString += weapon.bash();
+                return resultString;
             };
 
             if (((_broken) && (_breakable) && (_damaged))) {
@@ -226,7 +233,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _damaged = true;
                 _detailedDescription += " and shows signs of damage beyond normal expected wear and tear.";
             };
-            return "Ding! You repeatedly bash the "+_name+". with the "+weapon.getName()+" It feels good in a gratuitously violent sort of way."
+            return "Ding! You repeatedly attack the "+_name+". with the "+weapon.getName()+" It feels good in a gratuitously violent sort of way."
         };
 
         self.moveOrOpen = function(verb) {

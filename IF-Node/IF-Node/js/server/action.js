@@ -137,7 +137,7 @@ exports.Action = function Action(aPlayer, aMap) {
             convertActionToElements(_actionString); //extract object, description, json
             
             //do stuff
-            var description = '';
+            var description = "";
 
             //assume a move passes time. Some won't - for these, ticks will be 0.
             var ticks = 1;
@@ -214,6 +214,11 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'throw':
                     case 'drop': //add support for "all" later
                         description = _player.drop(_verb, _object0);
+                        //we're throwing the object *at* something. Use it as a weapon.
+                        //this needs work
+                        //if ((_verb == 'throw') && _object1) {
+                        //    description += _player.hit(_verb,_object1,_object0);
+                        //};
                         break;
                     case 'press':
                     case 'push':
