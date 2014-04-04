@@ -5,6 +5,7 @@ exports.Location = function Location(aName, aDescription) {
         //module deps
         var artefactObjectModule = require('./artefact');
         var exitObjectModule = require('./exit');
+        var inventoryObjectModule = require('./inventory');
               
 	    var self = this; //closure so we don't lose this reference in callbacks
         //self.location = {}; //JSON representation of location {description, objects, exits, creatures}
@@ -78,7 +79,6 @@ exports.Location = function Location(aName, aDescription) {
         self.removeObject = function(anObject) {
             console.log('removing '+anObject+' from '+_name);
 
-            //we don't have name exposed any more...
             for(var index = 0; index < _objects.length; index++) {
                 if(_objects[index].getName() == anObject) {
                     console.log('creature/object found at location: '+anObject+' index: '+index);
@@ -90,25 +90,38 @@ exports.Location = function Location(aName, aDescription) {
                             return returnObject;//+' removed from location';
                         };
                     } else {console.log(anObject+" is not collectable or won't follow");}
+                } else if(_objects[index].getType() == "container") {
+                    //hack - remove item from container and return to caller.
+                    var tempInventory = new inventoryObjectModule.Inventory;
+                    _objects[index].relinquish(anObject, tempInventory); //throw the response away.
+                    var returnedContainerObjects = tempInventory.getAllObjects();
+                    if (returnedContainerObjects.length>0) {return returnedContainerObjects[0];};
+                            
                 };
             };
         };
 
-        self.objectExists = function(anObject) {
+        self.objectExists = function(anObjectName) {
             self = this;
             //check if passed in object is in location
             //we don't have name exposed any more...
-            if (self.getObject(anObject)) {return true;};
+            if (self.getObject(anObjectName)) {return true;};
             return false;
         };
 
-        self.getObject = function(anObject) {
-            //check if passed in object is in location
-            //we don't have name exposed any more...
-            for(var i = 0; i < _objects.length; i++) {
-                if(_objects[i].getName() == anObject) {
-                    console.log('found: '+anObject);
-                    return _objects[i];
+        self.getObject = function(anObjectName) {
+            for(var index = 0; index < _objects.length; index++) {
+                if(_objects[index].getName() == anObjectName) {
+                    console.log('found: '+anObjectName);
+                    return _objects[index];
+                };
+                if(_objects[index].getType() == 'container' && (!(_objects[index].isLocked()))) {
+                    console.log('found container, searching for: '+anObjectName);
+                    if (_objects[index].isOpen()) {
+                    //only confirm item from open, unlocked containers - this way we know the player has discovered them
+                        var object = _objects[index].getInventoryObject().getObject(anObjectName);
+                        if (object) {return object}; 
+                    };
                 };
            };
            return null;
