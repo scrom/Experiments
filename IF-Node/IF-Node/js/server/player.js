@@ -228,6 +228,7 @@ module.exports.Player = function Player(aUsername) {
 
                 //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
                 if (receiver.isLocked()) { return  "Sorry, "+receiverName+" is locked.";};
+                if (!(receiver.isOpen())) { return  "Sorry, "+receiverName+" is closed.";};
                 if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiverName+" can't carry that. It's too heavy for them at the moment.";};
                 
                 //we know they *can* carry it...

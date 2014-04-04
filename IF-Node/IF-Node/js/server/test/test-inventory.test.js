@@ -147,14 +147,14 @@ exports.removeFirstObjectRemovesCorrectObject = function (test) {
 
 exports.removeFirstObjectRemovesCorrectObject.meta = { traits: ["Inventory Test", "Inventory Trait"], description: "Test that a inventory is carrying an object." };
 
-exports.removeNonExistentObjectReturnsSensibleMessage = function (test) {
+exports.removeNonExistentObjectReturnsNull = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
     var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     i0.add(a0);
     i0.add(a1);
 
-    var expectedResult = "not carrying "+artefactName+"2.";
+    var expectedResult = null;
     var actualResult = i0.remove(artefactName+"2");
 
     console.log("Expected: "+expectedResult);
@@ -163,7 +163,7 @@ exports.removeNonExistentObjectReturnsSensibleMessage = function (test) {
     test.done();
 };
 
-exports.removeNonExistentObjectReturnsSensibleMessage.meta = { traits: ["Inventory Test", "Inventory Trait"], description: "Test that a inventory is carrying an object." };
+exports.removeNonExistentObjectReturnsNull.meta = { traits: ["Inventory Test", "Inventory Trait"], description: "Test that a inventory is carrying an object." };
 
 exports.getWeightReturns0WhenEmpty = function (test) {
     var expectedResult = 0;

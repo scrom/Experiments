@@ -236,9 +236,10 @@ exports.canHitCreatureWithInventoryWeapon = function (test) {
 
 exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
 
-exports.canPutObjectInContainer = function (test) {
+exports.canPutObjectInOpenContainer = function (test) {
     p0.get('get', food.getName());
     var expectedResult = "container is now carrying a slab of sugary goodness.";
+    p0.open('open','container');
     var actualResult = p0.put('put','cake', 'container');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -246,7 +247,7 @@ exports.canPutObjectInContainer = function (test) {
     test.done();
 };
 
-exports.canPutObjectInContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into a container." };
+exports.canPutObjectInOpenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into a container." };
 
 exports.cantPutObjectInNonContainer = function (test) {
     p0.get('get', food.getName());
@@ -260,9 +261,10 @@ exports.cantPutObjectInNonContainer = function (test) {
 
 exports.cantPutObjectInNonContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into a Non container." };
 
-exports.canRemoveObjectFromContainer = function (test) {
+exports.canRemoveObjectFromOpenContainer = function (test) {
     p0.get('get', food.getName());
     var expectedResult = "You're now carrying a slab of sugary goodness.";
+    p0.open('open','container');
     p0.put('put','cake', 'container');
     var actualResult = p0.remove('remove','cake', 'container');
     console.log("Expected: "+expectedResult);
@@ -271,11 +273,12 @@ exports.canRemoveObjectFromContainer = function (test) {
     test.done();
 };
 
-exports.canRemoveObjectFromContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can remove an item from a container." };
+exports.canRemoveObjectFromOpenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can remove an item from a container." };
 
 
 exports.canExamineContainer = function (test) {
     var expectedResult = "hold hold hold<br>It contains a slab of sugary goodness.";
+    p0.open('open',container.getName());
     p0.put('put','cake', container.getName());
     var actualResult = p0.examine('examine', container.getName());
     console.log("Expected: "+expectedResult);
