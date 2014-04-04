@@ -6,6 +6,7 @@ var artefact = require('../artefact.js');
 
 //these are used in setup and teardown - need to be accessible to all tests
 var junkAttributes;
+var breakableJunkAttributes;
 var weaponAttributes;
 var foodAttributes;
 var containerAttributes;
@@ -18,6 +19,7 @@ var c0; //creature object.
 var weapon; //weapon object
 var food; //food object
 var container; //container object
+var breakable; //breakable object
 
 exports.setUp = function (callback) {
     playerName = 'player';
@@ -25,6 +27,7 @@ exports.setUp = function (callback) {
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+    breakableJunkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
@@ -33,11 +36,13 @@ exports.setUp = function (callback) {
     food = new artefact.Artefact('cake', 'a slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     container = new artefact.Artefact('container', 'a container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'a box', 'just a box',junkAttributes, null);
+    breakable = new artefact.Artefact('glass', 'a drinking glass', 'just a box',breakableJunkAttributes, null);
     c0 = new creature.Creature('creature', 'A creature', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, 5, true, [a1]);
     c0.go(null,l0); 
 
     l0.addObject(a0);
     l0.addObject(weapon);
+    l0.addObject(breakable);
     l0.addObject(food);
     l0.addObject(container);
     l0.addObject(c0);
@@ -49,12 +54,14 @@ exports.tearDown = function (callback) {
     p0 = null;
     l0 = null;
     junkAttributes = null;
+    breakableJunkAttributes = null;
     weaponAttributes = null;
     foodAttributes = null;
     containerAttributes = null;
     a0 = null;
     a1 = null;
     weapon = null;
+    breakable = null;
     food = null;
     container = null;
     c0 = null;
@@ -89,8 +96,8 @@ exports.canGetAndDropObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
     p0.get('get', a0.getName());
-    var expectedResult = "You dropped the "+artefactName+". ";
-    var actualResult = p0.drop('drop', a0.getName());
+    var expectedResult = "You throw the "+artefactName+". ";
+    var actualResult = p0.drop('throw', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -98,6 +105,20 @@ exports.canGetAndDropObject = function (test) {
 };
 
 exports.canGetAndDropObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can drop an object." };
+
+exports.canGetAndThrowBreakableObject = function (test) {
+    var artefactDescription = breakable.getDescription();
+    var artefactName = breakable.getName()
+    p0.get('get', breakable.getName());
+    var expectedResult = "You throw the "+artefactName+". You broke it!";
+    var actualResult = p0.drop('throw', breakable.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetAndThrowBreakableObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can drop an object." };
 
 exports.canWaveObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
@@ -164,7 +185,7 @@ exports.canEatFood.meta = { traits: ["Player Test", "Inventory Trait", "Action T
 
 exports.canBeKilledAndDropInventory = function (test) {
     p0.get('get', food.getName());
-    p0.killPlayer();
+    p0.kill();
     var expectedResult = 'cake';
     var actualResult = l0.getObject(food.getName()).getName();
     console.log("Expected: "+expectedResult);
@@ -259,7 +280,22 @@ exports.canRemoveObjectFromOpenContainer = function (test) {
     test.done();
 };
 
-exports.canRemoveObjectFromOpenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can remove an item from a container." };
+exports.canRemoveObjectFromOpenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can remove an item from an open container." };
+
+exports.canDropObjectFromOpenContainer = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "You drop the cake. ";//note trailing space
+    p0.open('open','container');
+    p0.put('put','cake', 'container');
+    p0.get('get', 'container');
+    var actualResult = p0.drop('drop','cake');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canDropObjectFromOpenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can drop an item from an open container." };
 
 
 exports.canExamineContainer = function (test) {
