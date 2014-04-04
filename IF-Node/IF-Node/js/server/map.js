@@ -193,7 +193,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var coffeeBeans = new artefactObjectModule.Artefact('beans', 'a giant bag of coffee beans', "Developer fuel", junkAttributes, null); 
             heidiPackage.receive(coffeeBeans);
                                                        
-            var heidi = new creatureObjectModule.Creature('heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
+            var heidi = new creatureObjectModule.Creature('Heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
             heidi.go(null,_locations[reception]);     
                                                                                                                                                    
             var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", breakableJunkAttributes, null); //breakable!               
@@ -201,11 +201,11 @@ exports.Map = function Map() { //inputs for constructor TBC
             spy.go(null,_locations[lift]);   
                                                                                              //, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
             var sketchbook = new artefactObjectModule.Artefact('sketchbook', 'an A3 sketch book', "It looks like it contains all Simon's plans.", treasureAttributes, null);               
-            var simong = new creatureObjectModule.Creature('simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, [sketchbook]);            
+            var simong = new creatureObjectModule.Creature('Simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, [sketchbook]);            
             simong.go(null,_locations[poppy]);   
             
             var money = new artefactObjectModule.Artefact('money', 'a big sack of money', "It's all the profits from the Opportunities projects.", moneyAttributes, null);               
-            var jamesm = new creatureObjectModule.Creature('james', 'James Moore', "He pwns the Opportunities division.", 190, 45, 'male','friendly', 30, 150, -1, true, [money]);            
+            var jamesm = new creatureObjectModule.Creature('James', 'James Moore', "He pwns the Opportunities division.", 190, 45, 'male','friendly', 30, 150, -1, true, [money]);            
             jamesm.go(null,_locations[opportunitiesNorth]);    
         };
 

@@ -77,6 +77,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _name;
         };
 
+        self.getDisplayName = function() {
+            return _name;
+        };
+
         self.getType = function() {
             return _type;
         };
@@ -205,19 +209,19 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.hurt = function(player, weapon) {      
             if (!(weapon)) {
-                var resultString = "Ouch, that hurt. If you're going to do that again, you might want to "+verb+" the "+_name+" _with_ something."; 
+                var resultString = "Ouch, that hurt. If you're going to do that again, you might want to "+verb+" the "+self.getDisplayName()+" _with_ something."; 
                 resultString += player.hurt(15);
                 return resultString;
             };
         
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())) {
-                return "You attack the "+self.getName()+". Unfortunately you can't move the "+weapon.getName()+" to use as a weapon.";
+                return "You attack the "+self.getDisplayName()+". Unfortunately you can't move the "+weapon.getDisplayName()+" to use as a weapon.";
             };
 
             //need to validate that artefact will do some damage
             if (weapon.getAttackStrength()<1) {
-                resultString = "You attack the "+self.getName()+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
+                resultString = "You attack the "+self.getDisplayName()+". Unfortunately the "+weapon.getDisplayName()+" is useless as a weapon. ";
                 resultString += weapon.bash();
                 return resultString;
             };
@@ -233,7 +237,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _damaged = true;
                 _detailedDescription += " and shows signs of damage beyond normal expected wear and tear.";
             };
-            return "Ding! You repeatedly attack the "+_name+". with the "+weapon.getName()+" It feels good in a gratuitously violent sort of way."
+            return "Ding! You repeatedly attack the "+self.getDisplayName()+". with the "+weapon.getDisplayName()+" It feels good in a gratuitously violent sort of way."
         };
 
         self.moveOrOpen = function(verb) {
@@ -241,10 +245,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_opens && (!(_open))){
                 _open = true;
                 if(_linkedExit) {
-                    return "you "+verb+" the "+_name+". "+_linkedExit.show();
+                    return "you "+verb+" the "+self.getDisplayName()+". "+_linkedExit.show();
                 };
                 if (verb == 'open') {
-                    var returnString = "you "+verb+" the "+_name+".";
+                    var returnString = "you "+verb+" the "+self.getDisplayName()+".";
                     if (_inventory.size() > 0) {returnString +=" It contains "+_inventory.describe()+".";}
                     else {returnString +=" It's empty.";};
                     return returnString;
@@ -261,12 +265,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_opens && _open){
                 _open = false;
                 if(_linkedExit) {_linkedExit.hide();};
-                return 'you closed the '+_name;
+                return 'you closed the '+self.getDisplayName();
             } else {return "It's not open."};
         };
 
         self.reply = function(someSpeech,playerAggression) {
-            return "The "+_name+", is quietly aware of the sound of your voice but shows no sign of response.";
+            return "The "+self.getDisplayName()+", is quietly aware of the sound of your voice but shows no sign of response.";
         };
 
         self.canTravel = function() {
@@ -281,7 +285,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_edible){
                     _weight = 0;
                     aPlayer.heal(25);
-                    return 'You eat the '+_name+'. You feel fitter, happier and healthier.';
+                    return 'You eat the '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
                 } else {
                     _detailedDescription += ' and shows signs of being chewed.';
                     aPlayer.hurt(5);
@@ -296,7 +300,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_locked) {return "It's locked.";};
 
             var objectToGive = _inventory.getObject(anObject);
-            if (!(objectToGive)) {return self.getName()+" doesn't contain "+anObject+".";};
+            if (!(objectToGive)) {return self.getDisplayName()+" doesn't contain "+anObject+".";};
 
             if (playerInventory.canCarry(objectToGive)) {
                 return "You're "+playerInventory.add(objectToGive);
@@ -329,7 +333,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (aKey.keyTo(self)) {
                     _locked = true;
                     _open = false;
-                    return "You lock the "+self.getName()+ " shut.";
+                    return "You lock the "+self.getDisplayName()+ " shut.";
                 } else {
                     return "You need something else to lock this.";
                 };
@@ -343,7 +347,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (aKey.keyTo(self)) {
                     _locked = false;
                     _open = true;
-                    return "You unlock and open the "+self.getName()+".";
+                    return "You unlock and open the "+self.getDisplayName()+".";
                 } else {
                     return "You need something else to unlock this.";
                 };

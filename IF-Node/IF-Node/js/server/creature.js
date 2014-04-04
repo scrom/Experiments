@@ -1,12 +1,13 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying) {
+exports.Creature = function Creature(aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
 
 	    var self=this; //closure so we don't lose reference in callbacks
-        var _name = aname;
+        var _name = aName.toLowerCase();
+        var _displayName = aName;
         var _gender;
         var _genderPrefix;
         var _genderSuffix;
@@ -41,6 +42,10 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 _inventory.push(carrying);
             };
         };
+
+        //set display name (support for proper nouns)
+        var initial = _displayName.substring(0,1);
+        if (initial != initial.toUpperCase()) {_displayName = "the "+_displayName;};
 
         //set gender for more sensible responses
         if ((gender == "f")||(gender == "female")) {
@@ -80,6 +85,10 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             return _name;
         };
 
+        self.getDisplayName = function() {
+            return _displayName;
+        };
+        
         self.getDescription = function() {
             return _description;
         };
@@ -306,7 +315,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
 
             //for each hostile creature, attack the player
             if(self.isHostile(playerAggression)) {
-                return "<br>"+self.getName()+" attacks you. " + player.hurt(self.getAttackStrength());
+                return "<br>"+self.getDisplayName()+" attacks you. " + player.hurt(self.getAttackStrength());
             };
 
         return "";
@@ -327,7 +336,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
                         self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
-                        if (i==0) {resultString = _name+" heads "+exit.getLongName()+"<br>";};
+                        if (i==0) {resultString = self.getDisplayName()+" heads "+exit.getLongName()+"<br>";};
                     };
                 };
             };
@@ -358,7 +367,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //add to new location
             _currentLocation.addObject(self);
 
-            return _name+" follows you to the "+_currentLocation.getName()+"<br>";
+            return self.getDisplayName()+" follows you to the "+_currentLocation.getName()+"<br>";
         };	
 
         self.getLocation = function() {
@@ -370,17 +379,17 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //regardless of outcome, you're not making yourself popular
             _affinity--;
 
-            if (_type == 'friendly') {return _genderPrefix+" takes exception to your violent conduct. Fortunately for you, you missed. Don't do that again."};
+            if (_type == 'friendly') {return _genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again."};
 
             if (!(weapon)) {
-                var resultString = "You attempt a bare-knuckle fight with "+_name+". You do no visible damage and end up coming worse-off. "; 
+                var resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
                 resultString += player.hurt(self.getAttackStrength());
                 return resultString;
             };
 
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())||(weapon.getAttackStrength()<1)) {
-                resultString = "You try hitting "+_name+". Unfortunately the "+weapon.getName()+" is useless as a weapon. ";
+                resultString = "You try hitting "+self.getDisplayName()+". Unfortunately the "+weapon.getDisplayName()+" is useless as a weapon. ";
                 resultString += weapon.bash();
                 resultString += player.hurt(self.getAttackStrength()/5); //return 20% damage
                 return resultString;
@@ -392,7 +401,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //should really bash weapon here in case it's breakable too.
             if (self.isDead()) {return self.kill();};
             if (_hitPoints <=50) {_bleeding = true;};
-            return "You attack "+_name+". "+self.health();
+            return "You attack "+self.getDisplayName()+". "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
@@ -418,12 +427,12 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
                 if (_edible){
                     _weight = 0;
                     aPlayer.heal(50);
-                    _description = "the remains of a well-chewed "+_name;
+                    _description = "the remains of a well-chewed "+self.getDisplayName();
                     _detailedDescription = "All that's left are a few scraps of skin and hair.";
-                    return "You tear into the raw flesh of "+_name+". It was a bit messy but you feel fitter, happier and healthier.";
+                    return "You tear into the raw flesh of "+self.getDisplayName()+". It was a bit messy but you feel fitter, happier and healthier.";
                 } else {
                     aPlayer.hurt(10);
-                    return "You try biting "+_name+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
+                    return "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
                 };
          }; 
 
@@ -469,16 +478,16 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             _edible = true;
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
-            _description = 'a dead '+_name;
-            return _name+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+            _description = 'a dead '+self.getDisplayName();
+            return self.getDisplayName()+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
          };
 
         self.moveOrOpen = function(aVerb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and pull at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
             _affinity--;
-            if (aVerb == 'push'||aVerb == 'pull') {return _name+" really doesn't appreciate being pushed around."};
+            if (aVerb == 'push'||aVerb == 'pull') {return self.getDisplayName()+" really doesn't appreciate being pushed around."};
             //open
-            return "I suggest you don't try to "+aVerb+" "+_name+" again, it's not going to end well.";
+            return "I suggest you don't try to "+aVerb+" "+self.getDisplayName()+" again, it's not going to end well.";
         };
 
         self.close = function() {
@@ -491,7 +500,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
-            return _name+" says '"+someSpeech+"' to you too.";
+            return self.getDisplayName()+" says '"+someSpeech+"' to you too.";
         };
 
         self.isCollectable = function() {
@@ -544,7 +553,7 @@ exports.Creature = function Creature(aname, aDescription, aDetailedDescription, 
             //consider fleeing here if not quite dead
             if (self.isDead()) {return resultString+self.kill();};
             if (_hitPoints <=50) {_bleeding = true;};
-            if (_bleeding) {resultString+="<br>"+self.getName()+" is bleeding. ";};    
+            if (_bleeding) {resultString+="<br>"+self.getDisplayName()+" is bleeding. ";};    
 
             return resultString;
         };

@@ -22,6 +22,10 @@ exports.Location = function Location(aName, aDescription) {
             return 'name: '+_name+' description: '+_description;
         };
 
+        self.getName = function() {
+            return _name;
+        };
+
         self.setDescription = function(aDescription) {
             _description=aDescription;
         };
@@ -31,15 +35,14 @@ exports.Location = function Location(aName, aDescription) {
             var newExit = new exitObjectModule.Exit(anExitName,aDestination);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   
-            //console.log('Exit from '+_name+', '+newExit.getName()+' to '+newExit.getDestinationName()+' added.');   
-            console.log('Exit from '+_name+', '+storedExit.getName()+' to '+storedExit.getDestinationName()+' added.');   
-            return 'Exit from '+_name+', '+newExit.getName()+' to '+newExit.getDestinationName()+' added.';
+            console.log('Exit from '+self.getName()+', '+storedExit.getName()+' to '+storedExit.getDestinationName()+' added.');   
+            return 'Exit from '+self.getName()+', '+newExit.getName()+' to '+newExit.getDestinationName()+' added.';
         };
 
         self.getExitDestination = function(aDirection) {
             var exit = self.getExit(aDirection);
             if (exit) {return exit.getDestinationName();};
-            return _name; //
+            return self.getName(); //
         };
 
         self.getExit = function(aDirection) {
@@ -73,11 +76,11 @@ exports.Location = function Location(aName, aDescription) {
         self.addObject = function(anObject) {
             _objects.push(anObject);
             console.log(anObject+' added to location');
-            return anObject.getName()+' added to location';
+            return anObject.getDisplayName()+' added to location';
         };
 
         self.removeObject = function(anObject) {
-            console.log('removing '+anObject+' from '+_name);
+            console.log('removing '+anObject+' from '+self.getName());
 
             for(var index = 0; index < _objects.length; index++) {
                 if(_objects[index].getName() == anObject) {
@@ -158,10 +161,6 @@ exports.Location = function Location(aName, aDescription) {
             } else { fullDescription+= "<br>There are no visible exits.";};
 
             return fullDescription;
-        };
-
-        self.getName = function() {
-            return _name;
         };
 
         self.addVisit = function() {
