@@ -56,6 +56,17 @@ exports.canGetObject = function (test) {
 
 exports.canGetObject.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait"], description: "Test that a player can get an object." };
 
+exports.canGetAllObjects = function (test) {
+    var expectedResult = "You collected 2 items.";
+    var actualResult = p0.get('get', 'all');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetAllObjects.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait"], description: "Test that a player can get all objects in a location." };
+
 exports.canGetContainer = function (test) {
     var artefactDescription = container.getDescription();
     var artefactName = container.getName()
