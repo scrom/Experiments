@@ -365,13 +365,11 @@ module.exports.Player = function Player(aUsername) {
             var objectToReceive;
             if (artefact) {
                     if (giver.isDead()) {
-                        objectToReceive = giver.relinquish(artefactName, _aggression);
+                        return giver.relinquish(artefactName, _inventory, _aggression);
                     } else {
                         _aggression++; //we're stealing!
-                        objectToReceive = giver.theft(artefactName, self);
+                        return giver.theft(artefactName, _inventory, self);
                     };
-                    if ((typeof objectToReceive != 'object')) {return objectToReceive;}; //it not an object, we get a string back instead
-                    return "You're "+_inventory.add(objectToReceive);
             };
         };
 
@@ -398,9 +396,7 @@ module.exports.Player = function Player(aUsername) {
                 return self.get('get',artefactName);
             };
 
-            var objectToReceive = giver.relinquish(artefactName, _aggression);
-            if ((typeof objectToReceive != 'object')) {return objectToReceive;}; //it not an object, we get a string back instead
-            return "You're "+_inventory.add(objectToReceive);
+            return giver.relinquish(artefactName, _inventory, _aggression);
         };
 
         self.say = function(verb, speech, receiverName) {

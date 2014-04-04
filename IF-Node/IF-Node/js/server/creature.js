@@ -16,13 +16,12 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         var _detailedDescription = aDetailedDescription;
         var _weight = weight;
         var _attackStrength = attackStrength;
-        var _maxCarryingWeight = carryWeight;
         var _type = aType;
         var _maxHitPoints = health;
         var _hitPoints = health;
         var _affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
         var _canTravel = canTravel; //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
-        var _inventory = [];//new inventoryObjectModule.Inventory(carryWeight);
+        var _inventory = new inventoryObjectModule.Inventory(carryWeight);
         var _missions = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
@@ -32,14 +31,18 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
 	    var _objectName = "Creature";
 	    console.log(_objectName + ' created: '+_name);
-
-        if (carrying != undefined) {
-            console.log('adding creature inventory: '+carrying);
+        console.log('carrying: '+carrying);
+        if (carrying) {
+            console.log('building creature inventory... ');
             //load inventory
             if (carrying instanceof Array) {
-                _inventory = carrying; //overwrite inital inventory
+                for (var i=0; i < carrying.length; i++){
+                    console.log('adding: '+carrying[i]);
+                    _inventory.add(carrying[i]);
+                };
             } else { //just one object
-                _inventory.push(carrying);
+                console.log('adding: '+carrying[i]);
+                _inventory.add(carrying);
             };
         };
 
@@ -137,7 +140,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         };
 
         self.getDetailedDescription = function() {
-            return _detailedDescription+"<br>"+self.getAffinityDescription()+"<br>"+self.getInventory();
+            return _detailedDescription+"<br>"+self.getAffinityDescription()+"<br>"+_genderPrefix+"'s carrying "+_inventory.describe()+"."
         };
 
         self.getType = function() {
@@ -149,24 +152,13 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         };
 
         self.getWeight = function() {
-             return  _weight+self.getInventoryWeight(); //to be honest, the creature drops everything when it's dead but still sensible to do this.
+             return  _weight+_inventory.getWeight();
         };
 
         self.getAttackStrength = function() {
             if (self.isDead()) {return 0;};
             return _attackStrength;
         };
-
-        self.getInventory = function() {
-            if (_inventory.length==0){return ''};
-            var list = "";
-            for(var i = 0; i < _inventory.length; i++) {
-                    if (i>0){list+=", ";}
-                    if ((i==_inventory.length-1)&&(i>0)){list+="and ";};
-                    list+=_inventory[i].getDescription();
-            };
-            return _genderPrefix+"'s carrying "+list+".";
-        };	
 
         self.getInventoryWeight = function() {
             if (_inventory.length==0){return ''};
@@ -178,16 +170,8 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         };
 
         self.canCarry = function(anObject) {
-             if (anObject != undefined) {
-                if (self.isDead()) { //dead
-                    return false;
-                };
-                if ((anObject.getWeight()+self.getInventoryWeight())>_maxCarryingWeight) {
-                    return false;
-                };
-                return true;
-            }; 
-            return false;
+            if (self.isDead()) {return false;};
+            return _inventory.canCarry(anObject);
         };
 
         self.wave = function(anObject) {
@@ -206,39 +190,12 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
                 _affinity -= offenceLevel;
             };            
         };
-    
-        self.addToInventory = function(anObject) {
-            if ((anObject != undefined)&&((!self.isDead()))) {
-                if ((anObject.getWeight()+self.getInventoryWeight())>_maxCarryingWeight) {
-                    return "It's too heavy for "+_genderSuffix+" to carry.";
-                };
-                _inventory.push(anObject);
-                console.log(anObject+' added to '+_name+' inventory');
-                return _genderPrefix+" is now carrying "+anObject.getDescription();
-            } else {return "Sorry, "+_genderPrefix+" can't carry that.";};
-        };
-    
-        self.removeFromInventory = function(anObject) {
-            //we don't have name exposed any more...
-            for(var index = 0; index < _inventory.length; index++) {
-                if(_inventory[index].getName() == anObject) {
-                    console.log('item to remove from creature found: '+anObject+' index: '+index);
-                    var returnObject = _inventory[index];
-                    _inventory.splice(index,1);
-                    console.log(anObject+" removed from "+_name+"'s inventory");
-                    return returnObject;
-                };
-            };
-
-            console.log( _genderPrefix+"'s not carrying "+anObject);
-            return _genderPrefix+" isn't carrying: "+anObject;//this return value may cause problems
-        };
 
         self.receive = function(anObject) {
-             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
-            if(anObject) { 
+            if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
+            if(self.canCarry(anObject)) {                
                 _affinity++;
-                return "That was kind. "+self.addToInventory(anObject);
+                return "That was kind. "+_genderPrefix+" is "+_inventory.add(anObject);
             };
             return '';
         };
@@ -253,14 +210,22 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             return true;
         };
 
-        self.theft = function(anObject,player) {
+        self.theft = function(anObject,playerInventory, player) {
             var playerStealth = player.getStealth();
             var randomInt = Math.floor(Math.random() * (7/playerStealth)); //will randomly return 0 to 6 by default(<15% chance of success)
             console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
                 _affinity--;
-                return self.removeFromInventory(anObject);
+                var objectToGive = _inventory.getObject(anObject);
+                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObject+".";};
+
+                if (playerInventory.canCarry(objectToGive)) {
+                    return "You're "+playerInventory.add(objectToGive);
+                    _inventory.remove(anObject);
+                };
+
+                return "Sorry. You can't carry "+anObject+" at the moment."
             } else {
                 _affinity-=2; //larger dent to affinity
                 return "Not smart! You were caught.";
@@ -272,35 +237,28 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             return false;
         };
 
-        self.relinquish = function(anObject,playerAggression) {
+        self.relinquish = function(anObject,playerInventory, playerAggression) {
             if (self.willShare(playerAggression)) {
                 _affinity--;
-                return self.removeFromInventory(anObject);
+                var objectToGive = _inventory.getObject(anObject);
+                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObject+".";};
+
+                if (playerInventory.canCarry(objectToGive)) {
+                    return "You're "+playerInventory.add(objectToGive);
+                    _inventory.remove(anObject);
+                };
+
+                return "Sorry. You can't carry "+anObject+" at the moment."
             };
             return _genderPrefix+" doesn't want to share with you.";
         };
-     
-        self.checkInventory = function(anObject) {
-            //check if passed in object is in inventory
-            //we don't have name exposed any more...
-            console.log('Creature inventory check: '+anObject);
-            if (self.getObject(anObject)) {return true;};
-            console.log(anObject+' not found');
-            return false;
-        };
 
         self.getObject = function(anObject) {
-            //we don't have name exposed any more...
-            for(var index = 0; index < _inventory.length; index++) {
-                if(_inventory[index].getName() == anObject) {
-                    console.log('item found in creature inventory: '+anObject+' index: '+index);
-                    return _inventory[index];
-                };
-            };
+            return _inventory.getObject(anObject);
         };
 
         self.getAllObjects = function() {
-            return _inventory;
+            return _inventory.getAllObjects();
         };
 
         self.fightOrFlight = function(map,player) {

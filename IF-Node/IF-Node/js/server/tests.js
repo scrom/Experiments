@@ -55,11 +55,6 @@ exports.Tests = function Tests() {
         console.log('====Creature tests====');
         //test creature interactions //name, inv*4, go, getlocation, hit, heal, eat, kill
         console.log('Name: '+c0.getName());
-        console.log('Add to inventory:'+c0.addToInventory(a0));
-        console.log('Check Inventory: '+c0.checkInventory(a0.getName()));
-        console.log('List Inventory: '+c0.getInventory());
-        console.log('Remove from inventory: '+c0.removeFromInventory(a0.getName()));
-        console.log('List Inventory: '+c0.getInventory());
         console.log('Kill :'+c0.kill());
         console.log('Heal:'+c0.heal(50));
         console.log('Add Creature to location: '+l0.addObject(c0));
