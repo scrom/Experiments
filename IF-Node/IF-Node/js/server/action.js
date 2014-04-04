@@ -211,6 +211,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'give':
                         description = _player.give(_verb, _object0,_object1);
                         break;
+                    case 'throw':
                     case 'drop': //add support for "all" later
                         description = _player.drop(_verb, _object0);
                         break;
@@ -272,11 +273,14 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'break':
                         description = _player.breakOrDestroy(_verb, _object0);
                         break;
-                    case 'save':
-                    case 'load':
-                    case 'talk':
                     case 'kill':
-                    case 'throw':
+                        description = "Much as you may like to believe in instant karma. If you *have* to kill, you'll need to fight it out yourself."
+                        break;
+                    case 'talk':
+                        description = "No time for small talk. You'll need to say something specific."
+                        break;
+                    case 'save':
+                    case 'load':d
                     case 'rub':
                     case 'drink':
                     case 'switch': //(this is a special one) - could be switch off light or switch light on.

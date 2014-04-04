@@ -157,8 +157,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Nothing happens.";
         };
 
-        self.break = function() {
-            if (_broken) { return "It's already broken";};
+        self.break = function(deliberateAction) {
+            if (_broken && deliberateAction) {return self.destroy(deliberateAction);};
             _damaged = true;
             if (_breakable) {
                 _broken = true;
@@ -167,11 +167,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return "You broke it!";
             };
             _detailedDescription += " It shows signs of abuse.";
-            return "You do a little damage but try as you might, you can't seem to break it";
+            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to break it.";};
+            return "";
         };
 
-        self.destroy = function() {
-            if (_destroyed) { return "There's not enough of it left to do any more damage to.";};
+        self.destroy = function(deliberateAction) {
+            if (_destroyed && deliberateAction) { return "There's not enough of it left to do any more damage to.";};
             _damaged = true;
             if (_breakable) {
                 _broken = true;
@@ -183,16 +184,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return "You destroyed it!";
             };
             _detailedDescription += " It shows signs of abuse.";
-            return "You do a little damage but try as you might, you can't seem to destroy it";
+            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy it.";};
+            return "";
         };
 
         self.bash = function() {
             //if you mistreat something breakable more than once it breaks, if you do it again, you lose it.
             if (((_broken) && (_breakable) && (_damaged))) {
-                return self.destroy();
+                return self.destroy(false);
             };
             if ((_breakable)&&(_damaged)) {
-                return self.break();
+                return self.break(false);
             };
             if (!(_damaged)) {
                 _damaged = true;
@@ -319,12 +321,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(_locked)) {
                 if (aKey.keyTo(self)) {
                     _locked = true;
-                    return "You lock the "+self.getName();
+                    _open = false;
+                    return "You lock the "+self.getName()+ " shut.";
                 } else {
                     return "You need something else to lock this.";
                 };
             };
-            return "It's already locked";
+            return "It's already locked.";
         };
 
         self.unlock = function(aKey) {
@@ -332,12 +335,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_locked) {
                 if (aKey.keyTo(self)) {
                     _locked = false;
-                    return "You unlock the "+self.getName();
+                    _open = true;
+                    return "You unlock and open the "+self.getName()+".";
                 } else {
                     return "You need something else to unlock this.";
                 };
             };
-            return "It's already unlocked";
+            return "It's already unlocked.";
         };
 
         self.keyTo = function(anObject) {
