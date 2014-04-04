@@ -157,21 +157,42 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Nothing happens.";
         };
 
-        self.bash = function() {
-            //if you mistreat something breakable more than once it breaks, if you do it again, you lose it.
-            if (((_broken) && (_breakable) && (_damaged))) {
-                //if it's damaged, broken and breakable return a message that it's destroyed. 
-                _description = "some wreckage that was once "+_description;
-                _detailedDescription = " There's nothing left but a few useless fragments.";
-                //note, player will remove object from game!
-                _destroyed = true;
-                return "You destroyed it!"
-            };
-            if ((_breakable)&&(_damaged)) {
+        self.break = function() {
+            if (_broken) { return "It's already broken";};
+            _damaged = true;
+            if (_breakable) {
                 _broken = true;
                 _description += " (broken)";
                 _detailedDescription = "It's broken.";
-                return "You broke it!"
+                return "You broke it!";
+            };
+            _detailedDescription += " It shows signs of abuse.";
+            return "You do a little damage but try as you might, you can't seem to break it";
+        };
+
+        self.destroy = function() {
+            if (_destroyed) { return "There's not enough of it left to do any more damage to.";};
+            _damaged = true;
+            if (_breakable) {
+                _broken = true;
+                _destroyed = true;
+                _description = _description.replace(" (broken)","")
+                _description = "some wreckage that was once "+_description;
+                _detailedDescription = " There's nothing left but a few useless fragments.";
+                //note, player will remove object from game!
+                return "You destroyed it!";
+            };
+            _detailedDescription += " It shows signs of abuse.";
+            return "You do a little damage but try as you might, you can't seem to destroy it";
+        };
+
+        self.bash = function() {
+            //if you mistreat something breakable more than once it breaks, if you do it again, you lose it.
+            if (((_broken) && (_breakable) && (_damaged))) {
+                return self.destroy();
+            };
+            if ((_breakable)&&(_damaged)) {
+                return self.break();
             };
             if (!(_damaged)) {
                 _damaged = true;
@@ -193,20 +214,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (((_broken) && (_breakable) && (_damaged))) {
-                //if it's damaged, broken and breakable return a message that it's destroyed.
-                _description = "some wreckage that was once "+_description;
-                _detailedDescription = " There's nothing left but a few useless fragments.";
-                //note, player will attempt to remove object from game!
-                _destroyed = true;
-                return "You destroyed it!"
+                return self.destroy();
             };
         
             if (_breakable) {
-                _damaged = true;
-                _broken = true;
-                _description += " (broken)";
-                _detailedDescription = "It's broken.";
-                return "You broke it!"
+                return self.break();
             };
             if (!(_damaged)) {
                 _damaged = true;

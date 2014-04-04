@@ -101,6 +101,33 @@ module.exports.Player = function Player(aUsername) {
             return resultString;          
         };
 
+        /*allow player to try and break an object*/
+        self.breakOrDestroy = function(verb, artefactName) {
+            var artefactExists = (_currentLocation.objectExists(artefactName)||_inventory.check(artefactName));
+            if (!(artefactExists)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+            //the we know the object does exist
+            var locationArtefact = _currentLocation.getObject(artefactName);
+            var playerArtefact = _inventory.getObject(artefactName);
+            var artefact;
+            if (locationArtefact) {artefact = locationArtefact} else {artefact = playerArtefact};
+            var returnString = "";
+
+            returnString = "You set to with your ";
+            if (self.isArmed()) {
+                var weapon = self.getWeapon();
+                returnString += weapon.getName();
+            } else {returnString += "bare hands and sheer malicious ingenuity"};
+            returnString += " in a bid to cause damage. "
+                
+            if (verb=='break') {
+                returnString += artefact.break();
+            } else {
+                returnString += artefact.destroy();
+            };
+            return returnString;
+        };
+
         /*allow player to drop an object*/
         self.drop = function(verb, artefactName) {
             if ((artefactName=="")||(artefactName==undefined)) {return verb+" what?";};

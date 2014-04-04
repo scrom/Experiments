@@ -268,6 +268,10 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'lock':
                         description = _player.lock(_verb, _object0);
                         break;
+                    case 'destroy':
+                    case 'break':
+                        description = _player.breakOrDestroy(_verb, _object0);
+                        break;
                     case 'save':
                     case 'load':
                     case 'talk':
@@ -289,8 +293,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'join':
                     case 'dismantle':
                     case 'delete':
-                    case 'destroy':
-                    case 'break':
                     case 'kick':
                     case 'ride':
                     case 'mount':
