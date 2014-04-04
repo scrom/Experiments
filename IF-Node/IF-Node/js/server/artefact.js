@@ -153,7 +153,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.canCarry = function(anObject) {
-            return false; //at the moment objects can't carry anything
+            return _inventory.canCarry(anObject);
         };
 
         self.wave = function(anObject) {
@@ -307,7 +307,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _inventory.remove(anObject);
             };
 
-            return "Sorry. Can't carry "+anObject+" at the moment."
+            return "Sorry. You can't carry "+anObject+" at the moment."
         };
 
         self.receive = function(anObject) {
