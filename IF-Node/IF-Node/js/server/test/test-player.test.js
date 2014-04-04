@@ -198,7 +198,7 @@ exports.canBeKilledAndDropInventory.meta = { traits: ["Player Test", "Inventory 
 
 exports.canGiveObjectToCreature = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = 'That was kind. He is now carrying a slab of sugary goodness';
+    var expectedResult = 'That was kind. He is now carrying a slab of sugary goodness.';
     var actualResult = p0.give('give','cake', c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -233,7 +233,7 @@ exports.canStealObjectFromCreature.meta = { traits: ["Player Test", "Inventory T
 
 exports.canHitCreatureWithInventoryWeapon = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "You attack creature. He's still the picture of health.";
+    var expectedResult = "You attack the creature. He's still the picture of health.";
     var actualResult = p0.hit('hit',c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
