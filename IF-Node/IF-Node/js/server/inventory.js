@@ -128,6 +128,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
            return returnObjects;
         };
 
+        self.tick = function() {
+            //iterate through each object.
+            //for those turned on (or ticking), decrement relevant stats
+            //not implemented yet
+            return "";
+        };
+
         ////end public methods
     }
     catch(err) {

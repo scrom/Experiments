@@ -413,8 +413,29 @@ module.exports.Player = function Player(aUsername) {
                 return receiver.reply(speech, _aggression);
         };
 
-        self.examine = function(verb, artefactName) {
+        self.switchOnOrOff = function(verb, artefactName, action) {
+            //note artefact could be a creature!
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
+
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+            return artefact.switchOnOrOff(verb);           
+        };
+
+        self.canSee = function() {
+            if (!(self.getLocation().isDark())) {return true;};  //location is not dark
+            var lamps = _inventory.getAllObjectsOfType("light");
+            console.log("Lamps found: "+lamps.length);
+            for (var i=0; i<lamps.length; i++) {
+                if (lamps[i].isPoweredOn()) {return true};
+            };
+            return false;
+        };
+
+        self.examine = function(verb, artefactName) {
+            if (!(self.canSee())) {return "It's too dark to see anything here.";};
+            if (stringIsEmpty(artefactName)){ return self.getLocation().describe();};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
@@ -491,7 +512,10 @@ module.exports.Player = function Player(aUsername) {
             if ((_moves%2 == 0) && (_aggression>0)) {_aggression--;};
 
             //set player's current location
-            returnMessage += self.setLocation(newLocation);
+            var newLocationDescription = self.setLocation(newLocation);
+            if (!(self.canSee())) {returnMessage += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
+            else {returnMessage +=newLocationDescription;};
+
 
             console.log('GO: '+returnMessage);
             return returnMessage;
@@ -726,6 +750,9 @@ module.exports.Player = function Player(aUsername) {
             //time passing
             for (var t=0; t < time; t++) {
                 console.log("Player tick...");
+
+                //inventory tick
+                resultString+=_inventory.tick();
 
                 //bleed?
                 if (_bleeding) {

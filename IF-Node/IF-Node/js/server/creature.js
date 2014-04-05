@@ -495,6 +495,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             //repeat for number of ticks
             for (var t=0; t < time; t++) {
                 console.log("Creature tick...");
+                resultString += _inventory.tick();
                 resultString += self.fightOrFlight(map, player);
                 //////
                 //bleed?

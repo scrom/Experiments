@@ -55,7 +55,7 @@ exports.Action = function Action(aPlayer, aMap) {
         we'll also only support one instance of each of these words - need to be cautious here
         */
         var splitRemainderString = function(aString){
-            var splitWordArray = ['with', 'to', 'from', 'for', 'at', 'on', 'in']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'to', 'from', 'for', 'at', 'on', 'off', 'in']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
@@ -83,7 +83,15 @@ exports.Action = function Action(aPlayer, aMap) {
 
                 //support case where first word of string is a "split" word
                 if (aString.indexOf(splitWordArray[i]+' ') == 0) {
+                    console.log('first word is split');
                     return ["",aString.substr(aString.indexOf(' ')).trim()];
+                };
+
+                //support case where last word of string is a "split" word
+                var endSplit = ' '+splitWordArray[i];
+                if (aString.indexOf(endSplit, aString.length - endSplit.length) !== -1) {
+                    console.log('last word is split');
+                    return [aString.substr(0,aString.indexOf(' ')).trim(),""];
                 };
 
             };
@@ -120,7 +128,7 @@ exports.Action = function Action(aPlayer, aMap) {
         //after player has performed an action, each creature in the room has an opportunuty to react
         var processCreatureTicks = function(time, map, player) {
             var resultString = "";
-            var creatures = _player.getLocation().getCreatures();
+            var creatures = player.getLocation().getCreatures();
             for(var i=0; i < creatures.length; i++) {
                 resultString += creatures[i].tick(time, map, player);
             };
@@ -163,7 +171,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'map':
                         ticks = 0;
-                        description = "Oh dear, are you lost? This is a text adventure you know. Time to get some graph paper, a pencil and start drawing!";
+                        description = "Oh dear, are you lost? This is a text adventure you know.<br>Time to get some graph paper, a pencil and start drawing!";
                         break;
                     case 'health':
                         ticks = 0;
@@ -186,7 +194,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         ticks = 0;
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1)}
-                        else {description = _player.getLocation().describe();};
+                        else {description = _player.examine(_verb, _object0);};
                         break;
                     case 'examine':
                         ticks = 0;
@@ -284,11 +292,16 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'talk':
                         description = "No time for small talk. You'll need to say something specific."
                         break;
+                    case 'turn': //eventually might want a different kind of turn (e.g. handle)
+                    case 'switch': //(this is a special one) - could be switch off light or switch light on.
+                        //if player enters "switch on x", we'll have an object 1 (but no object 0).
+                        if (_object1) {description = _player.switchOnOrOff(_verb,_object1,_splitWord);}
+                        else {description = _player.switchOnOrOff(_verb, _object0,_splitWord);};                    
+                        break;
                     case 'save':
-                    case 'load':d
+                    case 'load':
                     case 'rub':
                     case 'drink':
-                    case 'switch': //(this is a special one) - could be switch off light or switch light on.
                     case 'on':
                     case 'off':
                     case 'light':
