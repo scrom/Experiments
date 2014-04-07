@@ -192,7 +192,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             heidiPackage.receive(beanBag);
 
             var lockedStaticMachineAttributes = {weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1, delivers: coffee};           
-            var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "When it works it vends coffee.", lockedStaticMachineAttributes, null);
+            var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "When it works it uses coffee beans to make coffee.", lockedStaticMachineAttributes, null);
             _locations[bottomkitchen].addObject(coffeeMachine); 
 
             var liftExit = _locations[lift].getExit('o');
