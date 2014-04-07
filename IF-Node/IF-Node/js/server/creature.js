@@ -200,7 +200,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if(self.canCarry(anObject)) {                
                 _affinity++;
-                return "That was kind. "+initCap(self.getDisplayName())+" is "+_inventory.add(anObject);
+                return "That was kind. "+_genderPrefix+" is "+_inventory.add(anObject);
             };
             return '';
         };
