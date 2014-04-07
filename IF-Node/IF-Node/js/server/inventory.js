@@ -113,6 +113,19 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
            return null;
         };
 
+        self.getComponents = function(anObjectName) {
+            var returnObjects = [];
+            for(var index = 0; index < _items.length; index++) {
+                if(_items[index].getComponentOf() == anObjectName) {
+                    if(_items[index].chargesRemaining() > 0) {
+                        console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" index: "+index);
+                        returnObjects.push(_items[index]);
+                    } else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" index: "+index);};                     
+                };
+            };
+            return returnObjects;
+        };
+
         self.getAllObjects = function() {
             return _items;
         };

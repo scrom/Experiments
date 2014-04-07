@@ -237,6 +237,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'close':
                         description = _player.close(_verb, _object0);
                         break;
+                    case 'drink': //not quite eat but will fix this later.
                     case 'bite':
                     case 'chew':
                     case 'feast':
@@ -301,7 +302,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'save':
                     case 'load':
                     case 'rub':
-                    case 'drink':
                     case 'on':
                     case 'off':
                     case 'light':

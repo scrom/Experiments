@@ -9,12 +9,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         //attributes
 	    var self = this; //closure so we don't lose this reference in callbacks
+        var _sourceAttributes = attributes; //so we can clone.
         var _name = name;
         var _initialDescription = description; //save this for repairing later
         var _description = description;
         var _initialDetailedDescription = detailedDescription; //save this for repairing later
         var _detailedDescription = detailedDescription;
         var _weight = 0;
+        var _quantity = 1; //if we have -1 here, it's an unlimited plural.
         var _attackStrength = 0;
         var _inventory =  new inventoryObjectModule.Inventory(attributes.carryWeight);
         var _type = "";
@@ -35,6 +37,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _locked = false;
         var _lockable = false;
         var _unlocks = ""; //unique name of the object that it unlocks. 
+        var _componentOf = ""; //unique name of the object this is a component of.
+        var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
+        var _delivers; //what does this deliver when all components are in place? (it uses a charge of each component to do so)-- 
+        var _consumes; //what does it consume? --consume means reduce charge by one of a getgiven component. (may consume multiple components so this is an array)
+
+        //grammar support...
+        var _itemPrefix = "It";
+        var _itemSuffix = "it";
+        var _itemPossessiveSuffix = "its";
+        var _itemDescriptivePrefix = "It's";
 
         /*
         self.mendable = mendable;
@@ -43,6 +55,25 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         */
 
 	    var objectName = "Artefact";
+
+        var setQuantity = function(quantity) {
+            console.log('setting item quantity: '+quantity);
+            _quantity = quantity;
+            
+            //set plural grammar for more sensible responses
+            if ((quantity == "-1")||(quantity > "1")) {
+                _itemPrefix = "They";
+                _itemSuffix = "them";ge
+                _itemPossessiveSuffix = "their";
+                _itemDescriptivePrefix = "They're";
+            }
+            else {
+                _itemPrefix = "It";
+                _itemSuffix = "it";
+                _itemPossessiveSuffix = "its";
+                _itemDescriptivePrefix = "It's";
+            };
+        };
 
         var processAttributes = function(artefactAttributes) {
             if (artefactAttributes.lockable != undefined) {_lockable = artefactAttributes.lockable;};
@@ -60,11 +91,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.isEdible != undefined) {_edible = artefactAttributes.isEdible;};
             if (artefactAttributes.chewed != undefined) {_chewed = artefactAttributes.chewed;};
             if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
+            if (artefactAttributes.quantity != undefined) {_quantity = setQuantity(artefactAttributes.quantity);};
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
             if (artefactAttributes.isBreakable != undefined) {_breakable = artefactAttributes.isBreakable;};
             if (artefactAttributes.isBroken != undefined) {_broken = artefactAttributes.isBroken;};
             if (artefactAttributes.unlocks != undefined) {_unlocks = artefactAttributes.unlocks;};
+
+            if (artefactAttributes.componentOf != undefined) {_componentOf = artefactAttributes.componentOf;};
+            if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
+            if (artefactAttributes.delivers != undefined) {_delivers = artefactAttributes.delivers;};
+
         };
 
         processAttributes(attributes);
@@ -78,9 +115,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         validateType();
 
+        //captialise first letter of string.
+        var initCap = function(aString){
+            return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
+
         //public member functions
         self.getName = function() {
             return _name;
+        };
+
+        self.getSourceAttributes = function() {
+            return _sourceAttributes;
         };
 
         self.getDisplayName = function() {
@@ -89,6 +135,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getType = function() {
             return _type;
+        };
+
+        self.getComponentOf = function() {
+            return _componentOf;
         };
         
         self.toString = function() {
@@ -100,24 +150,33 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDetailedDescription = function() {
-            var returnString = _detailedDescription
+            var returnString = _detailedDescription; //original description
             var inventoryIsVisible = true;
-            if (_opens && (!(_open))) { 
-                returnString += " It's closed.";
-                inventoryIsVisible = false;
-            };
 
             if (_lockable && (_locked)) { 
-                returnString += " It's locked.";
+                returnString += " "+_itemDescriptivePrefix+" locked.";
+                inventoryIsVisible = false;
+            } else if (_opens && (!(_open))) { 
+                returnString += " "+_itemDescriptivePrefix+" closed.";
                 inventoryIsVisible = false;
             };
 
             if ((_inventory.size() > 0) && inventoryIsVisible) {
-                returnString += "<br>It contains "+_inventory.describe()+".";
+                returnString += "<br>"+_itemPrefix+" contains "+_inventory.describe()+".";
             };
 
+            if (!(self.checkComponents())) { 
+                returnString += "<br>"+_itemDescriptivePrefix+" missing something.";
+            } else {
+                if (_delivers) {
+                    returnString += "<br>"+_itemPrefix+" delivers "+_delivers.getDisplayName()+".";
+                };               
+            };
+
+            if (_charges !=-1) {returnString += "<br>There are "+self.chargesRemaining()+" uses remaining."};
+
             if (_switched) {
-                returnString += "<br>It has "+self.chargesRemaining()+" uses left and is currently switched ";
+                returnString += "<br>"+_itemDescriptivePrefix+" currently switched ";
                 if(self.isPoweredOn()) {returnString += "on.";} else {returnString += "off.";};
             };
             return returnString;
@@ -173,7 +232,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.chargesRemaining = function() {
-            if (_charges ==-1) {return "unlimited";}; //we use -1 to mean unlimited
+            console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);
+            if (_charges ==-1) {return "999";}; //we use -1 to mean unlimited
             return _charges;
         };
 
@@ -195,14 +255,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.switchOnOrOff = function(onOrOff) {
-            if (!(_switched)) {return "There's no obvious way to switch it on or off.";};
-            if (!(self.hasPower())) {return "It's dead, there's no sign of power.";};
+            if (!(_switched)) {return "There's no obvious way to switch "+_itemSuffix+" on or off.";};
+            if (!(self.hasPower())) {return _itemDescriptivePrefix+" dead, there's no sign of power.";};
             switch(onOrOff) {
                 case "on":
-                    if (_on) {return "It's already on.";}; 
+                    if (_on) {return _itemDescriptivePrefix+" already on.";}; 
                     break;
                 case "off":
-                    if (!(_on)) {return "It's already off.";};
+                    if (!(_on)) {return _itemDescriptivePrefix+" already off.";};
                     break;
                 default:
                     null; 
@@ -215,22 +275,52 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return returnString;
         };
 
+        self.consume = function() {
+            if (_charges == 0) {return false;};
+            if (_charges > 0) {_charges --;};
+            console.log("Consumed "+self.getDisplayName()+" charges remaining: ");
+            return true; //deliberately works if charges are -ve
+        };
+
+        self.consumeItem = function(anObject) {
+            anObject.consume();
+            if (anObject.chargesRemaining() == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
+        };
+
+        self.checkComponents = function() {
+            var components = _inventory.getComponents(self.getName());
+            if (components.length == _requiredComponentCount) {return true;}; //we have everything we need yet.
+            return false;
+        };
+
+        self.deliver = function() {
+            //if we have all components (with charges), return a delivery item (and consume a charge on each component)
+            var components = _inventory.getComponents(self.getName());
+            console.log("Required components: "+_requiredComponentCount+" Current Components: "+components.length);
+            if (components.length != _requiredComponentCount) {return null;}; //we don't have everything we need yet.
+            //iterate thru each component and remove charge.
+            for (var i=0; i<components.length; i++) {
+                self.consumeItem(components[i]);
+            };
+            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes()); //return a new instance of deliveryObject //not bothering with linkedexit here.
+        };
+
         self.break = function(deliberateAction) {
             if (_broken && deliberateAction) {return self.destroy(deliberateAction);};
             _damaged = true;
             if (_breakable) {
                 _broken = true;
                 _description += " (broken)";
-                _detailedDescription = "It's broken.";
-                return "You broke it!";
+                _detailedDescription = _itemDescriptivePrefix+" broken.";
+                return "You broke "+_itemSuffix+"!";
             };
-            _detailedDescription += " It shows signs of abuse.";
-            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to break it.";};
+            _detailedDescription += " "+_itemPrefix+" shows signs of abuse.";
+            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to break "+_itemSuffix+".";};
             return "";
         };
 
         self.destroy = function(deliberateAction) {
-            if (_destroyed && deliberateAction) { return "There's not enough of it left to do any more damage to.";};
+            if (_destroyed && deliberateAction) { return "There's not enough of "+_itemSuffix+" left to do any more damage to.";};
             _damaged = true;
             if (_breakable) {
                 _broken = true;
@@ -239,10 +329,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _description = "some wreckage that was once "+_description;
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game!
-                return "You destroyed it!";
+                return "You destroyed "+_itemSuffix+"!";
             };
-            _detailedDescription += " It shows signs of abuse.";
-            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy it.";};
+            _detailedDescription += _itemPrefix+" shows signs of abuse.";
+            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
             return "";
         };
 
@@ -256,7 +346,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (!(_damaged)) {
                 _damaged = true;
-                _detailedDescription += " It shows signs of being dropped or abused.";
+                _detailedDescription += " "+_itemPrefix+" shows signs of being dropped or abused.";
             };
             return "";
         };
@@ -295,7 +385,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.moveOrOpen = function(verb) {
-            if (_locked) {return "It's locked."};
+            if (_locked) {return _itemDescriptivePrefix+" locked."};
             if (_opens && (!(_open))){
                 _open = true;
                 if(_linkedExit) {
@@ -309,8 +399,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             if (verb == 'open') {
-                if (_opens && (_open)){return "It's already open";};                
-                return "It doesn't open";
+                if (_opens && (_open)){return _itemDescriptivePrefix+" already open";};                
+                return _itemPrefix+" doesn't open";
             };
             return "Nothing happens.";
         };
@@ -320,7 +410,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _open = false;
                 if(_linkedExit) {_linkedExit.hide();};
                 return 'you closed the '+self.getDisplayName();
-            } else {return "It's not open."};
+            } else {return _itemDescriptivePrefix+" not open."};
         };
 
         self.reply = function(someSpeech,playerAggression) {
@@ -343,22 +433,32 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 } else {
                     _detailedDescription += ' and shows signs of being chewed.';
                     aPlayer.hurt(5);
-                    return "You try and try but just can't seem to keep it in your mouth without doing yourself harm."
+                    return "You try and try but just can't seem to keep "+_itemSuffix+" in your mouth without doing yourself harm."
                 };
             } else {
-                return "It's really not worth trying to eat a second time."
+                return _itemDescriptivePrefix+" really not worth trying to eat a second time."
             };
         };
 
         self.relinquish = function(anObject, playerInventory) {
-            if (_locked) {return "It's locked.";};
+            if (_delivers) {
+                if (_delivers.getName() == anObject) {
+                    if (playerInventory.canCarry(_delivers)) {
+                        var item = self.deliver();
+                        if (item) {return "You're "+playerInventory.add(item);};
+                        return _itemDescriptivePrefix+" not working at the moment."
+                    };
+                };
+            };
+
+            if (_locked) {return _itemDescriptivePrefix+" locked.";};
 
             var objectToGive = _inventory.getObject(anObject);
             if (!(objectToGive)) {return self.getDisplayName()+" doesn't contain "+anObject+".";};
 
             if (playerInventory.canCarry(objectToGive)) {
-                return "You're "+playerInventory.add(objectToGive);
                 _inventory.remove(anObject);
+                return "You're "+playerInventory.add(objectToGive);
             };
 
             return "Sorry. You can't carry "+anObject+" at the moment."
@@ -368,7 +468,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(_locked)) {
                 return _inventory.add(anObject);
             };
-            return "It's locked.";
+            return _itemDescriptivePrefix+" locked.";
         };
 
         self.isOpen = function() {
@@ -382,31 +482,31 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.lock = function(aKey) {
-            if (!(_lockable)) {return "It doesn't have a lock.";};
+            if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (!(_locked)) {
                 if (aKey.keyTo(self)) {
                     _locked = true;
                     _open = false;
                     return "You lock the "+self.getDisplayName()+ " shut.";
                 } else {
-                    return "You need something else to lock this.";
+                    return "You need something else to lock "+_itemSuffix+".";
                 };
             };
-            return "It's already locked.";
+            return _itemDescriptivePrefix+" already locked.";
         };
 
         self.unlock = function(aKey) {
-            if (!(_lockable)) {return "It doesn't have a lock.";};
+            if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (_locked) {
                 if (aKey.keyTo(self)) {
                     _locked = false;
                     _open = true;
                     return "You unlock and open the "+self.getDisplayName()+".";
                 } else {
-                    return "You need something else to unlock this.";
+                    return "You need something else to unlock "+_itemSuffix+".";
                 };
             };
-            return "It's already unlocked.";
+            return  _itemDescriptivePrefix+" already unlocked.";
         };
 
         self.keyTo = function(anObject) {

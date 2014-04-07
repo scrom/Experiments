@@ -145,7 +145,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
             var containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
             var lockedContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
-            var lockedStaticContainerAttributes = {weight: 51, carryWeight: 25, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
+            var lockedStaticContainerAttributes = {weight: 51, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
             var fragileRoomAttributes = {weight: 51, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
             var doorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: false};
             var breakableDoorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: true};
@@ -155,6 +155,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var lightAttributes = {weight: 1, carryWeight: 0, attackStrength: 5, type: "light", canCollect: true, canOpen: false, isEdible: false, isBreakable: true, charges:-1,switched:true, isOn:false};
             var breakableJunkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
             var junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+            var componentAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, charges: 10, componentOf: "machine"};
             var keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: ""};
             var bedAttributes = {weight: 80, carryWeight: 0, attackStrength: 0, type: "bed", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
 
@@ -166,7 +167,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             
             var coffeeMachineKeyAttributes = keyAttributes; //buggy - same object
             coffeeMachineKeyAttributes.unlocks = 'machine';
-            _locations[peacock].addObject(new artefactObjectModule.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes));
+            _locations[groundBackStairsWest].addObject(new artefactObjectModule.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes));
             keyAttributes.unlocks = 'nothing';
             _locations[pioneer].addObject(new artefactObjectModule.Artefact('key', 'a key', "Just a plain key.", coffeeMachineKeyAttributes));
 
@@ -182,8 +183,16 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
             _locations[graffitib].addObject(new artefactObjectModule.Artefact('torch', 'an emergency torch', "Great for when it's dark. It looks like it'll work too!", lightAttributes, null));
             _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in her would be great.", junkAttributes, null));     //need to make this a cup containing coffee   
-            
-            var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "It's empty.", lockedStaticContainerAttributes, null);
+ 
+            var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
+            var coffeeBeans = new artefactObjectModule.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null); 
+            var coffee = new artefactObjectModule.Artefact('coffee', 'coffee', "Development fuel.", foodAttributes, null); 
+            var beanBag = new artefactObjectModule.Artefact('bag', 'a giant bag', "The label says 'Finest Software Development Coffee Beans'", containerAttributes, null); 
+            beanBag.receive(coffeeBeans);
+            heidiPackage.receive(beanBag);
+
+            var lockedStaticMachineAttributes = {weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1, delivers: coffee};           
+            var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "When it works it vends coffee.", lockedStaticMachineAttributes, null);
             _locations[bottomkitchen].addObject(coffeeMachine); 
 
             var liftExit = _locations[lift].getExit('o');
@@ -191,9 +200,11 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", doorAttributes, liftExit));
  
-            var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
-            var coffeeBeans = new artefactObjectModule.Artefact('beans', 'a giant bag of coffee beans', "Developer fuel", junkAttributes, null); 
-            heidiPackage.receive(coffeeBeans);
+            /*
+            if (artefactAttributes.componentOf != undefined) {_componentOf = artefactAttributes.componentOf;};
+            if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
+            if (artefactAttributes.delivers != undefined) {_delivers = artefactAttributes.delivers;};
+            */
                                                        
             var heidi = new creatureObjectModule.Creature('Heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
             heidi.go(null,_locations[reception]);     

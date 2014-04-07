@@ -19,7 +19,7 @@ exports.setUp = function (callback) {
     p0 = new player.Player(playerName);
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
-    junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+    junkAttributes = {weight: 3, quantity: 1, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
     a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
     container = new artefact.Artefact('container', 'a container', 'hold hold hold',containerAttributes, null);
