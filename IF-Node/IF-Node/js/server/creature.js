@@ -51,9 +51,8 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         if (initial != initial.toUpperCase()) {_displayName = "the "+_displayName;};
 
         //captialise first letter of string.
-        function get(string)
-        {
-            return string.charAt(0).toUpperCase() + string.slice(1);
+        var initCap = function(aString){
+            return aString.charAt(0).toUpperCase() + aString.slice(1);
         };
 
         //set gender for more sensible responses
