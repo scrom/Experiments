@@ -27,6 +27,10 @@ function Client(aServerHost, aServerPort, aUi) {
 
         We'll need to uncomment the console log from serverRequestCallback when trying to make this work
     */
+    var sanitiseString = function(aString) {
+        return aString.replace(/[^a-z0-9 +-]+/g,"").toLowerCase();
+    };
+
     var untangleResponse = function(someJSONData) {
         var response = new Response(someJSONData, console);
         if (username == ''){
@@ -67,13 +71,14 @@ function Client(aServerHost, aServerPort, aUi) {
     
     //generic client request
     var request = function(someUserInput) {
-        if (someUserInput == 'list') {
+        var inputString = sanitiseString(someUserInput);
+        if (inputString == 'list') {
             requestGameList();
         } else {
             if (username == ''){
-                requestGame(someUserInput);
+                requestGame(inputString);
             } else {
-                sendRequest(someUserInput);
+                sendRequest(inputString);
             };
         };
     };

@@ -13,6 +13,10 @@ exports.Server = function Server(anInterpreter) {
         var configObjectModule = require('./config');
         var _config = new configObjectModule.Config();
 
+        var sanitiseString = function(aString) {
+            return aString.replace(/[^a-z0-9 +-/]+/g,"").toLowerCase(); //same as used for client but includes "/" as well
+        };
+
         //Array of responses awaiting replies
         var _waitingResponses=[];
 
@@ -26,39 +30,40 @@ exports.Server = function Server(anInterpreter) {
 
             _webServer.get('/config', function (request, response) {
                 request.socket.setTimeout(120);
+                var sanitisedRequestURL = sanitiseString(request.url);
                 response.writeHead(200, {'Content-type':'text/plain'});
-                //response.send(_interpreter.translate(request.url,_config));
-                response.write(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(sanitisedRequestURL,_config));
                 response.end();
             });
 
            _webServer.get('/new/*', function (request, response) {
                 request.socket.setTimeout(120);
+                var sanitisedRequestURL = sanitiseString(request.url);
                 response.writeHead(200, {'Content-type':'text/plain'});
-                //response.send(_interpreter.translate(request.url,_config));
-                response.write(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(sanitisedRequestURL,_config));
                 response.end();
             });
 
            _webServer.get('/list*', function (request, response) {
                 request.socket.setTimeout(120);
+                var sanitisedRequestURL = sanitiseString(request.url);
                 response.writeHead(200, {'Content-type':'text/plain'});
-                //response.send(_interpreter.translate(request.url,_config));
-                response.write(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(sanitisedRequestURL,_config));
                 response.end();
             });
 
             _webServer.get('/action/*', function (request, response) {
                 request.socket.setTimeout(120);
+                var sanitisedRequestURL = sanitiseString(request.url);
                 response.writeHead(200, {'Content-type':'text/plain'});
-                //response.send(_interpreter.translate(request.url,_config));
-                response.write(_interpreter.translate(request.url,_config));
+                response.write(_interpreter.translate(sanitisedRequestURL,_config));
                 response.end();
             });
 
             //event source handler(!ooh) 
             _webServer.get('/events*', function (request, response) {
                 request.socket.setTimeout(0);
+                var sanitisedRequestURL = sanitiseString(request.url);
 
                 //var messagecount = 0;
                 
@@ -66,12 +71,13 @@ exports.Server = function Server(anInterpreter) {
                 //To be replied to at some point by the sendToWaitingResponses() method
                 _waitingResponses.push(response); 
 
-                //response.send(_interpreter.translate(request.url,_config));
+                //response.send(_interpreter.translate(sanitisedRequestURL,_config));
 
             });
 
             //fire an event
             _webServer.get('/fire*', function (request, response) {
+                var sanitisedRequestURL = sanitiseString(request.url);
                 response.writeHead(200, {'Content-type':'text/plain'});
                 response.write('firing '+_waitingResponses.length+' messages...');  
                               
@@ -85,7 +91,8 @@ exports.Server = function Server(anInterpreter) {
 
             //serve default dynamic
             _webServer.get('*', function (request, response) {
-                response.send(_interpreter.translate(request.url,_config));
+                var sanitisedRequestURL = sanitiseString(request.url);
+                response.send(_interpreter.translate(sanitisedRequestURL,_config));
             });
         });
 

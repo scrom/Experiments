@@ -78,6 +78,11 @@ exports.Interpreter = function Interpreter() {
             return '{"request":'+requestJson+',"response":'+responseJSON+'}';
         };
 
+        var validateUser = function(aUserName) {
+            if (aUserName) {return true;};
+            return false;
+        };
+
         //public member functions
 
         /*top level interpeter command creation*/
@@ -100,10 +105,12 @@ exports.Interpreter = function Interpreter() {
                     //list active games
                     return assembleResponse(commandJson,_gameController.listGames());
                 case 'new':
+                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");}
                     //add new user game
                     var aGameId = _gameController.addGame(username);
                     return assembleResponse(commandJson,_gameController.getGameState(username, aGameId));
                 case 'action':
+                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");}
                     return assembleResponse(commandJson, _gameController.userAction(username, gameId,actionString));
                 case 'events':
                     //respond to event requests

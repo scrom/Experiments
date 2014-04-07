@@ -60,10 +60,16 @@ exports.GameController = function GameController() {
         };
 
         self.userAction = function(aUsername, aGameId,anAction) {
+            if (!(_games[aGameId])) {
+                console.log('invalid gameId:'+aGameId);
+                return null;
+            };
+
             if (_games[aGameId].checkUser(aUsername, aGameId)) {
                 return _games[aGameId].userAction(anAction);
             } else {
                 console.log('invalid user:'+aUsername);
+                return null;
             };
         };
 
