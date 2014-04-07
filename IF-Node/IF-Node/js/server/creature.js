@@ -50,6 +50,12 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         var initial = _displayName.substring(0,1);
         if (initial != initial.toUpperCase()) {_displayName = "the "+_displayName;};
 
+        //captialise first letter of string.
+        function get(string)
+        {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        };
+
         //set gender for more sensible responses
         if ((gender == "f")||(gender == "female")) {
             _gender == "female";
@@ -195,7 +201,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if(self.canCarry(anObject)) {                
                 _affinity++;
-                return "That was kind. "+_genderPrefix+" is "+_inventory.add(anObject);
+                return "That was kind. "+initCap(self.getDisplayName())+" is "+_inventory.add(anObject);
             };
             return '';
         };
@@ -273,7 +279,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
 
             //for each hostile creature, attack the player
             if(self.isHostile(playerAggression)) {
-                return "<br>"+self.getDisplayName()+" attacks you. " + player.hurt(self.getAttackStrength());
+                return "<br>"+initCap(self.getDisplayName())+" attacks you. " + player.hurt(self.getAttackStrength());
             };
 
         return "";
@@ -294,7 +300,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
                         self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
-                        if (i==0) {resultString = self.getDisplayName()+" heads "+exit.getLongName()+"<br>";};
+                        if (i==0) {resultString = initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";};
                     };
                 };
             };
@@ -325,7 +331,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             //add to new location
             _currentLocation.addObject(self);
 
-            return self.getDisplayName()+" follows you to the "+_currentLocation.getName()+"<br>";
+            return initCap(self.getDisplayName())+" follows you to the "+_currentLocation.getName()+"<br>";
         };	
 
         self.getLocation = function() {
@@ -437,13 +443,13 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+self.getDisplayName();
-            return self.getDisplayName()+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+            return initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
          };
 
         self.moveOrOpen = function(aVerb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and pull at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
             _affinity--;
-            if (aVerb == 'push'||aVerb == 'pull') {return self.getDisplayName()+" really doesn't appreciate being pushed around."};
+            if (aVerb == 'push'||aVerb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
             //open
             return "I suggest you don't try to "+aVerb+" "+self.getDisplayName()+" again, it's not going to end well.";
         };
@@ -458,7 +464,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
-            return self.getDisplayName()+" says '"+someSpeech+"' to you too.";
+            return initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";
         };
 
         self.isCollectable = function() {
@@ -512,7 +518,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             //consider fleeing here if not quite dead
             if (self.isDead()) {return resultString+self.kill();};
             if (_hitPoints <=50) {_bleeding = true;};
-            if (_bleeding) {resultString+="<br>"+self.getDisplayName()+" is bleeding. ";};    
+            if (_bleeding) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
 
             return resultString;
         };

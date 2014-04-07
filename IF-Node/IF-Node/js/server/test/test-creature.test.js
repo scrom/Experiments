@@ -1,18 +1,20 @@
 ﻿"use strict";
 var creature = require('../creature.js');
 var artefact = require('../artefact.js');
-var junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+var junkAttributes;
 var a0;
 
 exports.setUp = function (callback) {
-    callback(); 
+    junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
     console.log("artefact setup:"+a0);
+    callback(); 
 };
 
 exports.tearDown = function (callback) {
+    junkAttributes = null;
+    a0 = null;
     callback();
-    a0 = undefined;
 };  
 
 //creature constructor params are: (aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
@@ -49,7 +51,9 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
     var anotherArtefactDescription = 'another artefact of little consequence';
     var artefactName = 'artefact'
     var anotherArtefactName = 'another artefact'
+    console.log('checking a0: '+a0.getDetailedDescription());
     var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',junkAttributes, null);
+                                    //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50, 'unknown', 'creature', 50, 150, 0, false, [a0,a1]);
     console.log('actual: '+c0.getDetailedDescription());
     var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+", and "+anotherArtefactDescription+".";
@@ -61,32 +65,32 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
 exports.canCreateCreatureWithMultipleObjects.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
 
 
-exports.canAddArtefactToInventory = function (test) {
+exports.creatureCanReceiveObject = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
     var expected = "It is now carrying "+artefactDescription;
-    var actual = c0.addToInventory(a0);
-    console.log("artefact:"+a0);
+    var actual = c0.receive(a0);
+    console.log("expected:"+a0);
     console.log("actual:"+actual);
     test.equal(actual, expected);
     test.done();
 }
 
-exports.canAddArtefactToInventory.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature object can receive an object." };
+exports.creatureCanReceiveObject.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature object can receive an object." };
 
-exports.canGetObjectFromInventory = function (test) {
+exports.canGetObjectFromCreature = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence'
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50,'unknown', 'creature', 50, 150, 0);
-    c0.addToInventory(a0);
+    c0.receive(a0);
     test.equal(c0.getObject(artefactName).getName(), artefactName);
     test.done();
-}
+};
 
-exports.canGetObjectFromInventory.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature is carrying an object that has been added after creation." };
+exports.canGetObjectFromCreature.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature is carrying an object that has been added after creation." };
 
 //creature constructor params are: (aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying)
 exports.canRetrieveAffinity = function (test) {
