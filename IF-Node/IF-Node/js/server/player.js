@@ -84,6 +84,13 @@ module.exports.Player = function Player(aUsername) {
         /*Allow player to get an object from a location*/
         self.get = function(verb, artefactName) {
             if (stringIsEmpty(artefactName)){ return verb+' what?';};
+            if (!(self.canSee())) {
+                //20% chance of success, 80% chance of being bitten.
+                var randomInt = Math.floor(Math.random() * 5);
+                if (randomInt != 0) {
+                    return "You fumble around in the dark and fail to find anything of use.<br>Something bites your hand in the darkness and runs away. "+self.hurt(10);
+                };
+            };
             if (artefactName=="all") {return self.getAll(verb);};
             if (artefactName=="everything") {return self.getAll(verb);};
             if (_inventory.check(artefactName)) {return "You're carrying it already.";};
@@ -413,8 +420,29 @@ module.exports.Player = function Player(aUsername) {
                 return receiver.reply(speech, _aggression);
         };
 
-        self.examine = function(verb, artefactName) {
+        self.switchOnOrOff = function(verb, artefactName, action) {
+            //note artefact could be a creature!
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
+
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+            return artefact.switchOnOrOff(verb);           
+        };
+
+        self.canSee = function() {
+            if (!(self.getLocation().isDark())) {return true;};  //location is not dark
+            var lamps = _inventory.getAllObjectsOfType("light");
+            console.log("Lamps found: "+lamps.length);
+            for (var i=0; i<lamps.length; i++) {
+                if (lamps[i].isPoweredOn()) {return true};
+            };
+            return false;
+        };
+
+        self.examine = function(verb, artefactName) {
+            if (!(self.canSee())) {return "It's too dark to see anything here.";};
+            if (stringIsEmpty(artefactName)){ return self.getLocation().describe();};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
@@ -460,6 +488,13 @@ module.exports.Player = function Player(aUsername) {
         
             //trim verb down to first letter...
             var direction = verb.substring(0, 1);
+            if (!(self.canSee())) {
+                //50% chance of walking into a wall
+                var randomInt = Math.floor(Math.random() * 2);
+                if (randomInt != 0) {
+                    return "Ouch! Whilst stumbling around in the dark, you walk into a wall. "+self.hurt(5);
+                };
+            };
             var exit = _currentLocation.getExit(direction);
             if (!(exit)) {return "There's no exit "+verb;};
             if (!(exit.isVisible())) {return "Your way '"+verb+"' is blocked.";}; //this might be too obvious;
@@ -491,7 +526,10 @@ module.exports.Player = function Player(aUsername) {
             if ((_moves%2 == 0) && (_aggression>0)) {_aggression--;};
 
             //set player's current location
-            returnMessage += self.setLocation(newLocation);
+            var newLocationDescription = self.setLocation(newLocation);
+            if (!(self.canSee())) {returnMessage += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
+            else {returnMessage +=newLocationDescription;};
+
 
             console.log('GO: '+returnMessage);
             return returnMessage;
@@ -726,6 +764,9 @@ module.exports.Player = function Player(aUsername) {
             //time passing
             for (var t=0; t < time; t++) {
                 console.log("Player tick...");
+
+                //inventory tick
+                resultString+=_inventory.tick();
 
                 //bleed?
                 if (_bleeding) {

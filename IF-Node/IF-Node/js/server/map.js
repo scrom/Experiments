@@ -45,8 +45,8 @@ exports.Map = function Map() { //inputs for constructor TBC
         
         //public member functions
         
-        self.addLocation = function(aName,aDescription){
-                var newLocation = new locationObjectModule.Location(aName,aDescription);
+        self.addLocation = function(aName,aDescription,isDark){
+                var newLocation = new locationObjectModule.Location(aName,aDescription,isDark);
                 _locations.push(newLocation);
                 return _locations.length-1;
         };
@@ -84,14 +84,14 @@ exports.Map = function Map() { //inputs for constructor TBC
             var opportunitiesNorthEastCorridor = self.addLocation('opportunities-north-east-corridor',"You're at the end of a corridor in the northern part of the opportunities and ventures area.");
             var peacock = self.addLocation('peacock',"You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.");//add sound desk, PC, microphone
             var spiderman = self.addLocation('spiderman',"You're in the Spiderman meeting room. (Or is that Spider-man?) There are large windows on 2 walls.<br>You feel somewhat exposed here");//add whiteboard
-            var groundBackStairsWest = self.addLocation('back-stairs-ground-floor-west',"You're in the bottom of the west fire escape stairs.");
+            var groundBackStairsWest = self.addLocation('back-stairs-ground-floor-west',"You're in the bottom of the west fire escape stairs.",true); //dark
             var groundSouthWestCorridor = self.addLocation('southwest-corridor-ground-floor',"You're in the South-West corridor of the ground floor.");
             var groundWestEndSouthCorridor = self.addLocation('west-end-south-corridor-ground-floor',"You're in the West end of the South corridor on the ground floor.");
             var groundEastEndSouthCorridor = self.addLocation('east-end-south-corridor-ground-floor',"You're in the East end of the South corridor on the ground floor.");
             var groundSouthEastCorridor = self.addLocation('southeast-corridor-ground-floor',"You're in the South-East corridor of the ground floor.");
             var poppy = self.addLocation('poppy',"You're in the Poppy meeting room. The AV equipment in here could use some love."); //add AV kit
             var graffitib = self.addLocation('graffiti-b',"You're in the Graffiti-B meeting room. It's all bright and shiny."); //add room divider
-            var graffitia = self.addLocation('graffiti-a',"You're in the Graffiti-A meeting room. It's all bright and shiny."); //add room divider and good AV kit
+            var graffitia = self.addLocation('graffiti-a',"You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",true); //add room divider and good AV kit
             var room404 = self.addLocation('room-404',"You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.");
             var groundEastSouthEndCorridor = self.addLocation('east-south-end-corridor-ground-floor',"You're in the South end of the East corridor on the ground floor.");
             //need to add fire exit to smoking area and fire escape
@@ -152,6 +152,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var treasureAttributes = {weight: 5, carryWeight: 0, attackStrength: 5, type: "treasure", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
             var moneyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "money", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
             var toolAttributes = {weight: 1, carryWeight: 0, attackStrength: 15, type: "tool", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+            var lightAttributes = {weight: 1, carryWeight: 0, attackStrength: 5, type: "light", canCollect: true, canOpen: false, isEdible: false, isBreakable: true, charges:-1,switched:true, isOn:false};
             var breakableJunkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
             var junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
             var keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: ""};
@@ -179,6 +180,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[restArea].addObject(new artefactObjectModule.Artefact('hammock', 'a comfy-looking hammock', "It's a bit of a pig to climb into but well-worth the effort for a rest.", bedAttributes, null));        
 
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
+            _locations[graffitib].addObject(new artefactObjectModule.Artefact('torch', 'an emergency torch', "Great for when it's dark. It looks like it'll work too!", lightAttributes, null));
             _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in her would be great.", junkAttributes, null));     //need to make this a cup containing coffee   
             
             var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "It's empty.", lockedStaticContainerAttributes, null);

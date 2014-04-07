@@ -13,7 +13,7 @@ the beast has taken on a life of its own.
 
 The original desire was to allow one (or more) users to enter a single room in a game, 
 and enter commands which would be pushed to a "watcher" queue. 
-Another player or watcher would then pull the user commands from the queue and write responses asynchromously.
+Another player or watcher would then pull the user commands from the queue and write responses asynchronously.
 
 The idea came from a game that ran for a number of weeks in the office where a glass wall next to the coffee machines became a for a free-form text adventure using a brain-writing / consequences style with an unwritten rule that a person may enter a command but someone else would define what the response was.
 

@@ -23,6 +23,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _missions = [];
         var _opens = false;
         var _open = false;
+        var _charges =-1; //-1 means unlimited
+        var _switched = false;
+        var _on = false;
         var _edible = false;
         var _chewed = false;
         var _damaged = false;
@@ -51,6 +54,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 else {_opens = artefactAttributes.canOpen;}
             };
             if (artefactAttributes.isOpen != undefined) {_open = artefactAttributes.isOpen;};
+            if (artefactAttributes.charges != undefined) {_charges = artefactAttributes.charges;};
+            if (artefactAttributes.switched != undefined) {_switched = artefactAttributes.switched;};
+            if (artefactAttributes.isOn != undefined) {_on = artefactAttributes.isOn;};
             if (artefactAttributes.isEdible != undefined) {_edible = artefactAttributes.isEdible;};
             if (artefactAttributes.chewed != undefined) {_chewed = artefactAttributes.chewed;};
             if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
@@ -65,7 +71,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
 
         var validateType = function() {
-            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key', 'bed'];
+            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid artefact type."}//
             console.log(_name+' type validated: '+_type);
         };
@@ -108,6 +114,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if ((_inventory.size() > 0) && inventoryIsVisible) {
                 returnString += "<br>It contains "+_inventory.describe()+".";
+            };
+
+            if (_switched) {
+                returnString += "<br>It has "+self.chargesRemaining()+" uses left and is currently switched ";
+                if(self.isPoweredOn()) {returnString += "on.";} else {returnString += "off.";};
             };
             return returnString;
         };
@@ -159,6 +170,49 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.wave = function(anObject) {
             //we may wave this at another object or creature
             return "Nothing happens.";
+        };
+
+        self.chargesRemaining = function() {
+            if (_charges ==-1) {return "unlimited";}; //we use -1 to mean unlimited
+            return _charges;
+        };
+
+        self.hasPower = function() {
+            if (!(_switched)) {return false;};
+            if (_broken||_destroyed) {return false;};
+            if (_charges ==0) {return false;}; //we use -1 to mean unlimited
+            console.log(self.getDisplayName+" has power.");
+            return true;
+        };
+
+        self.isPoweredOn = function() {
+            if (self.hasPower() && _on) {
+                console.log(self.getDisplayName+" is switched on.");
+                return true;
+            };
+            console.log(self.getDisplayName+" is switched off.");
+            return false;
+        };
+
+        self.switchOnOrOff = function(onOrOff) {
+            if (!(_switched)) {return "There's no obvious way to switch it on or off.";};
+            if (!(self.hasPower())) {return "It's dead, there's no sign of power.";};
+            switch(onOrOff) {
+                case "on":
+                    if (_on) {return "It's already on.";}; 
+                    break;
+                case "off":
+                    if (!(_on)) {return "It's already off.";};
+                    break;
+                default:
+                    null; 
+            };
+
+            _on = (!(_on)); //toggle switch 
+            var returnString ="You switch the "+self.getDisplayName();
+            if (_on) {returnString+= " on."} else {returnString+= " off."};
+
+            return returnString;
         };
 
         self.break = function(deliberateAction) {
