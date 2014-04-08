@@ -39,8 +39,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _unlocks = ""; //unique name of the object that it unlocks. 
         var _componentOf = ""; //unique name of the object this is a component of.
         var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
-        var _delivers; //what does this deliver when all components are in place? (it uses a charge of each component to do so)-- 
-        var _consumes; //what does it consume? --consume means reduce charge by one of a getgiven component. (may consume multiple components so this is an array)
+        var _delivers = null;; //what does this deliver when all components are in place? (it uses a charge of each component to do so)-- 
+        var _requiresContainer = false;
+        var _requiredContainer = null;
 
         //grammar support...
         var _itemPrefix = "It";
@@ -101,6 +102,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.componentOf != undefined) {_componentOf = artefactAttributes.componentOf;};
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
             if (artefactAttributes.delivers != undefined) {_delivers = artefactAttributes.delivers;};
+            if (artefactAttributes.requiresContainer != undefined) {_requiresContainer = artefactAttributes.requiresContainer;};
+            if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
 
         };
 
@@ -139,6 +142,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getComponentOf = function() {
             return _componentOf;
+        };
+
+        self.getRequiredContainer = function() {
+            if (_requiresContainer) {
+                return _requiredContainer
+            };
+            return null;
         };
         
         self.toString = function() {
