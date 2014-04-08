@@ -142,6 +142,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             //['weapon','junk','treasure','food','money','tool','door','container', 'key'];    
             //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable
             var foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+            var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
             var weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
             var containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
             var lockedContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
@@ -182,11 +183,11 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
             _locations[graffitib].addObject(new artefactObjectModule.Artefact('torch', 'an emergency torch', "Great for when it's dark. It looks like it'll work too!", lightAttributes, null));
-            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in her would be great.", junkAttributes, null));     //need to make this a cup containing coffee   
+            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in her would be great.", containerAttributes, null));     //need to make this a cup containing coffee   
  
             var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
             var coffeeBeans = new artefactObjectModule.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null); 
-            var coffee = new artefactObjectModule.Artefact('coffee', 'coffee', "Development fuel.", foodAttributes, null); 
+            var coffee = new artefactObjectModule.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
             var beanBag = new artefactObjectModule.Artefact('bag', 'a giant bag', "The label says 'Finest Software Development Coffee Beans'", containerAttributes, null); 
             beanBag.receive(coffeeBeans);
             heidiPackage.receive(beanBag);
