@@ -101,6 +101,11 @@ module.exports.Player = function Player(aUsername) {
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
             if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};
             if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName;};
+
+            var requiredContainer = artefact.getRequiredContainer(); 
+            if(requiredContainer) {
+                return self.put(verb, artefactName, receiverName, requiredContainer);
+            };
         
             var collectedArtefact = removeObjectFromLocation(artefactName);
             if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";}; //just in case it fails for any other reason.
@@ -116,8 +121,8 @@ module.exports.Player = function Player(aUsername) {
             var artefactCount = artefacts.length;
             var successCount = 0;
 
-            artefacts.forEach(function(artefact) {
-                if ((artefact.isCollectable()) && (_inventory.canCarry(artefact))) {
+            artefacts.forEach(function(artefact) { //bug workaround. get all won't auto-support required containers --V
+                if ((artefact.isCollectable()) && (_inventory.canCarry(artefact)) && (!(artefact.getRequiredContainer()))) {
                     var artefactToCollect = getObjectFromLocation(artefact.getName());
                     _inventory.add(artefactToCollect);
                     collectedArtefacts.push(artefactToCollect);
@@ -238,7 +243,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying any either.";};
 
             //find a key
             var key = self.getMatchingKey(artefact);
@@ -249,24 +254,28 @@ module.exports.Player = function Player(aUsername) {
         };
 
         /*Allow player to put something in an object */
-        self.put = function(verb, artefactName, receiverName){
+        self.put = function(verb, artefactName, receiverName, requiredContainer){
                 if (stringIsEmpty(artefactName)){ return verb+" what?";};
                 if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" to what?";};
 
                  var artefact = getObjectFromPlayerOrLocation(artefactName);
-                 if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+                 if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying any either.";};
 
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
-                if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
+                if (!(receiver)) {
+                    if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry this.";};
+                    return "There is no "+receiverName+" here and you're not carrying any either.";
+                };
 
                 //validate if it's a container
                 if (receiver.getType() == 'creature') {
                      return  "It's probably better to 'give' it to them."; 
                 };
                 
-                if (receiver.getType() != 'container') {
-                    return  "You can't put anything in that."; 
+                //check receiver can carry item (container or not)
+                if (!(receiver.canContain(artefact))) {
+                    return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName(); 
                 };
 
 
@@ -299,6 +308,7 @@ module.exports.Player = function Player(aUsername) {
                 };
 
                 if (receiver.getType() != 'container') {
+                    //or doesn't deliver anything?
                     return  "It doesn't contain anything."; 
                 };
 

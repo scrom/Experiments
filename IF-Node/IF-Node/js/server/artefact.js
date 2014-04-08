@@ -144,6 +144,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _componentOf;
         };
 
+        self.requiresContainer = function() {
+                return _requiresContainer
+        };
+
         self.getRequiredContainer = function() {
             if (_requiresContainer) {
                 return _requiredContainer
@@ -230,6 +234,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isDestroyed = function() {
             return _destroyed;
+        };
+
+        self.canContain = function(anObject) {
+            return _inventory.canContain(anObject, self.getName());
         };
 
         self.canCarry = function(anObject) {
@@ -451,23 +459,67 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.relinquish = function(anObject, playerInventory) {
-            if (_delivers) {
-                if (_delivers.getName() == anObject) {
-                    if (playerInventory.canCarry(_delivers)) {
-                        var item = self.deliver();
-                        if (item) {return "You're "+playerInventory.add(item);};
-                        return _itemDescriptivePrefix+" not working at the moment."
-                    };
-                };
-            };
+
+
 
             if (_locked) {return _itemDescriptivePrefix+" locked.";};
 
-            var objectToGive = _inventory.getObject(anObject);
+            var objectToGive;
+
+            //is this something we deliver
+            if (_delivers) {
+                if (_delivers.getName() == anObject) {objectToGive = _delivers};
+            }; 
+
+            //if not a deliverable, check inventory
+            if (!(objectToGive)) { objectToGive = _inventory.getObject(anObject); };
+
             if (!(objectToGive)) {return self.getDisplayName()+" doesn't contain "+anObject+".";};
 
+            //if required container, get suitable container 
+            //find all player containers *or* get specific required container
+            //loop thru all containers
+            //check canContain
+            //if any one is true, add it, if not fail
+            var requiresContainer = objectToGive.requiresContainer();
+            var requiredContainer = objectToGive.getRequiredContainer();
+            var suitableContainer;
+            if (requiredContainer) {
+                suitableContainer = playerInventory.getObject(requiredContainer);
+                if (!(suitableContainer)) { return "Sorry. You need a "+requiredContainer+" to carry "+objectToGive.getDisplayName()+".";};
+                //check suitable container can carry item
+                if (!(suitableContainer.canCarry(objectToGive))) { return "Sorry. Your "+requiredContainer+" can't hold "+objectToGive.getDisplayName()+" right now.";};
+            } else if (requiresContainer) {
+                //find all player containers 
+                var possibleContainers = playerInventory.getAllObjectsOfType('container');
+                for(var index = 0; index < possibleContainers.length; index++) {
+                    //loop thru all containers
+                    //check canContain
+                    //if any one is true, add it, if not fail
+                    if(possibleContainers[index].canCarry(objectToGive)) {
+                        console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" index: "+index);
+                        suitableContainer = possibleContainers[index];
+                        break; //exit loop early if success
+                    };
+                };                
+            };
+
+            if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
+
             if (playerInventory.canCarry(objectToGive)) {
-                _inventory.remove(anObject);
+                var deliveredItem;
+                if (_delivers) {
+                    if(_delivers.getName() == anObject) {
+                        deliveredItem = self.deliver();
+                        if (!(deliveredItem)) {return _itemDescriptivePrefix+" not working at the moment."};
+                        objectToGive = deliveredItem;
+                    };
+                } 
+                if (!(deliveredItem)) {_inventory.remove(anObject);};
+
+                //add to suitable container or to player inventory
+                //if container is required, we _know_ we have a suitable container by this point.
+                if (requiresContainer) { return "Your "+suitableContainer.getDisplayName()+" is "+suitableContainer.receive(objectToGive);};
                 return "You're "+playerInventory.add(objectToGive);
             };
 

@@ -40,11 +40,23 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
             return weight;
         };
 
+        self.canContain = function(anObject,containerName) {
+            if (_maxCarryingWeight ==0) {return false;};
+
+            var requiredContainer = anObject.getRequiredContainer();
+            if (requiredContainer) {
+                if (requiredContainer != containerName) {return false;};
+            };
+
+            return self.canCarry(anObject);
+        };
+
         self.canCarry = function(anObject) {
             if (anObject != undefined) {
                 if ((anObject.getWeight()+self.getWeight())>_maxCarryingWeight) {
                     return false;
                 };
+                if (anObject.isLocked()) {return false;};
                 return true;
             } else {return false;};
         };
@@ -86,6 +98,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
             return false;
         };
 
+        //recursively gets objects in containers
         self.getObject = function(anObject) {
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getName() == anObject) {
