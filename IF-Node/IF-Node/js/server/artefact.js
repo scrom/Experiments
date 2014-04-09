@@ -18,8 +18,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _weight = 0;
         var _quantity = 1; //if we have -1 here, it's an unlimited plural.
         var _attackStrength = 0;
-        var _inventory =  new inventoryObjectModule.Inventory(attributes.carryWeight);
-        var _type = "";
+        var _inventory =  new inventoryObjectModule.Inventory(0);
+        var _type = "junk";
         var _linkedExit = linkedExit;
         var _collectable = false;
         var _missions = [];
@@ -77,6 +77,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         var processAttributes = function(artefactAttributes) {
+            if (!artefactAttributes) {return null;};
+
+            if (artefactAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
             if (artefactAttributes.lockable != undefined) {_lockable = artefactAttributes.lockable;};
             if (artefactAttributes.locked != undefined) {_locked = artefactAttributes.locked;};
             if (artefactAttributes.canCollect != undefined) {_collectable = artefactAttributes.canCollect;};
@@ -156,7 +159,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
         
         self.toString = function() {
-            return '{"name":"'+_name+'"}';
+            return '{"name":"'+_name+'","description":"'+_description+'"}';
         };
 
         self.getDescription = function() {

@@ -19,6 +19,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
             return _items.length;
         };
 
+        self.setCarryWeight = function(newWeight) {
+            //ensure new weight is not set below current contents
+            if (self.getWeight() < newWeight) {
+                _maxCarryingWeight = newWeight;
+            };
+        };
+
         self.describe = function(ownerName) {
             if (_items.length == 0) {return "nothing"};
             var list = ''
