@@ -239,6 +239,96 @@ exports.canCarryHandlesLockedObject = function (test) {
 
 exports.canCarryHandlesLockedObject.meta = { traits: ["Inventory Test", "Inventory Trait", "Weight Trait", "Lock Trait"], description: "Test that a inventory is carrying an object." };
 
+exports.namedRequiredContainerIsConfirmedAsSuitable = function (test) {
+    var expectedResult = 'cup';
+
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    i0.add(mug);
+    i0.add(cup);
+
+    var actualResult = i0.getSuitableContainer(coffee).getName();
+
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.namedRequiredContainerIsConfirmedAsSuitable.meta = { traits: ["Inventory Test", "Inventory Trait", "Artefact Trait", "Container Trait"], description: "Test that an artefact with a named required container works when container is in inventory." };
+
+exports.missingNamedRequiredContainerReturnsNullForSuitable = function (test) {
+    var expectedResult = null;
+
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    i0.add(mug);
+
+    var actualResult = i0.getSuitableContainer(coffee);
+
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.missingNamedRequiredContainerReturnsNullForSuitable.meta = { traits: ["Inventory Test", "Inventory Trait", "Artefact Trait", "Container Trait"], description: "Test that an artefact with a named required container fails when container is not in inventory." };
+
+
+exports.anyContainerIsConfirmedAsSuitable = function (test) {
+    var expectedResult = 'mug';
+
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    i0.add(mug);
+
+    var actualResult = i0.getSuitableContainer(coffee).getName();
+
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.anyContainerIsConfirmedAsSuitable.meta = { traits: ["Inventory Test", "Inventory Trait", "Artefact Trait", "Container Trait"], description: "Test that an artefact with a required but un-named container works when container is in inventory." };
+
+exports.fullContainerIsRejectedAsUnSuitable = function (test) {
+    var expectedResult = null;
+
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    mug.receive(coffee); //fill the mug already
+
+    i0.add(mug);
+
+    var actualResult = i0.getSuitableContainer(coffee);
+
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.fullContainerIsRejectedAsUnSuitable.meta = { traits: ["Inventory Test", "Inventory Trait", "Artefact Trait", "Container Trait"], description: "Test that an artefact with a required but un-named container fails when container is full." };
+
+
 
 exports.canCarryCorrectlyChecksWeight = function (test) {
     var artefactDescription = 'an artefactDescription'
