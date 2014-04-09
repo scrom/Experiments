@@ -279,6 +279,17 @@ exports.Action = function Action(aPlayer, aMap) {
                         //this will fall through to navigation later.
                         _verb = _object0;
                         break;
+                    case 'exit':
+                    case 'leave':
+                        //overwrite the verb with direction. 
+                        //this will fall through to navigation later.                                        
+                        _verb = 'out';
+                        break;
+                    case 'enter':
+                        //overwrite the verb with direction. 
+                        //this will fall through to navigation later.                                        
+                        _verb = 'in';
+                        break;
                     case 'unlock':
                         description = _player.unlock(_verb, _object0);
                         break;
@@ -303,6 +314,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'save':
                     case 'load':
+                    case 'pick':
                     case 'rub':
                     case 'on':
                     case 'off':
