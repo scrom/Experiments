@@ -102,9 +102,14 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};
             if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName;};
 
-            var requiredContainer = artefact.getRequiredContainer(); 
-            if(requiredContainer) {
-                return self.put(verb, artefactName, receiverName, requiredContainer);
+            var requiresContainer = artefact.requiresContainer();
+            var suitableContainer = _inventory.getSuitableContainer(artefact);
+    
+            if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
+
+            if(requiresContainer) {
+                var requiredContainer = artefact.getRequiredContainer(); 
+                return self.put(verb, artefactName, suitableContainer.getName(), requiredContainer);
             };
         
             var collectedArtefact = removeObjectFromLocation(artefactName);
@@ -189,6 +194,9 @@ module.exports.Player = function Player(aUsername) {
             //return "You destroyed it!"
             if (droppedObject.isDestroyed()) { return "Oops. "+artefactDamage;}; 
 
+            //needs a container
+            if (droppedObject.requiresContainer()) { return "Oops. You empty "+droppedObject.getDisplayName()+" all over the floor. Let's hope there's more somewhere.";}; 
+
             //not destroyed
             _currentLocation.addObject(droppedObject);
  
@@ -232,10 +240,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
             
             //find a key
-            var key = self.getMatchingKey(artefact);
-
-            if ((key==undefined)||(key==null)) {return "You don't have a key for it."};
-
+            var key = self.getMatchingKey(artefact); //migrate this to artefact and pass all keys through.
             return artefact.unlock(key);
         };
 
@@ -246,10 +251,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying any either.";};
 
             //find a key
-            var key = self.getMatchingKey(artefact);
-
-            if ((key==undefined)||(key==null)) {return "You don't have a key for it."};
-
+            var key = self.getMatchingKey(artefact); //migrate this to artefact and pass all keys through.
             return artefact.lock(key);
         };
 
@@ -289,7 +291,10 @@ module.exports.Player = function Player(aUsername) {
 
                 var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
                 if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";};
-                return receiver.getDisplayName()+" is "+receiver.receive(collectedArtefact);
+
+                //put the x in the y
+                receiver.receive(collectedArtefact);
+                return "You put "+collectedArtefact.getDisplayName()+" in "+receiver.getDisplayName()+".";
 
             };
 
@@ -714,6 +719,23 @@ module.exports.Player = function Player(aUsername) {
                 removeObjectFromPlayerOrLocation(artefactName); 
                 _timeSinceEating = 0;
                 console.log('player eats some food.');
+            };
+
+            return result;
+        };
+
+        self.drink = function(verb, artefactName) {
+            if (stringIsEmpty(artefactName)){ return verb+" what?";};
+
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";}; 
+
+            var result = artefact.drink(self); //trying to eat some things give interesting results.
+            if (artefact.isEdible() && artefact.requiresContainer()) {
+
+                //consume it
+                removeObjectFromPlayerOrLocation(artefactName); 
+                console.log('player drinks.');
             };
 
             return result;
