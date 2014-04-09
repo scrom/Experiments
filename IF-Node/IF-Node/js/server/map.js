@@ -69,7 +69,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var lift = self.addLocation('lift-ground-floor',"The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.");
             var bottomStairs = self.addLocation('stairs-ground-floor',"You're standing at the foot of the stairs.");
             var library = self.addLocation('library',"You're in the atrium Library."); //add comfy sofa and shelves containing books
-            var bottomkitchen = self.addLocation('kitchen-ground-floor',"You're in the atrium kitchen."); //add comfy sofa and shelves containing books
+            var bottomkitchen = self.addLocation('kitchen-ground-floor',"You're in the atrium kitchen."); 
             var seatingArea = self.addLocation('atrium-seating',"You're in the atrium seating area."); //add chairs, chess, trees
             //need to add locked door to mewburn ellis lawyers
            // var lawyerEntrance = self.addLocation('lawyer entrance',"You're in the entranece to the resident law firm."); //add chairs, chess, trees
@@ -184,7 +184,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
             _locations[graffitib].addObject(new artefactObjectModule.Artefact('torch', 'an emergency torch', "Great for when it's dark. It looks like it'll work too!", lightAttributes, null));
-            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null));     //need to make this a cup containing coffee   
+            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null));  
  
             var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
             var coffeeBeans = new artefactObjectModule.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null); 
