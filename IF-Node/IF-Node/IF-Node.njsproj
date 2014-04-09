@@ -52,6 +52,7 @@
     <Compile Include="js\server\server.js" />
     <Compile Include="js\server\simpleObject.js" />
     <Compile Include="js\server\tests.js" />
+    <Compile Include="js\server\test\test-artefact.test.js" />
     <Compile Include="js\server\test\test-inventory.test.js" />
     <Compile Include="js\server\test\test-exit.test.js" />
     <Compile Include="js\server\test\test-creature.test.js" />
