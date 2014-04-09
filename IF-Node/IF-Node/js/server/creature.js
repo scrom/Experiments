@@ -8,6 +8,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
 	    var self=this; //closure so we don't lose reference in callbacks
         var _name = aName.toLowerCase();
         var _displayName = aName;
+        var _synonyms = [];
         var _gender;
         var _genderPrefix;
         var _genderSuffix;
@@ -91,6 +92,20 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         
         self.getName = function() {
             return _name;
+        };
+
+        self.syn = function (synonym) {
+            if (synonym == _name) { return true; }; //match by name first
+            if (!(_synonyms)) {
+                console.log('No syns found for ' + synonym);
+                return false;
+            };
+            if (_synonyms.indexOf(synonym) == -1) { return false; };
+            return true;
+        };
+
+        self.addSyns = function (synonyms) {
+            _synonyms = _synonyms.concat(synonyms);
         };
 
         self.getDisplayName = function() {

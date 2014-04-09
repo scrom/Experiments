@@ -11,6 +11,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _sourceAttributes = attributes; //so we can clone.
         var _name = name;
+        var _synonyms = [];
         var _initialDescription = description; //save this for repairing later
         var _description = description;
         var _initialDetailedDescription = detailedDescription; //save this for repairing later
@@ -79,7 +80,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
-
+            if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
             if (artefactAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
             if (artefactAttributes.lockable != undefined) {_lockable = artefactAttributes.lockable;};
             if (artefactAttributes.locked != undefined) {_locked = artefactAttributes.locked;};
@@ -117,7 +118,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         var validateType = function(aType) {
             var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key', 'bed', 'light'];
-            if (validobjectTypes.indexOf(aType) == -1) { throw "'"+aType+"' is not a valid artefact type."}//
+            if (validobjectTypes.indexOf(aType) == -1) { throw "'" + aType + "' is not a valid artefact type."; };//
             console.log(_name+' type validated: '+aType);
         };
 
@@ -131,6 +132,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //public member functions
         self.getName = function() {
             return _name;
+        }; 
+
+        self.syn = function (synonym) {
+            if (synonym == _name) { return true; }; //match by name first
+            if (!(_synonyms)) {
+                console.log('No syns found for ' + synonym);
+                return false;
+            };
+            if (_synonyms.indexOf(synonym) == -1) { return false; };
+            return true;
+        };
+
+        self.addSyns = function (synonyms) {
+            _synonyms = _synonyms.concat(synonyms);
         };
         
         //artefact only function at the moment

@@ -184,7 +184,9 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             _locations[room404].addObject(new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null));
             _locations[graffitib].addObject(new artefactObjectModule.Artefact('torch', 'an emergency torch', "Great for when it's dark. It looks like it'll work too!", lightAttributes, null));
-            _locations[bottomkitchen].addObject(new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null));  
+            var cup = new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null);
+            cup.addSyns(['mug', 'coffee', 'coffee cup']);
+            _locations[bottomkitchen].addObject(cup);
  
             var heidiPackage = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
             var coffeeBeans = new artefactObjectModule.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null); 
@@ -201,15 +203,10 @@ exports.Map = function Map() { //inputs for constructor TBC
             liftExit.hide();
 
             _locations[lift].addObject(new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", doorAttributes, liftExit));
- 
-            /*
-            if (artefactAttributes.componentOf != undefined) {_componentOf = artefactAttributes.componentOf;};
-            if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
-            if (artefactAttributes.delivers != undefined) {_delivers = artefactAttributes.delivers;};
-            */
                                                        
             var heidi = new creatureObjectModule.Creature('Heidi', 'Heidi the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [heidiPackage]);
-            heidi.go(null,_locations[reception]);     
+            heidi.addSyns(['receptionist']);
+            heidi.go(null, _locations[reception]);
                                                                                                                                                    
             var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", breakableJunkAttributes, null); //breakable!               
             var spy = new creatureObjectModule.Creature('spy', 'a corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, -4, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 

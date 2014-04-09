@@ -79,7 +79,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
         self.remove = function(anObject) {
                 var localInventory = self.getAllObjects();
                 for(var index = 0; index < localInventory.length; index++) {
-                    if(localInventory[index].getName() == anObject) {
+                    if (localInventory[index].syn(anObject)) {
                         var returnObject = _items[index];
                         localInventory.splice(index,1);
                         console.log(anObject+" removed from inventory");
@@ -117,7 +117,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
         //recursively gets objects in containers
         self.getObject = function(anObject) {
             for(var index = 0; index < _items.length; index++) {
-                if(_items[index].getName() == anObject) {
+                if(_items[index].syn(anObject)) {
                     console.log("inventory item found: "+anObject+" index: "+index);
                     return _items[index];
                 };
