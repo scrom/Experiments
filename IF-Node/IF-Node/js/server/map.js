@@ -141,11 +141,11 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             //['weapon','junk','treasure','food','money','tool','door','container', 'key'];    
             //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable
-            var foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
-            var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+            var foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 25, isBreakable: false};
+            var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
             var weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
             var containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: false};
-            var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+            var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
             var lockedContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: false, lockable: true, locked: true};
             var lockedStaticContainerAttributes = {weight: 51, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
             var fragileRoomAttributes = {weight: 51, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
@@ -177,7 +177,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[library].addObject(new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", weaponAttributes, null));
             _locations[library].addObject(new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", junkAttributes, null));
             _locations[seatingArea].addObject(new artefactObjectModule.Artefact('cake', 'a slice of cake', "Mmmm tasty *and* healthy. If only there were more.", foodAttributes, null));        
-            _locations[seatingArea].addObject(new artefactObjectModule.Artefact('chair', 'a red leather chair', "You expect to find Morpheus sitting in it. IT's surprisingly comfortable.", bedAttributes, null));        
+            _locations[seatingArea].addObject(new artefactObjectModule.Artefact('chair', 'a red leather chair', "You expect to find Morpheus sitting in it. It's surprisingly comfortable.", bedAttributes, null));        
             _locations[restArea].addObject(new artefactObjectModule.Artefact('chocolate', 'a bar of chocolate', "Mmmm tasty and loaded with calories.", foodAttributes, null));        
             _locations[restArea].addObject(new artefactObjectModule.Artefact('crisps', 'a packet of crisps', "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.", foodAttributes, null));        
             _locations[restArea].addObject(new artefactObjectModule.Artefact('hammock', 'a comfy-looking hammock', "It's a bit of a pig to climb into but well-worth the effort for a rest.", bedAttributes, null));        
