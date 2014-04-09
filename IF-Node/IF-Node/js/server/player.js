@@ -275,7 +275,7 @@ module.exports.Player = function Player(aUsername) {
                 
                 //check receiver can carry item (container or not)
                 if (!(receiver.canContain(artefact))) {
-                    return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName(); 
+                    return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 
                 };
 
 

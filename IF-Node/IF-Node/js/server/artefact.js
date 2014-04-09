@@ -64,7 +64,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //set plural grammar for more sensible responses
             if ((quantity == "-1")||(quantity > "1")) {
                 _itemPrefix = "They";
-                _itemSuffix = "them";ge
+                _itemSuffix = "them";
                 _itemPossessiveSuffix = "their";
                 _itemDescriptivePrefix = "They're";
             }
@@ -133,7 +133,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDisplayName = function() {
-            return _name;
+            return "the "+_name;
         };
 
         self.getType = function() {
@@ -237,10 +237,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.canContain = function(anObject) {
+            //broken objects can't contain anything
+            if (_destroyed|| _broken) {return false};
             return _inventory.canContain(anObject, self.getName());
         };
 
         self.canCarry = function(anObject) {
+            //broken objects can't contain anything
+            if (_destroyed|| _broken) {return false};
             return _inventory.canCarry(anObject);
         };
 
@@ -460,8 +464,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.relinquish = function(anObject, playerInventory) {
 
-
-
             if (_locked) {return _itemDescriptivePrefix+" locked.";};
 
             var objectToGive;
@@ -534,7 +536,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.isOpen = function() {
-            if (_opens && _open) {return true;};
+            //treat it as "open" if it *doesn't* open.
+            if ((_opens && _open) || (!(_opens))) {return true;};
             return false;
         };
 
