@@ -385,6 +385,10 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             console.log('Creature eats some food.');
         };
 
+        self.drink = function(aPlayer) {
+            return _genderPrefix+"'d get stuck in your throat if you tried."
+        };
+
         self.eat = function(aPlayer) {
             //console.log(_name+' edible:'+_edible+' chewed:'+_chewed);
                 if (_edible){
@@ -521,6 +525,79 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
 
             return resultString;
         };
+
+        //dummy methods to map to artefact interface
+        self.isOpen = function() {
+            return true;
+        };
+
+        self.isLocked = function() {
+            return false;
+        };
+
+        self.lock = function(aKey) {
+            return _genderPrefix+" is a creature, creatures don't lock.";
+        };
+
+        self.unlock = function(aKey) {
+            return _genderPrefix+" is a creature, creatures don't unlock.";
+        };
+
+        self.keyTo = function(anObject) {
+            return false;
+        };
+
+        self.getComponentOf = function() {
+            return null;
+        };
+
+        self.requiresContainer = function() {
+                return false;
+        };
+
+        self.getRequiredContainer = function() {
+            return null;
+        };
+
+        self.canContain = function(anObject) {
+            //broken objects can't contain anything
+            if (self.isDead()) {return false};
+            return _inventory.canContain(anObject, self.getName());
+        };
+
+        self.chargesRemaining = function() {
+            return 0;
+        };
+
+        self.hasPower = function() {
+            return false;
+        };
+
+        self.isPoweredOn = function() {
+            return false;
+        };
+
+        self.switchOnOrOff = function(onOrOff) {
+            return "That's really not a polite thing to do to "+_genderSuffix+".";
+        };
+
+        self.consume = function() {
+            return false;
+        };
+
+        self.consumeItem = function(anObject) {
+            anObject.consume();
+            if (anObject.chargesRemaining() == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
+        };
+
+        self.checkComponents = function() {
+            return true;
+        };
+
+        self.deliver = function() {
+            return null;
+        };
+
         //// end instance methods
 
     }
