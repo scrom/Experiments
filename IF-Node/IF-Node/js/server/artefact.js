@@ -451,7 +451,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_edible){
                     _weight = 0;
                     aPlayer.heal(25);
-                    return 'You eat the '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
+                    return 'You eat '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
                 } else {
                     _detailedDescription += ' and shows signs of being chewed.';
                     aPlayer.hurt(5);
