@@ -16,6 +16,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _initialDetailedDescription = detailedDescription; //save this for repairing later
         var _detailedDescription = detailedDescription;
         var _weight = 0;
+        var _nutrition = 0;
         var _quantity = 1; //if we have -1 here, it's an unlimited plural.
         var _attackStrength = 0;
         var _inventory =  new inventoryObjectModule.Inventory(0);
@@ -93,6 +94,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.switched != undefined) {_switched = artefactAttributes.switched;};
             if (artefactAttributes.isOn != undefined) {_on = artefactAttributes.isOn;};
             if (artefactAttributes.isEdible != undefined) {_edible = artefactAttributes.isEdible;};
+            if (artefactAttributes.nutrition != undefined) {_nutrition = artefactAttributes.nutrition;};
             if (artefactAttributes.chewed != undefined) {_chewed = artefactAttributes.chewed;};
             if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
             if (artefactAttributes.quantity != undefined) {_quantity = setQuantity(artefactAttributes.quantity);};
@@ -113,13 +115,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         processAttributes(attributes);
 
 
-        var validateType = function() {
+        var validateType = function(aType) {
             var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key', 'bed', 'light'];
-            if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid artefact type."}//
-            console.log(_name+' type validated: '+_type);
+            if (validobjectTypes.indexOf(aType) == -1) { throw "'"+aType+"' is not a valid artefact type."}//
+            console.log(_name+' type validated: '+aType);
         };
 
-        validateType();
+        validateType(_type);
 
         //captialise first letter of string.
         var initCap = function(aString){
@@ -130,9 +132,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getName = function() {
             return _name;
         };
-
+        
+        //artefact only function at the moment
         self.getSourceAttributes = function() {
             return _sourceAttributes;
+        }; 
+
+        //artefact only function at the moment
+        self.setAttributes = function(attributes) {
+            if (attributes.type != undefined) {
+                try{validateType(attributes.type);}
+                catch(err){
+                    console.log("Error: "+err);
+                    return null;//exit early
+                };
+            };
+            _sourceAttributes = attributes;
+            processAttributes(attributes);
         };
 
         self.getDisplayName = function() {
@@ -219,12 +235,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _breakable;
         };
 
+        //artefact only
         self.isIntact = function() {
             //check if object is completely intact
             if (_destroyed||_broken||_chewed||_damaged) {return false;};
             return true;
         };
 
+        //artefact only
         self.getCondition = function() {
             var condition = 5;
             //check if object is completely intact
@@ -248,6 +266,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canCarry = function(anObject) {
             //broken objects can't contain anything
             if (_destroyed|| _broken) {return false};
+            if (self.isLocked()) {return false;};
             return _inventory.canCarry(anObject);
         };
 
@@ -446,14 +465,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
+        self.drink = function(aPlayer) {
+            if(_edible && _requiresContainer)  {
+                _weight = 0;
+                aPlayer.heal(_nutrition);
+                return 'You drink '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
+            };
+
+            return _genderPrefix+"'d get stuck in your throat if you tried."
+        };
+
         self.eat = function(aPlayer) {
-            self = this;
             //console.log(_name+' edible:'+_edible+' chewed:'+_chewed);
             if (!(_chewed)) {
                 _chewed = true; 
                 if (_edible){
                     _weight = 0;
-                    aPlayer.heal(25);
+                    aPlayer.heal(_nutrition);
                     return 'You eat '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
                 } else {
                     _detailedDescription += ' and shows signs of being chewed.';
@@ -481,34 +509,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (!(objectToGive)) {return self.getDisplayName()+" doesn't contain "+anObject+".";};
 
-            //if required container, get suitable container 
-            //find all player containers *or* get specific required container
-            //loop thru all containers
-            //check canContain
-            //if any one is true, add it, if not fail
             var requiresContainer = objectToGive.requiresContainer();
-            var requiredContainer = objectToGive.getRequiredContainer();
-            var suitableContainer;
-            if (requiredContainer) {
-                suitableContainer = playerInventory.getObject(requiredContainer);
-                if (!(suitableContainer)) { return "Sorry. You need a "+requiredContainer+" to carry "+objectToGive.getDisplayName()+".";};
-                //check suitable container can carry item
-                if (!(suitableContainer.canCarry(objectToGive))) { return "Sorry. Your "+requiredContainer+" can't hold "+objectToGive.getDisplayName()+" right now.";};
-            } else if (requiresContainer) {
-                //find all player containers 
-                var possibleContainers = playerInventory.getAllObjectsOfType('container');
-                for(var index = 0; index < possibleContainers.length; index++) {
-                    //loop thru all containers
-                    //check canContain
-                    //if any one is true, add it, if not fail
-                    if(possibleContainers[index].canCarry(objectToGive)) {
-                        console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" index: "+index);
-                        suitableContainer = possibleContainers[index];
-                        break; //exit loop early if success
-                    };
-                };                
-            };
-
+            var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
+    
             if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
 
             if (playerInventory.canCarry(objectToGive)) {
@@ -524,7 +527,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 //add to suitable container or to player inventory
                 //if container is required, we _know_ we have a suitable container by this point.
-                if (requiresContainer) { return "Your "+suitableContainer.getDisplayName()+" is "+suitableContainer.receive(objectToGive);};
+                if (requiresContainer) { return "Your "+suitableContainer.getName()+" is "+suitableContainer.receive(objectToGive);};
                 return "You're "+playerInventory.add(objectToGive);
             };
 
@@ -549,9 +552,25 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
+        /*self.getMatchingKey = function(keys) {
+            //find the strongest non-breakable weapon the player is carrying.
+            for(var index = 0; index < keys.length; index++) {
+                //player must explicitly choose to use a breakable key - will only auto-use non-breakable ones.
+                if (keys[index].getType() == 'key') {
+                    if (keys[index].keyTo(self)) {
+                        console.log('Key found for: '+self.getName());
+                        return keys[index];
+                    };                   
+                };
+            };
+            console.log('Matching key not found');
+            return null;
+        };*/
+
         self.lock = function(aKey) {
             if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (!(_locked)) {
+                if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = true;
                     _open = false;
@@ -566,6 +585,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.unlock = function(aKey) {
             if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (_locked) {
+                if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = false;
                     _open = true;
@@ -586,7 +606,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.canCarry(anObject);
         };
 
-        //nasty - expose our internals
+        //nasty - expose our internals - needed to support inventory containers
         self.getInventoryObject = function() {
             return _inventory;
         };

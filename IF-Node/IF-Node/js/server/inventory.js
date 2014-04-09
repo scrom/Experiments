@@ -63,7 +63,6 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
                 if ((anObject.getWeight()+self.getWeight())>_maxCarryingWeight) {
                     return false;
                 };
-                if (anObject.isLocked()) {return false;};
                 return true;
             } else {return false;};
         };
@@ -103,6 +102,16 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
             //check if passed in object name is in inventory
             if (self.getObject(anObject)){return true;};
             return false;
+        };
+
+        self.listObjects = function() {
+            var list = ''
+            for(var i = 0; i < _items.length; i++) {
+                    if ((i>0)&&(i<_items.length-1)){list+=', ';};
+                    if ((i==_items.length-1)&&(i>0)){list+=' and ';};
+                    list+=_items[i].getDescription();
+            };
+            return list;
         };
 
         //recursively gets objects in containers
@@ -159,6 +168,38 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
                 };
            };
            return returnObjects;
+        };
+
+        self.getSuitableContainer = function(anObject) {
+            //if required container, get suitable container 
+            //find all player containers *or* get specific required container
+            //loop thru all containers
+            //check canContain
+            //if any one is true, add it, if not fail
+            var requiresContainer = anObject.requiresContainer();
+            var requiredContainer = anObject.getRequiredContainer();
+            var suitableContainer;
+            if (requiredContainer) {
+                suitableContainer = self.getObject(requiredContainer);
+                if (!(suitableContainer)) { return null;};
+                //check suitable container can carry item
+                if (!(suitableContainer.canCarry(anObject))) { return null;};
+            } else if (requiresContainer) {
+                //find all player containers 
+                var possibleContainers = self.getAllObjectsOfType('container');
+                for(var index = 0; index < possibleContainers.length; index++) {
+                    //loop thru all containers
+                    //check canContain
+                    //if any one is true, add it, if not fail
+                    if(possibleContainers[index].canCarry(anObject)) {
+                        console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" index: "+index);
+                        suitableContainer = possibleContainers[index];
+                        break; //exit loop early if success
+                    };
+                };                
+            };
+
+            return suitableContainer;
         };
 
         self.tick = function() {
