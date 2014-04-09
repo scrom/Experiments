@@ -96,6 +96,23 @@ exports.getObjectAfterAddingTwoReturnsCorrectObject = function (test) {
 
 exports.getObjectAfterAddingTwoReturnsCorrectObject.meta = { traits: ["Inventory Test", "Inventory Trait"], description: "Test that a inventory is carrying an object." };
 
+exports.canListContents = function (test) {
+    var artefactDescription = 'an artefactDescription'
+    var artefactName = 'artefact'
+    var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
+    i0.add(a0);
+    i0.add(a1);
+    var expectedResult = 'an artefact of little consequence and an artefactDescription1';
+    var actualResult = i0.listObjects();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canListContents.meta = { traits: ["Inventory Test", "Inventory Trait"], description: "Test that a inventory is carrying an object." };
+
+
 exports.removeFirstObjectReturnsCorrectObject = function (test) {
     var artefactDescription = 'an artefactDescription'
     var artefactName = 'artefact'
@@ -207,6 +224,21 @@ exports.canCarryHandlesNullObject = function (test) {
 };
 
 exports.canCarryHandlesNullObject.meta = { traits: ["Inventory Test", "Inventory Trait", "Weight Trait"], description: "Test that a inventory is carrying an object." };
+
+exports.canCarryHandlesLockedObject = function (test) {
+    var expectedResult = true;
+    var attributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, isLocked: true};
+    var lockedObject = new artefact.Artefact('artefact', 'description', 'more describing',attributes, null);
+    var actualResult = i0.canCarry(lockedObject); //we're carrying weight of 2 and limit is 50 - this should pass
+
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCarryHandlesLockedObject.meta = { traits: ["Inventory Test", "Inventory Trait", "Weight Trait", "Lock Trait"], description: "Test that a inventory is carrying an object." };
+
 
 exports.canCarryCorrectlyChecksWeight = function (test) {
     var artefactDescription = 'an artefactDescription'

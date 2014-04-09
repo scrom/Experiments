@@ -245,7 +245,7 @@ exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inve
 
 exports.canPutObjectInOpenContainer = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = "the container is now carrying a slab of sugary goodness.";
+    var expectedResult = "You put the cake in the container.";
     p0.open('open','container');
     var actualResult = p0.put('put','cake', 'container');
     console.log("Expected: "+expectedResult);
