@@ -1,3 +1,9 @@
+body
+{
+    font-family: 'Courier New', courier, Calibri, Arial, modern, monospace, sans-serif;
+    font-size: 80%;
+}
+
 .softBorder
 {
     border:2px solid;
@@ -19,7 +25,7 @@
 
 .smallBox
 {
-    height:180px;
+    height:20vh;
     width:600px
 }
 
@@ -31,7 +37,7 @@
 
 .bigBox
 {
-    height:325px;
+    height:55vh;
     width:600px
 }
 
