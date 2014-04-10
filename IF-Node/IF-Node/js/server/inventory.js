@@ -1,10 +1,11 @@
 ﻿"use strict";
 //inventory object - used for player, creature and eventually object inventories
-module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for constructor TBC
+module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //inputs for constructor TBC
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
 
 	    var _objectName = "Inventory";
+        var _ownerName = ownerName;
         var _maxCarryingWeight = maxCarryingWeight;
         var _items = [];
 
@@ -72,7 +73,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
             if (!(self.canCarry(anObject))) {return "It's too heavy.";};
 
             _items.push(anObject);
-            console.log(anObject+" added to inventory");
+            console.log(anObject+" added to "+_ownerName+" inventory");
             return "now carrying "+anObject.getDescription()+".";
         };
     
@@ -82,7 +83,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
                     if (localInventory[index].syn(anObject)) {
                         var returnObject = _items[index];
                         localInventory.splice(index,1);
-                        console.log(anObject+" removed from inventory");
+                        console.log(anObject+" removed from "+_ownerName+" inventory");
                         return returnObject;
                     };
                     if(localInventory[index].getType() == 'container' && (!(localInventory[index].isLocked()))) {
@@ -94,7 +95,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
                         if (object) {return object;}; 
                     };
                 };
-                console.log("not carrying "+anObject);
+                console.log(_ownerName+" is not carrying "+anObject);
                 return null;
         };
     
@@ -118,7 +119,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
         self.getObject = function(anObject) {
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].syn(anObject)) {
-                    console.log("inventory item found: "+anObject+" index: "+index);
+                    console.log(_ownerName+" inventory item found: "+anObject+" index: "+index);
                     return _items[index];
                 };
                 if(_items[index].getType() == 'container' && (!(_items[index].isLocked()))) {
@@ -135,7 +136,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
         self.getObjectByType = function(anObjectType) {
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getType() == anObjectType) {
-                    console.log(anObjectType+" found: "+_items[index].getName()+" index: "+index);
+                    console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
                 };
            };
@@ -147,9 +148,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getComponentOf() == anObjectName) {
                     if(_items[index].chargesRemaining() > 0) {
-                        console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" index: "+index);
+                        console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                         returnObjects.push(_items[index]);
-                    } else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" index: "+index);};                     
+                    } else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);};                     
                 };
             };
             return returnObjects;
@@ -163,7 +164,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
            var returnObjects = [];
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getType() == anObjectType) {
-                    console.log(anObjectType+" found: "+_items[index].getName()+" index: "+index);
+                    console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     returnObjects.push(_items[index]);
                 };
            };
@@ -192,7 +193,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight) { //inputs for 
                     //check canContain
                     //if any one is true, add it, if not fail
                     if(possibleContainers[index].canCarry(anObject)) {
-                        console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" index: "+index);
+                        console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" in "+_ownerName+" inventory. Index: "+index);
                         suitableContainer = possibleContainers[index];
                         break; //exit loop early if success
                     };
