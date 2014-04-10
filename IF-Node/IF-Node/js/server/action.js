@@ -193,7 +193,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'look':
                         ticks = 0;
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
-                        if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1)}
+                        if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1);}
                         else {description = _player.examine(_verb, _object0);};
                         break;
                     case 'examine':
@@ -237,14 +237,15 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'close':
                         description = _player.close(_verb, _object0);
                         break;
-                    case 'drink': //not quite eat but will fix this later.
+                    case 'drink': 
                         description = _player.drink(_verb, _object0);
                         break;
                     case 'bite':
                     case 'chew':
                     case 'feast':
                     case 'eat':
-                        description = _player.eat(_verb, _object0);
+                        if (_object1) {description = _player.eat(_verb+" "+_splitWord,_object1);}
+                        else {description = _player.eat(_verb, _object0);};
                         break;
                     case 'shoot': //will need to explicitly support projectile weapons
                     case 'attack':
@@ -312,15 +313,19 @@ exports.Action = function Action(aPlayer, aMap) {
                         if (_object1) {description = _player.switchOnOrOff(_verb,_object1,_splitWord);}
                         else {description = _player.switchOnOrOff(_verb, _object0,_splitWord);};                    
                         break;
+                    case 'light':
+                        description = _player.switchOnOrOff('light', _object0, 'on');
+                        break;
+                    case 'extinguish':
+                    case 'unlight':
+                        description = _player.switchOnOrOff('turn', _object0,'out');
+                        break;
                     case 'save':
                     case 'load':
                     case 'pick':
                     case 'rub':
                     case 'on':
                     case 'off':
-                    case 'light':
-                    case 'extinguish':
-                    case 'unlight':
                     case 'read':
                     case 'climb':
                     case 'jump':
