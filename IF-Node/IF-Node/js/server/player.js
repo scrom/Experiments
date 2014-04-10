@@ -6,7 +6,7 @@ module.exports.Player = function Player(aUsername) {
         var inventoryObjectModule = require('./inventory');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = aUsername;
-        var _inventory =  new inventoryObjectModule.Inventory(50);
+        var _inventory =  new inventoryObjectModule.Inventory(50, _username);
         var _missions = []; //player can "carry" missions.
         var _hitPoints = 100;
         var _aggression = 0;
@@ -255,10 +255,69 @@ module.exports.Player = function Player(aUsername) {
             return artefact.lock(key);
         };
 
+        //this can probably be made private
+        self.combine = function(artefact, receiver) {
+            //create new object, remove originals, place result in player inventory or location.
+            //zero weight of ingredients
+            var originalReceiverWeight = receiver.getWeight();
+            var originalArtefactWeight = artefact.getWeight();
+            receiver.setWeight(0);
+            artefact.setWeight(0);
+
+            var newObject = receiver.combineWith(artefact);
+            var requiresContainer = newObject.requiresContainer();
+
+            //check where receiver is/was
+            var receiverIsInLocation = _currentLocation.objectExists(receiver.getName());
+
+            if(requiresContainer) {
+                var container;
+                var containerIsInLocation = false;
+
+                if(receiverIsInLocation) {container = _currentLocation.getSuitableContainer(newObject);};
+                if (container) {containerIsInLocation = true;};
+                if (!(container)){container = _inventory.getSuitableContainer(newObject);};
+
+                if (!(container)) { 
+                    //reset weights
+                    receiver.setWeight(originalReceiverWeight);
+                    artefact.setWeight(originalArtefactWeight);
+                    return  "Sorry, you don't have a suitable container for "+newObject.getDisplayName()+".";
+                };
+            };
+
+            //attempt to add item to container
+            if (container && (!(containerIsInLocation)) && (!(_inventory.canCarry(newObject)))) {
+                //reset weights
+                receiver.setWeight(originalReceiverWeight);
+                artefact.setWeight(originalArtefactWeight);
+                
+                return "Sorry, you can't carry "+newObject.getDisplayName()+" at the moment, try dropping something you're carrying first."
+            };
+
+            removeObjectFromPlayerOrLocation(artefact.getName());
+            removeObjectFromPlayerOrLocation(receiver.getName());
+
+            if (container) {return container.receive(newObject);};
+
+            //reset weights
+            receiver.setWeight(originalReceiverWeight);
+            artefact.setWeight(originalArtefactWeight);
+
+            //if receiver is in location or player can't carry it and it doesn't use a container.
+            if(receiverIsInLocation || (!(_inventory.canCarry(newObject)))) {
+                _currentLocation.addObject(newObject);
+            } else {
+                _inventory.add(newObject);
+            };
+
+            return "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName()+" to produce "+newObject.getDisplayName();                
+        };
+
         /*Allow player to put something in an object */
         self.put = function(verb, artefactName, receiverName, requiredContainer){
                 if (stringIsEmpty(artefactName)){ return verb+" what?";};
-                if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" to what?";};
+                if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" with what?";};
 
                  var artefact = getObjectFromPlayerOrLocation(artefactName);
                  if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying any either.";};
@@ -273,6 +332,11 @@ module.exports.Player = function Player(aUsername) {
                 //validate if it's a container
                 if (receiver.getType() == 'creature') {
                      return  "It's probably better to 'give' it to them."; 
+                };
+
+                //if objects combine together...
+                if (receiver.combinesWith(artefact)) {
+                    return self.combine(artefact, receiver)                   
                 };
                 
                 //check receiver can carry item (container or not)

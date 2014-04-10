@@ -213,6 +213,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = "Time passes... ...slowly";
                         break;
                     case 'put':
+                    case 'combine':
                     case 'add':
                         description = _player.put(_verb, _object0, _object1);
                         break;
@@ -331,7 +332,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'climb':
                     case 'jump':
                     case 'attach':
-                    case 'combine':
                     case 'join':
                     case 'dismantle':
                     case 'delete':
