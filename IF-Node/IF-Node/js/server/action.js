@@ -187,6 +187,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.getLocation().getVisits();
                         break;
                     case 'inv':
+                    case 'inventory':
                         ticks = 0;
                         description = _player.getInventory();
                         break;
