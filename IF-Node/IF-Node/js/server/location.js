@@ -13,7 +13,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         var _visits = 0;
         var _dark = isDark;
         var _description = aDescription;
-        var _inventory =  new inventoryObjectModule.Inventory(99999);//unlimited //[]; //and creatures
+        var _inventory =  new inventoryObjectModule.Inventory(99999, _name);//unlimited //[]; //and creatures
         var _exits = [];
 
 	    var objectName = "Location";
@@ -72,6 +72,10 @@ exports.Location = function Location(aName, aDescription, isDark) {
             var randomInt = Math.floor(Math.random() * (availableExits.length));
             console.log('Random exit selected: '+availableExits[randomInt].getName());
             return availableExits[randomInt];
+        };
+
+        self.getSuitableContainer = function(anObject) {
+            return _inventory.getSuitableContainer(anObject);
         };
 
         self.addObject = function(anObject) {
