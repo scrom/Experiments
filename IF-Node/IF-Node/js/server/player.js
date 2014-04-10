@@ -442,7 +442,7 @@ module.exports.Player = function Player(aUsername) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
 
-            return artefact.switchOnOrOff(verb);           
+            return artefact.switchOnOrOff(verb, action);           
         };
 
         self.canSee = function() {
