@@ -34,8 +34,8 @@ exports.Tests = function Tests() {
         console.log('===== Location tests =====');
         m0.init();
         var l0 = m0.getLocation('atrium');
-        console.log(l0.getAvailableExits());
-        console.log(l0.getRandomExit());
+        console.log("found "+l0.getAvailableExits().length+" exits");
+        console.log(l0.getRandomExit().getDestinationName());
 
         console.log('====Action tests====');
         var act0 = new action.Action(p0, m0);
