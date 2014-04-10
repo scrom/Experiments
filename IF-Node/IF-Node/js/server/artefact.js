@@ -20,7 +20,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _nutrition = 0;
         var _quantity = 1; //if we have -1 here, it's an unlimited plural.
         var _attackStrength = 0;
-        var _inventory =  new inventoryObjectModule.Inventory(0);
+        var _inventory =  new inventoryObjectModule.Inventory(0, _name);
         var _type = "junk";
         var _linkedExit = linkedExit;
         var _collectable = false;
@@ -230,6 +230,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return returnString;
         };
 
+        self.setWeight = function(newWeight) {
+            _weight = newWeight;
+        };
+
         self.getWeight = function() {
             return _weight+_inventory.getWeight();
         };
@@ -270,6 +274,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isDestroyed = function() {
             return _destroyed;
+        };
+
+        self.combinesWith = function(anObject) {
+            if (self.getComponentOf(anObject.getName()) && anObject.getComponentOf(self.getName)) {
+            //objects are components of each other...
+            return true;
+            };
+            return false;
+        };
+
+        self.combineWith = function(anObject) {
+            if (!(self.combinesWith(anObject))) { return null;};
+            console.log("combining :"+self.getName()+" with "+anObject.getName()+" to produce "+_delivers);
+            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes()); //return a new instance of deliveryObject //not bothering with linkedexit here.
         };
 
         self.canContain = function(anObject) {
@@ -625,6 +643,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.canCarry = function(anObject) {
+            if (_locked) {return false;};
             return _inventory.canCarry(anObject);
         };
 
