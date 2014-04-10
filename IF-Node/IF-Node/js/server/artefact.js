@@ -300,21 +300,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(_switched)) {return false;};
             if (_broken||_destroyed) {return false;};
             if (_charges ==0) {return false;}; //we use -1 to mean unlimited
-            console.log(self.getDisplayName+" has power.");
+            console.log(self.getDisplayName()+" has power.");
             return true;
         };
 
         self.isPoweredOn = function() {
             if (self.hasPower() && _on) {
-                console.log(self.getDisplayName+" is switched on.");
+                console.log(self.getDisplayName()+" is switched on.");
                 return true;
             };
-            console.log(self.getDisplayName+" is switched off.");
+            console.log(self.getDisplayName()+" is switched off.");
             return false;
         };
 
-        self.switchOnOrOff = function(onOrOff) {
-            if (!(_switched)) {return "There's no obvious way to switch "+_itemSuffix+" on or off.";};
+        self.switchOnOrOff = function(verb, onOrOff) {
+            if (!(_switched)) {return "There's no obvious way to "+verb+" "+_itemSuffix+" on or off.";};
             if (!(self.hasPower())) {return _itemDescriptivePrefix+" dead, there's no sign of power.";};
             switch(onOrOff) {
                 case "on":
@@ -323,13 +323,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 case "off":
                     if (!(_on)) {return _itemDescriptivePrefix+" already off.";};
                     break;
+                case "out":
+                    if (!(_on)) {return _itemDescriptivePrefix+" already out.";};
+                    break;
                 default:
                     null; 
             };
 
             _on = (!(_on)); //toggle switch 
-            var returnString ="You switch the "+self.getDisplayName();
-            if (_on) {returnString+= " on."} else {returnString+= " off."};
+            var returnString ="You "+verb+" the "+self.getDisplayName();
+            if (verb == 'light') {returnString+= ".";}
+            else { 
+                if (_on) {returnString+= " on.";} 
+                else {returnString+= " off.";};
+            };
 
             return returnString;
         };
