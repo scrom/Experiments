@@ -223,7 +223,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             _locations[graffitib].addObject(torch);
 
             var cup = new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null);
-            cup.addSyns(['mug', 'coffee', 'coffee cup','coffee mug']);
+            cup.addSyns(['mug', 'coffee cup','coffee mug']);
             _locations[bottomkitchen].addObject(cup);
  
             var parcel = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
@@ -232,8 +232,18 @@ exports.Map = function Map() { //inputs for constructor TBC
             var coffeeBeans = new artefactObjectModule.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null); 
             coffeeBeans.addSyns(['coffee beans']);
 
-            var coffee = new artefactObjectModule.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+            var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+            var sweetCoffee = new artefactObjectModule.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
+            sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
+
+            var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', componentOf: 'sugar', delivers: sweetCoffee};
+            var sugarAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false, componentOf: 'coffee', delivers: sweetCoffee};
+
+            var coffee = new artefactObjectModule.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
             coffee.addSyns(['brew','drink']);
+
+            var sugar = new artefactObjectModule.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+            _locations[bottomkitchen].addObject(sugar);
 
             var beanBag = new artefactObjectModule.Artefact('bag', 'a giant bag', "The label says 'Finest Software Development Coffee Beans'", containerAttributes, null); 
             beanBag.addSyns(['bean bag','bag of beans','giant bag','big bag']);
