@@ -113,3 +113,105 @@ exports.canVendCoffeeIntoCup = function (test) {
 
 exports.canVendCoffeeIntoCup.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait"], description: "Test that coffee can be delivered into a cup from a working machine." };
 
+exports.canMakeSweetCoffeeByAddingSugarToCoffee = function (test) {
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+    var sweetCoffee = new artefact.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
+
+
+    var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', componentOf: 'sugar', delivers: sweetCoffee};
+    var sugarAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false, componentOf: 'coffee', delivers: sweetCoffee};
+
+    sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
+
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+    coffee.addSyns(['brew','drink']);
+
+    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+
+    var _inventory = new inventory.Inventory(25);
+    _inventory.add(cup); 
+
+    cup.receive(coffee);
+
+    var expectedResult = '{"name":"sweet coffee","description":"sweet coffee"}';
+    var actualResult = coffee.combineWith(sugar);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canMakeSweetCoffeeByAddingSugarToCoffee.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait", "Combine Trait"], description: "Test that coffee and sugar can be combined." };
+
+exports.canMakeSweetCoffeeByAddingCoffeeToSugar = function (test) {
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+    var sweetCoffee = new artefact.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
+
+
+    var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', componentOf: 'sugar', delivers: sweetCoffee};
+    var sugarAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false, componentOf: 'coffee', delivers: sweetCoffee};
+
+    sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
+
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+    coffee.addSyns(['brew','drink']);
+
+    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+
+    var _inventory = new inventory.Inventory(25);
+    _inventory.add(cup); 
+
+    cup.receive(sugar);
+
+    var expectedResult = '{"name":"sweet coffee","description":"sweet coffee"}';
+    var actualResult = sugar.combineWith(coffee);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canMakeSweetCoffeeByAddingCoffeeToSugar.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait", "Combine Trait"], description: "Test that coffee and sugar can be combined." };
+
+
+exports.cantMakeSweetCoffeeByAddingJunkToCoffee = function (test) {
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+    var sweetCoffee = new artefact.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
+
+
+    var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', componentOf: 'sugar', delivers: sweetCoffee};
+    var junkAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false};
+
+    sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
+
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+    coffee.addSyns(['brew','drink']);
+
+    var junk = new artefact.Artefact('junk', 'junk', "junk.", junkAttributes, null); 
+
+    var _inventory = new inventory.Inventory(25);
+    _inventory.add(cup); 
+
+    cup.receive(coffee);
+
+    var expectedResult = null;
+    var actualResult = coffee.combineWith(junk);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cantMakeSweetCoffeeByAddingJunkToCoffee.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait"], description: "Test that coffee and junk can't be combined." };
