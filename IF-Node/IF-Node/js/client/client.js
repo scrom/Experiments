@@ -28,7 +28,7 @@ function Client(aServerHost, aServerPort, aUi) {
         We'll need to uncomment the console log from serverRequestCallback when trying to make this work
     */
     var sanitiseString = function(aString) {
-        return aString.replace(/[^a-z0-9 +-]+/g,"").toLowerCase();
+        return aString.replace(/[^a-zA-Z0-9 +-]+/g,"").toLowerCase();
     };
 
     var untangleResponse = function(someJSONData) {

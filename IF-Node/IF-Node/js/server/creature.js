@@ -237,9 +237,15 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             return true;
         };
 
+        //when a player steals from them...
         self.theft = function(anObject,playerInventory, player) {
             var playerStealth = player.getStealth();
-            var randomInt = Math.floor(Math.random() * (7/playerStealth)); //will randomly return 0 to 6 by default(<15% chance of success)
+
+            //attempt to steal...
+            //will randomly return 0 to 6 by default(<15% chance of success)
+            var successDivider = 7; 
+            if (self.getSubType == 'friendly') {successDivider = 20;}; //only 5% chance of success when stealing from a friend
+            var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
             console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
