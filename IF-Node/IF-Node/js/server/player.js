@@ -7,6 +7,8 @@ module.exports.Player = function Player(aUsername) {
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = aUsername;
         var _inventory =  new inventoryObjectModule.Inventory(50, _username);
+        var _destroyedObjects = []; //track names of all objects player has destroyed
+        var _consumedObjects = []; //track names of all objects player has consumed
         var _missions = []; //player can "carry" missions.
         var _maxHitPoints = 100;
         var _hitPoints = _maxHitPoints;
@@ -209,6 +211,8 @@ module.exports.Player = function Player(aUsername) {
             } else {
                 returnString += artefact.destroy(true);
             };
+
+            if (artefact.isDestroyed()) {removeObjectFromPlayerOrLocation(artefact.getName());};
             return returnString;
         };
 
@@ -230,7 +234,10 @@ module.exports.Player = function Player(aUsername) {
             var droppedObject = removeObjectFromPlayer(artefactName);
 
             //destroyed it!
-            if (droppedObject.isDestroyed()) { return "Oops. "+artefactDamage;}; 
+            if (droppedObject.isDestroyed()) { 
+                _destroyedObjects.push(droppedObject.getName());
+                return "Oops. "+artefactDamage;
+            }; 
 
             //needs a container
             if (droppedObject.requiresContainer()) { return "Oops. You empty "+droppedObject.getDisplayName()+" all over the floor. Let's hope there's more somewhere.";}; 
@@ -758,7 +765,8 @@ module.exports.Player = function Player(aUsername) {
             if (receiver.isDestroyed()) { 
                 //wilful destruction of objects increases aggression further...
                 _aggression ++;
-                removeObjectFromPlayerOrLocation(receiverName);
+                removeObjectFromPlayerOrLocation(receiver.getName());
+                _destroyedObjects.push(receiver.getName());
                 resultString = "Oops. "+resultString;
             }; 
 
@@ -769,6 +777,7 @@ module.exports.Player = function Player(aUsername) {
                     if (weapon.isDestroyed()) {
                         resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+" that you decided to use as a weapon.";
                         //remove destroyed item
+                        _destroyedObjects.push(weapon.getName());
                         removeObjectFromPlayerOrLocation(artefactName);                    
                     } else {
                         resultString +="<br>You damaged "+weapon.getDisplayName()+"."
@@ -839,6 +848,7 @@ module.exports.Player = function Player(aUsername) {
             if (artefact.isEdible()) {
                 //consume it
                 removeObjectFromPlayerOrLocation(artefactName); 
+                _consumedObjects.push(artefact.getName());
                 _timeSinceEating = 0;
                 console.log('player eats some food.');
             };
@@ -857,6 +867,7 @@ module.exports.Player = function Player(aUsername) {
 
                 //consume it
                 removeObjectFromPlayerOrLocation(artefactName); 
+                _consumedObjects.push(artefact.getName());
                 console.log('player drinks.');
             };
 
@@ -954,7 +965,9 @@ module.exports.Player = function Player(aUsername) {
             status += "Your score is "+_score+".<br>";
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
-            status += "You have visited "+_locationsFound+" locations.<br>";             
+            status += "You have visited "+_locationsFound+" locations.<br>";
+            if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
+            if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
             if (self.isHungry()) { status += "You're hungry.<br>"};
             if (_bleeding) { status += "You're bleeding and need healing.<br>"};
             if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";

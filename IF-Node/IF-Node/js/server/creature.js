@@ -365,12 +365,12 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             return _currentLocation;
         };	
 
-        self.hurt = function(player, weapon) {
+        self.hurt = function(player, weapon, verb) {
              if (self.isDead()) {return _genderPrefix+"'s dead already."};
             //regardless of outcome, you're not making yourself popular
             _affinity--;
 
-            if (_type == 'friendly') {return _genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again."};
+            if (_type == 'friendly') {return _genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";};
 
             if (!(weapon)) {
                 var resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
