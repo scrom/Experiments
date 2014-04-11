@@ -84,6 +84,13 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
 
         validateType();
 
+        var healthPercent = function() {
+            //avoid dividebyzero
+            if (_maxHitPoints == 0) {return 0;};
+
+            return (_hitPoints/_maxHitPoints)*100;
+        };
+
         //// instance methods
 
         self.toString = function() {
@@ -155,7 +162,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             //will run away if affinity is less than 0 and player aggression is between 0 and the point where they turn hostile.
             //this makes a very small window where you can interact with unfriendly creatures. (you must not be hostile)
             if ((_affinity <0) && (playerAggression>0) && (_affinity >= playerAggression*-1)) {return true;};
-            if (_hitPoints <=10) {return true;}; //flee if nearly dead
+            if (healthPercent() <=10) {return true;}; //flee if nearly dead
             return false;
         };
 
@@ -303,8 +310,8 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             //run away the number of moves of player aggression vs (-ve)affinity difference
             var fearLevel = Math.floor(_affinity+playerAggression);
 
-            //if nearly dead - flee the great number of spaces of fear or half of remaining health...
-            if (_hitPoints <=10) {
+            //if nearly dead - flee the greater number of spaces of fear or half of remaining health...
+            if (healthPercent() <=10) {
                 fearLevel = Math.max(fearLevel, Math.floor(_hitPoints/2));
             };
             var resultString = "";
@@ -378,7 +385,8 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             _hitPoints -= pointsToRemove;
             //should really bash weapon here in case it's breakable too.
             if (self.isDead()) {return self.kill();};
-            if (_hitPoints <=50) {_bleeding = true;};
+
+            if (healthPercent() <=50) {_bleeding = true;};
             return "You attack "+self.getDisplayName()+". "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
@@ -389,7 +397,8 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             if (_hitPoints < _maxHitPoints) {
                 _hitPoints += pointsToAdd;
                 if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;}
-                if (_hitPoints > 50) {_bleeding = false};
+
+                if (healthPercent() > 50) {_bleeding = false};
                 console.log('Creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
             };
         };
@@ -420,24 +429,23 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
 
         self.health = function() {
             console.log('creature health: '+_hitPoints);
-            var healthPercent = (_hitPoints/_maxHitPoints)*100;
             switch(true) {
-                    case (healthPercent>99):
+                    case (healthPercent()>99):
                         return _genderPrefix+"'s still the picture of health.";
                         break;
-                    case (healthPercent>80):
+                    case (healthPercent()>80):
                         return _genderPrefix+"'s not happy.";
                         break;
-                    case (healthPercent>50):
+                    case (healthPercent()>50):
                         return _genderPrefix+"'s taken a fair beating.";
                         break;
-                    case (healthPercent>25):
+                    case (healthPercent()>25):
                         return _genderPrefix+"'s bleeding heavily and really not in good shape.";
                         break;
-                    case (healthPercent>10):
+                    case (healthPercent()>10):
                         return _genderPrefix+"'s dying.";
                         break;
-                    case (healthPercent>0):
+                    case (healthPercent()>0):
                         return _genderPrefix+"'s almost dead.";
                         break;
                     default:
@@ -507,22 +515,21 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         self.getCondition = function() {
             //check if object is completely intact
             if (self.isDead()) { return 0;};
-            var healthPercent = (_hitPoints/_maxHitPoints)*100;
 
             switch(true) {
-                case (healthPercent>99):
+                case (healthPercent()>99):
                     return 5;
                     break;
-                case (healthPercent>80):
+                case (healthPercent()>80):
                     return 4;
                     break;
-                case (healthPercent>50):
+                case (healthPercent()>50):
                     return 3;
                     break;
-                case (healthPercent>25):
+                case (healthPercent()>25):
                     return 2;
                     break;
-                case (healthPercent>0):
+                case (healthPercent()>0):
                     return 1;
                     break;
                 default:
@@ -562,7 +569,8 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             if (damage>0) {_hitPoints -=damage;};
             //consider fleeing here if not quite dead
             if (self.isDead()) {return resultString+self.kill();};
-            if (_hitPoints <=50) {_bleeding = true;};
+            
+            if (healthPercent() <=50) {_bleeding = true;};
             if (_bleeding) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
 
             return resultString;

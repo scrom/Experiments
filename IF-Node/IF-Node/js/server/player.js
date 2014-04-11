@@ -8,15 +8,38 @@ module.exports.Player = function Player(aUsername) {
         var _username = aUsername;
         var _inventory =  new inventoryObjectModule.Inventory(50, _username);
         var _missions = []; //player can "carry" missions.
-        var _hitPoints = 100;
+        var _maxHitPoints = 100;
+        var _hitPoints = _maxHitPoints;
         var _aggression = 0;
         var _stealth = 1;
         var _killedCount = 0;
         var _bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
         var _startLocation;
         var _currentLocation;
-        var _moves = 0; //only incremented when moving between locations but not yet used elsewhere
-        var _timeSinceEating = 0; //only incremented when moving between locations but not yet used elsewhere
+        var _timeSinceEating = 0; 
+
+        //potential player stats
+        var _stepsTaken = 0; //only incremented when moving between locations but not yet used elsewhere
+        var _restsTaken = 0;
+        var _sleepsTaken = 0;
+        var _locationsFound = 0;
+        var _foodEaten = 0;
+        var _drinksDrunk = 0;
+        var _creatureHitsMade = 0;
+        var _creaturesKilled = 0;
+        var _maxAggression = 0;
+        var _maxAffinity = 0;
+        var _totalCurrentAffinity = 0;
+        var _injuriesReceived = 0;
+        var _objectsChewed = 0;
+        var _objectsBroken = 0;
+        var _objectsDestroyed = 0;
+        var _objectsGiven = 0;
+        var _objectsStolen = 0;
+        var _objectsReceived = 0;
+        var _objectsCollected = 0;
+        var _locksOpened = 0;
+        var _doorsOpened = 0;
         var _score = 0; //not used yet
 	    var _objectName = "Player";
 
@@ -29,6 +52,13 @@ module.exports.Player = function Player(aUsername) {
         //captialise first letter of string.
         var initCap = function(aString){
             return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
+
+        var healthPercent = function() {
+            //avoid dividebyzero
+            if (_maxHitPoints == 0) {return 0;};
+
+            return (_hitPoints/_maxHitPoints)*100;
         };
 
         var getObjectFromPlayer = function(objectName){
@@ -606,10 +636,10 @@ module.exports.Player = function Player(aUsername) {
             };
 
             //now move self
-            _moves++;;
+            _stepsTaken++;;
 
             //reduce built up aggression every 2 moves
-            if ((_moves%2 == 0) && (_aggression>0)) {_aggression--;};
+            if ((_stepsTaken%2 == 0) && (_aggression>0)) {_aggression--;};
 
             //set player's current location
             var newLocationDescription = self.setLocation(newLocation);
@@ -737,6 +767,9 @@ module.exports.Player = function Player(aUsername) {
         self.rest = function(verb, duration) {
             if (!(_currentLocation.getObjectByType('bed'))) {return "There's nothing to rest on here.";};
 
+            //prevent resting if health > 80%
+            if (healthPercent() >80) {return "You're not tired at the moment.";};
+
             //check if there's an unfrindly creature here...
             var creatures = _currentLocation.getCreatures();
             var safeLocation = true;
@@ -757,9 +790,10 @@ module.exports.Player = function Player(aUsername) {
             _hitPoints += duration*3;
             _aggression -= duration;
             if (_aggression <0) {_aggression=0;}; //don't reduce aggression too far.
-            //limit to 100
-            if (_hitPoints >100) {_hitPoints = 100;}
-            if (_hitPoints > 50) {_bleeding = false};
+            //limit to max
+            if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
+
+            if (healthPercent() > 50) {_bleeding = false};
             console.log('player rested. HP remaining: '+_hitPoints);
 
             if  (!((initialKilledCount < _killedCount)|| initialHP >= _hitPoints)) {
@@ -771,10 +805,11 @@ module.exports.Player = function Player(aUsername) {
 
         self.heal = function(pointsToAdd) {
             _hitPoints += pointsToAdd;
-            if (_hitPoints <100) {_hitPoints += pointsToAdd;}
-            //limit to 100
-            if (_hitPoints >100) {_hitPoints = 100;}
-            if (_hitPoints > 50) {_bleeding = false};
+            if (_hitPoints <_maxHitPoints) {_hitPoints += pointsToAdd;};
+            //limit to max
+            if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
+
+            if (healthPercent() > 50) {_bleeding = false;};
             console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
@@ -832,24 +867,23 @@ module.exports.Player = function Player(aUsername) {
          };
 
         self.health = function() {
-            var healthPercent = (_hitPoints/_maxHitPoints)*100;
             switch(true) {
-                    case (healthPercent>99):
+                    case (healthPercent()>99):
                         return "You're the picture of health.";
                         break;
-                    case (healthPercent>80):
+                    case (healthPercent()>80):
                         return "You're just getting warmed up.";
                         break;
-                    case (healthPercent>50):
+                    case (healthPercent()>50):
                         return "You've taken a fair beating.";
                         break;
-                    case (healthPercent>25):
+                    case (healthPercent()>25):
                         return "You're bleeding heavily and really not in good shape.";
                         break;
-                    case (healthPercent>10):
+                    case (healthPercent()>10):
                         return "You're dying.";
                         break;
-                    case (healthPercent>0):
+                    case (healthPercent()>0):
                         return "You're almost dead.";
                         break;
                     default:
@@ -903,7 +937,7 @@ module.exports.Player = function Player(aUsername) {
             var status = "";
             status += "Your score is "+_score+".<br>";
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
-            status += "You have taken "+_moves+" moves so far.<br>"; 
+            status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
             if (self.isHungry()) { status += "You are hungry.<br>"};
             if (_bleeding) { status += "You are bleeding and need healing.<br>"};
             if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
