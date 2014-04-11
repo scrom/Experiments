@@ -3,7 +3,7 @@
 module.exports.Mission = function Mission(name, description, dialogue, parent, object, condition, destination, reward) { //add time limit of some form in later
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var _name = name;
+        var _name = name.toLowerCase();
         var _parent = parent; //parent mission - allows threads to be built up.
         var _description = description;
         var _dialogue = dialogue; //an array/collection of dialogue objects (owner, trigger, response - or similar)
@@ -23,6 +23,10 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         };
 
         self.getName = function() {
+            return _name;
+        };
+
+        self.getDisplayName = function() {
             return _name;
         };
 
@@ -50,7 +54,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         };
 
         self.isActive = function() {
-            if (returnObject) {return true;}; //reward has not been given
+            if (_reward) {return true;}; //reward has not been given
             return false;
         };
 

@@ -25,6 +25,12 @@ module.exports.Player = function Player(aUsername) {
          if ((aString == "")||(aString == undefined)||(aString == null)) {return true;};
          return false;
         };
+
+        //captialise first letter of string.
+        var initCap = function(aString){
+            return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
+
         var getObjectFromPlayer = function(objectName){
             return _inventory.getObject(objectName);
         };
@@ -191,7 +197,7 @@ module.exports.Player = function Player(aUsername) {
 
             var droppedObject = removeObjectFromPlayer(artefactName);
 
-            //return "You destroyed it!"
+            //destroyed it!
             if (droppedObject.isDestroyed()) { return "Oops. "+artefactDamage;}; 
 
             //needs a container
@@ -401,9 +407,10 @@ module.exports.Player = function Player(aUsername) {
             };
 
 
-            //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-            if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiverName+" can't carry that. It's too heavy for them at the moment.";};
-            if (!(receiver.willAcceptGifts(_aggression))) { return  "Sorry, "+receiverName+" is unwilling to take gifts from you at the moment.";};
+            //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
+            if (receiver.isDead()) { return  initCap(receiver.getDisplayName())+"'s dead. Gifts won't help now.";};
+            if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry that. It's too heavy for them at the moment.";};
+            if (!(receiver.willAcceptGifts(_aggression))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to take gifts from you at the moment.";};
 
             //we know they *can* carry it...
 
@@ -443,7 +450,7 @@ module.exports.Player = function Player(aUsername) {
 
             //get object if it exists
             var artefact = giver.getObject(artefactName);
-            if (!(artefact)) {return giverName+" isn't carrying that.";};
+            if (!(artefact)) {return initCap(giver.getDisplayName())+" isn't carrying that.";};
 
             //we'll only get this far if there is an object to give and a valid giver - note the object *could* be a live creature!
             if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
@@ -466,10 +473,10 @@ module.exports.Player = function Player(aUsername) {
 
             if (giver.getType() != 'creature') {return "It's not alive, it can't give you anything.";}; //correct this for dead creatures too
 
-            if (stringIsEmpty(artefactName)){ return verb+" "+giverName+" for what?";};
+            if (stringIsEmpty(artefactName)){ return verb+" "+giver.getDisplayName()+" for what?";};
 
             var artefact = (getObjectFromLocation(artefactName)||giver.getObject(artefactName));
-            if (!(artefact)) {return "There is no "+artefactName+" here and the "+giverName+" isn't carrying one either.";};   
+            if (!(artefact)) {return "There is no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying one either.";};   
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
             if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
@@ -477,8 +484,8 @@ module.exports.Player = function Player(aUsername) {
             //we know player *can* carry it...
             if (getObjectFromLocation(artefactName)) {
                 console.log('locationartefact');
-                if (!(artefact.isCollectable())) {return  "Sorry, the "+giverName+" can't pick it up.";};
-                if (!(giver.canCarry(artefact))) { return  "Sorry, "+giverName+" can't carry it.";};
+                if (!(artefact.isCollectable())) {return  "Sorry, "+giver.getDisplayName()+" can't pick it up.";};
+                if (!(giver.canCarry(artefact))) { return  "Sorry, "+giver.getDisplayName()+" can't carry it.";};
                 return self.get('get',artefactName);
             };
 
@@ -692,7 +699,7 @@ module.exports.Player = function Player(aUsername) {
 
             //just check it's not *already* destroyed...
             if (receiver.isDestroyed()) {
-                return "Don't you think you've done enough damage already?<br>There's nothing of it left worth breaking.";
+                return "Don't you think you've done enough damage already?<br>There's nothing of "+receiver.getDisplayName()+" left worth breaking.";
             };
 
             //regardless of whether this is successful, 
@@ -714,11 +721,11 @@ module.exports.Player = function Player(aUsername) {
                 if (weapon.isBreakable()) {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
-                        resultString +="<br>Oh dear. You destroyed the "+weapon.getDisplayName()+" that you decided to use as a weapon.";
+                        resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+" that you decided to use as a weapon.";
                         //remove destroyed item
                         removeObjectFromPlayerOrLocation(artefactName);                    
                     } else {
-                        resultString +="<br>You damaged the "+weapon.getDisplayName()+"."
+                        resultString +="<br>You damaged "+weapon.getDisplayName()+"."
                     };
                 };
             };
@@ -825,23 +832,24 @@ module.exports.Player = function Player(aUsername) {
          };
 
         self.health = function() {
+            var healthPercent = (_hitPoints/_maxHitPoints)*100;
             switch(true) {
-                    case (_hitPoints>99):
+                    case (healthPercent>99):
                         return "You're the picture of health.";
                         break;
-                    case (_hitPoints>80):
+                    case (healthPercent>80):
                         return "You're just getting warmed up.";
                         break;
-                    case (_hitPoints>50):
+                    case (healthPercent>50):
                         return "You've taken a fair beating.";
                         break;
-                    case (_hitPoints>25):
+                    case (healthPercent>25):
                         return "You're bleeding heavily and really not in good shape.";
                         break;
-                    case (_hitPoints>10):
+                    case (healthPercent>10):
                         return "You're dying.";
                         break;
-                    case (_hitPoints>0):
+                    case (healthPercent>0):
                         return "You're almost dead.";
                         break;
                     default:

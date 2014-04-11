@@ -420,23 +420,24 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
 
         self.health = function() {
             console.log('creature health: '+_hitPoints);
+            var healthPercent = (_hitPoints/_maxHitPoints)*100;
             switch(true) {
-                    case (_hitPoints>99):
+                    case (healthPercent>99):
                         return _genderPrefix+"'s still the picture of health.";
                         break;
-                    case (_hitPoints>80):
+                    case (healthPercent>80):
                         return _genderPrefix+"'s not happy.";
                         break;
-                    case (_hitPoints>50):
+                    case (healthPercent>50):
                         return _genderPrefix+"'s taken a fair beating.";
                         break;
-                    case (_hitPoints>25):
+                    case (healthPercent>25):
                         return _genderPrefix+"'s bleeding heavily and really not in good shape.";
                         break;
-                    case (_hitPoints>10):
+                    case (healthPercent>10):
                         return _genderPrefix+"'s dying.";
                         break;
-                    case (_hitPoints>0):
+                    case (healthPercent>0):
                         return _genderPrefix+"'s almost dead.";
                         break;
                     default:
@@ -501,6 +502,32 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
 
         self.isDestroyed = function() {
             return false; //it's hard to "destroy" a creature or corpse (at least for the purposes if the game)
+        };
+
+        self.getCondition = function() {
+            //check if object is completely intact
+            if (self.isDead()) { return 0;};
+            var healthPercent = (_hitPoints/_maxHitPoints)*100;
+
+            switch(true) {
+                case (healthPercent>99):
+                    return 5;
+                    break;
+                case (healthPercent>80):
+                    return 4;
+                    break;
+                case (healthPercent>50):
+                    return 3;
+                    break;
+                case (healthPercent>25):
+                    return 2;
+                    break;
+                case (healthPercent>0):
+                    return 1;
+                    break;
+                default:
+                    return 0;
+            };
         };
 
         self.canTravel = function() {

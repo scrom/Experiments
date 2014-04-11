@@ -9,7 +9,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
               
 	    var self = this; //closure so we don't lose this reference in callbacks
         //self.location = {}; //JSON representation of location {description, objects, exits, creatures}
-        var _name = aName;
+        var _name = aName.toLowerCase();
         var _visits = 0;
         var _dark = isDark;
         var _description = aDescription;
@@ -128,8 +128,8 @@ exports.Location = function Location(aName, aDescription, isDark) {
         };
 
         self.fireEntryTrigger = function() {
-            console.log('Entry trigger fired from '+self.getName()); 
-            return "";   
+            console.log('Firing entry trigger from '+self.getName());   
+            return "";
         };
 
         self.fireExitTrigger = function() {

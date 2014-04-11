@@ -233,7 +233,7 @@ exports.canStealObjectFromCreature.meta = { traits: ["Player Test", "Inventory T
 
 exports.canHitCreatureWithInventoryWeapon = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "You attack the creature. He's still the picture of health.";
+    var expectedResult = "You attack the creature. He's not happy.";
     var actualResult = p0.hit('hit',c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

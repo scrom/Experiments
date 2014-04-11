@@ -10,7 +10,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //attributes
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _sourceAttributes = attributes; //so we can clone.
-        var _name = name;
+        var _name = name.toLowerCase();
         var _synonyms = [];
         var _initialDescription = description; //save this for repairing later
         var _description = description;
@@ -228,6 +228,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if(self.isPoweredOn()) {returnString += "on.";} else {returnString += "off.";};
             };
             return returnString;
+        };
+
+        self.isDead = function() {
+            return false; //inanimate, not dead
         };
 
         self.setWeight = function(newWeight) {
@@ -486,7 +490,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_opens && (_open)){return _itemDescriptivePrefix+" already open";};                
                 return _itemPrefix+" doesn't open";
             };
-            return "Nothing happens.";
+            return "You try to "+verb+" the "+self.getDisplayName()+".<br>After a few minutes of yanking and shoving you conceed defeat.";
         };
 
         self.close = function() {
