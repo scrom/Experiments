@@ -26,11 +26,13 @@ module.exports.Player = function Player(aUsername) {
         var _foodEaten = 0;
         var _drinksDrunk = 0;
         var _creatureHitsMade = 0;
+        var _totalCreatureDamageDelivered = 0;
         var _creaturesKilled = 0;
         var _maxAggression = 0;
         var _maxAffinity = 0;
         var _totalCurrentAffinity = 0;
         var _injuriesReceived = 0;
+        var _totalDamageReceived = 0;
         var _objectsChewed = 0;
         var _objectsBroken = 0;
         var _objectsDestroyed = 0;
@@ -595,6 +597,9 @@ module.exports.Player = function Player(aUsername) {
             if (_startLocation == undefined) {
                 _startLocation = _currentLocation;
             };
+                       
+            //is this a new location?
+            if (_currentLocation.getVisits() == 1) {_locationsFound++;};
 
             resultString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
             return resultString;
@@ -636,7 +641,7 @@ module.exports.Player = function Player(aUsername) {
             };
 
             //now move self
-            _stepsTaken++;;
+            _stepsTaken++;
 
             //reduce built up aggression every 2 moves
             if ((_stepsTaken%2 == 0) && (_aggression>0)) {_aggression--;};
@@ -646,7 +651,6 @@ module.exports.Player = function Player(aUsername) {
             if (!(self.canSee())) {returnMessage += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
             else {returnMessage +=newLocationDescription;};
 
-
             console.log('GO: '+returnMessage);
             return returnMessage;
         };	
@@ -654,6 +658,14 @@ module.exports.Player = function Player(aUsername) {
         self.getLocation = function() {
             return _currentLocation;
         };	
+
+        self.getVisits = function() {
+            var visits = _currentLocation.getVisits();
+            var returnString = "You have visited this location ";
+            if (visits == 1) {return returnString+"once."}
+            if (visits == 2) {return returnString+"twice."}
+            return returnString+visits+" times.";
+        };
 
         self.isArmed = function() {
             if (_inventory.getObjectByType('weapon')) {return true;};
@@ -702,6 +714,10 @@ module.exports.Player = function Player(aUsername) {
         //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!
         self.hurt = function(pointsToRemove) {
             _hitPoints -= pointsToRemove;
+
+            _injuriesReceived ++;
+            _totalDamageReceived += pointsToRemove;
+
             //reduce aggression
             if (_aggression >0) {_aggression--;};
             if (_hitPoints <=0) {return self.kill();};
@@ -938,9 +954,12 @@ module.exports.Player = function Player(aUsername) {
             status += "Your score is "+_score+".<br>";
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
-            if (self.isHungry()) { status += "You are hungry.<br>"};
-            if (_bleeding) { status += "You are bleeding and need healing.<br>"};
+            status += "You have visited "+_locationsFound+" locations.<br>";             
+            if (self.isHungry()) { status += "You're hungry.<br>"};
+            if (_bleeding) { status += "You're bleeding and need healing.<br>"};
             if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
+            if (_injuriesReceived > 0) status += "You have been injured "+_injuriesReceived+" times.<br>";
+
             status += "Your health is at "+_hitPoints+"%.";//remove this in the final game
             //status += self.health();
 

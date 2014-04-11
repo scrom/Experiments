@@ -184,7 +184,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'visits':
                         ticks = 0;
-                        description = _player.getLocation().getVisits();
+                        description = _player.getVisits();
                         break;
                     case 'inv':
                     case 'inventory':

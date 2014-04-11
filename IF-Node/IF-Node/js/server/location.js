@@ -138,10 +138,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         }; 
 
         self.getVisits = function() {
-            var returnString = "You have visited this location ";
-            if (_visits == 1) {return returnString+"once."}
-            if (_visits == 2) {return returnString+"twice."}
-            return returnString+_visits+" times.";
+            return _visits;
         };
 
         self.listExits = function() {
