@@ -200,7 +200,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'examine':
                         ticks = 0;
                         description = _player.examine(_verb, _object0);
-                        break;
+                        break;  
                     case 'rest':
                         ticks = 0;
                         description = _player.rest(_verb, 5);
@@ -324,6 +324,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'save':
                     case 'load':
+                    case 'search':
                     case 'pick':
                     case 'rub':
                     case 'on':
