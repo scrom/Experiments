@@ -6,6 +6,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
     try{  
         //module deps
         var inventoryObjectModule = require('./inventory');    
+        var missionObjectModule = require('./mission.js');
 
         //attributes
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -135,12 +136,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         }; 
 
         self.syn = function (synonym) {
-            if (synonym == _name) { return true; }; //match by name first
+            if (synonym == _name) {
+                return true; 
+            }; //match by name first
+            if (synonym == self.getDisplayName()) { 
+                return true; 
+            }; //match by name first
             if (!(_synonyms)) {
-                console.log('No syns found for ' + synonym);
                 return false;
             };
-            if (_synonyms.indexOf(synonym) == -1) { return false; };
+            if (_synonyms.indexOf(synonym) == -1) { 
+                return false; 
+            };
             return true;
         };
 
@@ -195,6 +202,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getDescription = function() {
             return _description;
+        };
+
+        self.addMission = function(aMission) {
+            _missions.push(aMission);
+        };
+
+        self.getMissions = function() {
+            var missions = [];
+            for (var i=0; i < _missions.length; i++) {
+                missions.push(_missions[i]);
+                if (!(_missions[i].isStatic())) {
+                    _missions.splice(i,1);
+                };
+            };
+            return missions;
         };
 
         self.getDetailedDescription = function() {
@@ -309,6 +331,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_destroyed|| _broken) {return false};
             if (self.isLocked()) {return false;};
             return _inventory.canCarry(anObject);
+        };
+
+        self.getObject = function(anObject) {
+            return _inventory.getObject(anObject);
+        };
+
+        self.getAllObjects = function() {
+            return _inventory.getAllObjects();
         };
 
         self.wave = function(anObject) {

@@ -6,7 +6,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         var locationObjectModule = require('./location'); 
         var artefactObjectModule = require('./artefact');
         var creatureObjectModule = require('./creature.js');
-        //var missionObjectModule = require('./mission.js');
+        var missionObjectModule = require('./mission.js');
           
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];
@@ -63,7 +63,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         };
 
         self.init = function(){
-            var atrium = self.addLocation('atrium',"You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br>It's your first day in the office, time to get yourself some coffee and then figure out what you need to do!");
+            var atrium = self.addLocation('atrium',"You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.");
             var reception = self.addLocation('reception',"You are stood by the big red reception desk in the Red Gate office atrium.");
             var toilet = self.addLocation('toilet-ground-floor',"You stare at yourself in the mirror of that bathroom and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.");
             var lift = self.addLocation('lift-ground-floor',"The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.");
@@ -179,7 +179,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             keyAttributes.unlocks = 'nothing';
 
             var plainKey = new artefactObjectModule.Artefact('key', 'a key', "Just a plain key.", keyAttributes);
-            coffeeMachineKey.addSyns(['plain key']);
+            plainKey.addSyns(['plain key']);
             _locations[pioneer].addObject(plainKey);
 
             var table = new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", fragileRoomAttributes, null);
@@ -286,6 +286,17 @@ exports.Map = function Map() { //inputs for constructor TBC
             var jamesm = new creatureObjectModule.Creature('James', 'James Moore', "He pwns the Opportunities division.", 190, 45, 'male','friendly', 30, 150, -1, true, [money]);            
             jamesm.addSyns(['james moore','moore','jim', 'him']);
             jamesm.go(null,_locations[opportunitiesNorth]);    
+
+            //missions
+            var coffeeMission = new missionObjectModule.Mission('sweetCoffee',"It's your first day in the office. Your first important task is to get yourself a nice sweet cup of coffee.",'',null,'sweet coffee', false,5,'player',{score: 50, successMessage: "Congratulations. You managed to get your coffee, have 50 points!"});
+            _locations[atrium].addMission(coffeeMission);
+
+            var beansMission = new missionObjectModule.Mission('beans',"Before you can get any coffee, this machine needs beans.",'',null,'beans',true, 5,'machine',{score: 50, successMessage: "Congratulations. You filled the coffee machine with beans, have 50 points!"});
+            coffeeMachine.addMission(beansMission);
+
+            var bookMission = new missionObjectModule.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', false ,5,'Vic',{score: 50, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
+            receptionist.addMission(bookMission);
+
         };
 
         self.getStartLocation = function() {

@@ -124,7 +124,7 @@ exports.Action = function Action(aPlayer, aMap) {
             _object1 = _objects[1]; 
 
         };
-        
+       
         //after player has performed an action, each creature in the room has an opportunuty to react
         var processCreatureTicks = function(time, map, player) {
             var resultString = "";
@@ -189,7 +189,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'inv':
                     case 'inventory':
                         ticks = 0;
-                        description = _player.getInventory();
+                        description = _player.describeInventory();
                         break;
                     case 'look':
                         ticks = 0;

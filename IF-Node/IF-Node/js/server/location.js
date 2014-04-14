@@ -6,6 +6,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         var artefactObjectModule = require('./artefact');
         var exitObjectModule = require('./exit');
         var inventoryObjectModule = require('./inventory');
+        var missionObjectModule = require('./mission.js');
               
 	    var self = this; //closure so we don't lose this reference in callbacks
         //self.location = {}; //JSON representation of location {description, objects, exits, creatures}
@@ -15,6 +16,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         var _description = aDescription;
         var _inventory =  new inventoryObjectModule.Inventory(99999, _name);//unlimited //[]; //and creatures
         var _exits = [];
+        var _missions = [];
 
 	    var objectName = "Location";
 
@@ -38,6 +40,10 @@ exports.Location = function Location(aName, aDescription, isDark) {
             var storedExit = _exits[_exits.length-1];   
             console.log('Exit from '+self.getName()+', '+storedExit.getName()+' to '+storedExit.getDestinationName()+' added.');   
             return 'Exit from '+self.getName()+', '+newExit.getName()+' to '+newExit.getDestinationName()+' added.';
+        };
+
+        self.addMission = function(aMission) {
+            _missions.push(aMission);
         };
 
         self.getExitDestination = function(aDirection) {
@@ -109,17 +115,23 @@ exports.Location = function Location(aName, aDescription, isDark) {
         };
 
         self.describe = function() {
-            var fullDescription = _description;
+            var resultString = _description;
+            //retrieve missions from location:
+            if (_missions.length>0) {resultString+= "<br><br>";};
+            for (var i=0; i< _missions.length;i++) {
+                resultString+= _missions[i].getDescription()+"<br>";
+            };
+
             if (_inventory.size() > 0) {
                 //clean up grammar here (there is/there are)
-                fullDescription+="<br>You can see "+self.listObjects()+".";
+                resultString+="<br>You can see "+self.listObjects()+".";
             };
             if (self.getAvailableExits().length > 0) {
                 //clean the grammar up here. (in particular - better answer when there are no exits)
-                fullDescription+="<br>Exits are: "+self.listExits()+".";
-            } else { fullDescription+= "<br>There are no visible exits.";};
+                resultString+="<br>Exits are: "+self.listExits()+".";
+            } else { resultString+= "<br>There are no visible exits.";};
 
-            return fullDescription;
+            return resultString;
         };
 
         self.addVisit = function() {
@@ -139,6 +151,17 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.getVisits = function() {
             return _visits;
+        };
+
+        self.getMissions = function() {
+            var missions = [];
+            for (var i=0; i < _missions.length; i++) {
+                missions.push(_missions[i]);
+                if (!(_missions[i].isStatic())) {
+                    _missions.splice(i,1);
+                };
+            };
+            return missions;
         };
 
         self.listExits = function() {

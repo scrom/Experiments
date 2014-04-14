@@ -19,7 +19,8 @@ module.exports.Game = function Game(aUsername,aGameID) {
 
         ////var initialLocation = map.add
         _map.init();
-        _player.setLocation(_map.getStartLocation());
+        
+        var locationDescription = _player.setLocation(_map.getStartLocation());
 
         //log game created
         console.log(_objectName+' id: '+_id+' created for '+_player.getUsername());	
@@ -31,7 +32,7 @@ module.exports.Game = function Game(aUsername,aGameID) {
         };	
 
         self.state = function() {
-            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+_player.getLocation().describe()+'"}';
+            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+locationDescription+'"}';
         };
 
         self.userAction = function(actionString) {

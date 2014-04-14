@@ -4,6 +4,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
+        var missionObjectModule = require('./mission.js');
 
 	    var self=this; //closure so we don't lose reference in callbacks
         var _name = aName.toLowerCase();
@@ -102,12 +103,18 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         };
 
         self.syn = function (synonym) {
-            if (synonym == _name) { return true; }; //match by name first
+            if (synonym == _name) { 
+                return true; 
+            }; //match by name first
+            if (synonym == self.getDisplayName()) { 
+                return true; 
+            }; //match by name first
             if (!(_synonyms)) {
-                console.log('No syns found for ' + synonym);
                 return false;
             };
-            if (_synonyms.indexOf(synonym) == -1) { return false; };
+            if (_synonyms.indexOf(synonym) == -1) { 
+                return false; 
+            };
             return true;
         };
 
@@ -121,6 +128,21 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         
         self.getDescription = function() {
             return _description;
+        };
+
+        self.addMission = function(aMission) {
+            _missions.push(aMission);
+        };
+
+        self.getMissions = function() {
+            var missions = [];
+            for (var i=0; i < _missions.length; i++) {
+                missions.push(_missions[i]);
+                if (!(_missions[i].isStatic())) {
+                    _missions.splice(i,1);
+                };
+            };
+            return missions;
         };
 
         self.getAffinityDescription = function() {

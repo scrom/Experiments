@@ -117,7 +117,12 @@ module.exports.Player = function Player(aUsername) {
             return _stealth;
         };
 
+        //ugly - expose an object we own!
         self.getInventory = function() {
+            return _inventory;
+        };	
+
+        self.describeInventory = function() {
             return "You're carrying "+_inventory.describe()+".";
         };	
 
@@ -566,13 +571,27 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.examine = function(verb, artefactName) {
+            var resultString = "";
+
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
             if (stringIsEmpty(artefactName)){ return self.getLocation().describe();};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
 
-            return artefact.getDetailedDescription();
+            resultString += artefact.getDetailedDescription();
+
+            var newMissions = artefact.getMissions();
+            if (newMissions.length>0) {resultString+= "<br>";};
+            for (var i=0; i< newMissions.length;i++) {
+                if (!(newMissions[i].isStatic())) {
+                    _missions.push(newMissions[i]);
+                };
+                resultString+= newMissions[i].getDescription()+"<br>";
+            };
+
+            return resultString;
+
         };
 
         self.open = function(verb, artefactName) {
@@ -598,7 +617,11 @@ module.exports.Player = function Player(aUsername) {
         self.setLocation = function(location) { //param is a loction object, not a name.
             //fire "leave" trigger for current location (if location is set and player not dead)
             var resultString = "";
-            if (_currentLocation) {resultString += _currentLocation.fireExitTrigger()}; //possible add line break here
+
+            if (_currentLocation) {
+                resultString += _currentLocation.fireExitTrigger(); //possible add line break here
+            }; 
+
             _currentLocation = location;
             resultString += _currentLocation.addVisit();
             if (_startLocation == undefined) {
@@ -608,7 +631,16 @@ module.exports.Player = function Player(aUsername) {
             //is this a new location?
             if (_currentLocation.getVisits() == 1) {_locationsFound++;};
 
+            
             resultString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
+
+            //retrieve missions from location:
+            var newMissions = _currentLocation.getMissions();
+
+            for (var i=0; i< newMissions.length;i++) {
+                if (!(newMissions[i].isStatic())) {_missions.push(newMissions[i]);};
+            };
+
             return resultString;
         };
 
@@ -923,6 +955,16 @@ module.exports.Player = function Player(aUsername) {
             var damage = 0;
             var healPoints = 0;
 
+            //check mission status
+            for (var i=0; i< _missions.length;i++) {
+                var missionReward = _missions[i].checkState(_inventory, _currentLocation);
+                if (missionReward) {
+                    resultString += "<br>"+missionReward.successMessage+"<br>";
+                    if (missionReward.score) { _score += missionReward.score;};
+                    _missions.splice(i,1); //remove mission.
+                };
+            };
+
             //if no time passes
             if (time <=0) {return resultString;};
 
@@ -962,6 +1004,11 @@ module.exports.Player = function Player(aUsername) {
 
         self.status = function() {
             var status = "";
+            for (var i=0; i< _missions.length;i++) {
+                status+= _missions[i].getDescription()+"<br>";
+            };
+            if (_missions.length > 0) {status+="<br>";};
+
             status += "Your score is "+_score+".<br>";
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
