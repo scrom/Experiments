@@ -25,6 +25,7 @@ module.exports.Player = function Player(aUsername) {
         var _restsTaken = 0;
         var _sleepsTaken = 0;
         var _locationsFound = 0;
+        var _missionsCompleted = 0;
         var _foodEaten = 0;
         var _drinksDrunk = 0;
         var _creatureHitsMade = 0;
@@ -961,6 +962,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    _missionsCompleted ++;
                     _missions.splice(i,1); //remove mission.
                 };
             };
@@ -972,6 +974,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    _missionsCompleted ++;
                     _currentLocation.removeMission(locationMissions[j].getName());
                 };
             };
@@ -985,6 +988,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward) {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
                         if (missionReward.score) { _score += missionReward.score;};
+                        _missionsCompleted ++;
                         artefacts[i].removeMission(artefactMissions[j].getName());
                     };
                 };
@@ -1038,6 +1042,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
             status += "You have visited "+_locationsFound+" locations.<br>";
+            if (_missionsCompleted > 0) {status += "You have completed "+_missionsCompleted+" missions.<br>";}; 
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
             if (self.isHungry()) { status += "You're hungry.<br>"};
