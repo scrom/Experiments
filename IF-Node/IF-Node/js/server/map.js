@@ -72,7 +72,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var bottomkitchen = self.addLocation('kitchen-ground-floor',"You're in the atrium kitchen."); 
             var seatingArea = self.addLocation('atrium-seating',"You're in the atrium seating area."); //add chairs, chess, trees
             //need to add locked door to mewburn ellis lawyers
-           // var lawyerEntrance = self.addLocation('lawyer entrance',"You're in the entranece to the resident law firm."); //add chairs, chess, trees
+            var lawyerLobby = self.addLocation('lawyer-lobby',"You're in the lobby of the resident law firm.<br>There's an air of bureaucracy, suits and books to the place."); //add chairs, chess, trees
             var groundNorthWestCorridor = self.addLocation('northwest-corridor-ground-floor',"You're in the North-West corridor of the ground floor.");
             var groundShower = self.addLocation('shower-ground-floor',"You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.");
             var pioneer = self.addLocation('pioneer',"You're in the Pioneer meeting room. The acoustics in here seem very strange."); //add shiny table
@@ -88,6 +88,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var groundSouthWestCorridor = self.addLocation('southwest-corridor-ground-floor',"You're in the South-West corridor of the ground floor.");
             var groundWestEndSouthCorridor = self.addLocation('west-end-south-corridor-ground-floor',"You're in the West end of the South corridor on the ground floor.");
             var groundEastEndSouthCorridor = self.addLocation('east-end-south-corridor-ground-floor',"You're in the East end of the South corridor on the ground floor.");
+            var smokingArea = self.addLocation('smoking-area',"You're outside the back of the office under the fire escape.");
             var groundSouthEastCorridor = self.addLocation('southeast-corridor-ground-floor',"You're in the South-East corridor of the ground floor.");
             var poppy = self.addLocation('poppy',"You're in the Poppy meeting room. The AV equipment in here could use some love."); //add AV kit
             var graffitib = self.addLocation('graffiti-b',"You're in the Graffiti-B meeting room. It's all bright and shiny."); //add room divider
@@ -106,6 +107,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             self.link('i', _locations[atrium].getName(), _locations[lift].getName());
             self.link('w', _locations[atrium].getName(), _locations[bottomStairs].getName());
             self.link('e', _locations[reception].getName(), _locations[seatingArea].getName());
+            self.link('s', _locations[seatingArea].getName(), _locations[lawyerLobby].getName());
             self.link('s', _locations[reception].getName(), _locations[groundNorthEastCorridor].getName());
             self.link('n', _locations[bottomStairs].getName(), _locations[library].getName());
             self.link('w', _locations[bottomStairs].getName(), _locations[bottomkitchen].getName());
@@ -127,6 +129,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             self.link('e', _locations[groundWestEndSouthCorridor].getName(), _locations[groundEastEndSouthCorridor].getName());
             self.link('n', _locations[groundWestEndSouthCorridor].getName(), _locations[graffitib].getName());
             self.link('n', _locations[groundEastEndSouthCorridor].getName(), _locations[graffitia].getName());
+            self.link('s', _locations[groundEastEndSouthCorridor].getName(), _locations[smokingArea].getName());
             self.link('e', _locations[groundEastEndSouthCorridor].getName(), _locations[groundSouthEastCorridor].getName());
             self.link('e', _locations[groundSouthEastCorridor].getName(), _locations[room404].getName());
             self.link('n', _locations[groundSouthEastCorridor].getName(), _locations[groundEastSouthEndCorridor].getName());
@@ -139,6 +142,15 @@ exports.Map = function Map() { //inputs for constructor TBC
             var liftEntrance = _locations[atrium].getExit('i');
             liftEntrance.hide();
 
+            var lawyerEntrance = _locations[seatingArea].getExit('s');
+            lawyerEntrance.hide();
+
+            var fireExit = _locations[groundEastEndSouthCorridor].getExit('s');
+            fireExit.hide();
+
+            var fireEntry = _locations[smokingArea].getExit('n');
+            fireEntry.hide();
+
             //['weapon','junk','treasure','food','money','tool','door','container', 'key'];    
             //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable
             var foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 25, isBreakable: false};
@@ -150,6 +162,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var lockedStaticContainerAttributes = {weight: 51, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
             var fragileRoomAttributes = {weight: 51, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
             var doorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: false};
+            var lockedDoorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: false, lockable: true, locked: true};
             var breakableDoorAttributes = {weight: 200, carryWeight: 0, attackStrength: 0, type: "door", canCollect: false, canOpen: true, isEdible: false, isBreakable: true};
             var treasureAttributes = {weight: 5, carryWeight: 0, attackStrength: 5, type: "treasure", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
             var moneyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "money", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, charges: 10, value: 10}; //value not used yet
@@ -170,6 +183,19 @@ exports.Map = function Map() { //inputs for constructor TBC
             var button = new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", doorAttributes, liftEntrance);
             button.addSyns(['lift','lift call','lift button','lift call button','door']);
             _locations[atrium].addObject(button);
+
+            //lawyerLobby
+            var lawyerDoor = new artefactObjectModule.Artefact('door', 'a locked door', "Peering through the window you see people in suits looking busy and important.", lockedDoorAttributes, lawyerEntrance);
+            lawyerDoor.addSyns(['lawyer exit','lawyer door']);
+            _locations[seatingArea].addObject(lawyerDoor);
+
+            var fireDoor = new artefactObjectModule.Artefact('door', 'a fire exit', "If you push the bar, you'll probably set off an alarm.", doorAttributes, fireExit);
+            fireDoor.addSyns(['bar','fire exit','fire door']);
+            _locations[groundEastEndSouthCorridor].addObject(fireDoor);
+
+            var fireDoor2 = new artefactObjectModule.Artefact('door', 'a fire exit', "If you push the bar, you'll probably set off an alarm.", doorAttributes, fireEntry);
+            fireDoor2.addSyns(['bar','fire exit','fire door','exit']);
+            _locations[smokingArea].addObject(fireDoor2);
             
             var coffeeMachineKeyAttributes = keyAttributes; //buggy - same object
             coffeeMachineKeyAttributes.unlocks = 'machine';
