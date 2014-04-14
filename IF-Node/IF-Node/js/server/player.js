@@ -965,6 +965,31 @@ module.exports.Player = function Player(aUsername) {
                 };
             };
 
+            //check missions from location
+            var locationMissions = _currentLocation.getMissions();
+            for (var j=0; j<locationMissions.length;j++) {
+                var missionReward = locationMissions[j].checkState(_inventory, _currentLocation);
+                if (missionReward) {
+                    resultString += "<br>"+missionReward.successMessage+"<br>";
+                    if (missionReward.score) { _score += missionReward.score;};
+                    _currentLocation.removeMission(locationMissions[j].getName());
+                };
+            };
+
+            //check missions from location objects
+            var artefacts = _currentLocation.getAllObjects();
+            for (var i=0; i<artefacts.length; i++) {
+                var artefactMissions = artefacts[i].getMissions();
+                for (var j=0; j<artefactMissions.length;j++) {
+                var missionReward = artefactMissions[j].checkState(_inventory, _currentLocation);
+                    if (missionReward) {
+                        resultString += "<br>"+missionReward.successMessage+"<br>";
+                        if (missionReward.score) { _score += missionReward.score;};
+                        artefacts[i].removeMission(artefactMissions[j].getName());
+                    };
+                };
+            };
+
             //if no time passes
             if (time <=0) {return resultString;};
 

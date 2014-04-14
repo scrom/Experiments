@@ -294,7 +294,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var beansMission = new missionObjectModule.Mission('beans',"Before you can get any coffee, this machine needs beans.",'',null,'beans',true, 5,'machine',{score: 50, successMessage: "Congratulations. You filled the coffee machine with beans, have 50 points!"});
             coffeeMachine.addMission(beansMission);
 
-            var bookMission = new missionObjectModule.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', false ,5,'Vic',{score: 50, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
+            var bookMission = new missionObjectModule.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', true ,5,'Vic',{score: 50, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
             receptionist.addMission(bookMission);
 
         };

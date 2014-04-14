@@ -134,6 +134,16 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             _missions.push(aMission);
         };
 
+        self.removeMission = function(aMissionName) {
+            for(var index = 0; index < _missions.length; index++) {
+                if (_missions[index].getName()==aMissionName) {
+                    _missions.splice(index,1);
+                    console.log(aMissionName+" removed from "+self.getDisplayName());
+                    break;
+                };
+            };
+        };
+
         self.getMissions = function() {
             var missions = [];
             for (var i=0; i < _missions.length; i++) {

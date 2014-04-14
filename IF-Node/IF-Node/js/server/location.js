@@ -42,10 +42,6 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return 'Exit from '+self.getName()+', '+newExit.getName()+' to '+newExit.getDestinationName()+' added.';
         };
 
-        self.addMission = function(aMission) {
-            _missions.push(aMission);
-        };
-
         self.getExitDestination = function(aDirection) {
             var exit = self.getExit(aDirection);
             if (exit) {return exit.getDestinationName();};
@@ -151,6 +147,20 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.getVisits = function() {
             return _visits;
+        };
+
+        self.addMission = function(aMission) {
+            _missions.push(aMission);
+        };
+
+        self.removeMission = function(aMissionName) {
+            for(var index = 0; index < _missions.length; index++) {
+                if (_missions[index].getName()==aMissionName) {
+                    _missions.splice(index,1);
+                    console.log(aMissionName+" removed from "+self.getName());
+                    break;
+                };
+            };
         };
 
         self.getMissions = function() {
