@@ -83,7 +83,14 @@ module.exports.Player = function Player(aUsername) {
         };
 
         var removeObjectFromLocation = function(objectName){
-            return _currentLocation.removeObject(objectName);
+            //player cannot remove immovable objects. (but they can remove themselves)
+            var objectToRemove = _currentLocation.getObject(objectName);
+            if (objectToRemove) {
+                if (objectToRemove.isCollectable()) {
+                    return _currentLocation.removeObject(objectName);
+                };
+            };
+            return null;
         };
 
         var removeObjectFromPlayerOrLocation = function(objectName){

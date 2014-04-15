@@ -82,13 +82,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
                 for(var index = 0; index < localInventory.length; index++) {
                     if (localInventory[index].syn(anObject)) {
                         var returnObject = _items[index];
-                        if (returnObject.isCollectable()) { //can't remove things that aren't collectable
-                            localInventory.splice(index,1);
-                            console.log(anObject+" removed from "+_ownerName+" inventory");
-                            return returnObject;
-                        } else {
-                            return null;
-                        };
+                        localInventory.splice(index,1);
+                        console.log(anObject+" removed from "+_ownerName+" inventory");
+                        return returnObject;
                     };
                     if(localInventory[index].getType() == 'container' && (!(localInventory[index].isLocked()))) {
                         if (localInventory[index].isOpen()) {
