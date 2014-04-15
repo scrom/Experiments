@@ -191,12 +191,17 @@ exports.Action = function Action(aPlayer, aMap) {
                         ticks = 0;
                         description = _player.describeInventory();
                         break;
+                    case 'show':
                     case 'look':
                         ticks = 0;
+                        //trap a few junk words - will return "look" with no object. 
+                        if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
+                        
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1);}
                         else {description = _player.examine(_verb, _object0);};
                         break;
+                    case 'read':
                     case 'examine':
                         ticks = 0;
                         description = _player.examine(_verb, _object0);
