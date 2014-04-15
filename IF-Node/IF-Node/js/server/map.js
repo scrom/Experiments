@@ -66,6 +66,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var atrium = self.addLocation('atrium',"You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.");
             var reception = self.addLocation('reception',"You are stood by the big red reception desk in the Red Gate office atrium.");
             var toilet = self.addLocation('toilet-ground-floor',"You stare at yourself in the mirror of that bathroom and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.");
+            var cubicle = self.addLocation('toilet-ground-floor-cubicle',"You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.");
             var lift = self.addLocation('lift-ground-floor',"The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.");
             var bottomStairs = self.addLocation('stairs-ground-floor',"You're standing at the foot of the stairs.");
             var library = self.addLocation('library',"You're in the atrium Library."); //add comfy sofa and shelves containing books
@@ -104,6 +105,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             self.link('e', _locations[atrium].getName(), _locations[reception].getName());
             self.link('s', _locations[atrium].getName(), _locations[toilet].getName());
+            self.link('i', _locations[toilet].getName(), _locations[cubicle].getName());
             self.link('i', _locations[atrium].getName(), _locations[lift].getName());
             self.link('w', _locations[atrium].getName(), _locations[bottomStairs].getName());
             self.link('e', _locations[reception].getName(), _locations[seatingArea].getName());
@@ -219,6 +221,10 @@ exports.Map = function Map() { //inputs for constructor TBC
             var book = new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", junkAttributes, null);
             book.addSyns(['large book','sales book','selling book', 'software book']);
             _locations[library].addObject(book);
+
+            var lotl = new artefactObjectModule.Artefact('article', "a 'Learn on the Loo' article", "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).", junkAttributes, null);
+            lotl.addSyns(['lotl','learn on the loo','learn on the loo article', 'loo article', 'learn article']);
+            _locations[cubicle].addObject(lotl);
 
             var cake = new artefactObjectModule.Artefact('cake', 'a slice of chocolate cake', "Mmmm tasty *and* healthy. If only there were more.", foodAttributes, null);
             cake.addSyns(['slice','chocolate cake','food']);
