@@ -326,6 +326,9 @@ exports.Map = function Map() { //inputs for constructor TBC
             var killSpy = new missionObjectModule.Mission('killTheSpy',"Kill the spy.",'',null,'spy', false ,0,'spy',{score: 50, successMessage: "Congratulations. You killed the spy! Have 50 points."});
             _locations[lift].addMission(killSpy);
 
+            var retrieveDisk = new missionObjectModule.Mission('retrieveDisk',"Retrieve a stolen hard drive.",["'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'", "'Have you found my missing data yet?'"],null,'disk', false ,5,'Simon',{score: 50, successMessage: "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."});
+            simong.addMission(retrieveDisk);
+
         };
 
         self.getStartLocation = function() {

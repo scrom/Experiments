@@ -529,7 +529,15 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
-            return initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";
+            //if creature has missions - return dialogue.
+            var response = "";
+            response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";
+            if (_missions.length>0) {response += "<br><br>"+_genderPrefix+' has a task for you:<br>';};
+            for (i=0; i< _missions.length; i++) {
+                response += _missions[i].getNextDialogue()+"<br>";
+            };
+
+            return  response;
         };
 
         self.isCollectable = function() {

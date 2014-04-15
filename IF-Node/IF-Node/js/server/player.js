@@ -551,7 +551,7 @@ module.exports.Player = function Player(aUsername) {
                 if (stringIsEmpty(receiverName)){ return "'"+speech+"'";};
 
                 //get receiver if it exists
-                var receiver = getObjectFromPlayerOrLocation(giverName);
+                var receiver = getObjectFromPlayerOrLocation(receiverName);
                 if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
 
                 //we'll only get this far if there is a valid receiver
@@ -590,6 +590,10 @@ module.exports.Player = function Player(aUsername) {
             resultString += artefact.getDetailedDescription();
 
             var newMissions = artefact.getMissions();
+            //remove any with dialogue from this list.
+            for (var j=0; j< newMissions.length;j++) {
+                if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
+            };
             if (newMissions.length>0) {resultString+= "<br>";};
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {

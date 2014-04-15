@@ -6,8 +6,9 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         var _name = name.toLowerCase();
         var _parent = parent; //parent mission - allows threads to be built up.
         var _description = description;
-        var _dialogue = dialogue; //an array/collection of dialogue objects (owner, trigger, response - or similar)
+        var _dialogue = dialogue; //an array/collection of dialogue sentences. If a mission has dialogue, it'll override any static settings and be treated as static for now.
         var _isStatic = isStatic; //if true, mission stays in source location.
+        var _conversationState = 0; //track dialogue
         var _object = object; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _condition = condition; //the required (numeric/enumerated) condition the object must be in for success 
         var _destination = destination; //could be a creature, object or location - where the object needs to get to - name only
@@ -16,6 +17,9 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
 
 	    var _objectName = "Mission";
         console.log(_objectName + ' created: '+_name+', '+_destination);
+
+        if (_dialogue == null || _dialogue == undefined || _dialogue == "") { _dialogue = [];} //ensure there's an array
+        else {_isStatic = true;}; //override static setting if mission has dialogue
 
         ////public methods
         self.toString = function() {
@@ -52,6 +56,19 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
 
         self.fail = function() {
             _reward=null;
+        };
+
+        self.hasDialogue = function() {
+            if (_dialogue.length > 0) {return true;};
+            return false;
+        };
+
+        self.getNextDialogue = function() {
+            var response = _dialogue[_conversationState];
+            //move conversation forward
+            //if we reach the end of the array, stop there.
+            if (_conversationState <= _dialogue.length) {_conversationState++};
+            return response;
         };
 
         self.checkState = function(playerInventory, location) {
