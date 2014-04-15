@@ -7,7 +7,6 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         var _parent = parent; //parent mission - allows threads to be built up.
         var _description = description;
         var _dialogue = dialogue; //an array/collection of dialogue objects (owner, trigger, response - or similar)
-        var _state = 0; //0 = not started, -1 = failed, 1=completed. //may extend this to allow tracking of each stage
         var _isStatic = isStatic; //if true, mission stays in source location.
         var _object = object; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _condition = condition; //the required (numeric/enumerated) condition the object must be in for success 
@@ -68,20 +67,24 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
                         object = location.getObject(_object);
                         break;
                     default:
+                        //this one allows you to have an object/creature in any location - the object's condition will determine success.
+                        //this supports find, break, destroy, chew, kill
                         if (location.getObject(_destination)) {
                             console.log('found mission destination object/creature in location');
                             var destinationObjectOrCreature = location.getObject(_destination);
-                            object = destinationObjectOrCreature.getObject(_object);
+                            if (_destination == _object) {object = destinationObjectOrCreature}
+                            else { object = destinationObjectOrCreature.getObject(_object);};
                         } else if (playerInventory.getObject(_destination)) {
                             //creature or object in player inventory
                             console.log('found mission destination object/creature in player inventory');
                             var destinationObjectOrCreature = playerInventory.getObject(_destination);
-                            object = destinationObjectOrCreature.getObject(_object);
+                            if (_destination == _object) {object = destinationObjectOrCreature}
+                            else { object = destinationObjectOrCreature.getObject(_object);};
                         };
                         break;
             };
             if (object) {
-                console.log('mission object retrieved');
+                console.log('mission object retrieved. Checking for condition: '+_condition);
                 if (object.getCondition() == _condition) {return self.success();};
             };
         };

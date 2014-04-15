@@ -323,6 +323,9 @@ exports.Map = function Map() { //inputs for constructor TBC
             var bookMission = new missionObjectModule.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', true ,5,'Vic',{score: 50, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
             receptionist.addMission(bookMission);
 
+            var killSpy = new missionObjectModule.Mission('killTheSpy',"Kill the spy.",'',null,'spy', false ,0,'spy',{score: 50, successMessage: "Congratulations. You killed the spy! Have 50 points."});
+            _locations[lift].addMission(killSpy);
+
         };
 
         self.getStartLocation = function() {
