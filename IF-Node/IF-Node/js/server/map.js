@@ -329,6 +329,9 @@ exports.Map = function Map() { //inputs for constructor TBC
             var retrieveDisk = new missionObjectModule.Mission('retrieveDisk',"Retrieve a stolen hard drive.",["'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'", "'Have you found my missing data yet?'"],null,'disk', false ,5,'Simon',{score: 50, successMessage: "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."});
             simong.addMission(retrieveDisk);
 
+            var destroyScreen = new missionObjectModule.Mission('destroyScreen',"It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",null,null,'screen', true ,0,'screen',{score: -25, successMessage: "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points."});
+            screen.addMission(destroyScreen);
+
         };
 
         self.getStartLocation = function() {
