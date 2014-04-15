@@ -9,7 +9,9 @@ module.exports.Player = function Player(aUsername) {
         var _inventory =  new inventoryObjectModule.Inventory(50, _username);
         var _destroyedObjects = []; //track names of all objects player has destroyed
         var _consumedObjects = []; //track names of all objects player has consumed
+        var _missionsCompleted = []; //track names of all missions completed
         var _missions = []; //player can "carry" missions.
+
         var _maxHitPoints = 100;
         var _hitPoints = _maxHitPoints;
         var _aggression = 0;
@@ -25,9 +27,6 @@ module.exports.Player = function Player(aUsername) {
         var _restsTaken = 0;
         var _sleepsTaken = 0;
         var _locationsFound = 0;
-        var _missionsCompleted = 0;
-        var _foodEaten = 0;
-        var _drinksDrunk = 0;
         var _creatureHitsMade = 0;
         var _totalCreatureDamageDelivered = 0;
         var _creaturesKilled = 0;
@@ -38,7 +37,6 @@ module.exports.Player = function Player(aUsername) {
         var _totalDamageReceived = 0;
         var _objectsChewed = 0;
         var _objectsBroken = 0;
-        var _objectsDestroyed = 0;
         var _objectsGiven = 0;
         var _objectsStolen = 0;
         var _objectsReceived = 0;
@@ -973,7 +971,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
-                    _missionsCompleted ++;
+                    _missionsCompleted.push(_missions[i].getName());
                     _missions.splice(i,1); //remove mission.
                 };
             };
@@ -985,7 +983,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
-                    _missionsCompleted ++;
+                    _missionsCompleted.push(locationMissions[j].getName());
                     _currentLocation.removeMission(locationMissions[j].getName());
                 };
             };
@@ -999,7 +997,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward) {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
                         if (missionReward.score) { _score += missionReward.score;};
-                        _missionsCompleted ++;
+                        _missionsCompleted.push(artefactMissions[j].getName());
                         artefacts[i].removeMission(artefactMissions[j].getName());
                     };
                 };
@@ -1053,7 +1051,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
             status += "You have visited "+_locationsFound+" locations.<br>";
-            if (_missionsCompleted > 0) {status += "You have completed "+_missionsCompleted+" missions.<br>";}; 
+            if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
             if (self.isHungry()) { status += "You're hungry.<br>"};
