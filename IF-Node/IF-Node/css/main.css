@@ -20,25 +20,25 @@ body
 .spacer
 {
     height:3px;
-    width:600px
+    width:800px
 }
 
 .smallBox
 {
     height:30vh;
-    width:600px
+    width:800px
 }
 
 .oneLineBox
 {
     height:25px;
-    width:600px
+    width:800px
 }
 
 .bigBox
 {
     height:45vh;
-    width:600px
+    width:800px
 }
 
 .softBorder.smallBox{}
