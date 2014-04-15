@@ -57,6 +57,12 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             return aString.charAt(0).toUpperCase() + aString.slice(1);
         };
 
+        //handle empty strings
+        var stringIsEmpty = function(aString){
+            if ((aString == "")||(aString == undefined)||(aString == null)) {return true;};
+            return false;
+        };
+
         //set gender for more sensible responses
         if ((gender == "f")||(gender == "female")) {
             _gender == "female";
@@ -199,7 +205,17 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
         };
 
         self.getDetailedDescription = function() {
-            return _detailedDescription+"<br>"+self.getAffinityDescription()+"<br>"+_genderPrefix+"'s carrying "+_inventory.describe()+"."
+            var returnString = _detailedDescription+"<br>"+self.getAffinityDescription();
+            if (_inventory.size() > 0) {returnString +="<br>"+_genderPrefix+"'s carrying "+_inventory.describe()+".";};
+            var hasDialogue = false;
+            for (var i=0; i< _missions.length;i++) {
+                if (_missions[i].hasDialogue()) {
+                    hasDialogue = true;
+                    break;
+                };
+            };
+            if (hasDialogue) {returnString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
+            return returnString;
         };
 
         self.getType = function() {
@@ -531,10 +547,17 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             //_affinity--; (would be good to respond based on positive or hostile words here)
             //if creature has missions - return dialogue.
             var response = "";
-            response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";
-            if (_missions.length>0) {response += "<br><br>"+_genderPrefix+' has a task for you:<br>';};
+            if (stringIsEmpty(someSpeech)) {
+                response += initCap(self.getDisplayName())+" says 'Hello.'";
+            } else {
+                response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";               
+            };
+
+            if (_missions.length>0) {response += "<br><br>"+_genderPrefix+' has a task for you.';};
             for (i=0; i< _missions.length; i++) {
-                response += _missions[i].getNextDialogue()+"<br>";
+                if (_missions[i].hasDialogue()) {
+                    response += "<br>"+_missions[i].getNextDialogue();
+                };
             };
 
             return  response;

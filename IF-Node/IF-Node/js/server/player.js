@@ -6,7 +6,7 @@ module.exports.Player = function Player(aUsername) {
         var inventoryObjectModule = require('./inventory');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = aUsername;
-        var _inventory =  new inventoryObjectModule.Inventory(50, _username);
+        var _inventory =  new inventoryObjectModule.Inventory(20, _username);
         var _destroyedObjects = []; //track names of all objects player has destroyed
         var _consumedObjects = []; //track names of all objects player has consumed
         var _missionsCompleted = []; //track names of all missions completed
@@ -543,8 +543,8 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.say = function(verb, speech, receiverName) {
-                if (stringIsEmpty(speech)){ return verb+" what?";};
-                if (verb == "shout") {speech = speech.toUpperCase();};
+                //if (stringIsEmpty(speech)){ return verb+" what?";};
+                if (verb == "shout") {speech = speech.toUpperCase()+"!";};
 
                 if (stringIsEmpty(receiverName)){ return "'"+speech+"'";};
 
@@ -960,6 +960,22 @@ module.exports.Player = function Player(aUsername) {
             };
         };
 
+        self.acceptItem = function(anObject)  {
+           var resultString = "You receive "+anObject.getDescription();
+            
+           if (_inventory.canCarry(anObject)) { 
+               _inventory.add(anObject);
+               return resultString+".";   
+           };
+
+           //can't carry it
+           _currentLocation.addObject(anObject);
+           return resultString +" but it's too heavy for you right now.<br>It's been left here until you can carry it.";  
+       
+           //need to add support for required containers         
+
+        };
+
         self.tick = function(time) {
             var resultString = "";
             var damage = 0;
@@ -971,6 +987,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missionsCompleted.push(_missions[i].getName());
                     _missions.splice(i,1); //remove mission.
                 };
@@ -983,6 +1000,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missionsCompleted.push(locationMissions[j].getName());
                     _currentLocation.removeMission(locationMissions[j].getName());
                 };
@@ -997,6 +1015,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward) {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
                         if (missionReward.score) { _score += missionReward.score;};
+                        if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                         _missionsCompleted.push(artefactMissions[j].getName());
                         artefacts[i].removeMission(artefactMissions[j].getName());
                     };

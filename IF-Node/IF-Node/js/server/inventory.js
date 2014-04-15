@@ -16,7 +16,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             return self.describe;
         };
 
-        self.size = function(ownerName) {
+        self.size = function() {
             return _items.length;
         };
 

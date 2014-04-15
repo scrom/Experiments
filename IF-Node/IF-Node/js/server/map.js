@@ -276,7 +276,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             beanBag.receive(coffeeBeans);
             parcel.receive(beanBag);
                                      
-            var receptionist = new creatureObjectModule.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, [parcel]);
+            var receptionist = new creatureObjectModule.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, null);
             receptionist.addSyns(['receptionist','vic','heidi','her']);
             receptionist.go(null, _locations[reception]);
 
@@ -320,7 +320,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var beansMission = new missionObjectModule.Mission('beans',"Before you can get any coffee, this machine needs beans.",'',null,'beans',true, 5,'machine',{score: 50, successMessage: "Congratulations. You filled the coffee machine with beans, have 50 points!"});
             coffeeMachine.addMission(beansMission);
 
-            var bookMission = new missionObjectModule.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', true ,5,'Vic',{score: 50, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
+            var bookMission = new missionObjectModule.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', true ,5,'Vic',{score: 50, delivers: parcel, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
             receptionist.addMission(bookMission);
 
             var killSpy = new missionObjectModule.Mission('killTheSpy',"Kill the spy.",'',null,'spy', false ,0,'spy',{score: 50, successMessage: "Congratulations. You killed the spy! Have 50 points."});

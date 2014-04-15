@@ -64,7 +64,8 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         };
 
         self.getNextDialogue = function() {
-            var response = _dialogue[_conversationState];
+            var response ="";
+            response += _dialogue[_conversationState];
             //move conversation forward
             //if we reach the end of the array, stop there.
             if (_conversationState <= _dialogue.length) {_conversationState++};
