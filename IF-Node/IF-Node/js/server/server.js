@@ -14,7 +14,7 @@ exports.Server = function Server(anInterpreter) {
         var _config = new configObjectModule.Config();
 
         var sanitiseString = function(aString) {
-            return aString.replace(/[^a-zA-Z0-9 +-/%]+/g,"").toLowerCase(); //same as used for client but includes "/" and "%" as well
+            return aString.replace(/[^a-zA-Z0-9 +-/%]+/g,"").toLowerCase().substring(0,255); //same as used for client but includes "/" and "%" as well
         };
 
         //Array of responses awaiting replies

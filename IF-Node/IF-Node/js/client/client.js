@@ -28,7 +28,7 @@ function Client(aServerHost, aServerPort, aUi) {
         We'll need to uncomment the console log from serverRequestCallback when trying to make this work
     */
     var sanitiseString = function(aString) {
-        return aString.replace(/[^a-zA-Z0-9 +-]+/g,"").toLowerCase();
+        return aString.replace(/[^a-zA-Z0-9 +-]+/g,"").toLowerCase().substring(0,255);
     };
 
     var untangleResponse = function(someJSONData) {
@@ -61,7 +61,8 @@ function Client(aServerHost, aServerPort, aUi) {
 
     //request a new game
     var requestGame = function(aUsername) {
-        serverRequest('new/new/'+aUsername);
+        var inputString = sanitiseString(aUsername);
+        serverRequest('new/new/'+inputString);
     };
 
     //request game list

@@ -553,7 +553,7 @@ module.exports.Player = function Player(aUsername) {
                 if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
 
                 //we'll only get this far if there is a valid receiver
-                return receiver.reply(speech, _aggression).replace("$player",initCap(_username));
+                return receiver.reply(speech, _aggression);
         };
 
         self.switchOnOrOff = function(verb, artefactName, action) {

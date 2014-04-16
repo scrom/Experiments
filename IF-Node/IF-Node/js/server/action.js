@@ -24,6 +24,11 @@ exports.Action = function Action(aPlayer, aMap) {
 
         //private functions
 
+        //captialise first letter of string.
+        var initCap = function(aString){
+            return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
+
         //private - store results in class variables
         var buildResult = function(resultDescription) {
             _resultString = resultDescription;
@@ -413,6 +418,9 @@ exports.Action = function Action(aPlayer, aMap) {
 
             //if time is passing, what additional things happen to a player?
             description += _player.tick(ticks);
+
+            //replace any player substitution variables
+            description = description.replace("$player",initCap(_player.getUsername())).replace("%20"," ");
 
             //we're done processing, build the results...
             return returnResultAsJson(description);

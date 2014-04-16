@@ -225,7 +225,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             //static objects
             var screen = new artefactObjectModule.Artefact('screen', 'a flat-panel screen', "It's cycling through news, traffic reports and the names of visitors for the day.<br>"+
-                                                                                                                "Apparently the A14 is broken again.<br>Ooh! It has your name up there too. "+
+                                                                                                                "Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>"+
                                                                                                                 "At least *someone* is expecting you.", fragileRoomAttributes, null);
             screen.addSyns(['display', 'flat-panel', 'panel', 'flat panel','flat-panel screen','flat panel screen']);
             _locations[atrium].addObject(screen);
