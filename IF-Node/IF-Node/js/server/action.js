@@ -128,9 +128,11 @@ exports.Action = function Action(aPlayer, aMap) {
         //after player has performed an action, each creature in the room has an opportunuty to react
         var processCreatureTicks = function(time, map, player) {
             var resultString = "";
-            var creatures = _map.getAllCreatures();
-            for(var i=0; i < creatures.length; i++) {
-                resultString += creatures[i].tick(time, map, player);
+            if (time>0) {
+                var creatures = _map.getAllCreatures();
+                for(var i=0; i < creatures.length; i++) {
+                    resultString += creatures[i].tick(time, map, player);
+                };
             };
             return resultString;
         };
@@ -179,6 +181,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'stats':
                     case 'status':
+                    case 'missions':
                         ticks = 0;
                         description = _player.status()+'<br><br>'+_player.getLocation().describe();
                         break;
@@ -193,7 +196,6 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'show':
                     case 'look':
-                        ticks = 0;
                         //trap a few junk words - will return "look" with no object. 
                         if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
                         
@@ -208,7 +210,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     //    break;  
                     case 'read':
                     case 'examine':
-                        ticks = 0;
                         description = _player.examine(_verb, _object0);
                         break;  
                     case 'rest':
