@@ -553,7 +553,7 @@ module.exports.Player = function Player(aUsername) {
                 if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
 
                 //we'll only get this far if there is a valid receiver
-                return receiver.reply(speech, _aggression);
+                return receiver.reply(speech, _aggression).replace("$player",initCap(_username));
         };
 
         self.switchOnOrOff = function(verb, artefactName, action) {
@@ -745,7 +745,7 @@ module.exports.Player = function Player(aUsername) {
         };
         
         self.getMatchingKey = function(anObject) {
-            //find the strongest non-breakable weapon the player is carrying.
+            //find the strongest non-breakable key the player is carrying.
             var keys = _inventory.getAllObjectsOfType('key');
             for(var index = 0; index < keys.length; index++) {
                 //player must explicitly choose to use a breakable key - will only auto-use non-breakable ones.
