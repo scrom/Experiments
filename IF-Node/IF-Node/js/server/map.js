@@ -69,10 +69,9 @@ exports.Map = function Map() { //inputs for constructor TBC
             var cubicle = self.addLocation('toilet-ground-floor-cubicle',"You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.");
             var lift = self.addLocation('lift-ground-floor',"The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.");
             var bottomStairs = self.addLocation('stairs-ground-floor',"You're standing at the foot of the stairs.");
-            var library = self.addLocation('library',"You're in the atrium Library."); //add comfy sofa and shelves containing books
+            var library = self.addLocation('library',"You're in the atrium Library."); //add comfy sofa
             var bottomkitchen = self.addLocation('kitchen-ground-floor',"You're in the atrium kitchen."); 
-            var seatingArea = self.addLocation('atrium-seating',"You're in the atrium seating area."); //add chairs, chess, trees
-            //need to add locked door to mewburn ellis lawyers
+            var seatingArea = self.addLocation('atrium-seating',"You're in the atrium seating area."); //add chess, trees
             var lawyerLobby = self.addLocation('lawyer-lobby',"You're in the lobby of the resident law firm.<br>There's an air of bureaucracy, suits and books to the place."); //add chairs, chess, trees
             var groundNorthWestCorridor = self.addLocation('northwest-corridor-ground-floor',"You're in the North-West corridor of the ground floor.");
             var groundShower = self.addLocation('shower-ground-floor',"You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.");
@@ -96,7 +95,6 @@ exports.Map = function Map() { //inputs for constructor TBC
             var graffitia = self.addLocation('graffiti-a',"You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",true); //add room divider and good AV kit
             var room404 = self.addLocation('room-404',"You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.");
             var groundEastSouthEndCorridor = self.addLocation('east-south-end-corridor-ground-floor',"You're in the South end of the East corridor on the ground floor.");
-            //need to add fire exit to smoking area and fire escape
             var groundEastCorridor = self.addLocation('east-corridor-ground-floor',"You're in the East corridor of the ground floor.");
             var restArea = self.addLocation('rest-area-ground-floor',"You're in the ground floor rest area.");//add sofa, hammock, vending machine
             var groundNorthEastCorridor = self.addLocation('northeast-corridor-ground-floor',"You're in the North end of the ground floor East corridor.");
@@ -160,6 +158,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
             var containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: false};
             var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+            var openStaticContainerAttributes = {weight: 80, carryWeight: 50, attackStrength: 0, type: "container", canCollect: false, canOpen: false, isEdible: false, isBreakable: false};
             var lockedContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: false, lockable: true, locked: true};
             var lockedStaticContainerAttributes = {weight: 51, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true};
             var fragileRoomAttributes = {weight: 51, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true};
@@ -218,9 +217,15 @@ exports.Map = function Map() { //inputs for constructor TBC
             sword.addSyns(['ornamental','ornamental sword','fake sword']);
             _locations[library].addObject(sword);
 
+            //openStaticContainerAttributes
+
+            var bookcase = new artefactObjectModule.Artefact('bookcase', 'a set of bookcases', "Books on everything from travel to SQL server and from sales to C#.", openStaticContainerAttributes, null);
+            bookcase.addSyns(['bookcase','bookshelf','bookcases', 'bookshelves', 'book case','book cases','book shelf','book shelves','case','shelf','cases','shelves']);
+            _locations[library].addObject(bookcase);
+
             var book = new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", junkAttributes, null);
             book.addSyns(['large book','sales book','selling book', 'software book']);
-            _locations[library].addObject(book);
+            bookcase.receive(book);
 
             var lotl = new artefactObjectModule.Artefact('article', "a 'Learn on the Loo' article", "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).", junkAttributes, null);
             lotl.addSyns(['lotl','learn on the loo','learn on the loo article', 'loo article', 'learn article']);

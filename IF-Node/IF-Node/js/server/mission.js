@@ -13,6 +13,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         var _condition = condition; //the required (numeric/enumerated) condition the object must be in for success 
         var _destination = destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
+        var _timeTaken = 0; //track time taken to complete.
         var _type = 'mission';
 
 	    var _objectName = "Mission";
@@ -45,6 +46,10 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         self.isStatic = function() {
             console.log('mission: '+_name+' static: '+_isStatic);
             return _isStatic;
+        };
+
+        self.addTicks = function(ticks) {
+            _timeTaken += ticks
         };
 
         self.success = function() {
