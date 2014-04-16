@@ -128,7 +128,7 @@ exports.Action = function Action(aPlayer, aMap) {
         //after player has performed an action, each creature in the room has an opportunuty to react
         var processCreatureTicks = function(time, map, player) {
             var resultString = "";
-            var creatures = player.getLocation().getCreatures();
+            var creatures = _map.getAllCreatures();
             for(var i=0; i < creatures.length; i++) {
                 resultString += creatures[i].tick(time, map, player);
             };

@@ -335,7 +335,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             spy.addSyns(['corporate spy','him']);
             spy.go(null,_locations[lift]);   
 
-            var simong = new creatureObjectModule.Creature('Simon', 'Simon the CEO', "He runs the show.", {weight:180, attackStrength:45, gender:'male', type:'friendly', carryWeight:15, health:500, affinity:0, canTravel:true}, [sketchbook]);            
+            var simong = new creatureObjectModule.Creature('Simon', 'Simon the CEO', "He runs the show.", {weight:180, attackStrength:45, gender:'male', type:'friendly', carryWeight:15, health:500, affinity:0, canTravel:true, traveller: true}, [sketchbook]);            
             simong.addSyns(['boss','ceo','simon g','galbraith', 'him']);
             simong.go(null,_locations[poppy]);   
 
@@ -402,6 +402,18 @@ exports.Map = function Map() { //inputs for constructor TBC
                 if (_locations[i].objectExists(anObjectName)) {return anObjectName+" found at "+_locations[i].getName()+".";};
             };
             return anObjectName+" not found in map.";
+        };
+
+        self.getAllCreatures = function() {
+            //note, this *won't* find objects delivered by a mission or delivered by another object.
+            //loop through each location and location inventory. 
+            //Get object (by synonym)
+            //return location name when found
+            var creatures = [];
+            for (var i=0;i<_locations.length;i++) {
+                creatures = creatures.concat(_locations[i].getAllObjectsOfType('creature'));
+            };
+            return creatures;
         };
 
 

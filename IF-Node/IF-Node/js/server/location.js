@@ -106,6 +106,10 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return _inventory.getAllObjects();
         };
 
+        self.getAllObjectsOfType = function(anObjectType) {
+            return _inventory.getAllObjectsOfType(anObjectType);
+        };
+
         self.getDescription = function() {
             return _description;
         };

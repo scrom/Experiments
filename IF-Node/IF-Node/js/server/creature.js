@@ -22,7 +22,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _maxHitPoints = 0; //default
         var _hitPoints = 0; //default
         var _affinity = 0 // default // Goes up if you're nice to the creature, goes down if you're not.
-        var _canTravel = true; //default //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
+        var _canTravel = true; //default //if true, may follow if friendly or aggressive. If false, won't follow a player. May also flee
+        var _traveller = false; //default //if true, will wander when ticking unless in the same location as a player
         var _inventory = new inventoryObjectModule.Inventory(0, _name); //carry weight gets updated by attributes
         var _missions = [];
         var _collectable = false; //can't carry a living creature
@@ -46,6 +47,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
             if (creatureAttributes.canTravel != undefined) {_canTravel = creatureAttributes.canTravel;};
+            if (creatureAttributes.traveller != undefined) {_traveller = creatureAttributes.traveller;};
             if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
             if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
@@ -647,10 +649,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var healPoints = 0;
             //repeat for number of ticks
             for (var t=0; t < time; t++) {
-                console.log("Creature tick...");
+                console.log("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick();
-                resultString += self.fightOrFlight(map, player);
-                //////
+
+                //if creature is in same location as player, fight or flee...
+                if (player.getLocation().getName() == _currentLocation.getName()) {
+                    resultString += self.fightOrFlight(map, player);
+                } else if (_traveller && _canTravel) { //is a traveller
+                    var exit = _currentLocation.getRandomExit();
+                    //if only one exit, random exit won't work so get the only one we can...
+                    if (!(exit)) {exit = _currentLocation.getAvailableExits()[0];}; 
+                    if (exit) {
+                        self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
+                        //if creature ends up in player location (rather than starting there...
+                        if (player.getLocation().getName() == _currentLocation.getName()) {
+                            resultString += "<br>"+initCap(self.getDisplayName())+" wanders in.<br>";  
+                        } else {
+                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";  
+                        };  
+                     };  
+             
+                };
+
                 //bleed?
                 if (_bleeding) {
                     damage+=2;
@@ -668,7 +688,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (healthPercent() <=50) {_bleeding = true;};
             if (_bleeding) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
 
-            return resultString;
+            //only show what's going on if the player is in the same location
+            if (player.getLocation().getName() == _currentLocation.getName()) {
+                return resultString;
+            } else {
+                return "";
+                console.log(resultString);
+            };
         };
 
         //dummy methods to map to artefact interface
