@@ -108,7 +108,12 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
             };
             if (object) {
                 console.log('mission object retrieved. Checking for condition: '+_condition);
-                if (object.getCondition() == _condition) {return self.success();};
+                if (object.getCondition() == _condition) {
+                    //if mission has dialogue, ensure that has been triggered at least once...
+                    if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
+                        return self.success();
+                    };
+                };
             };
         };
 

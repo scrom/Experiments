@@ -523,7 +523,7 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             _edible = true;
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
-            _description = 'a dead '+self.getDisplayName();
+            _description = 'a dead '+self.getDisplayName().replace("the ","");
             return initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
          };
 
