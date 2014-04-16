@@ -393,6 +393,17 @@ exports.Map = function Map() { //inputs for constructor TBC
              return fromLocation.getName()+' linked '+fromDirection+'/'+toDirection+' to '+toLocation.getName();
         };
 
+        self.find = function(anObjectName) {
+            //note, this *won't* find objects delivered by a mission or delivered by another object.
+            //loop through each location and location inventory. 
+            //Get object (by synonym)
+            //return location name when found
+            for (var i=0;i<_locations.length;i++) {
+                if (_locations[i].objectExists(anObjectName)) {return anObjectName+" found at "+_locations[i].getName()+".";};
+            };
+            return anObjectName+" not found in map.";
+        };
+
 
         //end public member functions
          

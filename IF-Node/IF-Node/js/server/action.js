@@ -201,6 +201,11 @@ exports.Action = function Action(aPlayer, aMap) {
                         if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1);}
                         else {description = _player.examine(_verb, _object0);};
                         break;
+                    //"find" is a cheat - disable it for now
+                    //case 'find':
+                    //    ticks = 0;
+                    //    description = _map.find(_object0);
+                    //    break;  
                     case 'read':
                     case 'examine':
                         ticks = 0;
