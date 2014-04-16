@@ -1,38 +1,92 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying) {
+exports.Creature = function Creature(name, description, detailedDescription, attributes, carrying) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
         var missionObjectModule = require('./mission.js');
 
 	    var self=this; //closure so we don't lose reference in callbacks
-        var _name = aName.toLowerCase();
-        var _displayName = aName;
+        var _name = name.toLowerCase();
+        var _displayName = name;
+        var _description = description;
+        var _detailedDescription = detailedDescription;
         var _synonyms = [];
-        var _gender;
-        var _genderPrefix;
-        var _genderSuffix;
-        var _genderPossessiveSuffix;
-        var _description = aDescription;
-        var _detailedDescription = aDetailedDescription;
-        var _weight = weight;
-        var _attackStrength = attackStrength;
-        var _type = aType;
-        var _maxHitPoints = health;
-        var _hitPoints = health;
-        var _affinity = affinity //goes up if you're nice to the creature, goes down if you're not.
-        var _canTravel = canTravel; //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
-        var _inventory = new inventoryObjectModule.Inventory(carryWeight, _name);
+        var _gender = "unknown"; //default
+        var _genderPrefix = "It"; //default
+        var _genderSuffix = "it"; //default
+        var _genderPossessiveSuffix = "its'"; //default
+        var _weight = 120; //default
+        var _attackStrength = 25; //default
+        var _type = 'creature'; //default
+        var _maxHitPoints = 0; //default
+        var _hitPoints = 0; //default
+        var _affinity = 0 // default // Goes up if you're nice to the creature, goes down if you're not.
+        var _canTravel = true; //default //if true, may follow if friendly or aggressive. If false, won't follow a player. MAy also flee
+        var _inventory = new inventoryObjectModule.Inventory(0, _name); //carry weight gets updated by attributes
         var _missions = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
         var _edible = false; //can't eat a living creature
+        var _nutrition = 50; //default
         var _startLocation;
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
 	    var _objectName = "Creature";
-	    console.log(_objectName + ' created: '+_name);
+
+        var processAttributes = function(creatureAttributes) {
+            if (!creatureAttributes) {return null;}; //leave defaults preset
+            if (creatureAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
+            if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
+            if (creatureAttributes.nutrition != undefined) {_nutrition = creatureAttributes.nutrition;};
+            if (creatureAttributes.health != undefined) {
+                _hitPoints = creatureAttributes.health;
+                _maxHitPoints = creatureAttributes.health
+            };
+            //allow explicit setting of maxHealth
+            if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
+            if (creatureAttributes.canTravel != undefined) {_canTravel = creatureAttributes.canTravel;};
+            if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
+            if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
+            if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
+            if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
+            if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
+        };
+
+        processAttributes(attributes);
+        
+        var validateType = function() {
+            var validobjectTypes = ['creature','friendly'];
+            if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid creature type."};
+            console.log(_name+' type validated: '+_type);
+        };
+
+        validateType();
+
+        var processGender = function() {
+            //set gender for more sensible responses
+            if ((_gender == "f")||(_gender == "female")) {
+                _gender == "female";
+                _genderPrefix = "She";
+                _genderSuffix = "her";
+                _genderPossessiveSuffix = "her";
+            }
+            else if ((_gender == "m")||(_gender == "male")) {
+                _gender == "male";
+                _genderPrefix = "He";
+                _genderSuffix = "him";
+                _genderPossessiveSuffix = "his";
+            }
+            else {
+                _gender == "unknown"
+                _genderPrefix = "It"
+                _genderSuffix = "it"
+                _genderPossessiveSuffix = "its";
+            };
+        };
+
+        processGender();
+
         console.log('carrying: '+carrying);
         if (carrying) {
             console.log('building creature inventory... ');
@@ -62,34 +116,6 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             if ((aString == "")||(aString == undefined)||(aString == null)) {return true;};
             return false;
         };
-
-        //set gender for more sensible responses
-        if ((gender == "f")||(gender == "female")) {
-            _gender == "female";
-            _genderPrefix = "She";
-            _genderSuffix = "her";
-            _genderPossessiveSuffix = "her";
-        }
-        else if ((gender == "m")||(gender == "male")) {
-            _gender == "male";
-            _genderPrefix = "He";
-            _genderSuffix = "him";
-            _genderPossessiveSuffix = "his";
-        }
-        else {
-            _gender == "unknown"
-            _genderPrefix = "It"
-            _genderSuffix = "it"
-            _genderPossessiveSuffix = "its";
-        };
-
-        var validateType = function() {
-            var validobjectTypes = ['creature','friendly'];
-            if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid creature type."};
-            console.log(_name+' type validated: '+_type);
-        };
-
-        validateType();
 
         var healthPercent = function() {
             //avoid dividebyzero
@@ -471,12 +497,12 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             //console.log(_name+' edible:'+_edible+' chewed:'+_chewed);
                 if (_edible){
                     _weight = 0;
-                    aPlayer.heal(50);
+                    aPlayer.heal(_nutrition);
                     _description = "the remains of a well-chewed "+self.getDisplayName();
                     _detailedDescription = "All that's left are a few scraps of skin and hair.";
                     return "You tear into the raw flesh of "+self.getDisplayName()+". It was a bit messy but you feel fitter, happier and healthier.";
                 } else {
-                    aPlayer.hurt(10);
+                    aPlayer.hurt(_attackStrength/4);
                     return "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
                 };
          }; 
@@ -717,8 +743,8 @@ exports.Creature = function Creature(aName, aDescription, aDetailedDescription, 
             return null;
         };
 
-        //// end instance methods
-
+        //// end instance methods       
+	    console.log(_objectName + ' created: '+_name);
     }
     catch(err) {
 	    console.log('Unable to create Creature object: '+err);

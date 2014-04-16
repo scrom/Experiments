@@ -37,7 +37,7 @@ exports.setUp = function (callback) {
     container = new artefact.Artefact('container', 'a container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'a box', 'just a box',junkAttributes, null);
     breakable = new artefact.Artefact('glass', 'a drinking glass', 'just a box',breakableJunkAttributes, null);
-    c0 = new creature.Creature('creature', 'A creature', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 215, 5, true, [a1]);
+    c0 = new creature.Creature('creature', 'A creature', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:5, canTravel:true},[a1]);
     c0.go(null,l0); 
 
     l0.addObject(a0);

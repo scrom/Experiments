@@ -20,7 +20,7 @@ exports.tearDown = function (callback) {
 //creature constructor params are: (aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
 exports.canCreateCreature = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     test.equal(c0.toString(), '{"name":"'+creatureName+'"}');
     test.done();
 };
@@ -33,7 +33,7 @@ exports.canCreateCreatureWithSingleObject = function (test) {
     var creatureDetailedDescription = "It's a big beastie with teeth.";
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50,'unknown', 'creature', 50, 150, 0, false, a0);
+    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, a0);
     console.log('actual: '+c0.getDetailedDescription());
     var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+'.';
     console.log("expect: "+expectedResult);
@@ -54,7 +54,7 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
     console.log('checking a0: '+a0.getDetailedDescription());
     var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',junkAttributes, null);
                                     //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
-    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,120, 50, 'unknown', 'creature', 50, 150, 0, false, [a0,a1]);
+    var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, [a0,a1]);
     console.log('actual: '+c0.getDetailedDescription());
     var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+", and "+anotherArtefactDescription+".";
     console.log("expect: "+expectedResult);
@@ -69,7 +69,7 @@ exports.creatureCanReceiveObject = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = "That was kind. It is now carrying an artefact of little consequence.";
     var actual = c0.receive(a0);
     console.log("expected: "+expected);
@@ -84,7 +84,7 @@ exports.canGetObjectFromCreature = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence'
     var artefactName = 'artefact'
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50,'unknown', 'creature', 50, 150, 0);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     c0.receive(a0);
     test.equal(c0.getObject(artefactName).getName(), artefactName);
     test.done();
@@ -95,7 +95,7 @@ exports.canGetObjectFromCreature.meta = { traits: ["Creature Test", "Inventory T
 //creature constructor params are: (aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying)
 exports.canRetrieveAffinity = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -5);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-5});
     var expected = "It doesn't like you.";
     var actual = c0.getAffinityDescription();
     console.log("actual:"+actual);
@@ -107,7 +107,7 @@ exports.canRetrieveAffinity.meta = { traits: ["Creature Test", "Affinity Trait"]
 
 exports.creatureIsFriendlyWhenAffinityGreaterThanPlayerAggression = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 1);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var actual = c0.isFriendly(1);
     console.log("actual:"+actual);
@@ -117,7 +117,7 @@ exports.creatureIsFriendlyWhenAffinityGreaterThanPlayerAggression = function (te
 
 exports.creatureIsNotFriendlyWhenPlayerIsAggressive = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, 0);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = false;
     var actual = c0.isFriendly(1);
     console.log("actual:"+actual);
@@ -128,7 +128,7 @@ exports.creatureIsNotFriendlyWhenPlayerIsAggressive.meta = { traits: ["Creature 
 
 exports.creatureIsHostileLvl6WhenPlayerIsLessAggressive = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -6);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-6});
     var expected = true;
     var actual = c0.isHostile(5);
     console.log("actual:"+actual);
@@ -139,7 +139,7 @@ exports.creatureIsHostileLvl6WhenPlayerIsLessAggressive.meta = { traits: ["Creat
 
 exports.creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -10);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-10});
     var expected = true;
     var actual = c0.isHostile(0);
     console.log("actual:"+actual);
@@ -151,7 +151,7 @@ exports.creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive.meta = { traits: ["
 
 exports.creatureIsNotHostileWhenPlayerIsAsAggressive = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2});
     var expected = false;
     var actual = c0.isHostile(2);
     console.log("actual:"+actual);
@@ -162,7 +162,7 @@ exports.creatureIsNotHostileWhenPlayerIsAsAggressive.meta = { traits: ["Creature
 
 exports.creatureWillFleeWhenPlayerIsAsAggressive = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2, true);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(2);
     console.log("actual:"+actual);
@@ -173,7 +173,7 @@ exports.creatureWillFleeWhenPlayerIsAsAggressive.meta = { traits: ["Creature Tes
 
 exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 10, -2, true);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:15, maxHealth:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(0);
     console.log("actual:"+actual);
@@ -185,7 +185,7 @@ exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility.meta = { traits: ["Cre
 
 exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2, false);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:false});
     var expected = false;
     var actual = c0.willFlee(3);
     console.log("actual:"+actual);
@@ -196,7 +196,7 @@ exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile.meta
 
 exports.creatureWillFleeWhenPlayerIsMoreAggressive = function (test) {
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',120, 50, 'unknown', 'creature', 50, 150, -2, true);
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(3);
     console.log("actual:"+actual);

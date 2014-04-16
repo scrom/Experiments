@@ -14,7 +14,7 @@ exports.Tests = function Tests() {
         //test module deps
         var action = require('./action');
         var artefact = require('./artefact');
-        var creature = require('./creature.js');
+        //var creature = require('./creature.js');
         var exit = require('./exit.js');
         var game = require('./game');
         var location = require('./location.js');
@@ -24,8 +24,6 @@ exports.Tests = function Tests() {
         //test player, creature, location and artefact creation.
         console.log('====Game Object Creation tests====');
         var a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',{weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false}, null);
-        //(aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-        var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',120,1, 'unknown','creature', 50, 150, 0);
         var e0 = new exit.Exit('north','test0'); //note we can name a location that doesn't exist at the moment - should probably prevent this.
         var l0 = new location.Location('test0','a test location');
         var m0 = new map.Map();
@@ -51,15 +49,6 @@ exports.Tests = function Tests() {
         //console.log('Split results: '+ act0.testStringSplit('')); //test empty string
 
         console.log('====End of Action tests====');
-
-        console.log('====Creature tests====');
-        //test creature interactions //name, inv*4, go, getlocation, hit, heal, eat, kill
-        console.log('Name: '+c0.getName());
-        console.log('Kill :'+c0.kill());
-        console.log('Heal:'+c0.heal(50));
-        console.log('Add Creature to location: '+l0.addObject(c0));
-        console.log('remove Creature from location: '+l0.removeObject(c0.getName()));
-        console.log('====End of Creature tests====');
 
         //test maps
         //m0.init(p0);

@@ -325,20 +325,21 @@ exports.Map = function Map() { //inputs for constructor TBC
             coffeeMachine.addSyns(['coffee machine','vending machine','coffee vending machine']);
             _locations[bottomkitchen].addObject(coffeeMachine);           
 
-            //creatures
-            var receptionist = new creatureObjectModule.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", 120, 25, 'female','friendly', 51, 215, 0, false, null);
+            //creatures  
+                                                                                                                                                                                                             
+            var receptionist = new creatureObjectModule.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, affinity:0, canTravel:false}, null);
             receptionist.addSyns(['receptionist','vic','heidi','her']);
             receptionist.go(null, _locations[reception]);
 
-            var spy = new creatureObjectModule.Creature('spy', 'a corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", 140, 12, 'male','creature', 51, 225, -4, true, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
+            var spy = new creatureObjectModule.Creature('spy', 'a corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:15, health:225, affinity:-4, canTravel:true}, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
             spy.addSyns(['corporate spy','him']);
             spy.go(null,_locations[lift]);   
 
-            var simong = new creatureObjectModule.Creature('Simon', 'Simon the CEO', "He runs the show.", 180, 45, 'male','friendly', 71, 515, 0, true, [sketchbook]);            
+            var simong = new creatureObjectModule.Creature('Simon', 'Simon the CEO', "He runs the show.", {weight:180, attackStrength:45, gender:'male', type:'friendly', carryWeight:15, health:500, affinity:0, canTravel:true}, [sketchbook]);            
             simong.addSyns(['boss','ceo','simon g','galbraith', 'him']);
             simong.go(null,_locations[poppy]);   
 
-            var jamesm = new creatureObjectModule.Creature('James', 'James Moore', "He pwns the Opportunities division.", 190, 45, 'male','friendly', 30, 150, -1, true, [money]);            
+            var jamesm = new creatureObjectModule.Creature('James', 'James Moore', "He pwns the Opportunities division.", {weight:190, attackStrength:45, gender:'male', type:'friendly', carryWeight:15, health:200, affinity:-1, canTravel:true}, [money]);            
             jamesm.addSyns(['james moore','moore','jim', 'him']);
             jamesm.go(null,_locations[opportunitiesNorth]);    
 
