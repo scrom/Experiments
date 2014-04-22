@@ -119,7 +119,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 response.writeHead(200, {'Content-type':'text/plain'});
                 var requestJson = JSON.stringify(request.body);
                 //post this response work to the watcher
-                var responseJSON = '{"description":"Name received: '+request.body.name+'"}';
+                var responseJSON = _watcher.processRequest(request);
                 var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}'; 
                 console.log(reply)   
                 response.write(reply);

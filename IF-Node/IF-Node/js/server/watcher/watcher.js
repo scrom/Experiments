@@ -22,12 +22,27 @@ exports.Watcher = function Watcher(aMap) {
         };
 
         //public member functions
+        self.processRequest = function(request) {
+            switch (request.body.object) {
+                case 'location':
+                return self.addLocation(request.body.name, request.body.dark, request.body.description, request.body.directions, request.body.links);
+                default:
+                return '{"description":"Request received for object: '+request.body.object+'"}';
+            };           
+        };
+
         self.getLocations = function() {
             return _map.getLocationsJSON();
         };
 
         self.getDirections = function(aGameId) {
             return ['{"name":"North"}','{"name":"South"}','{"name":"East"}','{"name":"West"}','{"name":"in"}','{"name":"out"}','{"name":"up"}','{"name":"down"}'];
+        };
+
+        self.addLocation = function(name, isDark, description, linkDirection, linksToName) {
+            _map.addLocation(name, description, isDark);
+            _map.link(linkDirection, name, linksToName);
+            return _map.getLocation(name).toString();
         };
 
         //end member functions
