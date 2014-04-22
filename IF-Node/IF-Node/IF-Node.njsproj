@@ -30,7 +30,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="js\client-watcher\client.js" />
     <Compile Include="js\client\client.js" />
+    <Compile Include="js\client-watcher\ui.js" />
     <Compile Include="js\client\response.js" />
     <Compile Include="js\client\main.js" />
     <Compile Include="js\client\ui.js" />
@@ -59,7 +61,9 @@
     <Compile Include="js\server\test\test-player.get.test.js" />
     <Compile Include="js\server\test\test-player.test.js" />
     <Compile Include="js\server\test\test-simpleObject.test.js" />
+    <Compile Include="js\server\watcher\watcher.js" />
     <Content Include="css\main.css" />
+    <Content Include="editor.html" />
     <Content Include="index.html" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -68,7 +72,9 @@
     <Folder Include="css\" />
     <Folder Include="js\" />
     <Folder Include="js\client\" />
+    <Folder Include="js\client-watcher\" />
     <Folder Include="js\server\" />
+    <Folder Include="js\server\watcher\" />
     <Folder Include="js\server\test\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />

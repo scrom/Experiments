@@ -22,7 +22,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         //public member functions
         self.toString = function() {
-            return '{name: '+_name+', description: '+_description+' dark: '+_dark+'}';
+            return '{"name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'"}';
         };
 
         self.getName = function() {

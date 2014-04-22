@@ -1,9 +1,10 @@
 "use strict";
-exports.Server = function Server(anInterpreter) {
+exports.Server = function Server(anInterpreter, aWatcher) {
     try{
         var self = this; //closure so we don't lose this reference in callbacks
         var _objectName = 'Server'; //for reference
         var _interpreter = anInterpreter;
+        var _watcher = aWatcher;
 
         //module deps
         var _root = __dirname+'/';
@@ -22,9 +23,12 @@ exports.Server = function Server(anInterpreter) {
 
         //log requests
         _webServer.use(express.logger('dev'));
+        _webServer.use(express.urlencoded());
+        _webServer.use(express.json());
 
 
         _webServer.configure(function () {
+
             //serve static files from project root
             _webServer.use(express.static(_root + '../../'));
 
@@ -89,10 +93,38 @@ exports.Server = function Server(anInterpreter) {
                 response.end();
             });
 
+            //serve data
+            _webServer.get('/data/locations.json*', function (request, response) {
+                //response.writeHead(200, {'Content-type':'text/plain'});
+                //response.write(_interpreter.getData(0));
+                //response.end();
+                response.send(_watcher.getLocations()); 
+            });
+            _webServer.get('/data/directions.json*', function (request, response) {
+                //response.writeHead(200, {'Content-type':'text/plain'});
+                //response.write(_interpreter.getData(0));
+                //response.end();
+                response.send(_watcher.getDirections()); 
+            });
+
             //serve default dynamic
             _webServer.get('*', function (request, response) {
                 var sanitisedRequestURL = sanitiseString(request.url);
                 response.send(_interpreter.translate(sanitisedRequestURL,_config));
+            });
+
+            //post handling
+            _webServer.post('/post/', function (request, response) {
+                console.log('Post received: '+request.body.name);    
+                response.writeHead(200, {'Content-type':'text/plain'});
+                var requestJson = JSON.stringify(request.body);
+                //post this response work to the watcher
+                var responseJSON = '{"description":"Name received: '+request.body.name+'"}';
+                var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}'; 
+                console.log(reply)   
+                response.write(reply);
+                response.end();
+
             });
         });
 

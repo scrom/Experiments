@@ -1,13 +1,12 @@
 "use strict";
 //main game interpreter
-exports.Interpreter = function Interpreter() {
+exports.Interpreter = function Interpreter(aGameController) {
     try{
 	    var self = this; //closure so we don't lose this refernce in callbacks
 	    var _objectName = "Interpreter";
 
         //module deps
-        var gameControllerModule = require('./gamecontroller');
-        var _gameController = new gameControllerModule.GameController();
+        var _gameController = aGameController;
 
         console.log(_objectName+' created');
 

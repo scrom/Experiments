@@ -44,6 +44,13 @@ exports.Map = function Map() { //inputs for constructor TBC
         };
         
         //public member functions
+        self.getLocationsJSON = function() {
+            var locationsAsJSON = [];
+            for (var i=0; i<_locations.length;i++) {
+                locationsAsJSON.push(_locations[i].toString());
+            };
+            return locationsAsJSON;
+        };
         
         self.addLocation = function(aName,aDescription,isDark){
                 var newLocation = new locationObjectModule.Location(aName,aDescription,isDark);
