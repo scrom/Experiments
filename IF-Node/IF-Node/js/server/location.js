@@ -22,7 +22,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         //public member functions
         self.toString = function() {
-            return '{"name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'"}';
+            return '{"object":"location","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'"}';
         };
 
         self.getName = function() {
@@ -33,9 +33,9 @@ exports.Location = function Location(aName, aDescription, isDark) {
             _description=aDescription;
         };
 
-        self.addExit = function(anExitName, aDestination) {
+        self.addExit = function(anExitName, aDestination,isHidden) {
             self = this;
-            var newExit = new exitObjectModule.Exit(anExitName,aDestination);
+            var newExit = new exitObjectModule.Exit(anExitName,aDestination,isHidden);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   
             console.log('Exit from '+self.getName()+', '+storedExit.getName()+' to '+storedExit.getDestinationName()+' added.');   

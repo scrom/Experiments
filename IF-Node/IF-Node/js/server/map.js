@@ -113,10 +113,10 @@ exports.Map = function Map() { //inputs for constructor TBC
             self.link('e', _locations[atrium].getName(), _locations[reception].getName());
             self.link('s', _locations[atrium].getName(), _locations[toilet].getName());
             self.link('i', _locations[toilet].getName(), _locations[cubicle].getName());
-            self.link('i', _locations[atrium].getName(), _locations[lift].getName());
+            self.link('i', _locations[atrium].getName(), _locations[lift].getName(),true,true);
             self.link('w', _locations[atrium].getName(), _locations[bottomStairs].getName());
             self.link('e', _locations[reception].getName(), _locations[seatingArea].getName());
-            self.link('s', _locations[seatingArea].getName(), _locations[lawyerLobby].getName());
+            self.link('s', _locations[seatingArea].getName(), _locations[lawyerLobby].getName(),true, false);
             self.link('s', _locations[reception].getName(), _locations[groundNorthEastCorridor].getName());
             self.link('n', _locations[bottomStairs].getName(), _locations[library].getName());
             self.link('w', _locations[bottomStairs].getName(), _locations[bottomkitchen].getName());
@@ -138,7 +138,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             self.link('e', _locations[groundWestEndSouthCorridor].getName(), _locations[groundEastEndSouthCorridor].getName());
             self.link('n', _locations[groundWestEndSouthCorridor].getName(), _locations[graffitib].getName());
             self.link('n', _locations[groundEastEndSouthCorridor].getName(), _locations[graffitia].getName());
-            self.link('s', _locations[groundEastEndSouthCorridor].getName(), _locations[smokingArea].getName());
+            self.link('s', _locations[groundEastEndSouthCorridor].getName(), _locations[smokingArea].getName(),true,true);
             self.link('e', _locations[groundEastEndSouthCorridor].getName(), _locations[groundSouthEastCorridor].getName());
             self.link('e', _locations[groundSouthEastCorridor].getName(), _locations[room404].getName());
             self.link('n', _locations[groundSouthEastCorridor].getName(), _locations[groundEastSouthEndCorridor].getName());
@@ -150,20 +150,11 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             //ground floor closed doors (one for each side)
             var liftEntrance = _locations[atrium].getExit('i');
-            liftEntrance.hide();
-
             var liftExit = _locations[lift].getExit('o');
-            liftExit.hide();
-
             var lawyerEntrance = _locations[seatingArea].getExit('s');
-            lawyerEntrance.hide();
-
             var fireExit = _locations[groundEastEndSouthCorridor].getExit('s');
-            fireExit.hide();
-
             var fireEntry = _locations[smokingArea].getExit('n');
-            fireEntry.hide();
-
+            
             //object attributes
             //['weapon','junk','treasure','food','money','tool','door','container', 'key'];    
             //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable
@@ -389,13 +380,13 @@ exports.Map = function Map() { //inputs for constructor TBC
             return _locations;
         };
 
-        self.link = function(fromDirection, fromLocation, toLocation) {
+        self.link = function(fromDirection, fromLocation, toLocation, toIsHidden, fromIsHidden) {
              var toDirection = oppositeOf(fromDirection);
              console.log('from:'+fromDirection+' to:'+toDirection);
              var fromLocation = self.getLocation(fromLocation);
              var toLocation = self.getLocation(toLocation);
-             var temp = fromLocation.addExit(fromDirection,toLocation.getName());
-             var temp2 = toLocation.addExit(toDirection,fromLocation.getName());
+             var temp = fromLocation.addExit(fromDirection,toLocation.getName(), toIsHidden);
+             var temp2 = toLocation.addExit(toDirection,fromLocation.getName(), fromIsHidden);
              console.log('locations linked');
              return fromLocation.getName()+' linked '+fromDirection+'/'+toDirection+' to '+toLocation.getName();
         };

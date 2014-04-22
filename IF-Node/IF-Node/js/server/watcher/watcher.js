@@ -41,7 +41,8 @@ exports.Watcher = function Watcher(aMap) {
 
         self.addLocation = function(name, isDark, description, linkDirection, linksToName) {
             _map.addLocation(name, description, isDark);
-            _map.link(linkDirection, name, linksToName);
+            //@todo check we're not overwriting an existing link here (better to prevent this on the client though)
+            _map.link(linkDirection.toLowerCase(), name, linksToName);
             return _map.getLocation(name).toString();
         };
 

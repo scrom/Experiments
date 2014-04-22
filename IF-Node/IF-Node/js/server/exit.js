@@ -1,6 +1,6 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-module.exports.Exit = function Exit(aName, aDestinationName) { //inputs for constructor TBC
+module.exports.Exit = function Exit(aName, aDestinationName, isHidden) { //inputs for constructor TBC
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aName;
@@ -9,7 +9,9 @@ module.exports.Exit = function Exit(aName, aDestinationName) { //inputs for cons
         //long names are in an array with short names, just 1 index later - pretty crappy but does the job
         var _longName = _directions[_directions.indexOf(_name)+1];
         //self.visits = 0;
-        var _visible = true;
+        var _hidden = false;
+        if (isHidden) { _hidden = true;};
+
         var _destinationName = aDestinationName;
 
 	    var _objectName = "Exit";
@@ -33,15 +35,15 @@ module.exports.Exit = function Exit(aName, aDestinationName) { //inputs for cons
         };
 
         self.isVisible = function() {
-            return _visible;
+            return (!(_hidden));
         };
 
         self.hide = function() {
-            _visible = false;
+            _hidden = true;
         };
 
         self.show = function() {
-            _visible = true;
+            _hidden = false;
             return "You reveal a new exit: '"+_longName+"'.";
         };
 
