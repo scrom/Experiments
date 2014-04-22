@@ -33,7 +33,7 @@
                     <input type="submit" name="submit" value="Submit" id="submit">
                     <br />
                     Description:<br /><textarea rows="8" cols="95" wrap="soft" name="description" id="description"></textarea>
-                    Links <select name="directions" id="directions"></select>to:<select name="links" id="links"></select>
+                    Links <select name="directions" id="directions"><option selected></option></select>to:<select name="links" id="links"><option selected></option></select>
                 </form>   	    
 	        </div> 
         
@@ -60,6 +60,14 @@
 
 	        client.getData('locations', $("#links"));
 	        client.getData('directions', $("#directions"));
+
+	        client.filterOptions($("#directions").val(), $("#links"));
+
+	        $(function () {
+	            $("#directions").change(function () {
+	                client.filterOptions($("#directions").val(), $("#links"));
+	            });
+	        });
 	        
 		</script> 
     </body>

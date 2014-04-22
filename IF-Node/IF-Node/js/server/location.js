@@ -22,7 +22,13 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         //public member functions
         self.toString = function() {
-            return '{"object":"location","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'"}';
+            var returnJSON = '{"object":"location","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
+            for(var i=0; i<_exits.length;i++) {
+                if (i>0) {returnJSON+= ',';};
+                returnJSON+= _exits[i].toString();
+            };
+            returnJSON += ']}';
+            return returnJSON;
         };
 
         self.getName = function() {

@@ -19,7 +19,7 @@ module.exports.Exit = function Exit(aName, aDestinationName, isHidden) { //input
 
         ////public methods
         self.toString = function() {
-            return '{"name":"'+_name+'","location":"'+_destinationName+'"}';
+            return '{"name":"'+_name+'","longname":"'+_longName+'","destination":"'+_destinationName+'"}';
         };
 
         self.getName = function() {

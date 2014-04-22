@@ -23,6 +23,29 @@ function Client(aServerHost, aServerPort, aUi) {
         return aString.replace(/[^a-zA-Z0-9 +-]+/g,"").toLowerCase().substring(0,255);
     };
 
+    //direction opposites
+    var oppositeOf = function(aDirection){
+            switch(aDirection)
+            {
+                case 'north':
+                    return 'south'; 
+                case 'south':
+                    return 'north';
+                case 'east':
+                    return 'west';
+                case 'west':
+                    return 'east';
+                case 'up':
+                    return 'down';
+                case 'down':
+                    return 'up';
+                case 'in':
+                    return 'out';
+                case 'out':
+                    return 'in';  
+            };        
+    };
+
     var untangleResponse = function(someJSONData) {
         var response = new Response(someJSONData, console);
         if (username == ''){
@@ -150,7 +173,40 @@ function Client(aServerHost, aServerPort, aUi) {
         for (var i=0; i<locationData.length;i++) {
             var data;
             try{data = jQuery.parseJSON(locationData[i]);} catch(err){console.append(err);};
-            $('<option/>', {value: data.name, text: data.name}).appendTo(selectList);
+            var option = $('<option/>', {value: data.name, text: data.name});
+            if (data.exits) {
+                option.attr("data-exits", JSON.stringify(data.exits));
+            };
+            option.appendTo(selectList);
+        };
+    };
+
+    Client.prototype.filterOptions = function(selectedValue, list) {
+        //console.append('processing: '+list[0][0]+'...'+selectedValue);
+        if (!(selectedValue)) {return true;};
+
+        var selected = selectedValue.toLowerCase();
+        for (var i=0; i<list[0].length;i++) {
+            var jqElement = $(list[0][i]); 
+            console.append('processing: '+jqElement.val()+'...<br>');
+            //console.append('custom attr: '+jQuery.parseJSON(jqElement.attr("data-exits"))[0].longname+'<br>');
+            var disableOption = false;
+            var exits = jQuery.parseJSON(jqElement.attr("data-exits"));
+            if (exits) {
+                for (var j=0; j<exits.length;j++) {
+                    //console.append(exits.length+' exits found<br>');
+                    if (exits[j].longname == oppositeOf(selected)) {
+                        disableOption = true;
+                        break;
+                    };                   
+                };
+            };
+            if (disableOption) {
+                list[0][i].disabled=true;
+                //unselect option if it's disabled
+                if (list.val() == jqElement.val()) {list[0].selectedIndex=0;};
+            }
+            else {list[0][i].disabled=false;}; //don't forget to re-enable
         };
     };
 
