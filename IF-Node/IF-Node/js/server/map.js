@@ -42,13 +42,28 @@ exports.Map = function Map() { //inputs for constructor TBC
                     return 'i';   
             };        
         };
+
+        var sortByProperty = function(property) {
+            //console.log(b[property]);
+            return function (a, b) {
+                if( a[property] > b[property]){
+                    return 1;
+                }else if( a[property] < b[property] ){
+                    return -1;
+                };
+                return 0;
+                //return a[property].localeCompare(b[property]);
+            };
+        };
+
         
         //public member functions
         self.getLocationsJSON = function() {
             var locationsAsJSON = [];
             for (var i=0; i<_locations.length;i++) {
-                locationsAsJSON.push(_locations[i].toString());
+                locationsAsJSON.push(JSON.parse(_locations[i].toString()));
             };
+            locationsAsJSON.sort(sortByProperty("name"));
             return locationsAsJSON;
         };
         

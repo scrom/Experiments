@@ -36,7 +36,7 @@ exports.Watcher = function Watcher(aMap) {
         };
 
         self.getDirections = function(aGameId) {
-            return ['{"name":"North"}','{"name":"South"}','{"name":"East"}','{"name":"West"}','{"name":"in"}','{"name":"out"}','{"name":"up"}','{"name":"down"}'];
+            return JSON.parse('[{"name":"North"},{"name":"South"},{"name":"East"},{"name":"West"},{"name":"in"},{"name":"out"},{"name":"up"},{"name":"down"}]');
         };
 
         self.addLocation = function(name, isDark, description, linkDirection, linksToName) {

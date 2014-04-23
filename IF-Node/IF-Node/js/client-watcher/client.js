@@ -171,8 +171,7 @@ function Client(aServerHost, aServerPort, aUi) {
 
     Client.prototype.fillDropdown = function(selectList, locationData) {
         for (var i=0; i<locationData.length;i++) {
-            var data;
-            try{data = jQuery.parseJSON(locationData[i]);} catch(err){console.append(err);};
+            var data = locationData[i]; //we assume we're receiving proper JSON data
             var option = $('<option/>', {value: data.name, text: data.name});
 
             option.attr("data-dark", data.dark);
