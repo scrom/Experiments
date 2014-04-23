@@ -131,7 +131,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         //public member functions
         self.toString = function() {
-            console.log(JSON.stringify(_sourceAttributes));
+            //var _synonyms = [];
+            //var _missions = [];
             var returnString = '{"name":"'+_name+'","description":"'+_description+'","detailed-description":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_linkedExit) {returnString+= ',"linked-exit":'+_linkedExit.toString();};
             if (_delivers) {returnString+= ',"delivers":'+_delivers.toString();};

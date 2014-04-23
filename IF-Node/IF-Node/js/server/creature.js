@@ -11,6 +11,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _displayName = name;
         var _description = description;
         var _detailedDescription = detailedDescription;
+        var _sourceAttributes = attributes; //so we can clone etc.
         var _synonyms = [];
         var _gender = "unknown"; //default
         var _genderPrefix = "It"; //default
@@ -129,7 +130,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         //// instance methods
 
         self.toString = function() {
-            return '{"name":"'+_name+'"}';
+        //var _synonyms = [];
+        //var _missions = [];
+            var returnString = '{"name":"'+_name+'","display-name":"'+_displayName+'","description":"'+_description+'","detailed-description":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            returnString+= '}';
+            return returnString;
         };
         
         self.getName = function() {
