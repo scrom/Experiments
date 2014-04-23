@@ -95,12 +95,14 @@ exports.Server = function Server(anInterpreter, aWatcher) {
 
             //serve data
             _webServer.get('/data/locations.json*', function (request, response) {
+                //var sanitisedRequestURL = sanitiseString(request.url);
                 //response.writeHead(200, {'Content-type':'text/plain'});
                 //response.write(_interpreter.getData(0));
                 //response.end();
                 response.send(_watcher.getLocations()); 
             });
             _webServer.get('/data/directions.json*', function (request, response) {
+                //var sanitisedRequestURL = sanitiseString(request.url);
                 //response.writeHead(200, {'Content-type':'text/plain'});
                 //response.write(_interpreter.getData(0));
                 //response.end();

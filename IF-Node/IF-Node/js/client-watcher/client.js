@@ -164,7 +164,8 @@ function Client(aServerHost, aServerPort, aUi) {
     };
 
     Client.prototype.getData = function(data, selectList) {
-        $.getJSON(serverAddress+"data/"+data+".json/", function (response) {
+        var sanitisedRequest = sanitiseString(data);
+        $.getJSON(serverAddress+"data/"+sanitisedRequest+".json/", function (response) {
                 self.fillDropdown(selectList,response)
 	    });
     };
