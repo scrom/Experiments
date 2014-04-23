@@ -190,13 +190,10 @@ function Client(aServerHost, aServerPort, aUi) {
 
         for (var i=0; i<list[0].length;i++) {
             var jqElement = $(list[0][i]); 
-            //console.append('processing: '+jqElement.val()+'...<br>');
-            //console.append('custom attr: '+jQuery.parseJSON(jqElement.attr("data-exits"))[0].longname+'<br>');
             var disableOption = false;
             var exits = jQuery.parseJSON(jqElement.attr("data-exits"));
             if (exits) {
                 for (var j=0; j<exits.length;j++) {
-                    //console.append(exits.length+' exits found<br>');
                     if (exits[j].longname == oppositeOf(selected)) {
                         disableOption = true;
                         break;
@@ -207,13 +204,11 @@ function Client(aServerHost, aServerPort, aUi) {
                 list[0][i].disabled=true;
                 //unselect option if it's disabled
                 if (selectedLocation == jqElement.val()) {
-                    console.append('list element match:'+selectedLocation+'<br>');
                     list[0].selectedIndex=0;
                     list.selectmenu("destroy").selectmenu({style: "dropdown"});};
             }
             else {
                 //don't forget to re-enable
-                console.append('list element no match:'+selectedLocation+': '+jqElement.val()+'<br>');
                 list[0][i].disabled=false;
             }; 
         };
