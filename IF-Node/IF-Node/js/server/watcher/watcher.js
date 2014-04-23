@@ -40,6 +40,10 @@ exports.Watcher = function Watcher(aMap) {
         };
 
         self.addLocation = function(name, isDark, description, linkDirection, linksToName) {
+            if (_map.getLocation(name)) {
+                return '{"description":"Sorry. Location '+name+' already exists."}';
+            };
+
             _map.addLocation(name, description, isDark);
             
             //add link if specified

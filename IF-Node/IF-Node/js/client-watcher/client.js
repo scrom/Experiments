@@ -118,7 +118,7 @@ function Client(aServerHost, aServerPort, aUi) {
         var incomingElements = request.children(); //('input')
         var requestElements = [];
         for (var index=0; index<incomingElements.length;index++) {
-            if(debug) {console.append('Input found - type:'+incomingElements[index].type+' name: '+incomingElements[index].name+'<br>');};
+            //if(debug) {console.append('Input found - type:'+incomingElements[index].type+' name: '+incomingElements[index].name+'<br>');};
             //remove unsupported submit and undefined types
                 switch (incomingElements[index].type) {
                     case 'select-one':
