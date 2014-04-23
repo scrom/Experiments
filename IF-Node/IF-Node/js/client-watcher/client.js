@@ -174,6 +174,10 @@ function Client(aServerHost, aServerPort, aUi) {
             var data;
             try{data = jQuery.parseJSON(locationData[i]);} catch(err){console.append(err);};
             var option = $('<option/>', {value: data.name, text: data.name});
+
+            option.attr("data-dark", data.dark);
+            option.attr("data-description", data.description);
+
             if (data.exits) {
                 option.attr("data-exits", JSON.stringify(data.exits));
             };
@@ -212,6 +216,29 @@ function Client(aServerHost, aServerPort, aUi) {
                 list[0][i].disabled=false;
             }; 
         };
+    };
+
+    Client.prototype.updateLocationFormFields = function(selectedLocation, locationForm) {
+        //if not an existing location, do nothing.
+        if(!(selectedLocation.val())) {return true;};
+        var children = locationForm.children();
+        for (var index=0; index<children.length;index++) {
+            switch (children[index].name) {
+                case "name":
+                    $(children[index]).val(selectedLocation.val());
+                    break;
+                case "description":
+                    $(children[index]).val(selectedLocation.attr("data-description"));
+                    break;
+                case "dark":
+                    var isDark = selectedLocation.attr("data-dark");
+                    if (selectedLocation.attr("data-dark") == 'true') {                        
+                        $(children[index]).prop('checked', true);
+                    } else {$(children[index]).prop('checked',false)};
+                    break;
+             //add links support in here later
+             };
+        };  
     };
 
     //start UI listening with callback to client
