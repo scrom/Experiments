@@ -61,11 +61,11 @@
 	        client.getData('locations', $("#links"));
 	        client.getData('directions', $("#directions"));
 
-	        client.filterOptions($("#directions").val(), $("#links"));
+	        client.filterLocationOptions($("#directions").val(), $("#links").val(), $("#links"));
 
 	        $(function () {
 	            $("#directions").change(function () {
-	                client.filterOptions($("#directions").val(), $("#links"));
+	                client.filterLocationOptions($("#directions").val(), $("#links").val(), $("#links"));
 	            });
 	        });
 	        

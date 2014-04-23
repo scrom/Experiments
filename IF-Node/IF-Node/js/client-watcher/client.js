@@ -181,14 +181,16 @@ function Client(aServerHost, aServerPort, aUi) {
         };
     };
 
-    Client.prototype.filterOptions = function(selectedValue, list) {
+    Client.prototype.filterLocationOptions = function(selectedDirection, selectedLocation, list) {
         //console.append('processing: '+list[0][0]+'...'+selectedValue);
-        if (!(selectedValue)) {return true;};
+        var selected = "";
+        if (selectedDirection) {
+            selected = selectedDirection.toLowerCase();
+        };
 
-        var selected = selectedValue.toLowerCase();
         for (var i=0; i<list[0].length;i++) {
             var jqElement = $(list[0][i]); 
-            console.append('processing: '+jqElement.val()+'...<br>');
+            //console.append('processing: '+jqElement.val()+'...<br>');
             //console.append('custom attr: '+jQuery.parseJSON(jqElement.attr("data-exits"))[0].longname+'<br>');
             var disableOption = false;
             var exits = jQuery.parseJSON(jqElement.attr("data-exits"));
@@ -204,9 +206,16 @@ function Client(aServerHost, aServerPort, aUi) {
             if (disableOption) {
                 list[0][i].disabled=true;
                 //unselect option if it's disabled
-                if (list.val() == jqElement.val()) {list[0].selectedIndex=0;};
+                if (selectedLocation == jqElement.val()) {
+                    console.append('list element match:'+selectedLocation+'<br>');
+                    list[0].selectedIndex=0;
+                    list.selectmenu("destroy").selectmenu({style: "dropdown"});};
             }
-            else {list[0][i].disabled=false;}; //don't forget to re-enable
+            else {
+                //don't forget to re-enable
+                console.append('list element no match:'+selectedLocation+': '+jqElement.val()+'<br>');
+                list[0][i].disabled=false;
+            }; 
         };
     };
 
