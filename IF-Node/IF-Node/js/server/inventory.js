@@ -14,11 +14,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         ////public methods
         self.toString = function() {
             //return self.describe;
-            if (_items.length == 0) {return []};
-            var list = []
+            if (_items.length == 0) {return "[]";};
+            var list = "[";
             for(var i = 0; i < _items.length; i++) {
-                    list.push(_items[i].toString());
+                    if (i>0) {list += ", ";};
+                    list+= _items[i].toString();
             };
+            list += "]";
             return list;
         };
 
