@@ -65,6 +65,7 @@
     <Content Include="css\main.css" />
     <Content Include="editor.html" />
     <Content Include="index.html" />
+    <Content Include="js\server\data\root-locations.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
@@ -74,6 +75,7 @@
     <Folder Include="js\client\" />
     <Folder Include="js\client-watcher\" />
     <Folder Include="js\server\" />
+    <Folder Include="js\server\data\" />
     <Folder Include="js\server\watcher\" />
     <Folder Include="js\server\test\" />
   </ItemGroup>

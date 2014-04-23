@@ -14,6 +14,7 @@ exports.Map = function Map() { //inputs for constructor TBC
           
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];
+        var _objects = []; //all game objects
         var _missions = [];
         var _missionsJSON;
         //consider storing all creatures and artefacts on map object (rather than in location, creature or player) 
@@ -74,6 +75,20 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         
         //public member functions
+        self.getObjectsJSON = function() {
+            var objectsAsJSON = [];
+            for (var i=0; i<_objects.length;i++) {
+                //just return button for now
+                console.log(_objects[i].toString());
+                var temp = JSON.parse(_objects[i].toString());
+                //if (temp.name == 'button') {
+                    objectsAsJSON.push(temp);
+                //};
+            };
+            objectsAsJSON.sort(sortByProperty("name"));
+            return objectsAsJSON;
+        };
+
         self.getLocationsJSON = function() {
             var locationsAsJSON = [];
             for (var i=0; i<_locations.length;i++) {
@@ -233,23 +248,28 @@ exports.Map = function Map() { //inputs for constructor TBC
              var button = new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", doorAttributes, liftEntrance);
             button.addSyns(['lift','lift call','lift button','lift call button','door']);
             atrium.addObject(button);
+            _objects.push(button);
 
             var exitButton = new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", doorAttributes, liftExit);
             exitButton.addSyns(['lift','lift call','lift button','lift call button','door', 'exit', 'exit button']);
             lift.addObject(exitButton);      
+            _objects.push(exitButton);
 
             //lawyerLobby
             var lawyerDoor = new artefactObjectModule.Artefact('door', 'a locked door', "Peering through the window you see people in suits looking busy and important.", lockedDoorAttributes, lawyerEntrance);
             lawyerDoor.addSyns(['lawyer exit','lawyer door']);
             seatingArea.addObject(lawyerDoor);
+            _objects.push(lawyerDoor);
 
             var fireDoor = new artefactObjectModule.Artefact('door', 'a fire exit', "If you push the bar, you'll probably set off an alarm.", doorAttributes, fireExit);
             fireDoor.addSyns(['bar','fire exit','fire door']);
             groundEastEndSouthCorridor.addObject(fireDoor);
+            _objects.push(fireDoor);
 
             var fireDoor2 = new artefactObjectModule.Artefact('door', 'a fire exit', "If you push the bar, you'll probably set off an alarm.", doorAttributes, fireEntry);
             fireDoor2.addSyns(['bar','fire exit','fire door','exit']);
             smokingArea.addObject(fireDoor2);
+            _objects.push(fireDoor2);
 
 
             //ground floor objects
@@ -260,13 +280,17 @@ exports.Map = function Map() { //inputs for constructor TBC
             coffeeMachineKey.addSyns(['vending key','machine key','vending machine key','coffee machine key','coffee key']);
             groundBackStairsWest.addObject(coffeeMachineKey);
             keyAttributes.unlocks = 'nothing';
+            _objects.push(coffeeMachineKey);
+
 
             var plainKey = new artefactObjectModule.Artefact('key', 'a key', "Just a plain key.", keyAttributes);
             plainKey.addSyns(['plain key']);
             pioneer.addObject(plainKey);
+            _objects.push(plainKey);
 
             var fob = new artefactObjectModule.Artefact('keyfob', 'a key fob', "Carrying this ensures you have access to the office whenever you need.", keyAttributes);
             plainKey.addSyns(['fob','key fob']);
+            _objects.push(fob);
             //no location - this is delivered by a mission
 
             //static objects
@@ -275,141 +299,176 @@ exports.Map = function Map() { //inputs for constructor TBC
                                                                                                                 "At least *someone* is expecting you.", fragileRoomAttributes, null);
             screen.addSyns(['display', 'flat-panel', 'panel', 'flat panel','flat-panel screen','flat panel screen']);
             atrium.addObject(screen);
+            _objects.push(screen);
 
             var table = new artefactObjectModule.Artefact('table', 'a glass table', "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.", fragileRoomAttributes, null);
             table.addSyns(['glass','glass table']);
             library.addObject(table);
+            _objects.push(table);
 
             var bookcase = new artefactObjectModule.Artefact('bookcase', 'a set of bookcases', "Books on everything from travel to SQL server and from sales to C#.", openStaticContainerAttributes, null);
             bookcase.addSyns(['bookcase','bookshelf','bookcases', 'bookshelves', 'book case','book cases','book shelf','book shelves','case','shelf','cases','shelves']);
             library.addObject(bookcase);
+            _objects.push(bookcase);
 
             var chair = new artefactObjectModule.Artefact('chair', 'a red leather chair', "You expect to find Morpheus sitting in it. It's surprisingly comfortable.", bedAttributes, null);    
             chair.addSyns(['red chair','leather chair','red leather chair','morpheus chair']);
-            seatingArea.addObject(chair);   
+            seatingArea.addObject(chair);
+            _objects.push(chair);   
             
             var hammock = new artefactObjectModule.Artefact('hammock', 'a comfy-looking hammock', "It's a bit of a pig to climb into but well-worth the effort for a rest.", bedAttributes, null);      
             hammock.addSyns(['bed','comfy hammock','comfy-looking hammock','comfy looking hammock']);
-            restArea.addObject(hammock);  
+            restArea.addObject(hammock);
+            _objects.push(hammock);  
 
             //food objects
             var cake = new artefactObjectModule.Artefact('cake', 'a slice of chocolate cake', "Mmmm tasty *and* healthy. If only there were more.", foodAttributes, null);
             cake.addSyns(['slice','chocolate cake','food']);
-            seatingArea.addObject(cake);   
+            seatingArea.addObject(cake);
+            _objects.push(cake);   
             
             var chocolate = new artefactObjectModule.Artefact('chocolate', 'a bar of chocolate', "Mmmm tasty and loaded with calories.", foodAttributes, null);     
             chocolate.addSyns(['bar','bar of chocolate','chocolate bar','food']);
-            restArea.addObject(chocolate);      
+            restArea.addObject(chocolate); 
+            _objects.push(chocolate);     
             
             var crisps =   new artefactObjectModule.Artefact('crisps', 'a packet of crisps', "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.", foodAttributes, null);
             crisps.addSyns(['packet','crisp packet','packet of crisps','food']);
-            restArea.addObject(crisps);  
+            restArea.addObject(crisps); 
+            _objects.push(crisps); 
 
             //weapons
             var sword = new artefactObjectModule.Artefact('sword', 'an ornamental sword', "It's flimsy and fake-looking but kind of fun.", weaponAttributes, null);
             sword.addSyns(['ornamental','ornamental sword','fake sword']);
             library.addObject(sword);
+            _objects.push(sword);
 
             var brick = new artefactObjectModule.Artefact('brick', 'a brick', "This would make quite a good cudgel.", toolAttributes, null);
             //no synonyms
             room404.addObject(brick);
+            _objects.push(brick);
 
             //other objects
             var lotl = new artefactObjectModule.Artefact('article', "a 'Learn on the Loo' article", "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).", junkAttributes, null);
             lotl.addSyns(['lotl','learn on the loo','learn on the loo article', 'loo article', 'learn article']);
             cubicle.addObject(lotl);  
+            _objects.push(lotl);
                                                                                              
             var sketchbook = new artefactObjectModule.Artefact('sketchbook', 'an A3 sketch book', "It looks like it contains all Simon's plans.", treasureAttributes, null);               
-            sketchbook.addSyns(['book','a3','a3 sketch book','a3 sketchbook','sketch book']);       
+            sketchbook.addSyns(['book','a3','a3 sketch book','a3 sketchbook','sketch book']);
+            _objects.push(sketchbook);       
 
             var money = new artefactObjectModule.Artefact('money', 'a big sack of money', "It's all the profits from the Opportunities projects.", moneyAttributes, null);               
-            money.addSyns(['cash','sack','dosh','profits']);                     
+            money.addSyns(['cash','sack','dosh','profits']);
+            _objects.push(money);                     
             
             //objects used in missions
             var book = new artefactObjectModule.Artefact('book', 'a large book', "It's a book on how to sell software in a friendly way.", junkAttributes, null);
             book.addSyns(['large book','sales book','selling book', 'software book']);
-            bookcase.receive(book);                   
+            bookcase.receive(book);  
+            _objects.push(book);                
                                                                                                                                                    
             var stolenHardDrive = new artefactObjectModule.Artefact('disk', 'a hard disk', "Pretty sure it belongs to Red Gate.", breakableJunkAttributes, null); //breakable!               
             stolenHardDrive.addSyns(['disc','drive','hard drive','hard disk','hard disc','disc drive','disk drive']);             
+            _objects.push(stolenHardDrive);
 
             var torch = new artefactObjectModule.Artefact('torch', 'an emergency torch', "Great for when it's dark. It looks like it'll work too!", lightAttributes, null);
             torch.addSyns(['light','lamp','emergency torch','emergency lamp','emergency light']);
             graffitib.addObject(torch);
+            _objects.push(torch);
 
             var cup = new artefactObjectModule.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null);
             cup.addSyns(['mug', 'coffee cup','coffee mug']);
             bottomkitchen.addObject(cup);
+            _objects.push(cup);
  
             var parcel = new artefactObjectModule.Artefact('parcel', 'a parcel from Amazon', "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.", containerAttributes, null); //breakable!
             parcel.addSyns(['package','amazon parcel','amazon package','coffee parcel','coffee package']);
+            _objects.push(parcel);
 
             var coffeeBeans = new artefactObjectModule.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null); 
             coffeeBeans.addSyns(['coffee beans']);
+            _objects.push(coffeeBeans);
 
             var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
             var sweetCoffee = new artefactObjectModule.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
             sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
+            _objects.push(sweetCoffee);
 
-            var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', componentOf: 'sugar', delivers: sweetCoffee};
-            var sugarAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false, componentOf: 'coffee', delivers: sweetCoffee};
+            var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', componentOf: 'sugar'};
+            var sugarAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false, componentOf: 'coffee'};
 
-            var coffee = new artefactObjectModule.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+            var coffee = new artefactObjectModule.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null, sweetCoffee); 
             coffee.addSyns(['brew','drink']);
+            _objects.push(coffee);
 
-            var sugar = new artefactObjectModule.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+            var sugar = new artefactObjectModule.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null, sweetCoffee); 
             bottomkitchen.addObject(sugar);
+            _objects.push(sugar);
 
             var beanBag = new artefactObjectModule.Artefact('bag', 'a giant bag', "The label says 'Finest Software Development Coffee Beans'", containerAttributes, null); 
             beanBag.addSyns(['bean bag','bag of beans','giant bag','big bag']);
             beanBag.receive(coffeeBeans);
             parcel.receive(beanBag);
+            _objects.push(beanBag);
                                      
             //static object (dependent on coffee)
-            var lockedStaticMachineAttributes = {weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1, delivers: coffee};           
-            var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "When it works it uses coffee beans to make coffee.", lockedStaticMachineAttributes, null);
+            var lockedStaticMachineAttributes = {weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1};           
+            var coffeeMachine = new artefactObjectModule.Artefact('machine', 'a coffee vending machine', "When it works it uses coffee beans to make coffee.", lockedStaticMachineAttributes, null, coffee);
             coffeeMachine.addSyns(['coffee machine','vending machine','coffee vending machine']);
-            bottomkitchen.addObject(coffeeMachine);           
+            bottomkitchen.addObject(coffeeMachine);  
+            _objects.push(coffeeMachine);         
 
             //creatures  
                                                                                                                                                                                                              
             var receptionist = new creatureObjectModule.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, affinity:0, canTravel:false}, null);
             receptionist.addSyns(['receptionist','vic','heidi','her']);
             receptionist.go(null, reception);
+            _objects.push(receptionist); 
 
             var spy = new creatureObjectModule.Creature('spy', 'a corporate spy', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:15, health:225, affinity:-4, canTravel:true}, [stolenHardDrive]); //affinity is low enough to make bribery very hard 
             spy.addSyns(['corporate spy','him']);
-            spy.go(null,lift);   
+            spy.go(null,lift); 
+            _objects.push(spy);   
 
             var simong = new creatureObjectModule.Creature('Simon', 'Simon the CEO', "He runs the show.", {weight:180, attackStrength:45, gender:'male', type:'friendly', carryWeight:15, health:500, affinity:0, canTravel:true, traveller: true}, [sketchbook]);            
             simong.addSyns(['boss','ceo','simon g','galbraith', 'him']);
-            simong.go(null,poppy);   
+            simong.go(null,poppy);  
+            _objects.push(simong);  
 
             var jamesm = new creatureObjectModule.Creature('James', 'James Moore', "He pwns the Opportunities division.", {weight:190, attackStrength:45, gender:'male', type:'friendly', carryWeight:15, health:200, affinity:-1, canTravel:true}, [money]);            
             jamesm.addSyns(['james moore','moore','jim', 'him']);
-            jamesm.go(null,opportunitiesNorth);    
+            jamesm.go(null,opportunitiesNorth); 
+            _objects.push(jamesm);    
 
             //missions
             var coffeeMission = new missionObjectModule.Mission('sweetCoffee',"It's your first day in the office. Your first important task is to get yourself a nice sweet cup of coffee.",'',null,'sweet coffee', false,5,'player',{score: 50, successMessage: "Congratulations. You managed to get your coffee, have 50 points!"});
             atrium.addMission(coffeeMission);
+            _missions.push(coffeeMission);
 
             var beansMission = new missionObjectModule.Mission('beans',"Before you can get any coffee, this machine needs beans.",'',null,'beans',true, 5,'machine',{score: 50, successMessage: "Congratulations. You filled the coffee machine with beans, have 50 points!"});
             coffeeMachine.addMission(beansMission);
+            _missions.push(beansMission);
 
             var keyFob = new missionObjectModule.Mission('keyFob',"Vic has a key fob for you.",["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office."],null,'Vic', true ,5,'Vic',{score: 10, delivers: fob, successMessage: "Have 10 points."});
             receptionist.addMission(keyFob);
+            _missions.push(keyFob);
 
             var bookMission = new missionObjectModule.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', true ,5,'Vic',{score: 50, delivers: parcel, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
             receptionist.addMission(bookMission);
+            _missions.push(bookMission);
 
             var killSpy = new missionObjectModule.Mission('killTheSpy',"Kill the spy.",'',null,'spy', false ,0,'spy',{score: 50, successMessage: "Congratulations. You killed the spy! Have 50 points."});
             lift.addMission(killSpy);
+            _missions.push(killSpy);
 
             var retrieveDisk = new missionObjectModule.Mission('retrieveDisk',"Retrieve a stolen hard drive.",["'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'", "'Have you found my missing data yet?'"],null,'disk', false ,5,'Simon',{score: 50, successMessage: "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."});
             simong.addMission(retrieveDisk);
+            _missions.push(retrieveDisk);
 
             var destroyScreen = new missionObjectModule.Mission('destroyScreen',"It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",null,null,'screen', true ,0,'screen',{score: -25, successMessage: "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points."});
             screen.addMission(destroyScreen);
+            _missions.push(destroyScreen);
             
             //first floor locations
 

@@ -109,6 +109,14 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 response.send(_watcher.getDirections()); 
             });
 
+            _webServer.get('/data/objects.json*', function (request, response) {
+                //var sanitisedRequestURL = sanitiseString(request.url);
+                //response.writeHead(200, {'Content-type':'text/plain'});
+                //response.write(_interpreter.getData(0));
+                //response.end();
+                response.send(_watcher.getObjects()); 
+            });
+
             //serve default dynamic
             _webServer.get('*', function (request, response) {
                 var sanitisedRequestURL = sanitiseString(request.url);

@@ -1,7 +1,7 @@
 ﻿"use strict";
 //artefact object 
                                     
-module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExit) { 
+module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExit, delivers) { 
     //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable, 
     try{  
         //module deps
@@ -42,7 +42,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _unlocks = ""; //unique name of the object that it unlocks. 
         var _componentOf = ""; //unique name of the object this is a component of.
         var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
-        var _delivers = null;; //what does this deliver when all components are in place? (it uses a charge of each component to do so)-- 
+        var _delivers = delivers; //what does this deliver when all components are in place? (it uses a charge of each component to do so)-- 
         var _requiresContainer = false;
         var _requiredContainer = null;
 
@@ -108,7 +108,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (artefactAttributes.componentOf != undefined) {_componentOf = artefactAttributes.componentOf;};
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
-            if (artefactAttributes.delivers != undefined) {_delivers = artefactAttributes.delivers;};
             if (artefactAttributes.requiresContainer != undefined) {_requiresContainer = artefactAttributes.requiresContainer;};
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
 
@@ -131,6 +130,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         //public member functions
+        self.toString = function() {
+            console.log(JSON.stringify(_sourceAttributes));
+            var returnString = '{"name":"'+_name+'","description":"'+_description+'","detailed-description":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            if (_linkedExit) {returnString+= ',"linked-exit":'+_linkedExit.toString();};
+            if (_delivers) {returnString+= ',"delivers":'+_delivers.toString();};
+            returnString+= '}';
+            return returnString;
+        };
+
         self.getName = function() {
             return _name;
         }; 
@@ -159,6 +167,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getSourceAttributes = function() {
             return _sourceAttributes;
         }; 
+
+        self.getDeliveryItem = function() {
+            return _delivers;
+        };
+
+        self.getLinkedExit = function() {
+            return _linkedExit;
+        };
 
         //artefact only function at the moment
         self.setAttributes = function(attributes) {
@@ -194,10 +210,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return _requiredContainer
             };
             return null;
-        };
-        
-        self.toString = function() {
-            return '{"name":"'+_name+'","description":"'+_description+'"}';
         };
 
         self.getDescription = function() {
@@ -327,7 +339,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.combineWith = function(anObject) {
             if (!(self.combinesWith(anObject))) { return null;};
             console.log("combining :"+self.getName()+" with "+anObject.getName()+" to produce "+_delivers);
-            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes()); //return a new instance of deliveryObject //not bothering with linkedexit here.
+            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExit(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
         };
 
         self.canContain = function(anObject) {
@@ -440,7 +452,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             for (var i=0; i<components.length; i++) {
                 self.consumeItem(components[i]);
             };
-            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes()); //return a new instance of deliveryObject //not bothering with linkedexit here.
+            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExit(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
         };
 
         self.break = function(deliberateAction) {

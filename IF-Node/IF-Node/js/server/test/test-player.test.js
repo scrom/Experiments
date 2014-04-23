@@ -326,10 +326,10 @@ exports.canMakeSweetCoffeeByAddingSugarToCoffee = function (test) {
 
     sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
 
-    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null, sweetCoffee); 
     coffee.addSyns(['brew','drink']);
 
-    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null, sweetCoffee); 
 
     l0.addObject(sugar);
     l0.addObject(cup);
@@ -362,10 +362,10 @@ exports.canMakeSweetCoffeeByAddingCoffeeToACupOfSugar = function (test) {
 
     sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
 
-    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null, sweetCoffee); 
     coffee.addSyns(['brew','drink']);
 
-    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null, sweetCoffee); 
 
     l0.addObject(cup);
     l0.addObject(coffee);
@@ -395,10 +395,10 @@ exports.cantMakeSweetCoffeeWithoutACup = function (test) {
 
     sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
 
-    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null, sweetCoffee); 
     coffee.addSyns(['brew','drink']);
 
-    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null, sweetCoffee); 
 
     console.log(l0.addObject(coffee));
     l0.addObject(sugar);
@@ -425,10 +425,10 @@ exports.failingToMakeSweetCoffeeDoesnotModifyIngredients = function (test) {
 
     sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
 
-    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null, sweetCoffee); 
     coffee.addSyns(['brew','drink']);
 
-    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null); 
+    var sugar = new artefact.Artefact('sugar', 'sugar', "Not so good for the waistline but sugary, sweet and tasty.", sugarAttributes, null, sweetCoffee); 
 
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
