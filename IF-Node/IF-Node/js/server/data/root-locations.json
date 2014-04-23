@@ -1,0 +1,742 @@
+﻿[
+  {
+    "object": "location",
+    "name": "atrium",
+    "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "reception",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "toilet-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "i",
+        "longname": "in",
+        "destination": "lift-ground-floor",
+        "hidden": "true"
+      },
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "stairs-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "atrium-seating",
+    "description": "You're in the atrium seating area.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "reception",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "lawyer-lobby",
+        "hidden": "true"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "back-stairs-ground-floor-west",
+    "description": "You're in the bottom of the west fire escape stairs.",
+    "dark": "true",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "opportunities-north",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "buenosaires",
+    "description": "You're in the Buenos Aires interview room.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "northeast-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "east-corridor-ground-floor",
+    "description": "You're in the East corridor of the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "east-south-end-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "northeast-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "signpost",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "east-end-south-corridor-ground-floor",
+    "description": "You're in the East end of the South corridor on the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "west-end-south-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "graffiti-a",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "smoking-area",
+        "hidden": "true"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "southeast-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "east-south-end-corridor-ground-floor",
+    "description": "You're in the South end of the East corridor on the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "southeast-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "east-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "rest-area-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "graffiti-a",
+    "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
+    "dark": "true",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "east-end-south-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "graffiti-b",
+    "description": "You're in the Graffiti-B meeting room. It's all bright and shiny.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "west-end-south-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "kitchen-ground-floor",
+    "description": "You're in the atrium kitchen.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "stairs-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "lawyer-lobby",
+    "description": "You're in the lobby of the resident law firm.<br>There's an air of bureaucracy, suits and books to the place.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "atrium-seating",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "library",
+    "description": "You're in the atrium Library.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "stairs-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "lift-ground-floor",
+    "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "o",
+        "longname": "out",
+        "destination": "atrium",
+        "hidden": "true"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "northeast-corridor-ground-floor",
+    "description": "You're in the North end of the ground floor East corridor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "reception",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "east-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "buenosaires",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "northwest-corridor-ground-floor",
+    "description": "You're in the North-West corridor of the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "stairs-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "pioneer",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "shower-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "west-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-cubbyhole",
+    "description": "You're in a dead-end room full of clutter in the opportunities and ventures area.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "opportunities-north",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-north",
+    "description": "You're in north end of the opportunities and ventures area.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "opportunities-south",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "back-stairs-ground-floor-west",
+        "hidden": "false"
+      },
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "opportunities-cubbyhole",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "opportunities-north-corridor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-north-corridor",
+    "description": "You're in a corridor at the north end of the opportunities and ventures area.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "opportunities-north",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "opportunities-north-east-corridor",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "peacock",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-north-east-corridor",
+    "description": "You're at the end of a corridor in the northern part of the opportunities and ventures area.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "opportunities-north-corridor",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "spiderman",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-south",
+    "description": "You're in south end of the opportunities and ventures area.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "west-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "opportunities-north",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "peacock",
+    "description": "You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "opportunities-north-corridor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "pioneer",
+    "description": "You're in the Pioneer meeting room. The acoustics in here seem very strange.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "northwest-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "poppy",
+    "description": "You're in the Poppy meeting room. The AV equipment in here could use some love.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "southwest-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "reception",
+    "description": "You are stood by the big red reception desk in the Red Gate office atrium.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "atrium",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "atrium-seating",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "northeast-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "rest-area-ground-floor",
+    "description": "You're in the ground floor rest area.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "east-south-end-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "room-404",
+    "description": "You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "southeast-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "shower-ground-floor",
+    "description": "You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "northwest-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "signpost",
+    "description": "You're in the SignPost meeting room.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "east-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "smoking-area",
+    "description": "You're outside the back of the office under the fire escape.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "east-end-south-corridor-ground-floor",
+        "hidden": "true"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "southeast-corridor-ground-floor",
+    "description": "You're in the South-East corridor of the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "east-end-south-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "room-404",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "east-south-end-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "southwest-corridor-ground-floor",
+    "description": "You're in the South-West corridor of the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "west-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "poppy",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "west-end-south-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "spiderman",
+    "description": "You're in the Spiderman meeting room. (Or is that Spider-man?) There are large windows on 2 walls.<br>You feel somewhat exposed here",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "opportunities-north-east-corridor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "stairs-ground-floor",
+    "description": "You're standing at the foot of the stairs.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "atrium",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "library",
+        "hidden": "false"
+      },
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "kitchen-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "northwest-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "toilet-ground-floor",
+    "description": "You stare at yourself in the mirror of that bathroom and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "atrium",
+        "hidden": "false"
+      },
+      {
+        "name": "i",
+        "longname": "in",
+        "destination": "toilet-ground-floor-cubicle",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "toilet-ground-floor-cubicle",
+    "description": "You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "o",
+        "longname": "out",
+        "destination": "toilet-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "west-corridor-ground-floor",
+    "description": "You're in the West corridor of the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "northwest-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "s",
+        "longname": "south",
+        "destination": "southwest-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "opportunities-south",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "west-end-south-corridor-ground-floor",
+    "description": "You're in the West end of the South corridor on the ground floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "name": "w",
+        "longname": "west",
+        "destination": "southwest-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "e",
+        "longname": "east",
+        "destination": "east-end-south-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "name": "n",
+        "longname": "north",
+        "destination": "graffiti-b",
+        "hidden": "false"
+      }
+    ]
+  }
+]
