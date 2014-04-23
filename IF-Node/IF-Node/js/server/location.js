@@ -27,7 +27,15 @@ exports.Location = function Location(aName, aDescription, isDark) {
                 if (i>0) {returnJSON+= ',';};
                 returnJSON+= _exits[i].toString();
             };
-            returnJSON += ']}';
+            returnJSON += ']';
+            /*returnJSON += ',"objects":[';
+            var inventoryObjects = _inventory.getAllObjects();
+            for(var j=0; j<inventoryObjects.length;j++) {
+                if (j>0) {returnJSON+= ',';};
+                returnJSON+= inventoryObjects[j].toString();
+            };
+            returnJSON += ']';*/
+            returnJSON += '}';
             return returnJSON;
         };
 

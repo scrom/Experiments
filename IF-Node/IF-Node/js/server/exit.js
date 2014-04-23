@@ -10,16 +10,16 @@ module.exports.Exit = function Exit(aName, aDestinationName, isHidden) { //input
         var _longName = _directions[_directions.indexOf(_name)+1];
         //self.visits = 0;
         var _hidden = false;
-        if (isHidden) { _hidden = true;};
+        if (isHidden == true || isHidden == "true") { _hidden = true;};
 
         var _destinationName = aDestinationName;
 
 	    var _objectName = "Exit";
-        console.log(_objectName + ' created: '+_name+', '+_destinationName);
+        console.log(_objectName + ' created: '+_name+', '+_destinationName+' visible? '+(!(_hidden)));
 
         ////public methods
         self.toString = function() {
-            return '{"name":"'+_name+'","longname":"'+_longName+'","destination":"'+_destinationName+'"}';
+            return '{"name":"'+_name+'","longname":"'+_longName+'","destination":"'+_destinationName+'", "hidden":"'+_hidden+'"}';
         };
 
         self.getName = function() {
