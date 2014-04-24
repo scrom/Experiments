@@ -23,15 +23,23 @@ exports.Location = function Location(aName, aDescription, isDark) {
         //public member functions
         self.toString = function() {
             //var _missions = [];
-            var returnJSON = '{"object":"location","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
+            var returnString = '{"object":"location","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
             for(var i=0; i<_exits.length;i++) {
-                if (i>0) {returnJSON+= ',';};
-                returnJSON+= _exits[i].toString();
+                if (i>0) {returnString+= ',';};
+                returnString+= _exits[i].toString();
             };
-            returnJSON += ']';
-            if (_inventory.size() >0) {returnJSON+= ',"inventory":'+_inventory.toString();};
-            returnJSON += '}';
-            return returnJSON;
+            returnString += ']';
+            if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            if (_missions.length >0) {
+                returnString+= ', "missions":[';
+                for(var i=0; i<_missions.length;i++) {
+                    if (i>0) {returnString+= ', ';};
+                    returnString+= _missions[i].toString();
+                };
+                returnString+= ']';
+            };
+            returnString += '}';
+            return returnString;
         };
 
         self.getName = function() {

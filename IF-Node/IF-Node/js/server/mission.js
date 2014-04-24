@@ -22,9 +22,29 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         if (_dialogue == null || _dialogue == undefined || _dialogue == "") { _dialogue = [];} //ensure there's an array
         else {_isStatic = true;}; //override static setting if mission has dialogue
 
+        self.literalToString = function(literal) {
+            var returnString = '{';
+            var counter = 0;
+            for (var key in literal) {
+               if (counter > 0) {returnString +=', ';};
+               counter++;
+
+               returnString += '"'+key+'":';
+               var obj = literal[key];
+                 if (typeof(obj) == 'object') {returnString += obj.toString();}
+                 else if (typeof(obj) == 'string') {returnString += '"'+obj+'"';}
+                 else {returnString += obj;};
+            };
+            returnString+= '}';
+            return returnString;
+        };
+
         ////public methods
+
         self.toString = function() {
-            return '{"name":"'+_name+'"}';
+            var returnString = '{"name":"'+_name+'","description":"'+_description+'","dialogue":"'+_dialogue+'","parent":"'+_parent+'","object":"'+_object+'","static":"'+_isStatic+'","condition":"'+_condition+'","destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            returnString+= '}';
+            return returnString;
         };
 
         self.getName = function() {

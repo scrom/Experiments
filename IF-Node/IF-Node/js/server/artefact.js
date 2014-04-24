@@ -137,6 +137,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_linkedExit) {returnString+= ',"linked-exit":'+_linkedExit.toString();};
             if (_delivers) {returnString+= ',"delivers":'+_delivers.toString();};
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            if (_missions.length >0) {
+                returnString+= ',"missions":[';
+                for(var i=0; i<_missions.length;i++) {
+                    if (i>0) {returnString+= ',';};
+                    returnString+= _missions[i].toString();
+                };
+                returnString+= ']';
+            };
             returnString+= '}';
             return returnString;
         };

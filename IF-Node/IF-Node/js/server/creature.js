@@ -134,6 +134,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         //var _missions = [];
             var returnString = '{"name":"'+_name+'","display-name":"'+_displayName+'","description":"'+_description+'","detailed-description":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            if (_missions.length >0) {
+                returnString+= ',"missions":[';
+                for(var i=0; i<_missions.length;i++) {
+                    if (i>0) {returnString+= ', ';};
+                    returnString+= _missions[i].toString();
+                };
+                returnString+= ']';
+            };
             returnString+= '}';
             return returnString;
         };

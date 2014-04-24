@@ -39,6 +39,10 @@ exports.Watcher = function Watcher(aMap) {
             return _map.getObjectsJSON();
         };
 
+        self.getMissions = function() {
+            return _map.getMissionsJSON();
+        };
+
         self.getDirections = function(aGameId) {
             return JSON.parse('[{"name":"North"},{"name":"South"},{"name":"East"},{"name":"West"},{"name":"in"},{"name":"out"},{"name":"up"},{"name":"down"}]');
         };

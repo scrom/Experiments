@@ -97,6 +97,15 @@ exports.Map = function Map() { //inputs for constructor TBC
             locationsAsJSON.sort(sortByProperty("name"));
             return locationsAsJSON;
         };
+
+        self.getMissionsJSON = function() {
+            var missionsAsJSON = [];
+            for (var i=0; i<_missions.length;i++) {
+                missionsAsJSON.push(JSON.parse(_missions[i].toString()));
+            };
+            missionsAsJSON.sort(sortByProperty("name"));
+            return missionsAsJSON;
+        };
         
         self.addLocation = function(aName,aDescription,isDark){
                 if (isDark == "true" || isDark == true) {isDark = true;}
