@@ -11,6 +11,8 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         //source data: 
         var _rootLocationsJSON = require('./data/root-locations.json');
+        var _rootObjectsJSON = require('./data/root-objects.json');
+        var _rootMissionsJSON = require('./data/root-missions.json');
           
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];

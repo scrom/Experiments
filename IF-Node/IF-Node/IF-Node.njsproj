@@ -68,6 +68,8 @@
     <Content Include="editor.html" />
     <Content Include="index.html" />
     <Content Include="js\server\data\root-locations.json" />
+    <Content Include="js\server\data\root-missions.json" />
+    <Content Include="js\server\data\root-objects.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>

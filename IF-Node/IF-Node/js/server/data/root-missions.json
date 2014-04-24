@@ -1,0 +1,179 @@
+﻿[
+  {
+    "object": "mission",
+    "name": "beans",
+    "description": "Before you can get any coffee, this machine needs beans.",
+    "dialogue": "",
+    "parent": "null",
+    "mission-object": "beans",
+    "static": "true",
+    "condition": "5",
+    "destination": "machine",
+    "reward": {
+      "score": 50,
+      "successMessage": "Congratulations. You filled the coffee machine with beans, have 50 points!"
+    }
+  },
+  {
+    "object": "mission",
+    "name": "destroyscreen",
+    "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",
+    "dialogue": "",
+    "parent": "null",
+    "mission-object": "screen",
+    "static": "true",
+    "condition": "0",
+    "destination": "screen",
+    "reward": {
+      "score": -25,
+      "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points."
+    }
+  },
+  {
+    "object": "mission",
+    "name": "keyfob",
+    "description": "Vic has a key fob for you.",
+    "dialogue": "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office.",
+    "parent": "null",
+    "mission-object": "Vic",
+    "static": "true",
+    "condition": "5",
+    "destination": "Vic",
+    "reward": {
+      "score": 10,
+      "delivers": {
+        "object": "artefact",
+        "name": "keyfob",
+        "description": "a key fob",
+        "detailed-description": "Carrying this ensures you have access to the office whenever you need.",
+        "attributes": {
+          "weight": 0.1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "key",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": false,
+          "unlocks": "nothing"
+        }
+      },
+      "successMessage": "Have 10 points."
+    }
+  },
+  {
+    "object": "mission",
+    "name": "killthespy",
+    "description": "Kill the spy.",
+    "dialogue": "",
+    "parent": "null",
+    "mission-object": "spy",
+    "static": "false",
+    "condition": "0",
+    "destination": "spy",
+    "reward": {
+      "score": 50,
+      "successMessage": "Congratulations. You killed the spy! Have 50 points."
+    }
+  },
+  {
+    "object": "mission",
+    "name": "retrievedisk",
+    "description": "Retrieve a stolen hard drive.",
+    "dialogue": "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?','Have you found my missing data yet?'",
+    "parent": "null",
+    "mission-object": "disk",
+    "static": "true",
+    "condition": "5",
+    "destination": "Simon",
+    "reward": {
+      "score": 50,
+      "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."
+    }
+  },
+  {
+    "object": "mission",
+    "name": "sweetcoffee",
+    "description": "It's your first day in the office. Your first important task is to get yourself a nice sweet cup of coffee.",
+    "dialogue": "",
+    "parent": "null",
+    "mission-object": "sweet coffee",
+    "static": "false",
+    "condition": "5",
+    "destination": "player",
+    "reward": {
+      "score": 50,
+      "successMessage": "Congratulations. You managed to get your coffee, have 50 points!"
+    }
+  },
+  {
+    "object": "mission",
+    "name": "vicsbook",
+    "description": "Vic has a parcel for you but she'd like something to read first.",
+    "dialogue": "",
+    "parent": "null",
+    "mission-object": "book",
+    "static": "true",
+    "condition": "5",
+    "destination": "Vic",
+    "reward": {
+      "score": 50,
+      "delivers": {
+        "object": "artefact",
+        "name": "parcel",
+        "description": "a parcel from Amazon",
+        "detailed-description": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
+        "attributes": {
+          "weight": 2,
+          "carryWeight": 25,
+          "attackStrength": 2,
+          "type": "container",
+          "canCollect": true,
+          "canOpen": true,
+          "isEdible": false,
+          "isBreakable": false
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "bag",
+            "description": "a giant bag",
+            "detailed-description": "The label says 'Finest Software Development Coffee Beans'",
+            "attributes": {
+              "weight": 2,
+              "carryWeight": 25,
+              "attackStrength": 2,
+              "type": "container",
+              "canCollect": true,
+              "canOpen": true,
+              "isEdible": false,
+              "isBreakable": false
+            },
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "beans",
+                "description": "coffee beans",
+                "detailed-description": "Development fuel. Almost enough to last a day here.",
+                "attributes": {
+                  "weight": 3,
+                  "carryWeight": 0,
+                  "attackStrength": 5,
+                  "type": "junk",
+                  "canCollect": true,
+                  "canOpen": false,
+                  "isEdible": false,
+                  "isBreakable": false,
+                  "charges": 10,
+                  "componentOf": "machine",
+                  "requiresContainer": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "successMessage": "Congratulations. Vic likes the book! Have 50 points."
+    }
+  }
+]
