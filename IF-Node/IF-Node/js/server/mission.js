@@ -1,6 +1,6 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, description, dialogue, parent, object, isStatic, condition, destination, reward) { //add time limit of some form in later
+module.exports.Mission = function Mission(name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward) { //add time limit of some form in later
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
@@ -9,14 +9,14 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         var _dialogue = dialogue; //an array/collection of dialogue sentences. If a mission has dialogue, it'll override any static settings and be treated as static for now.
         var _isStatic = isStatic; //if true, mission stays in source location.
         var _conversationState = 0; //track dialogue
-        var _object = object; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
+        var _missionObject = missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _condition = condition; //the required (numeric/enumerated) condition the object must be in for success 
         var _destination = destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
         var _timeTaken = 0; //track time taken to complete.
         var _type = 'mission';
 
-	    var _objectName = "Mission";
+	    var _objectName = "mission";
         console.log(_objectName + ' created: '+_name+', '+_destination);
 
         if (_dialogue == null || _dialogue == undefined || _dialogue == "") { _dialogue = [];} //ensure there's an array
@@ -42,7 +42,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
         ////public methods
 
         self.toString = function() {
-            var returnString = '{"name":"'+_name+'","description":"'+_description+'","dialogue":"'+_dialogue+'","parent":"'+_parent+'","object":"'+_object+'","static":"'+_isStatic+'","condition":"'+_condition+'","destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","dialogue":"'+_dialogue+'","parent":"'+_parent+'","mission-object":"'+_missionObject+'","static":"'+_isStatic+'","condition":"'+_condition+'","destination":"'+_destination+'","reward":'+self.literalToString(_reward);
             returnString+= '}';
             return returnString;
         };
@@ -99,15 +99,15 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
 
         self.checkState = function(playerInventory, location) {
             //var coffeeMission = new missionObjectModule.Mission('sweetCoffee','Your first task is to get yourself a nice sweet cup of coffee.','',null,'sweet coffee',5,'player',{points: 50});
-            var object;
+            var missionObject;
             console.log('Checking state for mission: '+_name);
             switch(true) {
                     case (_destination == 'player'): //player inventory
-                        object = playerInventory.getObject(_object);
+                        missionObject = playerInventory.getObject(_missionObject);
                         break;
                     case (_destination == location.getName()): //location
                         console.log('mission destination location reached');
-                        object = location.getObject(_object);
+                        missionObject = location.getObject(_missionObject);
                         break;
                     default:
                         //this one allows you to have an object/creature in any location - the object's condition will determine success.
@@ -115,20 +115,20 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, o
                         if (location.getObject(_destination)) {
                             console.log('found mission destination object/creature in location');
                             var destinationObjectOrCreature = location.getObject(_destination);
-                            if (_destination == _object) {object = destinationObjectOrCreature}
-                            else { object = destinationObjectOrCreature.getObject(_object);};
+                            if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                            else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
                         } else if (playerInventory.getObject(_destination)) {
                             //creature or object in player inventory
                             console.log('found mission destination object/creature in player inventory');
                             var destinationObjectOrCreature = playerInventory.getObject(_destination);
-                            if (_destination == _object) {object = destinationObjectOrCreature}
-                            else { object = destinationObjectOrCreature.getObject(_object);};
+                            if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                            else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
                         };
                         break;
             };
-            if (object) {
+            if (missionObject) {
                 console.log('mission object retrieved. Checking for condition: '+_condition);
-                if (object.getCondition() == _condition) {
+                if (missionObject.getCondition() == _condition) {
                     //if mission has dialogue, ensure that has been triggered at least once...
                     if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
                         return self.success();

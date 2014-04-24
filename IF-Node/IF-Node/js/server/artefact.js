@@ -58,7 +58,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.rechargable = rechargable;
         */
 
-	    var objectName = "Artefact";
+	    var _objectName = "artefact";
 
         var setQuantity = function(quantity) {
             console.log('setting item quantity: '+quantity);
@@ -133,7 +133,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.toString = function() {
             //var _synonyms = [];
             //var _missions = [];
-            var returnString = '{"name":"'+_name+'","description":"'+_description+'","detailed-description":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailed-description":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_linkedExit) {returnString+= ',"linked-exit":'+_linkedExit.toString();};
             if (_delivers) {returnString+= ',"delivers":'+_delivers.toString();};
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
@@ -746,7 +746,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
         //end public member functions
 
-        console.log(objectName + " created: "+_name+", "+self.destinationName);
+        console.log(_objectName + " created: "+_name+", "+self.destinationName);
     }
     catch(err) {
 	    console.log("Unable to create Artefact object: "+err);

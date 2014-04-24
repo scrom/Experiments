@@ -18,12 +18,12 @@ exports.Location = function Location(aName, aDescription, isDark) {
         var _exits = [];
         var _missions = [];
 
-	    var objectName = "Location";
+	    var _objectName = "location";
 
         //public member functions
         self.toString = function() {
             //var _missions = [];
-            var returnString = '{"object":"location","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
             for(var i=0; i<_exits.length;i++) {
                 if (i>0) {returnString+= ',';};
                 returnString+= _exits[i].toString();
@@ -228,7 +228,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         //end public member functions
 
-        console.log(objectName + ' created: '+self.toString());
+        console.log(_objectName + ' created: '+self.toString());
 
     }
     catch(err) {

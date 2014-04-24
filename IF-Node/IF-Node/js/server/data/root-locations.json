@@ -6,28 +6,107 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "reception",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "toilet-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "i",
         "longname": "in",
         "destination": "lift-ground-floor",
         "hidden": "true"
       },
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "stairs-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "button",
+        "description": "a lift call button",
+        "detailed-description": "If you push the button, perhaps a lift will come.",
+        "attributes": {
+          "weight": 200,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "door",
+          "canCollect": false,
+          "canOpen": true,
+          "isEdible": false,
+          "isBreakable": false
+        },
+        "linked-exit": {
+          "object": "exit",
+          "name": "i",
+          "longname": "in",
+          "destination": "lift-ground-floor",
+          "hidden": "true"
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "screen",
+        "description": "a flat-panel screen",
+        "detailed-description": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least *someone* is expecting you.",
+        "attributes": {
+          "weight": 51,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "junk",
+          "canCollect": false,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": true
+        },
+        "missions": [
+          {
+            "object": "mission",
+            "name": "destroyscreen",
+            "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",
+            "dialogue": "",
+            "parent": "null",
+            "mission-object": "screen",
+            "static": "true",
+            "condition": "0",
+            "destination": "screen",
+            "reward": {
+              "score": -25,
+              "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points."
+            }
+          }
+        ]
+      }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "sweetcoffee",
+        "description": "It's your first day in the office. Your first important task is to get yourself a nice sweet cup of coffee.",
+        "dialogue": "",
+        "parent": "null",
+        "mission-object": "sweet coffee",
+        "static": "false",
+        "condition": "5",
+        "destination": "player",
+        "reward": {
+          "score": 50,
+          "successMessage": "Congratulations. You managed to get your coffee, have 50 points!"
+        }
       }
     ]
   },
@@ -38,16 +117,78 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "reception",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "lawyer-lobby",
         "hidden": "true"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "a locked door",
+        "detailed-description": "Peering through the window you see people in suits looking busy and important.",
+        "attributes": {
+          "weight": 200,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "door",
+          "canCollect": false,
+          "canOpen": true,
+          "isEdible": false,
+          "isBreakable": false,
+          "lockable": true,
+          "locked": true
+        },
+        "linked-exit": {
+          "object": "exit",
+          "name": "s",
+          "longname": "south",
+          "destination": "lawyer-lobby",
+          "hidden": "true"
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "chair",
+        "description": "a red leather chair",
+        "detailed-description": "You expect to find Morpheus sitting in it. It's surprisingly comfortable.",
+        "attributes": {
+          "weight": 80,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "bed",
+          "canCollect": false,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": true
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "cake",
+        "description": "a slice of chocolate cake",
+        "detailed-description": "Mmmm tasty *and* healthy. If only there were more.",
+        "attributes": {
+          "weight": 1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "food",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": true,
+          "nutrition": 25,
+          "isBreakable": false
+        }
       }
     ]
   },
@@ -58,10 +199,30 @@
     "dark": "true",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "opportunities-north",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "key",
+        "description": "a vending machine key",
+        "detailed-description": "It unlocks a vending machine.",
+        "attributes": {
+          "weight": 0.1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "key",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": false,
+          "unlocks": "nothing"
+        }
       }
     ]
   },
@@ -72,6 +233,7 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "northeast-corridor-ground-floor",
@@ -86,18 +248,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "east-south-end-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "northeast-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "signpost",
@@ -112,28 +277,57 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "west-end-south-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "graffiti-a",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "smoking-area",
         "hidden": "true"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "southeast-corridor-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "a fire exit",
+        "detailed-description": "If you push the bar, you'll probably set off an alarm.",
+        "attributes": {
+          "weight": 200,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "door",
+          "canCollect": false,
+          "canOpen": true,
+          "isEdible": false,
+          "isBreakable": false
+        },
+        "linked-exit": {
+          "object": "exit",
+          "name": "s",
+          "longname": "south",
+          "destination": "smoking-area",
+          "hidden": "true"
+        }
       }
     ]
   },
@@ -144,18 +338,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "southeast-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "east-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "rest-area-ground-floor",
@@ -170,6 +367,7 @@
     "dark": "true",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "east-end-south-corridor-ground-floor",
@@ -184,10 +382,32 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "west-end-south-corridor-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "torch",
+        "description": "an emergency torch",
+        "detailed-description": "Great for when it's dark. It looks like it'll work too!",
+        "attributes": {
+          "weight": 1,
+          "carryWeight": 0,
+          "attackStrength": 5,
+          "type": "light",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": true,
+          "charges": -1,
+          "switched": true,
+          "isOn": false
+        }
       }
     ]
   },
@@ -198,10 +418,141 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "stairs-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "cup",
+        "description": "a coffee cup",
+        "detailed-description": "Some coffee in here would be great.",
+        "attributes": {
+          "weight": 2,
+          "carryWeight": 1,
+          "attackStrength": 2,
+          "type": "container",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": true
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "sugar",
+        "description": "sugar",
+        "detailed-description": "Not so good for the waistline but sugary, sweet and tasty.",
+        "attributes": {
+          "weight": 0.1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "food",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": true,
+          "nutrition": 5,
+          "isBreakable": false,
+          "componentOf": "coffee"
+        },
+        "delivers": {
+          "object": "artefact",
+          "name": "sweet coffee",
+          "description": "sweet coffee",
+          "detailed-description": "Development fuel with added sugar!",
+          "attributes": {
+            "weight": 1,
+            "carryWeight": 0,
+            "attackStrength": 0,
+            "type": "food",
+            "canCollect": true,
+            "canOpen": false,
+            "isEdible": true,
+            "nutrition": 15,
+            "isBreakable": false,
+            "requiresContainer": true,
+            "requiredContainer": "cup"
+          }
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "machine",
+        "description": "a coffee vending machine",
+        "detailed-description": "When it works it uses coffee beans to make coffee.",
+        "attributes": {
+          "weight": 151,
+          "carryWeight": 3,
+          "attackStrength": 0,
+          "type": "container",
+          "canCollect": false,
+          "canOpen": true,
+          "isEdible": false,
+          "isBreakable": true,
+          "lockable": true,
+          "locked": true,
+          "requiredComponentCount": 1
+        },
+        "delivers": {
+          "object": "artefact",
+          "name": "coffee",
+          "description": "coffee",
+          "detailed-description": "Development fuel.",
+          "attributes": {
+            "weight": 1,
+            "carryWeight": 0,
+            "attackStrength": 0,
+            "type": "food",
+            "canCollect": true,
+            "canOpen": false,
+            "isEdible": true,
+            "nutrition": 10,
+            "isBreakable": false,
+            "requiresContainer": true,
+            "requiredContainer": "cup",
+            "componentOf": "sugar"
+          },
+          "delivers": {
+            "object": "artefact",
+            "name": "sweet coffee",
+            "description": "sweet coffee",
+            "detailed-description": "Development fuel with added sugar!",
+            "attributes": {
+              "weight": 1,
+              "carryWeight": 0,
+              "attackStrength": 0,
+              "type": "food",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": true,
+              "nutrition": 15,
+              "isBreakable": false,
+              "requiresContainer": true,
+              "requiredContainer": "cup"
+            }
+          }
+        },
+        "missions": [
+          {
+            "object": "mission",
+            "name": "beans",
+            "description": "Before you can get any coffee, this machine needs beans.",
+            "dialogue": "",
+            "parent": "null",
+            "mission-object": "beans",
+            "static": "true",
+            "condition": "5",
+            "destination": "machine",
+            "reward": {
+              "score": 50,
+              "successMessage": "Congratulations. You filled the coffee machine with beans, have 50 points!"
+            }
+          }
+        ]
       }
     ]
   },
@@ -212,6 +563,7 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "atrium-seating",
@@ -226,10 +578,79 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "stairs-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "a glass table",
+        "detailed-description": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
+        "attributes": {
+          "weight": 51,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "junk",
+          "canCollect": false,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": true
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "bookcase",
+        "description": "a set of bookcases",
+        "detailed-description": "Books on everything from travel to SQL server and from sales to C#.",
+        "attributes": {
+          "weight": 80,
+          "carryWeight": 50,
+          "attackStrength": 0,
+          "type": "container",
+          "canCollect": false,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": false
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "book",
+            "description": "a large book",
+            "detailed-description": "It's a book on how to sell software in a friendly way.",
+            "attributes": {
+              "weight": 3,
+              "carryWeight": 0,
+              "attackStrength": 5,
+              "type": "junk",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": false,
+              "isBreakable": false
+            }
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "sword",
+        "description": "an ornamental sword",
+        "detailed-description": "It's flimsy and fake-looking but kind of fun.",
+        "attributes": {
+          "weight": 4,
+          "carryWeight": 0,
+          "attackStrength": 20,
+          "type": "weapon",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": false
+        }
       }
     ]
   },
@@ -240,10 +661,88 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "o",
         "longname": "out",
         "destination": "atrium",
         "hidden": "true"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "button",
+        "description": "an exit button",
+        "detailed-description": "If you push the exit, you should be able to get out again.",
+        "attributes": {
+          "weight": 200,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "door",
+          "canCollect": false,
+          "canOpen": true,
+          "isEdible": false,
+          "isBreakable": false
+        },
+        "linked-exit": {
+          "object": "exit",
+          "name": "o",
+          "longname": "out",
+          "destination": "atrium",
+          "hidden": "true"
+        }
+      },
+      {
+        "object": "creature",
+        "name": "spy",
+        "display-name": "the spy",
+        "description": "a corporate spy",
+        "detailed-description": "Very shifty. I'm sure nobody would notice if they disappeared.",
+        "attributes": {
+          "weight": 140,
+          "attackStrength": 12,
+          "gender": "male",
+          "type": "creature",
+          "carryWeight": 15,
+          "health": 225,
+          "affinity": -4,
+          "canTravel": true
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "disk",
+            "description": "a hard disk",
+            "detailed-description": "Pretty sure it belongs to Red Gate.",
+            "attributes": {
+              "weight": 3,
+              "carryWeight": 0,
+              "attackStrength": 5,
+              "type": "junk",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": false,
+              "isBreakable": true
+            }
+          }
+        ]
+      }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "killthespy",
+        "description": "Kill the spy.",
+        "dialogue": "",
+        "parent": "null",
+        "mission-object": "spy",
+        "static": "false",
+        "condition": "0",
+        "destination": "spy",
+        "reward": {
+          "score": 50,
+          "successMessage": "Congratulations. You killed the spy! Have 50 points."
+        }
       }
     ]
   },
@@ -254,18 +753,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "reception",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "east-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "buenosaires",
@@ -280,24 +782,28 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "stairs-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "pioneer",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "shower-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "west-corridor-ground-floor",
@@ -312,6 +818,7 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "opportunities-north",
@@ -326,28 +833,71 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "opportunities-south",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "back-stairs-ground-floor-west",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "opportunities-cubbyhole",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "opportunities-north-corridor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "james",
+        "display-name": "James",
+        "description": "James Moore",
+        "detailed-description": "He pwns the Opportunities division.",
+        "attributes": {
+          "weight": 190,
+          "attackStrength": 45,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 200,
+          "affinity": -1,
+          "canTravel": true
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "money",
+            "description": "a big sack of money",
+            "detailed-description": "It's all the profits from the Opportunities projects.",
+            "attributes": {
+              "weight": 0.1,
+              "carryWeight": 0,
+              "attackStrength": 0,
+              "type": "money",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": false,
+              "isBreakable": false,
+              "charges": 10,
+              "value": 10
+            }
+          }
+        ]
       }
     ]
   },
@@ -358,18 +908,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "opportunities-north",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "opportunities-north-east-corridor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "peacock",
@@ -384,12 +937,14 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "opportunities-north-corridor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "spiderman",
@@ -404,12 +959,14 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "west-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "opportunities-north",
@@ -424,6 +981,7 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "opportunities-north-corridor",
@@ -438,10 +996,30 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "northwest-corridor-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "key",
+        "description": "a key",
+        "detailed-description": "Just a plain key.",
+        "attributes": {
+          "weight": 0.1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "key",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": false,
+          "unlocks": "nothing"
+        }
       }
     ]
   },
@@ -452,10 +1030,66 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "southwest-corridor-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "simon",
+        "display-name": "Simon",
+        "description": "Simon the CEO",
+        "detailed-description": "He runs the show.",
+        "attributes": {
+          "weight": 180,
+          "attackStrength": 45,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 500,
+          "affinity": 0,
+          "canTravel": true,
+          "traveller": true
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "sketchbook",
+            "description": "an A3 sketch book",
+            "detailed-description": "It looks like it contains all Simon's plans.",
+            "attributes": {
+              "weight": 5,
+              "carryWeight": 0,
+              "attackStrength": 5,
+              "type": "treasure",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": false,
+              "isBreakable": true
+            }
+          }
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "retrievedisk",
+            "description": "Retrieve a stolen hard drive.",
+            "dialogue": "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?','Have you found my missing data yet?'",
+            "parent": "null",
+            "mission-object": "disk",
+            "static": "true",
+            "condition": "5",
+            "destination": "Simon",
+            "reward": {
+              "score": 50,
+              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."
+            }
+          }
+        ]
       }
     ]
   },
@@ -466,22 +1100,148 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "atrium",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "atrium-seating",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "northeast-corridor-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "vic",
+        "display-name": "Vic",
+        "description": "Vic the receptionist",
+        "detailed-description": "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.",
+        "attributes": {
+          "weight": 100,
+          "attackStrength": 25,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 215,
+          "affinity": 0,
+          "canTravel": false
+        },
+        "missions": [
+          {
+            "object": "mission",
+            "name": "keyfob",
+            "description": "Vic has a key fob for you.",
+            "dialogue": "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office.",
+            "parent": "null",
+            "mission-object": "Vic",
+            "static": "true",
+            "condition": "5",
+            "destination": "Vic",
+            "reward": {
+              "score": 10,
+              "delivers": {
+                "object": "artefact",
+                "name": "keyfob",
+                "description": "a key fob",
+                "detailed-description": "Carrying this ensures you have access to the office whenever you need.",
+                "attributes": {
+                  "weight": 0.1,
+                  "carryWeight": 0,
+                  "attackStrength": 0,
+                  "type": "key",
+                  "canCollect": true,
+                  "canOpen": false,
+                  "isEdible": false,
+                  "isBreakable": false,
+                  "unlocks": "nothing"
+                }
+              },
+              "successMessage": "Have 10 points."
+            }
+          },
+          {
+            "object": "mission",
+            "name": "vicsbook",
+            "description": "Vic has a parcel for you but she'd like something to read first.",
+            "dialogue": "",
+            "parent": "null",
+            "mission-object": "book",
+            "static": "true",
+            "condition": "5",
+            "destination": "Vic",
+            "reward": {
+              "score": 50,
+              "delivers": {
+                "object": "artefact",
+                "name": "parcel",
+                "description": "a parcel from Amazon",
+                "detailed-description": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
+                "attributes": {
+                  "weight": 2,
+                  "carryWeight": 25,
+                  "attackStrength": 2,
+                  "type": "container",
+                  "canCollect": true,
+                  "canOpen": true,
+                  "isEdible": false,
+                  "isBreakable": false
+                },
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "bag",
+                    "description": "a giant bag",
+                    "detailed-description": "The label says 'Finest Software Development Coffee Beans'",
+                    "attributes": {
+                      "weight": 2,
+                      "carryWeight": 25,
+                      "attackStrength": 2,
+                      "type": "container",
+                      "canCollect": true,
+                      "canOpen": true,
+                      "isEdible": false,
+                      "isBreakable": false
+                    },
+                    "inventory": [
+                      {
+                        "object": "artefact",
+                        "name": "beans",
+                        "description": "coffee beans",
+                        "detailed-description": "Development fuel. Almost enough to last a day here.",
+                        "attributes": {
+                          "weight": 3,
+                          "carryWeight": 0,
+                          "attackStrength": 5,
+                          "type": "junk",
+                          "canCollect": true,
+                          "canOpen": false,
+                          "isEdible": false,
+                          "isBreakable": false,
+                          "charges": 10,
+                          "componentOf": "machine",
+                          "requiresContainer": true
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "successMessage": "Congratulations. Vic likes the book! Have 50 points."
+            }
+          }
+        ]
       }
     ]
   },
@@ -492,10 +1252,63 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "east-south-end-corridor-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "hammock",
+        "description": "a comfy-looking hammock",
+        "detailed-description": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
+        "attributes": {
+          "weight": 80,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "bed",
+          "canCollect": false,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": true
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "chocolate",
+        "description": "a bar of chocolate",
+        "detailed-description": "Mmmm tasty and loaded with calories.",
+        "attributes": {
+          "weight": 1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "food",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": true,
+          "nutrition": 25,
+          "isBreakable": false
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "crisps",
+        "description": "a packet of crisps",
+        "detailed-description": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
+        "attributes": {
+          "weight": 1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "food",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": true,
+          "nutrition": 25,
+          "isBreakable": false
+        }
       }
     ]
   },
@@ -506,10 +1319,29 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "southeast-corridor-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "brick",
+        "description": "a brick",
+        "detailed-description": "This would make quite a good cudgel.",
+        "attributes": {
+          "weight": 1,
+          "carryWeight": 0,
+          "attackStrength": 15,
+          "type": "tool",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": true
+        }
       }
     ]
   },
@@ -520,6 +1352,7 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "northwest-corridor-ground-floor",
@@ -534,6 +1367,7 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "east-corridor-ground-floor",
@@ -548,10 +1382,36 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "true"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "a fire exit",
+        "detailed-description": "If you push the bar, you'll probably set off an alarm.",
+        "attributes": {
+          "weight": 200,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "door",
+          "canCollect": false,
+          "canOpen": true,
+          "isEdible": false,
+          "isBreakable": false
+        },
+        "linked-exit": {
+          "object": "exit",
+          "name": "n",
+          "longname": "north",
+          "destination": "east-end-south-corridor-ground-floor",
+          "hidden": "true"
+        }
       }
     ]
   },
@@ -562,18 +1422,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "room-404",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "east-south-end-corridor-ground-floor",
@@ -588,18 +1451,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "west-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "poppy",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "west-end-south-corridor-ground-floor",
@@ -614,6 +1480,7 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "opportunities-north-east-corridor",
@@ -628,24 +1495,28 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "atrium",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "library",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "kitchen-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "northwest-corridor-ground-floor",
@@ -660,12 +1531,14 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "atrium",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "i",
         "longname": "in",
         "destination": "toilet-ground-floor-cubicle",
@@ -680,10 +1553,29 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "o",
         "longname": "out",
         "destination": "toilet-ground-floor",
         "hidden": "false"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "article",
+        "description": "a 'Learn on the Loo' article",
+        "detailed-description": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
+        "attributes": {
+          "weight": 3,
+          "carryWeight": 0,
+          "attackStrength": 5,
+          "type": "junk",
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": false,
+          "isBreakable": false
+        }
       }
     ]
   },
@@ -694,18 +1586,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "northwest-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "s",
         "longname": "south",
         "destination": "southwest-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "opportunities-south",
@@ -720,18 +1615,21 @@
     "dark": "false",
     "exits": [
       {
+        "object": "exit",
         "name": "w",
         "longname": "west",
         "destination": "southwest-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "e",
         "longname": "east",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "false"
       },
       {
+        "object": "exit",
         "name": "n",
         "longname": "north",
         "destination": "graffiti-b",

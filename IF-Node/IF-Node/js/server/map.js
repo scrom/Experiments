@@ -138,7 +138,15 @@ exports.Map = function Map() { //inputs for constructor TBC
                     var exitData = locationData.exits[j];
                     //manually add exits from each location (linking not needed)
                     newLocation.addExit(exitData.name,exitData.destination,exitData.hidden);
-                };               
+                };  
+                 
+                //will likely need to create all objects as standalone first and then add to each others inventory afterward
+                //for (var k=0; k<locationData.inventory.length;k++) {
+                //    var inventoryData = locationData.inventory[k];
+                    //create child inventory objects first
+                    //add missions to relevant inventory objects
+                //    newLocation.addExit(exitData.name,exitData.destination,exitData.hidden);
+                //};                             
             };
 
             var atrium = self.getLocation('atrium');

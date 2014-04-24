@@ -14,12 +14,12 @@ module.exports.Exit = function Exit(aName, aDestinationName, isHidden) { //input
 
         var _destinationName = aDestinationName;
 
-	    var _objectName = "Exit";
+	    var _objectName = "exit";
         console.log(_objectName + ' created: '+_name+', '+_destinationName+' visible? '+(!(_hidden)));
 
         ////public methods
         self.toString = function() {
-            return '{"name":"'+_name+'","longname":"'+_longName+'","destination":"'+_destinationName+'", "hidden":"'+_hidden+'"}';
+            return '{"object":"'+_objectName+'","name":"'+_name+'","longname":"'+_longName+'","destination":"'+_destinationName+'", "hidden":"'+_hidden+'"}';
         };
 
         self.getName = function() {

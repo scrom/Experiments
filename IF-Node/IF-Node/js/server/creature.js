@@ -34,7 +34,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _startLocation;
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
-	    var _objectName = "Creature";
+	    var _objectName = "creature";
 
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
@@ -132,7 +132,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.toString = function() {
         //var _synonyms = [];
         //var _missions = [];
-            var returnString = '{"name":"'+_name+'","display-name":"'+_displayName+'","description":"'+_description+'","detailed-description":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","display-name":"'+_displayName+'","description":"'+_description+'","detailed-description":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
             if (_missions.length >0) {
                 returnString+= ',"missions":[';
