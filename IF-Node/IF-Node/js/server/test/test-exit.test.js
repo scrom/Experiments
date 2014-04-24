@@ -11,9 +11,14 @@ exports.tearDown = function (callback) {
 
 exports.canCreateExitObject = function (test) {
     var exitName = 'n';
+    var sourceName = 'source';
     var destinationName = 'location';
-    var e0 = new exit.Exit(exitName, destinationName);
-    test.equal(e0.toString(), '{"name":"'+exitName+'","location":"'+destinationName+'"}');
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);
+    var expectedResult = '{"object":"exit","name":"n","longname":"north","source":"source","destination":"location", "hidden":"false"}';
+    var actualResult = e0.toString();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
     test.done();
 };
 
@@ -33,8 +38,9 @@ exports.longNameShouldMatchName.meta = { traits: ["Exit Test", "Name Trait"], de
 exports.nameShouldMatchNameFromConstructor = function (test) {
     var exitName = 'n';
     var longName = 'north';
+    var sourceName = 'source';
     var destinationName = 'location';
-    var e0 = new exit.Exit(exitName, destinationName);
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);
     test.equal(e0.getName(), exitName);
     test.done();
 };
@@ -44,8 +50,9 @@ exports.nameShouldMatchNameFromConstructor.meta = { traits: ["Exit Test", "Name 
 exports.destinationNameShouldMatchNameFromConstructor = function (test) {
     var exitName = 'n';
     var longName = 'north';
+    var sourceName = 'source';
     var destinationName = 'location';
-    var e0 = new exit.Exit(exitName, destinationName);
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);
     test.equal(e0.getDestinationName(), destinationName);
     test.done();
 };
@@ -55,8 +62,9 @@ exports.destinationNameShouldMatchNameFromConstructor.meta = { traits: ["Exit Te
 exports.newExitShouldBeVisible = function (test) {
     var exitName = 'n';
     var longName = 'north';
+    var sourceName = 'source';
     var destinationName = 'location';
-    var e0 = new exit.Exit(exitName, destinationName);
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);
     test.ok(e0.isVisible);    test.done();
 };
 
@@ -65,8 +73,9 @@ exports.newExitShouldBeVisible.meta = { traits: ["Exit Test", "Visibility Trait"
 exports.canHideExit = function (test) {
     var exitName = 'n';
     var longName = 'north';
+    var sourceName = 'source';
     var destinationName = 'location';
-    var e0 = new exit.Exit(exitName, destinationName);
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);
     e0.hide();
     test.ok(!(e0.isVisible()));    //not visible
     test.done();
@@ -77,8 +86,9 @@ exports.canHideExit.meta = { traits: ["Exit Test", "Visibility Trait"], descript
 exports.canShowHiddenExit = function (test) {
     var exitName = 'n';
     var longName = 'north';
+    var sourceName = 'source';
     var destinationName = 'location';
-    var e0 = new exit.Exit(exitName, destinationName);
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);
     e0.hide();
     e0.show();
     test.ok(e0.isVisible());    //visible
@@ -90,8 +100,9 @@ exports.canShowHiddenExit.meta = { traits: ["Exit Test", "Visibility Trait"], de
 exports.showHiddenExitReturnsSensibleMessage = function (test) {
     var exitName = 'n';
     var longName = 'north';
+    var sourceName = 'source';
     var destinationName = 'location';
-    var e0 = new exit.Exit(exitName, destinationName);
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);
     e0.hide();
     var expectedMessage = "You reveal a new exit: 'north'."
     test.equal(e0.show(), expectedMessage);

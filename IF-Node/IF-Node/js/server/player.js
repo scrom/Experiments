@@ -611,7 +611,7 @@ module.exports.Player = function Player(aUsername) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
 
-            return artefact.moveOrOpen(verb);
+            return artefact.moveOrOpen(verb, _currentLocation.getName());
         };
 
         self.close = function(verb, artefactName) {
@@ -620,7 +620,7 @@ module.exports.Player = function Player(aUsername) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
 
-            return artefact.close();
+            return artefact.close(verb, _currentLocation.getName());
         };
 
         //mainly used for setting initial location but could also be used for warping even if no exit/direction

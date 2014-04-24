@@ -50,9 +50,9 @@ exports.Location = function Location(aName, aDescription, isDark) {
             _description=aDescription;
         };
 
-        self.addExit = function(anExitName, aDestination,isHidden) {
+        self.addExit = function(anExitName, aSource, aDestination,isHidden) {
             self = this;
-            var newExit = new exitObjectModule.Exit(anExitName,aDestination,isHidden);
+            var newExit = new exitObjectModule.Exit(anExitName,aSource, aDestination,isHidden);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   
             console.log('Exit from '+self.getName()+', '+storedExit.getName()+' to '+storedExit.getDestinationName()+' added.');   

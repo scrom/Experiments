@@ -137,10 +137,17 @@ exports.Map = function Map() { //inputs for constructor TBC
                 for (var j=0; j<locationData.exits.length;j++) {
                     var exitData = locationData.exits[j];
                     //manually add exits from each location (linking not needed)
-                    newLocation.addExit(exitData.name,exitData.destination,exitData.hidden);
+                    newLocation.addExit(exitData.name,locationData.name,exitData.destination,exitData.hidden);
                 };  
                  
                 //will likely need to create all objects as standalone first and then add to each others inventory afterward
+
+                //build all "delivers" objects
+                //build all remaining objects
+                //add objects to container trees
+                //collate final set of "root" objects (including containers)
+                //add root objects to locations and creatures
+                //build missions with delivered objects
                 //for (var k=0; k<locationData.inventory.length;k++) {
                 //    var inventoryData = locationData.inventory[k];
                     //create child inventory objects first
@@ -262,31 +269,29 @@ exports.Map = function Map() { //inputs for constructor TBC
 
 
             //ground floor door objects (one for each side of an exit)
-             var button = new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", doorAttributes, liftEntrance);
+             var button = new artefactObjectModule.Artefact('button', 'a lift call button', "If you push the button, perhaps a lift will come.", doorAttributes, [liftEntrance]);
             button.addSyns(['lift','lift call','lift button','lift call button','door']);
             atrium.addObject(button);
             _objects.push(button);
 
-            var exitButton = new artefactObjectModule.Artefact('button', 'an exit button', "If you push the exit, you should be able to get out again.", doorAttributes, liftExit);
-            exitButton.addSyns(['lift','lift call','lift button','lift call button','door', 'exit', 'exit button']);
+            var exitButton = new artefactObjectModule.Artefact('exit button', 'an exit button', "If you push the exit, you should be able to get out again.", doorAttributes, [liftExit]);
+            exitButton.addSyns(['lift','lift call','lift button','lift call button','door', 'exit', 'button']);
             lift.addObject(exitButton);      
             _objects.push(exitButton);
 
             //lawyerLobby
-            var lawyerDoor = new artefactObjectModule.Artefact('door', 'a locked door', "Peering through the window you see people in suits looking busy and important.", lockedDoorAttributes, lawyerEntrance);
+            var lawyerDoor = new artefactObjectModule.Artefact('door', 'a locked door', "Peering through the window you see people in suits looking busy and important.", lockedDoorAttributes, [lawyerEntrance]);
             lawyerDoor.addSyns(['lawyer exit','lawyer door']);
             seatingArea.addObject(lawyerDoor);
             _objects.push(lawyerDoor);
 
-            var fireDoor = new artefactObjectModule.Artefact('door', 'a fire exit', "If you push the bar, you'll probably set off an alarm.", doorAttributes, fireExit);
+            var fireDoor = new artefactObjectModule.Artefact('door', 'a fire exit', "If you open the door, you'll probably set off an alarm.", doorAttributes, [fireExit, fireEntry]);
             fireDoor.addSyns(['bar','fire exit','fire door']);
             groundEastEndSouthCorridor.addObject(fireDoor);
+            smokingArea.addObject(fireDoor);
             _objects.push(fireDoor);
 
-            var fireDoor2 = new artefactObjectModule.Artefact('door', 'a fire exit', "If you push the bar, you'll probably set off an alarm.", doorAttributes, fireEntry);
-            fireDoor2.addSyns(['bar','fire exit','fire door','exit']);
-            smokingArea.addObject(fireDoor2);
-            _objects.push(fireDoor2);
+
 
 
             //ground floor objects

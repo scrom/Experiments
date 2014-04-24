@@ -1,7 +1,7 @@
 ﻿"use strict";
 //artefact object 
                                     
-module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExit, delivers) { 
+module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExits, delivers) { 
     //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable, 
     try{  
         //module deps
@@ -23,7 +23,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _attackStrength = 0;
         var _inventory =  new inventoryObjectModule.Inventory(0, _name);
         var _type = "junk";
-        var _linkedExit = linkedExit;
+        var _linkedExits = [];
         var _collectable = false; //if not collectable, it also can't be completely removed from the game. Leave wreckage
         var _missions = [];
         var _opens = false;
@@ -59,6 +59,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         */
 
 	    var _objectName = "artefact";
+
+        //add linked exits
+        if (linkedExits) { _linkedExits = linkedExits;};
 
         var setQuantity = function(quantity) {
             console.log('setting item quantity: '+quantity);
@@ -134,7 +137,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //var _synonyms = [];
             //var _missions = [];
             var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailed-description":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
-            if (_linkedExit) {returnString+= ',"linked-exit":'+_linkedExit.toString();};
+            if (_linkedExits.length>0) {
+                returnString+= ',"linked-exits":[';
+                for(var i=0; i<_linkedExits.length;i++) {
+                    if (i>0) {returnString+= ',';};
+                    returnString+= _linkedExits[i].toString();
+                };
+                returnString+= ']';
+            };
             if (_delivers) {returnString+= ',"delivers":'+_delivers.toString();};
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
             if (_missions.length >0) {
@@ -182,10 +192,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _delivers;
         };
 
-        self.getLinkedExit = function() {
-            return _linkedExit;
+        self.getLinkedExits = function() {
+            return _linkedExits;
         };
-
         //artefact only function at the moment
         self.setAttributes = function(attributes) {
             if (attributes.type != undefined) {
@@ -349,7 +358,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.combineWith = function(anObject) {
             if (!(self.combinesWith(anObject))) { return null;};
             console.log("combining :"+self.getName()+" with "+anObject.getName()+" to produce "+_delivers);
-            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExit(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
+            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
         };
 
         self.canContain = function(anObject) {
@@ -462,7 +471,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             for (var i=0; i<components.length; i++) {
                 self.consumeItem(components[i]);
             };
-            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExit(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
+            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
         };
 
         self.break = function(deliberateAction) {
@@ -545,16 +554,35 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Ding! You repeatedly attack the "+self.getDisplayName()+". with the "+weapon.getDisplayName()+" It feels good in a gratuitously violent sort of way."
         };
 
-        self.moveOrOpen = function(verb) {
+        self.moveOrOpen = function(verb, locationName) {
             if (self.isDestroyed()) {return "There's nothing viable left to work with.";};
             if (_locked) {return initCap(_itemDescriptivePrefix)+" locked."};
             if (_opens && (!(_open))){
+
                 _open = true;
-                if(_linkedExit) {
-                    return "you "+verb+" the "+self.getDisplayName()+". "+_linkedExit.show();
+                if(_linkedExits.length>0) {
+                    var localExit;
+                    var exitResult = "";
+                    for (var i=0;i<_linkedExits.length;i++) {
+                        if (_linkedExits[i].getSourceName() == locationName) {
+                            localExit = _linkedExits[i];
+                            exitResult = _linkedExits[i].show();
+                        } else {
+                            _linkedExits[i].show();  
+                        };
+                    };
+
+                    if (!(localExit)) {
+                        //we had no *local* exit
+                        exitResult = "A door opens somewhere.";
+                    };
+
+                    return "you "+verb+" "+self.getDisplayName()+". "+exitResult;
                 };
+               
+
                 if (verb == 'open') {
-                    var returnString = "you "+verb+" the "+self.getDisplayName()+".";
+                    var returnString = "you "+verb+" "+self.getDisplayName()+".";
                     if (_inventory.size() > 0) {returnString +=" It contains "+_inventory.describe()+".";}
                     else {returnString +=" It's empty.";};
                     return returnString;
@@ -564,15 +592,31 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_opens && (_open)){return initCap(_itemDescriptivePrefix)+" already open";};                
                 return _itemPrefix+" doesn't open";
             };
-            return "You try to "+verb+" the "+self.getDisplayName()+".<br>After a few minutes of yanking and shoving you conceed defeat.";
+            return "You try to "+verb+" "+self.getDisplayName()+".<br>After a few minutes of yanking and shoving you conceed defeat.";
         };
 
-        self.close = function() {
+        self.close = function(verb, locationName) {
             if (self.isDestroyed()) {return "There's nothing viable left to work with.";};
             if (_opens && _open){
                 _open = false;
-                if(_linkedExit) {_linkedExit.hide();};
-                return 'You closed the '+self.getDisplayName();
+
+                if(_linkedExits.length>0) {
+                    var localExit;
+                    for (var i=0;i<_linkedExits.length;i++) {
+                        if (_linkedExits[i].getSourceName() == locationName) {
+                            localExit = _linkedExits[i];
+                        }; 
+
+                        _linkedExits[i].hide();  
+                    };
+
+                    if (!(localExit)) {
+                        //we had no *local* exit
+                        return "A door closes somewhere.";
+                    };
+                };
+
+                return 'You closed '+self.getDisplayName();
             } else {return initCap(_itemDescriptivePrefix)+" not open."};
         };
 

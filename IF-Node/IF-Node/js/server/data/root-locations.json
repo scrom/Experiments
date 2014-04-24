@@ -9,6 +9,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "atrium",
         "destination": "reception",
         "hidden": "false"
       },
@@ -16,6 +17,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "atrium",
         "destination": "toilet-ground-floor",
         "hidden": "false"
       },
@@ -23,6 +25,7 @@
         "object": "exit",
         "name": "i",
         "longname": "in",
+        "source": "atrium",
         "destination": "lift-ground-floor",
         "hidden": "true"
       },
@@ -30,6 +33,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "atrium",
         "destination": "stairs-ground-floor",
         "hidden": "false"
       }
@@ -50,13 +54,16 @@
           "isEdible": false,
           "isBreakable": false
         },
-        "linked-exit": {
-          "object": "exit",
-          "name": "i",
-          "longname": "in",
-          "destination": "lift-ground-floor",
-          "hidden": "true"
-        }
+        "linked-exits": [
+          {
+            "object": "exit",
+            "name": "i",
+            "longname": "in",
+            "source": "atrium",
+            "destination": "lift-ground-floor",
+            "hidden": "true"
+          }
+        ]
       },
       {
         "object": "artefact",
@@ -120,6 +127,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "atrium-seating",
         "destination": "reception",
         "hidden": "false"
       },
@@ -127,6 +135,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "atrium-seating",
         "destination": "lawyer-lobby",
         "hidden": "true"
       }
@@ -149,13 +158,16 @@
           "lockable": true,
           "locked": true
         },
-        "linked-exit": {
-          "object": "exit",
-          "name": "s",
-          "longname": "south",
-          "destination": "lawyer-lobby",
-          "hidden": "true"
-        }
+        "linked-exits": [
+          {
+            "object": "exit",
+            "name": "s",
+            "longname": "south",
+            "source": "atrium-seating",
+            "destination": "lawyer-lobby",
+            "hidden": "true"
+          }
+        ]
       },
       {
         "object": "artefact",
@@ -202,6 +214,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "back-stairs-ground-floor-west",
         "destination": "opportunities-north",
         "hidden": "false"
       }
@@ -236,6 +249,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "buenosaires",
         "destination": "northeast-corridor-ground-floor",
         "hidden": "false"
       }
@@ -251,6 +265,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "east-corridor-ground-floor",
         "destination": "east-south-end-corridor-ground-floor",
         "hidden": "false"
       },
@@ -258,6 +273,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "east-corridor-ground-floor",
         "destination": "northeast-corridor-ground-floor",
         "hidden": "false"
       },
@@ -265,6 +281,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "east-corridor-ground-floor",
         "destination": "signpost",
         "hidden": "false"
       }
@@ -280,6 +297,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "east-end-south-corridor-ground-floor",
         "destination": "west-end-south-corridor-ground-floor",
         "hidden": "false"
       },
@@ -287,6 +305,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "east-end-south-corridor-ground-floor",
         "destination": "graffiti-a",
         "hidden": "false"
       },
@@ -294,6 +313,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "east-end-south-corridor-ground-floor",
         "destination": "smoking-area",
         "hidden": "true"
       },
@@ -301,6 +321,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "east-end-south-corridor-ground-floor",
         "destination": "southeast-corridor-ground-floor",
         "hidden": "false"
       }
@@ -310,7 +331,7 @@
         "object": "artefact",
         "name": "door",
         "description": "a fire exit",
-        "detailed-description": "If you push the bar, you'll probably set off an alarm.",
+        "detailed-description": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
           "weight": 200,
           "carryWeight": 0,
@@ -321,13 +342,24 @@
           "isEdible": false,
           "isBreakable": false
         },
-        "linked-exit": {
-          "object": "exit",
-          "name": "s",
-          "longname": "south",
-          "destination": "smoking-area",
-          "hidden": "true"
-        }
+        "linked-exits": [
+          {
+            "object": "exit",
+            "name": "s",
+            "longname": "south",
+            "source": "east-end-south-corridor-ground-floor",
+            "destination": "smoking-area",
+            "hidden": "true"
+          },
+          {
+            "object": "exit",
+            "name": "n",
+            "longname": "north",
+            "source": "smoking-area",
+            "destination": "east-end-south-corridor-ground-floor",
+            "hidden": "true"
+          }
+        ]
       }
     ]
   },
@@ -341,6 +373,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "east-south-end-corridor-ground-floor",
         "destination": "southeast-corridor-ground-floor",
         "hidden": "false"
       },
@@ -348,6 +381,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "east-south-end-corridor-ground-floor",
         "destination": "east-corridor-ground-floor",
         "hidden": "false"
       },
@@ -355,6 +389,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "east-south-end-corridor-ground-floor",
         "destination": "rest-area-ground-floor",
         "hidden": "false"
       }
@@ -370,6 +405,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "graffiti-a",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "false"
       }
@@ -385,6 +421,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "graffiti-b",
         "destination": "west-end-south-corridor-ground-floor",
         "hidden": "false"
       }
@@ -421,6 +458,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "kitchen-ground-floor",
         "destination": "stairs-ground-floor",
         "hidden": "false"
       }
@@ -566,6 +604,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "lawyer-lobby",
         "destination": "atrium-seating",
         "hidden": "false"
       }
@@ -581,6 +620,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "library",
         "destination": "stairs-ground-floor",
         "hidden": "false"
       }
@@ -664,6 +704,7 @@
         "object": "exit",
         "name": "o",
         "longname": "out",
+        "source": "lift-ground-floor",
         "destination": "atrium",
         "hidden": "true"
       }
@@ -671,7 +712,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "button",
+        "name": "exit button",
         "description": "an exit button",
         "detailed-description": "If you push the exit, you should be able to get out again.",
         "attributes": {
@@ -684,13 +725,16 @@
           "isEdible": false,
           "isBreakable": false
         },
-        "linked-exit": {
-          "object": "exit",
-          "name": "o",
-          "longname": "out",
-          "destination": "atrium",
-          "hidden": "true"
-        }
+        "linked-exits": [
+          {
+            "object": "exit",
+            "name": "o",
+            "longname": "out",
+            "source": "lift-ground-floor",
+            "destination": "atrium",
+            "hidden": "true"
+          }
+        ]
       },
       {
         "object": "creature",
@@ -756,6 +800,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "northeast-corridor-ground-floor",
         "destination": "reception",
         "hidden": "false"
       },
@@ -763,6 +808,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "northeast-corridor-ground-floor",
         "destination": "east-corridor-ground-floor",
         "hidden": "false"
       },
@@ -770,6 +816,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "northeast-corridor-ground-floor",
         "destination": "buenosaires",
         "hidden": "false"
       }
@@ -785,6 +832,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "northwest-corridor-ground-floor",
         "destination": "stairs-ground-floor",
         "hidden": "false"
       },
@@ -792,6 +840,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "northwest-corridor-ground-floor",
         "destination": "pioneer",
         "hidden": "false"
       },
@@ -799,6 +848,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "northwest-corridor-ground-floor",
         "destination": "shower-ground-floor",
         "hidden": "false"
       },
@@ -806,6 +856,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "northwest-corridor-ground-floor",
         "destination": "west-corridor-ground-floor",
         "hidden": "false"
       }
@@ -821,6 +872,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "opportunities-cubbyhole",
         "destination": "opportunities-north",
         "hidden": "false"
       }
@@ -836,6 +888,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "opportunities-north",
         "destination": "opportunities-south",
         "hidden": "false"
       },
@@ -843,6 +896,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "opportunities-north",
         "destination": "back-stairs-ground-floor-west",
         "hidden": "false"
       },
@@ -850,6 +904,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "opportunities-north",
         "destination": "opportunities-cubbyhole",
         "hidden": "false"
       },
@@ -857,6 +912,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "opportunities-north",
         "destination": "opportunities-north-corridor",
         "hidden": "false"
       }
@@ -911,6 +967,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "opportunities-north-corridor",
         "destination": "opportunities-north",
         "hidden": "false"
       },
@@ -918,6 +975,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "opportunities-north-corridor",
         "destination": "opportunities-north-east-corridor",
         "hidden": "false"
       },
@@ -925,6 +983,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "opportunities-north-corridor",
         "destination": "peacock",
         "hidden": "false"
       }
@@ -940,6 +999,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "opportunities-north-east-corridor",
         "destination": "opportunities-north-corridor",
         "hidden": "false"
       },
@@ -947,6 +1007,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "opportunities-north-east-corridor",
         "destination": "spiderman",
         "hidden": "false"
       }
@@ -962,6 +1023,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "opportunities-south",
         "destination": "west-corridor-ground-floor",
         "hidden": "false"
       },
@@ -969,6 +1031,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "opportunities-south",
         "destination": "opportunities-north",
         "hidden": "false"
       }
@@ -984,6 +1047,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "peacock",
         "destination": "opportunities-north-corridor",
         "hidden": "false"
       }
@@ -999,6 +1063,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "pioneer",
         "destination": "northwest-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1033,6 +1098,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "poppy",
         "destination": "southwest-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1103,6 +1169,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "reception",
         "destination": "atrium",
         "hidden": "false"
       },
@@ -1110,6 +1177,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "reception",
         "destination": "atrium-seating",
         "hidden": "false"
       },
@@ -1117,6 +1185,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "reception",
         "destination": "northeast-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1255,6 +1324,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "rest-area-ground-floor",
         "destination": "east-south-end-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1322,6 +1392,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "room-404",
         "destination": "southeast-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1355,6 +1426,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "shower-ground-floor",
         "destination": "northwest-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1370,6 +1442,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "signpost",
         "destination": "east-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1385,6 +1458,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "smoking-area",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "true"
       }
@@ -1394,7 +1468,7 @@
         "object": "artefact",
         "name": "door",
         "description": "a fire exit",
-        "detailed-description": "If you push the bar, you'll probably set off an alarm.",
+        "detailed-description": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
           "weight": 200,
           "carryWeight": 0,
@@ -1405,13 +1479,24 @@
           "isEdible": false,
           "isBreakable": false
         },
-        "linked-exit": {
-          "object": "exit",
-          "name": "n",
-          "longname": "north",
-          "destination": "east-end-south-corridor-ground-floor",
-          "hidden": "true"
-        }
+        "linked-exits": [
+          {
+            "object": "exit",
+            "name": "s",
+            "longname": "south",
+            "source": "east-end-south-corridor-ground-floor",
+            "destination": "smoking-area",
+            "hidden": "true"
+          },
+          {
+            "object": "exit",
+            "name": "n",
+            "longname": "north",
+            "source": "smoking-area",
+            "destination": "east-end-south-corridor-ground-floor",
+            "hidden": "true"
+          }
+        ]
       }
     ]
   },
@@ -1425,6 +1510,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "southeast-corridor-ground-floor",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "false"
       },
@@ -1432,6 +1518,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "southeast-corridor-ground-floor",
         "destination": "room-404",
         "hidden": "false"
       },
@@ -1439,6 +1526,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "southeast-corridor-ground-floor",
         "destination": "east-south-end-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1454,6 +1542,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "southwest-corridor-ground-floor",
         "destination": "west-corridor-ground-floor",
         "hidden": "false"
       },
@@ -1461,6 +1550,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "southwest-corridor-ground-floor",
         "destination": "poppy",
         "hidden": "false"
       },
@@ -1468,6 +1558,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "southwest-corridor-ground-floor",
         "destination": "west-end-south-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1483,6 +1574,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "spiderman",
         "destination": "opportunities-north-east-corridor",
         "hidden": "false"
       }
@@ -1498,6 +1590,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "stairs-ground-floor",
         "destination": "atrium",
         "hidden": "false"
       },
@@ -1505,6 +1598,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "stairs-ground-floor",
         "destination": "library",
         "hidden": "false"
       },
@@ -1512,6 +1606,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "stairs-ground-floor",
         "destination": "kitchen-ground-floor",
         "hidden": "false"
       },
@@ -1519,6 +1614,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "stairs-ground-floor",
         "destination": "northwest-corridor-ground-floor",
         "hidden": "false"
       }
@@ -1534,6 +1630,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "toilet-ground-floor",
         "destination": "atrium",
         "hidden": "false"
       },
@@ -1541,6 +1638,7 @@
         "object": "exit",
         "name": "i",
         "longname": "in",
+        "source": "toilet-ground-floor",
         "destination": "toilet-ground-floor-cubicle",
         "hidden": "false"
       }
@@ -1556,6 +1654,7 @@
         "object": "exit",
         "name": "o",
         "longname": "out",
+        "source": "toilet-ground-floor-cubicle",
         "destination": "toilet-ground-floor",
         "hidden": "false"
       }
@@ -1589,6 +1688,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "west-corridor-ground-floor",
         "destination": "northwest-corridor-ground-floor",
         "hidden": "false"
       },
@@ -1596,6 +1696,7 @@
         "object": "exit",
         "name": "s",
         "longname": "south",
+        "source": "west-corridor-ground-floor",
         "destination": "southwest-corridor-ground-floor",
         "hidden": "false"
       },
@@ -1603,6 +1704,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "west-corridor-ground-floor",
         "destination": "opportunities-south",
         "hidden": "false"
       }
@@ -1618,6 +1720,7 @@
         "object": "exit",
         "name": "w",
         "longname": "west",
+        "source": "west-end-south-corridor-ground-floor",
         "destination": "southwest-corridor-ground-floor",
         "hidden": "false"
       },
@@ -1625,6 +1728,7 @@
         "object": "exit",
         "name": "e",
         "longname": "east",
+        "source": "west-end-south-corridor-ground-floor",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "false"
       },
@@ -1632,6 +1736,7 @@
         "object": "exit",
         "name": "n",
         "longname": "north",
+        "source": "west-end-south-corridor-ground-floor",
         "destination": "graffiti-b",
         "hidden": "false"
       }

@@ -1,7 +1,7 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-module.exports.Exit = function Exit(aName, aDestinationName, isHidden) { //inputs for constructor TBC
-    try{      
+module.exports.Exit = function Exit(aName, aSourceName, aDestinationName, isHidden) { //inputs for constructor TBC
+    try{
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aName;
         var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
@@ -13,13 +13,14 @@ module.exports.Exit = function Exit(aName, aDestinationName, isHidden) { //input
         if (isHidden == true || isHidden == "true") { _hidden = true;};
 
         var _destinationName = aDestinationName;
+        var _sourceName = aSourceName
 
 	    var _objectName = "exit";
         console.log(_objectName + ' created: '+_name+', '+_destinationName+' visible? '+(!(_hidden)));
 
         ////public methods
         self.toString = function() {
-            return '{"object":"'+_objectName+'","name":"'+_name+'","longname":"'+_longName+'","destination":"'+_destinationName+'", "hidden":"'+_hidden+'"}';
+            return '{"object":"'+_objectName+'","name":"'+_name+'","longname":"'+_longName+'","source":"'+_sourceName+'","destination":"'+_destinationName+'", "hidden":"'+_hidden+'"}';
         };
 
         self.getName = function() {
@@ -32,6 +33,10 @@ module.exports.Exit = function Exit(aName, aDestinationName, isHidden) { //input
 
         self.getDestinationName = function() {
             return _destinationName;
+        };
+
+        self.getSourceName = function() {
+            return _sourceName;
         };
 
         self.isVisible = function() {
