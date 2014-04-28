@@ -20,7 +20,7 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreateArtefactObject = function (test) {
-    var expectedResult = '{"object":"artefact","name":"name","description":"description","detailed-description":"detailed description","attributes":null}';
+    var expectedResult = '{"object":"artefact","name":"name","description":"description","detaileddescription":"detailed description","attributes":null}';
     //artefact object is created in setUp
     var actualResult = a0.toString();
     console.log("Expected: "+expectedResult);
@@ -137,8 +137,10 @@ exports.canMakeSweetCoffeeByAddingSugarToCoffee = function (test) {
 
     cup.receive(coffee);
 
-    var expectedResult = '{"object":"artefact","name":"sweet coffee","description":"sweet coffee","detailed-description":"Development fuel with added sugar!","attributes":{"weight":1,"carryWeight":0,"attackStrength":0,"type":"food","canCollect":true,"canOpen":false,"isEdible":true,"nutrition":15,"isBreakable":false,"requiresContainer":true,"requiredContainer":"cup"}}';
-    var actualResult = coffee.combineWith(sugar);
+    var newCoffee = coffee.combineWith(sugar);
+
+    var expectedResult = "sweet coffee";
+    var actualResult = newCoffee.getName();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -171,8 +173,10 @@ exports.canMakeSweetCoffeeByAddingCoffeeToSugar = function (test) {
 
     cup.receive(sugar);
 
-    var expectedResult = '{"object":"artefact","name":"sweet coffee","description":"sweet coffee","detailed-description":"Development fuel with added sugar!","attributes":{"weight":1,"carryWeight":0,"attackStrength":0,"type":"food","canCollect":true,"canOpen":false,"isEdible":true,"nutrition":15,"isBreakable":false,"requiresContainer":true,"requiredContainer":"cup"}}';
-    var actualResult = sugar.combineWith(coffee);
+    var newCoffee = sugar.combineWith(coffee);
+
+    var expectedResult = "sweet coffee";
+    var actualResult = newCoffee.getName();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -217,8 +221,10 @@ exports.canMakeSweetCoffeeFromVendedCoffee = function (test) {
     coffeeMachine.receive(coffeeBeans);
     console.log(coffeeMachine.relinquish('coffee', _inventory)); 
 
-    var expectedResult = '{"object":"artefact","name":"sweet coffee","description":"sweet coffee","detailed-description":"Development fuel with added sugar!","attributes":{"weight":1,"carryWeight":0,"attackStrength":0,"type":"food","canCollect":true,"canOpen":false,"isEdible":true,"nutrition":15,"isBreakable":false,"requiresContainer":true,"requiredContainer":"cup"}}';
-    var actualResult = coffee.combineWith(sugar);
+    var newCoffee = coffee.combineWith(sugar);
+
+    var expectedResult = "sweet coffee";
+    var actualResult = newCoffee.getName();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);

@@ -22,7 +22,7 @@ exports.tearDown = function (callback) {
 exports.canCreateCreature = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
-    var expectedResult = '{"object":"creature","name":"creature","display-name":"the creature","description":"a beastie","detailed-description":"a big beastie with teeth","attributes":{"weight":120,"attackStrength":50,"gender":"unknown","type":"creature","carryWeight":50,"health":150,"affinity":0}}';
+    var expectedResult = '{"object":"creature","name":"creature","displayname":"the creature","description":"a beastie","detaileddescription":"a big beastie with teeth","attributes":{"weight":120,"attackStrength":50,"gender":"unknown","type":"creature","carryWeight":50,"health":150,"affinity":0}}';
     var actualResult = c0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -70,7 +70,7 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
 exports.canCreateCreatureWithMultipleObjects.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
 
 
-exports.toStringReturnsValidJSON = function (test) {
+exports.creatureToStringReturnsValidJSON = function (test) {
     var keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: ""};
     var fob = new artefact.Artefact('keyfob', 'a key fob', "Carrying this ensures you have access to the office whenever you need.", keyAttributes);
     var parcel = new artefact.Artefact('parcel', 'a parcel', "A Parcel with key attributes - odd.", keyAttributes);
@@ -84,7 +84,7 @@ exports.toStringReturnsValidJSON = function (test) {
     var bookMission = new mission.Mission('vicsBook',"Vic has a parcel for you but she'd like something to read first.",'',null,'book', true ,5,'Vic',{score: 50, delivers: parcel, successMessage: "Congratulations. Vic likes the book! Have 50 points."});
     receptionist.addMission(bookMission);
 
-    var expectedResult = '{"object":"creature","name":"vic","display-name":"Vic","description":"Vic the receptionist","detailed-description":"Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.","attributes":{"weight":100,"attackStrength":25,"gender":"female","type":"friendly","carryWeight":15,"health":215,"affinity":0,"canTravel":false},"missions":[{"object":"mission","name":"keyfob","description":"Vic has a key fob for you.","dialogue":"Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of most parts of the office.","parent":"null","mission-object":"Vic","static":"true","condition":"5","destination":"Vic","reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailed-description":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"carryWeight":0,"attackStrength":0,"type":"key","canCollect":true,"canOpen":false,"isEdible":false,"isBreakable":false,"unlocks":""}}, "successMessage":"Have 10 points."}}, {"object":"mission","name":"vicsbook","description":"Vic has a parcel for you but she\'d like something to read first.","dialogue":"","parent":"null","mission-object":"book","static":"true","condition":"5","destination":"Vic","reward":{"score":50, "delivers":{"object":"artefact","name":"parcel","description":"a parcel","detailed-description":"A Parcel with key attributes - odd.","attributes":{"weight":0.1,"carryWeight":0,"attackStrength":0,"type":"key","canCollect":true,"canOpen":false,"isEdible":false,"isBreakable":false,"unlocks":""}}, "successMessage":"Congratulations. Vic likes the book! Have 50 points."}}]}';
+    var expectedResult = '{"object":"creature","name":"vic","displayname":"Vic","description":"Vic the receptionist","detaileddescription":"Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.","attributes":{"weight":100,"attackStrength":25,"gender":"female","type":"friendly","carryWeight":15,"health":215,"affinity":0,"canTravel":false},"synonyms":["receptionist","vic","heidi","her"],"missions":[{"object":"mission","name":"keyfob","description":"Vic has a key fob for you.","dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of most parts of the office."],"parent":"null","missionobject":"Vic","static":"true","condition":"5","destination":"Vic","reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detaileddescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"carryWeight":0,"attackStrength":0,"type":"key","canCollect":true,"canOpen":false,"isEdible":false,"isBreakable":false,"unlocks":""}}, "successMessage":"Have 10 points."}}, {"object":"mission","name":"vicsbook","description":"Vic has a parcel for you but she\'d like something to read first.","parent":"null","missionobject":"book","static":"true","condition":"5","destination":"Vic","reward":{"score":50, "delivers":{"object":"artefact","name":"parcel","description":"a parcel","detaileddescription":"A Parcel with key attributes - odd.","attributes":{"weight":0.1,"carryWeight":0,"attackStrength":0,"type":"key","canCollect":true,"canOpen":false,"isEdible":false,"isBreakable":false,"unlocks":""}}, "successMessage":"Congratulations. Vic likes the book! Have 50 points."}}]}';
     var actualResult = receptionist.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -92,7 +92,7 @@ exports.toStringReturnsValidJSON = function (test) {
     test.done();
 };
 
-exports.toStringReturnsValidJSON.meta = { traits: ["Creature Test", "JSON Trait"], description: "Test that a creature object converts to valid JSON via toString." };
+exports.creatureToStringReturnsValidJSON.meta = { traits: ["Creature Test", "JSON Trait"], description: "Test that a creature object converts to valid JSON via toString." };
 
 exports.creatureCanReceiveObject = function (test) {
     var creatureName = 'creature';
