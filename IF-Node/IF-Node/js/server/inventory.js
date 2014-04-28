@@ -81,7 +81,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             if (!(self.canCarry(anObject))) {return "It's too heavy.";};
 
             _items.push(anObject);
-            console.log(anObject+" added to "+_ownerName+" inventory");
+            console.log(anObject.getName()+" added to "+_ownerName+" inventory");
             return "now carrying "+anObject.getDescription()+".";
         };
     

@@ -12,31 +12,31 @@ exports.Tests = function Tests() {
         console.log('====End of Experiments====');
 
         //test module deps
-        var action = require('./action');
-        var artefact = require('./artefact');
+        //var action = require('./action');
+        //var artefact = require('./artefact');
         //var creature = require('./creature.js');
-        var exit = require('./exit.js');
-        var game = require('./game');
-        var location = require('./location.js');
-        var map = require('./map');
-        var player = require('./player.js');
+        //var exit = require('./exit.js');
+        //var game = require('./game');
+        //var location = require('./location.js');
+        //var map = require('./map');
+        //var player = require('./player.js');
 
         //test player, creature, location and artefact creation.
         console.log('====Game Object Creation tests====');
-        var a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',{weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false}, null);
-        var e0 = new exit.Exit('north','test0'); //note we can name a location that doesn't exist at the moment - should probably prevent this.
-        var l0 = new location.Location('test0','a test location');
-        var m0 = new map.Map();
-        var p0 = new player.Player('tester');
+        //var a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',{weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false}, null);
+        //var e0 = new exit.Exit('north','test0'); //note we can name a location that doesn't exist at the moment - should probably prevent this.
+        //var l0 = new location.Location('test0','a test location');
+        //var m0 = new map.Map();
+        //var p0 = new player.Player('tester');
 
         console.log('===== Location tests =====');
-        m0.init();
-        var l0 = m0.getLocation('atrium');
-        console.log("found "+l0.getAvailableExits().length+" exits");
-        console.log(l0.getRandomExit().getDestinationName());
+        //m0.init();
+        //var l0 = m0.getLocation('atrium');
+        //console.log("found "+l0.getAvailableExits().length+" exits");
+        //console.log(l0.getRandomExit().getDestinationName());
 
         console.log('====Action tests====');
-        var act0 = new action.Action(p0, m0);
+        //var act0 = new action.Action(p0, m0);
         //test string splitting on 'with', 'to', 'from', 'for', 'at', 'on', 'in'
         //console.log('Split results: '+ act0.testStringSplit('eat some food with a fork on a stick'));  //test with
         //console.log('Split results: '+ act0.testStringSplit('give some tofu to the vegan within the well')); //test to

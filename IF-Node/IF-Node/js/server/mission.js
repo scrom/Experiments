@@ -42,7 +42,16 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         ////public methods
 
         self.toString = function() {
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","dialogue":"'+_dialogue+'","parent":"'+_parent+'","missionobject":"'+_missionObject+'","static":"'+_isStatic+'","condition":"'+_condition+'","destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
+            if (_dialogue.length >0) {
+                returnString+= ',"dialogue":[';
+                for(var i=0; i<_dialogue.length;i++) {
+                    if (i>0) {returnString+= ',';};
+                    returnString+= '"'+_dialogue[i]+'"';
+                };
+                returnString+= ']';
+            };
+            returnString +=',"parent":"'+_parent+'","missionobject":"'+_missionObject+'","static":"'+_isStatic+'","condition":"'+_condition+'","destination":"'+_destination+'","reward":'+self.literalToString(_reward);
             returnString+= '}';
             return returnString;
         };

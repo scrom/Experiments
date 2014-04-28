@@ -717,7 +717,6 @@
         "object": "mission",
         "name": "beans",
         "description": "Before you can get any coffee, this machine needs beans.",
-        "dialogue": "",
         "parent": "null",
         "missionobject": "beans",
         "static": "true",
@@ -853,7 +852,6 @@
         "object": "mission",
         "name": "destroyscreen",
         "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",
-        "dialogue": "",
         "parent": "null",
         "missionobject": "screen",
         "static": "true",
@@ -920,7 +918,10 @@
         "object": "mission",
         "name": "retrievedisk",
         "description": "Retrieve a stolen hard drive.",
-        "dialogue": "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?','Have you found my missing data yet?'",
+        "dialogue": [
+          "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
+          "'Have you found my missing data yet?'"
+        ],
         "parent": "null",
         "missionobject": "disk",
         "static": "true",
@@ -1166,7 +1167,9 @@
         "object": "mission",
         "name": "keyfob",
         "description": "Vic has a key fob for you.",
-        "dialogue": "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office.",
+        "dialogue": [
+          "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office."
+        ],
         "parent": "null",
         "missionobject": "Vic",
         "static": "true",
@@ -1198,7 +1201,6 @@
         "object": "mission",
         "name": "vicsbook",
         "description": "Vic has a parcel for you but she'd like something to read first.",
-        "dialogue": "",
         "parent": "null",
         "missionobject": "book",
         "static": "true",
