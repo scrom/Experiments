@@ -14,9 +14,6 @@ exports.Map = function Map() { //inputs for constructor TBC
 
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];
-        var _exits = [];
-        var _objects = []; //all game objects
-        var _missions = [];
 
         //consider storing all creatures and artefacts on map object (rather than in location, creature or player) 
         //this will need some major rework and tracking/linking who owns what
@@ -72,17 +69,6 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         
         //public member functions
-        self.getObjectsJSON = function() {
-            var objectsAsJSON = [];
-            for (var i=0; i<_objects.length;i++) {
-                //just return button for now
-                console.log(_objects[i].toString());
-                var temp = JSON.parse(_objects[i].toString());
-                    objectsAsJSON.push(temp);
-            };
-            objectsAsJSON.sort(sortByProperty("name"));
-            return objectsAsJSON;
-        };
 
         self.getLocationsJSON = function() {
             var locationsAsJSON = [];
@@ -91,15 +77,6 @@ exports.Map = function Map() { //inputs for constructor TBC
             };
             locationsAsJSON.sort(sortByProperty("name"));
             return locationsAsJSON;
-        };
-
-        self.getMissionsJSON = function() {
-            var missionsAsJSON = [];
-            for (var i=0; i<_missions.length;i++) {
-                missionsAsJSON.push(JSON.parse(_missions[i].toString()));
-            };
-            missionsAsJSON.sort(sortByProperty("name"));
-            return missionsAsJSON;
         };
 
         self.buildArtefact = function(artefactData) {

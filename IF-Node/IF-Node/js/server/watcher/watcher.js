@@ -36,11 +36,11 @@ exports.Watcher = function Watcher(aMap) {
         };
 
         self.getObjects = function() {
-            return _map.getObjectsJSON();
+            return [];
         };
 
         self.getMissions = function() {
-            return _map.getMissionsJSON();
+            return [];
         };
 
         self.getDirections = function(aGameId) {
