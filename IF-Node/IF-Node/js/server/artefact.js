@@ -267,7 +267,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return missions;
         };
 
-        self.getDetailedDescription = function() {
+        self.getDetailedDescription = function(playerAggression) {
+            //note we can change description based on player aggression - better for creatures but supported here too.
             var returnString = _detailedDescription; //original description
             if (_destroyed) {return returnString;}; //don't go any further.
             var inventoryIsVisible = true;

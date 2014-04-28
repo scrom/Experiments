@@ -585,7 +585,7 @@ module.exports.Player = function Player(aUsername) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
 
-            resultString += artefact.getDetailedDescription();
+            resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
 
             var newMissions = artefact.getMissions();
             //remove any with dialogue from this list.

@@ -254,7 +254,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.getDetailedDescription = function() {
+        self.getDetailedDescription = function(playerAggression) {
             var returnString = _detailedDescription+"<br>"+self.getAffinityDescription();
             if (_inventory.size() > 0) {returnString +="<br>"+_genderPrefix+"'s carrying "+_inventory.describe()+".";};
             var hasDialogue = false;
@@ -264,7 +264,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     break;
                 };
             };
-            if (hasDialogue) {returnString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
+            if (hasDialogue) {
+                if ((_affinity <0) && (playerAggression>0)) {returnString +="<br>"+_genderPrefix+" appears to have something on "+_genderSuffix+" mind but doesn't trust you enough to talk about it right now.";}
+                else { returnString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
+                };
             return returnString;
         };
 
@@ -607,7 +610,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";               
             };
 
-            if (_missions.length>0) {response += "<br><br>"+_genderPrefix+' has a task for you.';};
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue()) {
                     response += "<br>"+_missions[i].getNextDialogue();

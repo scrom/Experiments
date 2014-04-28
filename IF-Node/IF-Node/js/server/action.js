@@ -186,6 +186,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'stats':
                     case 'status':
+                    case 'score':
                     case 'missions':
                         ticks = 0;
                         description = _player.status()+'<br><br>'+_player.getLocation().describe();

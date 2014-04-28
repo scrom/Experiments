@@ -99,10 +99,16 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
         self.getNextDialogue = function() {
             var response ="";
-            response += _dialogue[_conversationState];
+            console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
             //move conversation forward
-            //if we reach the end of the array, stop there.
-            if (_conversationState <= _dialogue.length) {_conversationState++};
+            //if we reach the end of the array, stop there.             
+            if (_conversationState < _dialogue.length) {
+                response += _dialogue[_conversationState];
+                _conversationState++;
+            } else {
+                response += _dialogue[_dialogue.length-1];
+            };
+
             return response;
         };
 
@@ -136,8 +142,9 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                         break;
             };
             if (missionObject) {
-                console.log('mission object retrieved. Checking for condition: '+_condition);
+                console.log('mission object retrieved. Checking required condition: '+_condition);
                 if (missionObject.getCondition() == _condition) {
+                    console.log('actual condition: '+missionObject.getCondition());
                     //if mission has dialogue, ensure that has been triggered at least once...
                     if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
                         return self.success();
