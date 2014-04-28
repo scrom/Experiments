@@ -3,7 +3,7 @@
     "object": "artefact",
     "name": "article",
     "description": "a 'Learn on the Loo' article",
-    "detailed-description": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
+    "detaileddescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
     "attributes": {
       "weight": 3,
       "carryWeight": 0,
@@ -13,13 +13,20 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": false
-    }
+    },
+    "synonyms": [
+      "lotl",
+      "learn on the loo",
+      "learn on the loo article",
+      "loo article",
+      "learn article"
+    ]
   },
   {
     "object": "artefact",
     "name": "bag",
     "description": "a giant bag",
-    "detailed-description": "The label says 'Finest Software Development Coffee Beans'",
+    "detaileddescription": "The label says 'Finest Software Development Coffee Beans'",
     "attributes": {
       "weight": 2,
       "carryWeight": 25,
@@ -30,12 +37,18 @@
       "isEdible": false,
       "isBreakable": false
     },
+    "synonyms": [
+      "bean bag",
+      "bag of beans",
+      "giant bag",
+      "big bag"
+    ],
     "inventory": [
       {
         "object": "artefact",
         "name": "beans",
         "description": "coffee beans",
-        "detailed-description": "Development fuel. Almost enough to last a day here.",
+        "detaileddescription": "Development fuel. Almost enough to last a day here.",
         "attributes": {
           "weight": 3,
           "carryWeight": 0,
@@ -48,7 +61,10 @@
           "charges": 10,
           "componentOf": "machine",
           "requiresContainer": true
-        }
+        },
+        "synonyms": [
+          "coffee beans"
+        ]
       }
     ]
   },
@@ -56,7 +72,7 @@
     "object": "artefact",
     "name": "beans",
     "description": "coffee beans",
-    "detailed-description": "Development fuel. Almost enough to last a day here.",
+    "detaileddescription": "Development fuel. Almost enough to last a day here.",
     "attributes": {
       "weight": 3,
       "carryWeight": 0,
@@ -69,13 +85,16 @@
       "charges": 10,
       "componentOf": "machine",
       "requiresContainer": true
-    }
+    },
+    "synonyms": [
+      "coffee beans"
+    ]
   },
   {
     "object": "artefact",
     "name": "book",
     "description": "a large book",
-    "detailed-description": "It's a book on how to sell software in a friendly way.",
+    "detaileddescription": "It's a book on how to sell software in a friendly way.",
     "attributes": {
       "weight": 3,
       "carryWeight": 0,
@@ -85,13 +104,19 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": false
-    }
+    },
+    "synonyms": [
+      "large book",
+      "sales book",
+      "selling book",
+      "software book"
+    ]
   },
   {
     "object": "artefact",
     "name": "bookcase",
     "description": "a set of bookcases",
-    "detailed-description": "Books on everything from travel to SQL server and from sales to C#.",
+    "detaileddescription": "Books on everything from travel to SQL server and from sales to C#.",
     "attributes": {
       "weight": 80,
       "carryWeight": 50,
@@ -102,12 +127,26 @@
       "isEdible": false,
       "isBreakable": false
     },
+    "synonyms": [
+      "bookcase",
+      "bookshelf",
+      "bookcases",
+      "bookshelves",
+      "book case",
+      "book cases",
+      "book shelf",
+      "book shelves",
+      "case",
+      "shelf",
+      "cases",
+      "shelves"
+    ],
     "inventory": [
       {
         "object": "artefact",
         "name": "book",
         "description": "a large book",
-        "detailed-description": "It's a book on how to sell software in a friendly way.",
+        "detaileddescription": "It's a book on how to sell software in a friendly way.",
         "attributes": {
           "weight": 3,
           "carryWeight": 0,
@@ -117,7 +156,13 @@
           "canOpen": false,
           "isEdible": false,
           "isBreakable": false
-        }
+        },
+        "synonyms": [
+          "large book",
+          "sales book",
+          "selling book",
+          "software book"
+        ]
       }
     ]
   },
@@ -125,7 +170,7 @@
     "object": "artefact",
     "name": "brick",
     "description": "a brick",
-    "detailed-description": "This would make quite a good cudgel.",
+    "detaileddescription": "This would make quite a good cudgel.",
     "attributes": {
       "weight": 1,
       "carryWeight": 0,
@@ -141,7 +186,7 @@
     "object": "artefact",
     "name": "button",
     "description": "a lift call button",
-    "detailed-description": "If you push the button, perhaps a lift will come.",
+    "detaileddescription": "If you push the button, perhaps a lift will come.",
     "attributes": {
       "weight": 200,
       "carryWeight": 0,
@@ -152,7 +197,7 @@
       "isEdible": false,
       "isBreakable": false
     },
-    "linked-exits": [
+    "linkedexits": [
       {
         "object": "exit",
         "name": "i",
@@ -161,13 +206,20 @@
         "destination": "lift-ground-floor",
         "hidden": "true"
       }
+    ],
+    "synonyms": [
+      "lift",
+      "lift call",
+      "lift button",
+      "lift call button",
+      "door"
     ]
   },
   {
     "object": "artefact",
     "name": "cake",
     "description": "a slice of chocolate cake",
-    "detailed-description": "Mmmm tasty *and* healthy. If only there were more.",
+    "detaileddescription": "Mmmm tasty *and* healthy. If only there were more.",
     "attributes": {
       "weight": 1,
       "carryWeight": 0,
@@ -178,13 +230,18 @@
       "isEdible": true,
       "nutrition": 25,
       "isBreakable": false
-    }
+    },
+    "synonyms": [
+      "slice",
+      "chocolate cake",
+      "food"
+    ]
   },
   {
     "object": "artefact",
     "name": "chair",
     "description": "a red leather chair",
-    "detailed-description": "You expect to find Morpheus sitting in it. It's surprisingly comfortable.",
+    "detaileddescription": "You expect to find Morpheus sitting in it. It's surprisingly comfortable.",
     "attributes": {
       "weight": 80,
       "carryWeight": 0,
@@ -194,13 +251,19 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": true
-    }
+    },
+    "synonyms": [
+      "red chair",
+      "leather chair",
+      "red leather chair",
+      "morpheus chair"
+    ]
   },
   {
     "object": "artefact",
     "name": "chocolate",
     "description": "a bar of chocolate",
-    "detailed-description": "Mmmm tasty and loaded with calories.",
+    "detaileddescription": "Mmmm tasty and loaded with calories.",
     "attributes": {
       "weight": 1,
       "carryWeight": 0,
@@ -211,13 +274,19 @@
       "isEdible": true,
       "nutrition": 25,
       "isBreakable": false
-    }
+    },
+    "synonyms": [
+      "bar",
+      "bar of chocolate",
+      "chocolate bar",
+      "food"
+    ]
   },
   {
     "object": "artefact",
     "name": "coffee",
     "description": "coffee",
-    "detailed-description": "Development fuel.",
+    "detaileddescription": "Development fuel.",
     "attributes": {
       "weight": 1,
       "carryWeight": 0,
@@ -232,11 +301,15 @@
       "requiredContainer": "cup",
       "componentOf": "sugar"
     },
+    "synonyms": [
+      "brew",
+      "drink"
+    ],
     "delivers": {
       "object": "artefact",
       "name": "sweet coffee",
       "description": "sweet coffee",
-      "detailed-description": "Development fuel with added sugar!",
+      "detaileddescription": "Development fuel with added sugar!",
       "attributes": {
         "weight": 1,
         "carryWeight": 0,
@@ -249,14 +322,20 @@
         "isBreakable": false,
         "requiresContainer": true,
         "requiredContainer": "cup"
-      }
+      },
+      "synonyms": [
+        "brew",
+        "drink",
+        "coffee",
+        "sugary coffee"
+      ]
     }
   },
   {
     "object": "artefact",
     "name": "crisps",
     "description": "a packet of crisps",
-    "detailed-description": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
+    "detaileddescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
     "attributes": {
       "weight": 1,
       "carryWeight": 0,
@@ -267,13 +346,19 @@
       "isEdible": true,
       "nutrition": 25,
       "isBreakable": false
-    }
+    },
+    "synonyms": [
+      "packet",
+      "crisp packet",
+      "packet of crisps",
+      "food"
+    ]
   },
   {
     "object": "artefact",
     "name": "cup",
     "description": "a coffee cup",
-    "detailed-description": "Some coffee in here would be great.",
+    "detaileddescription": "Some coffee in here would be great.",
     "attributes": {
       "weight": 2,
       "carryWeight": 1,
@@ -283,13 +368,18 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": true
-    }
+    },
+    "synonyms": [
+      "mug",
+      "coffee cup",
+      "coffee mug"
+    ]
   },
   {
     "object": "artefact",
     "name": "disk",
     "description": "a hard disk",
-    "detailed-description": "Pretty sure it belongs to Red Gate.",
+    "detaileddescription": "Pretty sure it belongs to Red Gate.",
     "attributes": {
       "weight": 3,
       "carryWeight": 0,
@@ -299,13 +389,22 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": true
-    }
+    },
+    "synonyms": [
+      "disc",
+      "drive",
+      "hard drive",
+      "hard disk",
+      "hard disc",
+      "disc drive",
+      "disk drive"
+    ]
   },
   {
     "object": "artefact",
     "name": "door",
     "description": "a locked door",
-    "detailed-description": "Peering through the window you see people in suits looking busy and important.",
+    "detaileddescription": "Peering through the window you see people in suits looking busy and important.",
     "attributes": {
       "weight": 200,
       "carryWeight": 0,
@@ -318,7 +417,7 @@
       "lockable": true,
       "locked": true
     },
-    "linked-exits": [
+    "linkedexits": [
       {
         "object": "exit",
         "name": "s",
@@ -327,13 +426,17 @@
         "destination": "lawyer-lobby",
         "hidden": "true"
       }
+    ],
+    "synonyms": [
+      "lawyer exit",
+      "lawyer door"
     ]
   },
   {
     "object": "artefact",
     "name": "door",
     "description": "a fire exit",
-    "detailed-description": "If you open the door, you'll probably set off an alarm.",
+    "detaileddescription": "If you open the door, you'll probably set off an alarm.",
     "attributes": {
       "weight": 200,
       "carryWeight": 0,
@@ -344,7 +447,7 @@
       "isEdible": false,
       "isBreakable": false
     },
-    "linked-exits": [
+    "linkedexits": [
       {
         "object": "exit",
         "name": "s",
@@ -361,13 +464,18 @@
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "true"
       }
+    ],
+    "synonyms": [
+      "bar",
+      "fire exit",
+      "fire door"
     ]
   },
   {
     "object": "artefact",
     "name": "exit button",
     "description": "an exit button",
-    "detailed-description": "If you push the exit, you should be able to get out again.",
+    "detaileddescription": "If you push the exit, you should be able to get out again.",
     "attributes": {
       "weight": 200,
       "carryWeight": 0,
@@ -378,7 +486,7 @@
       "isEdible": false,
       "isBreakable": false
     },
-    "linked-exits": [
+    "linkedexits": [
       {
         "object": "exit",
         "name": "o",
@@ -387,13 +495,22 @@
         "destination": "atrium",
         "hidden": "true"
       }
+    ],
+    "synonyms": [
+      "lift",
+      "lift call",
+      "lift button",
+      "lift call button",
+      "door",
+      "exit",
+      "button"
     ]
   },
   {
     "object": "artefact",
     "name": "hammock",
     "description": "a comfy-looking hammock",
-    "detailed-description": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
+    "detaileddescription": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
     "attributes": {
       "weight": 80,
       "carryWeight": 0,
@@ -403,14 +520,20 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": true
-    }
+    },
+    "synonyms": [
+      "bed",
+      "comfy hammock",
+      "comfy-looking hammock",
+      "comfy looking hammock"
+    ]
   },
   {
     "object": "creature",
     "name": "james",
-    "display-name": "James",
+    "displayname": "James",
     "description": "James Moore",
-    "detailed-description": "He pwns the Opportunities division.",
+    "detaileddescription": "He pwns the Opportunities division.",
     "attributes": {
       "weight": 190,
       "attackStrength": 45,
@@ -426,7 +549,7 @@
         "object": "artefact",
         "name": "money",
         "description": "a big sack of money",
-        "detailed-description": "It's all the profits from the Opportunities projects.",
+        "detaileddescription": "It's all the profits from the Opportunities projects.",
         "attributes": {
           "weight": 0.1,
           "carryWeight": 0,
@@ -438,15 +561,27 @@
           "isBreakable": false,
           "charges": 10,
           "value": 10
-        }
+        },
+        "synonyms": [
+          "cash",
+          "sack",
+          "dosh",
+          "profits"
+        ]
       }
+    ],
+    "synonyms": [
+      "james moore",
+      "moore",
+      "jim",
+      "him"
     ]
   },
   {
     "object": "artefact",
     "name": "key",
     "description": "a vending machine key",
-    "detailed-description": "It unlocks a vending machine.",
+    "detaileddescription": "It unlocks a vending machine.",
     "attributes": {
       "weight": 0.1,
       "carryWeight": 0,
@@ -457,13 +592,20 @@
       "isEdible": false,
       "isBreakable": false,
       "unlocks": "nothing"
-    }
+    },
+    "synonyms": [
+      "vending key",
+      "machine key",
+      "vending machine key",
+      "coffee machine key",
+      "coffee key"
+    ]
   },
   {
     "object": "artefact",
     "name": "key",
     "description": "a key",
-    "detailed-description": "Just a plain key.",
+    "detaileddescription": "Just a plain key.",
     "attributes": {
       "weight": 0.1,
       "carryWeight": 0,
@@ -474,13 +616,18 @@
       "isEdible": false,
       "isBreakable": false,
       "unlocks": "nothing"
-    }
+    },
+    "synonyms": [
+      "plain key",
+      "fob",
+      "key fob"
+    ]
   },
   {
     "object": "artefact",
     "name": "keyfob",
     "description": "a key fob",
-    "detailed-description": "Carrying this ensures you have access to the office whenever you need.",
+    "detaileddescription": "Carrying this ensures you have access to the office whenever you need.",
     "attributes": {
       "weight": 0.1,
       "carryWeight": 0,
@@ -497,7 +644,7 @@
     "object": "artefact",
     "name": "machine",
     "description": "a coffee vending machine",
-    "detailed-description": "When it works it uses coffee beans to make coffee.",
+    "detaileddescription": "When it works it uses coffee beans to make coffee.",
     "attributes": {
       "weight": 151,
       "carryWeight": 3,
@@ -511,11 +658,16 @@
       "locked": true,
       "requiredComponentCount": 1
     },
+    "synonyms": [
+      "coffee machine",
+      "vending machine",
+      "coffee vending machine"
+    ],
     "delivers": {
       "object": "artefact",
       "name": "coffee",
       "description": "coffee",
-      "detailed-description": "Development fuel.",
+      "detaileddescription": "Development fuel.",
       "attributes": {
         "weight": 1,
         "carryWeight": 0,
@@ -530,11 +682,15 @@
         "requiredContainer": "cup",
         "componentOf": "sugar"
       },
+      "synonyms": [
+        "brew",
+        "drink"
+      ],
       "delivers": {
         "object": "artefact",
         "name": "sweet coffee",
         "description": "sweet coffee",
-        "detailed-description": "Development fuel with added sugar!",
+        "detaileddescription": "Development fuel with added sugar!",
         "attributes": {
           "weight": 1,
           "carryWeight": 0,
@@ -547,7 +703,13 @@
           "isBreakable": false,
           "requiresContainer": true,
           "requiredContainer": "cup"
-        }
+        },
+        "synonyms": [
+          "brew",
+          "drink",
+          "coffee",
+          "sugary coffee"
+        ]
       }
     },
     "missions": [
@@ -557,7 +719,7 @@
         "description": "Before you can get any coffee, this machine needs beans.",
         "dialogue": "",
         "parent": "null",
-        "mission-object": "beans",
+        "missionobject": "beans",
         "static": "true",
         "condition": "5",
         "destination": "machine",
@@ -572,7 +734,7 @@
     "object": "artefact",
     "name": "money",
     "description": "a big sack of money",
-    "detailed-description": "It's all the profits from the Opportunities projects.",
+    "detaileddescription": "It's all the profits from the Opportunities projects.",
     "attributes": {
       "weight": 0.1,
       "carryWeight": 0,
@@ -584,13 +746,19 @@
       "isBreakable": false,
       "charges": 10,
       "value": 10
-    }
+    },
+    "synonyms": [
+      "cash",
+      "sack",
+      "dosh",
+      "profits"
+    ]
   },
   {
     "object": "artefact",
     "name": "parcel",
     "description": "a parcel from Amazon",
-    "detailed-description": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
+    "detaileddescription": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
     "attributes": {
       "weight": 2,
       "carryWeight": 25,
@@ -601,12 +769,19 @@
       "isEdible": false,
       "isBreakable": false
     },
+    "synonyms": [
+      "package",
+      "amazon parcel",
+      "amazon package",
+      "coffee parcel",
+      "coffee package"
+    ],
     "inventory": [
       {
         "object": "artefact",
         "name": "bag",
         "description": "a giant bag",
-        "detailed-description": "The label says 'Finest Software Development Coffee Beans'",
+        "detaileddescription": "The label says 'Finest Software Development Coffee Beans'",
         "attributes": {
           "weight": 2,
           "carryWeight": 25,
@@ -617,12 +792,18 @@
           "isEdible": false,
           "isBreakable": false
         },
+        "synonyms": [
+          "bean bag",
+          "bag of beans",
+          "giant bag",
+          "big bag"
+        ],
         "inventory": [
           {
             "object": "artefact",
             "name": "beans",
             "description": "coffee beans",
-            "detailed-description": "Development fuel. Almost enough to last a day here.",
+            "detaileddescription": "Development fuel. Almost enough to last a day here.",
             "attributes": {
               "weight": 3,
               "carryWeight": 0,
@@ -635,7 +816,10 @@
               "charges": 10,
               "componentOf": "machine",
               "requiresContainer": true
-            }
+            },
+            "synonyms": [
+              "coffee beans"
+            ]
           }
         ]
       }
@@ -645,7 +829,7 @@
     "object": "artefact",
     "name": "screen",
     "description": "a flat-panel screen",
-    "detailed-description": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least *someone* is expecting you.",
+    "detaileddescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least *someone* is expecting you.",
     "attributes": {
       "weight": 51,
       "carryWeight": 0,
@@ -656,6 +840,14 @@
       "isEdible": false,
       "isBreakable": true
     },
+    "synonyms": [
+      "display",
+      "flat-panel",
+      "panel",
+      "flat panel",
+      "flat-panel screen",
+      "flat panel screen"
+    ],
     "missions": [
       {
         "object": "mission",
@@ -663,7 +855,7 @@
         "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",
         "dialogue": "",
         "parent": "null",
-        "mission-object": "screen",
+        "missionobject": "screen",
         "static": "true",
         "condition": "0",
         "destination": "screen",
@@ -677,9 +869,9 @@
   {
     "object": "creature",
     "name": "simon",
-    "display-name": "Simon",
+    "displayname": "Simon",
     "description": "Simon the CEO",
-    "detailed-description": "He runs the show.",
+    "detaileddescription": "He runs the show.",
     "attributes": {
       "weight": 180,
       "attackStrength": 45,
@@ -696,7 +888,7 @@
         "object": "artefact",
         "name": "sketchbook",
         "description": "an A3 sketch book",
-        "detailed-description": "It looks like it contains all Simon's plans.",
+        "detaileddescription": "It looks like it contains all Simon's plans.",
         "attributes": {
           "weight": 5,
           "carryWeight": 0,
@@ -706,8 +898,22 @@
           "canOpen": false,
           "isEdible": false,
           "isBreakable": true
-        }
+        },
+        "synonyms": [
+          "book",
+          "a3",
+          "a3 sketch book",
+          "a3 sketchbook",
+          "sketch book"
+        ]
       }
+    ],
+    "synonyms": [
+      "boss",
+      "ceo",
+      "simon g",
+      "galbraith",
+      "him"
     ],
     "missions": [
       {
@@ -716,7 +922,7 @@
         "description": "Retrieve a stolen hard drive.",
         "dialogue": "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?','Have you found my missing data yet?'",
         "parent": "null",
-        "mission-object": "disk",
+        "missionobject": "disk",
         "static": "true",
         "condition": "5",
         "destination": "Simon",
@@ -731,7 +937,7 @@
     "object": "artefact",
     "name": "sketchbook",
     "description": "an A3 sketch book",
-    "detailed-description": "It looks like it contains all Simon's plans.",
+    "detaileddescription": "It looks like it contains all Simon's plans.",
     "attributes": {
       "weight": 5,
       "carryWeight": 0,
@@ -741,14 +947,21 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": true
-    }
+    },
+    "synonyms": [
+      "book",
+      "a3",
+      "a3 sketch book",
+      "a3 sketchbook",
+      "sketch book"
+    ]
   },
   {
     "object": "creature",
     "name": "spy",
-    "display-name": "the spy",
+    "displayname": "the spy",
     "description": "a corporate spy",
-    "detailed-description": "Very shifty. I'm sure nobody would notice if they disappeared.",
+    "detaileddescription": "Very shifty. I'm sure nobody would notice if they disappeared.",
     "attributes": {
       "weight": 140,
       "attackStrength": 12,
@@ -764,7 +977,7 @@
         "object": "artefact",
         "name": "disk",
         "description": "a hard disk",
-        "detailed-description": "Pretty sure it belongs to Red Gate.",
+        "detaileddescription": "Pretty sure it belongs to Red Gate.",
         "attributes": {
           "weight": 3,
           "carryWeight": 0,
@@ -774,15 +987,28 @@
           "canOpen": false,
           "isEdible": false,
           "isBreakable": true
-        }
+        },
+        "synonyms": [
+          "disc",
+          "drive",
+          "hard drive",
+          "hard disk",
+          "hard disc",
+          "disc drive",
+          "disk drive"
+        ]
       }
+    ],
+    "synonyms": [
+      "corporate spy",
+      "him"
     ]
   },
   {
     "object": "artefact",
     "name": "sugar",
     "description": "sugar",
-    "detailed-description": "Not so good for the waistline but sugary, sweet and tasty.",
+    "detaileddescription": "Not so good for the waistline but sugary, sweet and tasty.",
     "attributes": {
       "weight": 0.1,
       "carryWeight": 0,
@@ -799,7 +1025,7 @@
       "object": "artefact",
       "name": "sweet coffee",
       "description": "sweet coffee",
-      "detailed-description": "Development fuel with added sugar!",
+      "detaileddescription": "Development fuel with added sugar!",
       "attributes": {
         "weight": 1,
         "carryWeight": 0,
@@ -812,14 +1038,20 @@
         "isBreakable": false,
         "requiresContainer": true,
         "requiredContainer": "cup"
-      }
+      },
+      "synonyms": [
+        "brew",
+        "drink",
+        "coffee",
+        "sugary coffee"
+      ]
     }
   },
   {
     "object": "artefact",
     "name": "sweet coffee",
     "description": "sweet coffee",
-    "detailed-description": "Development fuel with added sugar!",
+    "detaileddescription": "Development fuel with added sugar!",
     "attributes": {
       "weight": 1,
       "carryWeight": 0,
@@ -832,13 +1064,19 @@
       "isBreakable": false,
       "requiresContainer": true,
       "requiredContainer": "cup"
-    }
+    },
+    "synonyms": [
+      "brew",
+      "drink",
+      "coffee",
+      "sugary coffee"
+    ]
   },
   {
     "object": "artefact",
     "name": "sword",
     "description": "an ornamental sword",
-    "detailed-description": "It's flimsy and fake-looking but kind of fun.",
+    "detaileddescription": "It's flimsy and fake-looking but kind of fun.",
     "attributes": {
       "weight": 4,
       "carryWeight": 0,
@@ -848,13 +1086,18 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": false
-    }
+    },
+    "synonyms": [
+      "ornamental",
+      "ornamental sword",
+      "fake sword"
+    ]
   },
   {
     "object": "artefact",
     "name": "table",
     "description": "a glass table",
-    "detailed-description": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
+    "detaileddescription": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
     "attributes": {
       "weight": 51,
       "carryWeight": 0,
@@ -864,13 +1107,17 @@
       "canOpen": false,
       "isEdible": false,
       "isBreakable": true
-    }
+    },
+    "synonyms": [
+      "glass",
+      "glass table"
+    ]
   },
   {
     "object": "artefact",
     "name": "torch",
     "description": "an emergency torch",
-    "detailed-description": "Great for when it's dark. It looks like it'll work too!",
+    "detaileddescription": "Great for when it's dark. It looks like it'll work too!",
     "attributes": {
       "weight": 1,
       "carryWeight": 0,
@@ -883,14 +1130,21 @@
       "charges": -1,
       "switched": true,
       "isOn": false
-    }
+    },
+    "synonyms": [
+      "light",
+      "lamp",
+      "emergency torch",
+      "emergency lamp",
+      "emergency light"
+    ]
   },
   {
     "object": "creature",
     "name": "vic",
-    "display-name": "Vic",
+    "displayname": "Vic",
     "description": "Vic the receptionist",
-    "detailed-description": "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.",
+    "detaileddescription": "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.",
     "attributes": {
       "weight": 100,
       "attackStrength": 25,
@@ -901,6 +1155,12 @@
       "affinity": 0,
       "canTravel": false
     },
+    "synonyms": [
+      "receptionist",
+      "vic",
+      "heidi",
+      "her"
+    ],
     "missions": [
       {
         "object": "mission",
@@ -908,7 +1168,7 @@
         "description": "Vic has a key fob for you.",
         "dialogue": "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office.",
         "parent": "null",
-        "mission-object": "Vic",
+        "missionobject": "Vic",
         "static": "true",
         "condition": "5",
         "destination": "Vic",
@@ -918,7 +1178,7 @@
             "object": "artefact",
             "name": "keyfob",
             "description": "a key fob",
-            "detailed-description": "Carrying this ensures you have access to the office whenever you need.",
+            "detaileddescription": "Carrying this ensures you have access to the office whenever you need.",
             "attributes": {
               "weight": 0.1,
               "carryWeight": 0,
@@ -940,7 +1200,7 @@
         "description": "Vic has a parcel for you but she'd like something to read first.",
         "dialogue": "",
         "parent": "null",
-        "mission-object": "book",
+        "missionobject": "book",
         "static": "true",
         "condition": "5",
         "destination": "Vic",
@@ -950,7 +1210,7 @@
             "object": "artefact",
             "name": "parcel",
             "description": "a parcel from Amazon",
-            "detailed-description": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
+            "detaileddescription": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
             "attributes": {
               "weight": 2,
               "carryWeight": 25,
@@ -961,12 +1221,19 @@
               "isEdible": false,
               "isBreakable": false
             },
+            "synonyms": [
+              "package",
+              "amazon parcel",
+              "amazon package",
+              "coffee parcel",
+              "coffee package"
+            ],
             "inventory": [
               {
                 "object": "artefact",
                 "name": "bag",
                 "description": "a giant bag",
-                "detailed-description": "The label says 'Finest Software Development Coffee Beans'",
+                "detaileddescription": "The label says 'Finest Software Development Coffee Beans'",
                 "attributes": {
                   "weight": 2,
                   "carryWeight": 25,
@@ -977,12 +1244,18 @@
                   "isEdible": false,
                   "isBreakable": false
                 },
+                "synonyms": [
+                  "bean bag",
+                  "bag of beans",
+                  "giant bag",
+                  "big bag"
+                ],
                 "inventory": [
                   {
                     "object": "artefact",
                     "name": "beans",
                     "description": "coffee beans",
-                    "detailed-description": "Development fuel. Almost enough to last a day here.",
+                    "detaileddescription": "Development fuel. Almost enough to last a day here.",
                     "attributes": {
                       "weight": 3,
                       "carryWeight": 0,
@@ -995,7 +1268,10 @@
                       "charges": 10,
                       "componentOf": "machine",
                       "requiresContainer": true
-                    }
+                    },
+                    "synonyms": [
+                      "coffee beans"
+                    ]
                   }
                 ]
               }

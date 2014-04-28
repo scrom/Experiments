@@ -132,8 +132,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.toString = function() {
         //var _synonyms = [];
         //var _missions = [];
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","display-name":"'+_displayName+'","description":"'+_description+'","detailed-description":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detaileddescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            if (_synonyms.length >0) {
+                returnString+= ',"synonyms":[';
+                for(var i=0; i<_synonyms.length;i++) {
+                    if (i>0) {returnString+= ',';};
+                    returnString+= '"'+_synonyms[i]+'"';
+                };
+                returnString+= ']';
+            };
             if (_missions.length >0) {
                 returnString+= ',"missions":[';
                 for(var i=0; i<_missions.length;i++) {
@@ -284,6 +292,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     inventoryWeight+=_inventory[i].getWeight();
             };
             return inventoryWeight;
+        };
+
+        self.getInventoryObject = function() {
+            return _inventory;
         };
 
         self.canCarry = function(anObject) {

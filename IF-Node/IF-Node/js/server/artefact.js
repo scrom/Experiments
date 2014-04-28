@@ -135,13 +135,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //public member functions
         self.toString = function() {
             //var _synonyms = [];
-            //var _missions = [];
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailed-description":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detaileddescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_linkedExits.length>0) {
-                returnString+= ',"linked-exits":[';
+                returnString+= ',"linkedexits":[';
                 for(var i=0; i<_linkedExits.length;i++) {
                     if (i>0) {returnString+= ',';};
                     returnString+= _linkedExits[i].toString();
+                };
+                returnString+= ']';
+            };
+            if (_synonyms.length >0) {
+                returnString+= ',"synonyms":[';
+                for(var i=0; i<_synonyms.length;i++) {
+                    if (i>0) {returnString+= ',';};
+                    returnString+= '"'+_synonyms[i]+'"';
                 };
                 returnString+= ']';
             };

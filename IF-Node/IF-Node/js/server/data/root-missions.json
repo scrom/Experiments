@@ -5,7 +5,7 @@
     "description": "Before you can get any coffee, this machine needs beans.",
     "dialogue": "",
     "parent": "null",
-    "mission-object": "beans",
+    "missionobject": "beans",
     "static": "true",
     "condition": "5",
     "destination": "machine",
@@ -20,7 +20,7 @@
     "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",
     "dialogue": "",
     "parent": "null",
-    "mission-object": "screen",
+    "missionobject": "screen",
     "static": "true",
     "condition": "0",
     "destination": "screen",
@@ -35,7 +35,7 @@
     "description": "Vic has a key fob for you.",
     "dialogue": "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office.",
     "parent": "null",
-    "mission-object": "Vic",
+    "missionobject": "Vic",
     "static": "true",
     "condition": "5",
     "destination": "Vic",
@@ -45,7 +45,7 @@
         "object": "artefact",
         "name": "keyfob",
         "description": "a key fob",
-        "detailed-description": "Carrying this ensures you have access to the office whenever you need.",
+        "detaileddescription": "Carrying this ensures you have access to the office whenever you need.",
         "attributes": {
           "weight": 0.1,
           "carryWeight": 0,
@@ -67,7 +67,7 @@
     "description": "Kill the spy.",
     "dialogue": "",
     "parent": "null",
-    "mission-object": "spy",
+    "missionobject": "spy",
     "static": "false",
     "condition": "0",
     "destination": "spy",
@@ -82,7 +82,7 @@
     "description": "Retrieve a stolen hard drive.",
     "dialogue": "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?','Have you found my missing data yet?'",
     "parent": "null",
-    "mission-object": "disk",
+    "missionobject": "disk",
     "static": "true",
     "condition": "5",
     "destination": "Simon",
@@ -97,7 +97,7 @@
     "description": "It's your first day in the office. Your first important task is to get yourself a nice sweet cup of coffee.",
     "dialogue": "",
     "parent": "null",
-    "mission-object": "sweet coffee",
+    "missionobject": "sweet coffee",
     "static": "false",
     "condition": "5",
     "destination": "player",
@@ -112,7 +112,7 @@
     "description": "Vic has a parcel for you but she'd like something to read first.",
     "dialogue": "",
     "parent": "null",
-    "mission-object": "book",
+    "missionobject": "book",
     "static": "true",
     "condition": "5",
     "destination": "Vic",
@@ -122,7 +122,7 @@
         "object": "artefact",
         "name": "parcel",
         "description": "a parcel from Amazon",
-        "detailed-description": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
+        "detaileddescription": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
         "attributes": {
           "weight": 2,
           "carryWeight": 25,
@@ -133,12 +133,19 @@
           "isEdible": false,
           "isBreakable": false
         },
+        "synonyms": [
+          "package",
+          "amazon parcel",
+          "amazon package",
+          "coffee parcel",
+          "coffee package"
+        ],
         "inventory": [
           {
             "object": "artefact",
             "name": "bag",
             "description": "a giant bag",
-            "detailed-description": "The label says 'Finest Software Development Coffee Beans'",
+            "detaileddescription": "The label says 'Finest Software Development Coffee Beans'",
             "attributes": {
               "weight": 2,
               "carryWeight": 25,
@@ -149,12 +156,18 @@
               "isEdible": false,
               "isBreakable": false
             },
+            "synonyms": [
+              "bean bag",
+              "bag of beans",
+              "giant bag",
+              "big bag"
+            ],
             "inventory": [
               {
                 "object": "artefact",
                 "name": "beans",
                 "description": "coffee beans",
-                "detailed-description": "Development fuel. Almost enough to last a day here.",
+                "detaileddescription": "Development fuel. Almost enough to last a day here.",
                 "attributes": {
                   "weight": 3,
                   "carryWeight": 0,
@@ -167,7 +180,10 @@
                   "charges": 10,
                   "componentOf": "machine",
                   "requiresContainer": true
-                }
+                },
+                "synonyms": [
+                  "coffee beans"
+                ]
               }
             ]
           }
