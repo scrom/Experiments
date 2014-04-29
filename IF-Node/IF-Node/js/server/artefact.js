@@ -16,6 +16,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _initialDescription = description; //save this for repairing later
         var _description = description;
         var _initialDetailedDescription = detailedDescription; //save this for repairing later
+        var _extendedInventoryDescription = "";
         var _detailedDescription = detailedDescription;
         var _weight = 0;
         var _nutrition = 0;
@@ -85,6 +86,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
+            if (attributes.extendedinventorydescription != undefined) {
+                _extendedInventoryDescription = attributes.extendedinventorydescription;
+            } else {
+                _extendedInventoryDescription = _itemPrefix+" contains $inventory."
+            };
             if (artefactAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
             if (artefactAttributes.lockable != undefined) {_lockable = artefactAttributes.lockable;};
             if (artefactAttributes.locked != undefined) {_locked = artefactAttributes.locked;};
@@ -282,14 +288,24 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if ((_inventory.size() > 0) && inventoryIsVisible) {
-                returnString += "<br>"+_itemPrefix+" contains "+_inventory.describe()+".";
+                returnString += "<br>";
+
+                //inventory description may be extended...
+                //ensure we have a substitution value
+                var placeholder = _extendedInventoryDescription.indexOf("$inventory");
+                if (placeholder == -1) {
+                    _extendedInventoryDescription+="$inventory."
+                };
+                returnString += _extendedInventoryDescription;
+
+                returnString = returnString.replace("$inventory",_inventory.describe());
             };
 
             if (!(self.checkComponents())) { 
                 returnString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
             } else {
                 if (_delivers) {
-                    returnString += "<br>"+_itemPrefix+" delivers "+_delivers.getDisplayName()+".";
+                    returnString += "<br>"+_itemPrefix+" delivers "+_delivers.getName()+".";
                 };               
             };
 

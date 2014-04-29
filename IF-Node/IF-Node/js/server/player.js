@@ -144,10 +144,12 @@ module.exports.Player = function Player(aUsername) {
             };
             if (artefactName=="all") {return self.getAll(verb);};
             if (artefactName=="everything") {return self.getAll(verb);};
-            if (_inventory.check(artefactName)) {return "You're carrying it already.";};
 
             var artefact = getObjectFromLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here.";};
+            if (!(artefact)) {
+                if (_inventory.check(artefactName)) {return "You're carrying it already.";};
+                return "There is no "+artefactName+" here.";
+            };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
             if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};

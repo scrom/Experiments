@@ -262,7 +262,7 @@
           "canOpen": false,
           "isEdible": false,
           "isBreakable": false,
-          "unlocks": "nothing"
+          "unlocks": "machine"
         },
         "synonyms": [
           "vending key",
@@ -515,7 +515,7 @@
         "object": "artefact",
         "name": "cup",
         "description": "a coffee cup",
-        "detaileddescription": "Some coffee in here would be great.",
+        "detaileddescription": "Just the right size for a decent brew.",
         "attributes": {
           "weight": 2,
           "carryWeight": 1,
@@ -581,6 +581,7 @@
         "description": "a coffee vending machine",
         "detaileddescription": "When it works it uses coffee beans to make coffee.",
         "attributes": {
+		  "extendedinventorydescription": "It's fully loaded with ",	
           "weight": 151,
           "carryWeight": 3,
           "attackStrength": 0,
@@ -724,6 +725,7 @@
         "description": "a set of bookcases",
         "detaileddescription": "Books on everything from travel to SQL server and from sales to C#.",
         "attributes": {
+		  "extendedinventorydescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",	
           "weight": 80,
           "carryWeight": 50,
           "attackStrength": 0,
@@ -750,7 +752,7 @@
         "inventory": [
           {
             "object": "artefact",
-            "name": "book",
+            "name": "large book",
             "description": "a large book",
             "detaileddescription": "It's a book on how to sell software in a friendly way.",
             "attributes": {
@@ -764,10 +766,31 @@
               "isBreakable": false
             },
             "synonyms": [
-              "large book",
+              "book",
               "sales book",
               "selling book",
               "software book"
+            ]
+          },
+		  {
+            "object": "artefact",
+            "name": "small book",
+            "description": "a small book",
+            "detaileddescription": "It's a book on why not all customers are created equal.",
+            "attributes": {
+              "weight": 1,
+              "carryWeight": 0,
+              "attackStrength": 2,
+              "type": "junk",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": false,
+              "isBreakable": false
+            },
+            "synonyms": [
+              "book",
+              "care book",
+              "customer book"
             ]
           }
         ]
@@ -1409,7 +1432,7 @@
             "name": "vicsbook",
             "description": "Vic has a parcel for you but she'd like something to read first.",
             "parent": "null",
-            "missionobject": "book",
+            "missionobject": "small book",
             "static": "true",
             "condition": "5",
             "destination": "Vic",
