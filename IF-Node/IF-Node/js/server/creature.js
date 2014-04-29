@@ -283,7 +283,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
              return  _weight+_inventory.getWeight();
         };
 
+        self.setAttackStrength = function(attackStrength) {
+            _attackStrength = attackStrength;
+        };
+
         self.getAttackStrength = function() {
+            console.log('Creature attack strength = '+_attackStrength);
             if (self.isDead()) {return 0;};
             return _attackStrength;
         };
@@ -406,11 +411,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //for each frightened creature, try to flee (choose first available exit if more than 1 available).
             //otherwise they try to flee but can't get past you
             if(self.willFlee(playerAggression)) {
+                console.log("Flee!");
                 return "<br>"+self.flee(map, playerAggression);
             };
 
             //for each hostile creature, attack the player
             if(self.isHostile(playerAggression)) {
+                console.log("Fight!");
                 return "<br>"+initCap(self.getDisplayName())+" attacks you. " + player.hurt(self.getAttackStrength());
             };
 
@@ -475,10 +482,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //regardless of outcome, you're not making yourself popular
             _affinity--;
 
+            var resultString = "";
+
             if (_type == 'friendly') {return _genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";};
 
             if (!(weapon)) {
-                var resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
+                resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
                 resultString += player.hurt(self.getAttackStrength());
                 return resultString;
             };
@@ -581,7 +590,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+self.getDisplayName().replace("the ","");
-            return initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+            return "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
          };
 
         self.moveOrOpen = function(aVerb) {
@@ -668,11 +677,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.tick = function(time, map, player) {
+            //important note. If the player is not in the same room as the creature at the end of the creature tick
+            //none of the results of this tick will be visible to the player.
             var resultString = "";
 
             //quick return if already dead
             if (self.isDead()) {return resultString;};
 
+            var playerLocation = player.getLocation().getName();
             var damage = 0;
             var healPoints = 0;
             //repeat for number of ticks
@@ -681,7 +693,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString += _inventory.tick();
 
                 //if creature is in same location as player, fight or flee...
-                if (player.getLocation().getName() == _currentLocation.getName()) {
+                if (playerLocation == _currentLocation.getName()) {
                     resultString += self.fightOrFlight(map, player);
                 } else if (_traveller && _canTravel) { //is a traveller
                     var exit = _currentLocation.getRandomExit();
@@ -696,7 +708,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";  
                         };  
                      };  
-             
+            
                 };
 
                 //bleed?
@@ -711,13 +723,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (healPoints>0) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
             if (damage>0) {_hitPoints -=damage;};
             //consider fleeing here if not quite dead
-            if (self.isDead()) {return resultString+self.kill();};
+            if (self.isDead()) {
+                resultString += self.kill();
+            };
             
             if (healthPercent() <=50) {_bleeding = true;};
             if (_bleeding) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
 
             //only show what's going on if the player is in the same location
-            if (player.getLocation().getName() == _currentLocation.getName()) {
+            //note we store playerLocatoin at the beginning in case the player was killed as a result of the tick.
+            if (playerLocation == _currentLocation.getName()) {
                 return resultString;
             } else {
                 return "";

@@ -43,7 +43,7 @@ module.exports.Player = function Player(aUsername) {
         var _objectsCollected = 0;
         var _locksOpened = 0;
         var _doorsOpened = 0;
-        var _score = 0; //not used yet
+        var _score = 0;
 	    var _objectName = "Player";
 
         //private functions
@@ -624,7 +624,8 @@ module.exports.Player = function Player(aUsername) {
         };
 
         //mainly used for setting initial location but could also be used for warping even if no exit/direction
-        self.setLocation = function(location) { //param is a loction object, not a name.
+        //param is a location object, not a name.
+        self.setLocation = function(location) { 
             //fire "leave" trigger for current location (if location is set and player not dead)
             var resultString = "";
 
@@ -633,7 +634,7 @@ module.exports.Player = function Player(aUsername) {
             }; 
 
             _currentLocation = location;
-            resultString += _currentLocation.addVisit();
+            resultString += _currentLocation.addVisit(); 
             if (_startLocation == undefined) {
                 _startLocation = _currentLocation;
             };
@@ -646,7 +647,7 @@ module.exports.Player = function Player(aUsername) {
 
             //retrieve missions from location:
             var newMissions = _currentLocation.getMissions();
-
+        
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {_missions.push(newMissions[i]);};
             };
@@ -764,15 +765,18 @@ module.exports.Player = function Player(aUsername) {
         self.hurt = function(pointsToRemove) {
             _hitPoints -= pointsToRemove;
 
+            console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+
             _injuriesReceived ++;
             _totalDamageReceived += pointsToRemove;
 
             //reduce aggression
             if (_aggression >0) {_aggression--;};
-            if (_hitPoints <=0) {return self.kill();};
             if (_hitPoints <=50) {_bleeding = true;};
-            return 'You feel weaker.'
-            console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+
+            if (_hitPoints <=0) {return self.kill();};
+            
+            return "You feel weaker. ";
         };
 
         self.hit = function(verb, receiverName, artefactName){
@@ -917,7 +921,14 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.kill = function(){
+            console.log("Player killed");
+            var resultString = "";
             _killedCount ++;
+            //reduce score
+            var minusPoints = 100;
+            _score -= minusPoints;
+            if (_score <-1000) {_score = -1000;}; //can't score less than -1000 (seriously!)
+
             //reset hp before healing
             _hitPoints = 0;
             //reset aggression
@@ -930,9 +941,16 @@ module.exports.Player = function Player(aUsername) {
                 _currentLocation.addObject(removeObjectFromPlayer(inventoryContents[i].getName()));
             }; 
             self.heal(100);
-            return '<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>'+
-                   'Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>'+
-                   "You'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" +self.setLocation(_startLocation);
+
+            resultString += "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>"+
+                   "Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>"+
+                   "It'll cost you "+minusPoints+" points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" 
+
+            var newLocationDescription = self.setLocation(_startLocation);
+            if (!(self.canSee())) {resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
+            else {resultString +=newLocationDescription;};
+
+            return resultString;
          };
 
         self.health = function() {
@@ -977,6 +995,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.tick = function(time) {
+
             var resultString = "";
             var damage = 0;
             var healPoints = 0;
