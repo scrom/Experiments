@@ -86,8 +86,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
-            if (attributes.extendedinventorydescription != undefined) {
-                _extendedInventoryDescription = attributes.extendedinventorydescription;
+            if (artefactAttributes.extendedinventorydescription != undefined) {
+                _extendedInventoryDescription = artefactAttributes.extendedinventorydescription;
             } else {
                 _extendedInventoryDescription = _itemPrefix+" contains $inventory."
             };
@@ -218,6 +218,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.addSyns = function (synonyms) {
             _synonyms = _synonyms.concat(synonyms);
+        };
+
+        self.getSyns = function () {
+            return _synonyms;
         };
         
         //artefact only function at the moment
@@ -406,7 +410,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.combineWith = function(anObject) {
             if (!(self.combinesWith(anObject))) { return null;};
             console.log("combining :"+self.getName()+" with "+anObject.getName()+" to produce "+_delivers);
-            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
+
+            //return a new instance of deliveryObject
+            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); 
+            deliveredItem.addSyns(_delivers.getSyns());
+            return deliveredItem;
         };
 
         self.canContain = function(anObject) {
@@ -519,7 +527,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             for (var i=0; i<components.length; i++) {
                 self.consumeItem(components[i]);
             };
-            return new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
+            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
+            deliveredItem.addSyns(_delivers.getSyns());
+            return deliveredItem;
         };
 
         self.break = function(deliberateAction) {
