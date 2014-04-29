@@ -1498,6 +1498,7 @@
                           "isEdible": false,
                           "isBreakable": false,
                           "charges": 10,
+						  "quantity": -1,
                           "componentOf": "machine",
                           "requiresContainer": true
                         },
@@ -1627,7 +1628,7 @@
           "weight": 1,
           "carryWeight": 0,
           "attackStrength": 15,
-          "type": "tool",
+          "type": "weapon",
           "canCollect": true,
           "canOpen": false,
           "isEdible": false,

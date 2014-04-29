@@ -530,6 +530,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.bash = function() {
+            //cascade to contents
+            if (_inventory.size() > 0) {
+                var contents = _inventory.getAllObjects();
+                for (var i=0;i<contents.length;i++) {
+                    //75% chance of damaging contents
+                    var randomInt = Math.floor(Math.random() * 4);
+                    if (randomInt > 0) {
+                        contents[i].bash();
+                    };                
+                };
+            };
+
             //if you mistreat something breakable more than once it breaks, if you do it again, you lose it.
             if (((_broken) && (_breakable) && (_damaged))) {
                 return self.destroy(false);
@@ -762,7 +774,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };*/
 
         self.lock = function(aKey) {
-            if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemPrefix+" first.";};
+            if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (!(_locked)) {
                 if (!(aKey)) {return "You don't have a key that fits.";};
