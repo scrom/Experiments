@@ -183,6 +183,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _synonyms = _synonyms.concat(synonyms);
         };
 
+        self.getSyns = function () {
+            return _synonyms;
+        };
+
         self.getDisplayName = function() {
             return _displayName;
         };

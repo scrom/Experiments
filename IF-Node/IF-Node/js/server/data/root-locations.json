@@ -1422,7 +1422,13 @@
                   "isEdible": false,
                   "isBreakable": false,
                   "unlocks": "nothing"
-                }
+                },
+                "synonyms": [
+                  "key fob",
+                  "fob",
+                  "keyring",
+                  "key ring"
+                ]
               },
               "successMessage": "Have 10 points."
             }

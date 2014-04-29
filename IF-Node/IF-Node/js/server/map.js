@@ -118,6 +118,8 @@ exports.Map = function Map() { //inputs for constructor TBC
                 };
             };
 
+            //check artefact has syns
+            if (artefact.getSyns().length ==0) {console.log("Usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
             return artefact;
         };
 
@@ -149,6 +151,7 @@ exports.Map = function Map() { //inputs for constructor TBC
                 };
             };
 
+            if (creature.getSyns().length ==0) {console.log("Usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
             return creature;
         };
 
