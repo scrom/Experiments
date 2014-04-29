@@ -522,7 +522,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _description = "some wreckage that was once "+_description;
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
-                return "You destroyed "+_itemSuffix+"!";
+                var destroyMessage = "You destroyed "+_itemSuffix;
+                if (_inventory.size() > 0) {destroyMessage += " and "+_itemPossessiveSuffix+" contents";};
+                return destroyMessage+"!";
             };
             _detailedDescription += _itemPrefix+" shows signs of abuse.";
             if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
