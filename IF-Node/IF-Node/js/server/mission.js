@@ -7,7 +7,9 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         var _parent = parent; //parent mission - allows threads to be built up.
         var _description = description;
         var _dialogue = dialogue; //an array/collection of dialogue sentences. If a mission has dialogue, it'll override any static settings and be treated as static for now.
-        var _isStatic = isStatic; //if true, mission stays in source location.
+        var _isStatic = false; //if true, mission stays in source location.
+        if (isStatic == true || isStatic == "true") { _isStatic = true;};
+
         var _conversationState = 0; //track dialogue
         var _missionObject = missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _condition = condition; //the required (numeric/enumerated) condition the object must be in for success 

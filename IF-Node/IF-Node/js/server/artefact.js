@@ -92,32 +92,56 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _extendedInventoryDescription = _itemPrefix+" contains $inventory."
             };
             if (artefactAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
-            if (artefactAttributes.lockable != undefined) {_lockable = artefactAttributes.lockable;};
-            if (artefactAttributes.locked != undefined) {_locked = artefactAttributes.locked;};
-            if (artefactAttributes.canCollect != undefined) {_collectable = artefactAttributes.canCollect;};
+            if (artefactAttributes.lockable != undefined) {
+                if (artefactAttributes.lockable== true || artefactAttributes.lockable == "true") { _lockable = true;};
+            };
+            if (artefactAttributes.locked != undefined) {
+                if (artefactAttributes.locked== true || artefactAttributes.locked == "true") { _locked = true;};
+            };
+            if (artefactAttributes.canCollect != undefined) {
+                if (artefactAttributes.canCollect== true || artefactAttributes.canCollect == "true") { _collectable = true;};
+            };
             if (artefactAttributes.canOpen != undefined) {
                 //lockable items are openable so ignore "canOpen" attribute.
                 if (_lockable) {_opens = true;}
-                else {_opens = artefactAttributes.canOpen;}
+                else {
+                    if (artefactAttributes.canOpen== true || artefactAttributes.canOpen == "true") { _opens = true;};                    
+                };
             };
-            if (artefactAttributes.isOpen != undefined) {_open = artefactAttributes.isOpen;};
+            if (artefactAttributes.isOpen != undefined) {
+                if (artefactAttributes.isOpen== true || artefactAttributes.isOpen == "true") { _open = true;};
+            };
             if (artefactAttributes.charges != undefined) {_charges = artefactAttributes.charges;};
-            if (artefactAttributes.switched != undefined) {_switched = artefactAttributes.switched;};
-            if (artefactAttributes.isOn != undefined) {_on = artefactAttributes.isOn;};
-            if (artefactAttributes.isEdible != undefined) {_edible = artefactAttributes.isEdible;};
+            if (artefactAttributes.switched != undefined) {
+                if (artefactAttributes.switched== true || artefactAttributes.switched == "true") { _switched = true;};
+            };
+            if (artefactAttributes.isOn != undefined) {
+                if (artefactAttributes.isOn== true || artefactAttributes.isOn == "true") { _on = true;};
+            };
+            if (artefactAttributes.isEdible != undefined) {
+                if (artefactAttributes.isEdible== true || artefactAttributes.isEdible == "true") { _edible = true;};
+            };
             if (artefactAttributes.nutrition != undefined) {_nutrition = artefactAttributes.nutrition;};
-            if (artefactAttributes.chewed != undefined) {_chewed = artefactAttributes.chewed;};
+            if (artefactAttributes.chewed != undefined) {
+                if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
+            };
             if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
             if (artefactAttributes.quantity != undefined) {_quantity = setQuantity(artefactAttributes.quantity);};
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
-            if (artefactAttributes.isBreakable != undefined) {_breakable = artefactAttributes.isBreakable;};
-            if (artefactAttributes.isBroken != undefined) {_broken = artefactAttributes.isBroken;};
+            if (artefactAttributes.isBreakable != undefined) {
+                if (artefactAttributes.isBreakable== true || artefactAttributes.isBreakable == "true") { _breakable = true;};
+            };
+            if (artefactAttributes.isBroken != undefined) {
+                if (artefactAttributes.isBroken== true || artefactAttributes.isBroken == "true") { _broken = true;};
+            };
             if (artefactAttributes.unlocks != undefined) {_unlocks = artefactAttributes.unlocks;};
 
             if (artefactAttributes.componentOf != undefined) {_componentOf = artefactAttributes.componentOf;};
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
-            if (artefactAttributes.requiresContainer != undefined) {_requiresContainer = artefactAttributes.requiresContainer;};
+            if (artefactAttributes.requiresContainer != undefined) {
+                if (artefactAttributes.requiresContainer== true || artefactAttributes.requiresContainer == "true") { _requiresContainer = true;};
+            };
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
 
         };

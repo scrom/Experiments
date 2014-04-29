@@ -14,6 +14,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];
+        var _maxScore = 0; //missions add score
 
         //consider storing all creatures and artefacts on map object (rather than in location, creature or player) 
         //this will need some major rework and tracking/linking who owns what
@@ -69,6 +70,9 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         
         //public member functions
+        self.getMaxScore = function() {
+            return _maxScore;
+        };
 
         self.getLocationsJSON = function() {
             var locationsAsJSON = [];
@@ -154,6 +158,12 @@ exports.Map = function Map() { //inputs for constructor TBC
             for (var attr in reward) {
                 if (reward.hasOwnProperty(attr)) returnObject[attr] = reward[attr];
             }
+
+            //set maximum possible game score...
+            if (reward.score) {
+                //note some missions reduce score so we only add  those > 0
+                if (reward.score>0) {_maxScore += reward.score;};
+            };
             if (reward.delivers) {
                 console.log("Delivers: "+returnObject.delivers);
                 var deliveryObject = self.buildArtefact(returnObject.delivers);

@@ -1083,14 +1083,14 @@ module.exports.Player = function Player(aUsername) {
             return false;
         };
 
-        self.status = function() {
+        self.status = function(maxScore) {
             var status = "";
             for (var i=0; i< _missions.length;i++) {
                 status+= _missions[i].getDescription()+"<br>";
             };
             if (_missions.length > 0) {status+="<br>";};
 
-            status += "Your score is "+_score+".<br>";
+            status += "Your score is "+_score+" out of "+maxScore+"<br>";
             if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
             status += "You have visited "+_locationsFound+" locations.<br>";

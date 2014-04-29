@@ -47,8 +47,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
-            if (creatureAttributes.canTravel != undefined) {_canTravel = creatureAttributes.canTravel;};
-            if (creatureAttributes.traveller != undefined) {_traveller = creatureAttributes.traveller;};
+            if (creatureAttributes.canTravel != undefined) {
+                if (creatureAttributes.canTravel== true || creatureAttributes.canTravel == "true") { _canTravel = true;}
+                else {_canTravel = false;};
+            };
+            if (creatureAttributes.traveller != undefined) {
+                if (creatureAttributes.traveller== true || creatureAttributes.traveller == "true") { _traveller = true;};
+            };
             if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
             if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
