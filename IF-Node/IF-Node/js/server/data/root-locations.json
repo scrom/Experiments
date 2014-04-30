@@ -747,7 +747,8 @@
           "case",
           "shelf",
           "cases",
-          "shelves"
+          "shelves",
+		  "books"
         ],
         "inventory": [
           {
@@ -791,7 +792,23 @@
               "book",
               "repair book",
               "repair manual"
-            ]
+            ],
+			"missions": [
+			  {
+				"object": "mission",
+				"name": "repairCoffeeMachine",
+				"description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.",
+				"parent": "null",
+				"missionobject": "manual",
+				"static": "false",
+				"condition": "5",
+				"destination": "manual",
+				"reward": {
+					"repairSkill": "machine",
+					"successMessage": "Congratulations. You've learned how to repair a coffee machine."
+				}
+			  }
+			]
           },
 		  {
             "object": "artefact",

@@ -614,6 +614,21 @@ module.exports.Player = function Player(aUsername) {
 
         };
 
+        self.repair = function(verb, artefactName) {
+            var resultString = "";
+
+            if (!(self.canSee())) {return "It's too dark to see anything here.";};
+            if (stringIsEmpty(artefactName)){ return verb+" what?"};
+
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+            if (!(artefact.isBroken())) {return artefact.getDescriptivePrefix()+" not broken.";}; //this will catch creatures
+
+            return artefact.repair(_repairSkills);
+
+        };
+
         self.read = function(verb, artefactName) {
             var resultString = "";
 

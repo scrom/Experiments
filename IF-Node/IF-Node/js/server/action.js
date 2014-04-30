@@ -343,6 +343,11 @@ exports.Action = function Action(aPlayer, aMap) {
                         ticks = 2; //studying takes time!
                         description = _player.read(_verb, _object0);
                         break;
+                    case 'repair':
+                    case 'mend':
+                    case 'fix':
+                        description = _player.repair(_verb, _object0);
+                        break;
                     case 'save':
                     case 'load':
                     case 'search':
@@ -363,9 +368,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'unmount': //don't think this is a real verb but still...
                     case 'go': //link this with location moves
                     case 'feed':
-                    case 'repair':
-                    case 'mend':
-                    case 'fix':
                     default:
                         ticks = 0; //for now 
                         console.log('verb: '+_verb+' default response');

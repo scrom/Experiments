@@ -552,6 +552,26 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return deliveredItem;
         };
 
+        self.repair = function(playerRepairSkills) {
+            if(_destroyed) {return _itemDescriptivePrefix+" beyond repair."};
+            var playerHasRequiredSkill = false;
+            for (var i=0; i<playerRepairSkills.length;i++) {
+                if (self.syn(playerRepairSkills[i])) {
+                    playerHasRequiredSkill = true;
+                    break;
+                };
+            };
+            if (!(playerHasRequiredSkill)) {return "You don't have the skills needed to repair "+_itemSuffix; };
+
+            _description = _initialDescription;
+            _detailedDescription = _initialDetailedDescription;
+            _broken = false;
+            _damaged = false;
+            _chewed = false;
+
+            return "Great work, you fixed "+_itemSuffix;
+        };
+
         self.break = function(deliberateAction) {
             if (_broken && deliberateAction) {return self.destroy(deliberateAction);};
             _damaged = true;
