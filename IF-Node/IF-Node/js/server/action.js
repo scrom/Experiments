@@ -208,12 +208,20 @@ exports.Action = function Action(aPlayer, aMap) {
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1);}
                         else {description = _player.examine(_verb, _object0);};
+                        break;                  
+                    case 'find':                   
+                        ticks = 0;
+                        description = "Well it was worth a shot...<br>You'll have to hunt things down yourself here I'm afraid.";
+                        
+                        //"find" is a cheat - disable it for now
+                        //if player enters "search for x", we'll have an object 1 (but no object 0).
+                        //if (_object1) {description = _map.find(_object1);}
+                        //else {description = _map.find(_object0);};
+                        break;  
+                    case 'search':                  
+                        if (_object1) {description = "You'll need to say where you want to search.";}
+                        else {description = _player.examine(_verb, _object0);};
                         break;
-                    //"find" is a cheat - disable it for now
-                    //case 'find':
-                    //    ticks = 0;
-                    //    description = _map.find(_object0);
-                    //    break;  
                     case 'examine':
                         description = _player.examine(_verb, _object0);
                         break;  
@@ -296,7 +304,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'go':
                         //translate to "go north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
+                        //if player enters "go to x", we'll have an object 1 (but no object 0).
                         _verb = _object0;
+                        if (_object1) {_verb = _object1;};
                         break;
                     case 'exit':
                     case 'leave':
@@ -366,7 +376,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'mount':
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
-                    case 'go': //link this with location moves
                     case 'feed':
                     default:
                         ticks = 0; //for now 
@@ -381,43 +390,22 @@ exports.Action = function Action(aPlayer, aMap) {
                     description = _player.go(_verb, _map);
                 };
 
-                //admin commands
-                if (_verb == '+location') {
-                    if ((_object0)&&(_object1)) { 
-                        var newLocationIndex = _map.addLocation(_object0, _object1);                                   
-                        description = 'new location: '+_map.getLocationByIndex(newLocationIndex).toString()+' created';
-                    } else {
-                        description = 'cannot create location: '+_verb+' without name and description';
-                    };
-                };
+                //admin "cheat" commands
                 if (_verb == '+aggression') {
                     description = "Player Aggression set: "+_player.setAggression(_object0);
                 };
-                if (_verb == '+object') {
-                    description = _player.getLocation().addObject(new artefactObjectModule.Artefact(_object0,_object0,_object0,true, false, false, null));
-                };
-                if (_verb == '-object') {description = _player.getLocation().removeObject(_object0);};
 
-                if ((_verb.substring(0,1) == '+') && (_directions.indexOf(_verb.substring(1)>-1))) //we're forcing a direction
-                    {
-
-                    if (_object0.length>0) {
-                        var trimmedVerb = _verb.substring(1,2);
-
-                        var destination = _map.getLocation(_object0);
-                        if (destination) {
-                            description = _map.link(trimmedVerb, _player.getLocation().getName(), _object0);
-                        } else {
-                            console.log('could not link to location '+_object0);
-                            description = 'could not link to location '+_object0;
-                        };
-                    } else {
-                        description = 'cannot create exit: '+_verb+' without destination location';
-                    };
+                if (_verb == '+find') {
+                    description = _map.find(_object0);
                 };
 
                 //fall-through checks...
                 //swearCheck(_verb);
+
+                //final fall-through
+                if ((description == undefined)||(description == '')){
+                  description="Sorry, I didn't understand you. Can you try rephrasing that?";
+                };
 
             //check creatures for fightOrFlight
             description += processCreatureTicks(ticks, _map, _player);

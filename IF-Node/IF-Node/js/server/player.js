@@ -591,7 +591,7 @@ module.exports.Player = function Player(aUsername) {
 
             resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
 
-            if (artefact.getType == "book") {
+            if (artefact.getType() == "book") {
                 resultString += "<br>"+artefact.getPrefix()+" might be worth a read.";
                 return resultString;
             };
@@ -646,10 +646,10 @@ module.exports.Player = function Player(aUsername) {
                 if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
             };
 
-            resultString += "You "+verb+" "+artefact.getDisplayName()+". ";
+            resultString += artefact.read(verb);
 
             if (newMissions.length==0) {
-                resultString += artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
+                resultString += "<br>"+artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
                 return resultString;
             };
 
@@ -1089,8 +1089,9 @@ module.exports.Player = function Player(aUsername) {
                 };
             };
 
-            //check missions from location objects
-            var artefacts = _currentLocation.getAllObjects();
+            //check missions from location and inventory objects
+            var artefacts = _currentLocation.getAllObjectsAndChildren();
+            artefacts = artefacts.concat(_inventory.getAllObjectsAndChildren());
             for (var i=0; i<artefacts.length; i++) {
                 var artefactMissions = artefacts[i].getMissions();
                 for (var j=0; j<artefactMissions.length;j++) {

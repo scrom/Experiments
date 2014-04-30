@@ -27,6 +27,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _linkedExits = [];
         var _collectable = false; //if not collectable, it also can't be completely removed from the game. Leave wreckage
         var _missions = [];
+        var _read = false;
         var _opens = false;
         var _open = false;
         var _charges =-1; //-1 means unlimited
@@ -100,6 +101,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (artefactAttributes.canCollect != undefined) {
                 if (artefactAttributes.canCollect== true || artefactAttributes.canCollect == "true") { _collectable = true;};
+            };
+            if (artefactAttributes.read != undefined) {
+                if (artefactAttributes.read== true || artefactAttributes.read == "true") { _read = true;};
             };
             if (artefactAttributes.canOpen != undefined) {
                 //lockable items are openable so ignore "canOpen" attribute.
@@ -362,6 +366,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return returnString;
         };
 
+        self.read = function(verb) {
+            _read = true;
+            return "You "+verb+" "+self.getDisplayName()+".";
+        };
+
+        self.isRead = function() {
+            return _read;
+        };
+
         self.isDead = function() {
             return false; //inanimate, not dead
         };
@@ -402,8 +415,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //artefact only
         self.getCondition = function() {
             var condition = 5;
+
             //check if object is completely intact
             if (_destroyed) { return 0;};
+            if (_read) { return 6;}; //special flag for reading!
             if (_broken) {condition-=2};
             if (_chewed) {condition-=1};
             if (_damaged) {condition-=1};

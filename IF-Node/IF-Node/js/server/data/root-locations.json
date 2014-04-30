@@ -777,7 +777,7 @@
             "object": "artefact",
             "name": "manual",
             "description": "a maintenance manual for the coffee machines",
-            "detaileddescription": "It includes schematics and wiring diagrams for how to repair and maintain the coffe machines.",
+            "detaileddescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
             "attributes": {
               "weight": 2,
               "carryWeight": 0,
@@ -800,8 +800,8 @@
 				"description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.",
 				"parent": "null",
 				"missionobject": "manual",
-				"static": "false",
-				"condition": "5",
+				"static": "true",
+				"condition": "6",
 				"destination": "manual",
 				"reward": {
 					"repairSkill": "machine",
@@ -1951,7 +1951,24 @@
           "learn on the loo article",
           "loo article",
           "learn article"
-        ]
+        ],
+		"missions": [
+			  {
+				"object": "mission",
+				"name": "lotlEasterEgg",
+				"description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
+				"parent": "null",
+				"missionobject": "article",
+				"static": "true",
+				"condition": "6",
+				"destination": "article",
+				"reward": {
+					"score": 20,
+					"repairSkill": "architecture",
+					"successMessage": "Congratulations. You've learned the basics on how to develop good software architecture."
+				}
+			  }
+			]
       }
     ]
   },

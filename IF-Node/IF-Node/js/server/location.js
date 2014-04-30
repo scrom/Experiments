@@ -123,6 +123,10 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return _inventory.getAllObjects();
         };
 
+        self.getAllObjectsAndChildren = function() {
+            return _inventory.getAllObjectsAndChildren();
+        };
+
         self.getAllObjectsOfType = function(anObjectType) {
             return _inventory.getAllObjectsOfType(anObjectType);
         };

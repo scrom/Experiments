@@ -168,6 +168,22 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             return _items;
         };
 
+        self.getAllObjectsAndChildren = function() {
+            var objects = _items;
+            for (var i=0;i<_items.length;i++) {
+                //only return accessible children.
+                if(_items[i].getType() == 'container' && (!(_items[i].isLocked()))) {
+                    if (_items[i].isOpen()) {
+                        var itemInventory = _items[i].getInventoryObject();
+                        if (itemInventory.size()>0) {
+                            objects = objects.concat(itemInventory.getAllObjectsAndChildren());
+                        };
+                    };
+                };
+            };
+            return objects;
+        };
+
         self.getAllObjectsOfType = function(anObjectType) {
            var returnObjects = [];
            for(var index = 0; index < _items.length; index++) {
