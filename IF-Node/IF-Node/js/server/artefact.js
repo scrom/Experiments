@@ -150,7 +150,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
 
         var validateType = function(aType) {
-            var validobjectTypes = ['weapon','junk','treasure','food','money','tool','door','container', 'key', 'bed', 'light'];
+            var validobjectTypes = ['weapon','book','junk','treasure','food','money','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(aType) == -1) { throw "'" + aType + "' is not a valid artefact type."; };//
             console.log(_name+' type validated: '+aType);
         };
@@ -274,6 +274,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getDescription = function() {
             return _description;
+        };
+
+        self.getPrefix = function() {
+            return _itemPrefix;
         };
 
         self.getDescriptivePrefix = function() {

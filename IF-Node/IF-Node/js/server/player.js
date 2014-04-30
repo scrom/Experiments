@@ -11,6 +11,7 @@ module.exports.Player = function Player(aUsername) {
         var _consumedObjects = []; //track names of all objects player has consumed
         var _missionsCompleted = []; //track names of all missions completed
         var _missions = []; //player can "carry" missions.
+        var _repairSkills = []; //player can learn repair skills.
 
         var _maxHitPoints = 100;
         var _hitPoints = _maxHitPoints;
@@ -590,11 +591,53 @@ module.exports.Player = function Player(aUsername) {
 
             resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
 
+            if (artefact.getType == "book") {
+                resultString += "<br>"+artefact.getPrefix()+" might be worth a read.";
+                return resultString;
+            };
+
+            //if it's not a book, we'll get this far...
             var newMissions = artefact.getMissions();
             //remove any with dialogue from this list.
             for (var j=0; j< newMissions.length;j++) {
                 if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
             };
+            if (newMissions.length>0) {resultString+= "<br>";};
+            for (var i=0; i< newMissions.length;i++) {
+                if (!(newMissions[i].isStatic())) {
+                    _missions.push(newMissions[i]);
+                };
+                resultString+= newMissions[i].getDescription()+"<br>";
+            };
+
+            return resultString;
+
+        };
+
+        self.read = function(verb, artefactName) {
+            var resultString = "";
+
+            if (!(self.canSee())) {return "It's too dark to see anything here.";};
+            if (stringIsEmpty(artefactName)){ return verb+" what?"};
+
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+
+            if (artefact.getType() != "book") {return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";};
+
+            var newMissions = artefact.getMissions();
+            //remove any with dialogue from this list.
+            for (var j=0; j< newMissions.length;j++) {
+                if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
+            };
+
+            resultString += "You "+verb+" "+artefact.getDisplayName()+". ";
+
+            if (newMissions.length==0) {
+                resultString += artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
+                return resultString;
+            };
+
             if (newMissions.length>0) {resultString+= "<br>";};
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {
@@ -1010,6 +1053,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.repairSkill) { _repairSkills.push(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missionsCompleted.push(_missions[i].getName());
                     _missions.splice(i,1); //remove mission.

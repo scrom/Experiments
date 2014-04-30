@@ -199,6 +199,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _description;
         };
 
+        self.getPrefix = function() {
+            return _genderPrefix;
+        };
+
         self.getDescriptivePrefix = function() {
             return _genderDescriptivePrefix;
         };

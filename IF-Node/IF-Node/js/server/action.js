@@ -214,7 +214,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     //    ticks = 0;
                     //    description = _map.find(_object0);
                     //    break;  
-                    case 'read':
                     case 'examine':
                         description = _player.examine(_verb, _object0);
                         break;  
@@ -339,6 +338,11 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'unlight':
                         description = _player.switchOnOrOff('turn', _object0,'out');
                         break;
+                    case 'read':
+                    case 'study':
+                        ticks = 2; //studying takes time!
+                        description = _player.read(_verb, _object0);
+                        break;
                     case 'save':
                     case 'load':
                     case 'search':
@@ -346,7 +350,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'rub':
                     case 'on':
                     case 'off':
-                    case 'read':
                     case 'climb':
                     case 'jump':
                     case 'attach':

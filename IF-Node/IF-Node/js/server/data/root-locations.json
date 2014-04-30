@@ -759,7 +759,7 @@
               "weight": 3,
               "carryWeight": 0,
               "attackStrength": 5,
-              "type": "junk",
+              "type": "book",
               "canCollect": true,
               "canOpen": false,
               "isEdible": false,
@@ -774,6 +774,27 @@
           },
 		  {
             "object": "artefact",
+            "name": "manual",
+            "description": "a maintenance manual for the coffee machines",
+            "detaileddescription": "It includes schematics and wiring diagrams for how to repair and maintain the coffe machines.",
+            "attributes": {
+              "weight": 2,
+              "carryWeight": 0,
+              "attackStrength": 5,
+              "type": "book",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": false,
+              "isBreakable": false
+            },
+            "synonyms": [
+              "book",
+              "repair book",
+              "repair manual"
+            ]
+          },
+		  {
+            "object": "artefact",
             "name": "small book",
             "description": "a small book",
             "detaileddescription": "It's a book on why not all customers are created equal.",
@@ -781,7 +802,7 @@
               "weight": 1,
               "carryWeight": 0,
               "attackStrength": 2,
-              "type": "junk",
+              "type": "book",
               "canCollect": true,
               "canOpen": false,
               "isEdible": false,
@@ -1901,7 +1922,7 @@
           "weight": 3,
           "carryWeight": 0,
           "attackStrength": 5,
-          "type": "junk",
+          "type": "book",
           "canCollect": true,
           "canOpen": false,
           "isEdible": false,
