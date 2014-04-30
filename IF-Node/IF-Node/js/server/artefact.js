@@ -301,6 +301,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return missions;
         };
 
+        self.getInitialDetailedDescription = function() {
+            return _initialDetailedDescription;
+        };
+
         self.getDetailedDescription = function(playerAggression) {
             //note we can change description based on player aggression - better for creatures but supported here too.
             var returnString = _detailedDescription; //original description
@@ -412,7 +416,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             console.log("combining :"+self.getName()+" with "+anObject.getName()+" to produce "+_delivers);
 
             //return a new instance of deliveryObject
-            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); 
+            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getInitialDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); 
             deliveredItem.addSyns(_delivers.getSyns());
             return deliveredItem;
         };
@@ -527,7 +531,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             for (var i=0; i<components.length; i++) {
                 self.consumeItem(components[i]);
             };
-            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
+            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getInitialDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
             deliveredItem.addSyns(_delivers.getSyns());
             return deliveredItem;
         };
