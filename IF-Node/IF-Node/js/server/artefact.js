@@ -276,6 +276,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _description;
         };
 
+        self.getDescriptivePrefix = function() {
+            return _itemDescriptivePrefix;
+        };
+
+        self.getSuffix = function() {
+            return _itemSuffix;
+        };
+
         self.addMission = function(aMission) {
             _missions.push(aMission);
         };
@@ -400,6 +408,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isDestroyed = function() {
             return _destroyed;
+        };
+
+        self.isBroken = function() {
+            return _broken;
         };
 
         self.combinesWith = function(anObject) {
@@ -541,6 +553,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             _damaged = true;
             if (_breakable) {
                 _broken = true;
+                if (_lockable) {_locked = false;};
                 _description += " (broken)";
                 _detailedDescription = initCap(_itemDescriptivePrefix)+" broken.";
                 return "You broke "+_itemSuffix+"!";
@@ -556,6 +569,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_breakable) {
                 _broken = true;
                 _destroyed = true;
+                if (_lockable) {_locked = false;};
                 _description = _description.replace(" (broken)","")
                 _description = "some wreckage that was once "+_description;
                 _detailedDescription = " There's nothing left but a few useless fragments.";
@@ -779,7 +793,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.receive = function(anObject) {
-            if (self.isDestroyed()||_broken) {return "It's broken. You'll need to fix it first.";};
+            if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (!(_locked)) {
                 return _inventory.add(anObject);
             };

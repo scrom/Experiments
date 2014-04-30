@@ -17,6 +17,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _genderPrefix = "It"; //default
         var _genderSuffix = "it"; //default
         var _genderPossessiveSuffix = "its'"; //default
+        var _genderDescriptivePrefix = "it's"; //default
         var _weight = 120; //default
         var _attackStrength = 25; //default
         var _type = 'creature'; //default
@@ -78,18 +79,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _genderPrefix = "She";
                 _genderSuffix = "her";
                 _genderPossessiveSuffix = "her";
+                _genderDescriptivePrefix = "she's";
             }
             else if ((_gender == "m")||(_gender == "male")) {
                 _gender == "male";
                 _genderPrefix = "He";
                 _genderSuffix = "him";
                 _genderPossessiveSuffix = "his";
+                _genderDescriptivePrefix = "he's";
             }
             else {
                 _gender == "unknown"
                 _genderPrefix = "It"
                 _genderSuffix = "it"
                 _genderPossessiveSuffix = "its";
+                _genderDescriptivePrefix = "it's";
             };
         };
 
@@ -193,6 +197,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         
         self.getDescription = function() {
             return _description;
+        };
+
+        self.getDescriptivePrefix = function() {
+            return _genderDescriptivePrefix;
+        };
+
+        self.getSuffix = function() {
+            return _genderSuffix;
         };
 
         self.addMission = function(aMission) {
@@ -653,6 +665,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.isDestroyed = function() {
             return false; //it's hard to "destroy" a creature or corpse (at least for the purposes if the game)
+        };
+
+        self.isBroken = function() {
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes if the game)
         };
 
         self.getCondition = function() {

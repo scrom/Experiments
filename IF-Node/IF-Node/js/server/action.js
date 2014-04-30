@@ -359,8 +359,8 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
                     case 'go': //link this with location moves
-
                     case 'feed':
+                    case 'repair':
                     case 'mend':
                     case 'fix':
                     default:

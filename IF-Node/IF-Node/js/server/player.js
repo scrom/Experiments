@@ -399,6 +399,7 @@ module.exports.Player = function Player(aUsername) {
                 
                 //check receiver can carry item (container or not)
                 if (!(receiver.canContain(artefact))) {
+                    if (receiver.isBroken()){return receiver.getDescriptivePrefix()+" broken. You'll need to fix "+receiver.getSuffix()+" first.";};
                     return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 
                 };
 
