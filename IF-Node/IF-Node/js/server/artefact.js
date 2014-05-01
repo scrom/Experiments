@@ -477,6 +477,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.getAllObjects();
         };
 
+        self.removeObject = function(anObjectName) {
+            return _inventory.remove(anObjectName);
+        };
+
         self.wave = function(anObject) {
             if (self.isDestroyed()) {return "There's nothing left of "+_itemSuffix+".";};
             //we may wave this at another object or creature
@@ -619,7 +623,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
                 var destroyMessage = "You destroyed "+_itemSuffix;
-                if (_inventory.size() > 0) {destroyMessage += " and "+_itemPossessiveSuffix+" contents";};
+                if (_inventory.size() > 0) {destroyMessage;};
                 return destroyMessage+"!";
             };
             _detailedDescription += _itemPrefix+" shows signs of abuse.";

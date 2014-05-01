@@ -98,6 +98,63 @@ module.exports.Player = function Player(aUsername) {
             else { return removeObjectFromPlayer(objectName);};
         };
 
+        //empty the contents of a container into player or location inventory.
+        //if an item requires a container, it's lost. (even if inside another container)
+        var emptyContentsOfContainer = function(objectName) {
+            var lostObjectCount = 0;
+            var locationArtefact = getObjectFromLocation(objectName);
+            var artefact = locationArtefact;
+            if (!(artefact)) {artefact = getObjectFromPlayer(objectName);};
+
+            if (artefact.getType() != 'container') {return ""};
+
+            var contents = artefact.getAllObjects();
+            var contentCount = contents.length;
+            console.log("Removing "+contentCount+" items from wreckage.");
+            for (var i=0; i<contents.length;i++) {
+                console.log("Contents "+contents[i].getName());
+            };
+
+            var objectToRemove;
+            for (var i=0; i<contents.length;i++) {
+                console.log("i="+i);
+                console.log("Removing "+contents[i].getName()+" from wreckage.");
+                if (locationArtefact) {
+                    objectToRemove = locationArtefact.getObject(contents[i].getName());
+                    if (objectToRemove.requiresContainer()) {
+                        console.log(objectToRemove.getName()+" lost.");
+                        lostObjectCount++;
+                    } else {
+                        _currentLocation.addObject(objectToRemove);
+                        console.log(objectToRemove.getName()+" saved.");
+                    };
+                } else {
+                    objectToRemove = artefact.getObject(contents[i].getName());
+                    if (objectToRemove.requiresContainer()) {
+                        console.log(objectToRemove.getName()+" lost.");
+                        lostObjectCount++;
+                    } else {
+                        _inventory.add(objectToRemove);
+                        console.log(objectToRemove.getName().getName()+" saved.");
+                    };
+                };
+            };
+
+            //once the objects are in their new homes, we can remove them from the old.
+            //this sorts the array index splice problem out
+            for (var i=0; i<contents.length;i++) {
+                if (locationArtefact) { locationArtefact.removeObject(contents[i].getName()); }
+                else { artefact.removeObject(contents[i].getName()); };
+            };
+
+            if (contentCount == lostObjectCount) {return "<br>"+initCap(artefact.getPossessiveSuffix())+" contents are beyond recovery.";};
+            var remaining = "";
+            if (lostObjectCount > 0) {remaining = "remaining ";};
+
+            if (locationArtefact) {return "<br>The "+remaining+"contents are scattered on the floor.";};
+            return "You manage to gather up the "+remaining+"contents."
+        };
+
         var notFoundMessage = function(objectName) {
             return "There's no "+objectName+" here and you're not carrying any either.";
         };
@@ -251,7 +308,11 @@ module.exports.Player = function Player(aUsername) {
                 returnString += artefact.destroy(true);
             };
 
-            if (artefact.isDestroyed()) {removeObjectFromPlayerOrLocation(artefact.getName());};
+            if (artefact.isDestroyed()) {
+                _destroyedObjects.push(artefact.getName());
+                returnString += emptyContentsOfContainer(artefact.getName());
+                removeObjectFromPlayerOrLocation(artefact.getName());
+            };
             return returnString;
         };
 
@@ -275,7 +336,7 @@ module.exports.Player = function Player(aUsername) {
             //destroyed it!
             if (droppedObject.isDestroyed()) { 
                 _destroyedObjects.push(droppedObject.getName());
-                return "Oops. "+artefactDamage;
+                return "Oops. "+artefactDamage+ emptyContentsOfContainer(artefact.getName());
             }; 
 
             //needs a container
@@ -601,7 +662,7 @@ module.exports.Player = function Player(aUsername) {
         self.canSee = function() {
             if (!(self.getLocation().isDark())) {return true;};  //location is not dark
             var lamps = _inventory.getAllObjectsOfType("light");
-            console.log("Lamps found: "+lamps.length);
+            //console.log("Lamps found: "+lamps.length);
             for (var i=0; i<lamps.length; i++) {
                 if (lamps[i].isPoweredOn()) {return true};
             };
@@ -764,7 +825,7 @@ module.exports.Player = function Player(aUsername) {
             if (newLocation) {
                 console.log('found location: '+exitName);
             } else {
-                console.log('location: '+exitName+' not found');
+                //console.log('location: '+exitName+' not found');
                 return "That exit doesn't seem to go anywhere at the moment. Try again later.";                  
             };
 
@@ -902,7 +963,8 @@ module.exports.Player = function Player(aUsername) {
                 _aggression ++;
                 removeObjectFromPlayerOrLocation(receiver.getName());
                 _destroyedObjects.push(receiver.getName());
-                resultString = "Oops. "+resultString;
+                resultString += emptyContentsOfContainer(receiver.getName());
+                resultString = "Oops. "+resultString 
             }; 
 
             //did you use something fragile as a weapon?
@@ -911,6 +973,7 @@ module.exports.Player = function Player(aUsername) {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
                         resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+". "+weapon.getDescriptivePrefix()+" not the most durable of weapons.";
+                        resultString += emptyContentsOfContainer(weapon.getName());
                         //remove destroyed item
                         _destroyedObjects.push(weapon.getName());
                         removeObjectFromPlayerOrLocation(artefactName);                    

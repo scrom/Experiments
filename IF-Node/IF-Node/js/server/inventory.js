@@ -144,7 +144,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         self.getObjectByType = function(anObjectType) {
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getType() == anObjectType) {
-                    console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
                 };
            };
@@ -188,7 +188,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
            var returnObjects = [];
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getType() == anObjectType) {
-                    console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     returnObjects.push(_items[index]);
                 };
            };
