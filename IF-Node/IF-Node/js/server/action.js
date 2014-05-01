@@ -60,7 +60,8 @@ exports.Action = function Action(aPlayer, aMap) {
         we'll also only support one instance of each of these words - need to be cautious here
         */
         var splitRemainderString = function(aString){
-            var splitWordArray = ['with', 'to', 'from', 'for', 'at', 'on', 'off', 'in']; //the words we'll try to split on.
+            //note, any split words with spaces must be earlier than their component words!
+            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'for', 'at', 'on', 'off', 'in']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
@@ -68,8 +69,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     _splitWord = splitWordArray[i];
                     switch(splitWordArray[i]) {
                         case 'with':
-                        break;
-                        case 'to':
                         break;
                         case 'from':
                         break;
@@ -79,7 +78,13 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                         case 'on':
                         break;
+                        case 'into':
+                        break;
+                        case 'in to':
+                        break;
                         case 'in':
+                        break;
+                        case 'to':
                         break;
                         default:
                     };                   
@@ -238,6 +243,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'put':
                     case 'combine':
+                    case 'insert':
                     case 'add':
                         description = _player.put(_verb, _object0, _object1);
                         break;
