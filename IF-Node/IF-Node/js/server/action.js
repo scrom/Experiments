@@ -384,6 +384,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
                     case 'feed':
+                    case 'install':
                     default:
                         ticks = 0; //for now 
                         console.log('verb: '+_verb+' default response');

@@ -791,7 +791,15 @@
             "synonyms": [
               "book",
               "repair book",
-              "repair manual"
+			  "maintenance book",
+			  "coffee machine book",
+              "repair manual",
+			  "maintenance manual",
+			  "machine manual",
+			  "coffee machine manual", 
+			  "coffee machine repair manual",
+			  "coffee machine maintenance manual",
+			  "machine maintenance manual"
             ],
 			"missions": [
 			  {
