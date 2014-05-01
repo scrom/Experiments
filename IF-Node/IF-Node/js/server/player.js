@@ -133,6 +133,10 @@ module.exports.Player = function Player(aUsername) {
             return _inventory;
         };	
 
+        self.addSkill = function(skill) {
+            _repairSkills.push(skill);
+        };
+
         self.describeInventory = function() {
             return "You're carrying "+_inventory.describe()+".";
         };	
@@ -154,14 +158,28 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact)) {
                 if (_inventory.check(artefactName)) {
                     var inventoryObject = _inventory.getObject(artefactName);
-                    return "You're carrying "+inventoryObject.getsuffix()+" already.";
+                    return "You're carrying "+inventoryObject.getSuffix()+" already.";
                 };
-                return "There's no "+artefactName+" here.";
+
+                //if object doesn't exist, attempt "relinquish" from each container object in location.
+                var allLocationObjects = _currentLocation.getAllObjects();
+                for (var i=0;i<allLocationObjects.length;i++) {
+                    if (allLocationObjects[i].getType() == 'container') {
+                        var locationInventory = _currentLocation.getInventoryObject();
+                        var tempResultString = allLocationObjects[i].relinquish(artefactName, _inventory, locationInventory);
+                        if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
+                            //we got the requested object back!
+                            return tempResultString;
+                        };
+                    };
+                };
+
+                return "There's no "+artefactName+" available here at the moment.";
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
-            if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getsuffix()+" can't be picked up.";};
-            if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getsuffix()+".";};
+            if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
+            if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getSuffix()+".";};
 
             var requiresContainer = artefact.requiresContainer();
             var suitableContainer = _inventory.getSuitableContainer(artefact);
@@ -631,7 +649,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
             if (!(artefact.isBroken())) {return artefact.getDescriptivePrefix()+" not broken.";}; //this will catch creatures
-
+            
             return artefact.repair(_repairSkills);
 
         };
@@ -1063,6 +1081,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.tick = function(time) {
+            console.log("Player tick...");
 
             var resultString = "";
             var damage = 0;
@@ -1075,7 +1094,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
-                    if (missionReward.repairSkill) { _repairSkills.push(missionReward.repairSkill);};
+                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missionsCompleted.push(_missions[i].getName());
                     _missions.splice(i,1); //remove mission.
@@ -1090,6 +1109,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missionsCompleted.push(locationMissions[j].getName());
                     _currentLocation.removeMission(locationMissions[j].getName());
@@ -1107,6 +1127,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward) {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
                         if (missionReward.score) { _score += missionReward.score;};
+                        if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                         if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                         _missionsCompleted.push(artefactMissions[j].getName());
                         artefacts[i].removeMission(artefactMissions[j].getName());

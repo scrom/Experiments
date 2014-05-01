@@ -101,7 +101,7 @@ exports.cannotGetObjectFromOpenContainerInInventoryAlreadyExists.meta = { traits
 exports.cannotgetObjectFromClosedContainerInInventory = function (test) {
     container.receive(a1);
     p0.get('get', container.getName());
-    var expectedResult = "There is no box here.";
+    var expectedResult = "There's no box here.";
     var actualResult = p0.get('get', a1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -144,7 +144,7 @@ exports.cannotGetObjectFromClosedContainerInLocation.meta = { traits: ["Player.G
 
 
 exports.cannotGetNonexistentObject = function (test) {
-    var expectedResult = "There is no nothing here.";
+    var expectedResult = "There's no nothing here.";
     var actualResult = p0.get('get', 'nothing');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

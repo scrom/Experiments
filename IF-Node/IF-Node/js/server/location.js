@@ -93,6 +93,11 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return availableExits[randomInt];
         };
 
+        //nasty - expose our internals - needed to support inventory containers
+        self.getInventoryObject = function() {
+            return _inventory;
+        };
+
         self.getSuitableContainer = function(anObject) {
             return _inventory.getSuitableContainer(anObject);
         };

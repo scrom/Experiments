@@ -409,7 +409,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.relinquish = function(anObject,playerInventory, playerAggression) {
+        self.relinquish = function(anObject,playerInventory, locationInventory, playerAggression) {
+            //note we throw away locationInventory
             if (self.willShare(playerAggression)) {
                 _affinity--;
                 var objectToGive = _inventory.getObject(anObject);

@@ -573,6 +573,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.repair = function(playerRepairSkills) {
             if(_destroyed) {return _itemDescriptivePrefix+" beyond repair."};
+            console.log("Checking player repair skills: "+playerRepairSkills);
             var playerHasRequiredSkill = false;
             for (var i=0; i<playerRepairSkills.length;i++) {
                 if (self.syn(playerRepairSkills[i])) {
@@ -791,7 +792,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         };
 
-        self.relinquish = function(anObject, playerInventory) {
+        self.relinquish = function(anObject, playerInventory, locationInventory, playerAggression) {
+            //note we throw away playerAggression
 
             if ((!_delivers) && _locked && (!(self.isDestroyed()))) {return initCap(_itemDescriptivePrefix)+" locked.";};
 
@@ -812,6 +814,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
+            //if (!(suitableContainer)) {suitableContainer = locationInventory.getSuitableContainer(objectToGive);};
     
             if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
 
@@ -828,7 +831,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 //add to suitable container or to player inventory
                 //if container is required, we _know_ we have a suitable container by this point.
-                if (requiresContainer) { return "Your "+suitableContainer.getName()+" is "+suitableContainer.receive(objectToGive);};
+                if (requiresContainer) { 
+                    return "Your "+suitableContainer.getName()+" is "+suitableContainer.receive(objectToGive);
+                //    suitableContainer.receive(objectToGive);
+
+                //    if (playerInventory.check(suitableContainer.getName())) {
+                        //player has container
+                //        return objectToGive.getDisplayName()+ "has been added to your "+suitableContainer.getName()+".";
+                //    };
+                    //location has container
+                //    return objectToGive.getDisplayName()+ "has been added to "+suitableContainer.getDisplayName()+" that happened to be nearby.";
+                };
                 return "You're "+playerInventory.add(objectToGive);
             };
 
