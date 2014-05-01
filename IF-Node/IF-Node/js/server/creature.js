@@ -514,10 +514,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var resultString = "";
 
-            if (_type == 'friendly') {return _genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";};
+            if (_type == 'friendly') {
+                if (!(weapon)) {
+                    if (verb == 'shoot'||verb == 'stab') {
+                        resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
+                    } else {
+                        resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
+                    };
+                };
+                return resultString+_genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
+            };
 
             if (!(weapon)) {
-                resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
+                if (verb == 'shoot'||verb == 'stab') {
+                    resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>You do no visible damage and end up coming worse-off. "; 
+                } else {
+                    resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
+                };
                 resultString += player.hurt(self.getAttackStrength());
                 return resultString;
             };

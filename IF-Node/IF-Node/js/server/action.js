@@ -282,6 +282,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'shoot': //will need to explicitly support projectile weapons
                     case 'attack':
                     case 'smash':
+                    case 'stab':
                     case 'hit':
                         description = _player.hit(_verb, _object0, _object1);
                         break;

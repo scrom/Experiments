@@ -659,9 +659,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.hurt = function(player, weapon, verb) {
-            if (self.isDestroyed()) {return "There's not enough left to to any more damage to.";};      
+            if (self.isDestroyed()) {return "There's not enough left to to any more damage to.";};  
+            var resultString = "";    
             if (!(weapon)) {
-                var resultString = "Ouch, that hurt. If you're going to do that again, you might want to "+verb+" the "+self.getDisplayName()+" _with_ something.<br>"; 
+                if (verb == 'shoot'||verb == 'stab') {
+                    resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
+                } else {
+                    resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
+                };
+                resultString += "That hurt. If you're going to do that again, you might want to "+verb+" "+self.getSuffix()+" _with_ something.<br>"; 
                 resultString += player.hurt(15);
                 return resultString;
             };
