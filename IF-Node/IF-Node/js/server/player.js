@@ -98,6 +98,10 @@ module.exports.Player = function Player(aUsername) {
             else { return removeObjectFromPlayer(objectName);};
         };
 
+        var notFoundMessage = function(objectName) {
+            return "There's no "+objectName+" here and you're not carrying any either.";
+        };
+
 
         //public member functions
 
@@ -148,13 +152,16 @@ module.exports.Player = function Player(aUsername) {
 
             var artefact = getObjectFromLocation(artefactName);
             if (!(artefact)) {
-                if (_inventory.check(artefactName)) {return "You're carrying it already.";};
-                return "There is no "+artefactName+" here.";
+                if (_inventory.check(artefactName)) {
+                    var inventoryObject = _inventory.getObject(artefactName);
+                    return "You're carrying "+inventoryObject.getsuffix()+" already.";
+                };
+                return "There's no "+artefactName+" here.";
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
-            if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};
-            if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying in order to carry the "+artefactName;};
+            if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getsuffix()+" can't be picked up.";};
+            if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getsuffix()+".";};
 
             var requiresContainer = artefact.requiresContainer();
             var suitableContainer = _inventory.getSuitableContainer(artefact);
@@ -205,7 +212,7 @@ module.exports.Player = function Player(aUsername) {
         /*allow player to try and break an object*/
         self.breakOrDestroy = function(verb, artefactName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             var returnString = "";
 
@@ -235,7 +242,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayer(artefactName);
-            if (!(artefact)) {return "You're not carrying any "+artefactName;};
+            if (!(artefact)) {return "You're not carrying any "+artefactName+".";};
 
             //should be careful dropping things
             var artefactDamage = "";
@@ -259,7 +266,7 @@ module.exports.Player = function Player(aUsername) {
             //not destroyed
             _currentLocation.addObject(droppedObject);
  
-            return "You "+verb+" the "+artefactName+". "+artefactDamage;
+            return "You "+verb+" "+droppedObject.getDisplayName()+". "+artefactDamage;
         };
 
         /*Allow player to wave an object - potentially at another*/
@@ -270,17 +277,17 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(firstArtefactName)){return resultString+"."};
 
             var firstArtefact = getObjectFromPlayerOrLocation(firstArtefactName);
-            if (!(firstArtefact)) {return "There is no "+firstArtefactName+" here and you're not carrying one either.";};
+            if (!(firstArtefact)) {return notFoundMessage(firstArtefactName);};
 
             //build return string
-            resultString+= ' the '+firstArtefactName;
+            resultString+= " "+firstArtefact.getDisplayName();
 
             if (!(stringIsEmpty(secondArtefactName))){
                 var secondArtefact = getObjectFromPlayerOrLocation(secondArtefactName);
-                if (!(secondArtefact)) {return "There is no "+secondArtefactName+" here and you're not carrying one either.";};
+                if (!(secondArtefact)) {return notFoundMessage(secondArtefactName);};
 
                 //build return string
-                resultString+= ' at the '+secondArtefactName;
+                resultString+= " at "+secondArtefact.getDisplayName();
             }; 
 
             resultString+=". ";
@@ -296,7 +303,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
             
             //find a key
             var key = self.getMatchingKey(artefact); //migrate this to artefact and pass all keys through.
@@ -307,7 +314,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying any either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             //find a key
             var key = self.getMatchingKey(artefact); //migrate this to artefact and pass all keys through.
@@ -370,7 +377,7 @@ module.exports.Player = function Player(aUsername) {
                 _inventory.add(newObject);
             };
 
-            return "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName()+" to produce "+newObject.getDisplayName();                
+            return "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName()+" to produce "+newObject.getDisplayName()+".";                
         };
 
         /*Allow player to put something in an object */
@@ -379,18 +386,18 @@ module.exports.Player = function Player(aUsername) {
                 if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" with what?";};
 
                  var artefact = getObjectFromPlayerOrLocation(artefactName);
-                 if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying any either.";};
+                 if (!(artefact)) {return notFoundMessage(artefactName);};
 
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
                 if (!(receiver)) {
                     if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry this.";};
-                    return "There is no "+receiverName+" here and you're not carrying any either.";
+                    return notFoundMessage(receiverName);
                 };
 
                 //validate if it's a container
                 if (receiver.getType() == 'creature') {
-                     return  "It's probably better to 'give' it to them."; 
+                     return  "It's probably better to 'give' "+artefact.getSuffix()+" to "+receiver.getSuffix()+"."; 
                 };
 
                 //if objects combine together...
@@ -406,15 +413,15 @@ module.exports.Player = function Player(aUsername) {
 
 
                 //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-                if (receiver.isLocked()) { return  "Sorry, "+receiverName+" is locked.";};
-                if (!(receiver.isOpen())) { return  "Sorry, "+receiverName+" is closed.";};
-                if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiverName+" can't carry that. It's too heavy for them at the moment.";};
+                if (receiver.isLocked()) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" locked.";};
+                if (!(receiver.isOpen())) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" closed.";};
+                if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getSuffix()+". "+artefact.getDescriptivePrefix()+" too heavy for "+receiver.getSuffix()+" at the moment.";};
                 
                 //we know they *can* carry it...
-                if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};
+                if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
                 var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
-                if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";};
+                if (!(collectedArtefact)) { return  "Sorry, "+collectedArtefact.getSuffix()+" can't be picked up.";};
 
                 //put the x in the y
                 receiver.receive(collectedArtefact);
@@ -429,16 +436,16 @@ module.exports.Player = function Player(aUsername) {
 
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
-                if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
+                if (!(receiver)) {return notFoundMessage(receiverName);};
 
                 //check receiver is a container 
                 if (receiver.getType() == 'creature') {
-                    return  "It's probably better to 'ask'."; 
+                    return  "It's probably better to 'ask' "+receiver.getSuffix()+"."; 
                 };
 
                 if (receiver.getType() != 'container') {
                     //or doesn't deliver anything?
-                    return  "It doesn't contain anything."; 
+                    return  "There's nothing in "+receiver.getSuffix()+"."; 
                 };
 
                 return receiver.relinquish(artefactName, _inventory);
@@ -450,28 +457,28 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" to what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
-            if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
+            if (!(receiver)) {return notFoundMessage(receiverName);};
 
             if (receiver.getType() != 'creature') {
-                return  "Whilst the "+receiverName+", deep in it's inanimate psyche would love to receive your kind gift. It feels inappropriate to do so. Try 'put' or 'add'."; 
+                return  "Whilst "+receiver.getDisplayName()+", deep in "+receiver.getPossessiveSuffix()+" inanimate psyche would love to receive your kind gift. It feels inappropriate to do so. Try 'put' or 'add'."; 
             };
 
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
             if (receiver.isDead()) { return  initCap(receiver.getDisplayName())+"'s dead. Gifts won't help now.";};
-            if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry that. It's too heavy for them at the moment.";};
+            if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+artefact.getDescriptivePrefix()+" too heavy for "+receiver.getSuffix()+" at the moment.";};
             if (!(receiver.willAcceptGifts(_aggression))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to take gifts from you at the moment.";};
 
             //we know they *can* carry it...
 
-            if (!(artefact.isCollectable())) {return  "Sorry, it can't be picked up.";};
+            if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
             var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
-            if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";};
+            if (!(collectedArtefact)) { return  "Sorry, "+collectedArtefact.getSuffix()+" can't be picked up.";};
 
             //treat this as a kind act (if successful)
             if (_aggression >0) {_aggression--;};
@@ -486,7 +493,7 @@ module.exports.Player = function Player(aUsername) {
             //if giverName is a creature - steal
             //if giverName is not a creature - remove
             var giver = getObjectFromPlayerOrLocation(giverName);
-            if (!(giver)) {return "There is no "+giverName+" here and you're not carrying one either.";};
+            if (!(giver)) {return notFoundMessage(giverName);};
 
             if (giver.getType() == 'creature') {
                 return self.steal(verb, artefactName, giverName);
@@ -500,14 +507,14 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(giverName)){ return verb+" "+artefactName+" from?";};
 
             var giver = getObjectFromLocation(giverName);
-            if (!(giver)) {return "There is no "+giverName+" here.";};
+            if (!(giver)) {return "There's no "+giverName+" here.";};
 
             //get object if it exists
             var artefact = giver.getObject(artefactName);
             if (!(artefact)) {return initCap(giver.getDisplayName())+" isn't carrying that.";};
 
             //we'll only get this far if there is an object to give and a valid giver - note the object *could* be a live creature!
-            if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
+            if (!(_inventory.canCarry(artefact))) { return  artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying first.";};
 
             var objectToReceive;
             if (artefact) {
@@ -523,23 +530,23 @@ module.exports.Player = function Player(aUsername) {
         self.ask = function(verb, giverName, artefactName){
             if (stringIsEmpty(giverName)){ return verb+" what?";};
             var giver = getObjectFromLocation(giverName);
-            if (!(giver)) {return "There is no "+giverName+" here.";};
+            if (!(giver)) {return "There's no "+giverName+" here.";};
 
-            if (giver.getType() != 'creature') {return "It's not alive, it can't give you anything.";}; //correct this for dead creatures too
+            if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too
 
             if (stringIsEmpty(artefactName)){ return verb+" "+giver.getDisplayName()+" for what?";};
 
             var artefact = (getObjectFromLocation(artefactName)||giver.getObject(artefactName));
-            if (!(artefact)) {return "There is no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying one either.";};   
+            if (!(artefact)) {return "There's no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying any either.";};   
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-            if (!(_inventory.canCarry(artefact))) { return "It's too heavy. You may need to get rid of some things you're carrying first.";};
+            if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying first.";};
 
             //we know player *can* carry it...
             if (getObjectFromLocation(artefactName)) {
                 console.log('locationartefact');
-                if (!(artefact.isCollectable())) {return  "Sorry, "+giver.getDisplayName()+" can't pick it up.";};
-                if (!(giver.canCarry(artefact))) { return  "Sorry, "+giver.getDisplayName()+" can't carry it.";};
+                if (!(artefact.isCollectable())) {return  "Sorry, "+giver.getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
+                if (!(giver.canCarry(artefact))) { return  "Sorry, "+giver.getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
                 return self.get('get',artefactName);
             };
 
@@ -554,7 +561,7 @@ module.exports.Player = function Player(aUsername) {
 
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
-                if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
+                if (!(receiver)) {return notFoundMessage(receiverName);};
 
                 //we'll only get this far if there is a valid receiver
                 return receiver.reply(speech, _aggression);
@@ -565,7 +572,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             return artefact.switchOnOrOff(verb, action);           
         };
@@ -587,7 +594,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return self.getLocation().describe();};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
 
@@ -621,7 +628,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?"};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             if (!(artefact.isBroken())) {return artefact.getDescriptivePrefix()+" not broken.";}; //this will catch creatures
 
@@ -636,7 +643,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?"};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             if (artefact.getType() != "book") {return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";};
 
@@ -670,7 +677,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             return artefact.moveOrOpen(verb, _currentLocation.getName());
         };
@@ -679,7 +686,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";};
+            if (!(artefact)) {return notFoundMessage(artefactName);};
 
             return artefact.close(verb, _currentLocation.getName());
         };
@@ -855,7 +862,7 @@ module.exports.Player = function Player(aUsername) {
 
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
-            if (!(receiver)) {return "There is no "+receiverName+" here and you're not carrying one either.";};
+            if (!(receiver)) {return notFoundMessage(receiverName);};
 
             //just check it's not *already* destroyed...
             if (receiver.isDestroyed()) {
@@ -882,7 +889,7 @@ module.exports.Player = function Player(aUsername) {
                 if (weapon.isBreakable()) {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
-                        resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+" that you decided to use as a weapon.";
+                        resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+". "+weapon.getDescriptivePrefix()+" not the most durable of weapons.";
                         //remove destroyed item
                         _destroyedObjects.push(weapon.getName());
                         removeObjectFromPlayerOrLocation(artefactName);                    
@@ -910,7 +917,7 @@ module.exports.Player = function Player(aUsername) {
                 if (creatures[i].isHostile(_aggression)) {safeLocation = false;};
             };
 
-            if (!(safeLocation)) {return "Sorry, it's not safe to "+verb+" here at the moment."};
+            if (!(safeLocation)) {return "It's not safe to "+verb+" here at the moment."};
 
             //so we can check if player actually dies or deteriorates whilst resting...
             var initialKilledCount = _killedCount;
@@ -949,7 +956,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";}; 
+            if (!(artefact)) {return notFoundMessage(artefactName);}; 
 
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
@@ -967,7 +974,7 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return "There is no "+artefactName+" here and you're not carrying one either.";}; 
+            if (!(artefact)) {return notFoundMessage(artefactName);}; 
 
             var result = artefact.drink(self); //trying to eat some things give interesting results.
             if (artefact.isEdible() && artefact.requiresContainer()) {
@@ -1049,7 +1056,7 @@ module.exports.Player = function Player(aUsername) {
 
            //can't carry it
            _currentLocation.addObject(anObject);
-           return resultString +" but it's too heavy for you right now.<br>It's been left here until you can carry it.";  
+           return resultString +" but "+anObject.getDescriptivePrefix().toLowerCase()+" too heavy for you right now.<br>"+anObject.getDescriptivePrefix()+" been left here until you can carry "+anObject.getSuffix()+".";  
        
            //need to add support for required containers         
 

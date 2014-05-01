@@ -211,7 +211,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;                  
                     case 'find':                   
                         ticks = 0;
-                        description = "Well it was worth a shot...<br>You'll have to hunt things down yourself here I'm afraid.";
+                        description = "Nice try $player. It was worth a shot...<br>You'll have to hunt things down yourself here I'm afraid.";
                         
                         //"find" is a cheat - disable it for now
                         //if player enters "search for x", we'll have an object 1 (but no object 0).

@@ -292,6 +292,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _itemSuffix;
         };
 
+        self.getPossessiveSuffix = function() {
+            return _itemPossessiveSuffix;
+        };
+
         self.addMission = function(aMission) {
             _missions.push(aMission);
         };
@@ -474,7 +478,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.wave = function(anObject) {
-            if (self.isDestroyed()) {return "There's nothing left of it.";};
+            if (self.isDestroyed()) {return "There's nothing left of "+_itemSuffix+".";};
             //we may wave this at another object or creature
             return "Nothing happens.";
         };
@@ -885,7 +889,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.unlock = function(aKey) {
             if (self.isDestroyed()||_broken) {
                 _locked = false;
-                return "It's broken. No need to unlock it.";
+                return _itemDescriptivePrefix+" broken. No need to unlock "+_itemSuffix+".";
             };
             if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (_locked) {

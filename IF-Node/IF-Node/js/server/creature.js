@@ -211,6 +211,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _genderSuffix;
         };
 
+        self.getPossessiveSuffix = function() {
+            return _genderPossessiveSuffix;
+        };
+
         self.addMission = function(aMission) {
             _missions.push(aMission);
         };
