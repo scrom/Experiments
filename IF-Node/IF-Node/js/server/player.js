@@ -166,7 +166,7 @@ module.exports.Player = function Player(aUsername) {
                 for (var i=0;i<allLocationObjects.length;i++) {
                     if (allLocationObjects[i].getType() == 'container') {
                         var locationInventory = _currentLocation.getInventoryObject();
-                        var tempResultString = allLocationObjects[i].relinquish(artefactName, _inventory, locationInventory);
+                        var tempResultString = allLocationObjects[i].relinquish(artefactName, _inventory, locationInventory, _aggression);
                         if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
                             //we got the requested object back!
                             return tempResultString;
@@ -466,7 +466,8 @@ module.exports.Player = function Player(aUsername) {
                     return  "There's nothing in "+receiver.getSuffix()+"."; 
                 };
 
-                return receiver.relinquish(artefactName, _inventory);
+                var locationInventory = _currentLocation.getInventoryObject();
+                return receiver.relinquish(artefactName, _inventory, locationInventory, _aggression);
             };
 
         /*Allow player to give an object to a recipient*/
@@ -537,7 +538,8 @@ module.exports.Player = function Player(aUsername) {
             var objectToReceive;
             if (artefact) {
                     if (giver.isDead()) {
-                        return giver.relinquish(artefactName, _inventory, _aggression);
+                        var locationInventory = _currentLocation.getInventoryObject();
+                        return giver.relinquish(artefactName, _inventory, locationInventory, _aggression);
                     } else {
                         _aggression++; //we're stealing!
                         return giver.theft(artefactName, _inventory, self);
@@ -567,8 +569,9 @@ module.exports.Player = function Player(aUsername) {
                 if (!(giver.canCarry(artefact))) { return  "Sorry, "+giver.getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
                 return self.get('get',artefactName);
             };
-
-            return giver.relinquish(artefactName, _inventory, _aggression);
+            
+            var locationInventory = _currentLocation.getInventoryObject();
+            return giver.relinquish(artefactName, _inventory, locationInventory, _aggression);
         };
 
         self.say = function(verb, speech, receiverName) {
