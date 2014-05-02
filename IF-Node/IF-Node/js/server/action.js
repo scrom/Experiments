@@ -288,6 +288,13 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'hit':
                         description = _player.hit(_verb, _object0, _object1);
                         break;
+                    case 'pick':
+                        //special case for "pick up"
+                        _object0 = _object0.replace("up ","");       
+                        _verb = 'pick up';
+
+                        //might want to trap people wanting to pick locks in future.
+                        //now fall through to "take" verb.
                     case 'get':
                     case 'collect':
                     case 'take':
@@ -370,7 +377,6 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'save':
                     case 'load':
-                    case 'pick':
                     case 'rub':
                     case 'on':
                     case 'off':
