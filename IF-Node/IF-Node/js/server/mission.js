@@ -1,6 +1,6 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward) { //add time limit of some form in later
+module.exports.Mission = function Mission(name, description, dialogue, parent, missionObject, isStatic, condition, conditionAttributes, destination, reward) { //add time limit of some form in later
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
@@ -13,6 +13,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         var _conversationState = 0; //track dialogue
         var _missionObject = missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _condition = condition; //the required (numeric/enumerated) condition the object must be in for success 
+        var _conditionAttributes = conditionAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
         var _destination = destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
         var _timeTaken = 0; //track time taken to complete.
@@ -144,14 +145,26 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                         break;
             };
             if (missionObject) {
-                console.log('mission object retrieved. Checking required condition: '+_condition);
-                if (missionObject.getCondition() == _condition) {
-                    console.log('actual condition: '+missionObject.getCondition());
+                console.log('mission object retrieved. Checking condition attributes...');
+                var objectAttributes = missionObject.getCurrentAttributes();
+                var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;
+                var successCount = 0;
+                for (var attr in _conditionAttributes) {
+                    if (objectAttributes.hasOwnProperty(attr)) {
+                        console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);
+                        if (objectAttributes[attr] == _conditionAttributes[attr]) {successCount++;};
+                    };
+                };
+
+                console.log('condition matches: '+successCount+" out of "+requiredAttributeSuccessCount);
+                if (successCount == requiredAttributeSuccessCount) {
                     //if mission has dialogue, ensure that has been triggered at least once...
                     if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
                         return self.success();
                     };
                 };
+
+
             };
         };
 

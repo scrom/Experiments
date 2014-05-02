@@ -226,7 +226,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.attackStrength = _attackStrength;
             currentAttributes.type = _type;
             currentAttributes.isBreakable = _breakable;
+            currentAttributes.isDamaged = _damaged;
             currentAttributes.isBroken = _broken;
+            currentAttributes.isDestroyed =_destroyed
             currentAttributes.unlocks = _unlocks;
             currentAttributes.componentOf = _componentOf;
             currentAttributes.requiredComponentCount = _requiredComponentCount;
@@ -447,19 +449,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //check if object is completely intact
             if (_destroyed||_broken||_chewed||_damaged) {return false;};
             return true;
-        };
-
-        //artefact only
-        self.getCondition = function() {
-            var condition = 5;
-
-            //check if object is completely intact
-            if (_destroyed) { return 0;};
-            if (_read) { return 6;}; //special flag for reading!
-            if (_broken) {condition-=2};
-            if (_chewed) {condition-=1};
-            if (_damaged) {condition-=1};
-            return condition;
         };
 
         self.isDestroyed = function() {

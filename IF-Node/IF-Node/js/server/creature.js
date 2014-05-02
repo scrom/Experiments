@@ -173,10 +173,27 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             currentAttributes.synonyms = _synonyms;
             currentAttributes.health = _hitPoints;
+            if (_hitPoints > 0) {
+                currentAttributes.alive = true;
+                currentAttributes.dead = false;
+            } else {
+                currentAttributes.alive = false;
+                currentAttributes.dead = true;
+            };
             currentAttributes.maxHealth = _maxHitPoints;
             currentAttributes.canTravel = _canTravel;
             currentAttributes.traveller = _traveller;
             currentAttributes.affinity = _affinity;
+            if (_affinity > 0) {
+                currentAttributes.friendly = true;
+            } else {
+                currentAttributes.friendly = false;
+            };
+            if (_affinity < -5) {
+                currentAttributes.hostile = true;
+            } else {
+                currentAttributes.hostile = false;
+            };
             currentAttributes.gender = _gender; 
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.canCollect = _collectable;
@@ -715,31 +732,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.isBroken = function() {
             return false; //it's hard to "break" a creature or corpse (at least for the purposes if the game)
-        };
-
-        self.getCondition = function() {
-            //check if object is completely intact
-            if (self.isDead()) { return 0;};
-
-            switch(true) {
-                case (healthPercent()>99):
-                    return 5;
-                    break;
-                case (healthPercent()>80):
-                    return 4;
-                    break;
-                case (healthPercent()>50):
-                    return 3;
-                    break;
-                case (healthPercent()>25):
-                    return 2;
-                    break;
-                case (healthPercent()>0):
-                    return 1;
-                    break;
-                default:
-                    return 0;
-            };
         };
 
         self.canTravel = function() {

@@ -155,12 +155,27 @@ exports.Map = function Map() { //inputs for constructor TBC
             return creature;
         };
 
+        self.unpackConditionAttributes = function(attributes) {
+            console.log("Unpacking condition attributes: "+attributes);
+            var returnObject = {};
+            for (var attr in attributes) {
+                if (attributes.hasOwnProperty(attr)) {returnObject[attr] = attributes[attr];};
+            };
+            //fix strings to booleans
+            for (var attr in returnObject) {
+                if (returnObject[attr] == 'true') {returnObject[attr] = true;};
+                if (returnObject[attr] == 'false') {returnObject[attr] = false;};
+            };
+            console.log("Unpacked condition attributes");
+            return returnObject;
+        };
+
         self.unpackReward = function(reward) {
             console.log("Unpacking reward: "+reward);
             var returnObject = {};
             for (var attr in reward) {
-                if (reward.hasOwnProperty(attr)) returnObject[attr] = reward[attr];
-            }
+                if (reward.hasOwnProperty(attr)) {returnObject[attr] = reward[attr];};
+            };
 
             //set maximum possible game score...
             if (reward.score) {
@@ -181,7 +196,11 @@ exports.Map = function Map() { //inputs for constructor TBC
         self.buildMission = function(missionData) {
             console.log("Building mission: "+missionData.name);
             //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward
-            return new missionObjectModule.Mission(missionData.name, missionData.description, missionData.dialogue, missionData.parent, missionData.missionobject, missionData.static, missionData.condition, missionData.destination, self.unpackReward(missionData.reward));
+            var conditionAttr = {};
+            if (missionData.conditionAttributes) {
+                conditionAttr = self.unpackConditionAttributes(missionData.conditionAttributes);
+            };
+            return new missionObjectModule.Mission(missionData.name, missionData.description, missionData.dialogue, missionData.parent, missionData.missionobject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
         };
         
         self.addLocation = function(aName,aDescription,isDark){

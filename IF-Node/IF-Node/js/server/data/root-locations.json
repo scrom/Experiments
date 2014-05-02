@@ -103,7 +103,9 @@
             "parent": "null",
             "missionobject": "screen",
             "static": "true",
-            "condition": "0",
+			"conditionAttributes": { 
+				"isDestroyed": "true"
+			},
             "destination": "screen",
             "reward": {
               "score": -25,
@@ -121,7 +123,9 @@
         "parent": "null",
         "missionobject": "sweet coffee",
         "static": "false",
-        "condition": "5",
+		"conditionAttributes": { 
+			"isDestroyed": "false"
+		},
         "destination": "player",
         "reward": {
           "score": 50,
@@ -656,7 +660,10 @@
             "parent": "null",
             "missionobject": "beans",
             "static": "true",
-            "condition": "5",
+			"conditionAttributes": { 
+				"isDestroyed": "false",
+				"isBroken": "false"
+			},
             "destination": "machine",
             "reward": {
               "score": 50,
@@ -809,7 +816,10 @@
 				"parent": "null",
 				"missionobject": "manual",
 				"static": "true",
-				"condition": "6",
+				"conditionAttributes": { 
+					"isDestroyed": "false",
+					"read": "true"
+				},
 				"destination": "manual",
 				"reward": {
 					"repairSkill": "machine",
@@ -972,7 +982,9 @@
         "parent": "null",
         "missionobject": "spy",
         "static": "false",
-        "condition": "0",
+		"conditionAttributes": { 
+			"dead": "true"
+		},
         "destination": "spy",
         "reward": {
           "score": 50,
@@ -1373,7 +1385,11 @@
             "parent": "null",
             "missionobject": "disk",
             "static": "true",
-            "condition": "5",
+			"conditionAttributes": { 
+				"isDestroyed": "false",
+				"isBroken": "false",
+				"isDamaged": "false"
+			},
             "destination": "Simon",
             "reward": {
               "score": 50,
@@ -1449,7 +1465,9 @@
             "parent": "null",
             "missionobject": "Vic",
             "static": "true",
-            "condition": "5",
+			"conditionAttributes": { 
+					"alive": "true"
+			},
             "destination": "Vic",
             "reward": {
               "score": 10,
@@ -1486,7 +1504,10 @@
             "parent": "null",
             "missionobject": "small book",
             "static": "true",
-            "condition": "5",
+			"conditionAttributes": { 
+				"isDestroyed": "false",
+				"isBroken": "false"
+			},
             "destination": "Vic",
             "reward": {
               "score": 50,
@@ -1968,7 +1989,10 @@
 				"parent": "null",
 				"missionobject": "article",
 				"static": "true",
-				"condition": "6",
+				"conditionAttributes": { 
+				"isDestroyed": "false",
+				"read": "true"
+			},
 				"destination": "article",
 				"reward": {
 					"score": 20,
