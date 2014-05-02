@@ -103,9 +103,9 @@
             "parent": "null",
             "missionobject": "screen",
             "static": "true",
-			"conditionAttributes": { 
-				"isDestroyed": "true"
-			},
+            "conditionAttributes": {
+              "isDestroyed": "true"
+            },
             "destination": "screen",
             "reward": {
               "score": -25,
@@ -123,9 +123,9 @@
         "parent": "null",
         "missionobject": "sweet coffee",
         "static": "false",
-		"conditionAttributes": { 
-			"isDestroyed": "false"
-		},
+        "conditionAttributes": {
+          "isDestroyed": "false"
+        },
         "destination": "player",
         "reward": {
           "score": 50,
@@ -585,7 +585,7 @@
         "description": "a coffee vending machine",
         "detaileddescription": "When it works it uses coffee beans to make coffee.",
         "attributes": {
-		  "extendedinventorydescription": "It's fully loaded with ",	
+          "extendedinventorydescription": "It's fully loaded with ",
           "weight": 151,
           "carryWeight": 3,
           "attackStrength": 0,
@@ -660,10 +660,10 @@
             "parent": "null",
             "missionobject": "beans",
             "static": "true",
-			"conditionAttributes": { 
-				"isDestroyed": "false",
-				"isBroken": "false"
-			},
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "isBroken": "false"
+            },
             "destination": "machine",
             "reward": {
               "score": 50,
@@ -732,7 +732,7 @@
         "description": "a set of bookcases",
         "detaileddescription": "Books on everything from travel to SQL server and from sales to C#.",
         "attributes": {
-		  "extendedinventorydescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",	
+          "extendedinventorydescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",
           "weight": 80,
           "carryWeight": 50,
           "attackStrength": 0,
@@ -755,7 +755,7 @@
           "shelf",
           "cases",
           "shelves",
-		  "books"
+          "books"
         ],
         "inventory": [
           {
@@ -780,7 +780,7 @@
               "software book"
             ]
           },
-		  {
+          {
             "object": "artefact",
             "name": "manual",
             "description": "a maintenance manual for the coffee machines",
@@ -798,37 +798,37 @@
             "synonyms": [
               "book",
               "repair book",
-			  "maintenance book",
-			  "coffee machine book",
+              "maintenance book",
+              "coffee machine book",
               "repair manual",
-			  "maintenance manual",
-			  "machine manual",
-			  "coffee machine manual", 
-			  "coffee machine repair manual",
-			  "coffee machine maintenance manual",
-			  "machine maintenance manual"
+              "maintenance manual",
+              "machine manual",
+              "coffee machine manual",
+              "coffee machine repair manual",
+              "coffee machine maintenance manual",
+              "machine maintenance manual"
             ],
-			"missions": [
-			  {
-				"object": "mission",
-				"name": "repairCoffeeMachine",
-				"description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.",
-				"parent": "null",
-				"missionobject": "manual",
-				"static": "true",
-				"conditionAttributes": { 
-					"isDestroyed": "false",
-					"read": "true"
-				},
-				"destination": "manual",
-				"reward": {
-					"repairSkill": "machine",
-					"successMessage": "Congratulations. You've learned how to repair a coffee machine."
-				}
-			  }
-			]
+            "missions": [
+              {
+                "object": "mission",
+                "name": "repaircoffeemachine",
+                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.",
+                "parent": "null",
+                "missionobject": "manual",
+                "static": "true",
+                "conditionAttributes": {
+                  "isDestroyed": "false",
+                  "read": "true"
+                },
+                "destination": "manual",
+                "reward": {
+                  "repairSkill": "machine",
+                  "successMessage": "Congratulations. You've learned how to repair a coffee machine."
+                }
+              }
+            ]
           },
-		  {
+          {
             "object": "artefact",
             "name": "small book",
             "description": "a small book",
@@ -982,9 +982,9 @@
         "parent": "null",
         "missionobject": "spy",
         "static": "false",
-		"conditionAttributes": { 
-			"dead": "true"
-		},
+        "conditionAttributes": {
+          "dead": "true"
+        },
         "destination": "spy",
         "reward": {
           "score": 50,
@@ -1385,11 +1385,11 @@
             "parent": "null",
             "missionobject": "disk",
             "static": "true",
-			"conditionAttributes": { 
-				"isDestroyed": "false",
-				"isBroken": "false",
-				"isDamaged": "false"
-			},
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "isBroken": "false",
+              "isDamaged": "false"
+            },
             "destination": "Simon",
             "reward": {
               "score": 50,
@@ -1465,9 +1465,9 @@
             "parent": "null",
             "missionobject": "Vic",
             "static": "true",
-			"conditionAttributes": { 
-					"alive": "true"
-			},
+            "conditionAttributes": {
+              "alive": "true"
+            },
             "destination": "Vic",
             "reward": {
               "score": 10,
@@ -1504,10 +1504,10 @@
             "parent": "null",
             "missionobject": "small book",
             "static": "true",
-			"conditionAttributes": { 
-				"isDestroyed": "false",
-				"isBroken": "false"
-			},
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "isBroken": "false"
+            },
             "destination": "Vic",
             "reward": {
               "score": 50,
@@ -1571,7 +1571,7 @@
                           "isEdible": false,
                           "isBreakable": false,
                           "charges": 10,
-						  "quantity": -1,
+                          "quantity": -1,
                           "componentOf": "machine",
                           "requiresContainer": true
                         },
@@ -1981,26 +1981,26 @@
           "loo article",
           "learn article"
         ],
-		"missions": [
-			  {
-				"object": "mission",
-				"name": "lotlEasterEgg",
-				"description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
-				"parent": "null",
-				"missionobject": "article",
-				"static": "true",
-				"conditionAttributes": { 
-				"isDestroyed": "false",
-				"read": "true"
-			},
-				"destination": "article",
-				"reward": {
-					"score": 20,
-					"repairSkill": "architecture",
-					"successMessage": "Congratulations. You've learned the basics on how to develop good software architecture."
-				}
-			  }
-			]
+        "missions": [
+          {
+            "object": "mission",
+            "name": "lotleasteregg",
+            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
+            "parent": "null",
+            "missionobject": "article",
+            "static": "true",
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "read": "true"
+            },
+            "destination": "article",
+            "reward": {
+              "score": 20,
+              "repairSkill": "architecture",
+              "successMessage": "Congratulations. You've learned the basics on how to develop good software architecture."
+            }
+          }
+        ]
       }
     ]
   },
