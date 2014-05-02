@@ -238,6 +238,30 @@
   },
   {
     "object": "location",
+    "name": "back-stairs-first-floor-west",
+    "description": "You're halfway up the west fire escape staircase.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "d",
+        "longname": "down",
+        "source": "back-stairs-first-floor-west",
+        "destination": "back-stairs-ground-floor-west",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "u",
+        "longname": "up",
+        "source": "back-stairs-first-floor-west",
+        "destination": "back-stairs-second-floor-west",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "back-stairs-ground-floor-west",
     "description": "You're in the bottom of the west fire escape stairs.",
     "dark": "true",
@@ -248,6 +272,14 @@
         "longname": "south",
         "source": "back-stairs-ground-floor-west",
         "destination": "opportunities-north",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "u",
+        "longname": "up",
+        "source": "back-stairs-ground-floor-west",
+        "destination": "back-stairs-first-floor-west",
         "hidden": "false"
       }
     ],
@@ -275,6 +307,22 @@
           "coffee machine key",
           "coffee key"
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "back-stairs-second-floor-west",
+    "description": "You're standing at the top of the west fire escape staircase.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "d",
+        "longname": "down",
+        "source": "back-stairs-second-floor-west",
+        "destination": "back-stairs-first-floor-west",
+        "hidden": "false"
       }
     ]
   },
@@ -1881,6 +1929,30 @@
   },
   {
     "object": "location",
+    "name": "stairs-first-floor",
+    "description": "You're halfway up the main office staircase.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "d",
+        "longname": "down",
+        "source": "stairs-first-floor",
+        "destination": "stairs-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "u",
+        "longname": "up",
+        "source": "stairs-first-floor",
+        "destination": "stairs-second-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "stairs-ground-floor",
     "description": "You're standing at the foot of the stairs.",
     "dark": "false",
@@ -1915,6 +1987,30 @@
         "longname": "south",
         "source": "stairs-ground-floor",
         "destination": "northwest-corridor-ground-floor",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "u",
+        "longname": "up",
+        "source": "stairs-ground-floor",
+        "destination": "stairs-first-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "stairs-second-floor",
+    "description": "You're standing at the top of the main staircase The view's great from up here.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "d",
+        "longname": "down",
+        "source": "stairs-second-floor",
+        "destination": "stairs-first-floor",
         "hidden": "false"
       }
     ]

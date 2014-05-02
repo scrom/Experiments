@@ -277,6 +277,19 @@ exports.Map = function Map() { //inputs for constructor TBC
                 };                        
             };
 
+        //end of "init"
+        //self.addLocation("stairs-first-floor", "You're halfway up the main office staircase.", false);
+        //self.addLocation("stairs-second-floor", "You're standing at the top of the main staircase The view's great from up here.", false);
+        //self.link("u", "stairs-ground-floor", "stairs-first-floor",false, false);
+        //self.link("u", "stairs-first-floor", "stairs-second-floor",false, false);
+
+        //self.addLocation("back-stairs-first-floor-west", "You're halfway up the west fire escape staircase.", false);
+        //self.addLocation("back-stairs-second-floor-west", "You're standing at the top of the west fire escape staircase.", false);
+
+        //self.link("u", "back-stairs-ground-floor-west", "back-stairs-first-floor-west",false, false);
+        //self.link("u", "back-stairs-first-floor-west", "back-stairs-second-floor-west",false, false);
+
+
         };
 
         self.getStartLocation = function() {
@@ -291,14 +304,17 @@ exports.Map = function Map() { //inputs for constructor TBC
             return _locations;
         };
 
-        self.link = function(fromDirection, fromLocation, toLocation, toIsHidden, fromIsHidden) {
+        //note, "fromDirection" should be the lowercase short version (e.g. "u" or "n")
+        self.link = function(fromDirection, fromLocationName, toLocationName, toIsHidden, fromIsHidden) {
              var toDirection = oppositeOf(fromDirection);
              console.log('from:'+fromDirection+' to:'+toDirection);
-             var fromLocation = self.getLocation(fromLocation);
-             var toLocation = self.getLocation(toLocation);
-             var temp = fromLocation.addExit(fromDirection,toLocation.getName(), toIsHidden);
-             var temp2 = toLocation.addExit(toDirection,fromLocation.getName(), fromIsHidden);
+             var fromLocation = self.getLocation(fromLocationName);
+             var toLocation = self.getLocation(toLocationName);
+             var temp = fromLocation.addExit(fromDirection,fromLocation.getName(),toLocation.getName(), toIsHidden);
+             var temp2 = toLocation.addExit(toDirection,toLocation.getName(),fromLocation.getName(), fromIsHidden);
              console.log('locations linked');
+             console.log ("Exit 1:"+temp.toString());
+             console.log ("Exit 2:"+temp2.toString());
              return fromLocation.getName()+' linked '+fromDirection+'/'+toDirection+' to '+toLocation.getName();
         };
 
