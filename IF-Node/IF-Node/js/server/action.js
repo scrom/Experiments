@@ -61,7 +61,7 @@ exports.Action = function Action(aPlayer, aMap) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'for', 'at', 'on', 'off', 'in']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'for', 'at', 'on', 'off', 'in', 'is', 'are']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
@@ -213,7 +213,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1);}
                         else {description = _player.examine(_verb, _object0);};
-                        break;                  
+                        break;  
+                    case 'where':                
                     case 'find':                   
                         ticks = 0;
                         description = "Nice try $player. It was worth a shot...<br>You'll have to hunt things down yourself here I'm afraid.";
@@ -403,8 +404,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     description = "Player Aggression set: "+_player.setAggression(_object0);
                 };
 
-                if (_verb == '+find') {
-                    description = _map.find(_object0);
+                if (_verb == '+find'||_verb == '+where') {
+                    if(_object1) { description = _map.find(_object1);}
+                    else { description = _map.find(_object0); };
                 };
 
                 //fall-through checks...
