@@ -169,7 +169,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //public member functions
         self.toString = function() {
             //var _synonyms = [];
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detaileddescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailedDescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_linkedExits.length>0) {
                 returnString+= ',"linkedexits":[';
                 for(var i=0; i<_linkedExits.length;i++) {
@@ -899,21 +899,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_locked) {return true;};
             return false;
         };
-
-        /*self.getMatchingKey = function(keys) {
-            //find the strongest non-breakable weapon the player is carrying.
-            for(var index = 0; index < keys.length; index++) {
-                //player must explicitly choose to use a breakable key - will only auto-use non-breakable ones.
-                if (keys[index].getType() == 'key') {
-                    if (keys[index].keyTo(self)) {
-                        console.log('Key found for: '+self.getName());
-                        return keys[index];
-                    };                   
-                };
-            };
-            console.log('Matching key not found');
-            return null;
-        };*/
 
         self.lock = function(aKey) {
             if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};

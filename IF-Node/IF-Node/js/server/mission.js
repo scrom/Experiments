@@ -56,7 +56,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                 };
                 returnString+= ']';
             };
-            returnString +=',"parent":"'+_parent+'","missionobject":"'+_missionObject+'","static":"'+_isStatic+'","conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            returnString +=',"parent":"'+_parent+'","missionObject":"'+_missionObject+'","static":"'+_isStatic+'","conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
             returnString+= '}';
             return returnString;
         };

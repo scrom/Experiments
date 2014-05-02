@@ -101,7 +101,7 @@ exports.Map = function Map() { //inputs for constructor TBC
                 delivers = self.buildArtefact(artefactData.delivers);
             };
 
-            artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detaileddescription, artefactData.attributes, linkedExits, delivers);
+            artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);
             if (artefactData.synonyms) {artefact.addSyns(artefactData.synonyms);};
             if (artefactData.inventory) {
                 //add items directly to inventory
@@ -135,7 +135,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var initial = creatureData.displayname.substring(0,1);
             if (initial == initial.toUpperCase()) {creatureName = creatureData.displayname;}; //creature name is a proper noun
 
-            creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detaileddescription, creatureData.attributes, null); //we add inventory later
+            creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
             if (creatureData.synonyms) {creature.addSyns(creatureData.synonyms);};
             if (creatureData.inventory) {
                 //add items directly to inventory
@@ -200,7 +200,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             if (missionData.conditionAttributes) {
                 conditionAttr = self.unpackConditionAttributes(missionData.conditionAttributes);
             };
-            return new missionObjectModule.Mission(missionData.name, missionData.description, missionData.dialogue, missionData.parent, missionData.missionobject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
+            return new missionObjectModule.Mission(missionData.name, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
         };
         
         self.addLocation = function(aName,aDescription,isDark){

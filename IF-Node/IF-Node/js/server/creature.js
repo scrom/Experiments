@@ -141,7 +141,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.toString = function() {
         //var _synonyms = [];
         //var _missions = [];
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detaileddescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
             if (_synonyms.length >0) {
                 returnString+= ',"synonyms":[';
