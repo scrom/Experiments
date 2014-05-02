@@ -253,6 +253,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.give(_verb, _object0,_object1);
                         break;
                     case 'throw':
+                    case 'drpo': //common user typo
                     case 'drop': //add support for "all" later
                         description = _player.drop(_verb, _object0);
                         //we're throwing the object *at* something. Use it as a weapon.
@@ -333,6 +334,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'lock':
                         description = _player.lock(_verb, _object0);
                         break;
+                    case 'destry': //common user typo
                     case 'destroy':
                     case 'break':
                         description = _player.breakOrDestroy(_verb, _object0);
@@ -368,7 +370,6 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'save':
                     case 'load':
-                    case 'search':
                     case 'pick':
                     case 'rub':
                     case 'on':
