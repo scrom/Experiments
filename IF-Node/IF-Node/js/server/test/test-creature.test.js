@@ -32,6 +32,21 @@ exports.canCreateCreature = function (test) {
 
 exports.canCreateCreature.meta = { traits: ["Creature Test", "Constructor Trait"], description: "Test that a creature object can be created." };
 
+
+exports.canRetrieveACurrentAttribute = function (test) {
+    var expectedResult = 120;
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});  
+    var actualResult = c0.getCurrentAttributes().weight;
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canRetrieveACurrentAttribute.meta = { traits: ["Creature Test", "Attribute Trait"], description: "Test that a creature object can return its current attributes." };
+
+
 exports.canCreateCreatureWithSingleObject = function (test) {
     var creatureName = 'creature';
     var creatureDescription = 'a beastie'

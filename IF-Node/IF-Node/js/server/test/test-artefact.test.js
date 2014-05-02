@@ -31,6 +31,19 @@ exports.canCreateArtefactObject = function (test) {
 
 exports.canCreateArtefactObject.meta = { traits: ["Artefact Test", "Constructor Trait"], description: "Test that an artefact object can be created." };
 
+exports.canRetrieveACurrentAttribute = function (test) {
+    var expectedResult = false;
+    //artefact object is created in setUp
+    var actualResult = a0.getCurrentAttributes().read;
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canRetrieveACurrentAttribute.meta = { traits: ["Artefact Test", "Attribute Trait"], description: "Test that an artefact object can return its current attributes." };
+
+
 exports.canSetTypeAttributeAfterConstruction = function (test) {
     var expectedResult = 'treasure';
     //artefact object is created in setUp

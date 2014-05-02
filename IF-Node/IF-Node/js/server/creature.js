@@ -167,6 +167,30 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _name;
         };
 
+
+        self.getCurrentAttributes = function() {
+            var currentAttributes = {};
+
+            currentAttributes.synonyms = _synonyms;
+            currentAttributes.health = _hitPoints;
+            currentAttributes.maxHealth = _maxHitPoints;
+            currentAttributes.canTravel = _canTravel;
+            currentAttributes.traveller = _traveller;
+            currentAttributes.affinity = _affinity;
+            currentAttributes.gender = _gender; 
+            currentAttributes.carryWeight = _inventory.getCarryWeight();
+            currentAttributes.canCollect = _collectable;
+            currentAttributes.isEdible = _edible;
+            currentAttributes.nutrition = _nutrition;
+            currentAttributes.bleeding = _bleeding;
+            currentAttributes.weight = _weight;
+            currentAttributes.attackStrength = _attackStrength;
+            currentAttributes.type = _type;
+
+            return currentAttributes;
+
+        };
+
         self.syn = function (synonym) {
             if (synonym == _name) { 
                 return true; 

@@ -204,6 +204,39 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _name;
         }; 
 
+        self.getCurrentAttributes = function() {
+            var currentAttributes = {};
+            currentAttributes.synonyms = _synonyms;
+            currentAttributes.extendedinventorydescription = _extendedInventoryDescription;
+            currentAttributes.carryWeight = _inventory.getCarryWeight();
+            currentAttributes.lockable = _lockable;
+            currentAttributes.locked = _locked;
+            currentAttributes.canCollect = _collectable;
+            currentAttributes.read = _read;
+            currentAttributes.canOpen = _opens;                    
+            currentAttributes.isOpen = _open;
+            currentAttributes.charges = _charges;
+            currentAttributes.switched = _switched;
+            currentAttributes.isOn = _on;
+            currentAttributes.isEdible = _edible;
+            currentAttributes.nutrition = _nutrition;
+            currentAttributes.chewed = _chewed;
+            currentAttributes.weight = _weight;
+            currentAttributes.quantity = _quantity;
+            currentAttributes.attackStrength = _attackStrength;
+            currentAttributes.type = _type;
+            currentAttributes.isBreakable = _breakable;
+            currentAttributes.isBroken = _broken;
+            currentAttributes.unlocks = _unlocks;
+            currentAttributes.componentOf = _componentOf;
+            currentAttributes.requiredComponentCount = _requiredComponentCount;
+            currentAttributes.requiresContainer = _requiresContainer;
+            currentAttributes.requiredContainer = _requiredContainer;
+
+            return currentAttributes;
+
+        };
+
         self.syn = function (synonym) {
             if (synonym == _name) {
                 return true; 

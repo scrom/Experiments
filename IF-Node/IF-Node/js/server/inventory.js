@@ -35,6 +35,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             };
         };
 
+        self.getCarryWeight = function() {
+            return _maxCarryingWeight;
+        };
+
         self.describe = function(ownerName) {
             if (_items.length == 0) {return "nothing"};
             var list = ''
