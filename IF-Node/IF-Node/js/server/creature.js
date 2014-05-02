@@ -360,7 +360,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getAttackStrength = function() {
             console.log('Creature attack strength = '+_attackStrength);
             if (self.isDead()) {return 0;};
-            return _attackStrength;
+            var weapon = self.getWeapon();
+            var weaponStrength = 0;
+            if (weapon) {weaponStrength = weapon.getAttackStrength();};
+            var currentAttackStrength =_attackStrength;
+            if (weaponStrength > currentAttackStrength) { currentAttackStrength = weaponStrength; };
+            return currentAttackStrength;
         };
 
         self.getInventoryWeight = function() {
@@ -739,6 +744,62 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _canTravel;
         };
 
+        self.getWeapon = function() {
+            //find the strongest non-breakable weapon the player is carrying.
+            var selectedWeaponStrength = 0;
+            var selectedWeapon = null;
+            var weapons = _inventory.getAllObjectsOfType('weapon');
+            for(var index = 0; index < weapons.length; index++) {
+                //creature won't use a breakable weapon - will only auto-use non-breakable ones.
+                if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
+                    var weaponStrength = weapons[index].getAttackStrength();
+                    console.log('Creature is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                    if (weaponStrength > selectedWeaponStrength) {
+                        selectedWeapon = weapons[index];
+                        selectedWeaponStrength = weaponStrength;
+                    };
+                    
+                };
+            };
+            if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());}
+            else {console.log('Creature is not carrying an automatically usable weapon')};
+
+            return selectedWeapon;
+        };
+
+        self.collectBestAvailableWeapon = function() {
+            console.log("attempting to collect weapon");
+            //find the strongest non-breakable weapon the player is carrying.
+            var selectedWeaponStrength = 0;
+            var selectedWeapon = null;
+            var weapons = _currentLocation.getAllObjectsOfType('weapon')
+
+            for(var index = 0; index < weapons.length; index++) {
+                //creature won't collect a breakable weapon - will only auto-use non-breakable ones.
+                if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
+                    var weaponStrength = weapons[index].getAttackStrength();
+                    console.log(self.getDisplayName()+' found weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                    if (weaponStrength > selectedWeaponStrength) {
+                        //only if they can carry it
+                        if (self.canCarry(weapons[index])) {
+                            selectedWeapon = weapons[index];
+                            selectedWeaponStrength = weaponStrength;
+                        };
+                    };
+                    
+                };
+            };
+
+            //nothing collected.
+            if (!(selectedWeapon)) { return "";};
+
+            console.log('Selected weapon: '+selectedWeapon.getDisplayName());
+            _inventory.add(selectedWeapon);
+            _currentLocation.removeObject(selectedWeapon.getName());
+
+            return self.getDisplayName()+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
+        };
+
         self.tick = function(time, map, player) {
             //important note. If the player is not in the same room as the creature at the end of the creature tick
             //none of the results of this tick will be visible to the player.
@@ -754,6 +815,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             for (var t=0; t < time; t++) {
                 console.log("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick();
+
+                //if creature is hostile, collect available weapons
+                if (self.isHostile(player.getAggression())) {
+                    resultString += self.collectBestAvailableWeapon();
+                };
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {

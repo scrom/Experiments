@@ -1696,7 +1696,7 @@
         "object": "artefact",
         "name": "brick",
         "description": "a brick",
-        "detailedDescription": "This would make quite a good cudgel.",
+        "detailedDescription": "This would make quite a good cudgel but it's likely to break.",
         "attributes": {
           "weight": 1,
           "carryWeight": 0,
