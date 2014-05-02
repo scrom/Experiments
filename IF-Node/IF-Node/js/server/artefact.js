@@ -491,8 +491,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.canCarry(anObject);
         };
 
-        self.getObject = function(anObject) {
-            return _inventory.getObject(anObject);
+        self.getObject = function(anObjectName) {
+            return _inventory.getObject(anObjectName);
         };
 
         self.getAllObjects = function() {
@@ -824,7 +824,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         };
 
-        self.relinquish = function(anObject, playerInventory, locationInventory, playerAggression) {
+        self.relinquish = function(anObjectName, playerInventory, locationInventory, playerAggression) {
             //note we throw away playerAggression
 
             if ((!_delivers) && _locked && (!(self.isDestroyed()))) {return initCap(_itemDescriptivePrefix)+" locked.";};
@@ -833,16 +833,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //is this something we deliver
             if (_delivers) {
-                if (_delivers.getName() == anObject) {
+                if (_delivers.getName() == anObjectName) {
                     if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken.";};
                     objectToGive = _delivers
                 };
             }; 
 
             //if not a deliverable, check inventory
-            if (!(objectToGive)) { objectToGive = _inventory.getObject(anObject); };
+            if (!(objectToGive)) { objectToGive = _inventory.getObject(anObjectName); };
 
-            if (!(objectToGive)) {return self.getDisplayName()+" doesn't contain "+anObject+".";};
+            if (!(objectToGive)) {return self.getDisplayName()+" doesn't contain "+anObjectName+".";};
 
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
@@ -853,13 +853,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (playerInventory.canCarry(objectToGive)) {
                 var deliveredItem;
                 if (_delivers) {
-                    if(_delivers.getName() == anObject) {
+                    if(_delivers.getName() == anObjectName) {
                         deliveredItem = self.deliver();
                         if (!(deliveredItem)) {return initCap(_itemDescriptivePrefix)+" not working at the moment."};
                         objectToGive = deliveredItem;
                     };
                 } 
-                if (!(deliveredItem)) {_inventory.remove(anObject);};
+                if (!(deliveredItem)) {_inventory.remove(anObjectName);};
 
                 //add to suitable container or to player inventory
                 //if container is required, we _know_ we have a suitable container by this point.
@@ -877,7 +877,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return "You're "+playerInventory.add(objectToGive);
             };
 
-            return "Sorry. You can't carry "+anObject+" at the moment."
+            return "Sorry. You can't carry "+anObjectName+" at the moment."
         };
 
         self.receive = function(anObject) {

@@ -89,31 +89,31 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             return "now carrying "+anObject.getDescription()+".";
         };
     
-        self.remove = function(anObject) {
+        self.remove = function(anObjectName) {
                 var localInventory = self.getAllObjects();
                 for(var index = 0; index < localInventory.length; index++) {
-                    if (localInventory[index].syn(anObject)) {
+                    if (localInventory[index].syn(anObjectName)) {
                         var returnObject = _items[index];
                         localInventory.splice(index,1);
-                        console.log(anObject+" removed from "+_ownerName+" inventory");
+                        console.log(anObjectName+" removed from "+_ownerName+" inventory");
                         return returnObject;
                     };
                     if(localInventory[index].getType() == 'container' && (!(localInventory[index].isLocked()))) {
                         if (localInventory[index].isOpen()) {
                             //only remove from open, unlocked containers - this way we know the player has discovered them
                             var containerInventory = localInventory[index].getInventoryObject()
-                            var object = containerInventory.remove(anObject);
+                            var object = containerInventory.remove(anObjectName);
                         };
                         if (object) {return object;}; 
                     };
                 };
-                console.log(_ownerName+" is not carrying "+anObject);
+                console.log(_ownerName+" is not carrying "+anObjectName);
                 return null;
         };
     
-        self.check = function(anObject) {
+        self.check = function(anObjectName) {
             //check if passed in object name is in inventory
-            if (self.getObject(anObject)){return true;};
+            if (self.getObject(anObjectName)){return true;};
             return false;
         };
 
@@ -128,16 +128,16 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         };
 
         //recursively gets objects in containers
-        self.getObject = function(anObject) {
+        self.getObject = function(anObjectName) {
             for(var index = 0; index < _items.length; index++) {
-                if(_items[index].syn(anObject)) {
-                    console.log(_ownerName+" inventory item found: "+anObject+" index: "+index);
+                if(_items[index].syn(anObjectName)) {
+                    console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
                     return _items[index];
                 };
                 if(_items[index].getType() == 'container' && (!(_items[index].isLocked()))) {
                     if (_items[index].isOpen()) {
                     //only confirm item from open, unlocked containers - this way we know the player has discovered them
-                        var object = _items[index].getInventoryObject().getObject(anObject);
+                        var object = _items[index].getInventoryObject().getObject(anObjectName);
                         if (object) {return object}; 
                     };
                 };

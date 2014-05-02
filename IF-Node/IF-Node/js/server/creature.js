@@ -418,7 +418,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         //when a player steals from them...
-        self.theft = function(anObject,playerInventory, player) {
+        self.theft = function(anObjectName,playerInventory, player) {
             var playerStealth = player.getStealth();
 
             //attempt to steal...
@@ -430,15 +430,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
                 _affinity--;
-                var objectToGive = _inventory.getObject(anObject);
-                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObject+".";};
+                var objectToGive = _inventory.getObject(anObjectName);
+                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
                 if (playerInventory.canCarry(objectToGive)) {
                     return "You're "+playerInventory.add(objectToGive);
-                    _inventory.remove(anObject);
+                    _inventory.remove(anObjectName);
                 };
 
-                return "Sorry. You can't carry "+anObject+" at the moment."
+                return "Sorry. You can't carry "+anObjectName+" at the moment."
             } else {
                 _affinity-=2; //larger dent to affinity
                 return "Not smart! You were caught.";
@@ -450,25 +450,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.relinquish = function(anObject,playerInventory, locationInventory, playerAggression) {
+        self.relinquish = function(anObjectName,playerInventory, locationInventory, playerAggression) {
             //note we throw away locationInventory
             if (self.willShare(playerAggression)) {
                 _affinity--;
-                var objectToGive = _inventory.getObject(anObject);
-                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObject+".";};
+                var objectToGive = _inventory.getObject(anObjectName);
+                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
                 if (playerInventory.canCarry(objectToGive)) {
                     return "You're "+playerInventory.add(objectToGive);
-                    _inventory.remove(anObject);
+                    _inventory.remove(anObjectName);
                 };
 
-                return "Sorry. You can't carry "+anObject+" at the moment."
+                return "Sorry. You can't carry "+anObjectName+" at the moment."
             };
             return _genderPrefix+" doesn't want to share with you.";
         };
 
-        self.getObject = function(anObject) {
-            return _inventory.getObject(anObject);
+        self.getObject = function(anObjectName) {
+            return _inventory.getObject(anObjectName);
         };
 
         self.getAllObjects = function() {

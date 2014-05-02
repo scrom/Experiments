@@ -106,9 +106,9 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return "location is "+_inventory.add(anObject);
         };
 
-        self.removeObject = function(anObject) {
-            console.log('removing '+anObject+' from '+self.getName());
-            return _inventory.remove(anObject);
+        self.removeObject = function(anObjectName) {
+            console.log('removing '+anObjectName+' from '+self.getName());
+            return _inventory.remove(anObjectName);
         };
 
         self.objectExists = function(anObjectName) {

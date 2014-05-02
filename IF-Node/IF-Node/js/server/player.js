@@ -110,6 +110,10 @@ module.exports.Player = function Player(aUsername) {
 
             var contents = artefact.getAllObjects();
             var contentCount = contents.length;
+
+            //exit early if no contents.
+            if (contentCount == 0) return "";
+
             console.log("Removing "+contentCount+" items from wreckage.");
             for (var i=0; i<contents.length;i++) {
                 console.log("Contents "+contents[i].getName());
