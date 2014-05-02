@@ -403,7 +403,7 @@ module.exports.Player = function Player(aUsername) {
         //this can probably be made private
         self.combine = function(artefact, receiver) {
             //create new object, remove originals, place result in player inventory or location.
-            //zero weight of ingredients
+            //zero weight of ingredients to attempt combine
             var originalReceiverWeight = receiver.getWeight();
             var originalArtefactWeight = artefact.getWeight();
             receiver.setWeight(0);
@@ -418,6 +418,7 @@ module.exports.Player = function Player(aUsername) {
             if(requiresContainer) {
                 var container;
                 var containerIsInLocation = false;
+                var resultString = "";
 
                 if(receiverIsInLocation) {container = _currentLocation.getSuitableContainer(newObject);};
                 if (container) {containerIsInLocation = true;};
@@ -443,7 +444,15 @@ module.exports.Player = function Player(aUsername) {
             removeObjectFromPlayerOrLocation(artefact.getName());
             removeObjectFromPlayerOrLocation(receiver.getName());
 
-            if (container) {return container.receive(newObject);};
+            resultString = "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName();
+            if (container) {
+                if (containerIsInLocation) {
+                    return resultString + ".<br>You use "+container.getDisplayName()+" found nearby. "+container.getDescriptivePrefix()+" "+container.receive(newObject);
+                } else {
+                    return resultString +".<br>Your "+container.getName()+" is "+container.receive(newObject);
+                };
+            
+            };
 
             //reset weights
             receiver.setWeight(originalReceiverWeight);
@@ -456,7 +465,7 @@ module.exports.Player = function Player(aUsername) {
                 _inventory.add(newObject);
             };
 
-            return "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName()+" to produce "+newObject.getDisplayName()+".";                
+            return resultString+" to produce "+newObject.getDisplayName()+".";                
         };
 
         /*Allow player to put something in an object */
