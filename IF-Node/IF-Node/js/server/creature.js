@@ -797,7 +797,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _inventory.add(selectedWeapon);
             _currentLocation.removeObject(selectedWeapon.getName());
 
-            return self.getDisplayName()+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
+            return '<br>'+initCap(self.getDisplayName())+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
         };
 
         self.tick = function(time, map, player) {

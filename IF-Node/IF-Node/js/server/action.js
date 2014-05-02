@@ -408,7 +408,7 @@ exports.Action = function Action(aPlayer, aMap) {
 
                 //admin "cheat" commands
                 if (_verb == '+aggression') {
-                    description = "Player Aggression set: "+_player.setAggression(_object0);
+                    description = "Player Aggression set: "+_player.setAggression(parseInt(_object0));
                 };
 
                 if (_verb == '+find'||_verb == '+where') {
