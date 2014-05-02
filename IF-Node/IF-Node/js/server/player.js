@@ -265,8 +265,13 @@ module.exports.Player = function Player(aUsername) {
             var collectedArtefacts = [];
             var artefactCount = artefacts.length;
             var successCount = 0;
+            var collectibleArtefactCount = artefactCount;
 
-            artefacts.forEach(function(artefact) { //bug workaround. get all won't auto-support required containers --V
+            artefacts.forEach(function(artefact) { 
+                //update collectable artefacts count
+                if (!(artefact.isCollectable())) {collectibleArtefactCount --;};
+
+                                //bug workaround. get all won't auto-support required containers --V
                 if ((artefact.isCollectable()) && (_inventory.canCarry(artefact)) && (!(artefact.getRequiredContainer()))) {
                     var artefactToCollect = getObjectFromLocation(artefact.getName());
                     _inventory.add(artefactToCollect);
@@ -280,11 +285,13 @@ module.exports.Player = function Player(aUsername) {
                     removeObjectFromLocation(artefact.getName());
             });
 
+            if (collectibleArtefactCount==0) {return  "There's nothing here that can be picked up.";};
             if (successCount==0) {return  "There's nothing here that you can carry at the moment.";};
             var resultString = "You collected "+successCount+" item";
             if (successCount>1) {resultString += "s";};
             resultString += ".";
-            if (successCount < artefactCount)  {resultString += " You can't pick the rest up at the moment."};
+            if (successCount < collectibleArtefactCount)  {resultString += " You can't carry the rest at the moment."};
+            if ((successCount == collectibleArtefactCount) && (successCount < artefactCount))  {resultString += " The rest can't be picked up."};
             return resultString;          
         };
 
