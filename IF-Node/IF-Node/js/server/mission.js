@@ -40,7 +40,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                  else {returnString += obj;};
             };
             returnString+= '}';
-            console.log(returnString);
+            //console.log(returnString);
             return returnString;
         };
 
