@@ -36,6 +36,14 @@
         "source": "atrium",
         "destination": "stairs-ground-floor",
         "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "north",
+        "source": "atrium",
+        "destination": "office-front",
+        "hidden": "false"
       }
     ],
     "inventory": [
@@ -338,6 +346,62 @@
         "longname": "west",
         "source": "buenosaires",
         "destination": "northeast-corridor-ground-floor",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "east-bike-racks",
+    "description": "You're standing at the South-East corner of the the office building.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "north",
+        "source": "east-bike-racks",
+        "destination": "east-car-park",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "west",
+        "source": "east-bike-racks",
+        "destination": "smoking-area",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "east-car-park",
+    "description": "You're standing in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "west",
+        "source": "east-car-park",
+        "destination": "office-front",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "east",
+        "source": "east-car-park",
+        "destination": "waste-area",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "south",
+        "source": "east-car-park",
+        "destination": "east-bike-racks",
         "hidden": "false"
       }
     ]
@@ -1115,6 +1179,30 @@
   },
   {
     "object": "location",
+    "name": "office-front",
+    "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "south",
+        "source": "office-front",
+        "destination": "atrium",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "east",
+        "source": "office-front",
+        "destination": "east-car-park",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "opportunities-cubbyhole",
     "description": "You're in a dead-end room full of clutter in the opportunities and ventures area.",
     "dark": "false",
@@ -1803,6 +1891,14 @@
         "source": "smoking-area",
         "destination": "east-end-south-corridor-ground-floor",
         "hidden": "true"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "east",
+        "source": "smoking-area",
+        "destination": "east-bike-racks",
+        "hidden": "false"
       }
     ],
     "inventory": [
@@ -2097,6 +2193,22 @@
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "waste-area",
+    "description": "You're by a locked gate. On the far side are a series of waste containers full of carboard boxes, broken furniture and kitchen leftovers.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "west",
+        "source": "waste-area",
+        "destination": "east-car-park",
+        "hidden": "false"
       }
     ]
   },
