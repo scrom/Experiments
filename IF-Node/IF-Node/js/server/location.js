@@ -204,15 +204,16 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return missions;
         };
 
-        self.listExits = function() {
-            var exitList = ''
-            for(var i = 0; i < _exits.length; i++) {
-                if (_exits[i].isVisible()){
-                    if ((i>0)&&(i<_exits.length-1)){exitList+=', ';};
-                    if ((i==_exits.length-1)&&(i>0)){exitList+=' and ';};
-                    exitList+=_exits[i].getLongName();
-                };
+        self.listExits = function () {
+            var exitList = "";
+            var exits = self.getAvailableExits();
+
+            for (var i = 0; i < exits.length; i++) {
+                if ((i > 0) && (i < exits.length - 1)) { exitList += ', '; };
+                if ((i == exits.length - 1) && (i > 0)) { exitList += ' and '; };
+                exitList += exits[i].getLongName();
             };
+
             return exitList;
         };
 

@@ -1900,47 +1900,6 @@
         "destination": "east-bike-racks",
         "hidden": "false"
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "door",
-        "description": "a fire exit",
-        "detailedDescription": "If you open the door, you'll probably set off an alarm.",
-        "attributes": {
-          "weight": 200,
-          "carryWeight": 0,
-          "attackStrength": 0,
-          "type": "door",
-          "canCollect": false,
-          "canOpen": true,
-          "isEdible": false,
-          "isBreakable": false
-        },
-        "linkedexits": [
-          {
-            "object": "exit",
-            "name": "s",
-            "longname": "south",
-            "source": "east-end-south-corridor-ground-floor",
-            "destination": "smoking-area",
-            "hidden": "true"
-          },
-          {
-            "object": "exit",
-            "name": "n",
-            "longname": "north",
-            "source": "smoking-area",
-            "destination": "east-end-south-corridor-ground-floor",
-            "hidden": "true"
-          }
-        ],
-        "synonyms": [
-          "bar",
-          "fire exit",
-          "fire door"
-        ]
-      }
     ]
   },
   {
