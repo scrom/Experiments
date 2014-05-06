@@ -37,7 +37,7 @@ exports.GameController = function GameController(aRootMap) {
         };
 
         ////not yet in use
-        self.getGame = function(aGameId) {
+        self.getGame = function(aUsername, aGameId) {
             return _games[aGameId];
         };
 

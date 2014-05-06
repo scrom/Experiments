@@ -206,7 +206,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
-            currentAttributes.synonyms = _synonyms;
+            //currentAttributes.synonyms = _synonyms;
             currentAttributes.extendedinventorydescription = _extendedInventoryDescription;
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.lockable = _lockable;

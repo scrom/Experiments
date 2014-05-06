@@ -1,12 +1,13 @@
 ﻿"use strict";
 //main game interpreter
-exports.Watcher = function Watcher(aMap) {
+exports.Watcher = function Watcher(aMap, aGameController) {
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
 	    var _objectName = "Watcher";
 
         //module deps
         var _map = aMap;
+        var _gameController = aGameController;
 
         console.log(_objectName+' created');
 

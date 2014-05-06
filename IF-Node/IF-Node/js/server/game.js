@@ -35,6 +35,11 @@ module.exports.Game = function Game(aUsername,aGameID) {
             return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+locationDescription+'"}';
         };
 
+        self.fullState = function() {
+            //modify this to retrieve current state (not initial state)
+            return _map.getLocationsJSON();
+        };
+
         self.userAction = function(actionString) {
             //create singe instance of player actions is not previously set
             if (!(_playerActions)) {

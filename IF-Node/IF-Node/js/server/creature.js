@@ -37,6 +37,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
 	    var _objectName = "creature";
 
+        var healthPercent = function() {
+            //avoid dividebyzero
+            if (_maxHitPoints == 0) {return 0;};
+
+            return (_hitPoints/_maxHitPoints)*100;
+        };
+
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
             if (creatureAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
@@ -48,6 +55,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
+            if (healthPercent() <=50) {_bleeding = true;}; //set bleeding
             if (creatureAttributes.canTravel != undefined) {
                 if (creatureAttributes.canTravel== true || creatureAttributes.canTravel == "true") { _canTravel = true;}
                 else {_canTravel = false;};
@@ -129,12 +137,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        var healthPercent = function() {
-            //avoid dividebyzero
-            if (_maxHitPoints == 0) {return 0;};
-
-            return (_hitPoints/_maxHitPoints)*100;
-        };
 
         //// instance methods
 
@@ -171,7 +173,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
 
-            currentAttributes.synonyms = _synonyms;
+            //currentAttributes.synonyms = _synonyms;
             currentAttributes.health = _hitPoints;
             if (_hitPoints > 0) {
                 currentAttributes.alive = true;

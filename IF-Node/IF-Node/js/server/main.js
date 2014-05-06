@@ -13,8 +13,8 @@ var mapObjectModule = require('./map');
 var rootMap = new mapObjectModule.Map();
 rootMap.init();
 
-var watcher = new watcherObjectModule.Watcher(rootMap);
 var gameController = new gameControllerModule.GameController(rootMap);
+var watcher = new watcherObjectModule.Watcher(rootMap, gameController);
 var interpreter = new interpreterObjectModule.Interpreter(gameController);
 
 var server = new serverObjectModule.Server(interpreter, watcher);

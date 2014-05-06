@@ -227,6 +227,30 @@ exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility = function (test) {
 exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
 
 
+exports.newCreatureWith50PercentHealthIsCreatedBleeding = function (test) {
+    //creatures start bleeding at 50% health or lower.
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var expected = true;
+    var actual = c0.getCurrentAttributes().bleeding;
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.newCreatureWith50PercentHealthIsCreatedBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleeding Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
+exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding = function (test) {
+    //creatures start bleeding at 50% health or lower.
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:76, maxHealth:150, affinity:-2, canTravel:true});
+    var expected = false;
+    var actual = c0.getCurrentAttributes().bleeding;
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleeding Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
+
+
 exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:false});

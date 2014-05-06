@@ -111,6 +111,10 @@ exports.Interpreter = function Interpreter(aGameController) {
                 case 'action':
                     if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");}
                     return assembleResponse(commandJson, _gameController.userAction(username, gameId,actionString));
+                case 'state':
+                //note this isn't fully working yet - will probably be part of save/load support eventually
+                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");}
+                    return assembleResponse(commandJson, _gameController.getGame(username, gameId).fullState());
                 case 'events':
                     //respond to event requests
                     return 'ping.';
