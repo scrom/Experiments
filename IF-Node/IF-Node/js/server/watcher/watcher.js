@@ -49,14 +49,17 @@ exports.Watcher = function Watcher(aMap, aGameController) {
         };
 
         self.addLocation = function(name, isDark, description, linkDirection, linksToName) {
-            if (_map.getLocation(name)) {
-                return '{"description":"Sorry. Location '+name+' already exists."}';
+            var location = _map.getLocation(name);
+            if (location) {
+                location.setDescription(description);
+                return '{"description":"Location '+name+' already exists. Location description updated."}';
             };
 
             _map.addLocation(name, description, isDark);
             
             //add link if specified
             if (linkDirection && linksToName) {
+                //@todo - this creates buggy data at the moment
                 _map.link(linkDirection.toLowerCase(), name, linksToName);
             };
             return _map.getLocation(name).toString();

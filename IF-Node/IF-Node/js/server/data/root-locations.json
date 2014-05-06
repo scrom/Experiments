@@ -1198,6 +1198,14 @@
         "source": "office-front",
         "destination": "east-car-park",
         "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "office-front",
+        "destination": "west-car-park",
+        "hidden": "false"
       }
     ]
   },
@@ -1899,6 +1907,14 @@
         "source": "smoking-area",
         "destination": "east-bike-racks",
         "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "smoking-area",
+        "destination": "west-bike-racks",
+        "hidden": "false"
       }
     ]
   },
@@ -2167,6 +2183,54 @@
         "longname": "West",
         "source": "waste-area",
         "destination": "east-car-park",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "west-bike-racks",
+    "description": "You're standing at the South-West corner of the the office building.",
+    "dark": "false",
+    "exits": [
+	{
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "west-bike-racks",
+        "destination": "smoking-area",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "west-bike-racks",
+        "destination": "west-car-park",
+        "hidden": "false"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "west-car-park",
+    "description": "You're standing in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "west-car-park",
+        "destination": "office-front",
+        "hidden": "false"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "west-car-park",
+        "destination": "west-bike-racks",
         "hidden": "false"
       }
     ]
