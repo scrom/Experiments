@@ -190,6 +190,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.health();
                         break;
                     case 'stats':
+                    case 'statistics':
                     case 'score':
                         ticks = 0;
                         description = _player.stats(_map.getMaxScore());
@@ -313,6 +314,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'wave':
                         description = _player.wave(_verb, _object0, _object1);
                         break;
+                    case 'rub':
+                        description = _player.rub(_verb, _object0, _object1);
+                        break;
                     case 'say':
                     case 'sing':
                     case 'shout':
@@ -380,7 +384,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'save':
                     case 'load':
-                    case 'rub':
+                    case 'sharpen':
                     case 'on':
                     case 'off':
                     case 'climb':

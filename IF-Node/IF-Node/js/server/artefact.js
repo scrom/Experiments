@@ -509,6 +509,19 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Nothing happens.";
         };
 
+        self.rub = function(anObject) {
+            if (self.isDestroyed()) {return "There's nothing left of "+_itemSuffix+".";};
+            if (anObject) {
+                //we may rub this with another object or creature
+                if (anObject.getType() == 'food') {
+                    if (_attackStrength >=5) {_attackStrength -= 5;}; //yes you can reduce the strenght of an item by repeatedly coating it with food
+                    return "You make a sticky mess that leaves "+self.getDisplayName()+" somewhat slippery but see no obvious benefit.";
+                };
+            };
+
+            return "Nothing happens.";
+        };
+
         self.chargesRemaining = function() {
             if (self.isDestroyed()) {return 0;};
             console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);

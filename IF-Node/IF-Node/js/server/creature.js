@@ -393,6 +393,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "Nothing happens.";
         };
 
+        self.rub = function(anObject) {
+            if (self.isDead()) {return _genderPrefix+"'s dead. I'm not sure that's an appropriate thing to do to corpses."};
+            _affinity --;
+            if (_affinity >=-1) {
+                return _genderPrefix+" really doesn't appreciate it. I recommend you stop now.";
+            } else { return "Seriously. Stop that!";};
+        };
+
         self.bash = function() {
             //no damage - it's a creature
             return "";

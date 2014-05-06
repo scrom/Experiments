@@ -367,7 +367,6 @@ module.exports.Player = function Player(aUsername) {
 
         /*Allow player to wave an object - potentially at another*/
         self.wave = function(verb, firstArtefactName, secondArtefactName) {
-            //improve this once creatures are implemented
             //trap when object or creature don't exist
             var resultString = 'You '+verb;
             if (stringIsEmpty(firstArtefactName)){return resultString+"."};
@@ -389,6 +388,35 @@ module.exports.Player = function Player(aUsername) {
             resultString+=". ";
 
             resultString+= firstArtefact.wave(secondArtefact);
+
+            resultString += "<br>Your arms get tired and you feel slightly awkward.";   
+
+            return resultString;
+        };
+
+        /*Allow player to wave an object - potentially at another*/
+        self.rub = function(verb, firstArtefactName, secondArtefactName) {
+            //trap when object or creature don't exist
+            var resultString = 'You '+verb;
+            if (stringIsEmpty(firstArtefactName)){return verb+" what?"};
+
+            var firstArtefact = getObjectFromPlayerOrLocation(firstArtefactName);
+            if (!(firstArtefact)) {return notFoundMessage(firstArtefactName);};
+
+            //build return string
+            resultString+= " "+firstArtefact.getDisplayName();
+
+            if (!(stringIsEmpty(secondArtefactName))){
+                var secondArtefact = getObjectFromPlayerOrLocation(secondArtefactName);
+                if (!(secondArtefact)) {return notFoundMessage(secondArtefactName);};
+
+                //build return string
+                resultString+= " with "+secondArtefact.getDisplayName();
+            }; 
+
+            resultString+=". ";
+
+            resultString+= firstArtefact.rub(secondArtefact);
 
             resultString += "<br>Your arms get tired and you feel slightly awkward.";   
 
