@@ -8,6 +8,7 @@ module.exports.Player = function Player(aUsername) {
         var _username = aUsername;
         var _inventory =  new inventoryObjectModule.Inventory(20, _username);
         var _destroyedObjects = []; //track names of all objects player has destroyed
+        var _killedCreatures = []; //track names of all creatures player has killed (note if one bleeds to death the player doesn't get credit)
         var _consumedObjects = []; //track names of all objects player has consumed
         var _missionsCompleted = []; //track names of all missions completed
         var _missions = []; //player can "carry" missions.
@@ -26,19 +27,21 @@ module.exports.Player = function Player(aUsername) {
         var _maxMovesUntilHungry = 50;
         var _additionalMovesUntilStarving = 10;
 
-        //potential player stats
+        //player stats
         var _stepsTaken = 0; //only incremented when moving between locations but not yet used elsewhere
+        var _locationsFound = 0;
+        var _maxAggression = 0;
+        var _injuriesReceived = 0;
+        var _score = 0;
+        var _totalDamageReceived = 0;
+
+        //possible additional player stats
         var _restsTaken = 0;
         var _sleepsTaken = 0;
-        var _locationsFound = 0;
         var _creatureHitsMade = 0;
         var _totalCreatureDamageDelivered = 0;
-        var _creaturesKilled = 0;
-        var _maxAggression = 0;
         var _maxAffinity = 0;
         var _totalCurrentAffinity = 0;
-        var _injuriesReceived = 0;
-        var _totalDamageReceived = 0;
         var _objectsChewed = 0;
         var _objectsBroken = 0;
         var _objectsGiven = 0;
@@ -47,7 +50,7 @@ module.exports.Player = function Player(aUsername) {
         var _objectsCollected = 0;
         var _locksOpened = 0;
         var _doorsOpened = 0;
-        var _score = 0;
+
 	    var _objectName = "Player";
 
         //private functions
@@ -983,12 +986,20 @@ module.exports.Player = function Player(aUsername) {
 
             if (receiver.isDestroyed()) { 
                 //wilful destruction of objects increases aggression further...
+                //note creatures return false for isDestroyed - we check "isDead" for those
                 _aggression ++;
                 removeObjectFromPlayerOrLocation(receiver.getName());
                 _destroyedObjects.push(receiver.getName());
                 resultString += emptyContentsOfContainer(receiver.getName());
                 resultString = "Oops. "+resultString 
             }; 
+
+            if (receiver.isDead()) {
+                //killing creatures increases aggression further...
+                //note artefacts return false for isDead - we check "isDestroyed" for those
+                _aggression ++;     
+                _killedCreatures.push(receiver.getName());          
+            };
 
             //did you use something fragile as a weapon?
             if (weapon) {
@@ -1224,6 +1235,9 @@ module.exports.Player = function Player(aUsername) {
                 };
             };
 
+            //check some stats
+            if (_maxAggression < _aggression) {_maxAggression = _aggression;};
+
             //if no time passes
             if (time <=0) {return resultString;};
 
@@ -1268,29 +1282,41 @@ module.exports.Player = function Player(aUsername) {
             return false;
         };
 
-        self.status = function(maxScore) {
+        self.stats = function(maxScore) {
             var status = "";
-            for (var i=0; i< _missions.length;i++) {
-                status+= _missions[i].getDescription()+"<br>";
-            };
-            if (_missions.length > 0) {status+="<br>";};
 
+            status += "<i>Statistics:</i><br>";
             status += "Your score is "+_score+" out of "+maxScore+"<br>";
-            if (!(_killedCount>0)) { status += "You have been killed "+_killedCount+" times.<br>"};
-            status += "You have taken "+_stepsTaken+" steps so far.<br>"; 
+            if (_killedCount > 0) { status += "You have been killed "+_killedCount+" times.<br>"};
+            status += "You have taken "+_stepsTaken+" steps.<br>"; 
             status += "You have visited "+_locationsFound+" locations.<br>";
             if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
-            
+            if (_killedCreatures.length > 0) {status += "You have killed "+_killedCreatures.length+" characters.<br>";};             
+
+            if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
+            if (_maxAggression > 0) status += "Your maximum aggression level so far is "+_maxAggression+".<br>";
+            if (_injuriesReceived > 0) status += "You have been injured "+_injuriesReceived+" times.<br>";
+            if (_totalDamageReceived > 0) status += "You have received "+_totalDamageReceived+" points of damage (in total) during this game.<br>";
+            //if (_objectsChewed > 0) status += "You have chewed "+_objectsChewed+" objects.<br>";
+            return status;
+        };
+
+        self.status = function(maxScore) {
+            var status = "";
+            if (_missions.length > 0) {status+="<i>Tasks:</i><br>";};
+            for (var i=0; i< _missions.length;i++) {
+                status+=_missions[i].getDescription()+"<br>";
+            };
+            if (_missions.length > 0) {status+="<br>";};
+
+            status += "<i>Status:</i><br>";            
             if (self.isStarving()) {status+="You're starving.<br>";}
             else if (self.isHungry()) {status+="You're hungry.<br>";};
             
             if (_bleeding) { status += "You're bleeding and need healing.<br>"};
-            if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
-            if (_injuriesReceived > 0) status += "You have been injured "+_injuriesReceived+" times.<br>";
-
-            status += "Your health is at "+_hitPoints+"%.";//remove this in the final game
+            status += "Your health is at "+healthPercent()+"%.";//remove this in the final game
             //status += self.health();
 
             return status;

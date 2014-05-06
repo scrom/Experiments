@@ -730,15 +730,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.isBreakable = function() {
-            return false; //it's hard to "break" a creature or corpse (at least for the purposes if the game)
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
         };
 
         self.isDestroyed = function() {
-            return false; //it's hard to "destroy" a creature or corpse (at least for the purposes if the game)
+            return false; //it's hard to "destroy" a creature or corpse (at least for the purposes of the game)
         };
 
         self.isBroken = function() {
-            return false; //it's hard to "break" a creature or corpse (at least for the purposes if the game)
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
         };
 
         self.canTravel = function() {

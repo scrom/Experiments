@@ -190,8 +190,11 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.health();
                         break;
                     case 'stats':
-                    case 'status':
                     case 'score':
+                        ticks = 0;
+                        description = _player.stats(_map.getMaxScore());
+                        break;
+                    case 'status':
                     case 'missions':
                         ticks = 0;
                         description = _player.status(_map.getMaxScore())+'<br><br>'+_player.getLocation().describe();
