@@ -18,10 +18,13 @@ module.exports.Player = function Player(aUsername) {
         var _aggression = 0;
         var _stealth = 1;
         var _killedCount = 0;
-        var _bleeding = false; //thinking of introducing bleeding if not healing (not used yet)
+        var _bleeding = false;
+        var _bleedingHealthThreshold = 50; //health needs to be at 50% or lower to be bleeding.
         var _startLocation;
         var _currentLocation;
         var _timeSinceEating = 0; 
+        var _maxMovesUntilHungry = 50;
+        var _additionalMovesUntilStarving = 10;
 
         //potential player stats
         var _stepsTaken = 0; //only incremented when moving between locations but not yet used elsewhere
@@ -942,7 +945,7 @@ module.exports.Player = function Player(aUsername) {
 
             //reduce aggression
             if (_aggression >0) {_aggression--;};
-            if (_hitPoints <=50) {_bleeding = true;};
+            if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
 
             if (_hitPoints <=0) {return self.kill();};
             
@@ -1036,7 +1039,7 @@ module.exports.Player = function Player(aUsername) {
             //limit to max
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
-            if (healthPercent() > 50) {_bleeding = false};
+            if (healthPercent() > _bleedingHealthThreshold) {_bleeding = false};
             console.log('player rested. HP remaining: '+_hitPoints);
 
             if  (!((initialKilledCount < _killedCount)|| initialHP >= _hitPoints)) {
@@ -1052,7 +1055,7 @@ module.exports.Player = function Player(aUsername) {
             //limit to max
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
-            if (healthPercent() > 50) {_bleeding = false;};
+            if (healthPercent() > _bleedingHealthThreshold) {_bleeding = false;};
             console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
@@ -1133,7 +1136,7 @@ module.exports.Player = function Player(aUsername) {
                     case (healthPercent()>80):
                         return "You're just getting warmed up.";
                         break;
-                    case (healthPercent()>50):
+                    case (healthPercent()>_bleedingHealthThreshold):
                         return "You've taken a fair beating.";
                         break;
                     case (healthPercent()>25):
@@ -1241,10 +1244,12 @@ module.exports.Player = function Player(aUsername) {
 
                 //feed?
                 _timeSinceEating++;
-                if (_timeSinceEating>60) {damage+=_timeSinceEating-60;}; //gets worse the longer it's left.
+                if (_timeSinceEating>_maxMovesUntilHungry+_additionalMovesUntilStarving) {damage+=_timeSinceEating-(_maxMovesUntilHungry+_additionalMovesUntilStarving);}; //gets worse the longer it's left.
             };
 
-            if (self.isHungry()) {resultString+="<br>You're hungry.";};
+            if (self.isStarving()) {resultString+="<br>You're starving. ";}
+            else if (self.isHungry()) {resultString+="<br>You're hungry.";};
+
             if (_bleeding) {resultString+="<br>You're bleeding. ";};           
 
             if (healPoints>0) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
@@ -1254,7 +1259,12 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.isHungry = function() {
-            if (_timeSinceEating >=50) {return true;};
+            if (_timeSinceEating >=_maxMovesUntilHungry) {return true;};
+            return false;
+        };
+
+        self.isStarving = function() {
+            if (_timeSinceEating >=_maxMovesUntilHungry+_additionalMovesUntilStarving) {return true;};
             return false;
         };
 
@@ -1272,7 +1282,10 @@ module.exports.Player = function Player(aUsername) {
             if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
-            if (self.isHungry()) { status += "You're hungry.<br>"};
+            
+            if (self.isStarving()) {status+="You're starving.<br>";}
+            else if (self.isHungry()) {status+="You're hungry.<br>";};
+            
             if (_bleeding) { status += "You're bleeding and need healing.<br>"};
             if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
             if (_injuriesReceived > 0) status += "You have been injured "+_injuriesReceived+" times.<br>";
