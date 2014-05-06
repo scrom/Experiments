@@ -20,6 +20,13 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
 	    var _objectName = "location";
 
+        var compassSort = function(a,b) {
+            var orderedDirections = ['n','s','e','w','u','d','i','o'];
+            if (orderedDirections.indexOf(a.getName()) < orderedDirections.indexOf(b.getName())) {return -1;};
+            if (orderedDirections.indexOf(a.getName()) > orderedDirections.indexOf(b.getName())) {return 1;};
+            return 0;
+        };
+
         //public member functions
         self.toString = function() {
             //var _missions = [];
@@ -81,6 +88,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
             for(var i = 0; i < _exits.length; i++) {
                 if (_exits[i].isVisible()){exitArray.push(_exits[i]);};
             };
+            exitArray.sort(compassSort);
             return exitArray;
         };
 
