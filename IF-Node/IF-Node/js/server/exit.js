@@ -4,7 +4,8 @@ module.exports.Exit = function Exit(aName, aSourceName, aDestinationName, isHidd
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aName;
-        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
+        //var _description = aDescription;
+        var _directions = ['n','North','s','South','e','East','w','West','i','in','o','out','u','up','d','down'];
         
         //long names are in an array with short names, just 1 index later - pretty crappy but does the job
         var _longName = _directions[_directions.indexOf(_name)+1];

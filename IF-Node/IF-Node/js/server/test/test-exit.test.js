@@ -14,7 +14,7 @@ exports.canCreateExitObject = function (test) {
     var sourceName = 'source';
     var destinationName = 'location';
     var e0 = new exit.Exit(exitName, sourceName, destinationName);
-    var expectedResult = '{"object":"exit","name":"n","longname":"north","source":"source","destination":"location", "hidden":"false"}';
+    var expectedResult = '{"object":"exit","name":"n","longname":"North","source":"source","destination":"location", "hidden":"false"}';
     var actualResult = e0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -26,7 +26,7 @@ exports.canCreateExitObject.meta = { traits: ["Exit Test", "Constructor Trait"],
 
 exports.longNameShouldMatchName = function (test) {
     var exitName = 'n';
-    var longName = 'north';
+    var longName = 'North';
     var destinationName = 'location';
     var e0 = new exit.Exit(exitName, destinationName);
     test.equal(e0.getLongName(), longName);
@@ -104,7 +104,7 @@ exports.showHiddenExitReturnsSensibleMessage = function (test) {
     var destinationName = 'location';
     var e0 = new exit.Exit(exitName, sourceName, destinationName);
     e0.hide();
-    var expectedMessage = "You reveal a new exit: 'north'."
+    var expectedMessage = "You reveal a new exit: 'North'."
     test.equal(e0.show(), expectedMessage);
     test.done();
 };

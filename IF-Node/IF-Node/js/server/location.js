@@ -67,7 +67,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.getExit = function(aDirection) {
             for(var i = 0; i < _exits.length; i++) {
-                if(_exits[i].getName() == aDirection) {
+                if(_exits[i].getName().toLowerCase() == aDirection.toLowerCase()) {
                     console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
                     return _exits[i];
                 };
