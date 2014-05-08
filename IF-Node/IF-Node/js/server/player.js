@@ -725,9 +725,30 @@ module.exports.Player = function Player(aUsername) {
 
         self.examine = function(verb, artefactName) {
             var resultString = "";
+            var newMissions = [];
 
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
-            if (stringIsEmpty(artefactName)){ return self.getLocation().describe();};
+            if (stringIsEmpty(artefactName)){ 
+                resultString = _currentLocation.describe();
+
+                //retrieve missions from location:
+
+                newMissions = _currentLocation.getMissions();
+                //remove any with dialogue from this list.
+                for (var j=0; j< newMissions.length;j++) {
+                    if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
+                };
+                if (newMissions.length>0) {resultString+= "<br><br>";};
+                for (var i=0; i< newMissions.length;i++) {
+                    if (!(newMissions[i].isStatic())) {
+                        _missions.push(newMissions[i]);
+                    };
+                    resultString+= newMissions[i].getDescription()+"<br>";
+                };
+
+                return resultString;
+            
+            };
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
@@ -740,7 +761,7 @@ module.exports.Player = function Player(aUsername) {
             };
 
             //if it's not a book, we'll get this far...
-            var newMissions = artefact.getMissions();
+            newMissions = artefact.getMissions();
             //remove any with dialogue from this list.
             for (var j=0; j< newMissions.length;j++) {
                 if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
@@ -851,9 +872,19 @@ module.exports.Player = function Player(aUsername) {
 
             //retrieve missions from location:
             var newMissions = _currentLocation.getMissions();
-        
+
+            //remove any with dialogue from this list.
+            for (var j=0; j< newMissions.length;j++) {
+                if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
+            };
+
+            if (newMissions.length>0) {resultString+= "<br><br>";};
             for (var i=0; i< newMissions.length;i++) {
-                if (!(newMissions[i].isStatic())) {_missions.push(newMissions[i]);};
+                if (!(newMissions[i].isStatic())) {
+                    _missions.push(newMissions[i]);
+                };
+
+                resultString+= newMissions[i].getDescription()+"<br>";
             };
 
             return resultString;
@@ -1333,11 +1364,12 @@ module.exports.Player = function Player(aUsername) {
 
         self.status = function(maxScore) {
             var status = "";
-            if (_missions.length > 0) {status+="<i>Tasks:</i><br>";};
-            for (var i=0; i< _missions.length;i++) {
-                status+=_missions[i].getDescription()+"<br>";
+            var missions = _missions.concat(_currentLocation.getMissions());
+            if (missions.length > 0) {status+="<i>Tasks:</i><br>";};
+            for (var i=0; i< missions.length;i++) {
+                status+=missions[i].getDescription()+"<br>";
             };
-            if (_missions.length > 0) {status+="<br>";};
+            if (missions.length > 0) {status+="<br>";};
 
             status += "<i>Status:</i><br>";            
             if (self.isStarving()) {status+="You're starving.<br>";}
@@ -1346,6 +1378,8 @@ module.exports.Player = function Player(aUsername) {
             if (_bleeding) { status += "You're bleeding and need healing.<br>"};
             status += "Your health is at "+healthPercent()+"%.";//remove this in the final game
             //status += self.health();
+
+            status +='<br><br>'+_currentLocation.describe()
 
             return status;
         };

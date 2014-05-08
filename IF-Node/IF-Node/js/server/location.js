@@ -150,11 +150,6 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.describe = function() {
             var resultString = _description;
-            //retrieve missions from location:
-            if (_missions.length>0) {resultString+= "<br><br>";};
-            for (var i=0; i< _missions.length;i++) {
-                resultString+= _missions[i].getDescription()+"<br>";
-            };
 
             if (_inventory.size() > 0) {
                 //clean up grammar here (there is/there are)
