@@ -1468,6 +1468,48 @@
       }
     ],
     "inventory": [
+	{
+        "object": "artefact",
+        "name": "projector",
+        "description": "a projector",
+        "detailedDescription": "It whines in a plaintive way when switched on.",
+        "attributes": {
+            "weight": 6,
+            "carryWeight": 0,
+            "attackStrength": 0,
+            "type": "junk",
+            "canCollect": false,
+            "canOpen": false,
+            "isEdible": false,
+			"isBreakable": true,
+			"isBroken": true,
+			"switched": true
+        },
+        "synonyms": [
+            "ohp",
+			"screen"
+		],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "repairProjector",
+            "description": "The projector's broken, someone needs to fix it.",
+            "parent": "null",
+            "missionObject": "projector",
+            "static": "false",
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "isBroken": "false",
+              "isDamaged": "false"
+            },
+            "destination": "projector",
+            "reward": {
+              "score": 25,
+              "successMessage": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curse can only lead to <i>bad things!</i><br> Have 25 points."
+            }
+          }
+        ]
+      },
       {
         "object": "creature",
         "name": "simon",
@@ -1615,6 +1657,7 @@
             "destination": "Vic",
             "reward": {
               "score": 10,
+			  "repairSkill": "projector",
               "delivers": {
                 "object": "artefact",
                 "name": "keyfob",
@@ -2084,7 +2127,74 @@
         "destination": "stairs-first-floor",
         "hidden": "false"
       }
-    ]
+    ],
+	"inventory": [
+		{
+		"object": "creature",
+		"name": "amanda",
+		"displayname": "Amanda",
+		"description": "Amanda from IS",
+		"detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
+		"attributes": {
+			"weight": 90,
+			"attackStrength": 25,
+			"gender": "female",
+			"type": "friendly",
+			"carryWeight": 12,
+			"health": 215,
+			"affinity": 0,
+			"canTravel": true,
+			"traveller": true
+		},
+		"synonyms": [
+			"mandy",
+			"manda",
+			"her"
+		],
+		"missions": [
+			{
+				"object": "mission",
+				"name": "teachProjectorRepair",
+				"description": "Amanda knows how to fix stuff.",
+				"dialogue": [
+					"'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's everything you need.'"
+				],
+				"parent": "null",
+				"missionObject": "Amanda",
+				"static": "true",
+				"conditionAttributes": {
+					"alive": "true"
+				},
+				"destination": "Amanda",
+				"reward": {
+					"repairSkill": "projector",
+					"delivers": {
+						"object": "artefact",
+						"name": "bulb",
+						"description": "a projector bulb",
+						"detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
+						"attributes": {
+							"weight": 0,
+							"carryWeight": 0,
+							"attackStrength": 5,
+							"type": "junk",
+							"canCollect": true,
+							"canOpen": false,
+							"isEdible": false,
+							"isBreakable": true
+						},
+						"synonyms": [
+							"lightbulb",
+							"light bulb",
+							"projector bulb"
+						]
+					},
+					"successMessage": "Amanda hands you a projector bulb."
+				}
+			}
+		]
+	}
+	]
   },
   {
     "object": "location",
