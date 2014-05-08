@@ -276,9 +276,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var missions = [];
             for (var i=0; i < _missions.length; i++) {
                 missions.push(_missions[i]);
-                if (!(_missions[i].isStatic())) {
-                    _missions.splice(i,1);
-                };
             };
             return missions;
         };

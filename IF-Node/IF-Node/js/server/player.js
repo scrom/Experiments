@@ -736,12 +736,14 @@ module.exports.Player = function Player(aUsername) {
                 newMissions = _currentLocation.getMissions();
                 //remove any with dialogue from this list.
                 for (var j=0; j< newMissions.length;j++) {
+                    //note we're splicing a *copy*, not the original array!
                     if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
                 };
                 if (newMissions.length>0) {resultString+= "<br><br>";};
                 for (var i=0; i< newMissions.length;i++) {
                     if (!(newMissions[i].isStatic())) {
                         _missions.push(newMissions[i]);
+                        _currentLocation.removeMission(newMissions[i].getName());
                     };
                     resultString+= newMissions[i].getDescription()+"<br>";
                 };
@@ -770,6 +772,7 @@ module.exports.Player = function Player(aUsername) {
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {
                     _missions.push(newMissions[i]);
+                    artefact.removeMission(newMissions[i].getName());
                 };
                 resultString+= newMissions[i].getDescription()+"<br>";
             };
@@ -821,6 +824,7 @@ module.exports.Player = function Player(aUsername) {
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {
                     _missions.push(newMissions[i]);
+                    artefact.removeMission(newMissions[i].getName());
                 };
                 resultString+= newMissions[i].getDescription()+"<br>";
             };
@@ -882,6 +886,7 @@ module.exports.Player = function Player(aUsername) {
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {
                     _missions.push(newMissions[i]);
+                    _currentLocation.removeMission(newMissions[i].getName());
                 };
 
                 resultString+= newMissions[i].getDescription()+"<br>";
