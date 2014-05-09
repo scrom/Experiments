@@ -1501,7 +1501,8 @@
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false",
-              "isDamaged": "false"
+              "isDamaged": "false",
+			  "contains": ["bulb"]
             },
             "destination": "projector",
             "reward": {

@@ -117,6 +117,20 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             return response;
         };
 
+        self.checkForRequiredContents = function(missionObject, requiredContents) {
+            var contentsCount = 0;
+            var requiredContentsCount = requiredContents.length;
+            for (var i=0; i<requiredContents.length;i++) {
+                if (missionObject.getInventoryObject().check(requiredContents[i])) {contentsCount++;};
+            };
+
+            console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+            
+            if (contentsCount == requiredContentsCount) {return true;};
+
+            return false;
+        };
+
         self.checkState = function(playerInventory, location) {
             //var coffeeMission = new missionObjectModule.Mission('sweetCoffee','Your first task is to get yourself a nice sweet cup of coffee.','',null,'sweet coffee',5,'player',{points: 50});
             var missionObject;
@@ -151,10 +165,22 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                 var objectAttributes = missionObject.getCurrentAttributes();
                 var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;
                 var successCount = 0;
+
+                //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+                if (_conditionAttributes["contains"]) {
+                        
+                    if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
+                        successCount++;
+                    };                           
+                };
+
+                //check the rest of the object attributes if they exist
                 for (var attr in _conditionAttributes) {
                     if (objectAttributes.hasOwnProperty(attr)) {
-                        console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);
-                        if (objectAttributes[attr] == _conditionAttributes[attr]) {successCount++;};
+                        console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);                        
+                        if (objectAttributes[attr] == _conditionAttributes[attr]) {
+                            successCount++;
+                        };
                     };
                 };
 
