@@ -216,6 +216,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.canOpen = _opens;                    
             currentAttributes.isOpen = _open;
             currentAttributes.charges = _charges;
+            currentAttributes.checkComponents = self.checkComponents();
             currentAttributes.switched = _switched;
             currentAttributes.isOn = _on;
             currentAttributes.isEdible = _edible;

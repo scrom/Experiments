@@ -156,6 +156,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
            return null;
         };
 
+        //returns "intact" components only!
         self.getComponents = function(anObjectName) {
             var returnObjects = [];
             for(var index = 0; index < _items.length; index++) {

@@ -1502,6 +1502,7 @@
               "isDestroyed": "false",
               "isBroken": "false",
               "isDamaged": "false",
+			  "checkComponents": "true",
 			  "contains": ["bulb"]
             },
             "destination": "projector",
