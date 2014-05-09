@@ -476,14 +476,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.canContain = function(anObject) {
-            //broken objects can't contain anything
-            if (_destroyed|| _broken) {return false};
+            //broken containers can't contain anything
+            if (_destroyed) {return false;};
+            if (self.getType == "container" && _broken) {return false;};
             return _inventory.canContain(anObject, self.getName());
         };
 
         self.canCarry = function(anObject) {
-            //broken objects can't contain anything
-            if (_destroyed|| _broken) {return false};
+            //broken containers can't contain anything
+            if (_destroyed) {return false};
+            if (self.getType == "container" && _broken) {return false;};
             if (self.isLocked()) {return false;};
             return _inventory.canCarry(anObject);
         };
@@ -494,6 +496,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getAllObjects = function() {
             return _inventory.getAllObjects();
+        };
+
+        self.getComponents = function(anObjectName) {
+            return _inventory.getComponents(anObjectName);
         };
 
         self.removeObject = function(anObjectName) {
@@ -530,6 +536,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(_switched)) {return false;};
             if (_broken||_destroyed) {return false;};
             if (_charges ==0) {return false;}; //we use -1 to mean unlimited
+            if (!(self.checkComponents())) {return false;};
             console.log(self.getDisplayName()+" has power.");
             return true;
         };
@@ -547,7 +554,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.switchOnOrOff = function(verb, onOrOff) {
             if (_broken||self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" broken.";};
             if (!(_switched)) {return "There's no obvious way to "+verb+" "+_itemSuffix+" on or off.";};
-            if (!(self.hasPower())) {return initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";};
+            if (!(self.hasPower())) {
+                var returnString = initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
+                if (!(self.checkComponents())) {returnString +=" "+initCap(_itemDescriptivePrefix)+" missing something.";};
+                return returnString;
+
+            };
             switch(onOrOff) {
                 case "on":
                     if (_on) {return initCap(_itemDescriptivePrefix)+" already on.";}; 
@@ -597,7 +609,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //if we have all components (with charges), return a delivery item (and consume a charge on each component)
             var components = _inventory.getComponents(self.getName());
             console.log("Required components: "+_requiredComponentCount+" Current Components: "+components.length);
-            if (components.length != _requiredComponentCount) {return null;}; //we don't have everything we need yet.
+            if (components.length < _requiredComponentCount) {return null;}; //we don't have everything we need yet.
             //iterate thru each component and remove charge.
             for (var i=0; i<components.length; i++) {
                 self.consumeItem(components[i]);
@@ -607,7 +619,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return deliveredItem;
         };
 
-        self.repair = function(playerRepairSkills) {
+        self.repair = function(playerRepairSkills, playerInventory) {
+            var resultString = "";
+
             if(_destroyed) {return _itemDescriptivePrefix+" beyond repair."};
             console.log("Checking player repair skills: "+playerRepairSkills);
             var playerHasRequiredSkill = false;
@@ -617,7 +631,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     break;
                 };
             };
-            if (!(playerHasRequiredSkill)) {return "You don't have the skills needed to repair "+_itemSuffix; };
+            if (!(playerHasRequiredSkill)) {return "Unfortunately you don't have the skills needed to fully repair "+_itemSuffix+"."; };
 
             _description = _initialDescription;
             _detailedDescription = _initialDetailedDescription;
@@ -625,7 +639,58 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             _damaged = false;
             _chewed = false;
 
-            return "Great work, you fixed "+_itemSuffix;
+            resultString += "You fixed "+self.getDisplayName();
+
+            if (self.checkComponents()) { return resultString+".";};
+        
+            //if there's still components missing...
+            //attempt to add components from player inventory
+            var components = playerInventory.getComponents(self.getName());
+            if (components.length == 0) {return resultString +" but "+ _itemDescriptivePrefix.toLowerCase()+" still missing something.";};
+       
+            var addedComponentCount = 0;
+            var notAddedComponentCount = 0;
+            var addedComponentString = " and put ";
+
+            for (var i=0; i<components.length; i++) {
+                if (self.canContain(components[i], self.getName())) {
+                    if (addedComponentCount>0 && addedComponentCount==components.length-1) {addedComponentString +=" and ";};  
+                    if (addedComponentCount>0 && addedComponentCount<components.length-1) {addedComponentString +=", ";};                     
+                    addedComponentString += components[i].getDisplayName();
+                    _inventory.add(components[i]);
+                    playerInventory.remove(components[i].getName());
+                    addedComponentCount++;
+                } else {
+                    notAddedComponentCount++;
+                };
+            };
+                
+            if (addedComponentCount>0) {
+                resultString+= addedComponentString+" you were carrying into "+_itemSuffix+".<br>";
+            }
+            else {
+                resultString+="."
+            };
+
+
+            //check we have everything we need
+            if (!(self.checkComponents())) {
+                resultString += "<br>You make a valiant attempt at getting "+_itemSuffix+" fully working but ";
+
+                if (notAddedComponentCount>0) {
+                    if (_locked) {
+                        resultString += _itemDescriptivePrefix.toLowerCase()+" locked.";
+                    } else {
+                        resultString += "you can't get all the right parts to fit.";
+                    };
+                    
+                } else {
+                    resultString += _itemDescriptivePrefix.toLowerCase()+" still missing something.";
+                };
+            };
+
+            return resultString;
+
         };
 
         self.break = function(deliberateAction) {
@@ -852,7 +917,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //if not a deliverable, check inventory
             if (!(objectToGive)) { objectToGive = _inventory.getObject(anObjectName); };
 
-            if (!(objectToGive)) {return self.getDisplayName()+" doesn't contain "+anObjectName+".";};
+            if (!(objectToGive)) {return initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
 
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
@@ -884,6 +949,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     //location has container
                 //    return objectToGive.getDisplayName()+ "has been added to "+suitableContainer.getDisplayName()+" that happened to be nearby.";
                 };
+
+                if (self.getName() == objectToGive.getComponentOf()) {
+                      playerInventory.add(objectToGive);
+                      if (_switched) {self.switchOnOrOff('switch','off');}; //kill the power
+                      return "You take "+objectToGive.getDisplayName()+".<br>Hopefully nobody needs "+self.getDisplayName()+" to work any time soon.<br>";      
+                };
+
                 return "You're "+playerInventory.add(objectToGive);
             };
 
@@ -891,11 +963,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.receive = function(anObject) {
-            if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
-            if (!(_locked)) {
-                return _inventory.add(anObject);
-            };
-            return initCap(_itemDescriptivePrefix)+" locked.";
+            if (self.getType == "container" && _broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
+            if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
+            if (_locked) {return initCap(_itemDescriptivePrefix)+" locked.";};
+
+            return _inventory.add(anObject);
         };
 
         self.isOpen = function() {
@@ -952,7 +1024,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.canCarry = function(anObject) {
-            if (self.isDestroyed()||_broken) {return false;};
+            if (self.isDestroyed()) {return false;};
+            //broken containers can't carry things but broken objects may be able to!
+            if (self.getType == "container" && self.isBroken()) {return false;}; 
             if (_locked) {return false;};
             return _inventory.canCarry(anObject);
         };

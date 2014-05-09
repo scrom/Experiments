@@ -61,7 +61,6 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         };
 
         self.canContain = function(anObject,containerName) {
-            if (_maxCarryingWeight ==0) {return false;};
 
             var requiredContainer = anObject.getRequiredContainer();
             if (requiredContainer) {
@@ -74,6 +73,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         self.canCarry = function(anObject) {
             if (anObject != undefined) {
                 if ((anObject.getWeight()+self.getWeight())>_maxCarryingWeight) {
+                    console.log("can't carry total weight of "+anObject.getWeight()+self.getWeight());
                     return false;
                 };
                 return true;
@@ -159,10 +159,18 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             var returnObjects = [];
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getComponentOf() == anObjectName) {
-                    if(_items[index].chargesRemaining() > 0) {
+                    if(_items[index].chargesRemaining() > 0 && (!(_items[index].isBroken()) && !(_items[index].isDestroyed()))) {
                         console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                         returnObjects.push(_items[index]);
                     } else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);};                     
+                };
+
+                if(_items[index].getType() == 'container' && (!(_items[index].isLocked()))) {
+                    if (_items[index].isOpen()) {
+                        //only confirm item from open, unlocked containers - this way we know the player has discovered them
+                        var containerObjects = _items[index].getComponents(anObjectName);
+                        returnObjects = returnObjects.concat(containerObjects);
+                    };
                 };
             };
             return returnObjects;

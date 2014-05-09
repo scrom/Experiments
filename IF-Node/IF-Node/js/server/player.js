@@ -515,6 +515,8 @@ module.exports.Player = function Player(aUsername) {
 
         /*Allow player to put something in an object */
         self.put = function(verb, artefactName, receiverName, requiredContainer){
+                var resultString = "";
+
                 if (stringIsEmpty(artefactName)){ return verb+" what?";};
                 if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" with what?";};
 
@@ -557,8 +559,22 @@ module.exports.Player = function Player(aUsername) {
                 if (!(collectedArtefact)) { return  "Sorry, "+collectedArtefact.getSuffix()+" can't be picked up.";};
 
                 //put the x in the y
-                receiver.receive(collectedArtefact);
-                return "You put "+collectedArtefact.getDisplayName()+" in "+receiver.getDisplayName()+".";
+                resultString = "You "+verb+" "+collectedArtefact.getDisplayName()+" in "+receiver.getDisplayName()+".<br>";
+                resultString += initCap(receiver.getDescriptivePrefix())+" "+receiver.receive(collectedArtefact);
+
+                //did we just add a missing component?
+                if (collectedArtefact.getComponentOf() == receiver.getName()) {
+                    //if we have all components and it needs reparing...
+                    if (receiver.checkComponents()) {
+                        resultString += "<br>That's all the missing ingredients in place.";
+                        //would like to attempt an auto-repair here
+                        if (receiver.isBroken()) {     
+                            resultString += "<br>"+receiver.repair(_repairSkills, _inventory);                 
+                        };
+                    };
+                };
+
+                return resultString;
 
             };
 
@@ -574,11 +590,6 @@ module.exports.Player = function Player(aUsername) {
                 //check receiver is a container 
                 if (receiver.getType() == 'creature') {
                     return  "It's probably better to 'ask' "+receiver.getSuffix()+"."; 
-                };
-
-                if (receiver.getType() != 'container') {
-                    //or doesn't deliver anything?
-                    return  "There's nothing in "+receiver.getSuffix()+"."; 
                 };
 
                 var locationInventory = _currentLocation.getInventoryObject();
@@ -792,7 +803,7 @@ module.exports.Player = function Player(aUsername) {
 
             if (!(artefact.isBroken())) {return artefact.getDescriptivePrefix()+" not broken.";}; //this will catch creatures
             
-            return artefact.repair(_repairSkills);
+            return artefact.repair(_repairSkills, _inventory);
 
         };
 
