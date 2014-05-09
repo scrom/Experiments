@@ -770,16 +770,18 @@
             "name": "beans",
             "description": "Before you can get any coffee, this machine needs beans.",
             "parent": "null",
-            "missionObject": "beans",
+            "missionObject": "machine",
             "static": "true",
             "conditionAttributes": {
               "isDestroyed": "false",
-              "isBroken": "false"
+              "isBroken": "false",
+			  "checkComponents": "true",
+			  "contains": ["beans"]
             },
             "destination": "machine",
             "reward": {
               "score": 50,
-              "successMessage": "Congratulations. You filled the coffee machine with beans, have 50 points!"
+              "successMessage": "Congratulations. You got the coffee machine working, have 50 points!"
             }
           }
         ]
