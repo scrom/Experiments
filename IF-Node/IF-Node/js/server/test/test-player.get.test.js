@@ -46,7 +46,7 @@ exports.tearDown = function (callback) {
 exports.canGetObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var expectedResult = "You're now carrying "+artefactDescription+".";
+    var expectedResult = "You get the artefact.";
     var actualResult = p0.get('get', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -71,7 +71,7 @@ exports.canGetContainer = function (test) {
     var artefactDescription = container.getDescription();
     var artefactName = container.getName()
     container.receive(a1);
-    var expectedResult = "You're now carrying "+artefactDescription+".";
+    var expectedResult = "You get the container.";
     var actualResult = p0.get('get', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -117,7 +117,7 @@ exports.canGetObjectFromOpenContainerInLocation = function (test) {
     container.receive(a1);
     var artefactDescription = 'a box';
     var artefactName = 'box'
-    var expectedResult = "You're now carrying "+artefactDescription+".";
+    var expectedResult = "You get the box.";
     var actualResult = p0.get('get', a1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -128,11 +128,13 @@ exports.canGetObjectFromOpenContainerInLocation = function (test) {
 exports.canGetObjectFromOpenContainerInLocation.meta = { traits: ["Player.Get Test", "Inventory Trait", "Location Trait", "Action Trait", "Container Trait"], description: "Test that a player can get an object from an open container in a location." };
 
 exports.cannotGetObjectFromClosedContainerInLocation = function (test) {
-    container.moveOrOpen('open');  
-    container.receive(a1);
+    console.log(container.moveOrOpen('open'));  
+    console.log(container.receive(a1));
+    console.log(container.close('close'));
+    console.log(container.isOpen());
     var artefactDescription = 'a box';
     var artefactName = 'box'
-    var expectedResult = "You're now carrying "+artefactDescription+".";
+    var expectedResult = "There's no box available here at the moment.";
     var actualResult = p0.get('get', a1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

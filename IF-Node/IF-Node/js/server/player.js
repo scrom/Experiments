@@ -228,10 +228,10 @@ module.exports.Player = function Player(aUsername) {
                     return "You're carrying "+inventoryObject.getSuffix()+" already.";
                 };
 
-                //if object doesn't exist, attempt "relinquish" from each container object in location.
+                //if object doesn't exist, attempt "relinquish" from each non-creature object in location.
                 var allLocationObjects = _currentLocation.getAllObjects();
                 for (var i=0;i<allLocationObjects.length;i++) {
-                    if (allLocationObjects[i].getType() == 'container') {
+                    if (allLocationObjects[i].getType() != 'creature') {
                         var locationInventory = _currentLocation.getInventoryObject();
                         var tempResultString = allLocationObjects[i].relinquish(artefactName, _inventory, locationInventory, _aggression);
                         if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
@@ -261,7 +261,8 @@ module.exports.Player = function Player(aUsername) {
             var collectedArtefact = removeObjectFromLocation(artefactName);
             if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";}; //just in case it fails for any other reason.
         
-            return "You're "+_inventory.add(collectedArtefact);          
+            _inventory.add(collectedArtefact);
+            return "You "+verb+" "+collectedArtefact.getDisplayName()+".";          
         };
 
         /*Allow player to get all available objects from a location*/
@@ -491,10 +492,13 @@ module.exports.Player = function Player(aUsername) {
 
             resultString = "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName();
             if (container) {
+
+                container.receive(newObject);
+
                 if (containerIsInLocation) {
-                    return resultString + ".<br>You use "+container.getDisplayName()+" found nearby. "+container.getDescriptivePrefix()+" "+container.receive(newObject);
+                    return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+".";
                 } else {
-                    return resultString +".<br>Your "+container.getName()+" is "+container.receive(newObject);
+                    return resultString +".<br>Your "+container.getName()+" now contains "+newObject.getName();
                 };
             
             };

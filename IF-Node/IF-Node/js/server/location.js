@@ -111,7 +111,8 @@ exports.Location = function Location(aName, aDescription, isDark) {
         };
 
         self.addObject = function(anObject) {
-            return "location is "+_inventory.add(anObject);
+            _inventory.add(anObject);
+            return "location now contains "+anObject.getDescription()+".";
         };
 
         self.removeObject = function(anObjectName) {

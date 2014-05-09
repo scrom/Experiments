@@ -80,7 +80,7 @@ exports.canCreateCoffeeMachineInKitchen = function (test) {
 
     var bottomkitchen = new location.Location('kitchen-ground-floor',"You're in the atrium kitchen."); //add comfy sofa and shelves containing books
     
-    var expectedResult = 'location is now carrying a coffee vending machine.';
+    var expectedResult = 'location now contains a coffee vending machine.';
     var actualResult = bottomkitchen.addObject(coffeeMachine);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -116,7 +116,7 @@ exports.canVendCoffeeIntoCup = function (test) {
     coffeeMachine.receive(coffeeBeans);
     coffeeMachine.relinquish('coffee', _inventory);
 
-    var expectedResult = 'Your cup is now carrying coffee.';
+    var expectedResult = 'You now have a cup of coffee.';
     var actualResult = coffeeMachine.relinquish('coffee', _inventory);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

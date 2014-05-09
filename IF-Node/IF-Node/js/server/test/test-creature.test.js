@@ -114,7 +114,7 @@ exports.creatureCanReceiveObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
-    var expected = "That was kind. It is now carrying an artefact of little consequence.";
+    var expected = "The creature now owns an artefact of little consequence.";
     var actual = c0.receive(a0);
     console.log("expected: "+expected);
     console.log("actual: "+actual);

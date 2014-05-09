@@ -28,7 +28,7 @@ exports.tearDown = function (callback) {
 exports.addReturnsMessage = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var expectedResult = "now carrying "+artefactDescription+".";
+    var expectedResult = "success: "+artefactDescription+".";
     var actualResult = i0.add(a0);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

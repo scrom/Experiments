@@ -414,7 +414,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if(self.canCarry(anObject)) {                
                 _affinity++;
-                return "That was kind. "+_genderPrefix+" is "+_inventory.add(anObject);
+                _inventory.add(anObject);
+                return initCap(self.getDisplayName())+" now owns "+anObject.getDescription()+".";
             };
             return '';
         };
@@ -446,7 +447,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
                 if (playerInventory.canCarry(objectToGive)) {
-                    return "You're "+playerInventory.add(objectToGive);
+                    playerInventory.add(objectToGive);
+                    return "You successfully steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";
                     _inventory.remove(anObjectName);
                 };
 
@@ -470,8 +472,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
                 if (playerInventory.canCarry(objectToGive)) {
-                    return "You're "+playerInventory.add(objectToGive);
+                    playerInventory.add(objectToGive);
                     _inventory.remove(anObjectName);
+                    if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from "+_genderPossessiveSuffix+" corpse.";};
+                    return initCap(self.getDisplayName())+" hands you "+objectToGive.getDisplayName()+".";
                 };
 
                 return "Sorry. You can't carry "+anObjectName+" at the moment."

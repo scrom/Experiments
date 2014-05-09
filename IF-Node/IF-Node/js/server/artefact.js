@@ -819,12 +819,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         exitResult = "A door opens somewhere.";
                     };
 
-                    return "you "+verb+" "+self.getDisplayName()+". "+exitResult;
+                    return "You "+verb+" "+self.getDisplayName()+". "+exitResult;
                 };
                
 
                 if (verb == 'open') {
-                    var returnString = "you "+verb+" "+self.getDisplayName()+".";
+                    var returnString = "You "+verb+" "+self.getDisplayName()+".";
                     if (_inventory.size() > 0) {returnString +=" It contains "+_inventory.describe()+".";}
                     else {returnString +=" It's empty.";};
                     return returnString;
@@ -903,7 +903,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.relinquish = function(anObjectName, playerInventory, locationInventory, playerAggression) {
             //note we throw away playerAggression
 
-            if ((!_delivers) && _locked && (!(self.isDestroyed()))) {return initCap(_itemDescriptivePrefix)+" locked.";};
+            //are we attempting to retrieve a delivery object?
+            var delivering = false;
+            if (_delivers) {
+                if (_delivers.syn(anObjectName)) {
+                    delivering = true;
+                };
+            };
+
+            if ((!delivering) && _locked && (!(self.isDestroyed()))) {return initCap(_itemDescriptivePrefix)+" locked.";};
+            if ((!delivering) && (!(self.isOpen()))) {return initCap(_itemDescriptivePrefix)+" closed.";};
 
             var objectToGive;
 
@@ -940,7 +949,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //add to suitable container or to player inventory
                 //if container is required, we _know_ we have a suitable container by this point.
                 if (requiresContainer) { 
-                    return "Your "+suitableContainer.getName()+" is "+suitableContainer.receive(objectToGive);
+                    suitableContainer.receive(objectToGive);
+                    return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
                 //    suitableContainer.receive(objectToGive);
 
                 //    if (playerInventory.check(suitableContainer.getName())) {
@@ -951,13 +961,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //    return objectToGive.getDisplayName()+ "has been added to "+suitableContainer.getDisplayName()+" that happened to be nearby.";
                 };
 
+                playerInventory.add(objectToGive);
+
                 if (self.getName() == objectToGive.getComponentOf()) {
-                      playerInventory.add(objectToGive);
+                      
                       if (_switched) {self.switchOnOrOff('switch','off');}; //kill the power
                       return "You take "+objectToGive.getDisplayName()+".<br>Hopefully nobody needs "+self.getDisplayName()+" to work any time soon.<br>";      
                 };
 
-                return "You're "+playerInventory.add(objectToGive);
+                return "You're now carrying "+objectToGive.getDescription()+".";
             };
 
             return "Sorry. You can't carry "+anObjectName+" at the moment."
@@ -968,7 +980,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
             if (_locked) {return initCap(_itemDescriptivePrefix)+" locked.";};
 
-            return _inventory.add(anObject);
+            _inventory.add(anObject);
+            return self.getDisplayName()+" now contains "+anObject.getDescription();
         };
 
         self.isOpen = function() {

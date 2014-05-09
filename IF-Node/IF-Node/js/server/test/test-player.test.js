@@ -248,7 +248,7 @@ exports.hitAndKillPlayerReturnsExpectedStringResult.meta = { traits: ["Player Te
 
 exports.canGiveObjectToCreature = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = 'That was kind. He is now carrying a slab of sugary goodness.';
+    var expectedResult = 'The creature now owns a slab of sugary goodness.';
     var actualResult = p0.give('give','cake', c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -259,7 +259,7 @@ exports.canGiveObjectToCreature = function (test) {
 exports.canGiveObjectToCreature.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait"], description: "Test that a player can give an item from inventory to a creature." };
 
 exports.canAskCreatureForObject = function (test) {
-    var expectedResult = "You're now carrying a box.";
+    var expectedResult = "The creature hands you the box.";
     var actualResult = p0.ask('ask',c0.getName(), 'box');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -271,7 +271,7 @@ exports.canAskCreatureForObject.meta = { traits: ["Player Test", "Inventory Trai
 
 exports.canStealObjectFromCreature = function (test) {
     p0.setStealth(7); //crank stealth up to guarantee successful steal
-    var expectedResult = "You're now carrying a box.";
+    var expectedResult = "You successfully steal the box from the creature.";
     var actualResult = p0.steal('steal','box',c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
