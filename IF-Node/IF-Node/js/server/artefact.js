@@ -478,14 +478,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canContain = function(anObject) {
             //broken containers can't contain anything
             if (_destroyed) {return false;};
-            if (self.getType == "container" && _broken) {return false;};
+            if (self.getType() == "container" && _broken) {return false;};
             return _inventory.canContain(anObject, self.getName());
         };
 
         self.canCarry = function(anObject) {
             //broken containers can't contain anything
             if (_destroyed) {return false};
-            if (self.getType == "container" && _broken) {return false;};
+            if (self.getType() == "container" && _broken) {return false;};
             if (self.isLocked()) {return false;};
             return _inventory.canCarry(anObject);
         };
@@ -963,7 +963,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.receive = function(anObject) {
-            if (self.getType == "container" && _broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
+            if (self.getType() == "container" && _broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
             if (_locked) {return initCap(_itemDescriptivePrefix)+" locked.";};
 
@@ -1026,7 +1026,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canCarry = function(anObject) {
             if (self.isDestroyed()) {return false;};
             //broken containers can't carry things but broken objects may be able to!
-            if (self.getType == "container" && self.isBroken()) {return false;}; 
+            if (self.getType() == "container" && self.isBroken()) {return false;}; 
             if (_locked) {return false;};
             return _inventory.canCarry(anObject);
         };

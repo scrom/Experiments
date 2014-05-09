@@ -98,7 +98,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
                         console.log(anObjectName+" removed from "+_ownerName+" inventory");
                         return returnObject;
                     };
-                    if(localInventory[index].getType() == 'container' && (!(localInventory[index].isLocked()))) {
+                    if(localInventory[index].getType() != 'creature' && (!(localInventory[index].isLocked()))) {
                         if (localInventory[index].isOpen()) {
                             //only remove from open, unlocked containers - this way we know the player has discovered them
                             var containerInventory = localInventory[index].getInventoryObject()
@@ -127,14 +127,14 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             return list;
         };
 
-        //recursively gets objects in containers
+        //recursively gets objects in other objects
         self.getObject = function(anObjectName) {
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].syn(anObjectName)) {
                     console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
                     return _items[index];
                 };
-                if(_items[index].getType() == 'container' && (!(_items[index].isLocked()))) {
+                if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
                     if (_items[index].isOpen()) {
                     //only confirm item from open, unlocked containers - this way we know the player has discovered them
                         var object = _items[index].getInventoryObject().getObject(anObjectName);
@@ -145,6 +145,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
            return null;
         };
 
+        //this one doesn't cascase to contents of other objects.
         self.getObjectByType = function(anObjectType) {
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getType() == anObjectType) {
@@ -165,7 +166,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
                     } else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);};                     
                 };
 
-                if(_items[index].getType() == 'container' && (!(_items[index].isLocked()))) {
+                if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
                     if (_items[index].isOpen()) {
                         //only confirm item from open, unlocked containers - this way we know the player has discovered them
                         var containerObjects = _items[index].getComponents(anObjectName);
@@ -184,7 +185,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             var objects = _items;
             for (var i=0;i<_items.length;i++) {
                 //only return accessible children.
-                if(_items[i].getType() == 'container' && (!(_items[i].isLocked()))) {
+                if (_items[i].getType() != 'creature' && (!(_items[i].isLocked()))) {
                     if (_items[i].isOpen()) {
                         var itemInventory = _items[i].getInventoryObject();
                         if (itemInventory.size()>0) {
@@ -202,6 +203,16 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
                 if(_items[index].getType() == anObjectType) {
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     returnObjects.push(_items[index]);
+                } else {
+                    //accessible children.
+                    if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
+                        if (_items[index].isOpen()) {
+                            var itemInventory = _items[index].getInventoryObject();
+                            if (itemInventory.size()>0) {
+                                returnObjects = returnObjects.concat(itemInventory.getAllObjectsOfType(anObjectType));
+                            };
+                        };
+                    }; 
                 };
            };
            return returnObjects;

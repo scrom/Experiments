@@ -26,8 +26,8 @@ exports.setUp = function (callback) {
     p0 = new player.Player(playerName);
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
-    junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
-    breakableJunkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
+    breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
@@ -293,9 +293,22 @@ exports.canHitCreatureWithInventoryWeapon = function (test) {
 
 exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
 
+exports.cannotPutObjectInClosedContainer = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "Sorry, it's closed.";
+    var actualResult = p0.put('put','cake', 'container');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotPutObjectInClosedContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot put an item from inventory into a closed container." };
+
+
 exports.canPutObjectInOpenContainer = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = "You put the cake in the container.";
+    var expectedResult = "You put the cake in the container.<br>";
     p0.open('open','container');
     var actualResult = p0.put('put','cake', 'container');
     console.log("Expected: "+expectedResult);
@@ -304,9 +317,24 @@ exports.canPutObjectInOpenContainer = function (test) {
     test.done();
 };
 
-exports.canPutObjectInOpenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into a container." };
+exports.canPutObjectInOpenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into an open container." };
 
-exports.cantPutObjectInNonContainer = function (test) {
+exports.cantPutObjectInBrokenContainer = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "It's broken. You'll need to fix it first.";
+    p0.open('open','container');
+    console.log(p0.breakOrDestroy('break','container'));
+    var actualResult = p0.put('put','cake', 'container');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cantPutObjectInBrokenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot put an item from inventory into a broken container." };
+
+
+exports.cantPutObjectInItemWithNoCarryWeight = function (test) {
     p0.get('get', food.getName());
     var expectedResult = "Sorry, the sword can't hold the cake.";
     var actualResult = p0.put('put','cake', 'sword');
@@ -316,7 +344,46 @@ exports.cantPutObjectInNonContainer = function (test) {
     test.done();
 };
 
-exports.cantPutObjectInNonContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can put an item from inventory into a Non container." };
+exports.cantPutObjectInItemWithNoCarryWeight.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "CarryWeight Trait"], description: "Test that a player cannot put an item from inventory into an item with a 0 carrying weight." };
+
+exports.cantPutObjectInItemThatDoesntExist = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "There's no missing here and you're not carrying any either.";
+    var actualResult = p0.put('put','cake', 'missing');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cantPutObjectInItemThatDoesntExist.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot put an item from inventory into an item with a 0 carrying weight." };
+
+
+exports.canPutObjectInNonContainerItemWithCarryWeight = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "You put the cake in the artefact.<br>";
+    var actualResult = p0.put('put','cake', 'artefact');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canPutObjectInNonContainerItemWithCarryWeight.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "CarryWeight Trait", "Container Trait"], description: "Test that a player can put an item from inventory into an item with a >0 carrying weight." };
+
+exports.canPutObjectInBrokenNonContainerItemWithCarryWeight = function (test) {
+    p0.get('get', food.getName());
+    p0.breakOrDestroy('break','glass');
+    var expectedResult = "You put the cake in the glass.<br>";
+    var actualResult = p0.put('put','cake', 'glass');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canPutObjectInBrokenNonContainerItemWithCarryWeight.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "CarryWeight Trait", "Container Trait"], description: "Test that a player can put an item from inventory into an item with a >0 carrying weight." };
+
 
 exports.canRemoveObjectFromOpenContainer = function (test) {
     p0.get('get', food.getName());

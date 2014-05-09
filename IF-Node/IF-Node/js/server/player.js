@@ -251,11 +251,11 @@ module.exports.Player = function Player(aUsername) {
             var requiresContainer = artefact.requiresContainer();
             var suitableContainer = _inventory.getSuitableContainer(artefact);
     
-            if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
+            if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+artefact.getDisplayName()+".";};
 
             if(requiresContainer) {
                 var requiredContainer = artefact.getRequiredContainer(); 
-                return self.put(verb, artefactName, suitableContainer.getName(), requiredContainer);
+                return self.put("put", artefactName, suitableContainer.getName(), requiredContainer);
             };
         
             var collectedArtefact = removeObjectFromLocation(artefactName);
@@ -526,7 +526,7 @@ module.exports.Player = function Player(aUsername) {
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
                 if (!(receiver)) {
-                    if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry this.";};
+                    if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry "+artefact.getDisplayName()+".";};
                     return notFoundMessage(receiverName);
                 };
 
@@ -556,11 +556,18 @@ module.exports.Player = function Player(aUsername) {
                 if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
                 var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
-                if (!(collectedArtefact)) { return  "Sorry, "+collectedArtefact.getSuffix()+" can't be picked up.";};
+                if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
                 //put the x in the y
-                resultString = "You "+verb+" "+collectedArtefact.getDisplayName()+" in "+receiver.getDisplayName()+".<br>";
-                resultString += initCap(receiver.getDescriptivePrefix())+" "+receiver.receive(collectedArtefact);
+                var displayNameString = receiver.getDisplayName();
+                if (_inventory.check(receiver.getName())) {displayNameString = "your "+receiver.getName();};
+                resultString = "You "+verb+" "+collectedArtefact.getDisplayName()+" in "+displayNameString+".<br>";
+
+                var receiveResult = receiver.receive(collectedArtefact);
+                //if receiving failed...
+                if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
+                    resultString += receiveResult;
+                };
 
                 //did we just add a missing component?
                 if (collectedArtefact.getComponentOf() == receiver.getName()) {
@@ -623,7 +630,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
             var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
-            if (!(collectedArtefact)) { return  "Sorry, "+collectedArtefact.getSuffix()+" can't be picked up.";};
+            if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
             //treat this as a kind act (if successful)
             if (_aggression >0) {_aggression--;};

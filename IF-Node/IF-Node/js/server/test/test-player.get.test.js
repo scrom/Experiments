@@ -98,7 +98,7 @@ exports.cannotGetObjectFromOpenContainerInInventoryAlreadyExists = function (tes
 
 exports.cannotGetObjectFromOpenContainerInInventoryAlreadyExists.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot re-get an object from an open container they're carrying." };
 
-exports.cannotgetObjectFromClosedContainerInInventory = function (test) {
+exports.cannotGetObjectFromClosedContainerInInventory = function (test) {
     container.receive(a1);
     p0.get('get', container.getName());
     var expectedResult = "There's no box available here at the moment.";
@@ -109,7 +109,7 @@ exports.cannotgetObjectFromClosedContainerInInventory = function (test) {
     test.done();
 };
 
-exports.cannotgetObjectFromClosedContainerInInventory.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot get an object from a closed container they're carrying." };
+exports.cannotGetObjectFromClosedContainerInInventory.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot get an object from a closed container they're carrying." };
 
 
 exports.canGetObjectFromOpenContainerInLocation = function (test) {
