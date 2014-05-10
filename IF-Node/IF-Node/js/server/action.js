@@ -233,6 +233,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         else {description = _player.examine(_verb, _object0);};
                         break;
                     case 'examine':
+                    case 'examin':
                         description = _player.examine(_verb, _object0);
                         break;  
                     case 'rest':
