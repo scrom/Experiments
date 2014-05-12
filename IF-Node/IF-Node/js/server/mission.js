@@ -34,7 +34,20 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
                returnString += '"'+key+'":';
                var obj = literal[key];
-                 if (typeof(obj) == 'object') {returnString += obj.toString();}
+               console.log("LiteralConversion: "+typeof(obj)+":"+obj.toString());
+
+                 if (typeof(obj) == 'object') {
+                     if (Object.prototype.toString.call(obj) === '[object Array]') {
+                        returnString += '[';
+                        for (var j=0;j<obj.length;j++) {
+                            if (j>0) {returnString += ",";};
+                            returnString += '"'+obj[j]+'"';
+                        };
+                        returnString += ']';
+                     } else {
+                        returnString += obj.toString();
+                     };
+                 }
                  else if (typeof(obj) == 'string') {returnString += '"'+obj+'"';}
                  else if (typeof(obj) == 'boolean') {returnString += '"'+obj+'"';}
                  else {returnString += obj;};
