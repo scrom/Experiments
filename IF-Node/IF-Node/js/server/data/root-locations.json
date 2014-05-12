@@ -1295,6 +1295,7 @@
               "attackStrength": 0,
               "type": "money",
               "canCollect": true,
+			  "affinityModifier": 5,
               "canOpen": false,
               "isEdible": false,
               "isBreakable": false,
@@ -1544,6 +1545,7 @@
               "attackStrength": 5,
               "type": "treasure",
               "canCollect": true,
+			  "affinityModifier": 5,
               "canOpen": false,
               "isEdible": false,
               "isBreakable": true
