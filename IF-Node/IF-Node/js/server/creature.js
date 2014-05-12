@@ -459,29 +459,35 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        self.willShare = function(playerAggression) {
-            if (self.isFriendly(playerAggression)||self.isDead()) {return true;};
+        self.willShare = function(playerAggression, anObject) {
+            if (self.isDead()) {return true;};
+            if (self.isFriendly(playerAggression)) {
+                return true;
+            };
+
             return false;
         };
 
         self.relinquish = function(anObjectName,playerInventory, locationInventory, playerAggression) {
             //note we throw away locationInventory
-            if (self.willShare(playerAggression)) {
-                _affinity--;
-                var objectToGive = _inventory.getObject(anObjectName);
-                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
+          
+            var objectToGive = _inventory.getObject(anObjectName);
+            if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
-                if (playerInventory.canCarry(objectToGive)) {
-                    playerInventory.add(objectToGive);
-                    _inventory.remove(anObjectName);
-                    if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from "+_genderPossessiveSuffix+" corpse.";};
-                    return initCap(self.getDisplayName())+" hands you "+objectToGive.getDisplayName()+".";
-                };
+            if (!(self.willShare(playerAggression, objectToGive))) {  return _genderPrefix+" doesn't want to share "+objectToGive.getDisplayName()+" with you.";};
+ 
 
-                return "Sorry. You can't carry "+anObjectName+" at the moment."
-            };
-            return _genderPrefix+" doesn't want to share with you.";
+            if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry "+anObjectName+" at the moment.";};
+
+            playerInventory.add(objectToGive);
+            _inventory.remove(anObjectName);
+
+            if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from "+_genderPossessiveSuffix+" corpse.";};
+
+            _affinity--;            
+            return initCap(self.getDisplayName())+" hands you "+objectToGive.getDisplayName()+".";
         };
+
 
         self.getObject = function(anObjectName) {
             return _inventory.getObject(anObjectName);

@@ -124,6 +124,137 @@ exports.creatureCanReceiveObject = function (test) {
 
 exports.creatureCanReceiveObject.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature object can receive an object." };
 
+/*
+exports.unfriendlyCreatureWontShareObject = function (test) {
+    var creatureName = 'creature';
+    var artefactDescription = 'an artefact of little consequence';
+    var artefactName = 'artefact'
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
+    var expected = "The creature now owns an artefact of little consequence.";
+    var actual = c0.receive(a0);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.unfriendlyCreatureWontShareObject.meta = { traits: ["Creature Test", "Inventory Trait", "Relinquish Trait"], description: "Test that an unfriendly creature won't share." };
+*/
+
+exports.creatureIsUnfriendlyWhenAffinityLessThan0 = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
+    var expected = false;
+    var playerAggression = 0;
+    var actual = c0.isFriendly(playerAggression);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.creatureIsUnfriendlyWhenAffinityLessThan0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a low affinity creature is unfriendly." };
+
+exports.creatureIsUnfriendlyWhenAffinityIs0 = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
+    var expected = false;
+    var playerAggression = 0;
+    var actual = c0.isFriendly(playerAggression);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.creatureIsUnfriendlyWhenAffinityIs0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a 0 affinity creature is unfriendly." };
+
+exports.creatureIsFriendlyWhenAffinityIsGreaterThan0 = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.isFriendly(playerAggression);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.creatureIsFriendlyWhenAffinityIsGreaterThan0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a positive affinity creature is friendly when player is not aggressive." };
+
+exports.creatureIsFriendlyWhenAffinityEqualsPlayerAggression = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = true;
+    var playerAggression = 1;
+    var actual = c0.isFriendly(playerAggression);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.creatureIsFriendlyWhenAffinityEqualsPlayerAggression.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that an a positive affinity creature is friendly when affinity matches player aggression level." };
+
+exports.creatureIsUnfriendlyWhenAffinityLessThanPlayerAggression = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = false;
+    var playerAggression = 2;
+    var actual = c0.isFriendly(playerAggression);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.creatureIsUnfriendlyWhenAffinityLessThanPlayerAggression.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a positive affinity creature is *not* friendly when affinity is less than player aggression level.." };
+
+exports.unfriendlyCreatureWontShare = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
+    var expected = false;
+    var playerAggression = 0;
+    var actual = c0.willShare(playerAggression, a0);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.unfriendlyCreatureWontShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that an unfriendly creature won't share" };
+
+exports.friendlyCreatureWillShare = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willShare(playerAggression, a0);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.friendlyCreatureWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature will share" };
+
+exports.deadCreatureWithNegativeAffinityWillShare = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:-1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willShare(playerAggression, a0);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.deadCreatureWithNegativeAffinityWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a dead creature will share" };
+
+
+
 exports.canGetObjectFromCreature = function (test) {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence'
