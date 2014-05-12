@@ -216,7 +216,7 @@ exports.unfriendlyCreatureWontShare = function (test) {
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
     var expected = false;
     var playerAggression = 0;
-    var actual = c0.willShare(playerAggression, a0);
+    var actual = c0.willShare(playerAggression, 1);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -225,12 +225,28 @@ exports.unfriendlyCreatureWontShare = function (test) {
 
 exports.unfriendlyCreatureWontShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that an unfriendly creature won't share" };
 
+
+exports.unfriendlyCreatureWontShareRegardlessOfAffinityImpact = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
+    var expected = false;
+    var playerAggression = 0;
+    var actual = c0.willShare(playerAggression, -99);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.unfriendlyCreatureWontShareRegardlessOfAffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that an unfriendly creature won't share even if taking an item from them actually *increases* affinity" };
+
+
 exports.friendlyCreatureWillShare = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var playerAggression = 0;
-    var actual = c0.willShare(playerAggression, a0);
+    var actual = c0.willShare(playerAggression, 1);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -239,12 +255,42 @@ exports.friendlyCreatureWillShare = function (test) {
 
 exports.friendlyCreatureWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature will share" };
 
+exports.friendlyCreatureWillShareItemWith0AffinityImpact = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willShare(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.friendlyCreatureWillShareItemWith0AffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature will share" };
+
+
+exports.friendlyCreatureWontShareSomethingWithHighAffinityImpact = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = false;
+    var playerAggression = 0;
+    var actual = c0.willShare(playerAggression, 2);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.friendlyCreatureWontShareSomethingWithHighAffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature won't share something that reduces affinity below 0" };
+
+
 exports.deadCreatureWithNegativeAffinityWillShare = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:-1});
     var expected = true;
     var playerAggression = 0;
-    var actual = c0.willShare(playerAggression, a0);
+    var actual = c0.willShare(playerAggression, 1);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -254,6 +300,164 @@ exports.deadCreatureWithNegativeAffinityWillShare = function (test) {
 exports.deadCreatureWithNegativeAffinityWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a dead creature will share" };
 
 
+exports.deadCreaturesCantAcceptGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:-1});
+    var expected = false;
+    var playerAggression = 0;
+    var actual = c0.willAcceptGift(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.deadCreaturesCantAcceptGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a dead creature can't accept gifts" };
+
+exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willAcceptGift(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will accept gifts with minor affinity impact" };
+
+
+exports.neutralCreaturesWillAcceptSmallGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:0});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willAcceptGift(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.neutralCreaturesWillAcceptSmallGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a neutral creature will accept gifts with minor affinity impact" };
+
+exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
+    var expected = true;
+    var playerAggression = 1;
+    var actual = c0.willAcceptGift(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will accept gifts with minor affinity impact is player is only slightly aggressive" };
+
+
+exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
+    var expected = false;
+    var playerAggression = 2;
+    var actual = c0.willAcceptGift(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will not accept gifts with minor affinity impact is player is aggressive" };
+
+exports.veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressive = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-5});
+    var expected = true;
+    var playerAggression = 1;
+    var actual = c0.willAcceptGift(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a very unfriendly creature will accept gifts with minor affinity impact regardless of agression" };
+
+
+exports.veryUnfriendlyCreaturesWillRefuseLargeGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-5});
+    var expected = false;
+    var playerAggression = 1;
+    var actual = c0.willAcceptGift(playerAggression, 5);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.veryUnfriendlyCreaturesWillRefuseLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a very unfriendly creature will accept gifts with minor affinity impact regardless of agression" };
+
+
+exports.friendlyCreaturesWillAcceptSmallGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willAcceptGift(playerAggression, 1);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.friendlyCreaturesWillAcceptSmallGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
+
+
+exports.friendlyCreaturesWillAcceptLargeGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willAcceptGift(playerAggression, 99);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.friendlyCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
+
+
+exports.waryCreaturesWillAcceptLargeGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
+    var expected = true;
+    var playerAggression = 0;
+    var actual = c0.willAcceptGift(playerAggression, 99);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+}
+
+exports.waryCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
+
+
+/*
+        self.willAcceptGift = function(playerAggression, affinityModifier) {
+            //more tolerant than fight or flight but not by much...
+            //this allows a moderate bribe to get a flighty creature to stick around
+            //but prevents them taking something and running away immediately afterward
+            if ((_affinity <-1) && (playerAggression>1)) {return false;};
+            //if player is peaceful but creature is very low affinity, 
+            //cannot give a single gift of affinity impact enough to transform their response.
+            if ((_affinity <-5) && (0-affinityModifier<_affinity)) {return false;};
+            if (self.isDead()) {return false;};
+*/
 
 exports.canGetObjectFromCreature = function (test) {
     var creatureName = 'creature';

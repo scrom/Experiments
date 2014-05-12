@@ -22,6 +22,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _nutrition = 0;
         var _quantity = 1; //if we have -1 here, it's an unlimited plural.
         var _attackStrength = 0;
+        var _affinityModifier = 1;
         var _inventory =  new inventoryObjectModule.Inventory(0, _name);
         var _type = "junk";
         var _linkedExits = [];
@@ -132,6 +133,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
             if (artefactAttributes.quantity != undefined) {_quantity = setQuantity(artefactAttributes.quantity);};
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
+            if (artefactAttributes.affinityModifier != undefined) {_affinityModifier = artefactAttributes.affinityModifier;};
             if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
             if (artefactAttributes.isBreakable != undefined) {
                 if (artefactAttributes.isBreakable== true || artefactAttributes.isBreakable == "true") { _breakable = true;};
@@ -225,6 +227,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.weight = _weight;
             currentAttributes.quantity = _quantity;
             currentAttributes.attackStrength = _attackStrength;
+            currentAttributes.affinityModifier = _affinityModifier;
             currentAttributes.type = _type;
             currentAttributes.isBreakable = _breakable;
             currentAttributes.isDamaged = _damaged;
@@ -428,6 +431,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) {return 0;};
             return _attackStrength;
         };
+
+        self.getAffinityModifier = function() {
+            if (self.isDestroyed()) {return 0;};
+            if (self.isBroken()) {return Math.floor(_affinityModifier/2);};
+            return _affinityModifier;
+        };
+
+        self.reduceAffinityModifier = function() {
+            //bring affinity modifier closer to 0.
+            if (_affinityModifier>0) {
+                _affinityModifier--;
+            };
+            if (_affinityModifier<0) {
+                _affinityModifier++;
+            };
+        };
+
 
         self.isCollectable = function() {
             return _collectable;

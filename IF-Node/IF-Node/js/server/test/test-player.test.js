@@ -16,6 +16,7 @@ var l0; //location object.
 var a0; //artefact object.
 var a1; //artefact object.
 var c0; //creature object.
+var c1; //creature object
 var weapon; //weapon object
 var food; //food object
 var container; //container object
@@ -27,7 +28,7 @@ exports.setUp = function (callback) {
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
-    breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, affinityModifier: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
@@ -35,10 +36,12 @@ exports.setUp = function (callback) {
     weapon = new artefact.Artefact('sword', 'a mighty sword', 'chop chop chop',weaponAttributes, null);
     food = new artefact.Artefact('cake', 'a slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     container = new artefact.Artefact('container', 'a container', 'hold hold hold',containerAttributes, null);
-    a1 = new artefact.Artefact('box', 'a box', 'just a box',junkAttributes, null);
+    a1 = new artefact.Artefact('box', 'a box', 'just a box',breakableJunkAttributes, null);
     breakable = new artefact.Artefact('glass', 'a drinking glass', 'just a box',breakableJunkAttributes, null);
-    c0 = new creature.Creature('creature', 'A creature', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:5, canTravel:true},[a1]);
+    c0 = new creature.Creature('creature', 'A creature', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:5, canTravel:true},[a1]);
     c0.go(null,l0); 
+    c1 = new creature.Creature('evil', 'An evil unfriendly creature', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:-5, canTravel:true},[a1]);
+    c1.go(null,l0); 
 
     l0.addObject(a0);
     l0.addObject(weapon);
@@ -46,6 +49,7 @@ exports.setUp = function (callback) {
     l0.addObject(food);
     l0.addObject(container);
     l0.addObject(c0);
+    l0.addObject(c1);
     callback(); 
 };
 
@@ -65,6 +69,7 @@ exports.tearDown = function (callback) {
     food = null;
     container = null;
     c0 = null;
+    c1 = null;
     callback();
 };  
 
@@ -197,7 +202,7 @@ exports.canBeKilledAndDropInventory = function (test) {
 exports.canBeKilledAndDropInventory.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Kill Trait"], description: "Test that a killed player drops inventory." };
 
 exports.killPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container and A creature.<br>There are no visible exits.";
+    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.";
     var actualResult = p0.kill();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -209,7 +214,7 @@ exports.killPlayerReturnsExpectedStringResult.meta = { traits: ["Player Test", "
 
 exports.creatureRetaliationCanKillPlayer = function (test) {
     c0.setAttackStrength(104);
-    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container and A creature.<br>There are no visible exits.";
+    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.";
     var actual = p0.hit('hit',c0.getName());
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -223,7 +228,7 @@ exports.creatureAttackCanKillPlayer = function (test) {
     var creatureName = 'creature';
     var c1 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:104, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-15});
     c1.go(null,l0);
-    var expected = "<br>The creature attacks you. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and a beastie.<br>There are no visible exits.";
+    var expected = "<br>The creature attacks you. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature, An evil unfriendly creature and a beastie.<br>There are no visible exits.";
     var actual = c1.fightOrFlight(null,p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -234,7 +239,7 @@ exports.creatureAttackCanKillPlayer.meta = { traits: ["Player Test", "Affinity T
 
 
 exports.hitAndKillPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container and A creature.<br>There are no visible exits.";
+    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.";
     var actualResult = p0.hurt(101);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -256,7 +261,34 @@ exports.canGiveObjectToCreature = function (test) {
     test.done();
 };
 
-exports.canGiveObjectToCreature.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait"], description: "Test that a player can give an item from inventory to a creature." };
+exports.canGiveObjectToCreature.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Give Trait", "Creature Trait"], description: "Test that a player can give an item from inventory to a creature." };
+
+exports.canGiveHighAffinityObjectToFriendlyCreature = function (test) {
+    l0.addObject(a1);
+    p0.get(a1.getName());
+    var expectedResult = "The creature now owns a box.";
+    var actualResult = p0.give('give',a1.getName(), c0.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGiveHighAffinityObjectToFriendlyCreature.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Give Trait", "Creature Trait"], description: "Test that a player can give an item from inventory to a creature." };
+
+exports.cannotGiveHighAffinityObjectToUnfriendlyCreature = function (test) {
+    l0.addObject(a1);
+    p0.get(a1.getName());
+    var expectedResult = "Sorry, the evil is unwilling to take gifts from you at the moment.";
+    var actualResult = p0.give('give',a1.getName(), c1.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotGiveHighAffinityObjectToUnfriendlyCreature.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Give Trait", "Creature Trait"], description: "Test that a player cannot give an item of high affinity value from inventory to an unfriendly creature." };
+
 
 exports.canAskCreatureForObject = function (test) {
     var expectedResult = "The creature hands you the box.";

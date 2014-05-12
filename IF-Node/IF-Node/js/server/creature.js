@@ -367,6 +367,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return currentAttackStrength;
         };
 
+        self.getAffinityModifier = function() {
+            //giving dead creatures doesn't modify affinity
+            return 0;
+        };
+
+        self.reduceAffinityModifier = function() {
+            null; //do nothing - this only works for artefacts
+        };
+
         self.getInventoryWeight = function() {
             if (_inventory.length==0){return ''};
             var inventoryWeight = 0
@@ -412,20 +421,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.receive = function(anObject) {
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
-            if(self.canCarry(anObject)) {                
-                _affinity++;
-                _inventory.add(anObject);
-                return initCap(self.getDisplayName())+" now owns "+anObject.getDescription()+".";
-            };
-            return '';
+            if (!(self.canCarry(anObject))) {return '';};              
+            
+            _affinity += anObject.getAffinityModifier();
+            _inventory.add(anObject);
+            return initCap(self.getDisplayName())+" now owns "+anObject.getDescription()+".";
+            
         };
 
-        self.willAcceptGifts = function(playerAggression) {
+        self.willAcceptGift = function(playerAggression, affinityModifier) {
             //more tolerant than fight or flight but not by much...
             //this allows a moderate bribe to get a flighty creature to stick around
             //but prevents them taking something and running away immediately afterward
-            if ((_affinity <-1) && (playerAggression>1)) {return false;};
+            //if player is peaceful but creature is very low affinity, 
+            //cannot give a single gift of affinity impact enough to transform their response.
+            //this still leaves bad situations recoverable but at a high cost
             if (self.isDead()) {return false;};
+            if ((_affinity <=-5) && (0-affinityModifier<=_affinity)) {return false;};
+            if ((_affinity <-1) && (playerAggression>1)) {return false;};
+            if ((_affinity <0) && (playerAggression>=2)) {return false;};
 
             return true;
         };
@@ -459,12 +473,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        self.willShare = function(playerAggression, anObject) {
+        self.willShare = function(playerAggression, affinityModifier) {
             if (self.isDead()) {return true;};
-            if (self.isFriendly(playerAggression)) {
-                return true;
-            };
-
+            if (!(self.isFriendly(playerAggression))) {return false;};
+            //check if they'll share the object itself
+            if (_affinity - affinityModifier >=0) {return true;}
             return false;
         };
 
@@ -474,7 +487,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var objectToGive = _inventory.getObject(anObjectName);
             if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
-            if (!(self.willShare(playerAggression, objectToGive))) {  return _genderPrefix+" doesn't want to share "+objectToGive.getDisplayName()+" with you.";};
+            var affinityModifier = objectToGive.getAffinityModifier();
+            if (!(self.willShare(playerAggression, affinityModifier))) {  return _genderPrefix+" doesn't want to share "+objectToGive.getDisplayName()+" with you.";};
  
 
             if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry "+anObjectName+" at the moment.";};
@@ -483,8 +497,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _inventory.remove(anObjectName);
 
             if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from "+_genderPossessiveSuffix+" corpse.";};
-
-            _affinity--;            
+  
+            //reduce creature affinity by article modifier
+            _affinity -= affinityModifier;
+                 
+            //reduce the level of affinity this item provides in future...
+            //note this only happens when changing hands from a live creature to a player at the moment.
+            objectToGive.reduceAffinityModifier();
+                
             return initCap(self.getDisplayName())+" hands you "+objectToGive.getDisplayName()+".";
         };
 

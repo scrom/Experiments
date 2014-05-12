@@ -1,7 +1,24 @@
+html
+{ 
+     margin:0; 
+    padding:0; 
+ } 
+
 body
 {
     font-family: 'Courier New', courier, Calibri, Arial, modern, monospace, sans-serif;
     font-size: 80%;
+}
+
+.left
+{
+    float: left;
+    position: relative;
+}
+.right
+{
+    float: right;
+    position: relative;
 }
 
 .softBorder
@@ -41,7 +58,14 @@ body
     width:800px
 }
 
+.narrowBox
+{
+    height:45vh;
+    width:200px
+}
+
 .softBorder.smallBox{}
 .softBorder.oneLineBox{}
 .softBorder.bigBox.verticalScroll{}
 .softBorder.smallBox.verticalScroll{}
+.softBorder.narrowBox.verticalScroll{}

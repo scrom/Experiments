@@ -77,7 +77,9 @@ exports.Map = function Map() { //inputs for constructor TBC
         self.getLocationsJSON = function() {
             var locationsAsJSON = [];
             for (var i=0; i<_locations.length;i++) {
+                try {
                 locationsAsJSON.push(JSON.parse(_locations[i].toString()));
+                } catch (e) {console.log("Error parsing JSON for location: error = "+e+": "+_locations[i].toString());};
             };
             locationsAsJSON.sort(sortByProperty("name"));
             return locationsAsJSON;
