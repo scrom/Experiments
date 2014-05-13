@@ -238,11 +238,11 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;  
                     case 'rest':
                         ticks = 0;
-                        description = _player.rest(_verb, 5);
+                        description = _player.rest(_verb, 5, _map);
                         break;
                     case 'sleep':
                         ticks = 0;
-                        description = _player.rest(_verb, 10);
+                        description = _player.rest(_verb, 10, _map);
                         break;
                     case 'wait':
                         description = "Time passes... ...slowly";
@@ -436,7 +436,7 @@ exports.Action = function Action(aPlayer, aMap) {
             description += processCreatureTicks(ticks, _map, _player);
 
             //if time is passing, what additional things happen to a player?
-            description += _player.tick(ticks);
+            description += _player.tick(ticks, _map);
 
             //replace any player substitution variables
             description = description.replace("$player",initCap(_player.getUsername())).replace("%20"," ");

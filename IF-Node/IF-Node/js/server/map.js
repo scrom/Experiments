@@ -336,13 +336,26 @@ exports.Map = function Map() { //inputs for constructor TBC
             //note, this *won't* find objects delivered by a mission or delivered by another object.
 
             //loop through each location and location inventory. 
-            //Get object (by synonym)
-            //return location name when found
+            //Get all objects by type: creature
             var creatures = [];
             for (var i=0;i<_locations.length;i++) {
                 creatures = creatures.concat(_locations[i].getAllObjectsOfType('creature'));
             };
             return creatures;
+        };
+
+        self.getCreature = function(aCreatureName) {
+            //note, this *won't* find objects delivered by a mission or delivered by another object.
+
+            //loop through each location and location inventory. 
+            //Get all objects by type: creature
+            var creature;
+            for (var i=0;i<_locations.length;i++) {
+                creature = _locations[i].getObject(aCreatureName);
+                if (creature) { //we have a name match - is it a creature?
+                    if (creature.getType() == 'creature') {return creature;};
+                };
+            };
         };
 
     //end public member functions        

@@ -1,12 +1,17 @@
 ﻿"use strict";
 var mission = require('../mission.js');
 var artefact = require('../artefact.js');
+var map = require('../map.js');
+var m0;
 
 exports.setUp = function (callback) {
+    m0 = new map.Map();
+    m0.init();
     callback(); 
 };
 
 exports.tearDown = function (callback) {
+    m0 = null;
     callback();
 };  
 
@@ -24,3 +29,37 @@ exports.rewardToStringReturnsValidJSON = function (test) {
 };
 
 exports.rewardToStringReturnsValidJSON.meta = { traits: ["Mission Test", "JSON Trait", "Mission Trait"], description: "Test that a mission object converts to valid JSON via toString." };
+
+
+exports.rewardPositivelyModifiesCreatureAffinity = function (test) {
+    var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon","decreaseAffinityFor": "james","successMessage": "Congratulations. You killed the spy! Have 50 points."};
+    var simon = m0.getCreature('simon');
+
+    var m = new mission.Mission('mission');
+    m.processAffinityModifiers(m0,reward)
+    var expectedResult = 'He seems to like you.';
+    var actualResult = simon.getAffinityDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.rewardPositivelyModifiesCreatureAffinity.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+
+
+exports.rewardNegativelyModifiesCreatureAffinity = function (test) {
+    var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon","decreaseAffinityFor": "james","successMessage": "Congratulations. You killed the spy! Have 50 points."};
+    var james = m0.getCreature('james');
+
+    var m = new mission.Mission('mission');
+    m.processAffinityModifiers(m0,reward)
+    var expectedResult = 'He really doesn\'t like you.';
+    var actualResult = james.getAffinityDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.rewardNegativelyModifiesCreatureAffinity.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait"], description: "Test that a mission reward will correctly modify creature affinity." };

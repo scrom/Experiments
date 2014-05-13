@@ -34,7 +34,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
                returnString += '"'+key+'":';
                var obj = literal[key];
-               console.log("LiteralConversion: "+typeof(obj)+":"+obj.toString());
+               //console.log("LiteralConversion: "+typeof(obj)+":"+obj.toString());
 
                  if (typeof(obj) == 'object') {
                      if (Object.prototype.toString.call(obj) === '[object Array]') {
@@ -104,6 +104,21 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             _reward=null;
             console.log("reward delivered from mission: "+returnObject);
             return returnObject;
+        };
+
+        self.processAffinityModifiers = function(map, reward) {
+            //note, _reward is likely null at this point so we pass it back in.
+            console.log("Processing affinity modifiers from mission reward");
+            var affinityModifier = 1;
+            if (reward.affinityModifier) { affinityModifier = reward.affinityModifier;};
+            if (reward.increaseAffinityFor) { 
+                var creatureToIncrease = map.getCreature(reward.increaseAffinityFor);
+                if (creatureToIncrease) {creatureToIncrease.increaseAffinity(affinityModifier);};
+            };
+            if (reward.decreaseAffinityFor) { 
+                var creatureToDecrease = map.getCreature(reward.decreaseAffinityFor);
+                if (creatureToDecrease) {creatureToDecrease.decreaseAffinity(affinityModifier);};
+            };
         };
 
         self.fail = function() {

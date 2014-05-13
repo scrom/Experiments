@@ -136,7 +136,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
                 };
                 if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
                     if (_items[index].isOpen()) {
-                        console.log(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
+                    //    console.log(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
                     //only confirm item from open, unlocked containers - this way we know the player has discovered them
                         var object = _items[index].getInventoryObject().getObject(anObjectName);
                         if (object) {return object}; 

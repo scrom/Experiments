@@ -280,6 +280,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return missions;
         };
 
+        self.increaseAffinity = function(changeBy) {
+            if (!(self.isDead())) {
+                _affinity+=changeBy;
+                console.log("affinity for "+self.getName()+" is now "+_affinity);
+            };
+        };
+
+        self.decreaseAffinity = function(changeBy) {
+            if (!(self.isDead())) {
+                _affinity-=changeBy;
+                console.log("affinity for "+self.getName()+" is now "+_affinity);
+            };
+        };
+
         self.getAffinityDescription = function() {
               if (self.isDead()) {return ""};
             if (_affinity >5) {return _genderPrefix+" really likes you."};

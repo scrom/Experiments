@@ -1104,6 +1104,8 @@
         "destination": "spy",
         "reward": {
           "score": 50,
+		  "affinityModifier": 2,
+		  "increaseAffinityFor": "simon",
           "successMessage": "Congratulations. You killed the spy! Have 50 points."
         }
       }
@@ -1515,6 +1517,8 @@
             "destination": "projector",
             "reward": {
               "score": 25,
+			  "affinityModifier": 2,
+			  "increaseAffinityFor": "amanda",
               "successMessage": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i><br> Have 25 points."
             }
           }
@@ -1668,7 +1672,6 @@
             "destination": "Vic",
             "reward": {
               "score": 10,
-              "repairSkill": "projector",
               "delivers": {
                 "object": "artefact",
                 "name": "keyfob",
@@ -1709,6 +1712,7 @@
             "destination": "Vic",
             "reward": {
               "score": 50,
+		      "increaseAffinityFor": "Vic",
               "delivers": {
                 "object": "artefact",
                 "name": "parcel",

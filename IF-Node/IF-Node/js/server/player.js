@@ -1108,7 +1108,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
 
-        self.rest = function(verb, duration) {
+        self.rest = function(verb, duration, map) {
             if (!(_currentLocation.getObjectByType('bed'))) {return "There's nothing to "+verb+" on here.";};
 
             //prevent resting if health > 80%
@@ -1129,7 +1129,7 @@ module.exports.Player = function Player(aUsername) {
             var initialHP = _hitPoints;
 
             //time passes *before* any healing benefits are in place
-            var returnString = "You "+verb+" for a while.<br>"+self.tick(duration);
+            var returnString = "You "+verb+" for a while.<br>"+self.tick(duration, map);
 
             _hitPoints += duration*3;
             _aggression -= duration;
@@ -1267,7 +1267,7 @@ module.exports.Player = function Player(aUsername) {
 
         };
 
-        self.tick = function(time) {
+        self.tick = function(time, map) {
             console.log("Player tick...");
 
             var resultString = "";
@@ -1283,6 +1283,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward.score) { _score += missionReward.score;};
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                    _missions[i].processAffinityModifiers(map, missionReward);
                     _missionsCompleted.push(_missions[i].getName());
                     _missions.splice(i,1); //remove mission.
                 };
@@ -1298,6 +1299,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward.score) { _score += missionReward.score;};
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                    _missions[i].processAffinityModifiers(map, missionReward);
                     _missionsCompleted.push(locationMissions[j].getName());
                     _currentLocation.removeMission(locationMissions[j].getName());
                 };
@@ -1316,6 +1318,7 @@ module.exports.Player = function Player(aUsername) {
                         if (missionReward.score) { _score += missionReward.score;};
                         if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                         if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                        _missions[i].processAffinityModifiers(map, missionReward);
                         _missionsCompleted.push(artefactMissions[j].getName());
                         artefacts[i].removeMission(artefactMissions[j].getName());
                     };
