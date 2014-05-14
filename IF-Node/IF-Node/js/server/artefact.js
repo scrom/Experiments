@@ -45,7 +45,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _unlocks = ""; //unique name of the object that it unlocks. 
         var _componentOf = ""; //unique name of the object this is a component of.
         var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
-        var _delivers = delivers; //what does this deliver when all components are in place? (it uses a charge of each component to do so)-- 
+        var _delivers = delivers||[]; //what does this deliver when all components are in place? (it uses a charge of each component to do so)--
         var _requiresContainer = false;
         var _requiredContainer = null;
 
@@ -188,7 +188,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
                 returnString+= ']';
             };
-            if (_delivers) {returnString+= ',"delivers":'+_delivers.toString();};
+            if (_delivers.length>0) {
+                returnString += ',"delivers":[';
+                for (var i = 0; i < _delivers.length; i++) {
+                    if (i > 0) { returnString += ','; };
+                    returnString += _delivers[i].toString();
+                };
+                returnString += ']';
+            };
             if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
             if (_missions.length >0) {
                 returnString+= ',"missions":[';
@@ -272,7 +279,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _sourceAttributes;
         }; 
 
-        self.getDeliveryItem = function() {
+        self.getDeliveryItems = function() {
             return _delivers;
         };
 
@@ -392,8 +399,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(self.checkComponents())) { 
                 returnString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
             } else {
-                if (_delivers) {
-                    returnString += "<br>"+_itemPrefix+" delivers "+_delivers.getName()+".";
+                if (_delivers.length>0) {
+                    returnString += "<br>" + _itemPrefix + " delivers ";
+                    for (var i = 0; i < _delivers.length; i++) {
+                        if (i > 0 && i < _delivers.length - 1) { returnString += ", "; };
+                        if (i > 0 && i == _delivers.length - 1) { returnString += " and "; };
+                        returnString += _delivers[i].getName() + ".";
+                    };
                 };               
             };
 
@@ -487,12 +499,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.combineWith = function(anObject) {
-            if (!(self.combinesWith(anObject))) { return null;};
-            console.log("combining :"+self.getName()+" with "+anObject.getName()+" to produce "+_delivers);
+            if (!(self.combinesWith(anObject))) { return null; };
+            var deliveryItemSource = _delivers[0]; //@todo: we only take the first element for now+
+            console.log("o:" + anObject + " dis: " + deliveryItemSource);
+            console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
 
             //return a new instance of deliveryObject
-            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getInitialDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); 
-            deliveredItem.addSyns(_delivers.getSyns());
+            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
+            deliveredItem.addSyns(deliveryItemSource.getSyns());
             return deliveredItem;
         };
 
@@ -563,7 +577,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.isPoweredOn = function() {
-            if (self.isDestroyed()) {return false;};
             if (self.hasPower() && _on) {
                 console.log(self.getDisplayName()+" is switched on.");
                 return true;
@@ -610,33 +623,55 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_charges == 0) {return false;};
             if (_charges > 0) {_charges --;};
             console.log("Consumed "+self.getDisplayName()+" charges remaining: ");
-            return true; //deliberately works if charges are -ve
+            return true; //deliberately works but does nothing if charges are -ve
         };
 
         self.consumeItem = function(anObject) {
-            anObject.consume();
+            anObject.consume();  //we ignore any return value
             if (anObject.chargesRemaining() == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
         };
 
-        self.checkComponents = function() {
+        self.checkComponents = function(someComponents) {
             if (self.isDestroyed()) {return false;};
-            var components = _inventory.getComponents(self.getName());
+            var components = [];
+            components = components.concat(_inventory.getComponents(self.getName()));
+            //if we have some optionally passed in components, consider those too.
+            if (someComponents) {
+                components = components.concat(someComponents);
+            };
+            //eventually make this more intelligent than a simple count!
+            console.log("Required components for "+self.getName()+": " + _requiredComponentCount + " Current Components: " + components.length);
             if (components.length == _requiredComponentCount) {return true;}; //we have everything we need yet.
             return false;
         };
 
-        self.deliver = function() {
-            if (self.isDestroyed()||_broken) {return null;};
-            //if we have all components (with charges), return a delivery item (and consume a charge on each component)
+        self.deliver = function (anObjectName) {
+            //if we can't deliver the requested object
+            if (!(self.canDeliver(anObjectName))) {return null;};
+
+            //retrieve all components (both source and destination)
             var components = _inventory.getComponents(self.getName());
-            console.log("Required components: "+_requiredComponentCount+" Current Components: "+components.length);
-            if (components.length < _requiredComponentCount) {return null;}; //we don't have everything we need yet.
+            components = components.concat(_inventory.getComponents(anObjectName));
+
             //iterate thru each component and remove charge.
             for (var i=0; i<components.length; i++) {
                 self.consumeItem(components[i]);
             };
-            var deliveredItem = new Artefact(_delivers.getName(),_delivers.getDescription(), _delivers.getInitialDetailedDescription(), _delivers.getSourceAttributes(), _delivers.getLinkedExits(), _delivers.getDeliveryItem()); //return a new instance of deliveryObject
-            deliveredItem.addSyns(_delivers.getSyns());
+
+            //get the source we're using...
+            var deliveryItemSource;
+
+            for (var i = 0; i < _delivers.length; i++) {
+                if (_delivers[i].syn(anObjectName)) {
+                    deliveryItemSource = _delivers[i];
+                    break;
+                };
+            };
+
+            if (!(deliveryItemSource)) { return null; };
+
+            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems()); //return a new instance of deliveryObject
+            deliveredItem.addSyns(deliveryItemSource.getSyns());
             return deliveredItem;
         };
 
@@ -920,34 +955,88 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         };
 
+        self.canDeliver = function (anObjectName) {
+            //do we deliver anything at all?
+            if (!(_delivers)) {
+                console.log(self.getName + " doesn't deliver anything");
+                return false;
+            };
+
+            //find delivery item in array...
+            var deliveryItem;
+            //is the requested object one we can deliver?     
+            for (var i = 0; i < _delivers.length; i++) {
+                if (_delivers[i].syn(anObjectName)) {
+                    deliveryItem = _delivers[i];
+                    break;
+                };
+            };
+
+            if (!(deliveryItem)) {
+                console.log(self.getName() + " doesn't deliver " + anObjectName);
+                return false;
+            };
+
+            //is the deliverer intact?
+            if (self.isBroken() || self.isDestroyed()) {
+                console.log(self.getName() + " is broken");
+                return false;
+            };
+
+            //do we have all the components needed to work?
+            if (!(self.checkComponents())) {
+                console.log(self.getName() + " doesn't have all the required components to run");
+                return false;
+            };
+            
+            //is the deliverer working?
+            if (_switched) {
+                if (!(self.isPoweredOn())) {
+                    console.log(self.getName() + " isn't switched on");
+                    return false;
+                };
+            };
+
+            //do we have the required components for what we're delivering?
+            var deliveryComponents = _inventory.getComponents(anObjectName);
+            if (!(deliveryItem.checkComponents(deliveryComponents))) {
+                console.log(self.getName() + " doesn't have all the required components to deliver "+anObjectName);
+                return false;
+            };
+
+            return true;
+        };
+
         self.relinquish = function(anObjectName, playerInventory, locationInventory, playerAggression) {
             //note we throw away playerAggression
 
             //are we attempting to retrieve a delivery object?
-            var delivering = false;
+            var objectToGive;
             if (_delivers) {
-                if (_delivers.syn(anObjectName)) {
-                    delivering = true;
+                //is the requested object one we can deliver?     
+                for (var i = 0; i < _delivers.length; i++) {
+                    if (_delivers[i].syn(anObjectName)) {
+                        objectToGive = _delivers[i];
+                        break;
+                    };
                 };
             };
 
-            if ((!delivering) && _locked && (!(self.isDestroyed()))) {return initCap(_itemDescriptivePrefix)+" locked.";};
-            if ((!delivering) && (!(self.isOpen()))) {return initCap(_itemDescriptivePrefix)+" closed.";};
+            if ((!objectToGive) && _locked && (!(self.isDestroyed()))) { return initCap(_itemDescriptivePrefix) + " locked."; };
+            if ((!objectToGive) && (!(self.isOpen()))) { return initCap(_itemDescriptivePrefix) + " closed."; };
 
-            var objectToGive;
 
             //is this something we deliver
-            if (_delivers) {
-                if (_delivers.getName() == anObjectName) {
-                    if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken.";};
-                    objectToGive = _delivers
-                };
+            var delivering = false;
+            if (objectToGive) {
+                if (self.isDestroyed() || self.isBroken()) { return initCap(_itemDescriptivePrefix) + " broken."; };
+                delivering = true;
             }; 
 
             //if not a deliverable, check inventory
             if (!(objectToGive)) { objectToGive = _inventory.getObject(anObjectName); };
 
-            if (!(objectToGive)) {return initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
+            if ( !(objectToGive)) {return initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
 
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
@@ -955,22 +1044,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
     
             if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
 
-            if (playerInventory.canCarry(objectToGive)) {
-                var deliveredItem;
-                if (_delivers) {
-                    if(_delivers.getName() == anObjectName) {
-                        deliveredItem = self.deliver();
-                        if (!(deliveredItem)) {return initCap(_itemDescriptivePrefix)+" not working at the moment."};
-                        objectToGive = deliveredItem;
-                    };
-                } 
-                if (!(deliveredItem)) {_inventory.remove(anObjectName);};
+            if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry " + anObjectName + " at the moment." };
+
+            var deliveredItem;
+            if (delivering) {
+                deliveredItem = self.deliver(objectToGive.getName());
+                if (!(deliveredItem)) { return initCap(_itemDescriptivePrefix) + " not working at the moment." };
+                objectToGive = deliveredItem;
+            };
+
+            if (!(deliveredItem)) {_inventory.remove(anObjectName);};
 
                 //add to suitable container or to player inventory
                 //if container is required, we _know_ we have a suitable container by this point.
-                if (requiresContainer) { 
-                    suitableContainer.receive(objectToGive);
-                    return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
+            if (requiresContainer) { 
+                suitableContainer.receive(objectToGive);
+                return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
                 //    suitableContainer.receive(objectToGive);
 
                 //    if (playerInventory.check(suitableContainer.getName())) {
@@ -981,18 +1070,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //    return objectToGive.getDisplayName()+ "has been added to "+suitableContainer.getDisplayName()+" that happened to be nearby.";
                 };
 
-                playerInventory.add(objectToGive);
+            playerInventory.add(objectToGive);
 
-                if (self.getName() == objectToGive.getComponentOf()) {
-                      
-                      if (_switched) {self.switchOnOrOff('switch','off');}; //kill the power
-                      return "You take "+objectToGive.getDisplayName()+".<br>Hopefully nobody needs "+self.getDisplayName()+" to work any time soon.<br>";      
-                };
-
-                return "You're now carrying "+objectToGive.getDescription()+".";
+            if (self.getName() == objectToGive.getComponentOf()) {          
+                  if (_switched) {self.switchOnOrOff('switch','off');}; //kill the power
+                  return "You take "+objectToGive.getDisplayName()+".<br>Hopefully nobody needs "+self.getDisplayName()+" to work any time soon.<br>";      
             };
 
-            return "Sorry. You can't carry "+anObjectName+" at the moment."
+            return "You're now carrying "+objectToGive.getDescription()+".";
         };
 
         self.receive = function(anObject) {

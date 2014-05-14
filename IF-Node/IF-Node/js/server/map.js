@@ -90,7 +90,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             var artefact;
             var inventory;
             var linkedExits = [];
-            var delivers;
+            var delivers = [];
             var missions; //not implemented yet
 
             if (artefactData.linkedexits) {
@@ -99,8 +99,10 @@ exports.Map = function Map() { //inputs for constructor TBC
                 };
             };
 
-            if  (artefactData.delivers) {
-                delivers = self.buildArtefact(artefactData.delivers);
+            if (artefactData.delivers) {
+                for (var i = 0; i < artefactData.delivers.length; i++) {
+                    delivers.push(self.buildArtefact(artefactData.delivers[i]));
+                };
             };
 
             artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);

@@ -665,31 +665,33 @@
           "isBreakable": false,
           "componentOf": "coffee"
         },
-        "delivers": {
-          "object": "artefact",
-          "name": "sweet coffee",
-          "description": "sweet coffee",
-          "detailedDescription": "Development fuel with added sugar!",
-          "attributes": {
-            "weight": 1,
-            "carryWeight": 0,
-            "attackStrength": 0,
-            "type": "food",
-            "canCollect": true,
-            "canOpen": false,
-            "isEdible": true,
-            "nutrition": 15,
-            "isBreakable": false,
-            "requiresContainer": true,
-            "requiredContainer": "cup"
-          },
-          "synonyms": [
-            "brew",
-            "drink",
-            "coffee",
-            "sugary coffee"
-          ]
-        }
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "sweet coffee",
+            "description": "sweet coffee",
+            "detailedDescription": "Development fuel with added sugar!",
+            "attributes": {
+              "weight": 1,
+              "carryWeight": 0,
+              "attackStrength": 0,
+              "type": "food",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": true,
+              "nutrition": 15,
+              "isBreakable": false,
+              "requiresContainer": true,
+              "requiredContainer": "cup"
+            },
+            "synonyms": [
+              "brew",
+              "drink",
+              "coffee",
+              "sugary coffee"
+            ]
+          }
+        ]
       },
       {
         "object": "artefact",
@@ -715,34 +717,12 @@
           "vending machine",
           "coffee vending machine"
         ],
-        "delivers": {
-          "object": "artefact",
-          "name": "coffee",
-          "description": "coffee",
-          "detailedDescription": "Development fuel.",
-          "attributes": {
-            "weight": 1,
-            "carryWeight": 0,
-            "attackStrength": 0,
-            "type": "food",
-            "canCollect": true,
-            "canOpen": false,
-            "isEdible": true,
-            "nutrition": 10,
-            "isBreakable": false,
-            "requiresContainer": true,
-            "requiredContainer": "cup",
-            "componentOf": "sugar"
-          },
-          "synonyms": [
-            "brew",
-            "drink"
-          ],
-          "delivers": {
+        "delivers": [
+          {
             "object": "artefact",
-            "name": "sweet coffee",
-            "description": "sweet coffee",
-            "detailedDescription": "Development fuel with added sugar!",
+            "name": "coffee",
+            "description": "coffee",
+            "detailedDescription": "Development fuel.",
             "attributes": {
               "weight": 1,
               "carryWeight": 0,
@@ -751,19 +731,45 @@
               "canCollect": true,
               "canOpen": false,
               "isEdible": true,
-              "nutrition": 15,
+              "nutrition": 10,
               "isBreakable": false,
               "requiresContainer": true,
-              "requiredContainer": "cup"
+              "requiredContainer": "cup",
+              "componentOf": "sugar"
             },
             "synonyms": [
               "brew",
-              "drink",
-              "coffee",
-              "sugary coffee"
+              "drink"
+            ],
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "sweet coffee",
+                "description": "sweet coffee",
+                "detailedDescription": "Development fuel with added sugar!",
+                "attributes": {
+                  "weight": 1,
+                  "carryWeight": 0,
+                  "attackStrength": 0,
+                  "type": "food",
+                  "canCollect": true,
+                  "canOpen": false,
+                  "isEdible": true,
+                  "nutrition": 15,
+                  "isBreakable": false,
+                  "requiresContainer": true,
+                  "requiredContainer": "cup"
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary coffee"
+                ]
+              }
             ]
           }
-        },
+        ],
         "missions": [
           {
             "object": "mission",
@@ -1104,8 +1110,8 @@
         "destination": "spy",
         "reward": {
           "score": 50,
-		  "affinityModifier": 2,
-		  "increaseAffinityFor": "simon",
+          "affinityModifier": 2,
+          "increaseAffinityFor": "simon",
           "successMessage": "Congratulations. You killed the spy! Have 50 points."
         }
       }
@@ -1517,8 +1523,8 @@
             "destination": "projector",
             "reward": {
               "score": 25,
-			  "affinityModifier": 2,
-			  "increaseAffinityFor": "amanda",
+              "affinityModifier": 2,
+              "increaseAffinityFor": "amanda",
               "successMessage": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i><br> Have 25 points."
             }
           }
@@ -1712,7 +1718,7 @@
             "destination": "Vic",
             "reward": {
               "score": 50,
-		      "increaseAffinityFor": "Vic",
+              "increaseAffinityFor": "Vic",
               "delivers": {
                 "object": "artefact",
                 "name": "parcel",

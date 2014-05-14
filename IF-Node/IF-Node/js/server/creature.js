@@ -988,7 +988,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return true;
         };
 
-        self.deliver = function() {
+        self.deliver = function(anObjectName) {
             return null;
         };
 
