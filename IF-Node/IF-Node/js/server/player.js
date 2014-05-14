@@ -1299,7 +1299,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward.score) { _score += missionReward.score;};
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                    _missions[i].processAffinityModifiers(map, missionReward);
+                    locationMissions[j].processAffinityModifiers(map, missionReward);
                     _missionsCompleted.push(locationMissions[j].getName());
                     _currentLocation.removeMission(locationMissions[j].getName());
                 };
@@ -1318,7 +1318,7 @@ module.exports.Player = function Player(aUsername) {
                         if (missionReward.score) { _score += missionReward.score;};
                         if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                         if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                        _missions[i].processAffinityModifiers(map, missionReward);
+                        artefactMissions[j].processAffinityModifiers(map, missionReward);
                         _missionsCompleted.push(artefactMissions[j].getName());
                         artefacts[i].removeMission(artefactMissions[j].getName());
                     };
