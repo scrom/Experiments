@@ -44,6 +44,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _lockable = false;
         var _unlocks = ""; //unique name of the object that it unlocks. 
         var _componentOf = ""; //unique name of the object this is a component of.
+        var _combinesWith = ""; //unique name of the object this can combine with.
         var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
         var _delivers = delivers||[]; //what does this deliver when all components are in place? (it uses a charge of each component to do so)--
         var _requiresContainer = false;
@@ -143,7 +144,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (artefactAttributes.unlocks != undefined) {_unlocks = artefactAttributes.unlocks;};
 
-            if (artefactAttributes.componentOf != undefined) {_componentOf = artefactAttributes.componentOf;};
+            if (artefactAttributes.componentOf != undefined) { _componentOf = artefactAttributes.componentOf; };
+            if (artefactAttributes.combinesWith != undefined) { _combinesWith = artefactAttributes.combinesWith; };
+            
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
             if (artefactAttributes.requiresContainer != undefined) {
                 if (artefactAttributes.requiresContainer== true || artefactAttributes.requiresContainer == "true") { _requiresContainer = true;};
@@ -242,6 +245,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.isDestroyed =_destroyed
             currentAttributes.unlocks = _unlocks;
             currentAttributes.componentOf = _componentOf;
+            currentAttributes.combinesWith = _combinesWith;
             currentAttributes.requiredComponentCount = _requiredComponentCount;
             currentAttributes.requiresContainer = _requiresContainer;
             currentAttributes.requiredContainer = _requiredContainer;
@@ -305,6 +309,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getType = function() {
             return _type;
+        };
+
+        self.getCombinesWith = function () {
+            return _combinesWith;
         };
 
         self.getComponentOf = function() {
@@ -404,8 +412,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     for (var i = 0; i < _delivers.length; i++) {
                         if (i > 0 && i < _delivers.length - 1) { returnString += ", "; };
                         if (i > 0 && i == _delivers.length - 1) { returnString += " and "; };
-                        returnString += _delivers[i].getName() + ".";
+                        returnString += _delivers[i].getName();
                     };
+                    returnString += ".";
                 };               
             };
 
@@ -491,8 +500,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.combinesWith = function(anObject) {
             if (self.isDestroyed()) {return false;};
-            if (self.getComponentOf(anObject.getName()) && anObject.getComponentOf(self.getName)) {
-            //objects are components of each other...
+            if (self.getCombinesWith(anObject.getName()) && anObject.getCombinesWith(self.getName())) {
+            //objects combine with each other...
             return true;
             };
             return false;
@@ -1012,7 +1021,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //are we attempting to retrieve a delivery object?
             var objectToGive;
-            if (_delivers) {
+            if (_delivers && (!(self.getCombinesWith()))) {
                 //is the requested object one we can deliver?     
                 for (var i = 0; i < _delivers.length; i++) {
                     if (_delivers[i].syn(anObjectName)) {

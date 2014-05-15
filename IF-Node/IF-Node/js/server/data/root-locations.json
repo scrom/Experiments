@@ -629,6 +629,28 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "milk",
+        "description": "a bottle of milk",
+        "detailedDescription": "Enough for a few lattes.",
+        "attributes": {
+          "weight": 1,
+          "carryWeight": 0,
+          "attackStrength": 0,
+          "type": "food",
+          "charges": 5,
+          "canCollect": true,
+          "canOpen": false,
+          "isEdible": true,
+          "nutrition": 5,
+          "isBreakable": false,
+          "componentOf": "latte"
+        },
+        "synonyms": [
+          "cow juice"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "cup",
         "description": "a coffee cup",
         "detailedDescription": "Just the right size for a decent brew.",
@@ -663,7 +685,7 @@
           "isEdible": true,
           "nutrition": 5,
           "isBreakable": false,
-          "componentOf": "coffee"
+          "combinesWith": "coffee"
         },
         "delivers": [
           {
@@ -701,7 +723,7 @@
         "attributes": {
           "extendedinventorydescription": "It's fully loaded with ",
           "weight": 151,
-          "carryWeight": 3,
+          "carryWeight": 25,
           "attackStrength": 0,
           "type": "junk",
           "canCollect": false,
@@ -720,6 +742,30 @@
         "delivers": [
           {
             "object": "artefact",
+            "name": "latte",
+            "description": "latte",
+            "detailedDescription": "Development fuel for former hipsters.",
+            "attributes": {
+              "weight": 1,
+              "carryWeight": 0,
+              "attackStrength": 0,
+              "type": "food",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": true,
+              "nutrition": 10,
+              "isBreakable": false,
+              "requiresContainer": true,
+              "requiredContainer": "cup",
+              "requiredComponentCount": 1
+            },
+            "synonyms": [
+              "brew",
+              "drink"
+            ]
+          },
+          {
+            "object": "artefact",
             "name": "coffee",
             "description": "coffee",
             "detailedDescription": "Development fuel.",
@@ -735,7 +781,7 @@
               "isBreakable": false,
               "requiresContainer": true,
               "requiredContainer": "cup",
-              "componentOf": "sugar"
+              "combinesWith": "sugar"
             },
             "synonyms": [
               "brew",
@@ -1749,7 +1795,7 @@
                     "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
                     "attributes": {
                       "weight": 2,
-                      "carryWeight": 25,
+                      "carryWeight": 3,
                       "attackStrength": 2,
                       "type": "container",
                       "canCollect": true,
@@ -1770,7 +1816,7 @@
                         "description": "coffee beans",
                         "detailedDescription": "Development fuel. Almost enough to last a day here.",
                         "attributes": {
-                          "weight": 3,
+                          "weight": 2,
                           "carryWeight": 0,
                           "attackStrength": 5,
                           "type": "junk",

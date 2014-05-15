@@ -945,6 +945,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
+        self.getCombinesWith = function () {
+            return null;
+        };
+
         self.requiresContainer = function() {
                 return false;
         };

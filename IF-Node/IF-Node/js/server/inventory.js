@@ -43,9 +43,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             if (_items.length == 0) {return "nothing"};
             var list = ''
             for(var i = 0; i < _items.length; i++) {
-                    if (i>0){list+=', ';}
-                    if ((i==_items.length-1)&&(i>0)){list+='and ';};
-                    list+=_items[i].getDescription();
+                if (i > 0 && i < _items.length - 1) { list += ', '; };
+                if (i > 0 && i == _items.length - 1) { list += 'and '; };
+
+                list+=_items[i].getDescription();
             };
 
             return list;
@@ -71,13 +72,16 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         };
 
         self.canCarry = function(anObject) {
-            if (anObject != undefined) {
-                if ((anObject.getWeight()+self.getWeight())>_maxCarryingWeight) {
-                    console.log("can't carry total weight of "+anObject.getWeight()+self.getWeight());
+            if (anObject == undefined) {
+                return false;
+            };
+
+            if ((anObject.getWeight() + self.getWeight()) > _maxCarryingWeight) {
+                console.log("can't carry total weight of "+anObject.getWeight()+self.getWeight());
                     return false;
-                };
-                return true;
-            } else {return false;};
+            };
+
+            return true;
         };
     
         self.add = function(anObject) {
