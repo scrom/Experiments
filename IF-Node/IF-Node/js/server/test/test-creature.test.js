@@ -76,7 +76,7 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
                                     //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, [a0,a1]);
     console.log('actual: '+c0.getDetailedDescription());
-    var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+", and "+anotherArtefactDescription+".";
+    var expectedResult = "It's a big beastie with teeth.<br><br>It's carrying an artefact of little consequence and another artefact of little consequence.";
     console.log("expect: "+expectedResult);
     test.equal(c0.getDetailedDescription(), expectedResult);
     test.done();

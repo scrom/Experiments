@@ -44,7 +44,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             var list = ''
             for(var i = 0; i < _items.length; i++) {
                 if (i > 0 && i < _items.length - 1) { list += ', '; };
-                if (i > 0 && i == _items.length - 1) { list += 'and '; };
+                if (i > 0 && i == _items.length - 1) { list += ' and '; };
 
                 list+=_items[i].getDescription();
             };

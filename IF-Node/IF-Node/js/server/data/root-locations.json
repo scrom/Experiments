@@ -627,28 +627,53 @@
       }
     ],
     "inventory": [
-      {
+        {
         "object": "artefact",
-        "name": "milk",
-        "description": "a bottle of milk",
-        "detailedDescription": "Enough for a few lattes.",
+        "name": "bottle",
+        "description": "a milk bottle",
+        "detailedDescription": "A large milk bottle",
         "attributes": {
-          "weight": 1,
-          "carryWeight": 0,
-          "attackStrength": 0,
-          "type": "food",
-          "charges": 5,
-          "canCollect": true,
-          "canOpen": false,
-          "isEdible": true,
-          "nutrition": 5,
-          "isBreakable": false,
-          "componentOf": "latte"
+            "weight": 1,
+            "carryWeight": 3,
+            "attackStrength": 1,
+            "type": "container",
+            "canCollect": true,
+            "canOpen": false,
+            "isEdible": false,
+            "isBreakable": true
         },
         "synonyms": [
-          "cow juice"
-        ]
-      },
+            "bottle",
+            "milk bottle",
+            "milkbottle"
+        ],
+        "inventory": [
+            {
+            "object": "artefact",
+            "name": "milk",
+            "description": "some milk",
+            "detailedDescription": "Enough for a few lattes.",
+            "attributes": {
+                "weight": 1,
+                "carryWeight": 0,
+                "attackStrength": 0,
+                "type": "food",
+                "charges": 5,
+                "canCollect": true,
+                "canOpen": false,
+                "isEdible": true,
+                "nutrition": 5,
+                "isBreakable": false,
+                "requiresContainer": true,
+                "componentOf": "latte"
+            },
+            "synonyms": [
+                "cow juice"
+            ]
+        }
+      ]
+      }
+      ,
       {
         "object": "artefact",
         "name": "cup",
