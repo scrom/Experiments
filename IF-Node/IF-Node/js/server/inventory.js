@@ -165,7 +165,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         self.getComponents = function(anObjectName) {
             var returnObjects = [];
             for(var index = 0; index < _items.length; index++) {
-                if(_items[index].getComponentOf() == anObjectName) {
+                if(_items[index].isComponentOf(anObjectName)) {
                     if(_items[index].chargesRemaining() > 0 && (!(_items[index].isBroken()) && !(_items[index].isDestroyed()))) {
                         console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                         returnObjects.push(_items[index]);

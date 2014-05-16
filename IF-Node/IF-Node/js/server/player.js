@@ -574,7 +574,7 @@ module.exports.Player = function Player(aUsername) {
                 };
 
                 //did we just add a missing component?
-                if (collectedArtefact.getComponentOf() == receiver.getName()) {
+                if (collectedArtefact.isComponentOf(receiver.getName())) {
                     //if we have all components and it needs reparing...
                     if (receiver.checkComponents()) {
                         resultString += "<br>That's all the missing ingredients in place.";

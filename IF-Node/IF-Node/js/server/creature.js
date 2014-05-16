@@ -941,8 +941,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.getComponentOf = function() {
-            return null;
+        self.isComponentOf = function(anObjectName) {
+            return false;
         };
 
         self.getCombinesWith = function () {

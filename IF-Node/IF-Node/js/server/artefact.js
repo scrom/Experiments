@@ -43,7 +43,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _locked = false;
         var _lockable = false;
         var _unlocks = ""; //unique name of the object that it unlocks. 
-        var _componentOf = ""; //unique name of the object this is a component of.
+        var _componentOf = []; //unique names of the object this is a component of.
         var _combinesWith = ""; //unique name of the object this can combine with.
         var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
         var _delivers = delivers||[]; //what does this deliver when all components are in place? (it uses a charge of each component to do so)--
@@ -144,7 +144,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (artefactAttributes.unlocks != undefined) {_unlocks = artefactAttributes.unlocks;};
 
-            if (artefactAttributes.componentOf != undefined) { _componentOf = artefactAttributes.componentOf; };
+            if (artefactAttributes.componentOf != undefined) { _componentOf = _componentOf.concat(artefactAttributes.componentOf); };
             if (artefactAttributes.combinesWith != undefined) { _combinesWith = artefactAttributes.combinesWith; };
             
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
@@ -315,8 +315,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _combinesWith;
         };
 
-        self.getComponentOf = function() {
-            return _componentOf;
+        self.isComponentOf = function (anObjectName) {
+            for (var i = 0; i < _componentOf.length; i++) {
+                if (_componentOf[i] == anObjectName) { return true; };
+            };
+            return false;
         };
 
         self.requiresContainer = function() {
@@ -407,14 +410,40 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(self.checkComponents())) { 
                 returnString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
             } else {
-                if (_delivers.length>0) {
-                    returnString += "<br>" + _itemPrefix + " delivers ";
+                if (_delivers.length > 0) {
+                    //split deliers items into what can currently be delivered and what can't
+                    var canDeliverList = [];
+                    var cannotDeliverList = [];
                     for (var i = 0; i < _delivers.length; i++) {
-                        if (i > 0 && i < _delivers.length - 1) { returnString += ", "; };
-                        if (i > 0 && i == _delivers.length - 1) { returnString += " and "; };
-                        returnString += _delivers[i].getName();
+                        if (self.canDeliver(_delivers[i].getName())) { canDeliverList.push(_delivers[i]); }
+                        else { cannotDeliverList.push(_delivers[i]); };
+
                     };
-                    returnString += ".";
+
+                    //return what can be delivered
+                    if (canDeliverList.length > 0) {
+                        returnString += "<br>" + _itemPrefix + " delivers ";
+                        for (var i = 0; i < canDeliverList.length; i++) {
+                            if (i > 0 && i < canDeliverList.length - 1) { returnString += ", "; };
+                            if (i > 0 && i == canDeliverList.length - 1) { returnString += " and "; };
+                            returnString += canDeliverList[i].getName();
+                        };
+                        returnString += ".";
+                    };
+
+                    //return what cannot be delivered
+                    if (cannotDeliverList.length > 0) {
+                        returnString += "<br>When properly set up and working " + _itemPrefix.toLowerCase();
+                        if (canDeliverList.length > 0) { returnString += " also" };
+
+                        returnString += " delivers ";
+                        for (var i = 0; i < cannotDeliverList.length; i++) {
+                            if (i > 0 && i < cannotDeliverList.length - 1) { returnString += ", "; };
+                            if (i > 0 && i == cannotDeliverList.length - 1) { returnString += " and "; };
+                            returnString += cannotDeliverList[i].getName();
+                        };
+                        returnString += ".";
+                    };
                 };               
             };
 
@@ -1081,7 +1110,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             playerInventory.add(objectToGive);
 
-            if (self.getName() == objectToGive.getComponentOf()) {          
+            if (objectToGive.isComponentOf(self.getName())) {          
                   if (_switched) {self.switchOnOrOff('switch','off');}; //kill the power
                   return "You take "+objectToGive.getDisplayName()+".<br>Hopefully nobody needs "+self.getDisplayName()+" to work any time soon.<br>";      
             };
