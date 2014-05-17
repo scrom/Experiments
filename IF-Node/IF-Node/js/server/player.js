@@ -13,7 +13,7 @@ module.exports.Player = function Player(aUsername) {
         var _missionsCompleted = []; //track names of all missions completed
         var _missions = []; //player can "carry" missions.
         var _repairSkills = []; //player can learn repair skills.
-
+        var _money = 5.00;
         var _maxHitPoints = 100;
         var _hitPoints = _maxHitPoints;
         var _aggression = 0;
@@ -195,8 +195,21 @@ module.exports.Player = function Player(aUsername) {
             return _stealth;
         };
 
+        self.canAfford = function (price) {
+            if (_money >= price) { return true; };
+            return false;
+        };
+
+        self.reduceCash = function(amount) {
+            _money -= amount;
+        };
+
+        self.increaseCash = function (amount) {
+            _money += amount;
+        };
+
         //ugly - expose an object we own!
-        self.getInventory = function() {
+        self.getInventoryObject = function() {
             return _inventory;
         };	
 
@@ -230,9 +243,9 @@ module.exports.Player = function Player(aUsername) {
 
                 //if object doesn't exist, attempt "relinquish" from each non-creature object in location.
                 var allLocationObjects = _currentLocation.getAllObjects();
+                var locationInventory = _currentLocation.getInventoryObject();
                 for (var i=0;i<allLocationObjects.length;i++) {
                     if (allLocationObjects[i].getType() != 'creature') {
-                        var locationInventory = _currentLocation.getInventoryObject();
                         var tempResultString = allLocationObjects[i].relinquish(artefactName, _inventory, locationInventory, _aggression);
                         if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
                             //we got the requested object back!
@@ -641,7 +654,66 @@ module.exports.Player = function Player(aUsername) {
             if (_aggression >0) {_aggression--;};
             return receiver.receive(collectedArtefact);
 
-         };
+        };
+
+        self.buy = function (verb, artefactName, giverName) {
+            if (stringIsEmpty(giverName)) {
+                if (!(_currentLocation.creaturesExist())) {
+                    return "There's nobody to "+verb+ " from here."
+                };
+
+                var creatures = _currentLocation.getCreatures(); 
+                if (creatures.length > 1) {
+                    return verb + " from whom?"
+                } else {
+                    //there's only 1 creature to buy from.
+                    return creatures[0].sell(artefactName, self);
+                };
+            };
+
+            //if giverName is a creature - buy
+            //if giverName is not a creature - remove
+            var giver = getObjectFromPlayerOrLocation(giverName);
+            if (!(giver)) {
+                return "There's no " + giverName + " here.";
+            };
+
+            if (giver.getType() == 'creature') {
+                return giver.sell(artefactName, self);
+            } else {
+                return self.remove(verb, artefactName, giverName);
+            };
+        };
+
+        self.sell = function (verb, artefactName, giverName) {
+
+            var objectToGive = _inventory.getObject(artefactName);
+            if (!(objectToGive)) { return "You don't have any " + artefactName + " to sell."; };
+
+            if (stringIsEmpty(giverName)) {
+                if (!(_currentLocation.creaturesExist())) {
+                    return "There's nobody to " + verb + " to here."
+                };
+
+                var creatures = _currentLocation.getCreatures();
+                if (creatures.length > 1) {
+                    return verb + " to whom?"
+                } else {
+                    //there's only 1 creature to sell to.
+                    return creatures[0].buy(objectToGive, self);
+                };
+            };
+
+            //if giverName is a creature - sell
+            //if giverName is not a creature - can't sell.
+            var giver = getObjectFromPlayerOrLocation(giverName);
+            if (!(giver)) { return "There's no " + giverName + " here."; };
+
+            if (giver.getType() != 'creature') { return giver.getDisplayName() + " can't buy anything." };
+
+
+            return giver.buy(objectToGive, self);
+        };
 
         self.take = function(verb, artefactName, giverName){
             //use "get" if we're not taking from anything
@@ -1379,7 +1451,7 @@ module.exports.Player = function Player(aUsername) {
             status += "Your score is "+_score+" out of "+maxScore+"<br>";
             if (_killedCount > 0) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps.<br>"; 
-            status += "You have visited "+_locationsFound+" locations.<br>";
+            status += "You have visited " + _locationsFound + " locations.<br>";
             if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
@@ -1402,7 +1474,8 @@ module.exports.Player = function Player(aUsername) {
             };
             if (missions.length > 0) {status+="<br>";};
 
-            status += "<i>Status:</i><br>";            
+            status += "<i>Status:</i><br>";
+            if (_money > 0) { status += "You have &pound;" + _money.toFixed(2) + " in cash.<br>"; };
             if (self.isStarving()) {status+="You're starving.<br>";}
             else if (self.isHungry()) {status+="You're hungry.<br>";};
             

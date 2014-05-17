@@ -39,14 +39,17 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
             return _maxCarryingWeight;
         };
 
-        self.describe = function(ownerName) {
+        self.describe = function(additionalAttribute) {
             if (_items.length == 0) {return "nothing"};
             var list = ''
             for(var i = 0; i < _items.length; i++) {
                 if (i > 0 && i < _items.length - 1) { list += ', '; };
                 if (i > 0 && i == _items.length - 1) { list += ' and '; };
 
-                list+=_items[i].getDescription();
+                list += _items[i].getDescription();
+                if (additionalAttribute == "price") {
+                    list+= " (price: &pound;"+_items[i].getPrice().toFixed(2)+")<br>"
+                };
             };
 
             return list;

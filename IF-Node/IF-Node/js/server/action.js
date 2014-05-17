@@ -301,6 +301,12 @@ exports.Action = function Action(aPlayer, aMap) {
 
                         //might want to trap people wanting to pick locks in future.
                         //now fall through to "take" verb.
+                    case 'buy':
+                        description = _player.buy(_verb, _object0, _object1);
+                        break;
+                    case 'sell':
+                        description = _player.sell(_verb, _object0, _object1);
+                        break;
                     case 'get':
                     case 'collect':
                     case 'take':

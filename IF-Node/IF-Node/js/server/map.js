@@ -132,6 +132,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             console.log('Building Creature: '+creatureData.name);
             var creature;
             var inventory;
+            var salesInventory;
             var missions; //not implemented yet
 
             //determine name (proper noun or just noun)
@@ -147,6 +148,14 @@ exports.Map = function Map() { //inputs for constructor TBC
                 for (var i=0; i<creatureData.inventory.length; i++) {
                     if (creatureData.inventory[i].object == "artefact") {inventory.add(self.buildArtefact(creatureData.inventory[i]));};
                     //else if (creatureData.inventory[i].object == "creature") {inventory.add(self.buildCreature(creatureData.inventory[i]));}; //won't work - creatures need to "go" to a locaion at the moment
+                };
+            };
+            if (creatureData.sells) {
+                //add items directly to inventory
+                salesInventory = creature.getSalesInventoryObject();
+                for (var i = 0; i < creatureData.sells.length; i++) {
+                    if (creatureData.sells[i].object == "artefact") { salesInventory.add(self.buildArtefact(creatureData.sells[i])); };
+                    //else if (creatureData.sells[i].object == "creature") {salesInventory.add(self.buildCreature(creatureData.sells[i]));}; //won't work - creatures need to "go" to a locaion at the moment
                 };
             };
             if (creatureData.missions) {

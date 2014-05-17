@@ -1,6 +1,6 @@
 "use strict";
 //Creature object
-exports.Creature = function Creature(name, description, detailedDescription, attributes, carrying) {
+exports.Creature = function Creature(name, description, detailedDescription, attributes, carrying, sells) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
@@ -27,11 +27,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _canTravel = true; //default //if true, may follow if friendly or aggressive. If false, won't follow a player. May also flee
         var _traveller = false; //default //if true, will wander when ticking unless in the same location as a player
         var _inventory = new inventoryObjectModule.Inventory(0, _name); //carry weight gets updated by attributes
+        var _money = 0.00; //starts with no money
+        var _salesInventory = new inventoryObjectModule.Inventory(250, _name); //carry weight gets updated by attributes
         var _missions = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
         var _edible = false; //can't eat a living creature
         var _nutrition = 50; //default
+        var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _startLocation;
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
@@ -48,7 +51,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!creatureAttributes) {return null;}; //leave defaults preset
             if (creatureAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
             if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
-            if (creatureAttributes.nutrition != undefined) {_nutrition = creatureAttributes.nutrition;};
+            if (creatureAttributes.nutrition != undefined) { _nutrition = creatureAttributes.nutrition; };
+            if (creatureAttributes.price != undefined) { _price = creatureAttributes.price; };
             if (creatureAttributes.health != undefined) {
                 _hitPoints = creatureAttributes.health;
                 _maxHitPoints = creatureAttributes.health
@@ -122,6 +126,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
+        console.log('sells: ' + sells);
+        if (sells) {
+            console.log('building creature inventory... ');
+            //load inventory
+            if (sells instanceof Array) {
+                for (var i = 0; i < sells.length; i++) {
+                    console.log('adding: ' + sells[i]);
+                    _salesInventory.add(sells[i]);
+                };
+            } else { //just one object
+                console.log('adding: ' + sells[i]);
+                _salesInventory.add(sells);
+            };
+        };
+
         //set display name (support for proper nouns)
         var initial = _displayName.substring(0,1);
         if (initial != initial.toUpperCase()) {_displayName = "the "+_displayName;};
@@ -144,7 +163,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         //var _synonyms = [];
         //var _missions = [];
             var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
-            if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            if (_inventory.size() > 0) { returnString += ',"inventory":' + _inventory.toString(); };
+            if (_salesInventory.size() > 0) { returnString += ',"sells":' + _salesInventory.toString(); };
             if (_synonyms.length >0) {
                 returnString+= ',"synonyms":[';
                 for(var i=0; i<_synonyms.length;i++) {
@@ -339,7 +359,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getDetailedDescription = function(playerAggression) {
             var returnString = _detailedDescription+"<br>"+self.getAffinityDescription();
-            if (_inventory.size() > 0) {returnString +="<br>"+_genderPrefix+"'s carrying "+_inventory.describe()+".";};
+            if (_inventory.size() > 0) { returnString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
+            if (_salesInventory.size() > 0) { returnString += "<br>" + _genderPrefix + " has the following for sale:<br>" + _salesInventory.describe('price') + "."; };
             var hasDialogue = false;
             for (var i=0; i< _missions.length;i++) {
                 if (_missions[i].hasDialogue()) {
@@ -364,6 +385,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getWeight = function() {
              return  _weight+_inventory.getWeight();
+        };
+
+        self.getPrice = function () {
+            return _price;
+        };
+
+        self.discountPriceByPercent = function (percent) {
+            if (_price > 0) {
+                _price = Math.floor(_price * ((100 - percent) / 100));
+            };
+            return _price;
         };
 
         self.setAttackStrength = function(attackStrength) {
@@ -401,6 +433,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getInventoryObject = function() {
             return _inventory;
+        };
+
+        self.getSalesInventoryObject = function () {
+            return _salesInventory;
+        };
+
+        self.canAfford = function (price) {
+            if (_money >= price) { return true; };
+            return false;
+        };
+
+        self.reduceCash = function (amount) {
+            _money -= amount;
+        };
+
+        self.increaseCash = function (amount) {
+            _money += amount;
         };
 
         self.canCarry = function(anObject) {
@@ -441,6 +490,29 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _inventory.add(anObject);
             return initCap(self.getDisplayName())+" now owns "+anObject.getDescription()+".";
             
+        };
+
+        self.buy = function (anObject, player) {
+
+            if (!(self.willTrade(player.getAggression(), anObject))) { return _genderPrefix + " doesn't want to buy " + anObject.getDisplayName() + "."; };
+
+            if (!(self.canAfford(anObject.getPrice()))) { return _genderPrefix + " can't afford " + anObject.getPrefix().toLowerCase() + "."; };
+
+            if (!(_inventory.canCarry(anObject))) { return _genderPrefix + " can't carry " + anObject.getDisplayName() + " at the moment."; };
+
+            //take money from creature
+            self.reduceCash(anObject.getPrice());
+            player.increaseCash(anObject.getPrice());
+
+            //increase secondhand value
+            anObject.increasePriceByPercent(10);
+
+            //take ownership
+            var playerInventory = player.getInventoryObject();
+            playerInventory.remove(anObject.getName());
+            _salesInventory.add(anObject);
+
+            return initCap(self.getDisplayName()) + " bought " + anObject.getDisplayName() + ".";
         };
 
         self.willAcceptGift = function(playerAggression, affinityModifier) {
@@ -495,6 +567,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
+        self.willTrade = function (playerAggression, anObject) {
+            if (self.isDead()) { return false; };
+            if (self.isHostile(playerAggression)) { return false; };
+            if (anObject.getPrice() <= 0) { return false; };
+            return true;
+        };
+
         self.relinquish = function(anObjectName,playerInventory, locationInventory, playerAggression) {
             //note we throw away locationInventory
           
@@ -520,6 +599,33 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             objectToGive.reduceAffinityModifier();
                 
             return initCap(self.getDisplayName())+" hands you "+objectToGive.getDisplayName()+".";
+        };
+
+        self.sell = function (anObjectName, player) {
+            if (self.isDead()) { return _genderDescriptivePrefix + " dead. Your money's no good to " + _genderPrefix.toLowerCase() + " now."; };
+
+            var objectToGive = _salesInventory.getObject(anObjectName);
+            if (!(objectToGive)) { return _genderPrefix + " doesn't have any " + anObjectName + " to sell."; };
+
+            if (!(self.willTrade(player.getAggression(), objectToGive))) { return _genderPrefix + " doesn't want to sell " + objectToGive.getDisplayName() + " to you."; };
+
+            if (!(player.canAfford(objectToGive.getPrice()))) { return "You can't afford " + objectToGive.getPrefix().toLowerCase() + "."; };
+
+            var playerInventory = player.getInventoryObject();
+            if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry " + objectToGive.getDisplayName() + " at the moment."; };
+
+            //take money from player
+            player.reduceCash(objectToGive.getPrice());
+            _money += objectToGive.getPrice();
+
+            //reduce secondhand value
+            objectToGive.discountPriceByPercent(25);
+
+            //transfer to player
+            playerInventory.add(objectToGive);
+            _salesInventory.remove(anObjectName);
+
+            return initCap(self.getDisplayName()) + " sells you " + objectToGive.getDisplayName() + ".";
         };
 
 

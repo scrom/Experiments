@@ -1316,6 +1316,57 @@
         "destination": "west-car-park",
         "hidden": "false"
       }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "ice cream man",
+        "displayname": "the ice cream man",
+        "description": "The ice cream man",
+        "detailedDescription": "A random guy who occasionally has ice cream for sale.",
+        "attributes": {
+          "weight": 140,
+          "attackStrength": 35,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 215,
+          "affinity": 0,
+          "canTravel": false
+        },
+        "sells": [
+          {
+            "object": "artefact",
+            "name": "ice cream",
+            "description": "a 99 flake ice cream",
+            "detailedDescription": "Ice cream makes a great gift!",
+            "attributes": {
+              "weight": 1,
+              "carryWeight": 0,
+              "attackStrength": 0,
+              "type": "food",
+              "canCollect": true,
+              "affinityModifier": 5,
+              "canOpen": false,
+              "isEdible": true,
+              "nutrition": 15,
+              "isBreakable": false,
+              "price": 3.5
+            },
+            "synonyms": [
+              "ice",
+              "icecream",
+              "99",
+              "99 flake"
+            ]
+          }
+        ],
+        "synonyms": [
+          "man",
+          "icecream man",
+          "him"
+        ]
+      }
     ]
   },
   {
@@ -1407,7 +1458,7 @@
               "isEdible": false,
               "isBreakable": false,
               "charges": 10,
-              "value": 10
+              "price": 10
             },
             "synonyms": [
               "cash",

@@ -21,6 +21,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _weight = 0;
         var _nutrition = 0;
         var _quantity = 1; //if we have -1 here, it's an unlimited plural.
+        var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _attackStrength = 0;
         var _affinityModifier = 1;
         var _inventory =  new inventoryObjectModule.Inventory(0, _name);
@@ -127,7 +128,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.isEdible != undefined) {
                 if (artefactAttributes.isEdible== true || artefactAttributes.isEdible == "true") { _edible = true;};
             };
-            if (artefactAttributes.nutrition != undefined) {_nutrition = artefactAttributes.nutrition;};
+            if (artefactAttributes.nutrition != undefined) { _nutrition = artefactAttributes.nutrition; };
+            if (artefactAttributes.price != undefined) { _price = artefactAttributes.price; };
             if (artefactAttributes.chewed != undefined) {
                 if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
             };
@@ -382,7 +384,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getDetailedDescription = function(playerAggression) {
             //note we can change description based on player aggression - better for creatures but supported here too.
             var returnString = _detailedDescription; //original description
-            if (_destroyed) {return returnString;}; //don't go any further.
+            if (_destroyed) { return returnString; }; //don't go any further.
+
+            if (self.getPrice() > 0) {
+                returnString += "<br>" + initCap(_itemDescriptivePrefix) + " worth about £" + self.getPrice().toFixed(2) + ".";
+            };
+
             var inventoryIsVisible = true;
 
             if (_lockable && (_locked)) { 
@@ -475,6 +482,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getWeight = function() {
             return _weight+_inventory.getWeight();
+        };
+
+        self.getPrice = function () {
+            return _price;
+        };
+
+        self.increasePriceByPercent = function (percent) {
+            _price = Math.round(_price * (1 + (percent / 100)) * 100) / 100;
+            return _price;
+        };
+
+        self.discountPriceByPercent = function (percent) {
+            if (_price > 0) {
+                _price = Math.round(_price * ((100 - percent) / 100) * 100) / 100;
+            };
+            return _price;
         };
 
         self.getAttackStrength = function() {
@@ -1078,7 +1101,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
-            //if (!(suitableContainer)) {suitableContainer = locationInventory.getSuitableContainer(objectToGive);};
+
+            //fallback option, is there a container in the location itself?
+            if (!(suitableContainer)) {suitableContainer = locationInventory.getSuitableContainer(objectToGive);};
     
             if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
 
@@ -1093,20 +1118,29 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (!(deliveredItem)) {_inventory.remove(anObjectName);};
 
-                //add to suitable container or to player inventory
-                //if container is required, we _know_ we have a suitable container by this point.
-            if (requiresContainer) { 
+            //add to suitable container or to player inventory
+            //if container is required, we _know_ we have a suitable container by this point.
+            if (requiresContainer) {
                 suitableContainer.receive(objectToGive);
-                return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
-                //    suitableContainer.receive(objectToGive);
+                //return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
 
-                //    if (playerInventory.check(suitableContainer.getName())) {
-                        //player has container
-                //        return objectToGive.getDisplayName()+ "has been added to your "+suitableContainer.getName()+".";
-                //    };
-                    //location has container
-                //    return objectToGive.getDisplayName()+ "has been added to "+suitableContainer.getDisplayName()+" that happened to be nearby.";
+                if (playerInventory.check(suitableContainer.getName())) {
+                    //player has container
+                    return "You now have a " + suitableContainer.getName() + " of " + objectToGive.getName() + ".";
                 };
+
+                //location has container
+                var resultString = "You collect " + objectToGive.getName() + " into a nearby " + suitableContainer.getName() + ".";
+
+                //automatically collect the container if possible
+                if (playerInventory.canCarry(suitableContainer)) {
+                    playerInventory.add(suitableContainer);
+                    return resultString;
+                };
+
+                //if the player can't pick it up.
+                return resultString + "<br>" + objectToGive.getDescriptivePrefix().toLowerCase() + " here for you to collect when you're ready.";
+            };
 
             playerInventory.add(objectToGive);
 
