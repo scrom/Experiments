@@ -295,8 +295,8 @@
       {
         "object": "artefact",
         "name": "key",
-        "description": "a vending machine key",
-        "detailedDescription": "It unlocks a vending machine.",
+        "description": "a coffee machine key",
+        "detailedDescription": "It unlocks coffee machines.",
         "attributes": {
           "weight": 0.1,
           "carryWeight": 0,
@@ -1937,52 +1937,74 @@
       },
       {
         "object": "artefact",
-        "name": "chocolate",
-        "description": "a bar of chocolate",
-        "detailedDescription": "Mmmm tasty and loaded with calories.",
+        "name": "machine",
+        "description": "a snack vending machine",
+        "detailedDescription": "An almost endless supply of chocolate and crisps!",
         "attributes": {
-          "weight": 1,
-          "carryWeight": 0,
+          "weight": 151,
+          "carryWeight": 25,
           "attackStrength": 0,
-          "type": "food",
-          "charges": 1,
-          "canCollect": true,
+          "type": "junk",
+          "canCollect": false,
           "canOpen": false,
-          "isEdible": true,
-          "nutrition": 25,
-          "componentOf": [
-            "mocha"
-          ],
-          "isBreakable": false
+          "isEdible": false,
+          "isBreakable": true
         },
         "synonyms": [
-          "bar",
-          "bar of chocolate",
-          "chocolate bar",
-          "food"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "crisps",
-        "description": "a packet of crisps",
-        "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
-        "attributes": {
-          "weight": 1,
-          "carryWeight": 0,
-          "attackStrength": 0,
-          "type": "food",
-          "canCollect": true,
-          "canOpen": false,
-          "isEdible": true,
-          "nutrition": 25,
-          "isBreakable": false
-        },
-        "synonyms": [
-          "packet",
-          "crisp packet",
-          "packet of crisps",
-          "food"
+          "snack machine",
+          "vending machine"
+        ],
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "chocolate",
+            "description": "a bar of chocolate",
+            "detailedDescription": "Mmmm tasty and loaded with calories.",
+            "attributes": {
+              "weight": 1,
+              "carryWeight": 0,
+              "attackStrength": 0,
+              "type": "food",
+              "charges": 1,
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": true,
+              "nutrition": 25,
+              "componentOf": [
+                "mocha"
+              ],
+              "isBreakable": false
+            },
+            "synonyms": [
+              "bar",
+              "bar of chocolate",
+              "chocolate bar",
+              "food"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "crisps",
+            "description": "a packet of crisps",
+            "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
+            "attributes": {
+              "weight": 1,
+              "carryWeight": 0,
+              "attackStrength": 0,
+              "type": "food",
+              "canCollect": true,
+              "canOpen": false,
+              "isEdible": true,
+              "nutrition": 25,
+              "isBreakable": false
+            },
+            "synonyms": [
+              "packet",
+              "crisp packet",
+              "packet of crisps",
+              "food"
+            ]
+          }
         ]
       }
     ]
