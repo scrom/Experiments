@@ -497,7 +497,7 @@ exports.canMakeSweetCoffeeByAddingSugarToCoffee = function (test) {
 exports.canMakeSweetCoffeeByAddingSugarToCoffee.meta = { traits: ["Player Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait", "Combine Trait", "Put Trait"], description: "Test that coffee and sugar can be combined." };
 
 
-exports.canMakeSweetCoffeeByAddingCoffeeToACupOfSugar = function (test) {
+exports.canMakeSweetCoffeeByAddingCoffeeToSugarInACup = function (test) {
 
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
@@ -530,7 +530,7 @@ exports.canMakeSweetCoffeeByAddingCoffeeToACupOfSugar = function (test) {
     test.done();
 };
 
-exports.canMakeSweetCoffeeByAddingCoffeeToACupOfSugar.meta = { traits: ["Player Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait", "Combine Trait", "Put Trait"], description: "Test that coffee and sugar can be combined." };
+exports.canMakeSweetCoffeeByAddingCoffeeToSugarInACup.meta = { traits: ["Player Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait", "Combine Trait", "Put Trait"], description: "Test that coffee and sugar can be combined." };
 
 exports.sweetCoffeeDoesntLoseSynonymsOnDelivery = function (test) {
 
@@ -632,6 +632,94 @@ exports.failingToMakeSweetCoffeeDoesnotModifyIngredients = function (test) {
 };
 
 exports.failingToMakeSweetCoffeeDoesnotModifyIngredients.meta = { traits: ["Player Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait", "Combine Trait", "Put Trait"], description: "Test that coffee and sugar can be combined." };
+
+
+exports.canDrinkCoffee = function (test) {
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup'};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null); 
+
+    l0.addObject(cup);
+    cup.receive(coffee);
+    p0.get('get','cup');
+
+    var expectedResult = 'You drink the coffee. You feel fitter, happier and healthier.';
+    var actualResult = p0.drink('drink','coffee');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canDrinkCoffee.meta = { traits: ["Player Test", "Drink Trait", "Food Trait"], description: "Test that player can drink coffee." };
+
+exports.cannotDrinkCrisps = function (test) {
+
+    var foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false};
+    var crisps = new artefact.Artefact('crisps', 'crisps', "Junk food.", foodAttributes, null); 
+
+    l0.addObject(crisps);
+    p0.get('get','crisps');
+
+    var expectedResult = 'It\'d get stuck in your throat if you tried.';
+    var actualResult = p0.drink('drink','crisps');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotDrinkCrisps.meta = { traits: ["Player Test", "Drink Trait", "Food Trait"], description: "Test that player cannot drink crisps." };
+
+
+exports.cannotDrinkDeadCreature = function (test) {
+
+    var deadCreature = new creature.Creature('creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
+    deadCreature.go(null,l0); 
+    p0.get('get','creature');
+
+    var expectedResult = 'He\'d get stuck in your throat if you tried.';
+    var actualResult = p0.drink('drink','creature');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotDrinkDeadCreature.meta = { traits: ["Player Test", "Drink Trait", "Food Trait"], description: "Test that player cannot drink a dead creature." };
+
+exports.canEatDeadCreature = function (test) {
+
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
+    deadCreature.go(null,l0); 
+    p0.get('get','dead creature');
+
+    var expectedResult = 'You tear into the raw flesh of the dead creature. It was a bit messy but you feel fitter, happier and healthier.';
+    var actualResult = p0.eat('eat','dead creature');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canEatDeadCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature." };
+
+exports.cannotEatLiveCreature = function (test) {
+
+    p0.get('get','creature');
+
+    var expectedResult = 'You try biting the creature but he dodges out of the way and bites you back.';
+    var actualResult = p0.eat('eat','creature');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotEatLiveCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player cannot eat a living creature." };
 
 
 /*

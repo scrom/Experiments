@@ -1254,7 +1254,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact)) {return notFoundMessage(artefactName);}; 
 
             var result = artefact.drink(self); //trying to eat some things give interesting results.
-            if (artefact.isEdible() && artefact.requiresContainer()) {
+            if (artefact.isEdible() && artefact.isLiquid()) {
 
                 //consume it
                 removeObjectFromPlayerOrLocation(artefactName); 

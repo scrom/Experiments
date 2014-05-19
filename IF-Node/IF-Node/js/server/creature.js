@@ -326,7 +326,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.isDead = function() {
             if (_hitPoints <= 0) {return true;};
+            //console.log("hp = "+_hitPoints);
             return false;
+        };
+
+        self.isEdible = function() {
+            if (self.isDead()) { _edible = true;}; //in case not already set.
+            console.log("edible = "+_edible);
+            return _edible;
         };
 
         self.isFriendly = function(playerAggression) {
@@ -686,7 +693,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.go = function(aDirection, aLocation) {
-            if (self.isDead()) {return ""};
+            if (aDirection && self.isDead()) {return ""}; //if aDirection is not set, we're placing a dead creature somewhere.
             _moves++;
 
             //remove self from current location (if set)
@@ -780,8 +787,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.eat = function(aPlayer) {
-            //console.log(_name+' edible:'+_edible+' chewed:'+_chewed);
-                if (_edible){
+            //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
+                if (self.isEdible()){
                     _weight = 0;
                     aPlayer.heal(_nutrition);
                     _description = "the remains of a well-chewed "+self.getDisplayName();
@@ -877,11 +884,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.isCollectable = function() {
             console.log("collectable = "+_collectable);
             return _collectable;
-        };
-
-        self.isEdible = function() {
-            console.log("edible = "+_edible);
-            return _edible;
         };
 
         self.isBreakable = function() {
@@ -1061,6 +1063,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getRequiredContainer = function() {
             return null;
+        };
+
+        self.isLiquid = function() {
+                return false;
         };
 
         self.canContain = function(anObject) {

@@ -665,6 +665,7 @@
               "nutrition": 5,
               "isBreakable": false,
               "requiresContainer": true,
+			  "isLiquid": true,
               "componentOf": [
                 "latte",
                 "mocha"
@@ -731,6 +732,7 @@
               "nutrition": 15,
               "isBreakable": false,
               "requiresContainer": true,
+			  "isLiquid": true,
               "requiredContainer": "cup"
             },
             "synonyms": [
@@ -783,6 +785,7 @@
               "nutrition": 12,
               "isBreakable": false,
               "requiresContainer": true,
+			  "isLiquid": true,
               "requiredContainer": "cup",
               "requiredComponentCount": 1
             },
@@ -807,6 +810,7 @@
               "nutrition": 35,
               "isBreakable": false,
               "requiresContainer": true,
+			  "isLiquid": true,
               "requiredContainer": "cup",
               "requiredComponentCount": 2
             },
@@ -831,6 +835,7 @@
               "nutrition": 8,
               "isBreakable": false,
               "requiresContainer": true,
+			  "isLiquid": true,
               "requiredContainer": "cup",
               "combinesWith": "sugar"
             },
@@ -855,6 +860,7 @@
                   "nutrition": 15,
                   "isBreakable": false,
                   "requiresContainer": true,
+				  "isLiquid": true,
                   "requiredContainer": "cup"
                 },
                 "synonyms": [

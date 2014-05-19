@@ -50,6 +50,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _delivers = delivers||[]; //what does this deliver when all components are in place? (it uses a charge of each component to do so)--
         var _requiresContainer = false;
         var _requiredContainer = null;
+        var _liquid = false;
 
         //grammar support...
         var _itemPrefix = "It";
@@ -152,6 +153,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
             if (artefactAttributes.requiresContainer != undefined) {
                 if (artefactAttributes.requiresContainer== true || artefactAttributes.requiresContainer == "true") { _requiresContainer = true;};
+            };
+            if (artefactAttributes.isLiquid != undefined) {
+                _liquid = artefactAttributes.isLiquid;
+                _requiresContainer = true; //override requires container if liquid.
             };
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
 
@@ -326,6 +331,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.requiresContainer = function() {
                 return _requiresContainer
+        };
+
+        self.isLiquid = function() {
+                return _liquid;
         };
 
         self.getRequiredContainer = function() {
@@ -989,13 +998,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.drink = function(aPlayer) {
             if (self.isDestroyed()) {return "There's nothing left to drink.";};
-            if(_edible && _requiresContainer)  {
+            if(_edible && _liquid)  {
                 _weight = 0;
                 aPlayer.heal(_nutrition);
                 return 'You drink '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
             };
 
-            return _genderPrefix+"'d get stuck in your throat if you tried."
+            return _itemPrefix+"'d get stuck in your throat if you tried."
         };
 
         self.eat = function(aPlayer) {
