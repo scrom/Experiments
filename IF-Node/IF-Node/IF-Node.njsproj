@@ -63,7 +63,6 @@
     <Compile Include="js\server\test\test-creature.test.js" />
     <Compile Include="js\server\test\test-player.get.test.js" />
     <Compile Include="js\server\test\test-player.test.js" />
-    <Compile Include="js\server\test\test-simpleObject.test.js" />
     <Compile Include="js\server\watcher\watcher.js" />
     <Content Include="css\main.css" />
     <Content Include="editor.html" />

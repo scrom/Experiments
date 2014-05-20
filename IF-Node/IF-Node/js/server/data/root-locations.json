@@ -54,8 +54,6 @@
         "detailedDescription": "If you push the button, perhaps a lift will come.",
         "attributes": {
           "weight": 200,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "door",
           "canCollect": false,
           "canOpen": true,
@@ -87,12 +85,7 @@
         "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least *someone* is expecting you.",
         "attributes": {
           "weight": 51,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "junk",
-          "canCollect": false,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -173,13 +166,8 @@
         "detailedDescription": "Peering through the window you see people in suits looking busy and important.",
         "attributes": {
           "weight": 200,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "door",
-          "canCollect": false,
           "canOpen": true,
-          "isEdible": false,
-          "isBreakable": false,
           "lockable": true,
           "locked": true
         },
@@ -208,9 +196,6 @@
           "carryWeight": 0,
           "attackStrength": 0,
           "type": "bed",
-          "canCollect": false,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -227,14 +212,10 @@
         "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.",
         "attributes": {
           "weight": 1,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "food",
           "canCollect": true,
-          "canOpen": false,
           "isEdible": true,
-          "nutrition": 25,
-          "isBreakable": false
+          "nutrition": 25
         },
         "synonyms": [
           "slice",
@@ -299,13 +280,8 @@
         "detailedDescription": "It unlocks coffee machines.",
         "attributes": {
           "weight": 0.1,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "key",
           "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
-          "isBreakable": false,
           "unlocks": "machine"
         },
         "synonyms": [
@@ -485,13 +461,8 @@
         "detailedDescription": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
           "weight": 200,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "door",
-          "canCollect": false,
-          "canOpen": true,
-          "isEdible": false,
-          "isBreakable": false
+          "canOpen": true
         },
         "linkedexits": [
           {
@@ -590,16 +561,12 @@
         "detailedDescription": "Great for when it's dark. It looks like it'll work too!",
         "attributes": {
           "weight": 1,
-          "carryWeight": 0,
           "attackStrength": 5,
           "type": "light",
           "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true,
           "charges": -1,
-          "switched": true,
-          "isOn": false
+          "switched": true
         },
         "synonyms": [
           "light",
@@ -638,8 +605,6 @@
           "attackStrength": 1,
           "type": "container",
           "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -655,18 +620,14 @@
             "detailedDescription": "Enough for a few lattes.",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "food",
               "charges": 5,
 			  "chargeUnit": "cup",
 			  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
 			  "plural": true,
               "canCollect": true,
-              "canOpen": false,
               "isEdible": true,
               "nutrition": 5,
-              "isBreakable": false,
               "requiresContainer": true,
 			  "isLiquid": true,
               "componentOf": [
@@ -691,8 +652,6 @@
           "attackStrength": 2,
           "type": "container",
           "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -709,14 +668,10 @@
         "attributes": {
           "weight": 0.1,
 		  "plural": true,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "food",
           "canCollect": true,
-          "canOpen": false,
           "isEdible": true,
           "nutrition": 5,
-          "isBreakable": false,
           "combinesWith": "coffee"
         },
         "delivers": [
@@ -728,14 +683,10 @@
             "attributes": {
               "weight": 1,
 			  "plural": true,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "food",
               "canCollect": true,
-              "canOpen": false,
               "isEdible": true,
               "nutrition": 15,
-              "isBreakable": false,
               "requiresContainer": true,
 			  "isLiquid": true,
               "requiredContainer": "cup"
@@ -758,11 +709,8 @@
           "extendedinventorydescription": "It's fully loaded with ",
           "weight": 151,
           "carryWeight": 25,
-          "attackStrength": 0,
           "type": "junk",
-          "canCollect": false,
           "canOpen": true,
-          "isEdible": false,
           "isBreakable": true,
           "lockable": true,
           "locked": true,
@@ -781,14 +729,10 @@
             "detailedDescription": "Development fuel for former hipsters.",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "food",
               "canCollect": true,
-              "canOpen": false,
               "isEdible": true,
               "nutrition": 12,
-              "isBreakable": false,
               "requiresContainer": true,
 			  "isLiquid": true,
               "requiredContainer": "cup",
@@ -806,14 +750,10 @@
             "detailedDescription": "Coffee <i>and</i> chocolate. What a combination!",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "food",
               "canCollect": true,
-              "canOpen": false,
               "isEdible": true,
               "nutrition": 35,
-              "isBreakable": false,
               "requiresContainer": true,
 			  "isLiquid": true,
               "requiredContainer": "cup",
@@ -831,15 +771,11 @@
             "detailedDescription": "Development fuel.",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
 			  "plural": true,
-              "attackStrength": 0,
               "type": "food",
               "canCollect": true,
-              "canOpen": false,
               "isEdible": true,
               "nutrition": 8,
-              "isBreakable": false,
               "requiresContainer": true,
 			  "isLiquid": true,
               "requiredContainer": "cup",
@@ -858,14 +794,10 @@
                 "attributes": {
                   "weight": 1,
 				  "plural": true,
-                  "carryWeight": 0,
-                  "attackStrength": 0,
                   "type": "food",
                   "canCollect": true,
-                  "canOpen": false,
                   "isEdible": true,
                   "nutrition": 15,
-                  "isBreakable": false,
                   "requiresContainer": true,
 				  "isLiquid": true,
                   "requiredContainer": "cup"
@@ -945,12 +877,7 @@
         "detailedDescription": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
         "attributes": {
           "weight": 51,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "junk",
-          "canCollect": false,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -967,11 +894,7 @@
           "extendedinventorydescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",
           "weight": 80,
           "carryWeight": 50,
-          "attackStrength": 0,
           "type": "container",
-          "canCollect": false,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -997,13 +920,9 @@
             "detailedDescription": "It's a book on how to sell software in a friendly way.",
             "attributes": {
               "weight": 3,
-              "carryWeight": 0,
               "attackStrength": 5,
               "type": "book",
-              "canCollect": true,
-              "canOpen": false,
-              "isEdible": false,
-              "isBreakable": false
+              "canCollect": true
             },
             "synonyms": [
               "book",
@@ -1019,13 +938,9 @@
             "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
             "attributes": {
               "weight": 2,
-              "carryWeight": 0,
               "attackStrength": 5,
               "type": "book",
-              "canCollect": true,
-              "canOpen": false,
-              "isEdible": false,
-              "isBreakable": false
+              "canCollect": true
             },
             "synonyms": [
               "book",
@@ -1067,13 +982,9 @@
             "detailedDescription": "It's a book on why not all customers are created equal.",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
               "attackStrength": 2,
               "type": "book",
-              "canCollect": true,
-              "canOpen": false,
-              "isEdible": false,
-              "isBreakable": false
+              "canCollect": true
             },
             "synonyms": [
               "book",
@@ -1090,13 +1001,9 @@
         "detailedDescription": "It's flimsy and fake-looking but kind of fun.",
         "attributes": {
           "weight": 4,
-          "carryWeight": 0,
           "attackStrength": 20,
           "type": "weapon",
-          "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
-          "isBreakable": false
+          "canCollect": true
         },
         "synonyms": [
           "ornamental",
@@ -1129,13 +1036,8 @@
         "detailedDescription": "If you push the exit, you should be able to get out again.",
         "attributes": {
           "weight": 200,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "door",
-          "canCollect": false,
-          "canOpen": true,
-          "isEdible": false,
-          "isBreakable": false
+          "canOpen": true
         },
         "linkedexits": [
           {
@@ -1181,12 +1083,9 @@
             "detailedDescription": "Pretty sure it belongs to Red Gate.",
             "attributes": {
               "weight": 3,
-              "carryWeight": 0,
               "attackStrength": 5,
               "type": "junk",
               "canCollect": true,
-              "canOpen": false,
-              "isEdible": false,
               "isBreakable": true
             },
             "synonyms": [
@@ -1342,8 +1241,7 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 215,
-          "affinity": 0,
-          "canTravel": false
+          "affinity": 0
         },
         "sells": [
           {
@@ -1353,15 +1251,11 @@
             "detailedDescription": "Ice cream makes a great gift!",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "food",
               "canCollect": true,
               "affinityModifier": 5,
-              "canOpen": false,
               "isEdible": true,
               "nutrition": 15,
-              "isBreakable": false,
               "price": 3.5
             },
             "synonyms": [
@@ -1460,14 +1354,9 @@
             "detailedDescription": "It's all the profits from the Opportunities projects.",
             "attributes": {
               "weight": 0.1,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "money",
               "canCollect": true,
               "affinityModifier": 5,
-              "canOpen": false,
-              "isEdible": false,
-              "isBreakable": false,
               "charges": 10,
 			  "chargeUnit": "pound",
 			  "chargesDescription": "There's about $charges $chargeUnit",
@@ -1609,13 +1498,8 @@
         "detailedDescription": "Just a plain key.",
         "attributes": {
           "weight": 0.1,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "key",
           "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
-          "isBreakable": false,
           "unlocks": "nothing"
         },
         "synonyms": [
@@ -1649,12 +1533,7 @@
         "detailedDescription": "When these things work they're great.",
         "attributes": {
           "weight": 6,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "junk",
-          "canCollect": false,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true,
           "isBroken": true,
           "requiredComponentCount": 1,
@@ -1716,13 +1595,10 @@
             "detailedDescription": "It looks like it contains all Simon's plans.",
             "attributes": {
               "weight": 5,
-              "carryWeight": 0,
               "attackStrength": 5,
               "type": "treasure",
               "canCollect": true,
               "affinityModifier": 5,
-              "canOpen": false,
-              "isEdible": false,
               "isBreakable": true
             },
             "synonyms": [
@@ -1815,8 +1691,7 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 215,
-          "affinity": 0,
-          "canTravel": false
+          "affinity": 0
         },
         "synonyms": [
           "receptionist",
@@ -1848,13 +1723,8 @@
                 "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
                 "attributes": {
                   "weight": 0.1,
-                  "carryWeight": 0,
-                  "attackStrength": 0,
                   "type": "key",
                   "canCollect": true,
-                  "canOpen": false,
-                  "isEdible": false,
-                  "isBreakable": false,
                   "unlocks": "nothing"
                 },
                 "synonyms": [
@@ -1894,7 +1764,6 @@
                   "type": "container",
                   "canCollect": true,
                   "canOpen": true,
-                  "isEdible": false,
                   "isBreakable": true
                 },
                 "synonyms": [
@@ -1917,7 +1786,6 @@
                       "type": "container",
                       "canCollect": true,
                       "canOpen": true,
-                      "isEdible": false,
                       "isBreakable": true
                     },
                     "synonyms": [
@@ -1934,13 +1802,9 @@
                         "detailedDescription": "Development fuel. Almost enough to last a day here.",
                         "attributes": {
                           "weight": 2,
-                          "carryWeight": 0,
                           "attackStrength": 5,
                           "type": "junk",
                           "canCollect": true,
-                          "canOpen": false,
-                          "isEdible": false,
-                          "isBreakable": false,
                           "charges": 10,
 						  "chargeUnit": "cup",
 						  "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
@@ -1988,12 +1852,7 @@
         "detailedDescription": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
         "attributes": {
           "weight": 80,
-          "carryWeight": 0,
-          "attackStrength": 0,
           "type": "bed",
-          "canCollect": false,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -2011,11 +1870,7 @@
         "attributes": {
           "weight": 151,
           "carryWeight": 25,
-          "attackStrength": 0,
           "type": "junk",
-          "canCollect": false,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         },
         "synonyms": [
@@ -2030,20 +1885,16 @@
             "detailedDescription": "Mmmm tasty and loaded with calories.",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "food",
               "charges": 1,
 			  "chargeUnit": "bar",
 			  "chargesDescription": "$charges $chargeUnit",
               "canCollect": true,
-              "canOpen": false,
               "isEdible": true,
               "nutrition": 25,
               "componentOf": [
                 "mocha"
-              ],
-              "isBreakable": false
+              ]
             },
             "synonyms": [
               "bar",
@@ -2059,14 +1910,10 @@
             "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
             "attributes": {
               "weight": 1,
-              "carryWeight": 0,
-              "attackStrength": 0,
               "type": "food",
               "canCollect": true,
-              "canOpen": false,
               "isEdible": true,
-              "nutrition": 25,
-              "isBreakable": false
+              "nutrition": 25
             },
             "synonyms": [
               "packet",
@@ -2102,12 +1949,9 @@
         "detailedDescription": "This would make quite a good cudgel but it's likely to break.",
         "attributes": {
           "weight": 1,
-          "carryWeight": 0,
           "attackStrength": 15,
           "type": "weapon",
           "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
           "isBreakable": true
         }
       }
@@ -2390,13 +2234,9 @@
                 "description": "projector bulb",
                 "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
                 "attributes": {
-                  "weight": 0,
-                  "carryWeight": 0,
                   "attackStrength": 5,
                   "type": "junk",
                   "canCollect": true,
-                  "canOpen": false,
-                  "isEdible": false,
                   "isBreakable": true,
                   "componentOf": [
                     "projector"
@@ -2465,10 +2305,7 @@
           "carryWeight": 0,
           "attackStrength": 5,
           "type": "book",
-          "canCollect": true,
-          "canOpen": false,
-          "isEdible": false,
-          "isBreakable": false
+          "canCollect": true
         },
         "synonyms": [
           "lotl",
