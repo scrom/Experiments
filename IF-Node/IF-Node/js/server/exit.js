@@ -22,7 +22,7 @@ module.exports.Exit = function Exit(aName, aSourceName, aDestinationName, isHidd
         ////public methods
         self.toString = function() {
             var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","longname":"'+_longName+'","source":"'+_sourceName+'","destination":"'+_destinationName+'"';
-            if (_hidden) {resultString += '"hidden":"'+_hidden+'"';};
+            if (_hidden) { resultString += ', "hidden":"'+_hidden+'"'; };
             resultString += '}';
             return resultString;
         };
