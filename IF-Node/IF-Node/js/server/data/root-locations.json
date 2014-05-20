@@ -50,7 +50,7 @@
       {
         "object": "artefact",
         "name": "button",
-        "description": "a lift call button",
+        "description": "lift call button",
         "detailedDescription": "If you push the button, perhaps a lift will come.",
         "attributes": {
           "weight": 200,
@@ -83,7 +83,7 @@
       {
         "object": "artefact",
         "name": "screen",
-        "description": "a flat-panel screen",
+        "description": "flat-panel screen",
         "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least *someone* is expecting you.",
         "attributes": {
           "weight": 51,
@@ -169,7 +169,7 @@
       {
         "object": "artefact",
         "name": "door",
-        "description": "a locked door",
+        "description": "locked door",
         "detailedDescription": "Peering through the window you see people in suits looking busy and important.",
         "attributes": {
           "weight": 200,
@@ -201,7 +201,7 @@
       {
         "object": "artefact",
         "name": "chair",
-        "description": "a red leather chair",
+        "description": "red leather chair",
         "detailedDescription": "You expect to find Morpheus sitting in it. It's surprisingly comfortable.",
         "attributes": {
           "weight": 80,
@@ -223,7 +223,7 @@
       {
         "object": "artefact",
         "name": "cake",
-        "description": "a slice of chocolate cake",
+        "description": "slice of chocolate cake",
         "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.",
         "attributes": {
           "weight": 1,
@@ -295,7 +295,7 @@
       {
         "object": "artefact",
         "name": "key",
-        "description": "a coffee machine key",
+        "description": "coffee machine key",
         "detailedDescription": "It unlocks coffee machines.",
         "attributes": {
           "weight": 0.1,
@@ -481,7 +481,7 @@
       {
         "object": "artefact",
         "name": "door",
-        "description": "a fire exit",
+        "description": "fire exit",
         "detailedDescription": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
           "weight": 200,
@@ -586,7 +586,7 @@
       {
         "object": "artefact",
         "name": "torch",
-        "description": "an emergency torch",
+        "description": "emergency torch",
         "detailedDescription": "Great for when it's dark. It looks like it'll work too!",
         "attributes": {
           "weight": 1,
@@ -630,7 +630,7 @@
       {
         "object": "artefact",
         "name": "bottle",
-        "description": "a milk bottle",
+        "description": "milk bottle",
         "detailedDescription": "A large milk bottle",
         "attributes": {
           "weight": 1,
@@ -651,7 +651,7 @@
           {
             "object": "artefact",
             "name": "milk",
-            "description": "some milk",
+            "description": "milk",
             "detailedDescription": "Enough for a few lattes.",
             "attributes": {
               "weight": 1,
@@ -659,6 +659,7 @@
               "attackStrength": 0,
               "type": "food",
               "charges": 5,
+			  "quantity":-1,
               "canCollect": true,
               "canOpen": false,
               "isEdible": true,
@@ -680,7 +681,7 @@
       {
         "object": "artefact",
         "name": "cup",
-        "description": "a coffee cup",
+        "description": "coffee cup",
         "detailedDescription": "Just the right size for a decent brew.",
         "attributes": {
           "weight": 2,
@@ -705,6 +706,7 @@
         "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
         "attributes": {
           "weight": 0.1,
+		  "quantity": -1,
           "carryWeight": 0,
           "attackStrength": 0,
           "type": "food",
@@ -723,6 +725,7 @@
             "detailedDescription": "Development fuel with added sugar!",
             "attributes": {
               "weight": 1,
+			  "quantity": -1,
               "carryWeight": 0,
               "attackStrength": 0,
               "type": "food",
@@ -747,7 +750,7 @@
       {
         "object": "artefact",
         "name": "machine",
-        "description": "a coffee vending machine",
+        "description": "coffee vending machine",
         "detailedDescription": "Given the right ingedients it makes a variety of coffees.",
         "attributes": {
           "extendedinventorydescription": "It's fully loaded with ",
@@ -797,7 +800,7 @@
           {
             "object": "artefact",
             "name": "mocha",
-            "description": "mocha",
+            "description": "mocha coffee",
             "detailedDescription": "Coffee <i>and</i> chocolate. What a combination!",
             "attributes": {
               "weight": 1,
@@ -827,6 +830,7 @@
             "attributes": {
               "weight": 1,
               "carryWeight": 0,
+			  "quantity": -1,
               "attackStrength": 0,
               "type": "food",
               "canCollect": true,
@@ -851,6 +855,7 @@
                 "detailedDescription": "Development fuel with added sugar!",
                 "attributes": {
                   "weight": 1,
+				  "quantity": -1,
                   "carryWeight": 0,
                   "attackStrength": 0,
                   "type": "food",
@@ -934,7 +939,7 @@
       {
         "object": "artefact",
         "name": "table",
-        "description": "a glass table",
+        "description": "glass table",
         "detailedDescription": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
         "attributes": {
           "weight": 51,
@@ -954,7 +959,7 @@
       {
         "object": "artefact",
         "name": "bookcase",
-        "description": "a set of bookcases",
+        "description": "set of bookcases",
         "detailedDescription": "Books on everything from travel to SQL server and from sales to C#.",
         "attributes": {
           "extendedinventorydescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",
@@ -986,7 +991,7 @@
           {
             "object": "artefact",
             "name": "large book",
-            "description": "a large book",
+            "description": "large book",
             "detailedDescription": "It's a book on how to sell software in a friendly way.",
             "attributes": {
               "weight": 3,
@@ -1008,7 +1013,7 @@
           {
             "object": "artefact",
             "name": "manual",
-            "description": "a maintenance manual for the coffee machines",
+            "description": "maintenance manual for the coffee machines",
             "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
             "attributes": {
               "weight": 2,
@@ -1056,7 +1061,7 @@
           {
             "object": "artefact",
             "name": "small book",
-            "description": "a small book",
+            "description": "small book",
             "detailedDescription": "It's a book on why not all customers are created equal.",
             "attributes": {
               "weight": 1,
@@ -1079,7 +1084,7 @@
       {
         "object": "artefact",
         "name": "sword",
-        "description": "an ornamental sword",
+        "description": "ornamental sword",
         "detailedDescription": "It's flimsy and fake-looking but kind of fun.",
         "attributes": {
           "weight": 4,
@@ -1118,7 +1123,7 @@
       {
         "object": "artefact",
         "name": "exit button",
-        "description": "an exit button",
+        "description": "exit button",
         "detailedDescription": "If you push the exit, you should be able to get out again.",
         "attributes": {
           "weight": 200,
@@ -1170,7 +1175,7 @@
           {
             "object": "artefact",
             "name": "disk",
-            "description": "a hard disk",
+            "description": "hard disk",
             "detailedDescription": "Pretty sure it belongs to Red Gate.",
             "attributes": {
               "weight": 3,
@@ -1342,7 +1347,7 @@
           {
             "object": "artefact",
             "name": "ice cream",
-            "description": "a 99 flake ice cream",
+            "description": "99 flake ice cream",
             "detailedDescription": "Ice cream makes a great gift!",
             "attributes": {
               "weight": 1,
@@ -1449,7 +1454,7 @@
           {
             "object": "artefact",
             "name": "money",
-            "description": "a big sack of money",
+            "description": "big sack of money",
             "detailedDescription": "It's all the profits from the Opportunities projects.",
             "attributes": {
               "weight": 0.1,
@@ -1596,7 +1601,7 @@
       {
         "object": "artefact",
         "name": "key",
-        "description": "a key",
+        "description": "key",
         "detailedDescription": "Just a plain key.",
         "attributes": {
           "weight": 0.1,
@@ -1636,7 +1641,7 @@
       {
         "object": "artefact",
         "name": "projector",
-        "description": "a projector",
+        "description": "projector",
         "detailedDescription": "When these things work they're great.",
         "attributes": {
           "weight": 6,
@@ -1703,7 +1708,7 @@
           {
             "object": "artefact",
             "name": "sketchbook",
-            "description": "an A3 sketch book",
+            "description": "A3 sketch book",
             "detailedDescription": "It looks like it contains all Simon's plans.",
             "attributes": {
               "weight": 5,
@@ -1835,7 +1840,7 @@
               "delivers": {
                 "object": "artefact",
                 "name": "keyfob",
-                "description": "a key fob",
+                "description": "key fob",
                 "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
                 "attributes": {
                   "weight": 0.1,
@@ -1876,7 +1881,7 @@
               "delivers": {
                 "object": "artefact",
                 "name": "parcel",
-                "description": "a parcel from Amazon",
+                "description": "parcel from Amazon",
                 "detailedDescription": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
                 "attributes": {
                   "weight": 2,
@@ -1899,7 +1904,7 @@
                   {
                     "object": "artefact",
                     "name": "bag",
-                    "description": "a giant bag",
+                    "description": "giant bag",
                     "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
                     "attributes": {
                       "weight": 2,
@@ -1973,7 +1978,7 @@
       {
         "object": "artefact",
         "name": "hammock",
-        "description": "a comfy-looking hammock",
+        "description": "comfy-looking hammock",
         "detailedDescription": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
         "attributes": {
           "weight": 80,
@@ -1995,7 +2000,7 @@
       {
         "object": "artefact",
         "name": "machine",
-        "description": "a snack vending machine",
+        "description": "snack vending machine",
         "detailedDescription": "An almost endless supply of chocolate and crisps!",
         "attributes": {
           "weight": 151,
@@ -2015,7 +2020,7 @@
           {
             "object": "artefact",
             "name": "chocolate",
-            "description": "a bar of chocolate",
+            "description": "bar of chocolate",
             "detailedDescription": "Mmmm tasty and loaded with calories.",
             "attributes": {
               "weight": 1,
@@ -2042,7 +2047,7 @@
           {
             "object": "artefact",
             "name": "crisps",
-            "description": "a packet of crisps",
+            "description": "packet of crisps",
             "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
             "attributes": {
               "weight": 1,
@@ -2085,7 +2090,7 @@
       {
         "object": "artefact",
         "name": "brick",
-        "description": "a brick",
+        "description": "brick",
         "detailedDescription": "This would make quite a good cudgel but it's likely to break.",
         "attributes": {
           "weight": 1,
@@ -2374,7 +2379,7 @@
               "delivers": {
                 "object": "artefact",
                 "name": "bulb",
-                "description": "a projector bulb",
+                "description": "projector bulb",
                 "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
                 "attributes": {
                   "weight": 0,
@@ -2445,7 +2450,7 @@
       {
         "object": "artefact",
         "name": "article",
-        "description": "a 'Learn on the Loo' article",
+        "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
         "attributes": {
           "weight": 3,

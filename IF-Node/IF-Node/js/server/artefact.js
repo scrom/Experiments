@@ -69,10 +69,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //add linked exits
         if (linkedExits) { _linkedExits = linkedExits;};
 
-        var setQuantity = function(quantity) {
-            console.log('setting item quantity: '+quantity);
-            _quantity = quantity;
+        self.setQuantity = function(quantity) {
             
+            _quantity = quantity;
+            //console.log('setting item quantity for '+_name+': '+_quantity);
+
             //set plural grammar for more sensible responses
             if ((quantity == "-1")||(quantity > "1")) {
                 _itemPrefix = "They";
@@ -80,7 +81,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _itemPossessiveSuffix = "their";
                 _itemDescriptivePrefix = "they're";
             }
-            else {
+            else {               
                 _itemPrefix = "It";
                 _itemSuffix = "it";
                 _itemPossessiveSuffix = "its";
@@ -135,7 +136,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
             };
             if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
-            if (artefactAttributes.quantity != undefined) {_quantity = setQuantity(artefactAttributes.quantity);};
+            if (artefactAttributes.quantity != undefined) {self.setQuantity(artefactAttributes.quantity);};
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.affinityModifier != undefined) {_affinityModifier = artefactAttributes.affinityModifier;};
             if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
@@ -164,7 +165,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         processAttributes(attributes);
 
-
         var validateType = function(aType) {
             var validobjectTypes = ['weapon','book','junk','treasure','food','money','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(aType) == -1) { throw "'" + aType + "' is not a valid artefact type."; };//
@@ -176,6 +176,26 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //captialise first letter of string.
         var initCap = function(aString){
             return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
+
+
+        //return right prefix for item       
+        self.descriptionWithCorrectPrefix = function(anItemDescription, aQuantity) {
+            //console.log("desc: "+anItemDescription+" qty: "+aQuantity); 
+            if ((aQuantity <0) || (aQuantity >1)) {return "some "+anItemDescription;};
+            switch (anItemDescription.substring(0,1).toLowerCase()) {
+                case "a":
+                case "e":
+                case "i":
+                case "o":
+                case "u":
+                case "h":
+                    return "an "+anItemDescription;
+                    break;
+                default:
+                    return "a "+anItemDescription;
+                    break;
+            };
         };
 
         //public member functions
@@ -345,7 +365,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDescription = function() {
-            return _description;
+            return self.descriptionWithCorrectPrefix(_description, _quantity);
+        };
+
+        self.getQuantity = function() {
+            return _quantity;
         };
 
         self.getPrefix = function() {
@@ -842,7 +866,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _destroyed = true;
                 if (_lockable) {_locked = false;};
                 _description = _description.replace(" (broken)","")
-                _description = "some wreckage that was once "+_description;
+                _description = "some wreckage that was once "+self.descriptionWithCorrectPrefix(_description, _quantity);
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
                 var destroyMessage = "You destroyed "+_itemSuffix;

@@ -72,6 +72,35 @@ exports.cannotOverwriteTypeWithInvalidValueAfterConstruction = function (test) {
 
 exports.cannotOverwriteTypeWithInvalidValueAfterConstruction.meta = { traits: ["Artefact Test", "Attribute Trait"], description: "Test that an artefact object can have invalid type attribute set." };
 
+exports.canSetQuantityAndRetrieveCorrectDescription = function (test) {
+    var sugarAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, quantity: -1};
+    var sugar = new artefact.Artefact("sugar", "sugar", "sweet and sugary", sugarAttributes);
+    var expectedResult = "some sugar";
+    //artefact object is created in setUp
+    var actualResult = sugar.getDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canSetQuantityAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Attribute Trait", "Quantity Trait", "Description Trait"], description: "Test that an artefact object can have quantity set and return its correct description." };
+
+exports.canSetAndRetrieveQuantity = function (test) {
+    var sugarAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, quantity: -1};
+    var sugar = new artefact.Artefact("sugar", "sugar", "sweet and sugary", sugarAttributes);
+    var expectedResult = "-1";
+    //artefact object is created in setUp
+    var actualResult = sugar.getQuantity();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canSetAndRetrieveQuantity.meta = { traits: ["Artefact Test", "Attribute Trait", "Quantity Trait", "Description Trait"], description: "Test that an artefact object can have quantity set and return it." };
+
+
 exports.canCreateCoffeeMachineInKitchen = function (test) {
     var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup'};
     var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
