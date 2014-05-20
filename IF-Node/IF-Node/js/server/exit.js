@@ -21,7 +21,10 @@ module.exports.Exit = function Exit(aName, aSourceName, aDestinationName, isHidd
 
         ////public methods
         self.toString = function() {
-            return '{"object":"'+_objectName+'","name":"'+_name+'","longname":"'+_longName+'","source":"'+_sourceName+'","destination":"'+_destinationName+'", "hidden":"'+_hidden+'"}';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","longname":"'+_longName+'","source":"'+_sourceName+'","destination":"'+_destinationName+'"';
+            if (_hidden) {resultString += '"hidden":"'+_hidden+'"';};
+            resultString += '}';
+            return resultString;
         };
 
         self.getName = function() {
