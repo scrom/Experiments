@@ -659,6 +659,8 @@
               "attackStrength": 0,
               "type": "food",
               "charges": 5,
+			  "chargeUnit": "cup",
+			  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
 			  "quantity":-1,
               "canCollect": true,
               "canOpen": false,
@@ -1467,6 +1469,8 @@
               "isEdible": false,
               "isBreakable": false,
               "charges": 10,
+			  "chargeUnit": "pound",
+			  "chargesDescription": "There's about $charges $chargeUnit",
               "price": 10
             },
             "synonyms": [
@@ -1938,6 +1942,8 @@
                           "isEdible": false,
                           "isBreakable": false,
                           "charges": 10,
+						  "chargeUnit": "cup",
+						  "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
                           "quantity": -1,
                           "componentOf": [
                             "machine"
@@ -2028,6 +2034,8 @@
               "attackStrength": 0,
               "type": "food",
               "charges": 1,
+			  "chargeUnit": "bar",
+			  "chargesDescription": "$charges $chargeUnit",
               "canCollect": true,
               "canOpen": false,
               "isEdible": true,

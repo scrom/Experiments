@@ -13,7 +13,7 @@ var a0; //artefact object
 exports.setUp = function (callback) {
     i0 = new inventory.Inventory(50);
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
-    a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
+    a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
     callback(); 
 };
 
@@ -26,9 +26,9 @@ exports.tearDown = function (callback) {
 
 
 exports.addReturnsMessage = function (test) {
-    var artefactDescription = 'an artefact of little consequence';
+    var artefactDescription = 'artefact of little consequence';
     var artefactName = 'artefact'
-    var expectedResult = "success: "+artefactDescription+".";
+    var expectedResult = "success: an "+artefactDescription+".";
     var actualResult = i0.add(a0);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -97,7 +97,7 @@ exports.getObjectAfterAddingTwoReturnsCorrectObject = function (test) {
 exports.getObjectAfterAddingTwoReturnsCorrectObject.meta = { traits: ["Inventory Test", "Inventory Trait"], description: "Test that a inventory is carrying an object." };
 
 exports.canListContents = function (test) {
-    var artefactDescription = 'an artefactDescription'
+    var artefactDescription = 'artefactDescription'
     var artefactName = 'artefact'
     var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     i0.add(a0);
@@ -146,7 +146,7 @@ exports.removeSecondObjectReturnsCorrectObject = function (test) {
 exports.removeSecondObjectReturnsCorrectObject.meta = { traits: ["Inventory Test", "Inventory Trait"], description: "Test that a inventory is carrying an object." };
 
 exports.removeFirstObjectRemovesCorrectObject = function (test) {
-    var artefactDescription = 'an artefactDescription'
+    var artefactDescription = 'artefactDescription'
     var artefactName = 'artefact'
     var a1 = new artefact.Artefact(artefactName+'1', artefactDescription+'1', 'not much to say really',junkAttributes, null);
     i0.add(a0);

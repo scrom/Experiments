@@ -33,6 +33,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _opens = false;
         var _open = false;
         var _charges =-1; //-1 means unlimited
+        var _chargeUnit = "";
+        var _chargesDescription = "";
         var _switched = false;
         var _on = false;
         var _edible = false;
@@ -121,6 +123,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.isOpen== true || artefactAttributes.isOpen == "true") { _open = true;};
             };
             if (artefactAttributes.charges != undefined) {_charges = artefactAttributes.charges;};
+            if (artefactAttributes.chargeUnit != undefined) {_chargeUnit = artefactAttributes.chargeUnit;};
+            if (artefactAttributes.chargesDescription != undefined) {_chargesDescription = artefactAttributes.chargesDescription;};
+
             if (artefactAttributes.switched != undefined) {
                 if (artefactAttributes.switched== true || artefactAttributes.switched == "true") { _switched = true;};
             };
@@ -368,6 +373,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return self.descriptionWithCorrectPrefix(_description, _quantity);
         };
 
+        self.getRawDescription = function() {
+            return _description;
+        };
+
         self.getQuantity = function() {
             return _quantity;
         };
@@ -454,10 +463,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     //split deliers items into what can currently be delivered and what can't
                     var canDeliverList = [];
                     var cannotDeliverList = [];
+                    var combinesWithList = [];
                     for (var i = 0; i < _delivers.length; i++) {
-                        if (self.canDeliver(_delivers[i].getName())) { canDeliverList.push(_delivers[i]); }
+                        if (self.getCombinesWith().length>0) {combinesWithList.push(_delivers[i]); }
+                        else if (self.canDeliver(_delivers[i].getName())) { canDeliverList.push(_delivers[i]); }
                         else { cannotDeliverList.push(_delivers[i]); };
 
+                    };
+
+                    //return what can be combined with
+                    if (combinesWithList.length > 0) {
+                        returnString += "<br>" + initCap(self.getName()) + " can be used to make ";
+                        for (var i = 0; i < combinesWithList.length; i++) {
+                            if (i > 0 && i < combinesWithList.length - 1) { returnString += ", "; };
+                            if (i > 0 && i == combinesWithList.length - 1) { returnString += " and "; };
+                            returnString += combinesWithList[i].getName();
+                        };
+                        returnString += ".";
                     };
 
                     //return what can be delivered
@@ -487,7 +509,31 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };               
             };
 
-            if (_charges !=-1) {returnString += "<br>There are "+self.chargesRemaining()+" uses remaining."};
+            //describe remaining charges (if not unlimited)
+            if (self.chargesRemaining() == 0) {
+                returnString += "<br>"+_self.getDescriptivePrefix+" all used up.";
+            }
+            else if (self.chargesRemaining() >1) { //we don't report when there's only a single use left.
+                //if (_detailedDescription.indexOf('$') >-1) {//we have custom placeholders in the description
+                if (_chargesDescription.length>0) { //we have a custom description
+
+                    //set plural
+                    var tempQuantityString = "s";
+                    if (self.chargesRemaining() == 1) {tempQuantityString = "";};
+                    var tempUnits = _chargeUnit+tempQuantityString;
+
+                    //replace substitution variables if set
+                    var tempDescription = _chargesDescription;
+                    tempDescription = tempDescription.replace("$chargeUnit",tempUnits);
+                    tempDescription = tempDescription.replace("$charges",self.chargesRemaining());
+
+                    //set output
+                    returnString += "<br>"+tempDescription+".";
+
+                } else {
+                    returnString += "<br>There are "+self.chargesRemaining()+" uses remaining."
+                };
+            };
 
             if (_switched) {
                 returnString += "<br>"+initCap(_itemDescriptivePrefix)+" currently switched ";
@@ -599,7 +645,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
 
             //return a new instance of deliveryObject
-            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
+            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
             deliveredItem.addSyns(deliveryItemSource.getSyns());
             return deliveredItem;
         };
@@ -657,7 +703,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.chargesRemaining = function() {
             if (self.isDestroyed()) {return 0;};
             console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);
-            if (_charges ==-1) {return "999";}; //we use -1 to mean unlimited
+            //we use -1 to mean unlimited
             return _charges;
         };
 
@@ -764,7 +810,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (!(deliveryItemSource)) { return null; };
 
-            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems()); //return a new instance of deliveryObject
+            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems()); //return a new instance of deliveryObject
             deliveredItem.addSyns(deliveryItemSource.getSyns());
             return deliveredItem;
         };

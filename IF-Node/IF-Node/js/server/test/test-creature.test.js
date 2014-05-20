@@ -7,7 +7,7 @@ var a0;
 
 exports.setUp = function (callback) {
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
-    a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
+    a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
     console.log("artefact setup:"+a0);
     callback(); 
 };
@@ -51,11 +51,11 @@ exports.canCreateCreatureWithSingleObject = function (test) {
     var creatureName = 'creature';
     var creatureDescription = 'a beastie'
     var creatureDetailedDescription = "It's a big beastie with teeth.";
-    var artefactDescription = 'an artefact of little consequence';
+    var artefactDescription = 'artefact of little consequence';
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, a0);
     console.log('actual: '+c0.getDetailedDescription());
-    var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying "+artefactDescription+'.';
+    var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying an "+artefactDescription+'.';
     console.log("expect: "+expectedResult);
        test.equal(c0.getDetailedDescription(), expectedResult);
     test.done();
@@ -67,8 +67,8 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
     var creatureName = 'creature';
     var creatureDescription = 'a beastie'
     var creatureDetailedDescription = "It's a big beastie with teeth.";
-    var artefactDescription = 'an artefact of little consequence';
-    var anotherArtefactDescription = 'another artefact of little consequence';
+    var artefactDescription = 'artefact of little consequence';
+    var anotherArtefactDescription = 'second artefact of little consequence';
     var artefactName = 'artefact'
     var anotherArtefactName = 'another artefact'
     console.log('checking a0: '+a0.getDetailedDescription());
@@ -76,7 +76,7 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
                                     //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, [a0,a1]);
     console.log('actual: '+c0.getDetailedDescription());
-    var expectedResult = "It's a big beastie with teeth.<br><br>It's carrying an artefact of little consequence and another artefact of little consequence.";
+    var expectedResult = "It's a big beastie with teeth.<br><br>It's carrying an an artefact of little consequence and a second artefact of little consequence.";
     console.log("expect: "+expectedResult);
     test.equal(c0.getDetailedDescription(), expectedResult);
     test.done();

@@ -32,12 +32,12 @@ exports.setUp = function (callback) {
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
-    a0 = new artefact.Artefact('artefact', 'an artefact of little consequence', 'not much to say really',junkAttributes, null);
-    weapon = new artefact.Artefact('sword', 'a mighty sword', 'chop chop chop',weaponAttributes, null);
-    food = new artefact.Artefact('cake', 'a slab of sugary goodness', 'nom nom nom',foodAttributes, null);
-    container = new artefact.Artefact('container', 'a container', 'hold hold hold',containerAttributes, null);
-    a1 = new artefact.Artefact('box', 'a box', 'just a box',breakableJunkAttributes, null);
-    breakable = new artefact.Artefact('glass', 'a drinking glass', 'just a box',breakableJunkAttributes, null);
+    a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
+    weapon = new artefact.Artefact('sword', 'mighty sword', 'chop chop chop',weaponAttributes, null);
+    food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
+    container = new artefact.Artefact('container', 'container', 'hold hold hold',containerAttributes, null);
+    a1 = new artefact.Artefact('box', 'box', 'just a box',breakableJunkAttributes, null);
+    breakable = new artefact.Artefact('glass', 'drinking glass', 'just a box',breakableJunkAttributes, null);
     c0 = new creature.Creature('creature', 'A creature', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:5, canTravel:true},[a1]);
     c0.go(null,l0); 
     c1 = new creature.Creature('evil', 'An evil unfriendly creature', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:-5, canTravel:true},[a1]);
@@ -466,7 +466,7 @@ exports.canMakeSweetCoffeeByAddingSugarToCoffee = function (test) {
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
 
-    var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+    var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, quantity: -1, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
     var sweetCoffee = new artefact.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
 
 
@@ -486,7 +486,7 @@ exports.canMakeSweetCoffeeByAddingSugarToCoffee = function (test) {
     p0.get('get','cup');
     p0.put('add','sugar','coffee');
 
-    var expectedResult = 'Some coffee in here would be great.<br>It contains sweet coffee.';
+    var expectedResult = 'Some coffee in here would be great.<br>It contains some sweet coffee.';
     var actualResult = p0.examine('examine','cup');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -502,7 +502,7 @@ exports.canMakeSweetCoffeeByAddingCoffeeToSugarInACup = function (test) {
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
 
-    var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
+    var sweetCoffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, quantity: -1, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 15, isBreakable: false, requiresContainer: true, requiredContainer: 'cup'};
     var sweetCoffee = new artefact.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
 
 
@@ -522,7 +522,7 @@ exports.canMakeSweetCoffeeByAddingCoffeeToSugarInACup = function (test) {
     p0.get('get','cup');
     p0.put('add','coffee','sugar');
 
-    var expectedResult = 'Some coffee in here would be great.<br>It contains sweet coffee.';
+    var expectedResult = 'Some coffee in here would be great.<br>It contains some sweet coffee.';
     var actualResult = p0.examine('examine','cup');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -606,8 +606,8 @@ exports.failingToMakeSweetCoffeeDoesnotModifyIngredients = function (test) {
     var sweetCoffee = new artefact.Artefact('sweet coffee', 'sweet coffee', "Development fuel with added sugar!", sweetCoffeeAttributes, null); 
 
 
-    var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', combinesWith: 'sugar', delivers: [sweetCoffee]};
-    var sugarAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false, combinesWith: 'coffee', delivers: [sweetCoffee]};
+    var coffeeAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", quantity: -1, canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, requiredContainer: 'cup', combinesWith: 'sugar', delivers: [sweetCoffee]};
+    var sugarAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "food", quantity: -1, canCollect: true, canOpen: false, isEdible: true, nutrition: 5, isBreakable: false, combinesWith: 'coffee', delivers: [sweetCoffee]};
 
     sweetCoffee.addSyns(['brew','drink', 'coffee', 'sugary coffee']);
 
@@ -623,7 +623,7 @@ exports.failingToMakeSweetCoffeeDoesnotModifyIngredients = function (test) {
     l0.addObject(sugar);
     p0.put('add','coffee','sugar');
 
-    var expectedResult = "a home location<br>You can see coffee and sugar.<br>There are no visible exits. Coffee weight: 1, Sugar weight: 0.1";
+    var expectedResult = "a home location<br>You can see some coffee and some sugar.<br>There are no visible exits. Coffee weight: 1, Sugar weight: 0.1";
     var actualResult = p0.examine('look')+" Coffee weight: "+coffee.getWeight()+", Sugar weight: "+sugar.getWeight();//
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
