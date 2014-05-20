@@ -20,7 +20,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _detailedDescription = detailedDescription;
         var _weight = 0;
         var _nutrition = 0;
-        var _quantity = 1; //if we have -1 here, it's an unlimited plural.
+        var _plural = false; //if we have -1 here, it's an unlimited plural.
         var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _attackStrength = 0;
         var _affinityModifier = 1;
@@ -71,13 +71,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //add linked exits
         if (linkedExits) { _linkedExits = linkedExits;};
 
-        self.setQuantity = function(quantity) {
-            
-            _quantity = quantity;
-            //console.log('setting item quantity for '+_name+': '+_quantity);
+        self.setPluralGrammar = function(isPlural) {           
+            _plural = isPlural;
 
             //set plural grammar for more sensible responses
-            if ((quantity == "-1")||(quantity > "1")) {
+            if (_plural) {
                 _itemPrefix = "They";
                 _itemSuffix = "them";
                 _itemPossessiveSuffix = "their";
@@ -141,7 +139,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
             };
             if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
-            if (artefactAttributes.quantity != undefined) {self.setQuantity(artefactAttributes.quantity);};
+            if (artefactAttributes.plural != undefined) {self.setPluralGrammar(artefactAttributes.plural);};
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.affinityModifier != undefined) {_affinityModifier = artefactAttributes.affinityModifier;};
             if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
@@ -185,9 +183,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
 
         //return right prefix for item       
-        self.descriptionWithCorrectPrefix = function(anItemDescription, aQuantity) {
-            //console.log("desc: "+anItemDescription+" qty: "+aQuantity); 
-            if ((aQuantity <0) || (aQuantity >1)) {return "some "+anItemDescription;};
+        self.descriptionWithCorrectPrefix = function(anItemDescription) {
+            if (_plural) {return "some "+anItemDescription;};
             switch (anItemDescription.substring(0,1).toLowerCase()) {
                 case "a":
                 case "e":
@@ -267,7 +264,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.nutrition = _nutrition;
             currentAttributes.chewed = _chewed;
             currentAttributes.weight = _weight;
-            currentAttributes.quantity = _quantity;
+            currentAttributes.plural = _plural;
             currentAttributes.attackStrength = _attackStrength;
             currentAttributes.affinityModifier = _affinityModifier;
             currentAttributes.type = _type;
@@ -370,15 +367,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDescription = function() {
-            return self.descriptionWithCorrectPrefix(_description, _quantity);
+            return self.descriptionWithCorrectPrefix(_description);
         };
 
         self.getRawDescription = function() {
             return _description;
-        };
-
-        self.getQuantity = function() {
-            return _quantity;
         };
 
         self.getPrefix = function() {
@@ -518,9 +511,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_chargesDescription.length>0) { //we have a custom description
 
                     //set plural
-                    var tempQuantityString = "s";
-                    if (self.chargesRemaining() == 1) {tempQuantityString = "";};
-                    var tempUnits = _chargeUnit+tempQuantityString;
+                    var tempPluralString = "s";
+                    if (self.chargesRemaining() == 1) {tempPluralString = "";};
+                    var tempUnits = _chargeUnit+tempPluralString;
 
                     //replace substitution variables if set
                     var tempDescription = _chargesDescription;
@@ -912,7 +905,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _destroyed = true;
                 if (_lockable) {_locked = false;};
                 _description = _description.replace(" (broken)","")
-                _description = "some wreckage that was once "+self.descriptionWithCorrectPrefix(_description, _quantity);
+                _description = "some wreckage that was once "+self.descriptionWithCorrectPrefix(_description);
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
                 var destroyMessage = "You destroyed "+_itemSuffix;

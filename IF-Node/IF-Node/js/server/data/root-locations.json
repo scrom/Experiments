@@ -661,7 +661,7 @@
               "charges": 5,
 			  "chargeUnit": "cup",
 			  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
-			  "quantity":-1,
+			  "plural": true,
               "canCollect": true,
               "canOpen": false,
               "isEdible": true,
@@ -708,7 +708,7 @@
         "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
         "attributes": {
           "weight": 0.1,
-		  "quantity": -1,
+		  "plural": true,
           "carryWeight": 0,
           "attackStrength": 0,
           "type": "food",
@@ -727,7 +727,7 @@
             "detailedDescription": "Development fuel with added sugar!",
             "attributes": {
               "weight": 1,
-			  "quantity": -1,
+			  "plural": true,
               "carryWeight": 0,
               "attackStrength": 0,
               "type": "food",
@@ -832,7 +832,7 @@
             "attributes": {
               "weight": 1,
               "carryWeight": 0,
-			  "quantity": -1,
+			  "plural": true,
               "attackStrength": 0,
               "type": "food",
               "canCollect": true,
@@ -857,7 +857,7 @@
                 "detailedDescription": "Development fuel with added sugar!",
                 "attributes": {
                   "weight": 1,
-				  "quantity": -1,
+				  "plural": true,
                   "carryWeight": 0,
                   "attackStrength": 0,
                   "type": "food",
@@ -1944,7 +1944,7 @@
                           "charges": 10,
 						  "chargeUnit": "cup",
 						  "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
-                          "quantity": -1,
+                          "plural": true,
                           "componentOf": [
                             "machine"
                           ],
