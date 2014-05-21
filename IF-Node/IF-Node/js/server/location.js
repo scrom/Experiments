@@ -14,7 +14,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         var _visits = 0;
         var _dark = isDark;
         var _description = aDescription;
-        var _inventory =  new inventoryObjectModule.Inventory(99999, _name);//unlimited //[]; //and creatures
+        var _inventory =  new inventoryObjectModule.Inventory(99999, 0.00, _name);//unlimited //[]; //and creatures
         var _exits = [];
         var _missions = [];
 

@@ -1,6 +1,6 @@
 ﻿"use strict";
 //inventory object - used for player, creature and eventually object inventories
-module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //inputs for constructor TBC
+module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBalance, ownerName) { //inputs for constructor TBC
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
 
@@ -8,6 +8,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         var _ownerName = ownerName;
         var _maxCarryingWeight = maxCarryingWeight;
         var _items = [];
+        var _money = openingCashBalance;
 
         console.log(_objectName + ' created');
 
@@ -21,12 +22,37 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
                     list+= _items[i].toString();
             };
             list += "]";
+
+            //need to add money in here.
             return list;
+       
         };
 
         self.size = function() {
             return _items.length;
         };
+
+        self.setCashBalance = function (newBalance) {
+            _money = newBalance;
+        };
+
+        self.getCashBalance = function () {
+            return _money;
+        };
+
+        self.canAfford = function (price) {
+            if (_money >= price) { return true; };
+            return false;
+        };
+
+        self.reduceCash = function(amount) {
+            _money -= amount;
+        };
+
+        self.increaseCash = function (amount) {
+            _money += amount;
+        };
+
 
         self.setCarryWeight = function(newWeight) {
             //ensure new weight is not set below current contents
@@ -40,19 +66,24 @@ module.exports.Inventory = function Inventory(maxCarryingWeight,ownerName) { //i
         };
 
         self.describe = function(additionalAttribute) {
-            if (_items.length == 0) {return "nothing"};
-            var list = ''
+            var description = '';
+            if (_items.length == 0) {description = "nothing"};
             for(var i = 0; i < _items.length; i++) {
-                if (i > 0 && i < _items.length - 1) { list += ', '; };
-                if (i > 0 && i == _items.length - 1) { list += ' and '; };
+                if (i > 0 && i < _items.length - 1) { description += ', '; };
+                if (i > 0 && i == _items.length - 1) { description += ' and '; };
 
-                list += _items[i].getDescription();
+                description += _items[i].getDescription();
                 if (additionalAttribute == "price") {
-                    list+= " (price: &pound;"+_items[i].getPrice().toFixed(2)+")<br>"
+                    description+= " (price: &pound;"+_items[i].getPrice().toFixed(2)+")<br>"
                 };
             };
+            
+            if (additionalAttribute != "price") {
+                description += ".";
+                if (_money > 0) { description += "<br>You have &pound;" + _money.toFixed(2) + " in cash.<br>"; };
+            };
+            return description;
 
-            return list;
         };	
 
         self.getWeight = function() {

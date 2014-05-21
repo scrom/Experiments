@@ -6,14 +6,13 @@ module.exports.Player = function Player(aUsername) {
         var inventoryObjectModule = require('./inventory');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = aUsername;
-        var _inventory =  new inventoryObjectModule.Inventory(20, _username);
+        var _inventory =  new inventoryObjectModule.Inventory(20, 5.00, _username);
         var _destroyedObjects = []; //track names of all objects player has destroyed
         var _killedCreatures = []; //track names of all creatures player has killed (note if one bleeds to death the player doesn't get credit)
         var _consumedObjects = []; //track names of all objects player has consumed
         var _missionsCompleted = []; //track names of all missions completed
         var _missions = []; //player can "carry" missions.
         var _repairSkills = []; //player can learn repair skills.
-        var _money = 5.00;
         var _maxHitPoints = 100;
         var _hitPoints = _maxHitPoints;
         var _aggression = 0;
@@ -196,16 +195,15 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.canAfford = function (price) {
-            if (_money >= price) { return true; };
-            return false;
+            return _inventory.canAfford(price);
         };
 
         self.reduceCash = function(amount) {
-            _money -= amount;
+            _inventory.reduceCash(amount);
         };
 
         self.increaseCash = function (amount) {
-            _money += amount;
+            _inventory.increaseCash(amount);
         };
 
         //ugly - expose an object we own!
@@ -218,7 +216,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.describeInventory = function() {
-            return "You're carrying "+_inventory.describe()+".";
+            return "You're carrying "+_inventory.describe();
         };	
 
         /*Allow player to get an object from a location*/
@@ -1475,7 +1473,6 @@ module.exports.Player = function Player(aUsername) {
             if (missions.length > 0) {status+="<br>";};
 
             status += "<i>Status:</i><br>";
-            if (_money > 0) { status += "You have &pound;" + _money.toFixed(2) + " in cash.<br>"; };
             if (self.isStarving()) {status+="You're starving.<br>";}
             else if (self.isHungry()) {status+="You're hungry.<br>";};
             

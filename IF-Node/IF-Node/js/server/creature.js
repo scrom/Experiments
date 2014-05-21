@@ -26,9 +26,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _affinity = 0 // default // Goes up if you're nice to the creature, goes down if you're not.
         var _canTravel = false; //default //if true, may follow if friendly or aggressive. If false, won't follow a player. May also flee
         var _traveller = false; //default //if true, will wander when ticking unless in the same location as a player
-        var _inventory = new inventoryObjectModule.Inventory(0, _name); //carry weight gets updated by attributes
-        var _money = 0.00; //starts with no money
-        var _salesInventory = new inventoryObjectModule.Inventory(250, _name); //carry weight gets updated by attributes
+        var _inventory = new inventoryObjectModule.Inventory(0, 0.00, _name); //carry weight gets updated by attributes
+        var _salesInventory = new inventoryObjectModule.Inventory(250, 0.00, _name); //carry weight gets updated by attributes
         var _missions = [];
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
@@ -49,10 +48,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
-            if (creatureAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
-            if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
+            if (creatureAttributes.synonyms != undefined) { _synonyms = creatureAttributes.synonyms;};
+            if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(creatureAttributes.carryWeight);};
             if (creatureAttributes.nutrition != undefined) { _nutrition = creatureAttributes.nutrition; };
             if (creatureAttributes.price != undefined) { _price = creatureAttributes.price; };
+            if (creatureAttributes.money != undefined) {_inventory.setCashBalance(creatureAttributes.money);};
             if (creatureAttributes.health != undefined) {
                 _hitPoints = creatureAttributes.health;
                 _maxHitPoints = creatureAttributes.health
@@ -218,6 +218,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             currentAttributes.gender = _gender; 
             currentAttributes.carryWeight = _inventory.getCarryWeight();
+            currentAttributes.money = _inventory.getCashBalance();
             currentAttributes.canCollect = _collectable;
             currentAttributes.isEdible = _edible;
             currentAttributes.nutrition = _nutrition;
@@ -367,7 +368,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getDetailedDescription = function(playerAggression) {
             var returnString = _detailedDescription+"<br>"+self.getAffinityDescription();
             if (_inventory.size() > 0) { returnString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
-            if (_salesInventory.size() > 0) { returnString += "<br>" + _genderPrefix + " has the following for sale:<br>" + _salesInventory.describe('price') + "."; };
+            if (_salesInventory.size() > 0) { returnString += "<br>" + _genderPrefix + " has the following for sale:<br>" + _salesInventory.describe('price'); };
             var hasDialogue = false;
             for (var i=0; i< _missions.length;i++) {
                 if (_missions[i].hasDialogue()) {
@@ -447,16 +448,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.canAfford = function (price) {
-            if (_money >= price) { return true; };
-            return false;
+            return _inventory.canAfford(price);
         };
 
-        self.reduceCash = function (amount) {
-            _money -= amount;
+        self.reduceCash = function(amount) {
+            _inventory.reduceCash(amount);
         };
 
         self.increaseCash = function (amount) {
-            _money += amount;
+            _inventory.increaseCash(amount);
         };
 
         self.canCarry = function(anObject) {
@@ -623,7 +623,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //take money from player
             player.reduceCash(objectToGive.getPrice());
-            _money += objectToGive.getPrice();
+            self.increaseCash(objectToGive.getPrice());
 
             //reduce secondhand value
             objectToGive.discountPriceByPercent(25);

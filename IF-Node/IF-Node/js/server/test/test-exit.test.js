@@ -14,7 +14,7 @@ exports.canCreateExitObject = function (test) {
     var sourceName = 'source';
     var destinationName = 'location';
     var e0 = new exit.Exit(exitName, sourceName, destinationName);
-    var expectedResult = '{"object":"exit","name":"n","longname":"North","source":"source","destination":"location", "hidden":"false"}';
+    var expectedResult = '{"object":"exit","name":"n","longname":"North","source":"source","destination":"location"}';
     var actualResult = e0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
