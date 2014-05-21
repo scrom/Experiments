@@ -1197,8 +1197,7 @@
           "gender": "male",
           "type": "friendly",
           "carryWeight": 15,
-          "health": 215,
-          "affinity": 0
+          "health": 215
         },
         "sells": [
           {
@@ -1525,7 +1524,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 500,
-          "affinity": 0,
           "canTravel": true,
           "traveller": true
         },
@@ -1629,8 +1627,7 @@
           "gender": "female",
           "type": "friendly",
           "carryWeight": 15,
-          "health": 215,
-          "affinity": 0
+          "health": 215
         },
         "synonyms": [
           "receptionist",
@@ -2120,7 +2117,6 @@
           "type": "friendly",
           "carryWeight": 12,
           "health": 215,
-          "affinity": 0,
           "canTravel": true,
           "traveller": true
         },
