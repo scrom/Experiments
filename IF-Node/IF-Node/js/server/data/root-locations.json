@@ -46,10 +46,10 @@
       {
         "object": "artefact",
         "name": "button",
-		"description": "lift call button",
+        "description": "lift call button",
         "detailedDescription": "If you push the button, perhaps a lift will come.",
         "attributes": {
-		  "defaultAction": "press",
+          "defaultAction": "press",
           "weight": 200,
           "type": "door",
           "canOpen": true
@@ -158,7 +158,7 @@
         "description": "locked door",
         "detailedDescription": "Peering through the window you see people in suits looking busy and important.",
         "attributes": {
-		  "defaultAction": "open",
+          "defaultAction": "open",
           "weight": 200,
           "type": "door",
           "canOpen": true,
@@ -183,10 +183,10 @@
       {
         "object": "artefact",
         "name": "chair",
-		"description": "red leather chair",
+        "description": "red leather chair",
         "detailedDescription": "You expect to find Morpheus sitting in it. It's surprisingly comfortable.",
         "attributes": {
-		  "defaultAction": "rest",
+          "defaultAction": "rest",
           "weight": 80,
           "carryWeight": 0,
           "attackStrength": 0,
@@ -203,11 +203,11 @@
       {
         "object": "artefact",
         "name": "cake",
-		"defaultAction": "eat",
         "description": "slice of chocolate cake",
         "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.",
         "attributes": {
           "weight": 1,
+		  "defaultAction": "eat",
           "type": "food",
           "canCollect": true,
           "isEdible": true,
@@ -436,10 +436,10 @@
       {
         "object": "artefact",
         "name": "door",
-		"description": "fire exit",
+        "description": "fire exit",
         "detailedDescription": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
-		  "defaultAction": "open",
+          "defaultAction": "open",
           "weight": 200,
           "type": "door",
           "canOpen": true
@@ -535,7 +535,7 @@
         "description": "emergency torch",
         "detailedDescription": "Great for when it's dark. It looks like it'll work too!",
         "attributes": {
-		  "defaultAction": "turn on",
+          "defaultAction": "turn on",
           "weight": 1,
           "attackStrength": 5,
           "type": "light",
@@ -594,18 +594,18 @@
             "description": "milk",
             "detailedDescription": "Enough for a few lattes.",
             "attributes": {
-			  "defaultAction": "drink",
+              "defaultAction": "drink",
               "weight": 1,
               "type": "food",
               "charges": 5,
-			  "chargeUnit": "cup",
-			  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
-			  "plural": true,
+              "chargeUnit": "cup",
+              "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+              "plural": true,
               "canCollect": true,
               "isEdible": true,
               "nutrition": 5,
               "requiresContainer": true,
-			  "isLiquid": true,
+              "isLiquid": true,
               "componentOf": [
                 "latte",
                 "mocha"
@@ -643,7 +643,7 @@
         "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
         "attributes": {
           "weight": 0.1,
-		  "plural": true,
+          "plural": true,
           "type": "food",
           "canCollect": true,
           "isEdible": true,
@@ -657,15 +657,15 @@
             "description": "sweet coffee",
             "detailedDescription": "Development fuel with added sugar!",
             "attributes": {
-			  "defaultAction": "drink",
+              "defaultAction": "drink",
               "weight": 1,
-			  "plural": true,
+              "plural": true,
               "type": "food",
               "canCollect": true,
               "isEdible": true,
               "nutrition": 15,
               "requiresContainer": true,
-			  "isLiquid": true,
+              "isLiquid": true,
               "requiredContainer": "cup"
             },
             "synonyms": [
@@ -695,7 +695,7 @@
         },
         "synonyms": [
           "coffee machine",
-		  "vending",
+          "vending",
           "vending machine",
           "coffee vending machine"
         ],
@@ -706,14 +706,14 @@
             "description": "latte",
             "detailedDescription": "Development fuel for former hipsters.",
             "attributes": {
-			  "defaultAction": "drink",
+              "defaultAction": "drink",
               "weight": 1,
               "type": "food",
               "canCollect": true,
               "isEdible": true,
               "nutrition": 12,
               "requiresContainer": true,
-			  "isLiquid": true,
+              "isLiquid": true,
               "requiredContainer": "cup",
               "requiredComponentCount": 1
             },
@@ -728,14 +728,14 @@
             "description": "mocha coffee",
             "detailedDescription": "Coffee <i>and</i> chocolate. What a combination!",
             "attributes": {
-			  "defaultAction": "drink",
+              "defaultAction": "drink",
               "weight": 1,
               "type": "food",
               "canCollect": true,
               "isEdible": true,
               "nutrition": 35,
               "requiresContainer": true,
-			  "isLiquid": true,
+              "isLiquid": true,
               "requiredContainer": "cup",
               "requiredComponentCount": 2
             },
@@ -750,15 +750,15 @@
             "description": "coffee",
             "detailedDescription": "Development fuel.",
             "attributes": {
-			  "defaultAction": "drink",
+              "defaultAction": "drink",
               "weight": 1,
-			  "plural": true,
+              "plural": true,
               "type": "food",
               "canCollect": true,
               "isEdible": true,
               "nutrition": 8,
               "requiresContainer": true,
-			  "isLiquid": true,
+              "isLiquid": true,
               "requiredContainer": "cup",
               "combinesWith": "sugar"
             },
@@ -773,15 +773,15 @@
                 "description": "sweet coffee",
                 "detailedDescription": "Development fuel with added sugar!",
                 "attributes": {
-				  "defaultAction": "drink",
+                  "defaultAction": "drink",
                   "weight": 1,
-				  "plural": true,
+                  "plural": true,
                   "type": "food",
                   "canCollect": true,
                   "isEdible": true,
                   "nutrition": 15,
                   "requiresContainer": true,
-				  "isLiquid": true,
+                  "isLiquid": true,
                   "requiredContainer": "cup"
                 },
                 "synonyms": [
@@ -899,7 +899,7 @@
             "description": "large book",
             "detailedDescription": "It's a book on how to sell software in a friendly way.",
             "attributes": {
-			  "defaultAction": "read",
+              "defaultAction": "read",
               "weight": 3,
               "attackStrength": 5,
               "type": "book",
@@ -918,7 +918,7 @@
             "description": "maintenance manual for the coffee machines",
             "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
             "attributes": {
-			  "defaultAction": "read",
+              "defaultAction": "read",
               "weight": 2,
               "attackStrength": 5,
               "type": "book",
@@ -963,7 +963,7 @@
             "description": "small book",
             "detailedDescription": "It's a book on why not all customers are created equal.",
             "attributes": {
-			  "defaultAction": "read",
+              "defaultAction": "read",
               "weight": 1,
               "attackStrength": 2,
               "type": "book",
@@ -1018,7 +1018,7 @@
         "description": "exit button",
         "detailedDescription": "If you push the exit, you should be able to get out again.",
         "attributes": {
-		  "defaultAction": "press",
+          "defaultAction": "press",
           "weight": 200,
           "type": "door",
           "canOpen": true
@@ -1067,7 +1067,7 @@
             "detailedDescription": "Pretty sure it belongs to Red Gate.",
             "attributes": {
               "weight": 3,
-			  "price":100,
+              "price": 100,
               "attackStrength": 5,
               "type": "junk",
               "canCollect": true,
@@ -1224,7 +1224,7 @@
             "description": "99 flake ice cream",
             "detailedDescription": "Ice cream makes a great gift!",
             "attributes": {
-			  "defaultAction": "eat",
+              "defaultAction": "eat",
               "weight": 1,
               "type": "food",
               "canCollect": true,
@@ -1308,7 +1308,7 @@
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
           "weight": 190,
-		  "money": 100,
+          "money": 100,
           "attackStrength": 45,
           "gender": "male",
           "type": "friendly",
@@ -1469,7 +1469,7 @@
         "description": "projector",
         "detailedDescription": "When these things work they're great.",
         "attributes": {
-		  "defaultAction": "turn on",
+          "defaultAction": "turn on",
           "weight": 6,
           "type": "junk",
           "isBreakable": true,
@@ -1573,10 +1573,10 @@
             },
             "destination": "Simon",
             "reward": {
-			"affinityModifier": 2,
-			"increaseAffinityFor": "simon",
-            "score": 50,
-            "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."
+              "affinityModifier": 2,
+              "increaseAffinityFor": "simon",
+              "score": 50,
+              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."
             }
           }
         ]
@@ -1692,7 +1692,7 @@
                 "detailedDescription": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
                 "attributes": {
                   "weight": 2,
-				  "defaultAction": "open",
+                  "defaultAction": "open",
                   "carryWeight": 25,
                   "attackStrength": 2,
                   "type": "container",
@@ -1714,7 +1714,7 @@
                     "description": "giant bag",
                     "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
                     "attributes": {
-					  "defaultAction": "open",
+                      "defaultAction": "open",
                       "weight": 2,
                       "carryWeight": 3,
                       "attackStrength": 2,
@@ -1741,8 +1741,8 @@
                           "type": "junk",
                           "canCollect": true,
                           "charges": 10,
-						  "chargeUnit": "cup",
-						  "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
+                          "chargeUnit": "cup",
+                          "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
                           "plural": true,
                           "componentOf": [
                             "machine"
@@ -1785,7 +1785,7 @@
         "description": "comfy-looking hammock",
         "detailedDescription": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
         "attributes": {
-		  "defaultAction": "rest",
+          "defaultAction": "rest",
           "weight": 80,
           "type": "bed",
           "isBreakable": true
@@ -1810,7 +1810,7 @@
         },
         "synonyms": [
           "snack machine",
-		  "vending",
+          "vending",
           "vending machine"
         ],
         "delivers": [
@@ -1820,13 +1820,13 @@
             "description": "bar of chocolate",
             "detailedDescription": "Mmmm tasty and loaded with calories.",
             "attributes": {
-			  "defaultAction": "eat",
+              "defaultAction": "eat",
               "weight": 1,
-			  "price": 0.50,
+              "price": 0.5,
               "type": "food",
               "charges": 1,
-			  "chargeUnit": "bar",
-			  "chargesDescription": "$charges $chargeUnit",
+              "chargeUnit": "bar",
+              "chargesDescription": "$charges $chargeUnit",
               "canCollect": true,
               "isEdible": true,
               "nutrition": 25,
@@ -1847,9 +1847,9 @@
             "description": "packet of crisps",
             "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
             "attributes": {
-			  "defaultAction": "eat",
+              "defaultAction": "eat",
               "weight": 1,
-			  "price": 0.50,
+              "price": 0.5,
               "type": "food",
               "canCollect": true,
               "isEdible": true,
@@ -2130,6 +2130,10 @@
           "manda",
           "her"
         ],
+        "dislikes": [
+          "james",
+          "spy"
+        ],
         "missions": [
           {
             "object": "mission",
@@ -2217,7 +2221,7 @@
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
         "attributes": {
-		  "defaultAction": "read",
+          "defaultAction": "read",
           "weight": 3,
           "carryWeight": 0,
           "attackStrength": 5,

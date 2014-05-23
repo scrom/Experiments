@@ -24,6 +24,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _maxHitPoints = 0; //default
         var _hitPoints = 0; //default
         var _affinity = 0 // default // Goes up if you're nice to the creature, goes down if you're not.
+        var _dislikes = [];
         var _canTravel = false; //default //if true, may follow if friendly or aggressive. If false, won't follow a player. May also flee
         var _traveller = false; //default //if true, will wander when ticking unless in the same location as a player
         var _inventory = new inventoryObjectModule.Inventory(0, 0.00, _name); //carry weight gets updated by attributes
@@ -48,7 +49,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
-            if (creatureAttributes.synonyms != undefined) { _synonyms = creatureAttributes.synonyms;};
+            //if (creatureAttributes.synonyms != undefined) { _synonyms = creatureAttributes.synonyms;};
             if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(creatureAttributes.carryWeight);};
             if (creatureAttributes.nutrition != undefined) { _nutrition = creatureAttributes.nutrition; };
             if (creatureAttributes.price != undefined) { _price = creatureAttributes.price; };
@@ -69,6 +70,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
             if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
+            //if (creatureAttributes.dislikes != undefined) { _dislikes = creatureAttributes.dislikes;};
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
             if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
@@ -173,6 +175,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
                 returnString+= ']';
             };
+            if (_dislikes.length >0) {
+                returnString+= ',"dislikes":[';
+                for(var i=0; i<_dislikes.length;i++) {
+                    if (i>0) {returnString+= ',';};
+                    returnString+= '"'+_dislikes[i]+'"';
+                };
+                returnString+= ']';
+            };
             if (_missions.length >0) {
                 returnString+= ',"missions":[';
                 for(var i=0; i<_missions.length;i++) {
@@ -198,6 +208,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var currentAttributes = {};
 
             //currentAttributes.synonyms = _synonyms;
+            //currentAttributes.dislikes = _dislikes;
             currentAttributes.health = _hitPoints;
             if (_hitPoints > 0) {
                 currentAttributes.alive = true;
@@ -253,6 +264,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.addSyns = function (synonyms) {
             _synonyms = _synonyms.concat(synonyms);
+        };
+
+        self.addDislikes = function (dislikes) {
+            _dislikes = _dislikes.concat(dislikes);
         };
 
         self.getSyns = function () {
@@ -359,12 +374,34 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
+        //self.isHostileTo = function(aCreature) {
+            //if self.dislikes(aCreature)
+            //and self.isFriendly()
+            //and self.willDefendPlayer()
+            //consider defending other creatures too.
+        //};
+
+        self.dislikes = function(aCreature) {
+            var creatureName = aCreature.getName();
+            for (var j=0; j<_dislikes.length;j++) {
+                if (creatureName == _dislikes[j]) {return true;};
+            };
+            return false;
+        };
 
         self.willFollow = function(playerAggression) {
             if (!(self.canTravel())) { return false;} 
             if (self.isHostile(playerAggression)) {return true;};
             if (self.isFriendly(playerAggression)) {
                 if (_affinity < 2 ) {return false;}; //affinity needs to be a little higher.
+                //act based on other creatures present...
+                var creatures = _currentLocation.getCreatures();
+                for (var i=0;i<creatures.length;i++) {
+                    if (self.dislikes(creatures[i])) {
+                        if (_affinity >1) {_affinity--;}; //reduce affinity for encountering someone they don't like
+                        return false;
+                    };
+                };
                 return true;
             };
             return false;
@@ -746,8 +783,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _moves++;
 
             //slowly decrease affinity back down towards 0 the more time they spend following without a benefit.
+            //affinity degrades slower the higher it is to start with. 
             if (_affinity > 0) { 
-                if (_moves%10 == 0 && _moves>0) {_affinity--;};
+                if (_affinity < 5) {
+                    if (_moves%5 == 0 && _moves>0) {_affinity--;}; //degrade every 5 moves for affiity lower than 5
+                } else if (_affinity < 10) {
+                    if (_moves%10 == 0 && _moves>0) {_affinity--;}; //degrade every 10 moves for affinity 5-9
+                } else if (_affinity >= 10) {
+                    if (_moves%20 == 0 && _moves>0) {_affinity--;}; //degrade every 20 moves for affinity 10 or more
+                };
             };
 
             //remove self from current location (if set)

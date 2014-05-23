@@ -142,6 +142,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
             creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
             if (creatureData.synonyms) {creature.addSyns(creatureData.synonyms);};
+            if (creatureData.dislikes) {creature.addDislikes(creatureData.dislikes);};
             if (creatureData.inventory) {
                 //add items directly to inventory
                 inventory = creature.getInventoryObject();
