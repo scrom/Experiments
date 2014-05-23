@@ -368,7 +368,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getDetailedDescription = function(playerAggression) {
             var returnString = _detailedDescription+"<br>"+self.getAffinityDescription();
             if (_inventory.size() > 0) { returnString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
-            if (_salesInventory.size() > 0) { returnString += "<br>" + _genderPrefix + " has the following for sale:<br>" + _salesInventory.describe('price'); };
+            
+            if (_salesInventory.size() == 1) { returnString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
+            else if (_salesInventory.size() > 1) { returnString += "<br>" + initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
+            
             var hasDialogue = false;
             for (var i=0; i< _missions.length;i++) {
                 if (_missions[i].hasDialogue()) {
@@ -539,6 +542,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         //when a player steals from them...
         self.theft = function(anObjectName,playerInventory, player) {
+            var stealingFromSalesInventory = false;
             var playerStealth = player.getStealth();
 
             //attempt to steal...
@@ -551,7 +555,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
                 _affinity--;
+
+                //do they have it?
                 var objectToGive = _inventory.getObject(anObjectName);
+
+                //are they selling it?
+                if (!(objectToGive)) {
+                   objectToGive = _salesInventory.getObject(anObjectName);
+                   if (objectToGive) {stealingFromSalesInventory = true;};                   
+                };
+
                 if (!(objectToGive)) {
                     //we might be trying to steal money...
                     if (anObjectName == "money" || anObjectName == "cash" || anObjectName == "" || anObjectName == undefined) {
@@ -568,8 +581,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 if (playerInventory.canCarry(objectToGive)) {
                     playerInventory.add(objectToGive);
-                    return "You successfully steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";
-                    _inventory.remove(anObjectName);
+                    if(stealingFromSalesInventory) {_salesInventory.remove(anObjectName);}
+                    else {_inventory.remove(anObjectName);};
+
+                    if (self.isDead()) { return "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+"'s corpse.";};
+                    return "You steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";                   
                 };
 
                 return "Sorry. You can't carry "+anObjectName+" at the moment."

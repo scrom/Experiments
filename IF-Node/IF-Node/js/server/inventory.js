@@ -12,6 +12,11 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         console.log(_objectName + ' created');
 
+        //captialise first letter of string.
+        var initCap = function(aString){
+            return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
+
         ////public methods
         self.toString = function() {
             //return self.describe;
@@ -70,13 +75,21 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             var description = '';
             if (_items.length == 0) {description = "nothing"};
             for(var i = 0; i < _items.length; i++) {
-                if (i > 0 && i < _items.length - 1) { description += ', '; };
-                if (i > 0 && i == _items.length - 1) { description += ' and '; };
-
-                description += _items[i].getDescription();
                 if (additionalAttribute == "price") {
-                    description+= " (price: &pound;"+_items[i].getPrice().toFixed(2)+")<br>"
+                    if (_items.length >1 ) {description += "- ";};
+                    
+                    if (_items.length >1 ) {description +=initCap(_items[i].getDescription());}
+                    else { description += _items[i].getDescription();};
+                    
+                    description+= " (price: &pound;"+_items[i].getPrice().toFixed(2)+")"
+                    
+                    if (_items.length >1 ) {description +="<br>";};
+                } else {
+                    if (i > 0 && i < _items.length - 1) { description += ', '; };
+                    if (i > 0 && i == _items.length - 1) { description += ' and '; };
+                    description += _items[i].getDescription();
                 };
+
             };
 
             return description;

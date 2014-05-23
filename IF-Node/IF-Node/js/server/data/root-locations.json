@@ -1050,6 +1050,7 @@
             "detailedDescription": "Pretty sure it belongs to Red Gate.",
             "attributes": {
               "weight": 3,
+			  "price":100,
               "attackStrength": 5,
               "type": "junk",
               "canCollect": true,

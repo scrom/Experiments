@@ -731,7 +731,11 @@ module.exports.Player = function Player(aUsername) {
             if (!(giver)) {return notFoundMessage(giverName);};
 
             if (giver.getType() == 'creature') {
-                return self.steal(verb, artefactName, giverName);
+                if (giver.isDead()) {
+                    return self.steal(verb, artefactName, giverName);
+                };
+                return "You'll need to be a little more specific. Do you want to <i>buy</i> or <i>steal</i> from "+giver.getDisplayName()+"?";
+
             }  else {
                 return self.remove(verb, artefactName, giverName);
             };
