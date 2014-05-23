@@ -337,7 +337,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.isEdible = function() {
             if (self.isDead()) { _edible = true;}; //in case not already set.
-            console.log("edible = "+_edible);
+            //console.log("edible = "+_edible);
             return _edible;
         };
 
@@ -356,6 +356,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //this can potentially get a player in to an almost unwinnable situation with a particularly nasty creature as it will also follow.
             if ((_affinity <-5) && (playerAggression>0) && (_affinity < playerAggression*-1)) {return true;};
             if ((_affinity <=-10) && (_affinity < playerAggression*-1)) {return true;};
+            return false;
+        };
+
+
+        self.willFollow = function(playerAggression) {
+            if (!(self.canTravel())) { return false;} 
+            if (self.isHostile(playerAggression)) {return true;};
+            if (self.isFriendly(playerAggression)) {
+                if (_affinity < 2 ) {return false;}; //affinity needs to be a little higher.
+                return true;
+            };
             return false;
         };
 
@@ -730,8 +741,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.go = function(aDirection, aLocation) {
+            //@todo this if statement looks wrong.
             if (aDirection && self.isDead()) {return ""}; //if aDirection is not set, we're placing a dead creature somewhere.
             _moves++;
+
+            //slowly decrease affinity back down towards 0 the more time they spend following without a benefit.
+            if (_affinity > 0) { 
+                if (_moves%10 == 0 && _moves>0) {_affinity--;};
+            };
 
             //remove self from current location (if set)
             if (_currentLocation != undefined){
@@ -747,7 +764,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //add to new location
             _currentLocation.addObject(self);
 
-            return initCap(self.getDisplayName())+" follows you to the "+_currentLocation.getName()+"<br>";
+            return initCap(self.getDisplayName())+" follows you to the "+_currentLocation.getName()+".<br>";
         };	
 
         self.getLocation = function() {

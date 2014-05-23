@@ -1032,8 +1032,9 @@ module.exports.Player = function Player(aUsername) {
             //rewrite this so that creature does this automagically
             var creatures = _currentLocation.getCreatures();
             for(var i = 0; i < creatures.length; i++) {
-                if ((creatures[i].isHostile(_aggression)) || (creatures[i].isFriendly(_aggression)))
-                returnMessage += creatures[i].followPlayer(direction,newLocation);
+                if (creatures[i].willFollow(_aggression)) {
+                    returnMessage += creatures[i].followPlayer(direction,newLocation);
+                };
             };
 
             //now move self
