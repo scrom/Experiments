@@ -496,11 +496,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     
                     //return what can be sold
                     if (sellsList.length > 0) {
-                        returnString += "<br>" + _itemPrefix + " sells:<br>";
+                        returnString += "<br>" + _itemPrefix + " sells";
+
+                        if (sellsList.length >1 ) {
+                            returnString += ":<br>";
+                        } else {returnString += " ";};
+
                         for (var i = 0; i < sellsList.length; i++) {
-                            //if (i > 0 && i < sellsList.length - 1) { returnString += ", "; };
-                            //if (i > 0 && i == sellsList.length - 1) { returnString += " and "; };
-                            returnString += "- "+initCap(sellsList[i].getName())+" (£"+sellsList[i].getPrice().toFixed(2)+")<br>";
+                            if (sellsList.length >1 ) {returnString += "- ";};
+                            if (sellsList.length >1 ) {returnString +=initCap(sellsList[i].getName());}
+                            else {  returnString +=sellsList[i].getName();};                   
+                            returnString += " (£"+sellsList[i].getPrice().toFixed(2)+")<br>";
                         };
                     };
 
