@@ -229,7 +229,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             //we don't have name exposed any more...
             for(var index = 0; index < _locations.length; index++) {
                 if(_locations[index].getName() == aName) {
-                    console.log('location found: '+aName+' index: '+index);
+                    //console.log('location found: '+aName+' index: '+index);
                     return _locations[index];
                 };
            };
@@ -238,11 +238,10 @@ exports.Map = function Map() { //inputs for constructor TBC
 
 
         self.getExit = function(aSource, aDirection, aDestination){
-            //we don't have name exposed any more...
             var exit;
             for(var index = 0; index < _locations.length; index++) {
                 if(_locations[index].getName() == aSource) {
-                    console.log('exit source location found: '+aSource+' index: '+index);
+                    //console.log('exit source location found: '+aSource+' index: '+index);
                     exit = _locations[index].getExit(aDirection);
                     if (exit.getDestinationName() == aDestination) {return exit;}; 
                 };
@@ -252,7 +251,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         self.init = function(){
             
-            //ground floor locations and links
+            //locations and links
             for (var i=0; i<_rootLocationsJSON.length;i++) {
                 var locationData = _rootLocationsJSON[i]
                 self.addLocation(locationData.name, locationData.description, locationData.dark, locationData);

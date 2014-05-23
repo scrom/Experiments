@@ -155,7 +155,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         if (object) {return object;}; 
                     };
                 };
-                console.log(_ownerName+" is not carrying "+anObjectName);
+                //console.log(_ownerName+" is not carrying "+anObjectName);
                 return null;
         };
     
@@ -179,7 +179,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.getObject = function(anObjectName) {
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].syn(anObjectName)) {
-                    console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
+                    //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
                     return _items[index];
                 };
                 if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {

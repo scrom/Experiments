@@ -414,6 +414,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //this makes a very small window where you can interact with unfriendly creatures. (you must not be hostile)
             if ((_affinity <0) && (playerAggression>0) && (_affinity >= playerAggression*-1)) {return true;};
             if (healthPercent() <=10) {return true;}; //flee if nearly dead
+
+            //act based on other creatures present...
+            var creatures = _currentLocation.getCreatures();
+            for (var i=0;i<creatures.length;i++) {
+                if (self.dislikes(creatures[i])) {
+                    if (_affinity >1) {_affinity--;}; //reduce affinity for encountering someone they don't like
+                    return true;
+                };
+            };
+
             return false;
         };
 
@@ -751,20 +761,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.flee = function(map, playerAggression) {
             //run away the number of moves of player aggression vs (-ve)affinity difference
-            var fearLevel = Math.floor(_affinity+playerAggression);
+            var fearLevel;
+            if (_affinity <=0) {fearLevel = Math.floor(_affinity+playerAggression);}
+            else {fearLevel = playerAggression;};
 
             //if nearly dead - flee the greater number of spaces of fear or half of remaining health...
             if (healthPercent() <=10) {
                 fearLevel = Math.max(fearLevel, Math.floor(_hitPoints/2));
             };
+
+            if (fearLevel == 0) {fearLevel = 1;}; //in case they're fleeing for a reason other than aggression.
+
             var resultString = "";
             //if creature is mobile
             if (self.canTravel()) {
                 for (var i=0; i<fearLevel; i++) {
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
-                        self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
                         if (i==0) {resultString = initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";};
+                        self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
                     };
                 };
             };
@@ -1061,11 +1076,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //important note. If the player is not in the same room as the creature at the end of the creature tick
             //none of the results of this tick will be visible to the player.
             var resultString = "";
+            var partialResultString = "";
 
             //quick return if already dead
             if (self.isDead()) {return resultString;};
 
             var playerLocation = player.getLocation().getName();
+            var startLocation = _currentLocation.getName();
+
             var damage = 0;
             var healPoints = 0;
             //repeat for number of ticks
@@ -1081,6 +1099,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
                     resultString += self.fightOrFlight(map, player);
+                    partialResultString = resultString;
                 } else if (_traveller && _canTravel) { //is a traveller
                     var exit = _currentLocation.getRandomExit();
                     //if only one exit, random exit won't work so get the only one we can...
@@ -1091,7 +1110,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (player.getLocation().getName() == _currentLocation.getName()) {
                             resultString += "<br>"+initCap(self.getDisplayName())+" wanders in.<br>";  
                         } else {
-                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";  
+                            //@todo bug  - this will never be seen by the player
+                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>"; 
                         };  
                      };  
             
@@ -1117,9 +1137,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_bleeding) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
 
             //only show what's going on if the player is in the same location
-            //note we store playerLocatoin at the beginning in case the player was killed as a result of the tick.
+            //note we store playerLocation at the beginning in case the player was killed as a result of the tick.
             if (playerLocation == _currentLocation.getName()) {
                 return resultString;
+            } else if (playerLocation == startLocation) {
+                return partialResultString+"."; //just the outcome of fleeing.
             } else {
                 return "";
                 console.log(resultString);

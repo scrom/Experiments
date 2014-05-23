@@ -1638,7 +1638,7 @@
             "name": "keyfob",
             "description": "Vic has a key fob for you.",
             "dialogue": [
-              "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of most parts of the office."
+              "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
             ],
             "parent": "null",
             "missionObject": "Vic",

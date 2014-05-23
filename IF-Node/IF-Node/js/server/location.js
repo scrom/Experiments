@@ -116,7 +116,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         };
 
         self.removeObject = function(anObjectName) {
-            console.log('removing '+anObjectName+' from '+self.getName());
+            //console.log('removing '+anObjectName+' from '+self.getName());
             return _inventory.remove(anObjectName);
         };
 

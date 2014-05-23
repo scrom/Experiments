@@ -1417,7 +1417,7 @@ module.exports.Player = function Player(aUsername) {
 
             //time passing
             for (var t=0; t < time; t++) {
-                console.log("Player tick...");
+                console.log("tick...");
 
                 //inventory tick
                 resultString+=_inventory.tick();
