@@ -687,6 +687,7 @@
         },
         "synonyms": [
           "coffee machine",
+		  "vending",
           "vending machine",
           "coffee vending machine"
         ],
@@ -1788,6 +1789,7 @@
         },
         "synonyms": [
           "snack machine",
+		  "vending",
           "vending machine"
         ],
         "delivers": [

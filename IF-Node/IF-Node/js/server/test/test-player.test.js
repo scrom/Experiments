@@ -303,7 +303,7 @@ exports.canAskCreatureForObject.meta = { traits: ["Player Test", "Inventory Trai
 
 exports.canStealObjectFromCreature = function (test) {
     p0.setStealth(7); //crank stealth up to guarantee successful steal
-    var expectedResult = "You successfully steal the box from the creature.";
+    var expectedResult = "You steal the box from the creature.";
     var actualResult = p0.steal('steal','box',c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

@@ -390,6 +390,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'fix':
                         description = _player.repair(_verb, _object0);
                         break;
+                    case 'use':
+                        description = "Good idea. But... We've not implemented 'use' as a verb yet though. Try something else.";
+                        break;
                     case 'save':
                     case 'load':
                     case 'sharpen':

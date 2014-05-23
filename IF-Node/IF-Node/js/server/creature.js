@@ -603,6 +603,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
+        self.sells = function (anObjectName) {
+            return _salesInventory.check(anObjectName);
+        };
+
         self.willTrade = function (playerAggression, anObject) {
             if (self.isDead()) { return false; };
             if (self.isHostile(playerAggression)) { return false; };

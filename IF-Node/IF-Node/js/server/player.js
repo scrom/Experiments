@@ -673,7 +673,10 @@ module.exports.Player = function Player(aUsername) {
                     return verb + " from whom or what?"
                 } else {
                     //there's only 1 creature to buy from.
-                    return creatures[0].sell(artefactName, self);
+                    if (creatures[0].sells(artefactName)) {
+                        return creatures[0].sell(artefactName, self);
+                    };
+                    return self.get(verb, artefactName);
                 };
             };
 
