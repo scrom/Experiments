@@ -223,6 +223,13 @@ module.exports.Player = function Player(aUsername) {
             return returnString;
         };	
 
+        self.use = function(artefactName) {
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+            return artefact.getDefaultAction();
+
+        };
+
         /*Allow player to get an object from a location*/
         self.get = function(verb, artefactName) {
             if (stringIsEmpty(artefactName)){ return verb+' what?';};

@@ -391,10 +391,16 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.repair(_verb, _object0);
                         break;
                     case 'use':
-                        description = "Good idea. But... We've not implemented 'use' as a verb yet though. Try something else.";
+                        var newVerb = _player.use(_object0);
+                        if (newVerb == 'use') {newVerb = 'examine'}; //avoid infinite loop
+                        _actionString = _actionString.replace('use',newVerb);
+                        
+                        return self.act(_actionString);
                         break;
                     case 'save':
                     case 'load':
+                    case 'mug':
+                    case 'wipe':
                     case 'sharpen':
                     case 'on':
                     case 'off':

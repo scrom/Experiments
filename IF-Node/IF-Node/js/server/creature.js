@@ -189,6 +189,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _name;
         };
 
+        self.getDefaultAction = function() {
+            return 'examine';
+        };
+
 
         self.getCurrentAttributes = function() {
             var currentAttributes = {};

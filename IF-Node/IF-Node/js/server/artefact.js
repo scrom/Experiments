@@ -13,6 +13,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _sourceAttributes = attributes; //so we can clone.
         var _name = name.toLowerCase();
         var _synonyms = [];
+        var _defaultAction = "examine";
         var _initialDescription = description; //save this for repairing later
         var _description = description;
         var _initialDetailedDescription = detailedDescription; //save this for repairing later
@@ -92,6 +93,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
+            if (artefactAttributes.defaultAction != undefined) { _defaultAction = attributes.defaultAction;};
             if (artefactAttributes.extendedinventorydescription != undefined) {
                 _extendedInventoryDescription = artefactAttributes.extendedinventorydescription;
             } else {
@@ -246,9 +248,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _name;
         }; 
 
+        self.getDefaultAction = function() {
+            return _defaultAction;
+        };
+
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
             //currentAttributes.synonyms = _synonyms;
+            //currentAttributes.defaultAction = _defaultAction;
             currentAttributes.extendedinventorydescription = _extendedInventoryDescription;
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.lockable = _lockable;
