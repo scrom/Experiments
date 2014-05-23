@@ -1801,7 +1801,7 @@
         "object": "artefact",
         "name": "machine",
         "description": "snack vending machine",
-        "detailedDescription": "An almost endless supply of chocolate and crisps!",
+        "detailedDescription": "An almost endless supply of snacks and treats!",
         "attributes": {
           "weight": 151,
           "carryWeight": 25,
@@ -1820,6 +1820,7 @@
             "detailedDescription": "Mmmm tasty and loaded with calories.",
             "attributes": {
               "weight": 1,
+			  "price": 0.50,
               "type": "food",
               "charges": 1,
 			  "chargeUnit": "bar",
@@ -1845,6 +1846,7 @@
             "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
             "attributes": {
               "weight": 1,
+			  "price": 0.50,
               "type": "food",
               "canCollect": true,
               "isEdible": true,

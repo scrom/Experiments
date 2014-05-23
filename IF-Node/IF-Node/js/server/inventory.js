@@ -41,6 +41,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
 
         self.canAfford = function (price) {
+            //console.log("Can afford? money:"+_money+" price: "+price);
             if (_money >= price) { return true; };
             return false;
         };
@@ -77,11 +78,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     description+= " (price: &pound;"+_items[i].getPrice().toFixed(2)+")<br>"
                 };
             };
-            
-            if (additionalAttribute != "price") {
-                description += ".";
-                if (_money > 0) { description += "<br>You have &pound;" + _money.toFixed(2) + " in cash.<br>"; };
-            };
+
             return description;
 
         };	

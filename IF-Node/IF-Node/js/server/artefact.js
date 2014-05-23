@@ -192,6 +192,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 case "o":
                 case "u":
                 case "h":
+                case "8": //e.g. "an 8 gallon container"
                     return "an "+anItemDescription;
                     break;
                 default:
@@ -455,11 +456,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_delivers.length > 0) {
                     //split deliers items into what can currently be delivered and what can't
                     var canDeliverList = [];
+                    var sellsList = [];
                     var cannotDeliverList = [];
                     var combinesWithList = [];
                     for (var i = 0; i < _delivers.length; i++) {
                         if (self.getCombinesWith().length>0) {combinesWithList.push(_delivers[i]); }
-                        else if (self.canDeliver(_delivers[i].getName())) { canDeliverList.push(_delivers[i]); }
+                        else if (self.canDeliver(_delivers[i].getName())) { 
+                            if (_delivers[i].getPrice() > 0) {
+                                sellsList.push(_delivers[i]); 
+                            } else {
+                                canDeliverList.push(_delivers[i]); 
+                            };
+                        }
                         else { cannotDeliverList.push(_delivers[i]); };
 
                     };
@@ -484,6 +492,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             returnString += canDeliverList[i].getName();
                         };
                         returnString += ".";
+                    };
+                    
+                    //return what can be sold
+                    if (sellsList.length > 0) {
+                        returnString += "<br>" + _itemPrefix + " sells:<br>";
+                        for (var i = 0; i < sellsList.length; i++) {
+                            //if (i > 0 && i < sellsList.length - 1) { returnString += ", "; };
+                            //if (i > 0 && i == sellsList.length - 1) { returnString += " and "; };
+                            returnString += "- "+initCap(sellsList[i].getName())+" (£"+sellsList[i].getPrice().toFixed(2)+")<br>";
+                        };
                     };
 
                     //return what cannot be delivered
@@ -1163,6 +1181,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var delivering = false;
             if (objectToGive) {
                 if (self.isDestroyed() || self.isBroken()) { return initCap(_itemDescriptivePrefix) + " broken."; };
+                if (objectToGive.getPrice() > 0) { 
+                    if (!(playerInventory.canAfford(objectToGive.getPrice()))) {return "You can't afford " + objectToGive.getPrefix().toLowerCase() + ".";};
+                };
                 delivering = true;
             }; 
 
@@ -1186,6 +1207,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 deliveredItem = self.deliver(objectToGive.getName());
                 if (!(deliveredItem)) { return initCap(_itemDescriptivePrefix) + " not working at the moment." };
                 objectToGive = deliveredItem;
+                if (objectToGive.getPrice() > 0) { 
+                    playerInventory.reduceCash(objectToGive.getPrice());
+                    _inventory.increaseCash(objectToGive.getPrice());
+                };
             };
 
             if (!(deliveredItem)) {_inventory.remove(anObjectName);};

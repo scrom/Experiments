@@ -612,7 +612,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) { return _genderDescriptivePrefix + " dead. Your money's no good to " + _genderPrefix.toLowerCase() + " now."; };
 
             var objectToGive = _salesInventory.getObject(anObjectName);
-            if (!(objectToGive)) { return _genderPrefix + " doesn't have any " + anObjectName + " to sell."; };
+            if (!(objectToGive)) { return initCap(self.getDisplayName()) + " doesn't have any " + anObjectName + " to sell."; };
 
             if (!(self.willTrade(player.getAggression(), objectToGive))) { return _genderPrefix + " doesn't want to sell " + objectToGive.getDisplayName() + " to you."; };
 
@@ -632,7 +632,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             playerInventory.add(objectToGive);
             _salesInventory.remove(anObjectName);
 
-            return initCap(self.getDisplayName()) + " sells you " + objectToGive.getDisplayName() + ".";
+            return initCap(self.getDisplayName()) + " sells you " + objectToGive.getDescription() + ".";
         };
 
 

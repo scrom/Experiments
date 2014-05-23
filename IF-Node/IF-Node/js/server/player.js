@@ -216,7 +216,10 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.describeInventory = function() {
-            return "You're carrying "+_inventory.describe();
+            var returnString = "You're carrying "+_inventory.describe()+".";
+            var cash = _inventory.getCashBalance();
+            if (cash > 0) { returnString+= "<br>You have &pound;" + cash.toFixed(2) + " in cash.<br>"; };
+            return returnString;
         };	
 
         /*Allow player to get an object from a location*/
@@ -657,12 +660,13 @@ module.exports.Player = function Player(aUsername) {
         self.buy = function (verb, artefactName, giverName) {
             if (stringIsEmpty(giverName)) {
                 if (!(_currentLocation.creaturesExist())) {
-                    return "There's nobody to "+verb+ " from here."
+                    //if there's no creatures, we can simply try "get"
+                    return self.get(verb, artefactName);
                 };
 
                 var creatures = _currentLocation.getCreatures(); 
                 if (creatures.length > 1) {
-                    return verb + " from whom?"
+                    return verb + " from whom or what?"
                 } else {
                     //there's only 1 creature to buy from.
                     return creatures[0].sell(artefactName, self);
