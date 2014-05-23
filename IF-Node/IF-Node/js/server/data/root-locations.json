@@ -1576,7 +1576,8 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "simon",
               "score": 50,
-              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points."
+			  "money": 25,
+              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus."
             }
           }
         ]

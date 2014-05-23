@@ -187,6 +187,7 @@ module.exports.Player = function Player(aUsername) {
         self.setStealth = function(newStealthValue) {
             //used for stealing
             _stealth = newStealthValue;
+            return _stealth;
         };
 
         self.getStealth = function() {
@@ -1365,6 +1366,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missions[i].processAffinityModifiers(map, missionReward);
@@ -1381,6 +1383,7 @@ module.exports.Player = function Player(aUsername) {
                 if (missionReward) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     locationMissions[j].processAffinityModifiers(map, missionReward);
@@ -1400,6 +1403,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward) {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
                         if (missionReward.score) { _score += missionReward.score;};
+                        if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
                         if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                         if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                         artefactMissions[j].processAffinityModifiers(map, missionReward);

@@ -434,6 +434,9 @@ exports.Action = function Action(aPlayer, aMap) {
                 if (_verb == '+aggression') {
                     description = "Player Aggression set: "+_player.setAggression(parseInt(_object0));
                 };
+                if (_verb == '+stealth') {
+                    description = "Player Stealth set: "+_player.setStealth(parseInt(_object0));
+                };
 
                 if (_verb == '+find'||_verb == '+where') {
                     if(_object1) { description = _map.find(_object1);}
