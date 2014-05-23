@@ -773,7 +773,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             _on = (!(_on)); //toggle switch 
-            var returnString ="You "+verb+" the "+self.getDisplayName();
+            var returnString ="You "+verb+" "+self.getDisplayName();
             if (verb == 'light') {returnString+= ".";}
             else { 
                 if (_on) {returnString+= " on.";} 
