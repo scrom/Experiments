@@ -545,13 +545,26 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //will randomly return 0 to 6 by default(<15% chance of success)
             var successDivider = 7; 
             if (self.getSubType == 'friendly') {successDivider = 20;}; //only 5% chance of success when stealing from a friend
+            if (self.isDead()) {successDivider = 0;}; //guaranteed success if dead.
             var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
             console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
                 _affinity--;
                 var objectToGive = _inventory.getObject(anObjectName);
-                if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
+                if (!(objectToGive)) {
+                    //we might be trying to steal money...
+                    if (anObjectName == "money" || anObjectName == "cash" || anObjectName == "" || anObjectName == undefined) {
+                        var cash = _inventory.getCashBalance();
+                        if (cash <=0) {return _genderPrefix+" doesn't have any "+anObjectName+" to steal.";};
+                        var randomCash = Math.round((cash * Math.random())*100)/100; //round to 2DP.
+                        _inventory.reduceCash(randomCash);
+                        playerInventory.increaseCash(randomCash);
+                        return "You steal &pound;"+randomCash.toFixed(2)+" from "+self.getDisplayName()+".";
+                    };
+
+                    return _genderPrefix+" isn't carrying "+anObjectName+".";
+                };
 
                 if (playerInventory.canCarry(objectToGive)) {
                     playerInventory.add(objectToGive);

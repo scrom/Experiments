@@ -191,6 +191,7 @@ module.exports.Player = function Player(aUsername) {
 
         self.getStealth = function() {
             //used for stealing
+            if (_stealth <1) {return 1;}; // safetynet to avoid divide by zero or odd results from caller
             return _stealth;
         };
 
@@ -627,7 +628,10 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" to what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {
+                if (artefactName == "money"||artefactName == "cash") {return "Sorry, we don't accept bribes here.";};
+                return notFoundMessage(artefactName);
+            };
 
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
@@ -740,23 +744,14 @@ module.exports.Player = function Player(aUsername) {
             var giver = getObjectFromLocation(giverName);
             if (!(giver)) {return "There's no "+giverName+" here.";};
 
-            //get object if it exists
-            var artefact = giver.getObject(artefactName);
-            if (!(artefact)) {return initCap(giver.getDisplayName())+" isn't carrying that.";};
-
-            //we'll only get this far if there is an object to give and a valid giver - note the object *could* be a live creature!
-            if (!(_inventory.canCarry(artefact))) { return  artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying first.";};
-
-            var objectToReceive;
-            if (artefact) {
-                    if (giver.isDead()) {
-                        var locationInventory = _currentLocation.getInventoryObject();
-                        return giver.relinquish(artefactName, _inventory, locationInventory, _aggression);
-                    } else {
-                        _aggression++; //we're stealing!
-                        return giver.theft(artefactName, _inventory, self);
-                    };
+            if (giver.getType() == "creature") {
+                _aggression++; //we're stealing!                        
+                return giver.theft(artefactName, _inventory, self);
+            } else {
+                var locationInventory = _currentLocation.getInventoryObject();
+                return giver.relinquish(artefactName, _inventory, locationInventory, _aggression);
             };
+                    
         };
 
         self.ask = function(verb, giverName, artefactName){

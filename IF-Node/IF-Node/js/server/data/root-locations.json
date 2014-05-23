@@ -1289,6 +1289,7 @@
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
           "weight": 190,
+		  "money": 100,
           "attackStrength": 45,
           "gender": "male",
           "type": "friendly",
@@ -1297,30 +1298,6 @@
           "affinity": -1,
           "canTravel": true
         },
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "money",
-            "description": "big sack of money",
-            "detailedDescription": "It's all the profits from the Opportunities projects.",
-            "attributes": {
-              "weight": 0.1,
-              "type": "money",
-              "canCollect": true,
-              "affinityModifier": 5,
-              "charges": 10,
-			  "chargeUnit": "pound",
-			  "chargesDescription": "There's about $charges $chargeUnit",
-              "price": 10
-            },
-            "synonyms": [
-              "cash",
-              "sack",
-              "dosh",
-              "profits"
-            ]
-          }
-        ],
         "synonyms": [
           "james moore",
           "moore",
