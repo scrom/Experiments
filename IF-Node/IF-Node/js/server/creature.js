@@ -1125,7 +1125,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             resultString += "<br>"+initCap(self.getDisplayName())+" wanders in.<br>";  
                         } else {
                             //@todo bug  - this will never be seen by the player
-                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>"; 
+                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+".<br>"; 
                         };  
                      };  
             
@@ -1155,7 +1155,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (playerLocation == _currentLocation.getName()) {
                 return resultString;
             } else if (playerLocation == startLocation) {
-                return partialResultString+"."; //just the outcome of fleeing.
+                return partialResultString; //just the outcome of fleeing.
             } else {
                 return "";
                 console.log(resultString);

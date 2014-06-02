@@ -754,9 +754,17 @@ module.exports.Player = function Player(aUsername) {
 
         self.steal = function(verb, artefactName, giverName){
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
-            if (stringIsEmpty(giverName)){ return verb+" "+artefactName+" from?";};
 
-            var giver = getObjectFromLocation(giverName);
+            var giver;
+            if (stringIsEmpty(giverName)){ 
+                var creatures = _currentLocation.getCreatures();
+                //can we determine who to steal from?
+                if (creatures.length!=1) {return initCap(verb)+" "+artefactName+" from whom or what?";}; 
+                giver = creatures[0]; //get the only creature there is.
+            } else {
+                giver = getObjectFromLocation(giverName);
+            };
+
             if (!(giver)) {return "There's no "+giverName+" here.";};
 
             if (giver.getType() == "creature") {
