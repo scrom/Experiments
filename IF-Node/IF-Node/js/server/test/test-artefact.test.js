@@ -43,7 +43,6 @@ exports.canRetrieveACurrentAttribute = function (test) {
 
 exports.canRetrieveACurrentAttribute.meta = { traits: ["Artefact Test", "Attribute Trait"], description: "Test that an artefact object can return its current attributes." };
 
-
 exports.canSetTypeAttributeAfterConstruction = function (test) {
     var expectedResult = 'treasure';
     //artefact object is created in setUp
@@ -85,6 +84,21 @@ exports.canSetPluralAttributeAndRetrieveCorrectDescription = function (test) {
 };
 
 exports.canSetPluralAttributeAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Attribute Trait", "Quantity Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
+
+exports.canCreateToxicFood = function (test) {
+    var poisonAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, nutrition: -50, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    var poison = new artefact.Artefact('poison', 'poison', "eek, don't eat it!",poisonAttributes, null);
+    var attribs = poison.getCurrentAttributes();
+    var expectedResult = '-50';
+    var actualResult = attribs.nutrition;
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCreateToxicFood.meta = { traits: ["Artefact Test", "Food Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
 
 exports.canCreateCoffeeMachineInKitchen = function (test) {
     var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup'};

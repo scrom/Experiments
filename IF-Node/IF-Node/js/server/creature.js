@@ -577,7 +577,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             player.increaseCash(anObject.getPrice());
 
             //increase secondhand value
-            anObject.increasePriceByPercent(10);
+            var priceIncreasePercent = 10;
+            if (anObject.getType() == 'junk') {priceIncreasePercent = 5;}; //not much value in trading junk
+            if (anObject.getType() == 'treasure') {priceIncreasePercent = 15;}; //moderate price inflation as treasure changes hands.
+            anObject.increasePriceByPercent(priceIncreasePercent);
 
             //take ownership
             var playerInventory = player.getInventoryObject();
@@ -721,7 +724,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             self.increaseCash(objectToGive.getPrice());
 
             //reduce secondhand value
-            objectToGive.discountPriceByPercent(25);
+            var priceDecreasePercent = 25;
+            if (objectToGive.getType() == 'treasure') {priceDecreasePercent = 10;}; //not such a decline in the market for treasure
+            if (objectToGive.getType() == 'junk') {priceDecreasePercent = 90;}; //the resale value of junk is rotten - buyer beware.
+            objectToGive.discountPriceByPercent(priceDecreasePercent);
 
             //transfer to player
             playerInventory.add(objectToGive);
@@ -906,7 +912,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     aPlayer.heal(_nutrition);
                     _description = "the remains of a well-chewed "+self.getDisplayName();
                     _detailedDescription = "All that's left are a few scraps of skin and hair.";
-                    return "You tear into the raw flesh of "+self.getDisplayName()+". It was a bit messy but you feel fitter, happier and healthier.";
+                    var resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
+                    if (_nutrition >=0) {
+                        aPlayer.heal(_nutrition);
+                        resultString += "It was a bit messy but you feel fitter, happier and healthier.";
+                    } else { //nutrition is negative
+                        resultString += "Dead "+self.getName()+" really doesn't taste so great. ";
+                        resultString += aPlayer.hurt(_nutrition*-1);
+                    };
+                    return resultString;
                 } else {
                     aPlayer.hurt(_attackStrength/4);
                     return "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."

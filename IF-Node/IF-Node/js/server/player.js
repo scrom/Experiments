@@ -702,12 +702,12 @@ module.exports.Player = function Player(aUsername) {
             };
         };
 
-        self.sell = function (verb, artefactName, giverName) {
+        self.sell = function (verb, artefactName, buyerName) {
 
             var objectToGive = _inventory.getObject(artefactName);
             if (!(objectToGive)) { return "You don't have any " + artefactName + " to sell."; };
 
-            if (stringIsEmpty(giverName)) {
+            if (stringIsEmpty(buyerName)) {
                 if (!(_currentLocation.creaturesExist())) {
                     return "There's nobody to " + verb + " to here."
                 };
@@ -721,12 +721,12 @@ module.exports.Player = function Player(aUsername) {
                 };
             };
 
-            //if giverName is a creature - sell
-            //if giverName is not a creature - can't sell.
-            var giver = getObjectFromPlayerOrLocation(giverName);
-            if (!(giver)) { return "There's no " + giverName + " here."; };
+            //if buyerName is a creature - sell
+            //if buyerName is not a creature - can't sell.
+            var buyer = getObjectFromPlayerOrLocation(buyerName);
+            if (!(buyer)) { return "There's no " + buyerName + " here."; };
 
-            if (giver.getType() != 'creature') { return giver.getDisplayName() + " can't buy anything." };
+            if (buyer.getType() != 'creature') { return buyer.getDisplayName() + " can't buy anything." };
 
 
             return giver.buy(objectToGive, self);
@@ -1247,6 +1247,10 @@ module.exports.Player = function Player(aUsername) {
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);}; 
+
+            if (artefact.isLiquid()) {
+                return self.drink('drink',artefactName);
+            };
 
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {

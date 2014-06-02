@@ -9,6 +9,7 @@ var junkAttributes;
 var breakableJunkAttributes;
 var weaponAttributes;
 var foodAttributes;
+var poisonAttributes;
 var containerAttributes;
 var playerName;
 var p0; // player object.
@@ -19,6 +20,7 @@ var c0; //creature object.
 var c1; //creature object
 var weapon; //weapon object
 var food; //food object
+var poison; //toxic food object
 var container; //container object
 var breakable; //breakable object
 
@@ -31,10 +33,12 @@ exports.setUp = function (callback) {
     breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, affinityModifier: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    poisonAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, nutrition: -50, type: "food", isLiquid: true, canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
     weapon = new artefact.Artefact('sword', 'mighty sword', 'chop chop chop',weaponAttributes, null);
     food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
+    poison = new artefact.Artefact('poison', 'poison', "eek, don't eat it!",poisonAttributes, null);
     container = new artefact.Artefact('container', 'container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'box', 'just a box',breakableJunkAttributes, null);
     breakable = new artefact.Artefact('glass', 'drinking glass', 'just a box',breakableJunkAttributes, null);
@@ -47,6 +51,7 @@ exports.setUp = function (callback) {
     l0.addObject(weapon);
     l0.addObject(breakable);
     l0.addObject(food);
+    l0.addObject(poison);
     l0.addObject(container);
     l0.addObject(c0);
     l0.addObject(c1);
@@ -61,12 +66,14 @@ exports.tearDown = function (callback) {
     breakableJunkAttributes = null;
     weaponAttributes = null;
     foodAttributes = null;
+    poisonAttributes = null;
     containerAttributes = null;
     a0 = null;
     a1 = null;
     weapon = null;
     breakable = null;
     food = null;
+    poison = null;
     container = null;
     c0 = null;
     c1 = null;
@@ -186,7 +193,59 @@ exports.canEatFood = function (test) {
     test.done();
 };
 
-exports.canEatFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.canEatFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+exports.cannotDrinkSolidFood = function (test) {
+    p0.get('get', food.getName());
+    var expectedResult = "It'd get stuck in your throat if you tried.";
+    var actualResult = p0.drink('drink','cake');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotDrinkSolidFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+
+exports.canDrinkToxicFood = function (test) {
+    p0.get('get', poison.getName());
+    var expectedResult = "You drink the poison. You feel weaker. That wasn't a good idea.";
+    var actualResult = p0.drink('drink','poison');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canDrinkToxicFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Drink Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+exports.drinkingToxicFoodHurtsPlayer = function (test) {
+    p0.get('get', poison.getName());
+    p0.drink('drink','poison');
+    var expectedResult = "You're bleeding heavily and really not in good shape.";
+    var actualResult = p0.health();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.drinkingToxicFoodHurtsPlayer.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Action Trait", "Food Trait", "Liquid Trait", "Drink Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+
+exports.eatLiquidAutomaticallyDrinksInstead = function (test) {
+    p0.get('get', poison.getName());
+    var expectedResult = "You drink the poison. You feel weaker. That wasn't a good idea.";
+    var actualResult = p0.eat('eat','poison');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.eatLiquidAutomaticallyDrinksInstead.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Eat Trait", "Drink Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
 
 exports.canBeKilledAndDropInventory = function (test) {
     p0.get('get', food.getName());

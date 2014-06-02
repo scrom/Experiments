@@ -171,7 +171,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         processAttributes(attributes);
 
         var validateType = function(aType) {
-            var validobjectTypes = ['weapon','book','junk','treasure','food','money','tool','door','container', 'key', 'bed', 'light'];
+            var validobjectTypes = ['weapon','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(aType) == -1) { throw "'" + aType + "' is not a valid artefact type."; };//
             console.log(_name+' type validated: '+aType);
         };
@@ -1094,8 +1094,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) {return "There's nothing left to drink.";};
             if(_edible && _liquid)  {
                 _weight = 0;
-                aPlayer.heal(_nutrition);
-                return 'You drink '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
+                var resultString = "You drink "+self.getDisplayName()+". "
+                if (_nutrition >=0) {
+                    aPlayer.heal(_nutrition);
+                    resultString += "You feel fitter, happier and healthier.";
+                } else { //nutrition is negative
+                    resultString += aPlayer.hurt(_nutrition*-1);
+                    resultString += "That wasn't a good idea.";
+                };
+                return resultString;
             };
 
             return _itemPrefix+"'d get stuck in your throat if you tried."
@@ -1107,8 +1114,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _chewed = true; 
                 if (_edible){
                     _weight = 0;
-                    aPlayer.heal(_nutrition);
-                    return 'You eat '+self.getDisplayName()+'. You feel fitter, happier and healthier.';
+                    var resultString = "You eat "+self.getDisplayName()+". "
+                    if (_nutrition >=0) {
+                        aPlayer.heal(_nutrition);
+                        resultString += "You feel fitter, happier and healthier.";
+                    } else { //nutrition is negative
+                        resultString += "That wasn't a good idea. ";
+                        resultString += aPlayer.hurt(_nutrition*-1);
+                    };
+                    return resultString;
+
                 } else {
                     _detailedDescription += ' and shows signs of being chewed.';
                     aPlayer.hurt(5);
