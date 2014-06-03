@@ -49,11 +49,16 @@ module.exports.Exit = function Exit(aName, aSourceName, aDestinationName, isHidd
 
         self.hide = function() {
             _hidden = true;
+            var directionString = ": '"+_longName+"'";
+            if (_directions.indexOf(_name) < 8){directionString = " to the "+_longName;};
+            return "You close the exit"+directionString+"." 
         };
 
         self.show = function() {
             _hidden = false;
-            return "You reveal a new exit: '"+_longName+"'.";
+            var directionString = ": '"+_longName+"'";
+            if (_directions.indexOf(_name) < 8){directionString = " to the "+_longName;};
+            return "You reveal a new exit"+directionString+".";
         };
 
         ////end public methods

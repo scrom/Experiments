@@ -284,13 +284,13 @@ exports.missingNamedRequiredContainerReturnsNullForSuitable = function (test) {
 exports.missingNamedRequiredContainerReturnsNullForSuitable.meta = { traits: ["Inventory Test", "Inventory Trait", "Artefact Trait", "Container Trait"], description: "Test that an artefact with a named required container fails when container is not in inventory." };
 
 
-exports.anyContainerIsConfirmedAsSuitable = function (test) {
+exports.aLiquidHoldingContainerIsConfirmedAsSuitable = function (test) {
     var expectedResult = 'mug';
 
     var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
     var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
 
-    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
 
     i0.add(mug);
@@ -303,7 +303,7 @@ exports.anyContainerIsConfirmedAsSuitable = function (test) {
     test.done();
 };
 
-exports.anyContainerIsConfirmedAsSuitable.meta = { traits: ["Inventory Test", "Inventory Trait", "Artefact Trait", "Container Trait"], description: "Test that an artefact with a required but un-named container works when container is in inventory." };
+exports.aLiquidHoldingContainerIsConfirmedAsSuitable.meta = { traits: ["Inventory Test", "Inventory Trait", "Artefact Trait", "Container Trait", "Liquid Trait"], description: "Test that an artefact with a required but un-named container works when container is in inventory." };
 
 exports.fullContainerIsRejectedAsUnSuitable = function (test) {
     var expectedResult = null;

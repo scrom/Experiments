@@ -1050,6 +1050,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Ding! You repeatedly attack the "+self.getDisplayName()+". with the "+weapon.getDisplayName()+" It feels good in a gratuitously violent sort of way."
         };
 
+        self.moveOpenOrClose = function(verb, locationName) {
+            if (self.isOpen() && self.opens()) {
+                return self.close(verb, locationName);
+            } else {
+                return self.moveOrOpen(verb, locationName);
+            };
+        };
+
         self.moveOrOpen = function(verb, locationName) {
             if (self.isDestroyed()) {return "There's nothing viable left to work with.";};
             if (_locked) {return initCap(_itemDescriptivePrefix)+" locked."};
@@ -1096,23 +1104,26 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_opens && _open){
                 _open = false;
 
+                var exitResult = "";
+
                 if(_linkedExits.length>0) {
                     var localExit;
+                    
                     for (var i=0;i<_linkedExits.length;i++) {
                         if (_linkedExits[i].getSourceName() == locationName) {
                             localExit = _linkedExits[i];
                         }; 
 
-                        _linkedExits[i].hide();  
+                        exitResult =_linkedExits[i].hide();  
                     };
 
                     if (!(localExit)) {
                         //we had no *local* exit
-                        return "A door closes somewhere.";
+                        exitResult = "A door closes somewhere.";
                     };
                 };
 
-                return 'You closed '+self.getDisplayName();
+                return "You "+verb+" "+self.getDisplayName()+". "+exitResult;
             } else {return initCap(_itemDescriptivePrefix)+" not open."};
         };
 
@@ -1325,6 +1336,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //treat it as "open" if it *doesn't* open.
             if ((_opens && _open) || (!(_opens)) ||(self.isDestroyed())) {return true;};
             return false;
+        };
+
+        self.opens = function() {
+            return _opens;
         };
 
         self.isLocked = function() {

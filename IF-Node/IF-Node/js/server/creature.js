@@ -973,12 +973,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
          };
 
-        self.moveOrOpen = function(aVerb) {
-            if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and pull at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
+        self.moveOpenOrClose = function(verb) {
+            if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and push at the corpse. "+_genderPrefix+" makes some squishy gurgling sounds and some vile-smelling fluid seeps onto the floor."};
             _affinity--;
-            if (aVerb == 'push'||aVerb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
+            if (verb == 'push'||verb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
+
+        };
+
+        self.moveOrOpen = function(verb) {
+            if (self.isDead()) {return "You're a bit sick aren't you.<br>You pull and tear at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
+            _affinity--;
+            if (verb == 'push'||verb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
             //open
-            return "I suggest you don't try to "+aVerb+" "+self.getDisplayName()+" again, it's not going to end well.";
+            return "I suggest you don't try to "+verb+" "+self.getDisplayName()+" again, it's not going to end well.";
         };
 
         self.close = function() {

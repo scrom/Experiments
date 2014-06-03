@@ -104,9 +104,29 @@ exports.showHiddenExitReturnsSensibleMessage = function (test) {
     var destinationName = 'location';
     var e0 = new exit.Exit(exitName, sourceName, destinationName);
     e0.hide();
-    var expectedMessage = "You reveal a new exit: 'North'."
-    test.equal(e0.show(), expectedMessage);
+    var expectedResult = "You reveal a new exit to the North.";
+    var actualResult = e0.show();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
     test.done();
 };
 
 exports.showHiddenExitReturnsSensibleMessage.meta = { traits: ["Exit Test", "Visibility Trait"], description: "Test that revealing a hidden exit returns a user message." };
+
+
+exports.hideExitReturnsSensibleMessage = function (test) {
+    var exitName = 'i';
+    var longName = 'in';
+    var sourceName = 'source';
+    var destinationName = 'location';
+    var e0 = new exit.Exit(exitName, sourceName, destinationName);    
+    var expectedResult = "You close the exit: 'in'.";
+    var actualResult = e0.hide();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hideExitReturnsSensibleMessage.meta = { traits: ["Exit Test", "Visibility Trait"], description: "Test that hiding an exit returns a user message." };

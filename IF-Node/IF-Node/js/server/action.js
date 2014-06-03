@@ -262,7 +262,9 @@ exports.Action = function Action(aPlayer, aMap) {
                         //};
                         break;
                     case 'press':
-                    case 'push':
+                    case 'push':                   
+                        description = _player.openOrClose(_verb, _object0);
+                        break;
                     case 'pull':
                     case 'open': 
                         description = _player.open(_verb, _object0);

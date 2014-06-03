@@ -179,6 +179,11 @@ module.exports.Player = function Player(aUsername) {
             return _username;
         };
 
+        self.setAggression = function(aggressionLevel) {
+            _aggression = aggressionLevel;
+            return _aggression;
+        };
+
         self.getAggression = function() {
             //possibly replace the value with a "level" string 
             return _aggression;
@@ -955,6 +960,16 @@ module.exports.Player = function Player(aUsername) {
 
         };
 
+        self.openOrClose = function(verb, artefactName) {
+            //note artefact could be a creature!
+            if (stringIsEmpty(artefactName)){ return verb+" what?";};
+
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            return artefact.moveOpenOrClose(verb, _currentLocation.getName());
+        };
+
         self.open = function(verb, artefactName) {
             //note artefact could be a creature!
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
@@ -1520,11 +1535,6 @@ module.exports.Player = function Player(aUsername) {
             status +='<br><br>'+_currentLocation.describe()
 
             return status;
-        };
-
-        self.setAggression = function(aggressionLevel) {
-            _aggression = aggressionLevel;
-            return _aggression;
         };
 
         //end public member functions
