@@ -475,8 +475,6 @@ module.exports.Player = function Player(aUsername) {
             //zero weight of ingredients to attempt combine
             var originalReceiverWeight = receiver.getWeight();
             var originalArtefactWeight = artefact.getWeight();
-            receiver.setWeight(0);
-            artefact.setWeight(0);
 
             var newObject = receiver.combineWith(artefact);
             var requiresContainer = newObject.requiresContainer();
@@ -521,7 +519,7 @@ module.exports.Player = function Player(aUsername) {
                 if (containerIsInLocation) {
                     return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+".";
                 } else {
-                    return resultString +".<br>Your "+container.getName()+" now contains "+newObject.getName();
+                    return resultString +".<br>Your "+container.getName()+" now contains "+newObject.getName()+".";
                 };
             
             };
@@ -559,12 +557,21 @@ module.exports.Player = function Player(aUsername) {
 
                 //validate if it's a container
                 if (receiver.getType() == 'creature') {
-                     return  "It's probably better to 'give' "+artefact.getSuffix()+" to "+receiver.getSuffix()+"."; 
+                    if (receiver.isDead()) {
+                       return  "You're not really qualified as a taxidermist are you? Please stop interfering with corpses.";  
+                    } else {
+                       return  "It's probably better to 'give' "+artefact.getSuffix()+" to "+receiver.getSuffix()+"."; 
+                    };
                 };
 
                 //if objects combine together...
-                if (receiver.combinesWith(artefact)) {
+                if (artefact.combinesWith(receiver)) {
                     return self.combine(artefact, receiver)                   
+                };
+                //if object combines with something in contents...
+                if (artefact.combinesWithContentsOf(receiver)) {
+                    var newReceiver = receiver.getObject(artefact.getCombinesWith());
+                    return self.combine(artefact, newReceiver)                   
                 };
                 
                 //check receiver can carry item (container or not)

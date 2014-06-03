@@ -114,7 +114,7 @@
       {
         "object": "mission",
         "name": "sweetcoffee",
-        "description": "It's your first day in the office. Your first important task is to get yourself a nice sweet cup of coffee.",
+        "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet black coffee.",
         "parent": "null",
         "missionObject": "sweet coffee",
         "static": "false",
@@ -624,7 +624,7 @@
         "detailedDescription": "Just the right size for a decent brew.",
         "attributes": {
           "weight": 2,
-          "carryWeight": 1,
+          "carryWeight": 1.1,
           "attackStrength": 2,
           "type": "container",
           "canCollect": true,
@@ -658,7 +658,7 @@
             "detailedDescription": "Development fuel with added sugar!",
             "attributes": {
               "defaultAction": "drink",
-              "weight": 1,
+              "weight": 0.5,
               "plural": true,
               "type": "food",
               "canCollect": true,
@@ -751,7 +751,7 @@
             "detailedDescription": "Development fuel.",
             "attributes": {
               "defaultAction": "drink",
-              "weight": 1,
+              "weight": 0.5,
               "plural": true,
               "type": "food",
               "canCollect": true,

@@ -655,9 +655,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.combinesWith = function(anObject) {
             if (self.isDestroyed()) {return false;};
-            if (self.getCombinesWith(anObject.getName()) && anObject.getCombinesWith(self.getName())) {
+            if (self.getCombinesWith() == anObject.getName() && anObject.getCombinesWith() == self.getName()) {
             //objects combine with each other...
             return true;
+            };
+            return false;
+        };
+
+        self.combinesWithContentsOf = function(anObject) {
+            var objectInventory = anObject.getInventoryObject();
+            var items = objectInventory.getAllObjectsAndChildren();
+            for (var i=0; i<items.length;i++) {
+                if (self.combinesWith(items[i])) {
+                    return true;
+                };
             };
             return false;
         };
@@ -671,6 +682,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //return a new instance of deliveryObject
             var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
             deliveredItem.addSyns(deliveryItemSource.getSyns());
+
+            //zero the weights of both source objects. Unfortunately the caller must remove them from wherever they came from 
+            self.setWeight(0);
+            anObject.setWeight(0);
+
             return deliveredItem;
         };
 
