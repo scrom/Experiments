@@ -1070,9 +1070,19 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     for (var i=0;i<_linkedExits.length;i++) {
                         if (_linkedExits[i].getSourceName() == locationName) {
                             localExit = _linkedExits[i];
-                            exitResult = _linkedExits[i].show();
+                            //toggle exit visibility
+                            if (!(_linkedExits[i].isVisible())) {
+                                exitResult = _linkedExits[i].show();
+                            } else {
+                                exitResult = _linkedExits[i].hide();
+                            };
                         } else {
-                            _linkedExits[i].show();  
+                            //toggle exit visibility
+                            if (!(_linkedExits[i].isVisible())) {
+                                _linkedExits[i].show();  
+                            } else {
+                                _linkedExits[i].hide();
+                            };
                         };
                     };
 
@@ -1113,7 +1123,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         if (_linkedExits[i].getSourceName() == locationName) {
                             localExit = _linkedExits[i];
                         }; 
-
+                        //note, we don't toggle exit visibility for other exits here - only on "open"
                         exitResult =_linkedExits[i].hide();  
                     };
 
