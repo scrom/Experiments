@@ -388,7 +388,14 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'use':
                         var newVerb = _player.use(_object0);
                         if (newVerb == 'use') {newVerb = 'examine'}; //avoid infinite loop
+                        
+                        //replace verb but keep original object
                         _actionString = _actionString.replace('use',newVerb);
+
+                        //if default action is more than just a single word verb, overwrite the entire original action.
+                        if (newVerb.indexOf(' ') > 0) {
+                            _actionString = newVerb;  
+                        };                     
                         
                         return self.act(_actionString);
                         break;

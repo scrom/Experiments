@@ -685,6 +685,7 @@
         "description": "coffee vending machine",
         "detailedDescription": "Given the right ingedients it makes a variety of coffees.",
         "attributes": {
+		  "defaultAction": "get coffee from machine",
           "extendedinventorydescription": "It's fully loaded with ",
           "weight": 151,
           "carryWeight": 25,
