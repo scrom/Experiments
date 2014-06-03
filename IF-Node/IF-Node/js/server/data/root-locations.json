@@ -575,6 +575,7 @@
         "description": "milk bottle",
         "detailedDescription": "A large milk bottle",
         "attributes": {
+		  "extendedinventorydescription": "There's $inventory in it.",
           "weight": 1,
           "carryWeight": 3,
           "attackStrength": 1,
@@ -624,6 +625,7 @@
         "description": "coffee cup",
         "detailedDescription": "Just the right size for a decent brew.",
         "attributes": {
+		  "extendedinventorydescription": "There's $inventory in it.",
           "weight": 2,
           "carryWeight": 1.1,
           "attackStrength": 2,
