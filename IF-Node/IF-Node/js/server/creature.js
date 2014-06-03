@@ -1203,6 +1203,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return false;
         };
 
+        self.holdsLiquid = function() {
+                return false;
+        };
+
         self.canContain = function(anObject) {
             //broken objects can't contain anything
             if (self.isDead()) {return false};

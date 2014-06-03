@@ -54,6 +54,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _requiresContainer = false;
         var _requiredContainer = null;
         var _liquid = false;
+        var _holdsLiquid = false;
 
         //grammar support...
         var _itemPrefix = "It";
@@ -164,6 +165,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _liquid = artefactAttributes.isLiquid;
                 _requiresContainer = true; //override requires container if liquid.
             };
+            if (artefactAttributes.holdsLiquid != undefined) {_holdsLiquid = artefactAttributes.holdsLiquid;};
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
 
         };
@@ -286,6 +288,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.requiredComponentCount = _requiredComponentCount;
             currentAttributes.requiresContainer = _requiresContainer;
             currentAttributes.requiredContainer = _requiredContainer;
+            currentAttributes.liquid = _liquid;
+            currentAttributes.holdsLiquid = _holdsLiquid;
 
             return currentAttributes;
 
@@ -365,6 +369,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isLiquid = function() {
                 return _liquid;
+        };
+
+        self.holdsLiquid = function() {
+                return _holdsLiquid;
         };
 
         self.getRequiredContainer = function() {
@@ -692,15 +700,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.canContain = function(anObject) {
             //broken containers can't contain anything
-            if (_destroyed) {return false;};
-            if (self.getType() == "container" && _broken) {return false;};
+            if (self.isDestroyed()) {return false;};
+            if (self.getType() == "container" && self.isBroken()) {return false;};
+            if (anObject.isLiquid() && (!(self.holdsLiquid()))) {return false;};
             return _inventory.canContain(anObject, self.getName());
         };
 
         self.canCarry = function(anObject) {
             //broken containers can't contain anything
-            if (_destroyed) {return false};
-            if (self.getType() == "container" && _broken) {return false;};
+            if (self.isDestroyed()) {return false};
+            if (self.getType() == "container" && self.isBroken()) {return false;};
+            if (anObject.isLiquid() && (!(self.holdsLiquid()))) {return false;};
             if (self.isLocked()) {return false;};
             return _inventory.canCarry(anObject);
         };
@@ -1353,14 +1363,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()||_broken) {return false;};
             if (_unlocks == anObject.getName()) {return true;};
             return false;
-        };
-
-        self.canCarry = function(anObject) {
-            if (self.isDestroyed()) {return false;};
-            //broken containers can't carry things but broken objects may be able to!
-            if (self.getType() == "container" && self.isBroken()) {return false;}; 
-            if (_locked) {return false;};
-            return _inventory.canCarry(anObject);
         };
 
         //nasty - expose our internals - needed to support inventory containers

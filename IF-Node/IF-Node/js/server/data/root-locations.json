@@ -579,6 +579,7 @@
           "carryWeight": 3,
           "attackStrength": 1,
           "type": "container",
+		  "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true
         },
@@ -627,6 +628,7 @@
           "carryWeight": 1.1,
           "attackStrength": 2,
           "type": "container",
+		  "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true
         },
@@ -687,6 +689,7 @@
           "weight": 151,
           "carryWeight": 25,
           "type": "junk",
+		  "holdsLiquid": true,
           "canOpen": true,
           "isBreakable": true,
           "lockable": true,
