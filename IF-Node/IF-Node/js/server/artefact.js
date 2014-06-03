@@ -383,7 +383,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDescription = function() {
-            return self.descriptionWithCorrectPrefix(_description);
+            var returnString = self.descriptionWithCorrectPrefix(_description);
+            //if it's a container with a single item and it's open (or fixed open), include contents
+            if (self.getType() == "container" && _inventory.size() == 1 && ((!_opens)||_open)) {
+                var inventoryItem = _inventory.getAllObjects()[0];
+                if (inventoryItem.requiresContainer()) { 
+                    returnString = self.descriptionWithCorrectPrefix(_name);
+                    returnString+= " of "+inventoryItem.getName(); 
+                };
+            };
+            return returnString;
         };
 
         self.getRawDescription = function() {
