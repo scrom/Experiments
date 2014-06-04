@@ -202,6 +202,20 @@ module.exports.Player = function Player(aUsername) {
             return _stealth;
         };
 
+        self.addMission = function(mission) {
+            _missions.push(mission);
+        };
+
+        self.removeMission = function(missionName) {
+            for(var index = 0; index < _missions.length; index++) {
+                if (_missions[index].getName()==missionName) {
+                    _missions.splice(index,1);
+                    console.log(missionName+" removed from "+self.getUsername());
+                    break;
+                };
+            };
+        };
+
         self.canAfford = function (price) {
             return _inventory.canAfford(price);
         };
@@ -870,7 +884,7 @@ module.exports.Player = function Player(aUsername) {
                 if (newMissions.length>0) {resultString+= "<br><br>";};
                 for (var i=0; i< newMissions.length;i++) {
                     if (!(newMissions[i].isStatic())) {
-                        _missions.push(newMissions[i]);
+                        self.addMission(newMissions[i]);
                         _currentLocation.removeMission(newMissions[i].getName());
                     };
                     resultString+= newMissions[i].getDescription()+"<br>";
@@ -899,7 +913,7 @@ module.exports.Player = function Player(aUsername) {
             if (newMissions.length>0) {resultString+= "<br>";};
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {
-                    _missions.push(newMissions[i]);
+                    self.addMission(newMissions[i]);
                     artefact.removeMission(newMissions[i].getName());
                 };
                 resultString+= newMissions[i].getDescription()+"<br>";
@@ -958,7 +972,7 @@ module.exports.Player = function Player(aUsername) {
             if (newMissions.length>0) {resultString+= "<br>";};
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {
-                    _missions.push(newMissions[i]);
+                    self.addMission(newMissions[i]);
                     artefact.removeMission(newMissions[i].getName());
                 };
                 resultString+= newMissions[i].getDescription()+"<br>";
@@ -1030,7 +1044,7 @@ module.exports.Player = function Player(aUsername) {
             if (newMissions.length>0) {resultString+= "<br><br>";};
             for (var i=0; i< newMissions.length;i++) {
                 if (!(newMissions[i].isStatic())) {
-                    _missions.push(newMissions[i]);
+                    self.addMission(newMissions[i]);
                     _currentLocation.removeMission(newMissions[i].getName());
                 };
 
@@ -1413,7 +1427,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missions[i].processAffinityModifiers(map, missionReward);
                     _missionsCompleted.push(_missions[i].getName());
-                    _missions.splice(i,1); //remove mission.
+                    self.removeMission(_missions[i].getName());
                 };
             };
 

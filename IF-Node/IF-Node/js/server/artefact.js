@@ -1316,6 +1316,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 //automatically collect the container if possible
                 if (playerInventory.canCarry(suitableContainer)) {
+                    locationInventory.remove(suitableContainer.getName());
                     playerInventory.add(suitableContainer);
                     return resultString;
                 };
