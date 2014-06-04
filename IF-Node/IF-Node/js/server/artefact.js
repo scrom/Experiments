@@ -478,12 +478,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 returnString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
             } else {
                 if (_delivers.length > 0) {
-                    //split deliers items into what can currently be delivered and what can't
+                    //split delivers items into what can currently be delivered and what can't
                     var canDeliverList = [];
                     var sellsList = [];
                     var cannotDeliverList = [];
                     var combinesWithList = [];
                     for (var i = 0; i < _delivers.length; i++) {
+                        //@todo - this logic looks very wrong for "combinesWith" - can't tell what it's doing.
                         if (self.getCombinesWith().length>0) {combinesWithList.push(_delivers[i]); }
                         else if (self.canDeliver(_delivers[i].getName())) { 
                             if (_delivers[i].getPrice() > 0) {
