@@ -1337,9 +1337,42 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.getType() == "container" && _broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
             if (_locked) {return initCap(_itemDescriptivePrefix)+" locked.";};
+            var resultString = "";
 
             _inventory.add(anObject);
-            return self.getDisplayName()+" now contains "+anObject.getDescription();
+
+            //if object combines with something in contents...
+            if (anObject.combinesWithContentsOf(self)) {
+                var newReceiver = self.getObject(anObject.getCombinesWith());
+                var newObject = newReceiver.combineWith(anObject);  
+                var requiredContainer = newObject.getRequiredContainer(); 
+                if (requiredContainer) {
+                    if (requiredContainer == self.getName()) {                 
+                        _inventory.remove(anObject.getName());
+                        _inventory.remove(newReceiver.getName());  
+                        _inventory.add(newObject);   
+                        resultString = "You add "+anObject.getDisplayName()+" to "+self.getDisplayName()+".<br>";
+                        return resultString+self.getDisplayName()+" now contains "+newObject.getDescription()+".";   
+                    } else {
+                        resultString = "You attempt to make "+newObject.getDescription()+" by adding "+anObject.getDisplayName()+" to "+newReceiver.getDisplayName();
+                        resultString += " in "+self.getDisplayName()+" but you need something else to put "+newObject.getPrefix().toLowerCase()+" in.<br>"
+                    };  
+                } else  {
+                    if (self.canCarry(newObject)) {
+                        _inventory.remove(anObject.getName());
+                        _inventory.remove(newReceiver.getName());  
+                        _inventory.add(newObject);   
+                        resultString = "You add "+anObject.getDisplayName()+" to "+self.getDisplayName()+".<br>";
+                        return resultString+self.getDisplayName()+" now contains "+newObject.getDescription()+".";
+                    } else {
+                        resultString = "You attempt to make "+newObject.getDescription()+" by adding "+anObject.getDisplayName()+" to "+newReceiver.getDisplayName();
+                        resultString += " in "+self.getDisplayName()+" but you need something else to put "+newObject.getPrefix().toLowerCase()+" in.<br>"
+                    };
+
+                };
+            };
+
+            return resultString+self.getDisplayName()+" now contains "+anObject.getDescription();
         };
 
         self.isOpen = function() {
