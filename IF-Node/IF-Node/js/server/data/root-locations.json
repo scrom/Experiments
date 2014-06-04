@@ -207,7 +207,7 @@
         "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.",
         "attributes": {
           "weight": 1,
-		  "defaultAction": "eat",
+          "defaultAction": "eat",
           "type": "food",
           "canCollect": true,
           "isEdible": true,
@@ -501,6 +501,21 @@
   },
   {
     "object": "location",
+    "name": "first-floor-landing-west",
+    "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wanderig about their business down below.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "first-floor-landing-west",
+        "destination": "stairs-first-floor"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "graffiti-a",
     "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
     "dark": "true",
@@ -575,12 +590,12 @@
         "description": "milk bottle",
         "detailedDescription": "A large milk bottle",
         "attributes": {
-		  "extendedinventorydescription": "There's $inventory in it.",
+          "extendedinventorydescription": "There's $inventory in it.",
           "weight": 1,
           "carryWeight": 3,
           "attackStrength": 1,
           "type": "container",
-		  "holdsLiquid": true,
+          "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true
         },
@@ -625,12 +640,12 @@
         "description": "coffee cup",
         "detailedDescription": "Just the right size for a decent brew.",
         "attributes": {
-		  "extendedinventorydescription": "There's $inventory in it.",
+          "extendedinventorydescription": "There's $inventory in it.",
           "weight": 2,
           "carryWeight": 1.1,
           "attackStrength": 2,
           "type": "container",
-		  "holdsLiquid": true,
+          "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true
         },
@@ -687,12 +702,12 @@
         "description": "coffee vending machine",
         "detailedDescription": "Given the right ingedients it makes a variety of coffees.",
         "attributes": {
-		  "defaultAction": "get coffee from machine",
+          "defaultAction": "get coffee from machine",
           "extendedinventorydescription": "It's fully loaded with ",
           "weight": 151,
           "carryWeight": 25,
           "type": "junk",
-		  "holdsLiquid": true,
+          "holdsLiquid": true,
           "canOpen": true,
           "isBreakable": true,
           "lockable": true,
@@ -1582,7 +1597,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "simon",
               "score": 50,
-			  "money": 25,
+              "money": 25,
               "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus."
             }
           }
@@ -1905,6 +1920,21 @@
   },
   {
     "object": "location",
+    "name": "servery-north-west",
+    "description": "You're in the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "servery-north-west",
+        "destination": "stairs-first-floor"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "shower-ground-floor",
     "description": "You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.",
     "dark": "false",
@@ -2055,6 +2085,20 @@
         "longname": "up",
         "source": "stairs-first-floor",
         "destination": "stairs-second-floor"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "stairs-first-floor",
+        "destination": "servery-north-west"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "stairs-first-floor",
+        "destination": "first-floor-landing-west"
       }
     ]
   },
@@ -2188,7 +2232,7 @@
   {
     "object": "location",
     "name": "toilet-ground-floor",
-    "description": "You stare at yourself in the mirror of that bathroom and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
+    "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
     "dark": "false",
     "exits": [
       {
