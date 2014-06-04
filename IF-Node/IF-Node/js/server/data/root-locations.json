@@ -501,6 +501,57 @@
   },
   {
     "object": "location",
+    "name": "first-floor-landing-central",
+    "description": "You're on the first floor landing.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "first-floor-landing-central",
+        "destination": "first-floor-landing-west"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "first-floor-landing-central",
+        "destination": "first-floor-landing-east"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "first-floor-landing-central",
+        "destination": "first-floor-lift"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "first-floor-landing-east",
+    "description": "You're at the East end of the first floor landing.<br>Through the window to the East you can see some of the sales team relaxing and playing on an XBox.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "first-floor-landing-east",
+        "destination": "first-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "first-floor-landing-east",
+        "destination": "servery-back-corridor"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "first-floor-landing-west",
     "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wanderig about their business down below.",
     "dark": "false",
@@ -511,6 +562,50 @@
         "longname": "West",
         "source": "first-floor-landing-west",
         "destination": "stairs-first-floor"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "first-floor-landing-west",
+        "destination": "first-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "first-floor-landing-west",
+        "destination": "first-floor-toilet"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "first-floor-lift",
+    "description": "You're in the first floor lift.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "first-floor-lift",
+        "destination": "first-floor-landing-central"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "first-floor-toilet",
+    "description": "You're in the first floor toilet.<br>It's a lot like all the others here although there's a subtle difference in colour.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "first-floor-toilet",
+        "destination": "first-floor-landing-west"
       }
     ]
   },
@@ -1915,6 +2010,21 @@
           "canCollect": true,
           "isBreakable": true
         }
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "servery-back-corridor",
+    "description": "You're in the back corridor of the SQL Servery. There's a slight smell of industrial kitchens here.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "servery-back-corridor",
+        "destination": "first-floor-landing-east"
       }
     ]
   },
