@@ -33,6 +33,7 @@ module.exports.Player = function Player(aUsername) {
         var _injuriesReceived = 0;
         var _score = 0;
         var _totalDamageReceived = 0;
+        var _booksRead = 0;
 
         //possible additional player stats
         var _restsTaken = 0;
@@ -934,6 +935,13 @@ module.exports.Player = function Player(aUsername) {
 
             if (artefact.getType() != "book") {return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";};
 
+            if (artefact.isRead()) {
+                return "You've read it before, you're not going to gain anything new from reading it again.";
+            } else {
+                _booksRead ++;
+            };
+
+
             var newMissions = artefact.getMissions();
             //remove any with dialogue from this list.
             for (var j=0; j< newMissions.length;j++) {
@@ -1503,6 +1511,8 @@ module.exports.Player = function Player(aUsername) {
             status += "You have taken "+_stepsTaken+" steps.<br>"; 
             status += "You have visited " + _locationsFound + " locations.<br>";
             if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
+            if (_booksRead > 0) {status += "You have read "+_booksRead+" books or articles.<br>";};
+            if (_repairSkills.length > 0) {status += "You have gained "+_repairSkills.length+" skills.<br>";};
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
             if (_killedCreatures.length > 0) {status += "You have killed "+_killedCreatures.length+" characters.<br>";};             
