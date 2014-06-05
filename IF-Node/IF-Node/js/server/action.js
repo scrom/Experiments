@@ -321,12 +321,20 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'pick':
                         //special case for "pick up"
+                        var originalObject0 = _object0;
                         _object0 = _object0.replace("up ","");       
                         _object0 = _object0.replace(" up","");
-                        _verb = 'pick up';
 
-                        //might want to trap people wanting to pick locks in future.
-                        //now fall through to "take" verb.
+                        if (originalObject0 != _object0) {
+                            _verb = 'pick up';
+                            description = _player.take(_verb, _object0, _object1);
+                            break;
+                        }
+
+                        //pick locked item...
+                        description = _player.unlock(_verb, _object0);
+                        break;
+                        
                     case 'get':
                     case 'collect':
                     case 'take':

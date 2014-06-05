@@ -1130,7 +1130,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
                
 
-                if (verb == 'open') {
+                if (verb == 'open'||verb == 'unlock') {
                     var returnString = "You "+verb+" "+self.getDisplayName()+".";
                     if (_inventory.size() > 0) {returnString +=" It contains "+_inventory.describe()+".";}
                     else {returnString +=" It's empty.";};
@@ -1427,15 +1427,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
-        self.lock = function(aKey) {
+        self.lock = function(aKey, locationName) {
             if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (!(_locked)) {
                 if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = true;
-                    _open = false;
-                    return "You close and lock "+self.getDisplayName()+ ".";
+                    return self.close('close and lock',locationName);
                 } else {
                     return "You need something else to lock "+_itemSuffix+".";
                 };
@@ -1443,7 +1442,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return initCap(_itemDescriptivePrefix)+" already locked.";
         };
 
-        self.unlock = function(aKey) {
+        self.unlock = function(aKey, locationName) {
             if (self.isDestroyed()||_broken) {
                 _locked = false;
                 return _itemDescriptivePrefix+" broken. No need to unlock "+_itemSuffix+".";
@@ -1453,8 +1452,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = false;
-                    _open = true;
-                    return "You unlock and open "+self.getDisplayName()+".";
+                    var resultString = self.moveOrOpen('unlock',locationName);
+                    //unlocking with a breakable item will damage it
+                    var bashResult = "";
+                    if (aKey.isBreakable()) {
+                        aKey.bash();
+                        if (aKey.isBroken()) {resultString += " You broke "+aKey.getDisplayName()+".";};
+                        if (aKey.isDestroyed()) {resultString += " You destroyed "+aKey.getDisplayName()+".";};
+                    };
+                    return resultString;
                 } else {
                     return "You need something else to unlock "+_itemSuffix+".";
                 };
@@ -1465,6 +1471,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.keyTo = function(anObject) {
             if (self.isDestroyed()||_broken) {return false;};
             if (_unlocks == anObject.getName()) {return true;};
+            if (_unlocks == "everything") {return true;};
             return false;
         };
 

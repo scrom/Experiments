@@ -155,7 +155,7 @@
       {
         "object": "artefact",
         "name": "door",
-        "description": "locked door",
+        "description": "door heading south",
         "detailedDescription": "Peering through the window you see people in suits looking busy and important.",
         "attributes": {
           "defaultAction": "open",

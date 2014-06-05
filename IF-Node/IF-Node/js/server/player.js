@@ -476,11 +476,52 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {
+                if (artefactName == "lock") {
+                    //find locked doors, then objects in location first, then inventory
+                    var locationObjects = _currentLocation.getAllObjects();
+
+                    //find locked doors first
+                    for(var i = 0; i < locationObjects.length; i++) {
+                        if (locationObjects[i].getType() == "door" && locationObjects[i].isLocked()) {
+                            artefact = locationObjects[i];
+                            break;
+                        };
+                    };
+
+                    //now try locked location objects
+                    if (!(artefact)) {
+                        for(var i = 0; i < locationObjects.length; i++) {
+                            if (locationObjects[i].isLocked()) {
+                                artefact = locationObjects[i];
+                                break;
+                            };
+                        };
+                    };
+
+                    //now try player inventory location objects
+                    if (!(artefact)) {
+                        var inventoryObjects = _inventory.getAllObjects();
+                        for(var i = 0; i < inventoryObjects.length; i++) {
+                            if (inventoryObjects[i].isLocked()) {
+                                artefact = inventoryObjects[i];
+                                break;
+                            };
+                        };
+                    };
+                };
+            };
+
+            //if we still don't have anything...
             if (!(artefact)) {return notFoundMessage(artefactName);};
             
             //find a key
-            var key = self.getMatchingKey(artefact); //migrate this to artefact and pass all keys through.
-            return artefact.unlock(key);
+            var key = self.getMatchingKey(verb, artefact); //migrate this to artefact and pass all keys through.
+            var resultString = artefact.unlock(key, _currentLocation.getName());
+            if (key) {
+                if (key.isDestroyed()) {_inventory.remove(key.getName());};
+            };
+            return resultString;
         };
 
         self.lock = function(verb, artefactName) {
@@ -490,8 +531,8 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
             //find a key
-            var key = self.getMatchingKey(artefact); //migrate this to artefact and pass all keys through.
-            return artefact.lock(key);
+            var key = self.getMatchingKey(verb, artefact); //migrate this to artefact and pass all keys through.
+            return artefact.lock(key, _currentLocation.getName());
         };
 
         //this can probably be made private
@@ -1168,14 +1209,14 @@ module.exports.Player = function Player(aUsername) {
             return selectedWeapon;
         };
         
-        self.getMatchingKey = function(anObject) {
+        self.getMatchingKey = function(verb, object) {
             //find the strongest non-breakable key the player is carrying.
             var keys = _inventory.getAllObjectsOfType('key');
             for(var index = 0; index < keys.length; index++) {
-                //player must explicitly choose to use a breakable key - will only auto-use non-breakable ones.
-                if ((keys[index].getType() == 'key') && (!(keys[index].isBreakable()))) {
-                    if (keys[index].keyTo(anObject)) {
-                        console.log('Key found for: '+anObject.getName());
+                //player must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
+                if ((keys[index].getType() == 'key') && ((!(keys[index].isBreakable()))||verb == "pick")) {
+                    if (keys[index].keyTo(object)) {
+                        console.log('Key found for: '+object.getName());
                         return keys[index];
                     };                   
                 };
