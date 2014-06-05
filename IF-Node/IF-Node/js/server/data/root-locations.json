@@ -501,6 +501,21 @@
   },
   {
     "object": "location",
+    "name": "first-floor-back-stairs-east",
+    "description": "You're standing on the north-east staircase.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "first-floor-back-stairs-east",
+        "destination": "sales-north"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "first-floor-landing-central",
     "description": "You're on the first floor landing.",
     "dark": "false",
@@ -1222,6 +1237,21 @@
           "score": 50,
           "successMessage": "Congratulations. You killed the spy! Have 50 points."
         }
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "marketing",
+    "description": "You're in the Marketing area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "marketing",
+        "destination": "sales-north"
       }
     ]
   },
@@ -2015,6 +2045,35 @@
   },
   {
     "object": "location",
+    "name": "sales-break-out",
+    "description": "You're stood in a small break out area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "sales-break-out",
+        "destination": "sales-north"
+      },
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "sales-break-out",
+        "destination": "windows-meeting-room"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "sales-break-out",
+        "destination": "sales-seating"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "sales-main",
     "description": "You're in the main sales and marketing area.<br>There's a lowl level hum of telephone conversation.",
     "dark": "false",
@@ -2032,15 +2091,73 @@
         "longname": "South",
         "source": "sales-main",
         "destination": "sales-south"
+      },
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "sales-main",
+        "destination": "sales-north"
       }
     ]
   },
   {
     "object": "location",
-    "name": "sales-south",
-    "description": "You're at the south end of the sales and marketing area.",
+    "name": "sales-north",
+    "description": "You're at the North end of the sales and marketing area.<br>To the North is a door. East is the marketing area and West are some recreational spaces.",
     "dark": "false",
-    "exits": []
+    "exits": [
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "sales-north",
+        "destination": "sales-main"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "sales-north",
+        "destination": "marketing"
+      },
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "sales-north",
+        "destination": "first-floor-back-stairs-east"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "sales-north",
+        "destination": "sales-break-out"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "sales-seating",
+    "description": "You're in a small seating area. Peering down through the windows to the West you can see the atrium. To the North is a meeting room.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "sales-seating",
+        "destination": "sales-break-out"
+      },
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "sales-seating",
+        "destination": "traffic-jam-meeting-room"
+      }
+    ]
   },
   {
     "object": "location",
@@ -2063,6 +2180,13 @@
         "destination": "sales-main"
       }
     ]
+  },
+  {
+    "object": "location",
+    "name": "sales-south",
+    "description": "You're at the south end of the sales and marketing area.",
+    "dark": "false",
+    "exits": []
   },
   {
     "object": "location",
@@ -2552,6 +2676,21 @@
   },
   {
     "object": "location",
+    "name": "traffic-jam-meeting-room",
+    "description": "You're in the 'Traffic Jam' meeting room.<br>There's quite a good view outside from here although it does feel like a bit of a fishbowl.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "traffic-jam-meeting-room",
+        "destination": "sales-seating"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "waste-area",
     "description": "You're by a locked gate. On the far side are a series of waste containers full of carboard boxes, broken furniture and kitchen leftovers.",
     "dark": "false",
@@ -2664,6 +2803,21 @@
         "longname": "North",
         "source": "west-end-south-corridor-ground-floor",
         "destination": "graffiti-b"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "windows-meeting-room",
+    "description": "You're in the 'Windows' meeting room.<br>It's a bit cramped in here and one of the walls is oddly curved wall for no obvious reason.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "windows-meeting-room",
+        "destination": "sales-break-out"
       }
     ]
   }
