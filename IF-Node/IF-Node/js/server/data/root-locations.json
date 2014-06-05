@@ -539,7 +539,7 @@
   {
     "object": "location",
     "name": "first-floor-cubicle",
-    "description": "You're in a cubicle of the first floor toilet.",
+    "description": "You're in a first floor toilet cubicle.",
     "dark": "false",
     "exits": [
       {

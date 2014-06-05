@@ -17,10 +17,11 @@ exports.Action = function Action(aPlayer, aMap) {
         var _objects = []; //objects and creatures
         var _object0 = '';
         var _object1 = '';
+        var _failCount = 0; //count the number of consecutive user errors
 
 	    var objectName = "Action";
 
-        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down'];
+        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'b','back'];
 
         //private functions
 
@@ -169,7 +170,13 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'help':
                         ticks = 0;
-                        description = "Stuck already?<br>Ok...<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
+                        if (_failCount >=3) {
+                            _failCount = 0;
+                            description = "It looks like you're struggling to be understood.<br>";
+                        } else {
+                            description = "Stuck already?<br>Ok...";
+                        };
+                        description += "<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
                                       "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
                                       "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
                                       "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
@@ -422,14 +429,14 @@ exports.Action = function Action(aPlayer, aMap) {
                     default:
                         ticks = 0; //for now 
                         console.log('verb: '+_verb+' default response');
-                        if ((description == undefined)||(description == '')){
-                            description="Sorry, I didn't understand you. Can you try rephrasing that?";
-                        };
+                        //allow fall-through
                 };
                 //navigation
                 if (_directions.indexOf(_verb)>-1) {
-                    ticks = 1;
-                    description = _player.go(_verb, _map);
+                    if (!(_verb == 'i' && _object0.length>1)){ // trap sentences starting with "i" e.g. i need help
+                        ticks = 1;
+                        description = _player.go(_verb, _map);
+                    };
                 };
 
                 //admin "cheat" commands
@@ -450,7 +457,15 @@ exports.Action = function Action(aPlayer, aMap) {
 
                 //final fall-through
                 if ((description == undefined)||(description == '')){
-                  description="Sorry, I didn't understand you. Can you try rephrasing that?";
+                    _failCount ++;
+                    console.log("fail count: "+_failCount);
+                    if (_failCount >=3) {
+                        return self.act('help');
+                    };
+                    description="Sorry, I didn't understand you. Can you try rephrasing that?";
+                } else {
+                   //reset consecutive user errors
+                   _failCount = 0; 
                 };
 
             //check creatures for fightOrFlight

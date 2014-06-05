@@ -21,6 +21,7 @@ module.exports.Player = function Player(aUsername) {
         var _bleeding = false;
         var _bleedingHealthThreshold = 50; //health needs to be at 50% or lower to be bleeding.
         var _startLocation;
+        var _returnDirection;
         var _currentLocation;
         var _timeSinceEating = 0; 
         var _maxMovesUntilHungry = 50;
@@ -1054,10 +1055,27 @@ module.exports.Player = function Player(aUsername) {
             return resultString;
         };
 
+        self.getReturnDirection = function() {
+            return _returnDirection;
+        };
+
+        self.setReturnDirection = function(direction) {
+            _returnDirection = direction;
+            return _returnDirection;
+        };
+
         self.go = function(verb, map) {//(aDirection, aLocation) {
         
             //trim verb down to first letter...
             var direction = verb.substring(0, 1);
+            if (direction == 'b') {
+                //player wants to go "back"
+                direction = self.getReturnDirection();
+                if (direction == null||direction == "") {return "You've not been anywhere yet.";};
+            };
+
+            self.setReturnDirection(map.oppositeOf(direction));
+
             if (!(self.canSee())) {
                 //50% chance of walking into a wall
                 var randomInt = Math.floor(Math.random() * 2);
