@@ -785,7 +785,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
                         if (i==0) {resultString = initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";};
-                        self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
+                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
                     };
                 };
             };
@@ -998,7 +998,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
-            //if creature has missions - return dialogue.
             var response = "";
             if (stringIsEmpty(someSpeech)) {
                 response += initCap(self.getDisplayName())+" says 'Hello.'";
@@ -1006,6 +1005,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";               
             };
 
+            //if creature has missions - return dialogue.
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue()) {
                     response += "<br>"+_missions[i].getNextDialogue();
@@ -1126,7 +1126,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //if only one exit, random exit won't work so get the only one we can...
                     if (!(exit)) {exit = _currentLocation.getAvailableExits()[0];}; 
                     if (exit) {
-                        self.go(exit.getName(), map.getLocation(exit.getDestinationName()))+"<br>";
+                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
                         //if creature ends up in player location (rather than starting there...
                         if (player.getLocation().getName() == _currentLocation.getName()) {
                             resultString += "<br>"+initCap(self.getDisplayName())+" wanders in.<br>";  

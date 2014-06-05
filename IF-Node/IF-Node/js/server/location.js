@@ -22,8 +22,8 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         var compassSort = function(a,b) {
             var orderedDirections = ['n','s','e','w','u','d','i','o'];
-            if (orderedDirections.indexOf(a.getName()) < orderedDirections.indexOf(b.getName())) {return -1;};
-            if (orderedDirections.indexOf(a.getName()) > orderedDirections.indexOf(b.getName())) {return 1;};
+            if (orderedDirections.indexOf(a.getDirection()) < orderedDirections.indexOf(b.getDirection())) {return -1;};
+            if (orderedDirections.indexOf(a.getDirection()) > orderedDirections.indexOf(b.getDirection())) {return 1;};
             return 0;
         };
 
@@ -57,13 +57,13 @@ exports.Location = function Location(aName, aDescription, isDark) {
             _description=aDescription;
         };
 
-        self.addExit = function(anExitName, aSource, aDestination,isHidden) {
+        self.addExit = function(anExitDirection, aSource, aDestination,isHidden) {
             self = this;
-            var newExit = new exitObjectModule.Exit(anExitName,aSource, aDestination,isHidden);
+            var newExit = new exitObjectModule.Exit(anExitDirection,aSource, aDestination,isHidden);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   
-            console.log('Exit from '+self.getName()+', '+storedExit.getName()+' to '+storedExit.getDestinationName()+' added.');   
-            return 'Exit from '+self.getName()+', '+newExit.getName()+' to '+newExit.getDestinationName()+' added.';
+            console.log('Exit from '+self.getName()+', '+storedExit.getDirection()+' to '+storedExit.getDestinationName()+' added.');   
+            return 'Exit from '+self.getName()+', '+newExit.getDirection()+' to '+newExit.getDestinationName()+' added.';
         };
 
         self.getExitDestination = function(aDirection) {
@@ -74,7 +74,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.getExit = function(aDirection) {
             for(var i = 0; i < _exits.length; i++) {
-                if(_exits[i].getName().toLowerCase() == aDirection.toLowerCase()) {
+                if(_exits[i].getDirection().toLowerCase() == aDirection.toLowerCase()) {
                     console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
                     return _exits[i];
                 };
@@ -97,7 +97,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
             if (availableExits.length <= 1) {return null;};
 
             var randomInt = Math.floor(Math.random() * (availableExits.length));
-            console.log('Random exit selected: '+availableExits[randomInt].getName());
+            console.log('Random exit selected: '+availableExits[randomInt].getDirection());
             return availableExits[randomInt];
         };
 

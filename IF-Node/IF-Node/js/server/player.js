@@ -1091,12 +1091,12 @@ module.exports.Player = function Player(aUsername) {
             if (!(exit)) {return "There's no exit "+verb;};
             if (!(exit.isVisible())) {return "Your way '"+verb+"' is blocked.";}; //this might be too obvious;
 
-            var exitName = _currentLocation.getExitDestination(direction);
-            var newLocation = map.getLocation(exitName);
+            var exitDestination = _currentLocation.getExitDestination(direction);
+            var newLocation = map.getLocation(exitDestination);
             if (newLocation) {
-                console.log('found location: '+exitName);
+                console.log('found location: '+exitDestination);
             } else {
-                //console.log('location: '+exitName+' not found');
+                //console.log('location: '+exitDestination+' not found');
                 return "That exit doesn't seem to go anywhere at the moment. Try again later.";                  
             };
 
