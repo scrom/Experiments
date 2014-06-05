@@ -359,13 +359,13 @@ module.exports.Player = function Player(aUsername) {
                 returnString = "You set to with your ";
                 if (self.isArmed()) {
                     var weapon = self.getWeapon(verb);
-                    returnString += weapon.getDisplayName();
+                    returnString += weapon.getName();
                 } else {returnString += "bare hands and sheer malicious ingenuity"};
                 returnString += " in a bid to cause damage.<br>";
             };
                 
-            if (verb=='break') {
-                returnString += artefact.break(true);
+            if (verb=='break'||verb=='force') {
+                returnString += artefact.break(verb, true);
             } else {
                 returnString += artefact.destroy(true);
             };
@@ -389,7 +389,7 @@ module.exports.Player = function Player(aUsername) {
             if (verb != "put down") {
                 //should be careful dropping things
                 if (verb == "throw") {
-                    artefactDamage = artefact.break(false);
+                    artefactDamage = artefact.break(verb, false);
                     _aggression++; //grrrr
                 }
                 else {artefactDamage = artefact.bash();}; 
@@ -1280,9 +1280,9 @@ module.exports.Player = function Player(aUsername) {
                 //wilful destruction of objects increases aggression further...
                 //note creatures return false for isDestroyed - we check "isDead" for those
                 _aggression ++;
+                resultString += emptyContentsOfContainer(receiver.getName());
                 removeObjectFromPlayerOrLocation(receiver.getName());
                 _destroyedObjects.push(receiver.getName());
-                resultString += emptyContentsOfContainer(receiver.getName());
                 resultString = "Oops. "+resultString 
             }; 
 

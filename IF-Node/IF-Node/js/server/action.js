@@ -387,6 +387,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'destry': //common user typo
                     case 'destroy':
                     case 'break':
+                    case 'force':
                         description = _player.breakOrDestroy(_verb, _object0);
                         break;
                     case 'kill':

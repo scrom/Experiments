@@ -983,7 +983,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         };
 
-        self.break = function(deliberateAction) {
+        self.break = function(verb, deliberateAction) {
             if (_broken && deliberateAction) {return self.destroy(deliberateAction);};
             _damaged = true;
             if (_breakable) {
@@ -1036,7 +1036,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return self.destroy(false);
             };
             if ((_breakable)&&(_damaged)) {
-                return self.break(false);
+                return self.break("bash",false);
             };
             if (!(_damaged)) {
                 _damaged = true;
@@ -1061,12 +1061,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())) {
-                return "You attack the "+self.getDisplayName()+". Unfortunately you can't move the "+weapon.getDisplayName()+" to use as a weapon.";
+                return "You attack "+self.getDisplayName()+". Unfortunately you can't move "+weapon.getDisplayName()+" to use as a weapon.";
             };
 
             //need to validate that artefact will do some damage
             if (weapon.getAttackStrength()<1) {
-                resultString = "You attack the "+self.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon. ";
+                resultString = "You attack "+self.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon. ";
                 resultString += weapon.bash();
                 return resultString;
             };
@@ -1076,13 +1076,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         
             if (_breakable) {
-                return self.break();
+                return self.break(verb, false);
             };
             if (!(_damaged)) {
                 _damaged = true;
                 _detailedDescription += " and shows signs of damage beyond normal expected wear and tear.";
             };
-            return "Ding! You repeatedly attack the "+self.getDisplayName()+". with the "+weapon.getDisplayName()+" It feels good in a gratuitously violent sort of way."
+            return "Ding! You repeatedly attack "+self.getDisplayName()+". with "+weapon.getDisplayName()+" It feels good in a gratuitously violent sort of way."
         };
 
         self.moveOpenOrClose = function(verb, locationName) {
