@@ -240,6 +240,13 @@
         "direction": "u",
         "source": "back-stairs-first-floor-west",
         "destination": "back-stairs-second-floor-west"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "back-stairs-first-floor-west",
+        "destination": "customer-delight-north"
       }
     ]
   },
@@ -318,6 +325,42 @@
   },
   {
     "object": "location",
+    "name": "customer-delight-central",
+    "description": "You're in the middle of the Customer Delight team area.<br>According to the lights, the build status is currently green.<br>You fight the urge to play with the lights.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "customer-delight-central",
+        "destination": "customer-delight-east"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "customer-delight-central",
+        "destination": "customer-delight-south"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "customer-delight-central",
+        "destination": "customer-delight-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "customer-delight-central",
+        "destination": "customer-delight-north"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "customer-delight-east",
     "description": "You're at the Eastern end of the Customer Delight team area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
     "dark": "false",
@@ -328,6 +371,144 @@
         "direction": "e",
         "source": "customer-delight-east",
         "destination": "servery-north-west"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "customer-delight-east",
+        "destination": "customer-delight-central"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "customer-delight-east",
+        "destination": "customer-delight-management-area"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "customer-delight-management-area",
+    "description": "You're in the dead-zone of Customer Delight between the glass wall and Jellyfish.<br>There's a vacuum where the CEO and PA's used to sit although it's adequately filled by the presence of James Dening when he's around.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "customer-delight-management-area",
+        "destination": "customer-delight-east"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "customer-delight-management-area",
+        "destination": "jellyfish-meeting-room"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "customer-delight-north",
+    "description": "You're in the Northern part of the Customer Delight team area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "customer-delight-north",
+        "destination": "customer-delight-central"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "customer-delight-north",
+        "destination": "back-stairs-first-floor-west"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "customer-delight-north",
+        "destination": "first-floor-cubby-hole"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "customer-delight-north",
+        "destination": "support-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "customer-delight-south",
+    "description": "You're in the Southern part of the Customer Delight team area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "customer-delight-south",
+        "destination": "customer-delight-central"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "customer-delight-south",
+        "destination": "customer-delight-south-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "customer-delight-south-west",
+    "description": "You're in the South-West corner of the Customer Delight team area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "customer-delight-south-west",
+        "destination": "customer-delight-south"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "customer-delight-south-west",
+        "destination": "customer-delight-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "customer-delight-west",
+    "description": "You're at the West end of the Customer Delight team area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "customer-delight-west",
+        "destination": "customer-delight-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "customer-delight-west",
+        "destination": "customer-delight-south-west"
       }
     ]
   },
@@ -516,6 +697,21 @@
   },
   {
     "object": "location",
+    "name": "enterprise-meeting-room",
+    "description": "You're in the Enterprise meeting room. You peer through the window at the people coming and going from the office.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "enterprise-meeting-room",
+        "destination": "support-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "first-floor-back-stairs-east",
     "description": "You're standing on the north-east staircase.",
     "dark": "false",
@@ -533,6 +729,21 @@
         "direction": "d",
         "source": "first-floor-back-stairs-east",
         "destination": "ground-floor-back-stair-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "first-floor-cubby-hole",
+    "description": "You're in the First floor cubby hole.<br>The area is lined with whiteboards and there are assorted chairs and bean bags scattered around.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "first-floor-cubby-hole",
+        "destination": "customer-delight-north"
       }
     ]
   },
@@ -786,6 +997,21 @@
         "direction": "n",
         "source": "ground-floor-fire-escape",
         "destination": "smoking-area"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "jellyfish-meeting-room",
+    "description": "You're in Jellyfish meeting room. The carpet in here is a rather vivid green.<br>Through the window to the north you can see people scurrying up and down the stairs trying not to spill their coffee.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "jellyfish-meeting-room",
+        "destination": "customer-delight-management-area"
       }
     ]
   },
@@ -2799,6 +3025,57 @@
   },
   {
     "object": "location",
+    "name": "support-east",
+    "description": "You're in support area.<br>From here you can make rude gestures and wave through the window at passers-by on the stairs.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "support-east",
+        "destination": "support-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "support-east",
+        "destination": "enterprise-meeting-room"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "support-west",
+    "description": "You're in support area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "support-west",
+        "destination": "customer-delight-north"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "support-west",
+        "destination": "support-east"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "support-west",
+        "destination": "web-meeting-room"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "toilet-ground-floor",
     "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
     "dark": "false",
@@ -2919,6 +3196,21 @@
         "direction": "w",
         "source": "waste-area",
         "destination": "east-car-park"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "web-meeting-room",
+    "description": "You're in the Web meeting room.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "web-meeting-room",
+        "destination": "support-west"
       }
     ]
   },
