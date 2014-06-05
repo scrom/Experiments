@@ -2015,6 +2015,57 @@
   },
   {
     "object": "location",
+    "name": "sales-main",
+    "description": "You're in the main sales and marketing area.<br>There's a lowl level hum of telephone conversation.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "sales-main",
+        "destination": "servery-back-corridor"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "sales-main",
+        "destination": "sales-south"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "sales-south",
+    "description": "You're at the south end of the sales and marketing area.",
+    "dark": "false",
+    "exits": []
+  },
+  {
+    "object": "location",
+    "name": "sales-south",
+    "description": "You're at the south end of the sales and marketing area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "sales-south",
+        "destination": "servery-salad-bar"
+      },
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "sales-south",
+        "destination": "sales-main"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "servery-back-corridor",
     "description": "You're in the back corridor of the SQL Servery. There's a slight smell of industrial kitchens here.",
     "dark": "false",
@@ -2025,6 +2076,57 @@
         "longname": "North",
         "source": "servery-back-corridor",
         "destination": "first-floor-landing-east"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "servery-back-corridor",
+        "destination": "sales-main"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "servery-back-corridor",
+        "destination": "servery-kitchen"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "servery-kitchen",
+    "description": "You're in the SQL Servery kitchen.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "servery-kitchen",
+        "destination": "servery-back-corridor"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "servery-kitchen",
+        "destination": "servery-salad-bar"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "servery-main",
+    "description": "You're in the SQL Servery. To the South is a fire escape.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "servery-main",
+        "destination": "servery-salad-bar"
       }
     ]
   },
@@ -2040,6 +2142,35 @@
         "longname": "North",
         "source": "servery-north-west",
         "destination": "stairs-first-floor"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "servery-salad-bar",
+    "description": "You're standing by the SQL Servery salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "servery-salad-bar",
+        "destination": "servery-kitchen"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "servery-salad-bar",
+        "destination": "servery-main"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "servery-salad-bar",
+        "destination": "sales-south"
       }
     ]
   },
