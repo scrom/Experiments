@@ -2456,6 +2456,86 @@
         "source": "sales-main",
         "destination": "sales-north"
       }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "james",
+        "displayname": "James",
+        "description": "James King",
+        "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
+        "attributes": {
+          "weight": 140,
+          "money": 30,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "james king",
+		  "james k",
+		  "jk",
+          "king",
+          "jim",
+          "him"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "simon",
+        "displayname": "Simon",
+        "description": "Simon Johnson",
+        "detailedDescription": "He's a master of selling, seems like he's been here forever and now he's taking on Germany!",
+        "attributes": {
+          "weight": 140,
+          "money": 30,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "simon johnson",
+		  "simon j",
+		  "sj",
+          "johnson",
+          "him"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "cassi",
+        "displayname": "Cassi",
+        "description": "Cassi Roper",
+        "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
+        "attributes": {
+          "weight": 160,
+          "money": 45,
+          "attackStrength": 35,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 100,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "cassi roper",
+		  "cr",
+          "roper",
+          "her"
+        ]
+      }
     ]
   },
   {
