@@ -1489,7 +1489,7 @@
         "object": "artefact",
         "name": "nerf gun",
         "description": "a nerf gun",
-        "detailedDescription": "An unlucky shot with this could take someone's eye out.",
+        "detailedDescription": "It's loaded! :D An unlucky shot with this could take someone's eye out.",
         "attributes": {
           "weight": 2,
           "attackStrength": 5,
