@@ -318,6 +318,21 @@
   },
   {
     "object": "location",
+    "name": "customer-delight-east",
+    "description": "You're at the Eastern end of the Customer Delight team area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "customer-delight-east",
+        "destination": "servery-north-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "east-bike-racks",
     "description": "You're standing at the South-East corner of the the office building.",
     "dark": "false",
@@ -511,6 +526,43 @@
         "longname": "South",
         "source": "first-floor-back-stairs-east",
         "destination": "sales-north"
+      },
+      {
+        "object": "exit",
+        "name": "d",
+        "longname": "down",
+        "source": "first-floor-back-stairs-east",
+        "destination": "ground-floor-back-stair-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "first-floor-cubicle",
+    "description": "You're in a cubicle of the first floor toilet.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "o",
+        "longname": "out",
+        "source": "first-floor-cubicle",
+        "destination": "first-floor-toilet"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "first-floor-fire-escape",
+    "description": "You're standing on the first floor fire escape. You probably shouldn't be here without a good reason.<br>The wind howls across the steel deck. Peering cautiously down over the railings you can see the smoking area and bike racks",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "first-floor-fire-escape",
+        "destination": "servery-main"
       }
     ]
   },
@@ -621,6 +673,13 @@
         "longname": "North",
         "source": "first-floor-toilet",
         "destination": "first-floor-landing-west"
+      },
+      {
+        "object": "exit",
+        "name": "i",
+        "longname": "in",
+        "source": "first-floor-toilet",
+        "destination": "first-floor-cubicle"
       }
     ]
   },
@@ -676,6 +735,21 @@
           "emergency lamp",
           "emergency light"
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "ground-floor-back-stair-east",
+    "description": "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here. People don't come down here very often unless they're lost.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "u",
+        "longname": "up",
+        "source": "ground-floor-back-stair-east",
+        "destination": "first-floor-back-stairs-east"
       }
     ]
   },
@@ -2164,6 +2238,13 @@
     "name": "sales-south",
     "description": "You're at the south end of the sales and marketing area.",
     "dark": "false",
+    "exits": []
+  },
+  {
+    "object": "location",
+    "name": "sales-south",
+    "description": "You're at the south end of the sales and marketing area.",
+    "dark": "false",
     "exits": [
       {
         "object": "exit",
@@ -2180,13 +2261,6 @@
         "destination": "sales-main"
       }
     ]
-  },
-  {
-    "object": "location",
-    "name": "sales-south",
-    "description": "You're at the south end of the sales and marketing area.",
-    "dark": "false",
-    "exits": []
   },
   {
     "object": "location",
@@ -2242,6 +2316,13 @@
   {
     "object": "location",
     "name": "servery-main",
+    "description": "You're in SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses.",
+    "dark": "false",
+    "exits": []
+  },
+  {
+    "object": "location",
+    "name": "servery-main",
     "description": "You're in the SQL Servery. To the South is a fire escape.",
     "dark": "false",
     "exits": [
@@ -2251,6 +2332,20 @@
         "longname": "East",
         "source": "servery-main",
         "destination": "servery-salad-bar"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "servery-main",
+        "destination": "servery-south-west"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "servery-main",
+        "destination": "first-floor-fire-escape"
       }
     ]
   },
@@ -2266,6 +2361,20 @@
         "longname": "North",
         "source": "servery-north-west",
         "destination": "stairs-first-floor"
+      },
+      {
+        "object": "exit",
+        "name": "s",
+        "longname": "South",
+        "source": "servery-north-west",
+        "destination": "servery-south-west"
+      },
+      {
+        "object": "exit",
+        "name": "w",
+        "longname": "West",
+        "source": "servery-north-west",
+        "destination": "customer-delight-east"
       }
     ]
   },
@@ -2295,6 +2404,28 @@
         "longname": "East",
         "source": "servery-salad-bar",
         "destination": "sales-south"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "servery-south-west",
+    "description": "You're in the South-West end of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "name": "n",
+        "longname": "North",
+        "source": "servery-south-west",
+        "destination": "servery-north-west"
+      },
+      {
+        "object": "exit",
+        "name": "e",
+        "longname": "East",
+        "source": "servery-south-west",
+        "destination": "servery-main"
       }
     ]
   },
