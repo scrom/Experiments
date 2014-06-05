@@ -30,23 +30,23 @@ exports.Location = function Location(aName, aDescription, isDark) {
         //public member functions
         self.toString = function() {
             //var _missions = [];
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
             for(var i=0; i<_exits.length;i++) {
-                if (i>0) {returnString+= ',';};
-                returnString+= _exits[i].toString();
+                if (i>0) {resultString+= ',';};
+                resultString+= _exits[i].toString();
             };
-            returnString += ']';
-            if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            resultString += ']';
+            if (_inventory.size() >0) {resultString+= ',"inventory":'+_inventory.toString();};
             if (_missions.length >0) {
-                returnString+= ', "missions":[';
+                resultString+= ', "missions":[';
                 for(var i=0; i<_missions.length;i++) {
-                    if (i>0) {returnString+= ', ';};
-                    returnString+= _missions[i].toString();
+                    if (i>0) {resultString+= ', ';};
+                    resultString+= _missions[i].toString();
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
-            returnString += '}';
-            return returnString;
+            resultString += '}';
+            return resultString;
         };
 
         self.getName = function() {

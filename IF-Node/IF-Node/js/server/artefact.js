@@ -216,42 +216,42 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //public member functions
         self.toString = function() {
             //var _synonyms = [];
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailedDescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailedDescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
             if (_linkedExits.length>0) {
-                returnString+= ',"linkedexits":[';
+                resultString+= ',"linkedexits":[';
                 for(var i=0; i<_linkedExits.length;i++) {
-                    if (i>0) {returnString+= ',';};
-                    returnString+= _linkedExits[i].toString();
+                    if (i>0) {resultString+= ',';};
+                    resultString+= _linkedExits[i].toString();
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
             if (_synonyms.length >0) {
-                returnString+= ',"synonyms":[';
+                resultString+= ',"synonyms":[';
                 for(var i=0; i<_synonyms.length;i++) {
-                    if (i>0) {returnString+= ',';};
-                    returnString+= '"'+_synonyms[i]+'"';
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_synonyms[i]+'"';
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
             if (_delivers.length>0) {
-                returnString += ',"delivers":[';
+                resultString += ',"delivers":[';
                 for (var i = 0; i < _delivers.length; i++) {
-                    if (i > 0) { returnString += ','; };
-                    returnString += _delivers[i].toString();
+                    if (i > 0) { resultString += ','; };
+                    resultString += _delivers[i].toString();
                 };
-                returnString += ']';
+                resultString += ']';
             };
-            if (_inventory.size() >0) {returnString+= ',"inventory":'+_inventory.toString();};
+            if (_inventory.size() >0) {resultString+= ',"inventory":'+_inventory.toString();};
             if (_missions.length >0) {
-                returnString+= ',"missions":[';
+                resultString+= ',"missions":[';
                 for(var i=0; i<_missions.length;i++) {
-                    if (i>0) {returnString+= ',';};
-                    returnString+= _missions[i].toString();
+                    if (i>0) {resultString+= ',';};
+                    resultString+= _missions[i].toString();
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
-            returnString+= '}';
-            return returnString;
+            resultString+= '}';
+            return resultString;
         };
 
         self.getName = function() {
@@ -417,16 +417,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDescription = function() {
-            var returnString = self.descriptionWithCorrectPrefix(_description);
+            var resultString = self.descriptionWithCorrectPrefix(_description);
             //if it's a container with a single item and it's open (or fixed open), include contents
             if (self.getType() == "container" && _inventory.size() == 1 && ((!_opens)||_open)) {
                 var inventoryItem = _inventory.getAllObjects()[0];
                 if (inventoryItem.requiresContainer()) { 
-                    returnString = self.descriptionWithCorrectPrefix(_name);
-                    returnString+= " of "+inventoryItem.getName(); 
+                    resultString = self.descriptionWithCorrectPrefix(_name);
+                    resultString+= " of "+inventoryItem.getName(); 
                 };
             };
-            return returnString;
+            return resultString;
         };
 
         self.getRawDescription = function() {
@@ -477,25 +477,25 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getDetailedDescription = function(playerAggression) {
             //note we can change description based on player aggression - better for creatures but supported here too.
-            var returnString = _detailedDescription; //original description
-            if (_destroyed) { return returnString; }; //don't go any further.
+            var resultString = _detailedDescription; //original description
+            if (_destroyed) { return resultString; }; //don't go any further.
 
             if (self.getPrice() > 0) {
-                returnString += "<br>" + initCap(_itemDescriptivePrefix) + " worth about £" + self.getPrice().toFixed(2) + ".";
+                resultString += "<br>" + initCap(_itemDescriptivePrefix) + " worth about £" + self.getPrice().toFixed(2) + ".";
             };
 
             var inventoryIsVisible = true;
 
             if (_lockable && (_locked)) { 
-                returnString += " "+initCap(_itemDescriptivePrefix)+" locked.";
+                resultString += " "+initCap(_itemDescriptivePrefix)+" locked.";
                 inventoryIsVisible = false;
             } else if (_opens && (!(_open))) { 
-                returnString += " "+initCap(_itemDescriptivePrefix)+" closed.";
+                resultString += " "+initCap(_itemDescriptivePrefix)+" closed.";
                 inventoryIsVisible = false;
             };
 
             if ((_inventory.size() > 0) && inventoryIsVisible) {
-                returnString += "<br>";
+                resultString += "<br>";
 
                 //inventory description may be extended...
                 //ensure we have a substitution value
@@ -503,13 +503,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (placeholder == -1) {
                     _extendedInventoryDescription+="$inventory."
                 };
-                returnString += _extendedInventoryDescription;
+                resultString += _extendedInventoryDescription;
 
-                returnString = returnString.replace("$inventory",_inventory.describe());
+                resultString = resultString.replace("$inventory",_inventory.describe());
             };
 
             if (!(self.checkComponents())) { 
-                returnString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
+                resultString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
             } else {
                 if (_delivers.length > 0) {
                     //split delivers items into what can currently be delivered and what can't
@@ -533,61 +533,61 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                     //return what can be combined with
                     if (combinesWithList.length > 0) {
-                        returnString += "<br>" + initCap(self.getName()) + " can be used to make ";
+                        resultString += "<br>" + initCap(self.getName()) + " can be used to make ";
                         for (var i = 0; i < combinesWithList.length; i++) {
-                            if (i > 0 && i < combinesWithList.length - 1) { returnString += ", "; };
-                            if (i > 0 && i == combinesWithList.length - 1) { returnString += " and "; };
-                            returnString += combinesWithList[i].getName();
+                            if (i > 0 && i < combinesWithList.length - 1) { resultString += ", "; };
+                            if (i > 0 && i == combinesWithList.length - 1) { resultString += " and "; };
+                            resultString += combinesWithList[i].getName();
                         };
-                        returnString += ".";
+                        resultString += ".";
                     };
 
                     //return what can be delivered
                     if (canDeliverList.length > 0) {
-                        returnString += "<br>" + _itemPrefix + " delivers ";
+                        resultString += "<br>" + _itemPrefix + " delivers ";
                         for (var i = 0; i < canDeliverList.length; i++) {
-                            if (i > 0 && i < canDeliverList.length - 1) { returnString += ", "; };
-                            if (i > 0 && i == canDeliverList.length - 1) { returnString += " and "; };
-                            returnString += canDeliverList[i].getName();
+                            if (i > 0 && i < canDeliverList.length - 1) { resultString += ", "; };
+                            if (i > 0 && i == canDeliverList.length - 1) { resultString += " and "; };
+                            resultString += canDeliverList[i].getName();
                         };
-                        returnString += ".";
+                        resultString += ".";
                     };
                     
                     //return what can be sold
                     if (sellsList.length > 0) {
-                        returnString += "<br>" + _itemPrefix + " sells";
+                        resultString += "<br>" + _itemPrefix + " sells";
 
                         if (sellsList.length >1 ) {
-                            returnString += ":<br>";
-                        } else {returnString += " ";};
+                            resultString += ":<br>";
+                        } else {resultString += " ";};
 
                         for (var i = 0; i < sellsList.length; i++) {
-                            if (sellsList.length >1 ) {returnString += "- ";};
-                            if (sellsList.length >1 ) {returnString +=initCap(sellsList[i].getName());}
-                            else {  returnString +=sellsList[i].getName();};                   
-                            returnString += " (£"+sellsList[i].getPrice().toFixed(2)+")<br>";
+                            if (sellsList.length >1 ) {resultString += "- ";};
+                            if (sellsList.length >1 ) {resultString +=initCap(sellsList[i].getName());}
+                            else {  resultString +=sellsList[i].getName();};                   
+                            resultString += " (£"+sellsList[i].getPrice().toFixed(2)+")<br>";
                         };
                     };
 
                     //return what cannot be delivered
                     if (cannotDeliverList.length > 0) {
-                        returnString += "<br>When properly set up and working " + _itemPrefix.toLowerCase();
-                        if (canDeliverList.length > 0) { returnString += " also" };
+                        resultString += "<br>When properly set up and working " + _itemPrefix.toLowerCase();
+                        if (canDeliverList.length > 0) { resultString += " also" };
 
-                        returnString += " delivers ";
+                        resultString += " delivers ";
                         for (var i = 0; i < cannotDeliverList.length; i++) {
-                            if (i > 0 && i < cannotDeliverList.length - 1) { returnString += ", "; };
-                            if (i > 0 && i == cannotDeliverList.length - 1) { returnString += " and "; };
-                            returnString += cannotDeliverList[i].getName();
+                            if (i > 0 && i < cannotDeliverList.length - 1) { resultString += ", "; };
+                            if (i > 0 && i == cannotDeliverList.length - 1) { resultString += " and "; };
+                            resultString += cannotDeliverList[i].getName();
                         };
-                        returnString += ".";
+                        resultString += ".";
                     };
                 };               
             };
 
             //describe remaining charges (if not unlimited)
             if (self.chargesRemaining() == 0) {
-                returnString += "<br>"+_self.getDescriptivePrefix+" all used up.";
+                resultString += "<br>"+_self.getDescriptivePrefix+" all used up.";
             }
             else if (self.chargesRemaining() >1) { //we don't report when there's only a single use left.
                 //if (_detailedDescription.indexOf('$') >-1) {//we have custom placeholders in the description
@@ -604,18 +604,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     tempDescription = tempDescription.replace("$charges",self.chargesRemaining());
 
                     //set output
-                    returnString += "<br>"+tempDescription+".";
+                    resultString += "<br>"+tempDescription+".";
 
                 } else {
-                    returnString += "<br>There are "+self.chargesRemaining()+" uses remaining."
+                    resultString += "<br>There are "+self.chargesRemaining()+" uses remaining."
                 };
             };
 
             if (_switched) {
-                returnString += "<br>"+initCap(_itemDescriptivePrefix)+" currently switched ";
-                if(self.isPoweredOn()) {returnString += "on.";} else {returnString += "off.";};
+                resultString += "<br>"+initCap(_itemDescriptivePrefix)+" currently switched ";
+                if(self.isPoweredOn()) {resultString += "on.";} else {resultString += "off.";};
             };
-            return returnString;
+            return resultString;
         };
 
         self.read = function(verb) {
@@ -823,9 +823,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_broken||self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" broken.";};
             if (!(_switched)) {return "There's no obvious way to "+verb+" "+_itemSuffix+" on or off.";};
             if (!(self.hasPower())) {
-                var returnString = initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
-                if (!(self.checkComponents())) {returnString +=" "+initCap(_itemDescriptivePrefix)+" missing something.";};
-                return returnString;
+                var resultString = initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
+                if (!(self.checkComponents())) {resultString +=" "+initCap(_itemDescriptivePrefix)+" missing something.";};
+                return resultString;
 
             };
             switch(onOrOff) {
@@ -843,14 +843,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             _on = (!(_on)); //toggle switch 
-            var returnString ="You "+verb+" "+self.getDisplayName();
-            if (verb == 'light') {returnString+= ".";}
+            var resultString ="You "+verb+" "+self.getDisplayName();
+            if (verb == 'light') {resultString+= ".";}
             else { 
-                if (_on) {returnString+= " on.";} 
-                else {returnString+= " off.";};
+                if (_on) {resultString+= " on.";} 
+                else {resultString+= " off.";};
             };
 
-            return returnString;
+            return resultString;
         };
 
         self.consume = function() {
@@ -1131,10 +1131,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                
 
                 if (verb == 'open'||verb == 'unlock') {
-                    var returnString = "You "+verb+" "+self.getDisplayName()+".";
-                    if (_inventory.size() > 0) {returnString +=" It contains "+_inventory.describe()+".";}
-                    else {returnString +=" It's empty.";};
-                    return returnString;
+                    var resultString = "You "+verb+" "+self.getDisplayName()+".";
+                    if (_inventory.size() > 0) {resultString +=" It contains "+_inventory.describe()+".";}
+                    else {resultString +=" It's empty.";};
+                    return resultString;
                 };
             };
             if (verb == 'open') {

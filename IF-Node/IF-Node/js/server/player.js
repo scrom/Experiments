@@ -239,10 +239,10 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.describeInventory = function() {
-            var returnString = "You're carrying "+_inventory.describe()+".";
+            var resultString = "You're carrying "+_inventory.describe()+".";
             var cash = _inventory.getCashBalance();
-            if (cash > 0) { returnString+= "<br>You have &pound;" + cash.toFixed(2) + " in cash.<br>"; };
-            return returnString;
+            if (cash > 0) { resultString+= "<br>You have &pound;" + cash.toFixed(2) + " in cash.<br>"; };
+            return resultString;
         };	
 
         self.use = function(artefactName) {
@@ -351,31 +351,31 @@ module.exports.Player = function Player(aUsername) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            var returnString = "";
+            var resultString = "";
 
             _aggression++;
 
             if ((artefact.getType() != 'creature')&&(artefact.getType() != 'friendly'))  {
-                returnString = "You set to with your ";
+                resultString = "You set to with your ";
                 if (self.isArmed()) {
                     var weapon = self.getWeapon(verb);
-                    returnString += weapon.getName();
-                } else {returnString += "bare hands and sheer malicious ingenuity"};
-                returnString += " in a bid to cause damage.<br>";
+                    resultString += weapon.getName();
+                } else {resultString += "bare hands and sheer malicious ingenuity"};
+                resultString += " in a bid to cause damage.<br>";
             };
                 
             if (verb=='break'||verb=='force') {
-                returnString += artefact.break(verb, true);
+                resultString += artefact.break(verb, true);
             } else {
-                returnString += artefact.destroy(true);
+                resultString += artefact.destroy(true);
             };
 
             if (artefact.isDestroyed()) {
                 _destroyedObjects.push(artefact.getName());
-                returnString += emptyContentsOfContainer(artefact.getName());
+                resultString += emptyContentsOfContainer(artefact.getName());
                 removeObjectFromPlayerOrLocation(artefact.getName());
             };
-            return returnString;
+            return resultString;
         };
 
         /*allow player to drop an object*/
@@ -1174,10 +1174,10 @@ module.exports.Player = function Player(aUsername) {
 
         self.getVisits = function() {
             var visits = _currentLocation.getVisits();
-            var returnString = "You have visited this location ";
-            if (visits == 1) {return returnString+"once."}
-            if (visits == 2) {return returnString+"twice."}
-            return returnString+visits+" times.";
+            var resultString = "You have visited this location ";
+            if (visits == 1) {return resultString+"once."}
+            if (visits == 2) {return resultString+"twice."}
+            return resultString+visits+" times.";
         };
 
         self.isArmed = function() {
@@ -1334,7 +1334,7 @@ module.exports.Player = function Player(aUsername) {
             var initialHP = _hitPoints;
 
             //time passes *before* any healing benefits are in place
-            var returnString = "You "+verb+" for a while.<br>"+self.tick(duration, map);
+            var resultString = "You "+verb+" for a while.<br>"+self.tick(duration, map);
 
             _hitPoints += duration*3;
             _aggression -= duration;
@@ -1347,9 +1347,9 @@ module.exports.Player = function Player(aUsername) {
 
             if  (!((initialKilledCount < _killedCount)|| initialHP >= _hitPoints)) {
                 //if they didn't end up worse off...
-                returnString +=" You feel better in many ways for taking some time out.";
+                resultString +=" You feel better in many ways for taking some time out.";
             };
-            return returnString;
+            return resultString;
         };
 
         self.heal = function(pointsToAdd) {

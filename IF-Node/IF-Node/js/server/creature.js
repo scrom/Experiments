@@ -164,35 +164,35 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.toString = function() {
         //var _synonyms = [];
         //var _missions = [];
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
-            if (_inventory.size() > 0) { returnString += ',"inventory":' + _inventory.toString(); };
-            if (_salesInventory.size() > 0) { returnString += ',"sells":' + _salesInventory.toString(); };
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            if (_inventory.size() > 0) { resultString += ',"inventory":' + _inventory.toString(); };
+            if (_salesInventory.size() > 0) { resultString += ',"sells":' + _salesInventory.toString(); };
             if (_synonyms.length >0) {
-                returnString+= ',"synonyms":[';
+                resultString+= ',"synonyms":[';
                 for(var i=0; i<_synonyms.length;i++) {
-                    if (i>0) {returnString+= ',';};
-                    returnString+= '"'+_synonyms[i]+'"';
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_synonyms[i]+'"';
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
             if (_dislikes.length >0) {
-                returnString+= ',"dislikes":[';
+                resultString+= ',"dislikes":[';
                 for(var i=0; i<_dislikes.length;i++) {
-                    if (i>0) {returnString+= ',';};
-                    returnString+= '"'+_dislikes[i]+'"';
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_dislikes[i]+'"';
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
             if (_missions.length >0) {
-                returnString+= ',"missions":[';
+                resultString+= ',"missions":[';
                 for(var i=0; i<_missions.length;i++) {
-                    if (i>0) {returnString+= ', ';};
-                    returnString+= _missions[i].toString();
+                    if (i>0) {resultString+= ', ';};
+                    resultString+= _missions[i].toString();
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
-            returnString+= '}';
-            return returnString;
+            resultString+= '}';
+            return resultString;
         };
         
         self.getName = function() {
@@ -428,11 +428,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.getDetailedDescription = function(playerAggression) {
-            var returnString = _detailedDescription+"<br>"+self.getAffinityDescription();
-            if (_inventory.size() > 0) { returnString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
+            var resultString = _detailedDescription+"<br>"+self.getAffinityDescription();
+            if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
             
-            if (_salesInventory.size() == 1) { returnString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
-            else if (_salesInventory.size() > 1) { returnString += "<br>" + initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
+            if (_salesInventory.size() == 1) { resultString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
+            else if (_salesInventory.size() > 1) { resultString += "<br>" + initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
             
             var hasDialogue = false;
             for (var i=0; i< _missions.length;i++) {
@@ -442,10 +442,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if (hasDialogue) {
-                if ((_affinity <0) && (playerAggression>0)) {returnString +="<br>"+_genderPrefix+" appears to have something on "+_genderSuffix+" mind but doesn't trust you enough to talk about it right now.";}
-                else { returnString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
+                if ((_affinity <0) && (playerAggression>0)) {resultString +="<br>"+_genderPrefix+" appears to have something on "+_genderSuffix+" mind but doesn't trust you enough to talk about it right now.";}
+                else { resultString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
                 };
-            return returnString;
+            return resultString;
         };
 
         self.getType = function() {
