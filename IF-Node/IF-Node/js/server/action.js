@@ -177,9 +177,11 @@ exports.Action = function Action(aPlayer, aMap) {
                             description = "Stuck already?<br>Ok...";
                         };
                         description += "<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
+                                      "To find out how you're doing try asking for 'stats' or 'status'<br>"+  
+                                      "Two of the more useful verbs are 'look' and 'examine'.<br>"+
                                       "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
                                       "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
-                                      "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy a minimum viable adventure.";
+                                      "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy something more than a minimum viable adventure.";
                         break;
                     case 'map':
                         ticks = 0;
