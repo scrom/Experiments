@@ -251,6 +251,18 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = "Time passes... ...slowly";
                         break;
                     case 'put':
+                        //special case for "put down"
+                        var originalObject0 = _object0;
+                        _object0 = _object0.replace("down ","");       
+                        _object0 = _object0.replace(" down","");
+
+                        if (originalObject0 != _object0) {
+                            _verb = 'put down';
+                            description = _player.drop(_verb, _object0);
+                            break;
+                        };
+
+                        //or fall through to normal "put"
                     case 'combine':
                     case 'insert':
                     case 'add':
@@ -298,19 +310,20 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'hit':
                         description = _player.hit(_verb, _object0, _object1);
                         break;
-                    case 'pick':
-                        //special case for "pick up"
-                        _object0 = _object0.replace("up ","");       
-                        _verb = 'pick up';
-
-                        //might want to trap people wanting to pick locks in future.
-                        //now fall through to "take" verb.
                     case 'buy':
                         description = _player.buy(_verb, _object0, _object1);
                         break;
                     case 'sell':
                         description = _player.sell(_verb, _object0, _object1);
                         break;
+                    case 'pick':
+                        //special case for "pick up"
+                        _object0 = _object0.replace("up ","");       
+                        _object0 = _object0.replace(" up","");
+                        _verb = 'pick up';
+
+                        //might want to trap people wanting to pick locks in future.
+                        //now fall through to "take" verb.
                     case 'get':
                     case 'collect':
                     case 'take':

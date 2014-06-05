@@ -385,13 +385,17 @@ module.exports.Player = function Player(aUsername) {
             var artefact = getObjectFromPlayer(artefactName);
             if (!(artefact)) {return "You're not carrying any "+artefactName+".";};
 
-            //should be careful dropping things
             var artefactDamage = "";
-            if (verb == "throw") {
-                artefactDamage = artefact.break(false);
-                _aggression++; //grrrr
-            }
-            else {artefactDamage = artefact.bash();}; 
+            if (verb != "put down") {
+                //should be careful dropping things
+                if (verb == "throw") {
+                    artefactDamage = artefact.break(false);
+                    _aggression++; //grrrr
+                }
+                else {artefactDamage = artefact.bash();}; 
+            } else {
+               if (artefact.requiresContainer()) { return "You need to put "+artefact.getDisplayName()+" <i>in</i> something.";};  
+            };
 
             var droppedObject = removeObjectFromPlayer(artefactName);
 
