@@ -358,7 +358,7 @@ module.exports.Player = function Player(aUsername) {
             if ((artefact.getType() != 'creature')&&(artefact.getType() != 'friendly'))  {
                 returnString = "You set to with your ";
                 if (self.isArmed()) {
-                    var weapon = self.getWeapon();
+                    var weapon = self.getWeapon(verb);
                     returnString += weapon.getDisplayName();
                 } else {returnString += "bare hands and sheer malicious ingenuity"};
                 returnString += " in a bid to cause damage.<br>";
@@ -1144,7 +1144,7 @@ module.exports.Player = function Player(aUsername) {
             return false;
         };
 
-        self.getWeapon = function() {
+        self.getWeapon = function(verb) {
             //find the strongest non-breakable weapon the player is carrying.
             var selectedWeaponStrength = 0;
             var selectedWeapon = null;
@@ -1152,13 +1152,14 @@ module.exports.Player = function Player(aUsername) {
             for(var index = 0; index < weapons.length; index++) {
                 //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones.
                 if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
-                    var weaponStrength = weapons[index].getAttackStrength();
-                    console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
-                    if (weaponStrength > selectedWeaponStrength) {
-                        selectedWeapon = weapons[index];
-                        selectedWeaponStrength = weaponStrength;
-                    };
-                    
+                    if (weapons[index].supportsAction(verb)) {    
+                        var weaponStrength = weapons[index].getAttackStrength();
+                        console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                        if (weaponStrength > selectedWeaponStrength) {
+                            selectedWeapon = weapons[index];
+                            selectedWeaponStrength = weaponStrength;
+                        };
+                    };    
                 };
             };
             if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());}
@@ -1209,10 +1210,11 @@ module.exports.Player = function Player(aUsername) {
             if (!(stringIsEmpty(artefactName))){ 
                 weapon = getObjectFromPlayerOrLocation(artefactName);
                 if (!(weapon)) {return "You prepare your most aggressive stance and then realise there's no "+artefactName+" here and you don't have one on your person.<br>Fortunately, I don't think anyone noticed.";};
+                if (!(weapon.supportsAction(verb))) {return "You prepare your most aggressive stance and then realise you can't effectively "+verb+" with "+weapon.getDescription()+".";};
             };
 
             //arm with default weapon
-            if (!(weapon)){weapon = self.getWeapon();}; //try to get whatever the player might be armed with instead.
+            if (!(weapon)){weapon = self.getWeapon(verb);}; //try to get whatever the player might be armed with instead.
 
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
@@ -1226,6 +1228,9 @@ module.exports.Player = function Player(aUsername) {
             //regardless of whether this is successful, 
             //by this point this is definitely an aggressive act. Increase aggression
             _aggression ++;
+
+            //validate verb against weapon subType
+            
 
             //try to hurt the receiver
             var resultString = receiver.hurt(self, weapon, verb);

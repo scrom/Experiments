@@ -27,6 +27,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _affinityModifier = 1;
         var _inventory =  new inventoryObjectModule.Inventory(0, 0, _name);
         var _type = "junk";
+        var _subType = "";
         var _linkedExits = [];
         var _collectable = false; //if not collectable, it also can't be completely removed from the game. Leave wreckage
         var _missions = [];
@@ -146,6 +147,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.affinityModifier != undefined) {_affinityModifier = artefactAttributes.affinityModifier;};
             if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
+            if (artefactAttributes.subType != undefined) {_subType = artefactAttributes.subType;};
             if (artefactAttributes.isBreakable != undefined) {
                 if (artefactAttributes.isBreakable== true || artefactAttributes.isBreakable == "true") { _breakable = true;};
             };
@@ -172,13 +174,19 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         processAttributes(attributes);
 
-        var validateType = function(aType) {
+        var validateType = function(type, subType) {
             var validobjectTypes = ['weapon','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
-            if (validobjectTypes.indexOf(aType) == -1) { throw "'" + aType + "' is not a valid artefact type."; };//
-            console.log(_name+' type validated: '+aType);
+            if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
+            console.log(_name+' type validated: '+type);
+
+            if (type == "weapon") {
+                var validWeaponSubTypes = ['','blunt','sharp','projectile'];
+                if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
+                console.log(_name+' subtype validated: '+subType);
+            };
         };
 
-        validateType(_type);
+        validateType(_type, _subType);
 
         //captialise first letter of string.
         var initCap = function(aString){
@@ -278,6 +286,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.attackStrength = _attackStrength;
             currentAttributes.affinityModifier = _affinityModifier;
             currentAttributes.type = _type;
+            currentAttributes.subType = _subType;
             currentAttributes.isBreakable = _breakable;
             currentAttributes.isDamaged = _damaged;
             currentAttributes.isBroken = _broken;
@@ -350,6 +359,31 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getType = function() {
             return _type;
+        };
+
+        self.getSubType = function() {
+            return _subType;
+        };
+
+        self.supportsAction = function(verb) {
+            //validate verb against subType
+            var subType = self.getSubType();
+
+            switch(subType) {
+                case "projectile":
+                    if (verb == "smash"||verb == "stab"|| verb == "bash"|| verb == "hit") {return false;};
+                    break;
+                case "blunt":
+                    if (verb == "nerf"||verb == "shoot"||verb == "stab") {return false;};
+                    break;
+                case "sharp":
+                    if (verb == "nerf"||verb == "shoot") {return false;};
+                    break;
+                default:
+                    if (verb == "nerf"||verb == "shoot"||verb == "stab") {return false;};
+                    break;
+            };
+            return true;
         };
 
         self.getCombinesWith = function () {
@@ -1015,7 +1049,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) {return "There's not enough left to to any more damage to.";};  
             var resultString = "";    
             if (!(weapon)) {
-                if (verb == 'shoot'||verb == 'stab') {
+                if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
                     resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
                 } else {
                     resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
@@ -1032,7 +1066,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //need to validate that artefact will do some damage
             if (weapon.getAttackStrength()<1) {
-                resultString = "You attack the "+self.getDisplayName()+". Unfortunately the "+weapon.getDisplayName()+" is useless as a weapon. ";
+                resultString = "You attack the "+self.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon. ";
                 resultString += weapon.bash();
                 return resultString;
             };

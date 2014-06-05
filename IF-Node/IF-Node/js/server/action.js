@@ -303,10 +303,13 @@ exports.Action = function Action(aPlayer, aMap) {
                         if (_object1) {description = _player.eat(_verb+" "+_splitWord,_object1);}
                         else {description = _player.eat(_verb, _object0);};
                         break;
-                    case 'shoot': //will need to explicitly support projectile weapons
+                    case 'nerf':
+                    case 'shoot':
                     case 'attack':
                     case 'smash':
+                    case 'bash':
                     case 'stab':
+                    case 'hurt':
                     case 'hit':
                         description = _player.hit(_verb, _object0, _object1);
                         break;
@@ -423,6 +426,9 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'save':
                     case 'load':
+                    case 'play':
+                    case 'hum':
+                    case 'whistle':
                     case 'mug':
                     case 'wipe':
                     case 'sharpen':

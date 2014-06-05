@@ -845,7 +845,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (_type == 'friendly') {
                 if (!(weapon)) {
-                    if (verb == 'shoot'||verb == 'stab') {
+                    if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
                         resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
                     } else {
                         resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
@@ -855,7 +855,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (!(weapon)) {
-                if (verb == 'shoot'||verb == 'stab') {
+                if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
                     resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>You do no visible damage and end up coming worse-off. "; 
                 } else {
                     resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
@@ -866,7 +866,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())||(weapon.getAttackStrength()<1)) {
-                resultString = "You try hitting "+self.getDisplayName()+". Unfortunately the "+weapon.getDisplayName()+" is useless as a weapon. ";
+                resultString = "You try hitting "+self.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon. ";
                 resultString += weapon.bash();
                 resultString += player.hurt(self.getAttackStrength()/5); //return 20% damage
                 return resultString;

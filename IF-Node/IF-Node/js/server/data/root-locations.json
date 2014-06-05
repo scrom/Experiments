@@ -1191,6 +1191,7 @@
           "weight": 4,
           "attackStrength": 20,
           "type": "weapon",
+		  "subType": "sharp",
           "canCollect": true
         },
         "synonyms": [
@@ -1482,7 +1483,26 @@
         "source": "opportunities-cubbyhole",
         "destination": "opportunities-north"
       }
-    ]
+    ],
+	"inventory": [
+	  {
+        "object": "artefact",
+        "name": "nerf gun",
+        "description": "a nerf gun",
+        "detailedDescription": "An unlucky shot with this could take someone's eye out.",
+        "attributes": {
+          "weight": 2,
+          "attackStrength": 5,
+          "type": "weapon",
+		  "subType": "projectile",
+          "canCollect": true
+        },
+        "synonyms": [
+          "nerf",
+          "gun"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -2111,6 +2131,7 @@
           "weight": 1,
           "attackStrength": 15,
           "type": "weapon",
+		  "subType": "blunt",
           "canCollect": true,
           "isBreakable": true
         }
