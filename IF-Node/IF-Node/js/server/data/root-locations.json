@@ -268,6 +268,57 @@
   },
   {
     "object": "location",
+    "name": "core-area-east",
+    "description": "You're in the CORE (DevOps) area. Looks like things are running well here at the moment.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "core-area-east",
+        "destination": "incidentals-blinkpipe"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "core-area-east",
+        "destination": "core-area-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "core-area-west",
+    "description": "You're in the CORE Project Management zone. The team are battling the backlog of business requests and working their way to Cloud glory.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "core-area-west",
+        "destination": "is-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "core-area-west",
+        "destination": "mercedes"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "core-area-west",
+        "destination": "core-area-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "creative-agency-area",
     "description": "You're in the Agency Den. There's a tang of creativity (or is that printer toner?) in the air and the sound of clicks being converted to cash. ",
     "dark": "false",
@@ -542,6 +593,21 @@
   },
   {
     "object": "location",
+    "name": "darth-vader",
+    "description": "You're in the Darth-Vader meeting room. Another great space tucked out of the way behind facilities this time.<br>There's a great view up the road out of the business park.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "darth-vader",
+        "destination": "facilities-area"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "east-bike-racks",
     "description": "You're standing at the South-East corner of the the office building.",
     "dark": "false",
@@ -735,6 +801,64 @@
         "direction": "s",
         "source": "enterprise-meeting-room",
         "destination": "support-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "facilities-area",
+    "description": "You're in the Facilities team area. They work tirelessly to keep the building running, clean, safe and maintained. Just don't annoy them, you'll regret it.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "facilities-area",
+        "destination": "finance-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "facilities-area",
+        "destination": "darth-vader"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "facilities-area",
+        "destination": "fishing"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "finance-area",
+    "description": "You're in the Finance team area. You <i>really</i> need to be nice to this lot. They sort out your pay and expenses as well as all the rest of the cash running through this place.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "finance-area",
+        "destination": "incidentals-blinkpipe"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "finance-area",
+        "destination": "facilities-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "finance-area",
+        "destination": "second-floor-back-stairs-east"
       }
     ]
   },
@@ -974,6 +1098,21 @@
   },
   {
     "object": "location",
+    "name": "fishing",
+    "description": "You're in the Fishing meeting room. Now you <i>really</i> know how a goldfish feels.<br>You feel you're being watched.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "fishing",
+        "destination": "facilities-area"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "flowers-a",
     "description": "You're in the Flowers A meeting room. It's bright & airy in here.<br>If you want to use the AV equipment, forget it. Use the TV instead.",
     "dark": "false",
@@ -1134,6 +1273,64 @@
         "direction": "n",
         "source": "ground-floor-fire-escape",
         "destination": "smoking-area"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "incidentals-blinkpipe",
+    "description": "You're in the space between Core and Finance occupied by the Blinkpipe team. Some of them look oddly familiar although you rarely actually come into contact with them.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "incidentals-blinkpipe",
+        "destination": "core-area-east"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "incidentals-blinkpipe",
+        "destination": "finance-area"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "incidentals-blinkpipe",
+        "destination": "punts"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "is-area",
+    "description": "You're in the IS area. The team here keep this show on the road. Anything you need, they can usually get it or fix it for you.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "is-area",
+        "destination": "second-floor-seating-area-east"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "is-area",
+        "destination": "second-floor-east-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "is-area",
+        "destination": "core-area-west"
       }
     ]
   },
@@ -1716,6 +1913,43 @@
   },
   {
     "object": "location",
+    "name": "machine-room-east",
+    "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "machine-room-east",
+        "destination": "machine-room-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "machine-room-west",
+    "description": "You're in the IS storage area.<br>You're not meant to be in here unaccompanied I think. There are cables, wires and spare pieces of hardware arrayed around you.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "machine-room-west",
+        "destination": "second-floor-east-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "machine-room-west",
+        "destination": "machine-room-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "marketing",
     "description": "You're in the Marketing area.",
     "dark": "false",
@@ -1726,6 +1960,21 @@
         "direction": "w",
         "source": "marketing",
         "destination": "sales-north"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "mercedes",
+    "description": "You're in the Mercedes meeting room. An odd-shaped room that's rarely used by any but the locals.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "mercedes",
+        "destination": "core-area-west"
       }
     ]
   },
@@ -2342,6 +2591,21 @@
   },
   {
     "object": "location",
+    "name": "punts",
+    "description": "You're in the Punts meeting room. It's probably the narrowest meeting room in the building. Just room for 2 and a PC.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "punts",
+        "destination": "incidentals-blinkpipe"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "reception",
     "description": "You are stood by the big red reception desk in the Red Gate office atrium.",
     "dark": "false",
@@ -2937,6 +3201,13 @@
         "direction": "d",
         "source": "second-floor-back-stairs-east",
         "destination": "first-floor-back-stairs-east"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-back-stairs-east",
+        "destination": "finance-area"
       }
     ]
   },
@@ -2959,6 +3230,50 @@
         "direction": "s",
         "source": "second-floor-back-stairs-west",
         "destination": "second-floor-north-west-corridor-north-end"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-cubicle",
+    "description": "You're in a toilet cubicle. You feel even more disoriented. <br>The toilet is still refilling from a previous flush. You might need to hand around for a while if you plan on using this one.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "n",
+        "direction": "null",
+        "source": "second-floor-cubicle",
+        "destination": "second-floor-toilet"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-east-corridor",
+    "description": "You're in the East corridor on the second floor. Domain of all things IS.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-east-corridor",
+        "destination": "is-area"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-east-corridor",
+        "destination": "machine-room-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-east-corridor",
+        "destination": "second-floor-landing-east"
       }
     ]
   },
@@ -2996,6 +3311,101 @@
         "direction": "s",
         "source": "second-floor-kitchen",
         "destination": "second-floor-seating-area-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-landing-central",
+    "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-landing-central",
+        "destination": "second-floor-landing-west"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-landing-central",
+        "destination": "second-floor-landing-east"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-landing-central",
+        "destination": "second-floor-lift"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-landing-east",
+    "description": "You're at the east end of the second floor landing. Peering through the window to the East, you can just about make out the facilities team on the other side of the glass.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-landing-east",
+        "destination": "second-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-landing-east",
+        "destination": "second-floor-east-corridor"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-landing-west",
+    "description": "You're at the West end of the second floor landing. Peering over the balcony you consider throwing something down. If only there was a slide here.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-landing-west",
+        "destination": "stairs-second-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-landing-west",
+        "destination": "second-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-landing-west",
+        "destination": "second-floor-toilet"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-lift",
+    "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-lift",
+        "destination": "second-floor-landing-central"
       }
     ]
   },
@@ -3228,6 +3638,13 @@
         "direction": "w",
         "source": "second-floor-seating-area-east",
         "destination": "second-floor-seating-area-west"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-seating-area-east",
+        "destination": "is-area"
       }
     ]
   },
@@ -3257,6 +3674,28 @@
         "direction": "e",
         "source": "second-floor-seating-area-west",
         "destination": "second-floor-seating-area-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-toilet",
+    "description": "You're in a bathroom. You can't quite remember what floor you're on. Do those soap dispenser look different to you?",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-toilet",
+        "destination": "second-floor-landing-west"
+      },
+      {
+        "object": "exit",
+        "longname": "o",
+        "direction": "in",
+        "source": "second-floor-toilet",
+        "destination": "second-floor-cubicle"
       }
     ]
   },
@@ -3702,6 +4141,13 @@
         "direction": "s",
         "source": "stairs-second-floor",
         "destination": "second-floor-reception"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "stairs-second-floor",
+        "destination": "second-floor-landing-west"
       }
     ],
     "inventory": [
