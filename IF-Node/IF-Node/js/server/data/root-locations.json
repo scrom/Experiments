@@ -223,93 +223,6 @@
   },
   {
     "object": "location",
-    "name": "first-floor-back-stairs-west",
-    "description": "You're halfway up the west fire escape staircase.",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "first-floor-back-stairs-west",
-        "destination": "ground-floor-back-stairs-west"
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "first-floor-back-stairs-west",
-        "destination": "second-floor-back-stairs-west"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "first-floor-back-stairs-west",
-        "destination": "customer-delight-north"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "ground-floor-back-stairs-west",
-    "description": "You're in the bottom of the west fire escape stairs.",
-    "dark": "true",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "ground-floor-back-stairs-west",
-        "destination": "opportunities-north"
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "ground-floor-back-stairs-west",
-        "destination": "first-floor-back-stairs-west"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "key",
-        "description": "coffee machine key",
-        "detailedDescription": "It unlocks coffee machines.",
-        "attributes": {
-          "weight": 0.1,
-          "type": "key",
-          "canCollect": true,
-          "unlocks": "machine"
-        },
-        "synonyms": [
-          "vending key",
-          "machine key",
-          "vending machine key",
-          "coffee machine key",
-          "coffee key"
-        ]
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "second-floor-back-stairs-west",
-    "description": "You're standing at the top of the west fire escape staircase.",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "second-floor-back-stairs-west",
-        "destination": "first-floor-back-stairs-west"
-      }
-    ]
-  },
-  {
-    "object": "location",
     "name": "buenosaires",
     "description": "You're in the Buenos Aires interview room.",
     "dark": "false",
@@ -320,6 +233,36 @@
         "direction": "w",
         "source": "buenosaires",
         "destination": "northeast-corridor-ground-floor"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "camelids-a",
+    "description": "You're in Camelids-A. The UX team have filled the walls with post-its.<br>The table feels slightly too large for the room and it's a bit cramped in here.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "camelids-a",
+        "destination": "second-floor-north-west-corridor-central"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "camelids-b",
+    "description": "You're in Camelids-B. When not in use for small meetings, this room doubles as an in-office hairdressers salon.<br>You can still detect faint traces of hair clippings.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "camelids-b",
+        "destination": "second-floor-north-west-corridor-north-east"
       }
     ]
   },
@@ -729,6 +672,42 @@
         "direction": "d",
         "source": "first-floor-back-stairs-east",
         "destination": "ground-floor-back-stair-east"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "first-floor-back-stairs-east",
+        "destination": "second-floor-back-stairs-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "first-floor-back-stairs-west",
+    "description": "You're halfway up the west fire escape staircase.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "first-floor-back-stairs-west",
+        "destination": "ground-floor-back-stairs-west"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "first-floor-back-stairs-west",
+        "destination": "second-floor-back-stairs-west"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "first-floor-back-stairs-west",
+        "destination": "customer-delight-north"
       }
     ]
   },
@@ -910,6 +889,36 @@
   },
   {
     "object": "location",
+    "name": "flowers-a",
+    "description": "You're in the Flowers A meeting room. It's bright & airy in here.<br>If you want to use the AV equipment, forget it. Use the TV instead.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "flowers-a",
+        "destination": "second-floor-north-west-corridor-central"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "flowers-b",
+    "description": "You're in the Flowers B meeting room. This is a great medium-sized room that often gets overlooked. Possibly because it's regularly closed off to be used for massages.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "flowers-b",
+        "destination": "second-floor-north-west-corridor-north-central"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "graffiti-a",
     "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
     "dark": "true",
@@ -975,6 +984,49 @@
         "direction": "u",
         "source": "ground-floor-back-stair-east",
         "destination": "first-floor-back-stairs-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "ground-floor-back-stairs-west",
+    "description": "You're in the bottom of the west fire escape stairs.",
+    "dark": "true",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "ground-floor-back-stairs-west",
+        "destination": "opportunities-north"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "ground-floor-back-stairs-west",
+        "destination": "first-floor-back-stairs-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "key",
+        "description": "coffee machine key",
+        "detailedDescription": "It unlocks coffee machines.",
+        "attributes": {
+          "weight": 0.1,
+          "type": "key",
+          "canCollect": true,
+          "unlocks": "machine"
+        },
+        "synonyms": [
+          "vending key",
+          "machine key",
+          "vending machine key",
+          "coffee machine key",
+          "coffee key"
+        ]
       }
     ]
   },
@@ -2478,8 +2530,8 @@
         },
         "synonyms": [
           "james king",
-		  "james k",
-		  "jk",
+          "james k",
+          "jk",
           "king",
           "jim",
           "him"
@@ -2505,8 +2557,8 @@
         },
         "synonyms": [
           "simon johnson",
-		  "simon j",
-		  "sj",
+          "simon j",
+          "sj",
           "johnson",
           "him"
         ]
@@ -2531,7 +2583,7 @@
         },
         "synonyms": [
           "cassi roper",
-		  "cr",
+          "cr",
           "roper",
           "her"
         ]
@@ -2620,6 +2672,43 @@
   },
   {
     "object": "location",
+    "name": "second-floor-back-stairs-east",
+    "description": "You're at the top of the Eastern back staircase. This is very much a path less-travelled.<br>From here you can take a short-cut down to the Sales and Marketing teams or South to Finance and Facilities.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "second-floor-back-stairs-east",
+        "destination": "first-floor-back-stairs-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-back-stairs-west",
+    "description": "You're standing at the top of the west fire escape staircase.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "second-floor-back-stairs-west",
+        "destination": "first-floor-back-stairs-west"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-back-stairs-west",
+        "destination": "second-floor-north-west-corridor-north-end"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "second-floor-fire-escape",
     "description": "You're on the second floor of the rear fire escape. It's windy up here.",
     "dark": "false",
@@ -2639,6 +2728,158 @@
         "destination": "top-fire-escape"
       }
     ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-north-west-corridor-central",
+    "description": "You're part-way along a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the East and West.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-north-west-corridor-central",
+        "destination": "second-floor-north-west-corridor-north-east"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-north-west-corridor-central",
+        "destination": "second-floor-north-west-corridor-south"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-north-west-corridor-central",
+        "destination": "camelids-a"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-central",
+        "destination": "flowers-a"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-north-west-corridor-north-central",
+    "description": "You're in a roughly North-South running corridor in the North-West corner of the second floor.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-north-west-corridor-north-central",
+        "destination": "second-floor-north-west-corridor-north-end"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-north-central",
+        "destination": "flowers-b"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-north-west-corridor-north-central",
+        "destination": "second-floor-north-west-corridor-north-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-north-west-corridor-north-east",
+    "description": "You're at a bend in a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the North and East.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "second-floor-north-west-corridor-north-central"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "camelids-b"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "snorting-horses"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "second-floor-north-west-corridor-central"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-north-west-corridor-north-end",
+    "description": "You're in a North-South corridor at the North-West corner of the second floor. To the North is a staircase leading down.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-north-west-corridor-north-end",
+        "destination": "second-floor-back-stairs-west"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-north-west-corridor-north-end",
+        "destination": "second-floor-north-west-corridor-north-central"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-north-west-corridor-south",
+    "description": "You're at the South end of a roughly North-South running corridor in the North-West corner of the second floor.<br>There's meeting room to the West. To the east is a curved glass partition behind which are printers and a stationery cupboard",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "second-floor-north-west-corridor-central"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "war-room"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-west-corridor",
+    "description": "You're in a short corridor that runs East-West. To the East is the second floor reception area. <br>To the north is a printer area that also houses a stationary cupboard. To the west lies the People team (and more winding corridors).",
+    "dark": "false",
+    "exits": []
   },
   {
     "object": "location",
@@ -2864,6 +3105,21 @@
         "direction": "s",
         "source": "smoking-area",
         "destination": "ground-floor-fire-escape"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "snorting-horses",
+    "description": "You're in the Snorting Horses meeting room.<br>There's a great view out of the windows. The table has been rendered to look like straw, one wall is covered in rosettes whilst the other mixes acoustic treatment with some rather alarming horse-head-shaped lighting.<br>Overall there's something deeply unsettling about spending time alone in here.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "snorting-horses",
+        "destination": "second-floor-north-west-corridor-north-east"
       }
     ]
   },
@@ -3261,6 +3517,21 @@
         "direction": "s",
         "source": "traffic-jam-meeting-room",
         "destination": "sales-seating"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "war-room",
+    "description": "You're in the War Room. Once upon a time this was a little-used library. It's a long narrow space that's not used for management stand-ups.<br>The walls are filled with long-forgotten organisational restructuring plans.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "war-room",
+        "destination": "second-floor-north-west-corridor-south"
       }
     ]
   },
