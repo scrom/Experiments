@@ -638,6 +638,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         var randomCash = Math.round((cash * Math.random())*100)/100; //round to 2DP.
                         _inventory.reduceCash(randomCash);
                         playerInventory.increaseCash(randomCash);
+                        player.addStolenCash(randomCash);
                         return "You steal &pound;"+randomCash.toFixed(2)+" from "+self.getDisplayName()+".";
                     };
 
@@ -650,6 +651,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     else {_inventory.remove(anObjectName);};
 
                     if (self.isDead()) { return "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+"'s corpse.";};
+                    player.addStolenObject(objectToGive.getName());
                     return "You steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";                   
                 };
 

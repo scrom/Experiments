@@ -4,13 +4,11 @@ module.exports.Player = function Player(aUsername) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
+
+        //member variables
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = aUsername;
         var _inventory =  new inventoryObjectModule.Inventory(20, 5.00, _username);
-        var _destroyedObjects = []; //track names of all objects player has destroyed
-        var _killedCreatures = []; //track names of all creatures player has killed (note if one bleeds to death the player doesn't get credit)
-        var _consumedObjects = []; //track names of all objects player has consumed
-        var _missionsCompleted = []; //track names of all missions completed
         var _missions = []; //player can "carry" missions.
         var _repairSkills = []; //player can learn repair skills.
         var _maxHitPoints = 100;
@@ -28,6 +26,11 @@ module.exports.Player = function Player(aUsername) {
         var _additionalMovesUntilStarving = 10;
 
         //player stats
+        var _destroyedObjects = []; //track names of all objects player has destroyed
+        var _killedCreatures = []; //track names of all creatures player has killed (note if one bleeds to death the player doesn't get credit)
+        var _consumedObjects = []; //track names of all objects player has consumed
+        var _stolenObjects = []; //track names of all objects player has stolen
+        var _missionsCompleted = []; //track names of all missions completed
         var _stepsTaken = 0; //only incremented when moving between locations but not yet used elsewhere
         var _locationsFound = 0;
         var _maxAggression = 0;
@@ -35,6 +38,7 @@ module.exports.Player = function Player(aUsername) {
         var _score = 0;
         var _totalDamageReceived = 0;
         var _booksRead = 0;
+        var _stolenCash = 0;
 
         //possible additional player stats
         var _restsTaken = 0;
@@ -201,6 +205,14 @@ module.exports.Player = function Player(aUsername) {
             //used for stealing
             if (_stealth <1) {return 1;}; // safetynet to avoid divide by zero or odd results from caller
             return _stealth;
+        };
+
+        self.addStolenCash = function(quantity) {
+            _stolenCash+= quantity;
+        };
+
+        self.addStolenObject = function(objectName) {
+            _stolenObjects.push(objectName);
         };
 
         self.addMission = function(mission) {
@@ -1254,8 +1266,12 @@ module.exports.Player = function Player(aUsername) {
                 if (!(weapon.supportsAction(verb))) {return "You prepare your most aggressive stance and then realise you can't effectively "+verb+" with "+weapon.getDescription()+".";};
             };
 
-            //arm with default weapon
-            if (!(weapon)){weapon = self.getWeapon(verb);}; //try to get whatever the player might be armed with instead.
+            //try to get whatever the player might be armed with instead.
+            if (!(weapon)){
+                if (self.isArmed()) {
+                    weapon = self.getWeapon(verb);
+                };
+            }; 
 
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
@@ -1584,18 +1600,21 @@ module.exports.Player = function Player(aUsername) {
             return false;
         };
 
-        self.stats = function(maxScore) {
+        self.stats = function(maxScore, mapLocationCount) {
             var status = "";
 
             status += "<i>Statistics:</i><br>";
             status += "Your score is "+_score+" out of "+maxScore+"<br>";
             if (_killedCount > 0) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps.<br>"; 
-            status += "You have visited " + _locationsFound + " locations.<br>";
+            status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" possible locations.<br>";
             if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
             if (_booksRead > 0) {status += "You have read "+_booksRead+" books or articles.<br>";};
             if (_repairSkills.length > 0) {status += "You have gained "+_repairSkills.length+" skills.<br>";};
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
+            
+            if (_stolenCash > 0) status += "You have stolen a total of &pound;"+_stolenCash+" in cash.<br>";
+            if (_stolenObjects.length > 0) {status += "You have stolen "+_stolenObjects.length+" items.<br>";};             
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
             if (_killedCreatures.length > 0) {status += "You have killed "+_killedCreatures.length+" characters.<br>";};             
 
