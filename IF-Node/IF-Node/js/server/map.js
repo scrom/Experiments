@@ -75,6 +75,10 @@ exports.Map = function Map() { //inputs for constructor TBC
             return _maxScore;
         };
 
+        self.getLocationCount = function() {
+            return _locations.length;
+        };
+
         self.getLocationsJSON = function() {
             var locationsAsJSON = [];
             for (var i=0; i<_locations.length;i++) {
@@ -293,47 +297,6 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         //end of "init"
         //self.addLocation("stairs-first-floor", "You're halfway up the main office staircase.", false);
-        //self.addLocation("servery-south-west", "You're in the South-West end of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.", false);
-        //self.addLocation("servery-main", "You're in SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses.", false);
-        //self.addLocation("customer-delight-east", "You're at the Eastern end of the Customer Delight team area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.", false);
-        //self.addLocation("first-floor-landing-central", "You're on the first floor landing.", false);
-        //self.addLocation("first-floor-landing-east", "You're at the East end of the first floor landing.<br>Through the window to the East you can see some of the sales team relaxing and playing on an XBox.", false);
-        //self.addLocation("first-floor-cubicle", "You're in a cubicle of the first floor toilet.", false);
-        //self.addLocation("first-floor-lift", "You're in the first floor lift.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself", false);
-        //self.addLocation("servery-back-corridor", "You're in the back corridor of the SQL Servery. There's a slight smell of industrial kitchens here.", false);
-        //self.addLocation("sales-main", "You're in the main sales and marketing area.<br>There's a lowl level hum of telephone conversation.", false);
-        //self.addLocation("sales-north", "You're at the North end of the sales and marketing area.<br>To the North is a door. East is the marketing area and West are some recreational spaces.", false);
-        //self.addLocation("marketing", "You're in the Marketing area.", false);
-        //self.addLocation("sales-break-out", "You're stood in a small break out area.", false);
-        //self.addLocation("sales-seating", "You're in a small seating area. Peering down through the windows to the West you can see the atrium. To the North is a meeting room.", false);
-        //self.addLocation("ground-floor-back-stair-east", "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here. People don't come down here very often unless they're lost.", false);
-        //self.addLocation("first-floor-fire-escape", "You're standing on the first floor fire escape. You probably shouldn't be here without a good reason.<br>The wind howls across the steel deck. Peering cautiously down over the railings you can see the smoking area and bike racks", false);
-        //self.addLocation("windows-meeting-room", "You're in the 'Windows' meeting room.<br>It's a bit cramped in here and one of the walls is oddly curved wall for no obvious reason.", false);
-        //self.addLocation("traffic-jam-meeting-room", "You're in the 'Traffic Jam' meeting room.<br>There's quite a good view outside from here although it does feel like a bit of a fishbowl.", false);
-        //self.addLocation("servery-main", "You're in the SQL Servery. To the South is a fire escape.", false);
-        //self.addLocation("servery-salad-bar", "You're standing by the SQL Servery salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.", false);
-        //self.addLocation("sales-south", "You're at the south end of the sales and marketing area.", false);
-        //self.addLocation("sales-south", "You're at the south end of the sales and marketing area.", false);
-        //self.link("e", "servery-back-corridor", "sales-main",false, false);
-        //self.link("s", "servery-back-corridor", "servery-kitchen",false, false);
-        //self.link("s", "servery-kitchen", "servery-salad-bar",false, false);
-        //self.link("e", "servery-main", "servery-salad-bar",false, false);
-        //self.link("e", "servery-salad-bar", "sales-south",false, false);
-        //self.link("s", "sales-north", "sales-main",false, false);
-        //self.link("e", "sales-north", "marketing",false, false);
-        //self.link("d", "first-floor-back-stairs-east", "ground-floor-back-stair-east",false, false);        
-        //self.link("e", "sales-break-out", "sales-north",false, false);
-        //self.link("n", "sales-break-out", "windows-meeting-room",false, false);
-        //self.link("e", "sales-seating", "sales-break-out",false, false);
-        //self.link("n", "sales-seating", "traffic-jam-meeting-room",false, false);
-        //self.link("s", "servery-north-west", "servery-south-west",false, false);
-        //self.link("w", "servery-north-west", "customer-delight-east",false, false);
-        //self.link("e", "servery-south-west", "servery-main",false, false);
-        //self.link("s", "servery-main", "first-floor-fire-escape",false, false);
-        //self.link("e", "first-floor-landing-west", "first-floor-landing-central",false, false);
-        //self.link("i", "first-floor-toilet", "first-floor-cubicle",false, false);
-        //self.link("e", "first-floor-landing-central", "first-floor-landing-east",false, false);
-        //self.link("s", "first-floor-landing-central", "first-floor-lift",false, false);
         //self.link("s", "first-floor-landing-east", "servery-back-corridor",false, false);
 
         };
@@ -374,6 +337,10 @@ exports.Map = function Map() { //inputs for constructor TBC
                 if (_locations[i].objectExists(anObjectName)) {return anObjectName+" found at "+_locations[i].getName()+".";};
             };
             return anObjectName+" not found in map.";
+        };
+
+        self.globalAffinityChange = function() {
+            null;
         };
 
         self.getAllCreatures = function() {

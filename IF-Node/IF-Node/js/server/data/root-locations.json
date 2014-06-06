@@ -223,7 +223,7 @@
   },
   {
     "object": "location",
-    "name": "back-stairs-first-floor-west",
+    "name": "first-floor-back-stairs-west",
     "description": "You're halfway up the west fire escape staircase.",
     "dark": "false",
     "exits": [
@@ -231,28 +231,28 @@
         "object": "exit",
         "longname": "down",
         "direction": "d",
-        "source": "back-stairs-first-floor-west",
-        "destination": "back-stairs-ground-floor-west"
+        "source": "first-floor-back-stairs-west",
+        "destination": "ground-floor-back-stairs-west"
       },
       {
         "object": "exit",
         "longname": "up",
         "direction": "u",
-        "source": "back-stairs-first-floor-west",
-        "destination": "back-stairs-second-floor-west"
+        "source": "first-floor-back-stairs-west",
+        "destination": "second-floor-back-stairs-west"
       },
       {
         "object": "exit",
         "longname": "South",
         "direction": "s",
-        "source": "back-stairs-first-floor-west",
+        "source": "first-floor-back-stairs-west",
         "destination": "customer-delight-north"
       }
     ]
   },
   {
     "object": "location",
-    "name": "back-stairs-ground-floor-west",
+    "name": "ground-floor-back-stairs-west",
     "description": "You're in the bottom of the west fire escape stairs.",
     "dark": "true",
     "exits": [
@@ -260,15 +260,15 @@
         "object": "exit",
         "longname": "South",
         "direction": "s",
-        "source": "back-stairs-ground-floor-west",
+        "source": "ground-floor-back-stairs-west",
         "destination": "opportunities-north"
       },
       {
         "object": "exit",
         "longname": "up",
         "direction": "u",
-        "source": "back-stairs-ground-floor-west",
-        "destination": "back-stairs-first-floor-west"
+        "source": "ground-floor-back-stairs-west",
+        "destination": "first-floor-back-stairs-west"
       }
     ],
     "inventory": [
@@ -295,7 +295,7 @@
   },
   {
     "object": "location",
-    "name": "back-stairs-second-floor-west",
+    "name": "second-floor-back-stairs-west",
     "description": "You're standing at the top of the west fire escape staircase.",
     "dark": "false",
     "exits": [
@@ -303,8 +303,8 @@
         "object": "exit",
         "longname": "down",
         "direction": "d",
-        "source": "back-stairs-second-floor-west",
-        "destination": "back-stairs-first-floor-west"
+        "source": "second-floor-back-stairs-west",
+        "destination": "first-floor-back-stairs-west"
       }
     ]
   },
@@ -428,7 +428,7 @@
         "longname": "North",
         "direction": "n",
         "source": "customer-delight-north",
-        "destination": "back-stairs-first-floor-west"
+        "destination": "first-floor-back-stairs-west"
       },
       {
         "object": "exit",
@@ -1784,7 +1784,7 @@
         "longname": "North",
         "direction": "n",
         "source": "opportunities-north",
-        "destination": "back-stairs-ground-floor-west"
+        "destination": "ground-floor-back-stairs-west"
       },
       {
         "object": "exit",
