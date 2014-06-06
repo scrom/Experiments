@@ -268,6 +268,21 @@
   },
   {
     "object": "location",
+    "name": "creative-agency-area",
+    "description": "You're in the Agency Den. There's a tang of creativity (or is that printer toner?) in the air and the sound of clicks being converted to cash. ",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "creative-agency-area",
+        "destination": "people-team-area"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "customer-delight-central",
     "description": "You're in the middle of the Customer Delight team area.<br>According to the lights, the build status is currently green.<br>You fight the urge to play with the lights.",
     "dark": "false",
@@ -1970,6 +1985,57 @@
   },
   {
     "object": "location",
+    "name": "people-team-area",
+    "description": "You're in the People Team area. For such an overworked group they're always available and happy to help.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "people-team-area",
+        "destination": "creative-agency-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "people-team-area",
+        "destination": "people-team-water-cooler"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "people-team-water-cooler",
+    "description": "You're stood by a water cooler on the west wing of the second floor. A corridor leads North and East. There are team areas to the South and meeting rooms to the West.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "people-team-water-cooler",
+        "destination": "second-floor-west-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "people-team-water-cooler",
+        "destination": "people-team-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "people-team-water-cooler",
+        "destination": "second-floor-north-west-corridor-south"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "pioneer",
     "description": "You're in the Pioneer meeting room. The acoustics in here seem very strange.",
     "dark": "false",
@@ -2855,7 +2921,7 @@
   {
     "object": "location",
     "name": "second-floor-north-west-corridor-south",
-    "description": "You're at the South end of a roughly North-South running corridor in the North-West corner of the second floor.<br>There's meeting room to the West. To the east is a curved glass partition behind which are printers and a stationery cupboard",
+    "description": "You're at the South end of a roughly North-South running corridor in the North-West corner of the second floor.<br>There's meeting room to the West. To the east is a curved glass partition behind which are printers and a stationery cupboard.",
     "dark": "false",
     "exits": [
       {
@@ -2871,6 +2937,64 @@
         "direction": "w",
         "source": "second-floor-north-west-corridor-south",
         "destination": "war-room"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "second-floor-printer-area"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "people-team-water-cooler"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-printer-area",
+    "description": "You're in a small glass-walled corner bounded by corridors.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-printer-area",
+        "destination": "second-floor-north-west-corridor-south"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-printer-area",
+        "destination": "second-floor-west-corridor"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-reception",
+    "description": "You're standing in the former reception area on the second floor. A CCTV camera looms over the desk area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-reception",
+        "destination": "second-floor-west-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-reception",
+        "destination": "stairs-second-floor"
       }
     ]
   },
@@ -2879,7 +3003,29 @@
     "name": "second-floor-west-corridor",
     "description": "You're in a short corridor that runs East-West. To the East is the second floor reception area. <br>To the north is a printer area that also houses a stationary cupboard. To the west lies the People team (and more winding corridors).",
     "dark": "false",
-    "exits": []
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-west-corridor",
+        "destination": "second-floor-printer-area"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-west-corridor",
+        "destination": "second-floor-reception"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-west-corridor",
+        "destination": "people-team-water-cooler"
+      }
+    ]
   },
   {
     "object": "location",
@@ -3287,6 +3433,13 @@
         "direction": "d",
         "source": "stairs-second-floor",
         "destination": "stairs-first-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "stairs-second-floor",
+        "destination": "second-floor-reception"
       }
     ],
     "inventory": [
