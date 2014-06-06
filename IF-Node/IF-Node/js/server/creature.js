@@ -114,32 +114,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         processGender();
 
-        console.log('carrying: '+carrying);
+        //console.log('carrying: '+carrying);
         if (carrying) {
-            console.log('building creature inventory... ');
+            //console.log('building creature inventory... ');
             //load inventory
             if (carrying instanceof Array) {
                 for (var i=0; i < carrying.length; i++){
-                    console.log('adding: '+carrying[i]);
+                    //console.log('adding: '+carrying[i]);
                     _inventory.add(carrying[i]);
                 };
             } else { //just one object
-                console.log('adding: '+carrying[i]);
+                //console.log('adding: '+carrying[i]);
                 _inventory.add(carrying);
             };
         };
 
-        console.log('sells: ' + sells);
+        //console.log('sells: ' + sells);
         if (sells) {
-            console.log('building creature inventory... ');
+            //console.log('building creature inventory... ');
             //load inventory
             if (sells instanceof Array) {
                 for (var i = 0; i < sells.length; i++) {
-                    console.log('adding: ' + sells[i]);
+                    //console.log('adding: ' + sells[i]);
                     _salesInventory.add(sells[i]);
                 };
             } else { //just one object
-                console.log('adding: ' + sells[i]);
+                //console.log('adding: ' + sells[i]);
                 _salesInventory.add(sells);
             };
         };
@@ -307,7 +307,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==aMissionName) {
                     _missions.splice(index,1);
-                    console.log(aMissionName+" removed from "+self.getDisplayName());
+                    //console.log(aMissionName+" removed from "+self.getDisplayName());
                     break;
                 };
             };
@@ -333,6 +333,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _affinity-=changeBy;
                 console.log("affinity for "+self.getName()+" is now "+_affinity);
             };
+        };
+
+        self.getAffinity = function() {
+            return _affinity;
         };
 
         self.getAffinityDescription = function() {
@@ -751,7 +755,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.fightOrFlight = function(map,player) {
             var playerAggression = player.getAggression();
 
-            console.log("Creature FightOrFlight: aggression="+playerAggression+" affinity= "+_affinity);
+            //console.log("Creature FightOrFlight: aggression="+playerAggression+" affinity= "+_affinity);
             //for each frightened creature, try to flee (choose first available exit if more than 1 available).
             //otherwise they try to flee but can't get past you
             if(self.willFlee(playerAggression)) {
@@ -931,7 +935,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
          }; 
 
         self.health = function() {
-            console.log('creature health: '+_hitPoints);
+            //console.log('creature health: '+_hitPoints);
             switch(true) {
                     case (healthPercent()>99):
                         return _genderPrefix+"'s still the picture of health.";
@@ -1027,7 +1031,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.isCollectable = function() {
-            console.log("collectable = "+_collectable);
+            //console.log("collectable = "+_collectable);
             return _collectable;
         };
 
@@ -1044,7 +1048,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.canTravel = function() {
-            console.log("canTravel = "+_canTravel);
+            //console.log("canTravel = "+_canTravel);
             return _canTravel;
         };
 
@@ -1057,7 +1061,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //creature won't use a breakable weapon - will only auto-use non-breakable ones.
                 if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
                     var weaponStrength = weapons[index].getAttackStrength();
-                    console.log('Creature is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                    //console.log('Creature is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                     if (weaponStrength > selectedWeaponStrength) {
                         selectedWeapon = weapons[index];
                         selectedWeaponStrength = weaponStrength;
@@ -1072,7 +1076,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.collectBestAvailableWeapon = function() {
-            console.log("attempting to collect weapon");
+           // console.log("attempting to collect weapon");
             //find the strongest non-breakable weapon the player is carrying.
             var selectedWeaponStrength = 0;
             var selectedWeapon = null;
@@ -1082,7 +1086,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //creature won't collect a breakable weapon - will only auto-use non-breakable ones.
                 if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
                     var weaponStrength = weapons[index].getAttackStrength();
-                    console.log(self.getDisplayName()+' found weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                    //console.log(self.getDisplayName()+' found weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                     if (weaponStrength > selectedWeaponStrength) {
                         //only if they can carry it
                         if (self.canCarry(weapons[index])) {
@@ -1097,7 +1101,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //nothing collected.
             if (!(selectedWeapon)) { return "";};
 
-            console.log('Selected weapon: '+selectedWeapon.getDisplayName());
+            console.log('Creature collected weapon: '+selectedWeapon.getDisplayName());
             _inventory.add(selectedWeapon);
             _currentLocation.removeObject(selectedWeapon.getName());
 
@@ -1120,7 +1124,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var healPoints = 0;
             //repeat for number of ticks
             for (var t=0; t < time; t++) {
-                console.log("Creature tick: "+self.getName()+"...");
+                //console.log("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick();
 
                 //if creature is hostile, collect available weapons

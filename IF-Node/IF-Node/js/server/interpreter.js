@@ -86,7 +86,7 @@ exports.Interpreter = function Interpreter(aGameController) {
 
         /*top level interpeter command creation*/
         self.translate = function(aRequestUrl,someTempConfig) {
-            console.log('translate called: '+aRequestUrl);
+            //console.log('translate called: '+aRequestUrl);
             //note - only passing config in here until controlling game object is accessible
         
             var command = extractCommand(aRequestUrl);
@@ -94,7 +94,7 @@ exports.Interpreter = function Interpreter(aGameController) {
             var actionString = extractAction(aRequestUrl);
             var username = extractUsername(aRequestUrl);
             var gameId = extractGameId(aRequestUrl);
-            console.log('command: '+command+' username: '+username+', gameId:'+gameId);
+            //console.log('command: '+command+' action: '+actionString+' username: '+username+', gameId:'+gameId);
 
             switch(command)
             {

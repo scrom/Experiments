@@ -75,7 +75,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         self.getExit = function(aDirection) {
             for(var i = 0; i < _exits.length; i++) {
                 if(_exits[i].getDirection().toLowerCase() == aDirection.toLowerCase()) {
-                    console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
+                    //console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
                     return _exits[i];
                 };
             };       
@@ -97,7 +97,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
             if (availableExits.length <= 1) {return null;};
 
             var randomInt = Math.floor(Math.random() * (availableExits.length));
-            console.log('Random exit selected: '+availableExits[randomInt].getDirection());
+            //console.log('Random exit selected: '+availableExits[randomInt].getDirection());
             return availableExits[randomInt];
         };
 
@@ -170,12 +170,12 @@ exports.Location = function Location(aName, aDescription, isDark) {
         };
 
         self.fireEntryTrigger = function() {
-            console.log('Firing entry trigger from '+self.getName());   
+            //console.log('Firing entry trigger from '+self.getName());   
             return "";
         };
 
         self.fireExitTrigger = function() {
-            console.log('Exit trigger fired from '+self.getName());
+            //console.log('Exit trigger fired from '+self.getName());
             return "";                 
         }; 
 
@@ -191,7 +191,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==aMissionName) {
                     _missions.splice(index,1);
-                    console.log(aMissionName+" removed from "+self.getName());
+                    //console.log(aMissionName+" removed from "+self.getName());
                     break;
                 };
             };
@@ -219,7 +219,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         };
 
         self.isDark = function () {
-            console.log("location is dark? "+_dark);
+            //console.log("location is dark? "+_dark);
             if (_dark) {return true;};
             return false;
         };

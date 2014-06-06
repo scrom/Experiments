@@ -133,7 +133,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             if (!(self.canCarry(anObject))) {return "It's too heavy.";};
 
             _items.push(anObject);
-            console.log(anObject.getName()+" added to "+_ownerName+" inventory");
+            //console.log(anObject.getName()+" added to "+_ownerName+" inventory");
             return "success: "+anObject.getDescription()+".";
         };
     
@@ -143,7 +143,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     if (localInventory[index].syn(anObjectName)) {
                         var returnObject = _items[index];
                         localInventory.splice(index,1);
-                        console.log(anObjectName+" removed from "+_ownerName+" inventory");
+                        //console.log(anObjectName+" removed from "+_ownerName+" inventory");
                         return returnObject;
                     };
                     if(localInventory[index].getType() != 'creature' && (!(localInventory[index].isLocked()))) {

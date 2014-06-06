@@ -66,7 +66,7 @@ exports.Action = function Action(aPlayer, aMap) {
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
-                    console.log('split using "'+splitWordArray[i]+'".');
+                    //console.log('split using "'+splitWordArray[i]+'".');
                     _splitWord = splitWordArray[i];
                     switch(splitWordArray[i]) {
                         case 'with':
@@ -87,20 +87,20 @@ exports.Action = function Action(aPlayer, aMap) {
 
                 //support case where first word of string is a "split" word
                 if (aString.indexOf(splitWordArray[i]+' ') == 0) {
-                    console.log('first word is split');
+                    //console.log('first word is split');
                     return ["",aString.substr(aString.indexOf(' ')).trim()];
                 };
 
                 //support case where last word of string is a "split" word
                 var endSplit = ' '+splitWordArray[i];
                 if (aString.indexOf(endSplit, aString.length - endSplit.length) !== -1) {
-                    console.log('last word is split');
+                    //console.log('last word is split');
                     return [aString.substr(0,aString.indexOf(' ')).trim(),""];
                 };
 
             };
             //no match, return what we started with
-            console.log('no split');
+            //console.log('no split');
             _splitWord = "";
             return [aString,'']; //we add in a dummy second element for now
         };
@@ -195,7 +195,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'statistics':
                     case 'score':
                         ticks = 0;
-                        description = _player.stats(_map.getMaxScore(), _map.getLocationCount());
+                        description = _player.stats(_map);
                         break;
                     case 'status':
                     case 'missions':
@@ -458,7 +458,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'install':
                     default:
                         ticks = 0; //for now 
-                        console.log('verb: '+_verb+' default response');
+                        //console.log('verb: '+_verb+' default response');
                         //allow fall-through
                 };
                 //navigation
@@ -488,7 +488,7 @@ exports.Action = function Action(aPlayer, aMap) {
                 //final fall-through
                 if ((description == undefined)||(description == '')){
                     _failCount ++;
-                    console.log("fail count: "+_failCount);
+                    //console.log("fail count: "+_failCount);
                     if (_failCount >=3) {
                         return self.act('help');
                     };

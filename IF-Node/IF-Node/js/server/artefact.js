@@ -457,7 +457,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==aMissionName) {
                     _missions.splice(index,1);
-                    console.log(aMissionName+" removed from "+self.getDisplayName());
+                    //console.log(aMissionName+" removed from "+self.getDisplayName());
                     break;
                 };
             };
@@ -728,7 +728,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.combineWith = function(anObject) {
             if (!(self.combinesWith(anObject))) { return null; };
             var deliveryItemSource = _delivers[0]; //@todo: we only take the first element for now+
-            console.log("o:" + anObject + " dis: " + deliveryItemSource);
+            //console.log("o:" + anObject + " dis: " + deliveryItemSource);
             console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
 
             //return a new instance of deliveryObject
@@ -874,7 +874,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 components = components.concat(someComponents);
             };
             //eventually make this more intelligent than a simple count!
-            console.log("Required components for "+self.getName()+": " + _requiredComponentCount + " Current Components: " + components.length);
+            //console.log("Required components for "+self.getName()+": " + _requiredComponentCount + " Current Components: " + components.length);
             if (components.length == _requiredComponentCount) {return true;}; //we have everything we need yet.
             return false;
         };
@@ -1228,7 +1228,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canDeliver = function (anObjectName) {
             //do we deliver anything at all?
             if (!(_delivers)) {
-                console.log(self.getName + " doesn't deliver anything");
+                //console.log(self.getName + " doesn't deliver anything");
                 return false;
             };
 

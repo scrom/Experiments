@@ -128,13 +128,13 @@ module.exports.Player = function Player(aUsername) {
 
             console.log("Removing "+contentCount+" items from wreckage.");
             for (var i=0; i<contents.length;i++) {
-                console.log("Contents "+contents[i].getName());
+                //console.log("Contents "+contents[i].getName());
             };
 
             var objectToRemove;
             for (var i=0; i<contents.length;i++) {
-                console.log("i="+i);
-                console.log("Removing "+contents[i].getName()+" from wreckage.");
+                //console.log("i="+i);
+                //console.log("Removing "+contents[i].getName()+" from wreckage.");
                 if (locationArtefact) {
                     objectToRemove = locationArtefact.getObject(contents[i].getName());
                     if (objectToRemove.requiresContainer()) {
@@ -224,7 +224,7 @@ module.exports.Player = function Player(aUsername) {
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==missionName) {
                     _missions.splice(index,1);
-                    console.log(missionName+" removed from "+self.getUsername());
+                    //console.log(missionName+" removed from "+self.getUsername());
                     break;
                 };
             };
@@ -880,7 +880,7 @@ module.exports.Player = function Player(aUsername) {
 
             //we know player *can* carry it...
             if (getObjectFromLocation(artefactName)) {
-                console.log('locationartefact');
+                //console.log('locationartefact');
                 if (!(artefact.isCollectable())) {return  "Sorry, "+giver.getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
                 if (!(giver.canCarry(artefact))) { return  "Sorry, "+giver.getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
                 return self.get('get',artefactName);
@@ -1152,7 +1152,7 @@ module.exports.Player = function Player(aUsername) {
             var exitDestination = _currentLocation.getExitDestination(direction);
             var newLocation = map.getLocation(exitDestination);
             if (newLocation) {
-                console.log('found location: '+exitDestination);
+                //console.log('found location: '+exitDestination);
             } else {
                 //console.log('location: '+exitDestination+' not found');
                 return "That exit doesn't seem to go anywhere at the moment. Try again later.";                  
@@ -1181,7 +1181,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(self.canSee())) {returnMessage += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
             else {returnMessage +=newLocationDescription;};
 
-            console.log('GO: '+returnMessage);
+            //console.log('GO: '+returnMessage);
             return returnMessage;
         };	
 
@@ -1212,7 +1212,7 @@ module.exports.Player = function Player(aUsername) {
                 if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
                     if (weapons[index].supportsAction(verb)) {    
                         var weaponStrength = weapons[index].getAttackStrength();
-                        console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                        //console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                         if (weaponStrength > selectedWeaponStrength) {
                             selectedWeapon = weapons[index];
                             selectedWeaponStrength = weaponStrength;
@@ -1501,7 +1501,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
         self.tick = function(time, map) {
-            console.log("Player tick...");
+            //console.log("Player tick...");
 
             var resultString = "";
             var damage = 0;
@@ -1592,7 +1592,7 @@ module.exports.Player = function Player(aUsername) {
 
             if (_bleeding) {resultString+="<br>You're bleeding. ";};           
 
-            if (healPoints>0) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
+            if (healPoints>0 && (_hitPoints < _maxHitPoints)) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
             if (damage>0) {resultString+= self.hurt(damage);};        
 
             return resultString;
@@ -1608,7 +1608,25 @@ module.exports.Player = function Player(aUsername) {
             return false;
         };
 
-        self.stats = function(maxScore, mapLocationCount) {
+        self.getMaxMinAffinity = function(map) {
+            //want to limit this to only creatures the player has actually encountered.
+            //also iterating over all creatures is a performance issue.
+            var creatures = map.getAllCreatures();
+            var maxAffinity = 0;
+            var minAffinity = 0;
+            for (var i=0;i<creatures.length;i++) {
+                var creatureAffinity = creatures[i].getAffinity();
+                if (creatureAffinity < minAffinity) {minAffinity = creatureAffinity;};
+                if (creatureAffinity > maxAffinity) {maxAffinity = creatureAffinity;};
+            };
+            return {"max":maxAffinity, "min":minAffinity};
+        };
+
+        self.stats = function(map) {
+            var maxScore = map.getMaxScore(); 
+            var mapLocationCount = map.getLocationCount();
+            var maxMinAffinity = self.getMaxMinAffinity(map);
+
             var status = "";
 
             status += "<i>Statistics:</i><br>";
@@ -1623,18 +1641,21 @@ module.exports.Player = function Player(aUsername) {
             if (_repairSkills.length > 0) {status += "You have gained "+_repairSkills.length+" skills.<br>";};
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             
-            if (_restsTaken > 0) status += "You have rested "+_restsTaken+" times.<br>";
-            if (_sleepsTaken > 0) status += "You have slept "+_sleepsTaken+" times.<br>";
+            if (_restsTaken > 0) {status += "You have rested "+_restsTaken+" times.<br>";};
+            if (_sleepsTaken > 0) {status += "You have slept "+_sleepsTaken+" times.<br>";};
 
             if (_stolenCash > 0) status += "You have stolen a total of &pound;"+_stolenCash+" in cash.<br>";
             if (_stolenObjects.length > 0) {status += "You have stolen "+_stolenObjects.length+" items.<br>";};             
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
             if (_killedCreatures.length > 0) {status += "You have killed "+_killedCreatures.length+" characters.<br>";};             
 
-            if (_aggression > 0) status += "Your aggression level is "+self.getAggression()+".<br>";
-            if (_maxAggression > 0) status += "Your maximum aggression level so far is "+_maxAggression+".<br>";
-            if (_injuriesReceived > 0) status += "You have been injured "+_injuriesReceived+" times.<br>";
-            if (_totalDamageReceived > 0) status += "You have received "+_totalDamageReceived+" points of damage (in total) during this game.<br>";
+            if (_aggression > 0) {status += "Your aggression level is "+self.getAggression()+".<br>";};
+            if (_maxAggression > 0) {status += "Your maximum aggression level so far is "+_maxAggression+".<br>";};
+            if (maxMinAffinity.max > 0) {status += "Your maximum character affinity so far is "+maxMinAffinity.max+".<br>";};
+            if (maxMinAffinity.min < 0) {status += "Your minimum character affinity so far is "+maxMinAffinity.min+".<br>";};
+            
+            if (_injuriesReceived > 0) {status += "You have been injured "+_injuriesReceived+" times.<br>";};
+            if (_totalDamageReceived > 0) {status += "You have received "+_totalDamageReceived+" points of damage (in total) during this game.<br>";};
             //if (_objectsChewed > 0) status += "You have chewed "+_objectsChewed+" objects.<br>";
             return status;
         };
