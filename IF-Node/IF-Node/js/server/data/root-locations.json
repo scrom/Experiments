@@ -452,7 +452,7 @@
         "object": "creature",
         "name": "jonathan",
         "displayname": "Jonathan",
-        "description": "Janathan Watts",
+        "description": "Jonathan Watts",
         "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
         "attributes": {
           "weight": 110,
