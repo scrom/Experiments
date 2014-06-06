@@ -1365,6 +1365,9 @@ module.exports.Player = function Player(aUsername) {
                 //if they didn't end up worse off...
                 resultString +=" You feel better in many ways for taking some time out.";
             };
+
+            if (verb == "rest") {_restsTaken++;};
+            if (verb == "sleep") {_sleepsTaken++;};
             return resultString;
         };
 
@@ -1613,6 +1616,9 @@ module.exports.Player = function Player(aUsername) {
             if (_repairSkills.length > 0) {status += "You have gained "+_repairSkills.length+" skills.<br>";};
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             
+            if (_restsTaken > 0) status += "You have rested "+_restsTaken+" times.<br>";
+            if (_sleepsTaken > 0) status += "You have slept "+_sleepsTaken+" times.<br>";
+
             if (_stolenCash > 0) status += "You have stolen a total of &pound;"+_stolenCash+" in cash.<br>";
             if (_stolenObjects.length > 0) {status += "You have stolen "+_stolenObjects.length+" items.<br>";};             
             if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
