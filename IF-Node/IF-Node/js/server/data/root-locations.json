@@ -446,7 +446,63 @@
         "source": "customer-delight-south-west",
         "destination": "customer-delight-west"
       }
-    ]
+    ],
+	"inventory": [
+	{
+        "object": "creature",
+        "name": "jonathan",
+        "displayname": "Jonathan",
+        "description": "Janathan Watts",
+        "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
+        "attributes": {
+          "weight": 110,
+          "money": 10,
+          "attackStrength": 15,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 100,
+          "affinity": -1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "jonathan watts",
+		  "jon",
+		  "johnathan",
+          "jon w",
+          "jw",
+          "watts",
+          "him"
+        ]
+      },
+	  {
+        "object": "creature",
+        "name": "chris",
+        "displayname": "Chris",
+        "description": "Chris Moore",
+        "detailedDescription": "Endlessly cheerful security guru extraordinaire. Keep him away from Rum and pub floors.",
+        "attributes": {
+          "weight": 100,
+          "money": 10,
+          "attackStrength": 5,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 100,
+          "affinity": 2,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "chris moore",
+          "chris m",
+          "cm",
+          "moore",
+          "him"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -2576,6 +2632,59 @@
       }
     ],
     "inventory": [
+	{
+        "object": "creature",
+        "name": "alex",
+        "displayname": "Alex",
+        "description": "Alex Freeman",
+        "detailedDescription": "Can haz mor Accountz.",
+        "attributes": {
+          "weight": 140,
+          "money": 30,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "alex freeman",
+          "alex f",
+          "af",
+          "freeman",
+          "al",
+          "him"
+        ]
+      },
+	{
+        "object": "creature",
+        "name": "will",
+        "displayname": "Will",
+        "description": "Will Puttock",
+        "detailedDescription": "Don't ask about the Oompa-loompa costume.",
+        "attributes": {
+          "weight": 120,
+          "money": 30,
+          "attackStrength": 15,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 110,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "will puttock",
+          "will p",
+          "wp",
+          "puttock",
+          "him"
+        ]
+      },
       {
         "object": "creature",
         "name": "james",
@@ -3561,7 +3670,35 @@
         "source": "support-west",
         "destination": "web-meeting-room"
       }
-    ]
+    ],
+	"inventory": [
+	{
+        "object": "creature",
+        "name": "chris",
+        "displayname": "Chris",
+        "description": "Chris Allen",
+        "detailedDescription": "Support and music skills. What more could you need?",
+        "attributes": {
+          "weight": 120,
+          "money": 10,
+          "attackStrength": 15,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 100,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "chris allen",
+          "chris a",
+          "ca",
+          "allen",
+          "him"
+        ]
+      }
+	]
   },
   {
     "object": "location",
