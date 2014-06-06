@@ -39,6 +39,7 @@ module.exports.Player = function Player(aUsername) {
         var _totalDamageReceived = 0;
         var _booksRead = 0;
         var _stolenCash = 0;
+        var _creaturesSpokenTo = 0;
 
         //possible additional player stats
         var _restsTaken = 0;
@@ -900,7 +901,11 @@ module.exports.Player = function Player(aUsername) {
                 if (!(receiver)) {return notFoundMessage(receiverName);};
 
                 //we'll only get this far if there is a valid receiver
-                return receiver.reply(speech, _aggression);
+                var hasSpokenBefore = receiver.hasSpoken();
+                var resultString = receiver.reply(speech, _aggression);
+                var hasSpokenAfter = receiver.hasSpoken();
+                if (!(hasSpokenBefore) && hasSpokenAfter) {_creaturesSpokenTo ++;};
+                return resultString;
         };
 
         self.switchOnOrOff = function(verb, artefactName, action) {
@@ -1613,6 +1618,8 @@ module.exports.Player = function Player(aUsername) {
             status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" possible locations.<br>";
             if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
             if (_booksRead > 0) {status += "You have read "+_booksRead+" books or articles.<br>";};
+            if (_creaturesSpokenTo > 0) {status += "You have spoken to "+_creaturesSpokenTo+" characters.<br>";};
+            
             if (_repairSkills.length > 0) {status += "You have gained "+_repairSkills.length+" skills.<br>";};
             if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
             

@@ -38,6 +38,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _startLocation;
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
+        var _spokenToPlayer = false;
 	    var _objectName = "creature";
 
         var healthPercent = function() {
@@ -998,6 +999,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "Unless you've performed surgery on "+_genderSuffix+" recently, you can't close a living thing";
         };
 
+        self.hasSpoken = function() {
+            return _spokenToPlayer;
+        };
+
         self.reply = function(someSpeech,playerAggression) {
             if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
@@ -1017,6 +1022,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
 
+            if (!(_spokenToPlayer)) {_spokenToPlayer = true;};
             return  response;
         };
 
