@@ -278,6 +278,20 @@
         "direction": "w",
         "source": "creative-agency-area",
         "destination": "people-team-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "creative-agency-area",
+        "destination": "people-team-water-cooler"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "creative-agency-area",
+        "destination": "second-floor-seating-area-west"
       }
     ]
   },
@@ -447,8 +461,8 @@
         "destination": "customer-delight-west"
       }
     ],
-	"inventory": [
-	{
+    "inventory": [
+      {
         "object": "creature",
         "name": "jonathan",
         "displayname": "Jonathan",
@@ -468,15 +482,15 @@
         },
         "synonyms": [
           "jonathan watts",
-		  "jon",
-		  "johnathan",
+          "jon",
+          "johnathan",
           "jon w",
           "jw",
           "watts",
           "him"
         ]
       },
-	  {
+      {
         "object": "creature",
         "name": "chris",
         "displayname": "Chris",
@@ -502,7 +516,7 @@
           "him"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -2026,6 +2040,21 @@
   },
   {
     "object": "location",
+    "name": "paint-pots",
+    "description": "You're in the Paint Pots meeting room. The lack of visible light adds to the sense of foreboding.<br>You feel like this is a room specially reserved for difficult HR conversations. You'd be wrong of course!",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "paint-pots",
+        "destination": "people-team-north"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "peacock",
     "description": "You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.",
     "dark": "false",
@@ -2057,7 +2086,58 @@
         "longname": "North",
         "direction": "n",
         "source": "people-team-area",
-        "destination": "people-team-water-cooler"
+        "destination": "people-team-north"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "people-team-north",
+    "description": "You're on the Northern edge of the People Team area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "people-team-north",
+        "destination": "people-team-area"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "people-team-north",
+        "destination": "people-team-north-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "people-team-north",
+        "destination": "paint-pots"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "people-team-north-west",
+    "description": "You're in the North-West corner of the People Team area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "people-team-north-west",
+        "destination": "people-team-north"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "people-team-north-west",
+        "destination": "thinking-hats"
       }
     ]
   },
@@ -2079,7 +2159,7 @@
         "longname": "South",
         "direction": "s",
         "source": "people-team-water-cooler",
-        "destination": "people-team-area"
+        "destination": "creative-agency-area"
       },
       {
         "object": "exit",
@@ -2632,7 +2712,7 @@
       }
     ],
     "inventory": [
-	{
+      {
         "object": "creature",
         "name": "alex",
         "displayname": "Alex",
@@ -2659,7 +2739,7 @@
           "him"
         ]
       },
-	{
+      {
         "object": "creature",
         "name": "will",
         "displayname": "Will",
@@ -2906,6 +2986,21 @@
   },
   {
     "object": "location",
+    "name": "second-floor-kitchen",
+    "description": "You're in the second floor kitchen. There's a space where once a coffee machine sat but not much else here to tempt you to hand around upstairs now.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-kitchen",
+        "destination": "second-floor-seating-area-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "second-floor-north-west-corridor-central",
     "description": "You're part-way along a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the East and West.",
     "dark": "false",
@@ -3104,6 +3199,64 @@
         "direction": "n",
         "source": "second-floor-reception",
         "destination": "stairs-second-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-reception",
+        "destination": "second-floor-seating-area-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-seating-area-east",
+    "description": "You're in the East end of the second floor seating area.<br>You could stand here for hours reading the giant wall of post-it notes trying to spot the duplicates.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-seating-area-east",
+        "destination": "second-floor-kitchen"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-seating-area-east",
+        "destination": "second-floor-seating-area-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "second-floor-seating-area-west",
+    "description": "You're in the West end of the second floor seating area.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-seating-area-west",
+        "destination": "creative-agency-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-seating-area-west",
+        "destination": "second-floor-reception"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-seating-area-west",
+        "destination": "second-floor-seating-area-east"
       }
     ]
   },
@@ -3671,8 +3824,8 @@
         "destination": "web-meeting-room"
       }
     ],
-	"inventory": [
-	{
+    "inventory": [
+      {
         "object": "creature",
         "name": "chris",
         "displayname": "Chris",
@@ -3698,7 +3851,22 @@
           "him"
         ]
       }
-	]
+    ]
+  },
+  {
+    "object": "location",
+    "name": "thinking-hats",
+    "description": "You're in the Thinking Hats meeting room. The seats in here are really tricky to pick up and move and it's oddly chilly. Perhaps it's haunted?",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "thinking-hats",
+        "destination": "people-team-north-west"
+      }
+    ]
   },
   {
     "object": "location",
