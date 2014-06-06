@@ -26,52 +26,52 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         else {_isStatic = true;}; //override static setting if mission has dialogue
 
         self.literalToString = function(literal) {
-            var returnString = '{';
+            var resultString = '{';
             var counter = 0;
             for (var key in literal) {
-               if (counter > 0) {returnString +=', ';};
+               if (counter > 0) {resultString +=', ';};
                counter++;
 
-               returnString += '"'+key+'":';
+               resultString += '"'+key+'":';
                var obj = literal[key];
                //console.log("LiteralConversion: "+typeof(obj)+":"+obj.toString());
 
                  if (typeof(obj) == 'object') {
                      if (Object.prototype.toString.call(obj) === '[object Array]') {
-                        returnString += '[';
+                        resultString += '[';
                         for (var j=0;j<obj.length;j++) {
-                            if (j>0) {returnString += ",";};
-                            returnString += '"'+obj[j]+'"';
+                            if (j>0) {resultString += ",";};
+                            resultString += '"'+obj[j]+'"';
                         };
-                        returnString += ']';
+                        resultString += ']';
                      } else {
-                        returnString += obj.toString();
+                        resultString += obj.toString();
                      };
                  }
-                 else if (typeof(obj) == 'string') {returnString += '"'+obj+'"';}
-                 else if (typeof(obj) == 'boolean') {returnString += '"'+obj+'"';}
-                 else {returnString += obj;};
+                 else if (typeof(obj) == 'string') {resultString += '"'+obj+'"';}
+                 else if (typeof(obj) == 'boolean') {resultString += '"'+obj+'"';}
+                 else {resultString += obj;};
             };
-            returnString+= '}';
-            //console.log(returnString);
-            return returnString;
+            resultString+= '}';
+            //console.log(resultString);
+            return resultString;
         };
 
         ////public methods
 
         self.toString = function() {
-            var returnString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
             if (_dialogue.length >0) {
-                returnString+= ',"dialogue":[';
+                resultString+= ',"dialogue":[';
                 for(var i=0; i<_dialogue.length;i++) {
-                    if (i>0) {returnString+= ',';};
-                    returnString+= '"'+_dialogue[i]+'"';
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_dialogue[i]+'"';
                 };
-                returnString+= ']';
+                resultString+= ']';
             };
-            returnString +=',"parent":"'+_parent+'","missionObject":"'+_missionObject+'","static":"'+_isStatic+'","conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
-            returnString+= '}';
-            return returnString;
+            resultString +=',"parent":"'+_parent+'","missionObject":"'+_missionObject+'","static":"'+_isStatic+'","conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            resultString+= '}';
+            return resultString;
         };
 
         self.getName = function() {
@@ -91,7 +91,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         };
 
         self.isStatic = function() {
-            console.log('mission: '+_name+' static: '+_isStatic);
+            //console.log('mission: '+_name+' static: '+_isStatic);
             return _isStatic;
         };
 
@@ -104,6 +104,15 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             _reward=null;
             console.log("reward delivered from mission: "+returnObject);
             return returnObject;
+        };
+
+        self.clearParent = function() {
+            _parent = null;
+        };
+
+        self.checkParent = function(parent) {
+            if (parent == _parent) {return true};
+            return false;
         };
 
         self.processAffinityModifiers = function(map, reward) {
@@ -151,10 +160,11 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             for (var i=0; i<requiredContents.length;i++) {
                 if (missionObject.getInventoryObject().check(requiredContents[i])) {contentsCount++;};
             };
-
-            console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
-            
-            if (contentsCount == requiredContentsCount) {return true;};
+      
+            if (contentsCount == requiredContentsCount) {
+                console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+                return true;
+            };
 
             return false;
         };
@@ -162,26 +172,26 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         self.checkState = function(playerInventory, location) {
             //var coffeeMission = new missionObjectModule.Mission('sweetCoffee','Your first task is to get yourself a nice sweet cup of coffee.','',null,'sweet coffee',5,'player',{points: 50});
             var missionObject;
-            console.log('Checking state for mission: '+_name);
+            //console.log('Checking state for mission: '+_name);
             switch(true) {
                     case (_destination == 'player'): //player inventory
                         missionObject = playerInventory.getObject(_missionObject);
                         break;
                     case (_destination == location.getName()): //location
-                        console.log('mission destination location reached');
+                        //console.log('mission destination location reached');
                         missionObject = location.getObject(_missionObject);
                         break;
                     default:
                         //this one allows you to have an object/creature in any location - the object's condition will determine success.
                         //this supports find, break, destroy, chew, kill
                         if (location.getObject(_destination)) {
-                            console.log('found mission destination object/creature in location');
+                            //console.log('found mission destination object/creature in location');
                             var destinationObjectOrCreature = location.getObject(_destination);
                             if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
                             else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
                         } else if (playerInventory.getObject(_destination)) {
                             //creature or object in player inventory
-                            console.log('found mission destination object/creature in player inventory');
+                            //console.log('found mission destination object/creature in player inventory');
                             var destinationObjectOrCreature = playerInventory.getObject(_destination);
                             if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
                             else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
@@ -189,7 +199,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                         break;
             };
             if (missionObject) {
-                console.log('mission object retrieved. Checking condition attributes...');
+                //console.log('mission object retrieved. Checking condition attributes...');
                 var objectAttributes = missionObject.getCurrentAttributes();
                 var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;
                 var successCount = 0;
@@ -205,14 +215,14 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                 //check the rest of the object attributes if they exist
                 for (var attr in _conditionAttributes) {
                     if (objectAttributes.hasOwnProperty(attr)) {
-                        console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);                        
+                        //console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);                        
                         if (objectAttributes[attr] == _conditionAttributes[attr]) {
                             successCount++;
                         };
                     };
                 };
 
-                console.log('condition matches: '+successCount+" out of "+requiredAttributeSuccessCount);
+                //console.log('condition matches: '+successCount+" out of "+requiredAttributeSuccessCount);
                 if (successCount == requiredAttributeSuccessCount) {
                     //if mission has dialogue, ensure that has been triggered at least once...
                     if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
