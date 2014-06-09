@@ -948,6 +948,49 @@
         "source": "first-floor-cubicle",
         "destination": "first-floor-toilet"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "article",
+        "description": "'Learn on the Loo' article",
+        "detailedDescription": "It's entitled 'Take security in your STRIDE'.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 3,
+          "carryWeight": 0,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "lotl",
+          "learn on the loo",
+          "learn on the loo article",
+          "loo article",
+          "learn article"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "lotleasteregg",
+            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
+            "parent": "null",
+            "missionObject": "article",
+            "static": "true",
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "read": "true"
+            },
+            "destination": "article",
+            "reward": {
+              "score": 20,
+              "repairSkill": "security",
+              "successMessage": "Congratulations. You've learned a basic mnemonic for considering software security."
+            }
+          }
+        ]
+      }
     ]
   },
   {
@@ -1033,7 +1076,7 @@
   {
     "object": "location",
     "name": "first-floor-landing-west",
-    "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wanderig about their business down below.",
+    "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wandering about their business down below.",
     "dark": "false",
     "exits": [
       {
@@ -3236,15 +3279,58 @@
   {
     "object": "location",
     "name": "second-floor-cubicle",
-    "description": "You're in a toilet cubicle. You feel even more disoriented. <br>The toilet is still refilling from a previous flush. You might need to hand around for a while if you plan on using this one.",
-    "dark": "false",
+    "description": "You're in a toilet cubicle. You feel even more disoriented. <br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
+    "dark": "true",
     "exits": [
       {
         "object": "exit",
-        "longname": "n",
-        "direction": "null",
+        "longname": "out",
+        "direction": "o",
         "source": "second-floor-cubicle",
         "destination": "second-floor-toilet"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "article",
+        "description": "'Learn on the Loo' article",
+        "detailedDescription": "It's entitled 'The Boy Scout Rule'.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 3,
+          "carryWeight": 0,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "lotl",
+          "learn on the loo",
+          "learn on the loo article",
+          "loo article",
+          "learn article"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "lotleasteregg",
+            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+            "parent": "null",
+            "missionObject": "article",
+            "static": "true",
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "read": "true"
+            },
+            "destination": "article",
+            "reward": {
+              "score": 20,
+              "repairSkill": "clean code",
+              "successMessage": "Congratulations. You've learned a simple approach to keeping code clean."
+            }
+          }
+        ]
       }
     ]
   },
@@ -3680,7 +3766,7 @@
   {
     "object": "location",
     "name": "second-floor-toilet",
-    "description": "You're in a bathroom. You can't quite remember what floor you're on. Do those soap dispenser look different to you?",
+    "description": "You're in a bathroom. You can't quite remember what floor you're on. Do those soap dispensers look different to you?",
     "dark": "false",
     "exits": [
       {
@@ -3692,8 +3778,8 @@
       },
       {
         "object": "exit",
-        "longname": "o",
-        "direction": "in",
+        "longname": "in",
+        "direction": "i",
         "source": "second-floor-toilet",
         "destination": "second-floor-cubicle"
       }
