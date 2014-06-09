@@ -552,7 +552,7 @@
           "attackStrength": 35,
           "gender": "male",
           "type": "friendly",
-          "carryWeight": 15,
+          "carryWeight": 30,
           "health": 120,
           "affinity": 2,
           "canTravel": true,
@@ -1121,6 +1121,27 @@
         "direction": "e",
         "source": "first-floor-cubby-hole",
         "destination": "customer-delight-north"
+      }
+    ],    
+	"inventory": [
+      {
+        "object": "artefact",
+        "name": "beanbag",
+        "description": "giant bean bag",
+        "detailedDescription": "Very comfy. Not so easy to get out of once you're in place though",
+        "attributes": {
+		  "defaultAction": "rest",	
+          "weight": 30,
+          "type": "bed",
+          "canCollect": true,
+		  "isBreakable": true
+        },
+        "synonyms": [
+          "bean bag",
+          "bean",
+          "bag",
+          "giant bean bag"
+        ]
       }
     ]
   },
@@ -4109,6 +4130,27 @@
         "direction": "w",
         "source": "servery-north-west",
         "destination": "customer-delight-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "postcard",
+        "description": "thankyou postcard",
+        "detailedDescription": "It says thanks for being great, Chris! (there are loads of others with similar thank-yous)",
+        "attributes": {
+          "weight": 1,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "card",
+          "post-card",
+		  "post card",
+          "thankyou card",
+          "thank-you card",
+          "thank you card"
+        ]
       }
     ]
   },
