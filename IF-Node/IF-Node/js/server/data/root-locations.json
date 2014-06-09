@@ -380,7 +380,114 @@
         "source": "customer-delight-central",
         "destination": "customer-delight-north"
       }
-    ]
+    ],
+	"inventory": [
+      {
+        "object": "creature",
+        "name": "chris",
+        "displayname": "Chris",
+        "description": "Chris George",
+        "detailedDescription": "Our resident head of Test.",
+        "attributes": {
+          "weight": 130,
+          "money": 20,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "chris george",
+          "chris g",
+          "cg",
+          "george",
+          "him"
+        ]
+      },
+	  {
+        "object": "creature",
+        "name": "mark",
+        "displayname": "Mark",
+        "description": "Mark Wightman",
+        "detailedDescription": "Our head of Development.",
+        "attributes": {
+          "weight": 130,
+          "money": 20,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "mark wightman",
+          "mark w",
+          "mw",
+          "wightman",
+          "him"
+        ]
+      },
+	  {
+        "object": "creature",
+        "name": "jeff",
+        "displayname": "Jeff",
+        "description": "Jeff Foster",
+        "detailedDescription": "Our head of Software Engineering.",
+        "attributes": {
+          "weight": 130,
+          "money": 20,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "jeff foster",
+          "jeff f",
+          "jf",
+          "foster",
+          "him"
+        ]
+      },
+	  {
+        "object": "creature",
+        "name": "simon",
+        "displayname": "Simon",
+        "description": "Simon Cromarty",
+        "detailedDescription": "Our head of Project Management.",
+        "attributes": {
+          "weight": 140,
+          "money": 20,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "simon cromarty",
+          "simon c",
+          "sc",
+          "cromarty",
+		  "crom",
+          "him"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -431,7 +538,62 @@
         "source": "customer-delight-management-area",
         "destination": "jellyfish-meeting-room"
       }
-    ]
+    ],
+	"inventory": [
+      {
+        "object": "creature",
+        "name": "james",
+        "displayname": "James",
+        "description": "James Dening",
+        "detailedDescription": "Our head of Sales. Like a 6-foot-plus tigger.",
+        "attributes": {
+          "weight": 170,
+          "money": 200,
+          "attackStrength": 35,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 2,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "james dening",
+		  "james denning",
+          "james d",
+          "jd",
+          "dening",
+          "him"
+        ]
+      },
+	        {
+        "object": "creature",
+        "name": "alan",
+        "displayname": "Alan",
+        "description": "Alan Platt",
+        "detailedDescription": "The master of Customer Delight.",
+        "attributes": {
+          "weight": 160,
+          "money": 100,
+          "attackStrength": 30,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "alan platt",
+          "alan p",
+          "ap",
+          "platt",
+          "him"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -539,6 +701,33 @@
           "jw",
           "watts",
           "him"
+        ]
+      },
+	   {
+        "object": "creature",
+        "name": "alice",
+        "displayname": "Alice",
+        "description": "Alice Easey",
+        "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best best for survival in a zombie apocalypse.",
+        "attributes": {
+          "weight": 90,
+          "money": 30,
+          "attackStrength": 25,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 140,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "alice easey",
+		  "alice easy",
+          "alice e",
+          "ae",
+          "easey",
+          "her"
         ]
       },
       {
