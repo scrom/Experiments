@@ -94,7 +94,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.getRandomExit = function() {
             var availableExits = self.getAvailableExits();
-            if (availableExits.length <= 1) {return null;};
+            //if (availableExits.length <= 1) {return null;};
 
             var randomInt = Math.floor(Math.random() * (availableExits.length));
             //console.log('Random exit selected: '+availableExits[randomInt].getDirection());
@@ -239,12 +239,12 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.reduceLocalFriendlyCreatureAffinity = function(changeValue, excludedCreature) {
             //unless they really like the player, friendly creatures in the same location don't appreciate aggression.
-            console.log("attempting to reduce local creature affinity by"+changeValue+"except for "+excludedCreature);
+            //console.log("attempting to reduce local creature affinity by "+changeValue+" except for "+excludedCreature);
             var creatures = self.getCreatures();
             for (var i=0; i<creatures.length;i++) {
                 if (creatures[i].getSubType() == "friendly" && (creatures[i].getAffinity() <= 5)) {
                     if (creatures[i].getName() != excludedCreature) {
-                        console.log("reducing affinity for"+creatures[i].getName());
+                        //console.log("reducing affinity for "+creatures[i].getName());
                         creatures[i].reduceAffinity(changeValue);
                     };
                 };
