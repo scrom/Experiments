@@ -792,6 +792,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.flee = function(map, playerAggression) {
             //run away the number of moves of player aggression vs (-ve)affinity difference
             var fearLevel;
+            var fled = false;
             if (_affinity <=0) {fearLevel = Math.floor(_affinity+playerAggression);}
             else {fearLevel = playerAggression;};
 
@@ -804,11 +805,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var resultString = "";
             //if creature is mobile
-            if (self.canTravel()) {
+            if (self.canTravel()) {             
                 for (var i=0; i<fearLevel; i++) {
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
-                        if (i==0) {resultString = initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";};
+                        if (!(fled)) {
+                            resultString = initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";
+                            fled = true;
+                        };
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
                     };
                 };
