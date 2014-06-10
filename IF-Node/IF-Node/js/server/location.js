@@ -237,6 +237,18 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return _inventory.getAllObjectsOfType('creature');
         };
 
+        self.reduceLocalFriendlyCreatureAffinity = function(changeValue, excludedCreature) {
+            //unless they really like the player, friendly creatures in the same location don't appreciate aggression.
+            var creatures = self.getCreatures();
+            for (var i=0; i<creatures.length;i++) {
+                if (creatures[i].getSubType() == "friendly" && (creatures[i].getAffinity <= 5)) {
+                    if (creatures[i].getName() != excludedCreature) {
+                        creatures[i].reduceAffinity(changeValue);
+                    };
+                };
+            };
+        };
+
         //end public member functions
 
         console.log(_objectName + ' created: '+self.toString());

@@ -17,7 +17,7 @@
         "longname": "South",
         "direction": "s",
         "source": "atrium",
-        "destination": "toilet-ground-floor"
+        "destination": "ground-floor-toilet"
       },
       {
         "object": "exit",
@@ -1346,6 +1346,23 @@
         "direction": "i",
         "source": "first-floor-toilet",
         "destination": "first-floor-cubicle"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "soap",
+        "description": "soap dispenser",
+        "detailedDescription": "After careful inspection, you figure out where to push it and how to get soap out.",
+        "attributes": {
+          "weight": 1,
+          "type": "junk",
+          "canCollect": true
+        },
+        "synonyms": [
+          "dispenser",
+          "soap dispenser"
+        ]
       }
     ]
   },
@@ -2809,6 +2826,7 @@
           "boss",
           "ceo",
           "simon g",
+		  "simon galbraith",
           "galbraith",
           "him"
         ],
@@ -2832,7 +2850,7 @@
             "destination": "Simon",
             "reward": {
               "affinityModifier": 2,
-              "increaseAffinityFor": "simon",
+              "increaseAffinityFor": "simon galbraith",
               "score": 50,
               "money": 25,
               "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus."
@@ -3993,6 +4011,28 @@
         "source": "second-floor-toilet",
         "destination": "second-floor-cubicle"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "hand dryer",
+        "description": "hand dryer",
+        "detailedDescription": "These things are good but loud.",
+        "attributes": {
+          "weight": 15,
+          "type": "junk",
+		  "customAction": "dry",
+		  "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels.",
+          "canCollect": false,
+		  "breakable": true
+        },
+        "synonyms": [
+          "dryer",
+          "hand-dryer",
+		  "hand",
+		  "hands"
+        ]
+      }
     ]
   },
   {
@@ -4490,7 +4530,7 @@
           "her"
         ],
         "dislikes": [
-          "james",
+          "james moore",
           "spy"
         ],
         "missions": [
@@ -4633,7 +4673,7 @@
   },
   {
     "object": "location",
-    "name": "toilet-ground-floor",
+    "name": "ground-floor-toilet",
     "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
     "dark": "false",
     "exits": [
@@ -4641,21 +4681,21 @@
         "object": "exit",
         "longname": "North",
         "direction": "n",
-        "source": "toilet-ground-floor",
+        "source": "ground-floor-toilet",
         "destination": "atrium"
       },
       {
         "object": "exit",
         "longname": "in",
         "direction": "i",
-        "source": "toilet-ground-floor",
-        "destination": "toilet-ground-floor-cubicle"
+        "source": "ground-floor-toilet",
+        "destination": "ground-floor-toilet-cubicle"
       }
     ]
   },
   {
     "object": "location",
-    "name": "toilet-ground-floor-cubicle",
+    "name": "ground-floor-toilet-cubicle",
     "description": "You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.",
     "dark": "false",
     "exits": [
@@ -4663,8 +4703,8 @@
         "object": "exit",
         "longname": "out",
         "direction": "o",
-        "source": "toilet-ground-floor-cubicle",
-        "destination": "toilet-ground-floor"
+        "source": "ground-floor-toilet-cubicle",
+        "destination": "ground-floor-toilet"
       }
     ],
     "inventory": [

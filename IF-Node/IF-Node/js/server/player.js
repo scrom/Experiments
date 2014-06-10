@@ -191,6 +191,16 @@ module.exports.Player = function Player(aUsername) {
             return _aggression;
         };
 
+        self.increaseAggression = function(changeValue) {
+            _aggression += changeValue;
+            return _aggression;
+        };
+
+        self.decreaseAggression = function(changeValue) {
+            _aggression -= changeValue;
+            return _aggression;
+        };
+
         self.getAggression = function() {
             //possibly replace the value with a "level" string 
             return _aggression;
@@ -256,13 +266,27 @@ module.exports.Player = function Player(aUsername) {
             var cash = _inventory.getCashBalance();
             if (cash > 0) { resultString+= "<br>You have &pound;" + cash.toFixed(2) + " in cash.<br>"; };
             return resultString;
-        };	
-
-        self.use = function(artefactName) {
+        };
+        
+        self.customAction = function(verb,artefactName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
-            return artefact.getDefaultAction();
+            if (artefact.checkCustomAction(verb)) {
+                return artefact.getDefaultResult()+"$result";
+            };
 
+            return null;              
+        }; 	
+
+        self.use = function(verb, artefactName) {
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            //if we define a custom result, return that. Otherwise perform default action.
+            var result = artefact.getDefaultResult();
+            if (result) {return result+"$result";};
+            
+            return artefact.getDefaultAction();
         };
 
         /*Allow player to get an object from a location*/
@@ -366,7 +390,8 @@ module.exports.Player = function Player(aUsername) {
 
             var resultString = "";
 
-            _aggression++;
+            self.increaseAggression(1);            
+            _currentLocation.reduceLocalFriendlyCreatureAffinity(1, artefact.getName());
 
             if ((artefact.getType() != 'creature')&&(artefact.getType() != 'friendly'))  {
                 resultString = "You set to with your ";
@@ -403,7 +428,8 @@ module.exports.Player = function Player(aUsername) {
                 //should be careful dropping things
                 if (verb == "throw") {
                     artefactDamage = artefact.break(verb, false);
-                    _aggression++; //grrrr
+                    self.increaseAggression(1); //grrrr
+                    _currentLocation.reduceLocalFriendlyCreatureAffinity(1, artefact.getName());
                 }
                 else {artefactDamage = artefact.bash();}; 
             } else {
@@ -750,7 +776,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
             //treat this as a kind act (if successful)
-            if (_aggression >0) {_aggression--;};
+            if (_aggression >0) {self.decreaseAggression(1);};
             return receiver.receive(collectedArtefact);
 
         };
@@ -854,7 +880,8 @@ module.exports.Player = function Player(aUsername) {
             if (!(giver)) {return "There's no "+giverName+" here.";};
 
             if (giver.getType() == "creature") {
-                _aggression++; //we're stealing!                        
+                self.increaseAggression(1); //we're stealing!  
+                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName());                      
                 return giver.theft(artefactName, _inventory, self);
             } else {
                 var locationInventory = _currentLocation.getInventoryObject();
@@ -1174,7 +1201,7 @@ module.exports.Player = function Player(aUsername) {
             _stepsTaken++;
 
             //reduce built up aggression every 2 moves
-            if ((_stepsTaken%2 == 0) && (_aggression>0)) {_aggression--;};
+            if ((_stepsTaken%2 == 0) && (_aggression>0)) {self.decreaseAggression(1);};
 
             //set player's current location
             var newLocationDescription = self.setLocation(newLocation);
@@ -1252,7 +1279,7 @@ module.exports.Player = function Player(aUsername) {
             _totalDamageReceived += pointsToRemove;
 
             //reduce aggression
-            if (_aggression >0) {_aggression--;};
+            if (_aggression >0) {self.decreaseAggression(1);};
             if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
 
             if (_hitPoints <=0) {return self.kill();};
@@ -1289,7 +1316,8 @@ module.exports.Player = function Player(aUsername) {
 
             //regardless of whether this is successful, 
             //by this point this is definitely an aggressive act. Increase aggression
-            _aggression ++;
+            self.increaseAggression(1);
+            _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
 
             //validate verb against weapon subType
             
@@ -1300,7 +1328,8 @@ module.exports.Player = function Player(aUsername) {
             if (receiver.isDestroyed()) { 
                 //wilful destruction of objects increases aggression further...
                 //note creatures return false for isDestroyed - we check "isDead" for those
-                _aggression ++;
+                self.increaseAggression(1);
+                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
                 resultString += emptyContentsOfContainer(receiver.getName());
                 removeObjectFromPlayerOrLocation(receiver.getName());
                 _destroyedObjects.push(receiver.getName());
@@ -1310,7 +1339,8 @@ module.exports.Player = function Player(aUsername) {
             if (receiver.isDead()) {
                 //killing creatures increases aggression further...
                 //note artefacts return false for isDead - we check "isDestroyed" for those
-                _aggression ++;     
+                self.increaseAggression(1); 
+                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());    
                 _killedCreatures.push(receiver.getName());          
             };
 
@@ -1359,7 +1389,7 @@ module.exports.Player = function Player(aUsername) {
 
             _hitPoints += duration*3;
             _aggression -= duration;
-            if (_aggression <0) {_aggression=0;}; //don't reduce aggression too far.
+            if (_aggression <0) {self.setAggression(0);}; //don't reduce aggression too far.
             //limit to max
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
@@ -1438,7 +1468,7 @@ module.exports.Player = function Player(aUsername) {
             //reset hp before healing
             _hitPoints = 0;
             //reset aggression
-            _aggression = 0;
+            self.setAggression(0);
             //reset hunger
             _timeSinceEating = 0;
             //drop all objects and return to start

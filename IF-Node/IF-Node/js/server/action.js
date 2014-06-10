@@ -420,18 +420,24 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.repair(_verb, _object0);
                         break;
                     case 'use':
-                        var newVerb = _player.use(_object0);
-                        if (newVerb == 'use') {newVerb = 'examine'}; //avoid infinite loop
-                        
-                        //replace verb but keep original object
-                        _actionString = _actionString.replace('use',newVerb);
+                        var newVerb = _player.use(_verb, _object0);
+                        if (newVerb.indexOf("$result") > 0) {
+                            //we got a custom result back
+                            description = newVerb.replace("$result","");
+                        } else {
 
-                        //if default action is more than just a single word verb, overwrite the entire original action.
-                        if (newVerb.indexOf(' ') > 0) {
-                            _actionString = newVerb;  
-                        };                     
+                            if (newVerb == 'use') {newVerb = 'examine'}; //avoid infinite loop
                         
-                        return self.act(_actionString);
+                            //replace verb but keep original object
+                            _actionString = _actionString.replace('use',newVerb);
+
+                            //if default action is more than just a single word verb, overwrite the entire original action.
+                            if (newVerb.indexOf(' ') > 0) {
+                                _actionString = newVerb;  
+                            };                     
+                        
+                            return self.act(_actionString);
+                        };
                         break;
                     case 'save':
                     case 'load':
@@ -458,6 +464,10 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'install':
                     default:
                         ticks = 0; //for now 
+
+                        //check for a custom verb and response here.
+                        description = _player.customAction(_verb, _object0);
+                        //console.log("Custom result:"+description);
                         //console.log('verb: '+_verb+' default response');
                         //allow fall-through
                 };

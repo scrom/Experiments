@@ -32,8 +32,8 @@ exports.rewardToStringReturnsValidJSON.meta = { traits: ["Mission Test", "JSON T
 
 
 exports.rewardPositivelyModifiesCreatureAffinity = function (test) {
-    var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon","decreaseAffinityFor": "james","successMessage": "Congratulations. You killed the spy! Have 50 points."};
-    var simon = m0.getCreature('simon');
+    var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon galbraith","decreaseAffinityFor": "james moore","successMessage": "Congratulations. You killed the spy! Have 50 points."};
+    var simon = m0.getCreature('simon galbraith');
 
     var m = new mission.Mission('mission');
     m.processAffinityModifiers(m0,reward)
@@ -49,8 +49,8 @@ exports.rewardPositivelyModifiesCreatureAffinity.meta = { traits: ["Mission Test
 
 
 exports.rewardNegativelyModifiesCreatureAffinity = function (test) {
-    var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon","decreaseAffinityFor": "james","successMessage": "Congratulations. You killed the spy! Have 50 points."};
-    var james = m0.getCreature('james');
+    var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon galbraith","decreaseAffinityFor": "james moore","successMessage": "Congratulations. You killed the spy! Have 50 points."};
+    var james = m0.getCreature('james moore');
 
     var m = new mission.Mission('mission');
     m.processAffinityModifiers(m0,reward)

@@ -24,6 +24,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _maxHitPoints = 0; //default
         var _hitPoints = 0; //default
         var _affinity = 0 // default // Goes up if you're nice to the creature, goes down if you're not.
+        var _baseAffinity = 0 // default // the original affinity the creature started with.
         var _dislikes = [];
         var _canTravel = false; //default //if true, may follow if friendly or aggressive. If false, won't follow a player. May also flee
         var _traveller = false; //default //if true, will wander when ticking unless in the same location as a player
@@ -70,7 +71,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (creatureAttributes.traveller== true || creatureAttributes.traveller == "true") { _traveller = true;};
             };
             if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
-            if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
+            if (creatureAttributes.affinity != undefined) {
+                _affinity = creatureAttributes.affinity;
+                _baseAffinity = creatureAttributes.affinity;
+            };
+            
             //if (creatureAttributes.dislikes != undefined) { _dislikes = creatureAttributes.dislikes;};
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
@@ -200,8 +205,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _name;
         };
 
+        self.checkCustomAction = function(verb) {
+            return false; 
+        };
+
         self.getDefaultAction = function() {
             return 'examine';
+        };
+
+        self.getDefaultResult = function() {
+            return null;
         };
 
 
@@ -498,6 +511,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.reduceAffinityModifier = function() {
             null; //do nothing - this only works for artefacts
+        };
+
+        self.reduceAffinity = function(reduceBy) {
+            _affinity -= reduceBy;
         };
 
         self.getInventoryWeight = function() {
@@ -810,11 +827,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (aDirection && self.isDead()) {return ""}; //if aDirection is not set, we're placing a dead creature somewhere.
             _moves++;
 
-            //slowly decrease affinity back down towards 0 the more time they spend following without a benefit.
+            //slowly decrease affinity back down towards original level the more time they spend following without a benefit.
             //affinity degrades slower the higher it is to start with. 
-            if (_affinity > 0) { 
+            if (_affinity > _baseAffinity) { 
                 if (_affinity < 5) {
-                    if (_moves%5 == 0 && _moves>0) {_affinity--;}; //degrade every 5 moves for affiity lower than 5
+                    if (_moves%5 == 0 && _moves>0) {_affinity--;}; //degrade every 5 moves for affinity lower than 5
                 } else if (_affinity < 10) {
                     if (_moves%10 == 0 && _moves>0) {_affinity--;}; //degrade every 10 moves for affinity 5-9
                 } else if (_affinity >= 10) {
@@ -850,25 +867,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var resultString = "";
 
-            if (_type == 'friendly') {
-                if (!(weapon)) {
-                    if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
-                        resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
-                    } else {
-                        resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
-                    };
-                };
-                return resultString+_genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
-            };
-
             if (!(weapon)) {
                 if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
-                    resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>You do no visible damage and end up coming worse-off. "; 
+                    resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
                 } else {
-                    resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>You do no visible damage and end up coming worse-off. "; 
+                    resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
                 };
-                resultString += player.hurt(self.getAttackStrength());
-                return resultString;
+
+                if (!(_type == 'friendly')) {
+                    resultString += "You do no visible damage and end up coming worse-off. ";
+                    resultString += player.hurt(self.getAttackStrength());
+                    return resultString;
+                };
+            };
+
+            if (_type == 'friendly') {
+                return resultString+_genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
             };
 
             //need to validate that artefact is a weapon (or at least is mobile)
@@ -914,24 +928,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.eat = function(aPlayer) {
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
-                if (self.isEdible()){
-                    _weight = 0;
-                    aPlayer.heal(_nutrition);
-                    _description = "the remains of a well-chewed "+self.getDisplayName();
-                    _detailedDescription = "All that's left are a few scraps of skin and hair.";
-                    var resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
-                    if (_nutrition >=0) {
-                        aPlayer.heal(_nutrition);
-                        resultString += "It was a bit messy but you feel fitter, happier and healthier.";
-                    } else { //nutrition is negative
-                        resultString += "Dead "+self.getName()+" really doesn't taste so great. ";
-                        resultString += aPlayer.hurt(_nutrition*-1);
-                    };
-                    return resultString;
-                } else {
-                    aPlayer.hurt(_attackStrength/4);
-                    return "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
+            if (!(self.isEdible())){
+                aPlayer.hurt(_attackStrength/4);
+                return "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
+            };
+
+            _weight = 0;
+            _description = "the remains of a well-chewed "+self.getDisplayName();
+            _detailedDescription = "All that's left are a few scraps of skin and hair.";
+            var resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
+
+            if (_nutrition >0) {
+                aPlayer.heal(_nutrition);
+                resultString += "It was a bit messy but you feel fitter, happier and healthier.";
+            } else { //nutrition is zero or negative
+                resultString += "Dead "+self.getName()+" really doesn't taste so great. ";
+                if (_nutrition < 0) {
+                    resultString += aPlayer.hurt(_nutrition*-1);
                 };
+            };
+
+            return resultString;
+
          }; 
 
         self.health = function() {

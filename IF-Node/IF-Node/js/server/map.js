@@ -358,8 +358,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         };
 
         self.getCreature = function(aCreatureName) {
-            //note, this *won't* find objects delivered by a mission or delivered by another object.
-
+            //get the first creature whose name matches the name passed in
             //loop through each location and location inventory. 
             //Get all objects by type: creature
             var creature;

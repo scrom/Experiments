@@ -14,6 +14,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _name = name.toLowerCase();
         var _synonyms = [];
         var _defaultAction = "examine";
+        var _defaultResult = null;
+        var _customAction = null;
         var _initialDescription = description; //save this for repairing later
         var _description = description;
         var _initialDetailedDescription = detailedDescription; //save this for repairing later
@@ -96,6 +98,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = attributes.defaultAction;};
+            if (artefactAttributes.defaultResult != undefined) { _defaultResult = attributes.defaultResult;};
+            if (artefactAttributes.customVerb != undefined) { _customAction = attributes.customVerb;};
             if (artefactAttributes.extendedinventorydescription != undefined) {
                 _extendedInventoryDescription = artefactAttributes.extendedinventorydescription;
             } else {
@@ -258,14 +262,29 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _name;
         }; 
 
+        self.checkCustomAction = function(verb) {
+            //console.log("custom action: "+_customAction+" verb:"+verb);
+            if (_customAction == verb) { 
+                return true; 
+            };
+            return false;
+        };
+
         self.getDefaultAction = function() {
             return _defaultAction;
+        };
+
+        self.getDefaultResult = function() {
+            return _defaultResult;
         };
 
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
             //currentAttributes.synonyms = _synonyms;
             //currentAttributes.defaultAction = _defaultAction;
+            //currentAttributes.defaultResult = _defaultResult;
+            //currentAttributes.customVerb = _customAction;
+            
             currentAttributes.extendedinventorydescription = _extendedInventoryDescription;
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.lockable = _lockable;
