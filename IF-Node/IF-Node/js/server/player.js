@@ -389,6 +389,7 @@ module.exports.Player = function Player(aUsername) {
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
             var resultString = "";
+            var weapon;
 
             self.increaseAggression(1);            
             _currentLocation.reduceLocalFriendlyCreatureAffinity(1, artefact.getName());
@@ -396,9 +397,11 @@ module.exports.Player = function Player(aUsername) {
             if ((artefact.getType() != 'creature')&&(artefact.getType() != 'friendly'))  {
                 resultString = "You set to with your ";
                 if (self.isArmed()) {
-                    var weapon = self.getWeapon(verb);
-                    resultString += weapon.getName();
-                } else {resultString += "bare hands and sheer malicious ingenuity"};
+                    weapon = self.getWeapon(verb);                    
+                };
+
+                if (weapon) { resultString += weapon.getName();} 
+                else {resultString += "bare hands and sheer malicious ingenuity"};
                 resultString += " in a bid to cause damage.<br>";
             };
                 

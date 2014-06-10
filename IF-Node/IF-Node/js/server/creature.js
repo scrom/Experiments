@@ -827,7 +827,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (aDirection && self.isDead()) {return ""}; //if aDirection is not set, we're placing a dead creature somewhere.
             _moves++;
 
-            //slowly decrease affinity back down towards original level the more time they spend following without a benefit.
+            //slowly erode affinity back towards original level the more time they spend moving (without a benefit or impact).
             //affinity degrades slower the higher it is to start with. 
             if (_affinity > _baseAffinity) { 
                 if (_affinity < 5) {
@@ -836,6 +836,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (_moves%10 == 0 && _moves>0) {_affinity--;}; //degrade every 10 moves for affinity 5-9
                 } else if (_affinity >= 10) {
                     if (_moves%20 == 0 && _moves>0) {_affinity--;}; //degrade every 20 moves for affinity 10 or more
+                };
+            };
+            if (_affinity < _baseAffinity) { 
+                if (_affinity > -5) {
+                    if (_moves%5 == 0 && _moves>0) {_affinity++;}; //degrade every 5 moves for affinity lower than 5
+                } else if (_affinity > -10) {
+                    if (_moves%10 == 0 && _moves>0) {_affinity++;}; //degrade every 10 moves for affinity 5-9
+                } else if (_affinity < -10) {
+                    if (_moves%20 == 0 && _moves>0) {_affinity++;}; //degrade every 20 moves for affinity 10 or more
                 };
             };
 

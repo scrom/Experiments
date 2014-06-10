@@ -239,10 +239,12 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.reduceLocalFriendlyCreatureAffinity = function(changeValue, excludedCreature) {
             //unless they really like the player, friendly creatures in the same location don't appreciate aggression.
+            console.log("attempting to reduce local creature affinity by"+changeValue+"except for "+excludedCreature);
             var creatures = self.getCreatures();
             for (var i=0; i<creatures.length;i++) {
-                if (creatures[i].getSubType() == "friendly" && (creatures[i].getAffinity <= 5)) {
+                if (creatures[i].getSubType() == "friendly" && (creatures[i].getAffinity() <= 5)) {
                     if (creatures[i].getName() != excludedCreature) {
+                        console.log("reducing affinity for"+creatures[i].getName());
                         creatures[i].reduceAffinity(changeValue);
                     };
                 };
