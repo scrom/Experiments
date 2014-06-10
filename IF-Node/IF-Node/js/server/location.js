@@ -94,9 +94,16 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.getRandomExit = function() {
             var availableExits = self.getAvailableExits();
-            //if (availableExits.length <= 1) {return null;};
+            var randomInt = 0;
+            if (availableExits.length <= 1) {
+                //give them a 2 in 3 chance of not being able to use the only available exit
+                randomInt = Math.floor(Math.random() * 3);
+                if (randomInt != 0) {
+                    return null;
+                };
+            };
 
-            var randomInt = Math.floor(Math.random() * (availableExits.length));
+            randomInt = Math.floor(Math.random() * (availableExits.length));
             //console.log('Random exit selected: '+availableExits[randomInt].getDirection());
             return availableExits[randomInt];
         };
