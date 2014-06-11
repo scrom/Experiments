@@ -472,6 +472,7 @@ exports.Action = function Action(aPlayer, aMap) {
 
                             //check for a custom verb and response here.
                             description = _player.customAction(_verb, _object0);
+                            if (description) { description = description.replace("$result", ""); };
                             //console.log("Custom result:"+description);
                             //console.log('verb: '+_verb+' default response');
                             //allow fall-through

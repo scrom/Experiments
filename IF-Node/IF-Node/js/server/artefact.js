@@ -99,7 +99,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = attributes.defaultAction;};
             if (artefactAttributes.defaultResult != undefined) { _defaultResult = attributes.defaultResult;};
-            if (artefactAttributes.customVerb != undefined) { _customAction = attributes.customVerb;};
+            if (artefactAttributes.customAction != undefined) { _customAction = attributes.customAction;};
             if (artefactAttributes.extendedinventorydescription != undefined) {
                 _extendedInventoryDescription = artefactAttributes.extendedinventorydescription;
             } else {
@@ -283,7 +283,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //currentAttributes.synonyms = _synonyms;
             //currentAttributes.defaultAction = _defaultAction;
             //currentAttributes.defaultResult = _defaultResult;
-            //currentAttributes.customVerb = _customAction;
+            //currentAttributes.customAction = _customAction;
             
             currentAttributes.extendedinventorydescription = _extendedInventoryDescription;
             currentAttributes.carryWeight = _inventory.getCarryWeight();
