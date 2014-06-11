@@ -269,9 +269,12 @@ module.exports.Player = function Player(aUsername) {
             return resultString;
         };
         
-        self.customAction = function(verb,artefactName) {
+        self.customAction = function (verb, artefactName) {
+            if (artefactName == undefined || artefactName == "" || artefactName == null) {
+                return null; //treat this as not understood
+            };
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {return null;}; //treat this as not understood too
             if (artefact.checkCustomAction(verb)) {
                 return artefact.getDefaultResult()+"$result";
             };
