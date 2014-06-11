@@ -1552,7 +1552,7 @@ module.exports.Player = function Player(aUsername) {
                 var missionReward = _missions[i].checkState(_inventory, _currentLocation);
                 if (missionReward) {
                     if (missionReward.hasOwnProperty("fail")) {
-                        resultString += "<br>You failed to complete the "+_missions[i].getName()+" task in time.<br>";
+                        resultString += "<br>"+missionReward.failMessage+"<br>";
                         _missionsFailed.push(_missions[i].getName());
                     } else {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
