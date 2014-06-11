@@ -232,7 +232,7 @@
         "longname": "West",
         "direction": "w",
         "source": "buenosaires",
-        "destination": "northeast-corridor-ground-floor"
+        "destination": "east-corridor-ground-floor-north-west"
       }
     ]
   },
@@ -864,7 +864,7 @@
         "longname": "North",
         "direction": "n",
         "source": "east-corridor-ground-floor",
-        "destination": "northeast-corridor-ground-floor"
+        "destination": "east-corridor-ground-floor-north-west"
       },
       {
         "object": "exit",
@@ -2325,30 +2325,74 @@
   },
   {
     "object": "location",
-    "name": "northeast-corridor-ground-floor",
-    "description": "You're in the North end of the ground floor East corridor.",
+    "name": "east-corridor-ground-floor-north-west",
+    "description": "You're standing in the corridor just outside the post room.",
     "dark": "false",
     "exits": [
       {
         "object": "exit",
         "longname": "North",
         "direction": "n",
-        "source": "northeast-corridor-ground-floor",
+        "source": "east-corridor-ground-floor-north-west",
         "destination": "reception"
       },
       {
         "object": "exit",
         "longname": "South",
         "direction": "s",
-        "source": "northeast-corridor-ground-floor",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "post-room"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "east-corridor-ground-floor-north-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "post-room",
+    "description": "You're in the post room.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "post-room",
+        "destination": "east-corridor-ground-floor-north-west"
+      }
+    ]
+  },
+    {
+    "object": "location",
+    "name": "east-corridor-ground-floor-north-east",
+    "description": "You're in the North end of the ground floor East corridor.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "east-corridor-ground-floor-north-east",
         "destination": "east-corridor-ground-floor"
       },
       {
         "object": "exit",
         "longname": "East",
         "direction": "e",
-        "source": "northeast-corridor-ground-floor",
+        "source": "east-corridor-ground-floor-north-east",
         "destination": "buenosaires"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "east-corridor-ground-floor-north-east",
+        "destination": "east-corridor-ground-floor-north-west"
       }
     ]
   },
@@ -2973,7 +3017,7 @@
         "longname": "South",
         "direction": "s",
         "source": "reception",
-        "destination": "northeast-corridor-ground-floor"
+        "destination": "east-corridor-ground-floor-north-west"
       }
     ],
     "inventory": [
