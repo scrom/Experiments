@@ -3336,7 +3336,7 @@
   {
     "object": "location",
     "name": "sales-main",
-    "description": "You're in the main sales and marketing area.<br>There's a lowl level hum of telephone conversation.",
+    "description": "You're in the main sales and marketing area.<br>There's a low level hum of telephone conversation.",
     "dark": "false",
     "exits": [
       {
