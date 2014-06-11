@@ -1174,13 +1174,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //if only one exit, random exit won't work so get the only one we can...
                     if (!(exit)) {exit = _currentLocation.getAvailableExits()[0];}; 
                     if (exit) {
-                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
+                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
                         //if creature ends up in player location (rather than starting there...
                         if (player.getLocation().getName() == _currentLocation.getName()) {
-                            resultString += "<br>"+initCap(self.getDisplayName())+" wanders in.<br>";  
+                            resultString += "<br>"+initCap(self.getDisplayName())+" wanders in.";  
                         } else {
                             //@todo bug  - this will never be seen by the player
-                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+".<br>"; 
+                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+"."; 
                         };  
                      };  
             

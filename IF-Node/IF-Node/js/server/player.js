@@ -151,7 +151,7 @@ module.exports.Player = function Player(aUsername) {
                         lostObjectCount++;
                     } else {
                         _inventory.add(objectToRemove);
-                        console.log(objectToRemove.getName().getName()+" saved.");
+                        console.log(objectToRemove.getName()+" saved.");
                     };
                 };
             };
@@ -168,7 +168,7 @@ module.exports.Player = function Player(aUsername) {
             if (lostObjectCount > 0) {remaining = "remaining ";};
 
             if (locationArtefact) {return "<br>The "+remaining+"contents are scattered on the floor.";};
-            return "You manage to gather up the "+remaining+"contents."
+            return "<br>You manage to gather up the "+remaining+"contents."
         };
 
         var notFoundMessage = function(objectName) {
