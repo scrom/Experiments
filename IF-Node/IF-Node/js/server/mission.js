@@ -16,6 +16,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         var _conditionAttributes = conditionAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
         var _destination = destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
+        var _ticking = false; //is the timer running?
         var _timeTaken = 0; //track time taken to complete.
         var _type = 'mission';
 
@@ -98,13 +99,25 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             return _isStatic;
         };
 
+        self.startTimer = function() {
+            if (!(_ticking)) {_ticking = true;};
+            return _ticking;
+        };
+
         self.addTicks = function(ticks) {
-            _timeTaken += ticks
+            if (_ticking) {
+                _timeTaken += ticks;
+            };
+        };
+
+        self.getTimeTaken = function() {
+            return _timeTaken;
         };
 
         self.success = function() {
             var returnObject = _reward;
             _reward=null;
+            _ticking = false;
             console.log("reward delivered from mission: "+returnObject);
             return returnObject;
         };
@@ -139,7 +152,12 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         };
 
         self.fail = function() {
+            var failMessage = "<br>You failed to complete the "+self.getName()+" task in time.<br>";;
+            if (_reward.hasOwnProperty("failMessage")) {failMessage = _reward.failMessage;};
             _reward=null;
+            _ticking = false;
+            console.log("mission "+self.getName()+" failed");
+            return {"fail":true, "failMessage":failMessage};
         };
 
         self.hasDialogue = function() {
@@ -178,7 +196,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         };
 
         self.checkState = function(playerInventory, location) {
-            //var coffeeMission = new missionObjectModule.Mission('sweetCoffee','Your first task is to get yourself a nice sweet cup of coffee.','',null,'sweet coffee',5,'player',{points: 50});
+            if (!(self.isActive())) {return null;}; //exit early if mission isn't running.
             var missionObject;
             //console.log('Checking state for mission: '+_name);
             switch(true) {
@@ -220,6 +238,14 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                     };                           
                 };
 
+                if (_conditionAttributes["time"]) {                       
+                    if (self.getTimeTaken() <= _conditionAttributes["time"]) {
+                        successCount++;
+                    } else {
+                        return self.fail();
+                    };                           
+                };
+
                 //check the rest of the object attributes if they exist
                 for (var attr in _conditionAttributes) {
                     if (objectAttributes.hasOwnProperty(attr)) {
@@ -243,7 +269,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         };
 
         self.isActive = function() {
-            if (_reward) {return true;}; //reward has not been given
+            if (_reward && _ticking) {return true;}; //reward has not been given
             return false;
         };
 

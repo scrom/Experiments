@@ -94,16 +94,18 @@
           {
             "object": "mission",
             "name": "destroyscreen",
-            "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",
+            "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
             "missionObject": "screen",
             "static": "true",
             "conditionAttributes": {
+			  "time": 10,
               "isDestroyed": "true"
             },
             "destination": "screen",
             "reward": {
               "score": -25,
-              "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points."
+              "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points.",
+			  "failMessage": "Ah well. You failed to destroy the screen quickly enough.<br>Never mind, it's probably better that way."
             }
           }
         ]

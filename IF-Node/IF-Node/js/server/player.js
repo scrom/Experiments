@@ -31,6 +31,7 @@ module.exports.Player = function Player(aUsername) {
         var _consumedObjects = []; //track names of all objects player has consumed
         var _stolenObjects = []; //track names of all objects player has stolen
         var _missionsCompleted = []; //track names of all missions completed
+        var _missionsFailed = []; //track names of all missions failed
         var _stepsTaken = 0; //only incremented when moving between locations but not yet used elsewhere
         var _locationsFound = 0;
         var _maxAggression = 0;
@@ -976,6 +977,7 @@ module.exports.Player = function Player(aUsername) {
                 };
                 if (newMissions.length>0) {resultString+= "<br><br>";};
                 for (var i=0; i< newMissions.length;i++) {
+                    newMissions[i].startTimer();
                     if (!(newMissions[i].isStatic())) {
                         self.addMission(newMissions[i]);
                         _currentLocation.removeMission(newMissions[i].getName());
@@ -1005,6 +1007,7 @@ module.exports.Player = function Player(aUsername) {
             };
             if (newMissions.length>0) {resultString+= "<br>";};
             for (var i=0; i< newMissions.length;i++) {
+                newMissions[i].startTimer();
                 if (!(newMissions[i].isStatic())) {
                     self.addMission(newMissions[i]);
                     artefact.removeMission(newMissions[i].getName());
@@ -1064,6 +1067,7 @@ module.exports.Player = function Player(aUsername) {
 
             if (newMissions.length>0) {resultString+= "<br>";};
             for (var i=0; i< newMissions.length;i++) {
+                newMissions[i].startTimer();
                 if (!(newMissions[i].isStatic())) {
                     self.addMission(newMissions[i]);
                     artefact.removeMission(newMissions[i].getName());
@@ -1136,6 +1140,7 @@ module.exports.Player = function Player(aUsername) {
 
             if (newMissions.length>0) {resultString+= "<br><br>";};
             for (var i=0; i< newMissions.length;i++) {
+                newMissions[i].startTimer();
                 if (!(newMissions[i].isStatic())) {
                     self.addMission(newMissions[i]);
                     _currentLocation.removeMission(newMissions[i].getName());
@@ -1544,17 +1549,21 @@ module.exports.Player = function Player(aUsername) {
 
             //check mission status
             for (var i=0; i< _missions.length;i++) {
-                _missions[i].addTicks(time);
                 var missionReward = _missions[i].checkState(_inventory, _currentLocation);
                 if (missionReward) {
-                    resultString += "<br>"+missionReward.successMessage+"<br>";
-                    if (missionReward.score) { _score += missionReward.score;};
-                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
-                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                    _missions[i].processAffinityModifiers(map, missionReward);
-                    _missionsCompleted.push(_missions[i].getName());
-                    newlyCompletedMissions.push(_missions[i].getName());
+                    if (missionReward.hasOwnProperty("fail")) {
+                        resultString += "<br>You failed to complete the "+_missions[i].getName()+" task in time.<br>";
+                        _missionsFailed.push(_missions[i].getName());
+                    } else {
+                        resultString += "<br>"+missionReward.successMessage+"<br>";
+                        if (missionReward.score) { _score += missionReward.score;};
+                        if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                        if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                        if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                        _missions[i].processAffinityModifiers(map, missionReward);
+                        _missionsCompleted.push(_missions[i].getName());
+                        newlyCompletedMissions.push(_missions[i].getName());
+                    };
                     self.removeMission(_missions[i].getName());
                 };
             };
@@ -1562,17 +1571,21 @@ module.exports.Player = function Player(aUsername) {
             //check missions from location
             var locationMissions = _currentLocation.getMissions();
             for (var j=0; j<locationMissions.length;j++) {
-                locationMissions[j].addTicks(time); //this will be buggy as we only do this when in the same location
                 var missionReward = locationMissions[j].checkState(_inventory, _currentLocation);
                 if (missionReward) {
-                    resultString += "<br>"+missionReward.successMessage+"<br>";
-                    if (missionReward.score) { _score += missionReward.score;};
-                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
-                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                    locationMissions[j].processAffinityModifiers(map, missionReward);
-                    _missionsCompleted.push(locationMissions[j].getName());
-                    newlyCompletedMissions.push(locationMissions[j].getName());
+                    if (missionReward.hasOwnProperty("fail")) {
+                        resultString += "<br>"+missionReward.failMessage+"<br>";
+                        _missionsFailed.push(locationMissions[j].getName());
+                    } else {
+                        resultString += "<br>"+missionReward.successMessage+"<br>";
+                        if (missionReward.score) { _score += missionReward.score;};
+                        if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                        if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                        if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                        locationMissions[j].processAffinityModifiers(map, missionReward);
+                        _missionsCompleted.push(locationMissions[j].getName());
+                        newlyCompletedMissions.push(locationMissions[j].getName());
+                    };
                     _currentLocation.removeMission(locationMissions[j].getName());
                 };
             };
@@ -1583,17 +1596,21 @@ module.exports.Player = function Player(aUsername) {
             for (var i=0; i<artefacts.length; i++) {
                 var artefactMissions = artefacts[i].getMissions();
                 for (var j=0; j<artefactMissions.length;j++) {
-                    artefactMissions[j].addTicks(time); //this will be buggy as we only do this when in the same location
                     var missionReward = artefactMissions[j].checkState(_inventory, _currentLocation);
                     if (missionReward) {
-                        resultString += "<br>"+missionReward.successMessage+"<br>";
-                        if (missionReward.score) { _score += missionReward.score;};
-                        if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
-                        if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                        if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                        artefactMissions[j].processAffinityModifiers(map, missionReward);
-                        _missionsCompleted.push(artefactMissions[j].getName());
-                        newlyCompletedMissions.push(artefactMissions[j].getName());
+                        if (missionReward.hasOwnProperty("fail")) {
+                            resultString += "<br>"+missionReward.failMessage+"<br>";
+                            _missionsFailed.push(artefactMissions[j].getName());
+                        } else {
+                            resultString += "<br>"+missionReward.successMessage+"<br>";
+                            if (missionReward.score) { _score += missionReward.score;};
+                            if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                            if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                            if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                            artefactMissions[j].processAffinityModifiers(map, missionReward);
+                            _missionsCompleted.push(artefactMissions[j].getName());
+                            newlyCompletedMissions.push(artefactMissions[j].getName());
+                        };
                         artefacts[i].removeMission(artefactMissions[j].getName());
                     };
                 };
@@ -1606,6 +1623,7 @@ module.exports.Player = function Player(aUsername) {
                     var missionName = newlyCompletedMissions[j]; 
                     if (allMissions[i].checkParent(missionName)) {allMissions[i].clearParent();};
                 };
+                allMissions[i].addTicks(time);
             };
 
             //check some stats
@@ -1681,7 +1699,9 @@ module.exports.Player = function Player(aUsername) {
             if (_killedCount > 0) { status += "You have been killed "+_killedCount+" times.<br>"};
             status += "You have taken "+_stepsTaken+" steps.<br>"; 
             status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" possible locations.<br>";
-            if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" missions.<br>";}; 
+            if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" tasks.<br>";};
+            if (_missionsFailed.length > 0) {status += "You have failed "+_missionsFailed.length+" tasks.<br>";};
+             
             if (_booksRead > 0) {status += "You have read "+_booksRead+" books or articles.<br>";};
             if (_creaturesSpokenTo > 0) {status += "You have spoken to "+_creaturesSpokenTo+" characters.<br>";};
             

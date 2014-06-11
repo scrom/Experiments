@@ -1055,6 +1055,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if creature has missions - return dialogue.
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
+                    newMissions[i].startTimer();
                     response += "<br>"+_missions[i].getNextDialogue();
                 };
             };
