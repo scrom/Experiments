@@ -864,7 +864,7 @@
         "longname": "North",
         "direction": "n",
         "source": "east-corridor-ground-floor",
-        "destination": "east-corridor-ground-floor-north-west"
+        "destination": "east-corridor-ground-floor-north-east"
       },
       {
         "object": "exit",
@@ -4310,6 +4310,27 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "first aid kit",
+        "description": "first aid kit",
+        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 5
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
+        ]
+      },
       {
         "object": "artefact",
         "name": "postcard",

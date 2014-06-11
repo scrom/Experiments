@@ -195,8 +195,12 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             return false;
         };
 
-        self.checkState = function(playerInventory, location) {
-            if (!(self.isActive())) {return null;}; //exit early if mission isn't running.
+        self.checkState = function (playerInventory, location) {
+            //Note: even if not actually ticking (active), we still check state 
+            //this avoids the trap of user having to find a way to activate a mission when all the work is done
+            //we don't however check state for missions that still have a parent set as these should not yet be accessible
+            //we also exit early if the mission is already failed or completed
+            if (self.isFailedOrComplete()||self.hasParent()) { return null; }; 
             var missionObject;
             //console.log('Checking state for mission: '+_name);
             switch(true) {
@@ -269,8 +273,13 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         };
 
         self.isActive = function() {
-            if (_reward && _ticking) {return true;}; //reward has not been given
+            if (_reward && _ticking) {return true;}; //reward has not been given/cleared ad timer is running
             return false;
+        };
+
+        self.isFailedOrComplete = function () {
+            if (_reward) { return false; }; //reward has not been given/cleared
+            return true;
         };
 
         ////end public methods

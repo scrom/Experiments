@@ -1,6 +1,6 @@
 "use strict";
 //main bootstrap code for game client
-    var serverHost = 'pm-simonc';
+    var serverHost = 'captain-laptop';
     var serverPort = 1337;
 	var ui;
     var client;

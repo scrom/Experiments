@@ -16,8 +16,8 @@ exports.Config = function Config() {
 
         //naughty non-encapsulated public class variables
         this.port = process.env.port || 1337; //port to use
-        this.hostname = 'PM-SIMONC';
-	    this.sessionLimit = gameLimit*(gameUserLimit+gameWatcherLimit); //max number of sessions games*(players + watchers)
+        this.hostname = 'captain-laptop';
+	    this.sessionLimit = gameLimit*(gameUserLimit+gameWatcherLimit); //max number of sessions games*(players + watchers);
 
         console.log(objectName+' created');
     }
