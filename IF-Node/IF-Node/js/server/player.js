@@ -1401,7 +1401,6 @@ module.exports.Player = function Player(aUsername) {
             //limit to max
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
-            if (healthPercent() > _bleedingHealthThreshold) {_bleeding = false};
             console.log('player rested. HP remaining: '+_hitPoints);
 
             if  (!((initialKilledCount < _killedCount)|| initialHP >= _hitPoints)) {
@@ -1414,14 +1413,71 @@ module.exports.Player = function Player(aUsername) {
             return resultString;
         };
 
-        self.heal = function(pointsToAdd) {
-            _hitPoints += pointsToAdd;
+        self.recover = function(pointsToAdd) {
             if (_hitPoints <_maxHitPoints) {_hitPoints += pointsToAdd;};
             //limit to max
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
-            if (healthPercent() > _bleedingHealthThreshold) {_bleeding = false;};
+            console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+        };
+
+        self.heal = function() {
+            if (_hitPoints == _maxHitPoints) {return "You don't need healing at the moment.";};
+            var pointsToAdd = 0;
+            var pointsNeeded = _maxHitPoints-_hitPoints;
+            if (healthPercent() >60) {
+                //add 50% of remaining health to gain.
+                pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
+            } else {
+                //get health up to 60% only
+                pointsToAdd = Math.floor(((0.60*_maxHitPoints)-_hitPoints));
+            };
+
+            var resultString = "You ";
+
+            //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
+
+            //get first aid kit or similar...
+            var locationObject = false;
+            var medicalArtefact = _inventory.getObjectByType("medical");
+            if (!(medicalArtefact)) {
+                medicalArtefact = _currentLocation.getObjectByType("medical");
+                locationObject = true;
+            };
+
+            if (!(medicalArtefact)) { return resultString+" don't have anything to heal yourself with."};
+
+            //we do have something to heal with...
+
+            //use up one charge and consume if all used up...
+            medicalArtefact.consume();
+            
+            if (medicalArtefact.chargesRemaining() == 0) {
+                if (locationObject) {
+                    _currentLocation.removeObject(medicalArtefact.getName());
+                } else {
+                    _inventory.remove(medicalArtefact.getName());
+                };
+
+                resultString += " used up the last of your "+medicalArtefact.getName()+" but";
+            } else {
+                resultString += " use "+medicalArtefact.getDescription()+" to heal yourself. You";
+            };
+
+            //reciver health points
+            self.recover(pointsToAdd);
+            
+            //did we stop the bleeding?
+            if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
+                _bleeding = false;
+                resultString += " manage to stop your bleeding and ";
+            };
+
+            resultString += " feel much better.<br>You'd still benefit from a rest though.";
+
             console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+
+            return resultString;
         };
 
         self.eat = function(verb, artefactName) {
@@ -1484,7 +1540,9 @@ module.exports.Player = function Player(aUsername) {
             for(var i = 0; i < inventoryContents.length; i++) {
                 _currentLocation.addObject(removeObjectFromPlayer(inventoryContents[i].getName()));
             }; 
-            self.heal(100);
+
+            _bleeding = false;
+            self.recover(100);
 
             resultString += "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>"+
                    "Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>"+
@@ -1498,28 +1556,32 @@ module.exports.Player = function Player(aUsername) {
          };
 
         self.health = function() {
+            var resultString = "";
+
             switch(true) {
                     case (healthPercent()>99):
-                        return "You're the picture of health.";
+                        resultString = "You're generally the picture of health.";
                         break;
                     case (healthPercent()>80):
-                        return "You're just getting warmed up.";
+                        resultString = "You're just getting warmed up.";
                         break;
                     case (healthPercent()>_bleedingHealthThreshold):
-                        return "You've taken a fair beating.";
+                        resultString = "You've taken a fair beating.";
                         break;
                     case (healthPercent()>25):
-                        return "You're bleeding heavily and really not in good shape.";
+                        resultString = "You're really not in good shape.";
                         break;
                     case (healthPercent()>10):
-                        return "You're dying.";
+                        resultString = "You're dying.";
                         break;
                     case (healthPercent()>0):
-                        return "You're almost dead.";
+                        resultString = "You're almost dead.";
                         break;
                     default:
-                        return "You're dead.";
+                        resultString = "You're dead.";
             };
+            if (_bleeding) {resultString += " It looks like you're bleeding. You might want to get that seen to.";};
+            return resultString;
         };
 
         self.acceptItem = function(anObject)  {
@@ -1657,7 +1719,7 @@ module.exports.Player = function Player(aUsername) {
 
             if (_bleeding) {resultString+="<br>You're bleeding. ";};           
 
-            if (healPoints>0 && (_hitPoints < _maxHitPoints)) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
+            if (healPoints>0 && (_hitPoints < _maxHitPoints)) {self.recover(healPoints);};   //heal before damage - just in case it's enough to not get killed.
             if (damage>0) {resultString+= self.hurt(damage);};        
 
             return resultString;

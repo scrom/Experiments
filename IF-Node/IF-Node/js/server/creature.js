@@ -23,6 +23,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _type = 'creature'; //default
         var _maxHitPoints = 0; //default
         var _hitPoints = 0; //default
+        var _bleedingHealthThreshold = 50; //health needs to be at 50% or lower to be bleeding.
         var _affinity = 0 // default // Goes up if you're nice to the creature, goes down if you're not.
         var _baseAffinity = 0 // default // the original affinity the creature started with.
         var _dislikes = [];
@@ -824,7 +825,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.followPlayer = function(aDirection, aLocation) {
-            if (self.canTravel()) {return self.go(aDirection, aLocation)};
+            if (self.canTravel()) {
+                //erode affinity lower than base if following a player (prevents indefinite following)
+                if ((_affinity == _baseAffinity) && _affinity>0) {
+                    if (_moves%5 == 0 && _moves>0) {_affinity--;};
+                };
+                return self.go(aDirection, aLocation)
+            };
             return "";
         };
 
@@ -921,19 +928,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
         };
 
-        self.heal = function(pointsToAdd) {
+        self.recover = function(pointsToAdd) {
             if (_hitPoints < _maxHitPoints) {
                 _hitPoints += pointsToAdd;
                 if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;}
 
-                if (healthPercent() > 50) {_bleeding = false};
-                console.log('Creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+                console.log('Creature health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
             };
+        };
+
+        
+        self.heal = function(pointsToAdd) {
+            self.recover(pointsToAdd);
+            if (healthPercent() > _bleedingHealthThreshold) {_bleeding = false;};
+            console.log('Creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
         self.feed = function(pointsToAdd) {
             _affinity++;
-            self.heal(pointsToAdd);
+            self.recover(pointsToAdd);
             console.log('Creature eats some food.');
         };
 
@@ -954,7 +967,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
 
             if (_nutrition >0) {
-                aPlayer.heal(_nutrition);
+                aPlayer.recover(_nutrition);
                 resultString += "It was a bit messy but you feel fitter, happier and healthier.";
             } else { //nutrition is zero or negative
                 resultString += "Dead "+self.getName()+" really doesn't taste so great. ";
@@ -971,7 +984,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log('creature health: '+_hitPoints);
             switch(true) {
                     case (healthPercent()>99):
-                        return _genderPrefix+"'s still the picture of health.";
+                        return _genderPrefix+"'s generally the picture of health.";
                         break;
                     case (healthPercent()>80):
                         return _genderPrefix+"'s not happy.";
@@ -980,7 +993,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         return _genderPrefix+"'s taken a fair beating.";
                         break;
                     case (healthPercent()>25):
-                        return _genderPrefix+"'s bleeding heavily and really not in good shape.";
+                        return _genderPrefix+"'s really not in good shape.";
                         break;
                     case (healthPercent()>10):
                         return _genderPrefix+"'s dying.";
@@ -991,6 +1004,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     default:
                         return _genderPrefix+"'s dead.";
             };
+            if (_bleeding) {resultString += "<br>It looks like "+_genderPrefix+"'s bleeding. "+_genderDescriptivePrefix+" likely to die without some first aid.";};
         };
 
         self.break = function(verb, deliberateAction) {
@@ -1010,6 +1024,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _hitPoints = 0;
             if (_affinity >=0) {_affinity=-1;}; //just in case!
             _edible = true;
+            _bleeding = false;
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+self.getDisplayName().replace("the ","");
@@ -1055,7 +1070,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if creature has missions - return dialogue.
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
-                    newMissions[i].startTimer();
+                    _missions[i].startTimer();
                     response += "<br>"+_missions[i].getNextDialogue();
                 };
             };
@@ -1196,7 +1211,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };     
 
-            if (healPoints>0) {self.heal(healPoints);};   //heal before damage - just in case it's enough to not get killed.
+            if (healPoints>0) {self.recover(healPoints);};   //heal before damage - just in case it's enough to not get killed.
             if (damage>0) {_hitPoints -=damage;};
             //consider fleeing here if not quite dead
             if (self.isDead()) {

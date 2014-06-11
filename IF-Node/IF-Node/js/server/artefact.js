@@ -179,7 +179,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         processAttributes(attributes);
 
         var validateType = function(type, subType) {
-            var validobjectTypes = ['weapon','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
+            var validobjectTypes = ['weapon','medical','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             console.log(_name+' type validated: '+type);
 
@@ -1208,7 +1208,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _weight = 0;
                 var resultString = "You drink "+self.getDisplayName()+". "
                 if (_nutrition >=0) {
-                    aPlayer.heal(_nutrition);
+                    aPlayer.recover(_nutrition);
                     resultString += "You feel fitter, happier and healthier.";
                 } else { //nutrition is negative
                     resultString += aPlayer.hurt(_nutrition*-1);
@@ -1228,7 +1228,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     _weight = 0;
                     var resultString = "You eat "+self.getDisplayName()+". "
                     if (_nutrition >=0) {
-                        aPlayer.heal(_nutrition);
+                        aPlayer.recover(_nutrition);
                         resultString += "You feel fitter, happier and healthier.";
                     } else { //nutrition is negative
                         resultString += "That wasn't a good idea. ";

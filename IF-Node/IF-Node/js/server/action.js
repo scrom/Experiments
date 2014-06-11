@@ -193,6 +193,9 @@ exports.Action = function Action(aPlayer, aMap) {
                             ticks = 0;
                             description = _player.health();
                             break;
+                        case 'heal':
+                            description = _player.heal();
+                            break;
                         case 'stats':
                         case 'statistics':
                         case 'score':
