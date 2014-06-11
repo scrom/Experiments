@@ -827,7 +827,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.followPlayer = function(aDirection, aLocation) {
             if (self.canTravel()) {
                 //erode affinity lower than base if following a player (prevents indefinite following)
-                if ((_affinity == _baseAffinity) && _affinity>0) {
+                //it'll recover again as part of bsic creature wandering.
+                if ((_affinity <= _baseAffinity) && _affinity>0) {
                     if (_moves%5 == 0 && _moves>0) {_affinity--;};
                 };
                 return self.go(aDirection, aLocation)
