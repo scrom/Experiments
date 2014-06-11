@@ -1742,17 +1742,67 @@ module.exports.Player = function Player(aUsername) {
             //want to limit this to only creatures the player has actually encountered.
             //also iterating over all creatures is a performance issue.
             var creatures = map.getAllCreatures();
+            var livingCreatureCount = 0;
+            var extremeNegativeCount = 0;
+            var negativeCount = 0;
+            var waryCount = 0;
+            var neutralCount = 0;
+            var positiveCount = 0;
+            var extremePositiveCount = 0;
             var maxAffinity = 0;
             var minAffinity = 0;
             for (var i=0;i<creatures.length;i++) {
+                if (!(creatures[i].isDead())) { livingCreatureCount++;};
                 var creatureAffinity = creatures[i].getAffinity();
+
+                switch (true) {
+                    case (creatureAffinity > 5):
+                        extremePositiveCount++;
+                        break;
+                    case (creatureAffinity > 0):
+                        positiveCount++;
+                        break;
+                    case (creatureAffinity < -5):
+                        extremeNegativeCount++;
+                        break;
+                    case (creatureAffinity < -2):
+                        negativeCount++;
+                        break;
+                    case (creatureAffinity < 0):
+                        waryCount++;
+                        break;
+                    default:
+                        neutralCount++
+                        break;
+                };
+
+                var waryPercent = (waryCount / livingCreatureCount) * 100;
+                var strongLikePercent = (extremePositiveCount / livingCreatureCount) * 100;
+                var likePercent = (positiveCount / livingCreatureCount) * 100;
+                var strongDislikePercent = (extremeNegativeCount / livingCreatureCount) * 100;
+                var dislikePercent = (negativeCount / livingCreatureCount) * 100;
+                var neutralPercent = (neutralCount / livingCreatureCount) * 100;
+
                 if (creatureAffinity < minAffinity) {minAffinity = creatureAffinity;};
                 if (creatureAffinity > maxAffinity) {maxAffinity = creatureAffinity;};
             };
-            return {"max":maxAffinity, "min":minAffinity};
+            return { "max": maxAffinity, "min": minAffinity, "strongLike": strongLikePercent, "like": likePercent, "wary": waryPercent, "strongDislike": strongDislikePercent, "dislike": dislikePercent, "neutral": neutralPercent };
         };
 
-        self.stats = function(map) {
+        self.stats = function (map) {
+            //private local function
+            var pluralise = function (number, units) {
+                var resultString = number + " " + units;
+                if (number == 1) { return resultString; };
+                return resultString+"s";
+            };
+
+            var temporise = function (number) {
+                if (number == 1) { return "once" }
+                if (number == 2) { return "twice" }
+                return number + " times";
+            };
+
             var maxScore = map.getMaxScore(); 
             var mapLocationCount = map.getLocationCount();
             var maxMinAffinity = self.getMaxMinAffinity(map);
@@ -1761,34 +1811,41 @@ module.exports.Player = function Player(aUsername) {
 
             status += "<i>Statistics:</i><br>";
             status += "Your score is "+_score+" out of "+maxScore+"<br>";
-            if (_killedCount > 0) { status += "You have been killed "+_killedCount+" times.<br>"};
-            status += "You have taken "+_stepsTaken+" steps.<br>"; 
+            if (_killedCount > 0) { status += "You have been killed "+pluralise(_killedCount, "time")+".<br>"};
+            status += "You have taken "+pluralise(_stepsTaken,"step")+".<br>"; 
             status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" possible locations.<br>";
-            if (_missionsCompleted.length > 0) {status += "You have completed "+_missionsCompleted.length+" tasks.<br>";};
-            if (_missionsFailed.length > 0) {status += "You have failed "+_missionsFailed.length+" tasks.<br>";};
+            if (_missionsCompleted.length > 0) { status += "You have completed " + pluralise(_missionsCompleted.length,"task") + ".<br>"; };
+            if (_missionsFailed.length > 0) { status += "You have failed " + pluralise(_missionsFailed.length,"task") + ".<br>"; };
              
-            if (_booksRead > 0) {status += "You have read "+_booksRead+" books or articles.<br>";};
-            if (_creaturesSpokenTo > 0) {status += "You have spoken to "+_creaturesSpokenTo+" characters.<br>";};
+            if (_booksRead > 0) { status += "You have read " + pluralise(_booksRead, "item") + ".<br>"; };
+            if (_creaturesSpokenTo > 0) { status += "You have spoken to " + pluralise(_creaturesSpokenTo,"character") + ".<br>"; };
             
-            if (_repairSkills.length > 0) {status += "You have gained "+_repairSkills.length+" skills.<br>";};
-            if (_consumedObjects.length > 0) {status += "You have eaten or drunk "+_consumedObjects.length+" items.<br>";};   
+            if (_repairSkills.length > 0) { status += "You have gained " + pluralise(_repairSkills.length,"skill") + ".<br>"; };
+            if (_consumedObjects.length > 0) { status += "You have eaten or drunk " + pluralise(_consumedObjects.length,"item") + ".<br>"; };
             
-            if (_restsTaken > 0) {status += "You have rested "+_restsTaken+" times.<br>";};
-            if (_sleepsTaken > 0) {status += "You have slept "+_sleepsTaken+" times.<br>";};
+            if (_restsTaken > 0) {status += "You have rested "+temporise(_restsTaken)+".<br>";};
+            if (_sleepsTaken > 0) {status += "You have slept "+temporise(_sleepsTaken)+".<br>";};
 
             if (_stolenCash > 0) status += "You have stolen a total of &pound;"+_stolenCash+" in cash.<br>";
-            if (_stolenObjects.length > 0) {status += "You have stolen "+_stolenObjects.length+" items.<br>";};             
-            if (_destroyedObjects.length > 0) {status += "You have destroyed "+_destroyedObjects.length+" items.<br>";};             
-            if (_killedCreatures.length > 0) {status += "You have killed "+_killedCreatures.length+" characters.<br>";};             
+            if (_stolenObjects.length > 0) {status += "You have stolen "+pluralise(_stolenObjects.length,"item")+".<br>";};             
+            if (_destroyedObjects.length > 0) { status += "You have destroyed " + pluralise(_destroyedObjects.length, "item") + ".<br>"; };
+            if (_killedCreatures.length > 0) {status += "You have killed "+pluralise(_killedCreatures.length,"character")+".<br>";};             
 
             if (_aggression > 0) {status += "Your aggression level is "+self.getAggression()+".<br>";};
             if (_maxAggression > 0) {status += "Your maximum aggression level so far is "+_maxAggression+".<br>";};
-            if (maxMinAffinity.max > 0) {status += "Your maximum character affinity so far is "+maxMinAffinity.max+".<br>";};
-            if (maxMinAffinity.min < 0) {status += "Your minimum character affinity so far is "+maxMinAffinity.min+".<br>";};
+            //if (maxMinAffinity.max > 0) {status += "Your maximum character affinity so far is "+maxMinAffinity.max+".<br>";};
+            //if (maxMinAffinity.min < 0) {status += "Your minimum character affinity so far is "+maxMinAffinity.min+".<br>";};
             
-            if (_injuriesReceived > 0) {status += "You have been injured "+_injuriesReceived+" times.<br>";};
+            if (_injuriesReceived > 0) {status += "You have been injured "+pluralise(_injuriesReceived,"time")+".<br>";};
             if (_totalDamageReceived > 0) {status += "You have received "+_totalDamageReceived+" points of damage (in total) during this game.<br>";};
             //if (_objectsChewed > 0) status += "You have chewed "+_objectsChewed+" objects.<br>";
+
+            status += "<br>In a survey of your popularity..."
+            if (Math.ceil(maxMinAffinity.strongLike) > 0) { status += "<br> " + Math.ceil(maxMinAffinity.strongLike) + "% of characters said they 'strongly liked' you."; };
+            if (Math.ceil(maxMinAffinity.like) > 0) { status += "<br> " + Math.ceil(maxMinAffinity.like) + "% of characters said they 'liked' you."; };
+            if (Math.ceil(maxMinAffinity.wary) > 0) { status += "<br> " + Math.ceil(maxMinAffinity.wary) + "% of characters said they were 'wary' of you."; };
+            if (Math.ceil(maxMinAffinity.dislike + maxMinAffinity.strongDislike) > 0) { status += "<br> " + Math.ceil(maxMinAffinity.dislike + maxMinAffinity.strongDislike) + "% of characters said they 'disliked' or 'strongly disliked' you."; };           
+
             return status;
         };
 

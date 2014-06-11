@@ -98,14 +98,14 @@
             "missionObject": "screen",
             "static": "true",
             "conditionAttributes": {
-			  "time": 10,
+              "time": 10,
               "isDestroyed": "true"
             },
             "destination": "screen",
             "reward": {
               "score": -25,
               "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points.",
-			  "failMessage": "Ah well. You failed to destroy the screen quickly enough.<br>Never mind, it's probably better that way."
+              "failMessage": "Ah well. You failed to destroy the screen quickly enough.<br>Never mind, it's probably better that way."
             }
           }
         ]
@@ -396,7 +396,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -422,7 +421,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -448,7 +446,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -474,7 +471,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -581,7 +577,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -717,7 +712,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 140,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -872,6 +866,64 @@
         "direction": "e",
         "source": "east-corridor-ground-floor",
         "destination": "signpost"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "east-corridor-ground-floor-north-east",
+    "description": "You're in the North end of the ground floor East corridor.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "east-corridor-ground-floor-north-east",
+        "destination": "east-corridor-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-corridor-ground-floor-north-east",
+        "destination": "buenosaires"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "east-corridor-ground-floor-north-east",
+        "destination": "east-corridor-ground-floor-north-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "east-corridor-ground-floor-north-west",
+    "description": "You're standing in the corridor just outside the post room.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "reception"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "post-room"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "east-corridor-ground-floor-north-east"
       }
     ]
   },
@@ -2152,11 +2204,9 @@
           "attackStrength": 20,
           "type": "junk",
           "canCollect": true,
-          "breakable":  true,
+          "breakable": true,
           "customAction": "play",
           "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte."
-         
-
         },
         "synonyms": [
           "spanish",
@@ -2341,79 +2391,6 @@
         "direction": "s",
         "source": "mercedes",
         "destination": "core-area-west"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "east-corridor-ground-floor-north-west",
-    "description": "You're standing in the corridor just outside the post room.",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "east-corridor-ground-floor-north-west",
-        "destination": "reception"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "east-corridor-ground-floor-north-west",
-        "destination": "post-room"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "east-corridor-ground-floor-north-west",
-        "destination": "east-corridor-ground-floor-north-east"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "post-room",
-    "description": "You're in the post room.",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "post-room",
-        "destination": "east-corridor-ground-floor-north-west"
-      }
-    ]
-  },
-    {
-    "object": "location",
-    "name": "east-corridor-ground-floor-north-east",
-    "description": "You're in the North end of the ground floor East corridor.",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "east-corridor-ground-floor-north-east",
-        "destination": "east-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "east-corridor-ground-floor-north-east",
-        "destination": "buenosaires"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "east-corridor-ground-floor-north-east",
-        "destination": "east-corridor-ground-floor-north-west"
       }
     ]
   },
@@ -3000,6 +2977,21 @@
   },
   {
     "object": "location",
+    "name": "post-room",
+    "description": "You're in the post room.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "post-room",
+        "destination": "east-corridor-ground-floor-north-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "punts",
     "description": "You're in the Punts meeting room. It's probably the narrowest meeting room in the building. Just room for 2 and a PC.",
     "dark": "false",
@@ -3397,7 +3389,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -3424,7 +3415,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 110,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -3450,7 +3440,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -3477,7 +3466,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -3503,7 +3491,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 100,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
@@ -4823,7 +4810,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 100,
-          "affinity": 1,
           "canTravel": true,
           "traveller": true
         },
