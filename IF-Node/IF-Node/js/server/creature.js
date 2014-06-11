@@ -326,10 +326,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        self.getMissions = function() {
+        self.getMissions = function(includeChildren) {
             var missions = [];
             for (var i=0; i < _missions.length; i++) {
-                missions.push(_missions[i]);
+                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                    missions.push(_missions[i]);
+                };
             };
             return missions;
         };
@@ -454,7 +456,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             var hasDialogue = false;
             for (var i=0; i< _missions.length;i++) {
-                if (_missions[i].hasDialogue()) {
+                if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
                     hasDialogue = true;
                     break;
                 };
@@ -1052,7 +1054,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //if creature has missions - return dialogue.
             for (i=0; i< _missions.length; i++) {
-                if (_missions[i].hasDialogue()) {
+                if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
                     response += "<br>"+_missions[i].getNextDialogue();
                 };
             };

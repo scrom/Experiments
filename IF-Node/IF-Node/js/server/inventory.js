@@ -231,15 +231,15 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return _items;
         };
 
-        self.getAllObjectsAndChildren = function() {
+        self.getAllObjectsAndChildren = function(includeInaccessible) {
             var objects = _items;
             for (var i=0;i<_items.length;i++) {
                 //only return accessible children.
-                if (_items[i].getType() != 'creature' && (!(_items[i].isLocked()))) {
-                    if (_items[i].isOpen()) {
+                if ((_items[i].getType() != 'creature' && (!(_items[i].isLocked()))) || includeInaccessible == true) {
+                    if (_items[i].isOpen()|| includeInaccessible == true) {
                         var itemInventory = _items[i].getInventoryObject();
                         if (itemInventory.size()>0) {
-                            objects = objects.concat(itemInventory.getAllObjectsAndChildren());
+                            objects = objects.concat(itemInventory.getAllObjectsAndChildren(includeInaccessible));
                         };
                     };
                 };

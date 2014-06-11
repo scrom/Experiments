@@ -144,8 +144,8 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return _inventory.getAllObjects();
         };
 
-        self.getAllObjectsAndChildren = function() {
-            return _inventory.getAllObjectsAndChildren();
+        self.getAllObjectsAndChildren = function(includeInaccessible) {
+            return _inventory.getAllObjectsAndChildren(includeInaccessible);
         };
 
         self.getAllObjectsOfType = function(anObjectType) {
@@ -204,10 +204,12 @@ exports.Location = function Location(aName, aDescription, isDark) {
             };
         };
 
-        self.getMissions = function() {
+        self.getMissions = function(includeChildren) {
             var missions = [];
             for (var i=0; i < _missions.length; i++) {
-                missions.push(_missions[i]);
+                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                    missions.push(_missions[i]);
+                };
             };
             return missions;
         };

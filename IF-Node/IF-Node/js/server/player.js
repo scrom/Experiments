@@ -1540,6 +1540,8 @@ module.exports.Player = function Player(aUsername) {
             var damage = 0;
             var healPoints = 0;
 
+            var newlyCompletedMissions = [];
+
             //check mission status
             for (var i=0; i< _missions.length;i++) {
                 _missions[i].addTicks(time);
@@ -1552,6 +1554,7 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     _missions[i].processAffinityModifiers(map, missionReward);
                     _missionsCompleted.push(_missions[i].getName());
+                    newlyCompletedMissions.push(_missions[i].getName());
                     self.removeMission(_missions[i].getName());
                 };
             };
@@ -1569,13 +1572,14 @@ module.exports.Player = function Player(aUsername) {
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     locationMissions[j].processAffinityModifiers(map, missionReward);
                     _missionsCompleted.push(locationMissions[j].getName());
+                    newlyCompletedMissions.push(locationMissions[j].getName());
                     _currentLocation.removeMission(locationMissions[j].getName());
                 };
             };
 
             //check missions from location and inventory objects
-            var artefacts = _currentLocation.getAllObjectsAndChildren();
-            artefacts = artefacts.concat(_inventory.getAllObjectsAndChildren());
+            var artefacts = _currentLocation.getAllObjectsAndChildren(false);
+            artefacts = artefacts.concat(_inventory.getAllObjectsAndChildren(false));
             for (var i=0; i<artefacts.length; i++) {
                 var artefactMissions = artefacts[i].getMissions();
                 for (var j=0; j<artefactMissions.length;j++) {
@@ -1589,8 +1593,18 @@ module.exports.Player = function Player(aUsername) {
                         if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                         artefactMissions[j].processAffinityModifiers(map, missionReward);
                         _missionsCompleted.push(artefactMissions[j].getName());
+                        newlyCompletedMissions.push(artefactMissions[j].getName());
                         artefacts[i].removeMission(artefactMissions[j].getName());
                     };
+                };
+            };
+
+            //clear parents from any child missions to make them accessible
+            var allMissions = map.getAllMissions();
+            for (var i=0;i<allMissions.length;i++) {
+                for (var j=0;j<newlyCompletedMissions.length;j++) {
+                    var missionName = newlyCompletedMissions[j]; 
+                    if (allMissions[i].checkParent(missionName)) {allMissions[i].clearParent();};
                 };
             };
 

@@ -95,7 +95,6 @@
             "object": "mission",
             "name": "destroyscreen",
             "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have).",
-            "parent": "null",
             "missionObject": "screen",
             "static": "true",
             "conditionAttributes": {
@@ -115,7 +114,6 @@
         "object": "mission",
         "name": "sweetcoffee",
         "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet black coffee.",
-        "parent": "null",
         "missionObject": "sweet coffee",
         "static": "false",
         "conditionAttributes": {
@@ -381,7 +379,7 @@
         "destination": "customer-delight-north"
       }
     ],
-	"inventory": [
+    "inventory": [
       {
         "object": "creature",
         "name": "chris",
@@ -408,7 +406,7 @@
           "him"
         ]
       },
-	  {
+      {
         "object": "creature",
         "name": "mark",
         "displayname": "Mark",
@@ -434,7 +432,7 @@
           "him"
         ]
       },
-	  {
+      {
         "object": "creature",
         "name": "jeff",
         "displayname": "Jeff",
@@ -460,7 +458,7 @@
           "him"
         ]
       },
-	  {
+      {
         "object": "creature",
         "name": "simon",
         "displayname": "Simon",
@@ -483,11 +481,11 @@
           "simon c",
           "sc",
           "cromarty",
-		  "crom",
+          "crom",
           "him"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -539,7 +537,7 @@
         "destination": "jellyfish-meeting-room"
       }
     ],
-	"inventory": [
+    "inventory": [
       {
         "object": "creature",
         "name": "james",
@@ -560,14 +558,14 @@
         },
         "synonyms": [
           "james dening",
-		  "james denning",
+          "james denning",
           "james d",
           "jd",
           "dening",
           "him"
         ]
       },
-	        {
+      {
         "object": "creature",
         "name": "alan",
         "displayname": "Alan",
@@ -593,7 +591,7 @@
           "him"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -703,7 +701,7 @@
           "him"
         ]
       },
-	   {
+      {
         "object": "creature",
         "name": "alice",
         "displayname": "Alice",
@@ -723,7 +721,7 @@
         },
         "synonyms": [
           "alice easey",
-		  "alice easy",
+          "alice easy",
           "alice e",
           "ae",
           "easey",
@@ -1122,19 +1120,19 @@
         "source": "first-floor-cubby-hole",
         "destination": "customer-delight-north"
       }
-    ],    
-	"inventory": [
+    ],
+    "inventory": [
       {
         "object": "artefact",
         "name": "beanbag",
         "description": "giant bean bag",
         "detailedDescription": "Very comfy. Not so easy to get out of once you're in place though",
         "attributes": {
-		  "defaultAction": "rest",	
+          "defaultAction": "rest",
           "weight": 30,
           "type": "bed",
           "canCollect": true,
-		  "isBreakable": true
+          "isBreakable": true
         },
         "synonyms": [
           "bean bag",
@@ -1185,7 +1183,6 @@
             "object": "mission",
             "name": "lotleasteregg",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
-            "parent": "null",
             "missionObject": "article",
             "static": "true",
             "conditionAttributes": {
@@ -1548,6 +1545,85 @@
   },
   {
     "object": "location",
+    "name": "ground-floor-toilet",
+    "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "ground-floor-toilet",
+        "destination": "atrium"
+      },
+      {
+        "object": "exit",
+        "longname": "in",
+        "direction": "i",
+        "source": "ground-floor-toilet",
+        "destination": "ground-floor-toilet-cubicle"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "ground-floor-toilet-cubicle",
+    "description": "You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "ground-floor-toilet-cubicle",
+        "destination": "ground-floor-toilet"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "article",
+        "description": "'Learn on the Loo' article",
+        "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 3,
+          "carryWeight": 0,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "lotl",
+          "learn on the loo",
+          "learn on the loo article",
+          "loo article",
+          "learn article"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "lotleasteregg",
+            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
+            "missionObject": "article",
+            "static": "true",
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "read": "true"
+            },
+            "destination": "article",
+            "reward": {
+              "score": 20,
+              "repairSkill": "architecture",
+              "successMessage": "Congratulations. You've learned the basics on how to develop good software architecture."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "incidentals-blinkpipe",
     "description": "You're in the space between Core and Finance occupied by the Blinkpipe team. Some of them look oddly familiar although you rarely actually come into contact with them.",
     "dark": "false",
@@ -1870,7 +1946,6 @@
             "object": "mission",
             "name": "beans",
             "description": "Before you can get any coffee, this machine needs beans.",
-            "parent": "null",
             "missionObject": "machine",
             "static": "true",
             "conditionAttributes": {
@@ -2013,7 +2088,6 @@
                 "object": "mission",
                 "name": "repaircoffeemachine",
                 "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.",
-                "parent": "null",
                 "missionObject": "manual",
                 "static": "true",
                 "conditionAttributes": {
@@ -2167,7 +2241,6 @@
         "object": "mission",
         "name": "killthespy",
         "description": "Kill the spy.",
-        "parent": "null",
         "missionObject": "spy",
         "static": "false",
         "conditionAttributes": {
@@ -2761,7 +2834,6 @@
             "object": "mission",
             "name": "repairprojector",
             "description": "The projector's broken, someone needs to fix it.",
-            "parent": "null",
             "missionObject": "projector",
             "static": "false",
             "conditionAttributes": {
@@ -2826,7 +2898,7 @@
           "boss",
           "ceo",
           "simon g",
-		  "simon galbraith",
+          "simon galbraith",
           "galbraith",
           "him"
         ],
@@ -2839,7 +2911,6 @@
               "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
               "'Have you found my missing data yet?'"
             ],
-            "parent": "null",
             "missionObject": "disk",
             "static": "true",
             "conditionAttributes": {
@@ -2932,7 +3003,6 @@
             "dialogue": [
               "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
             ],
-            "parent": "null",
             "missionObject": "Vic",
             "static": "true",
             "conditionAttributes": {
@@ -2966,7 +3036,6 @@
             "object": "mission",
             "name": "vicsbook",
             "description": "Vic has a parcel for you but she'd like something to read first.",
-            "parent": "null",
             "missionObject": "small book",
             "static": "true",
             "conditionAttributes": {
@@ -3544,7 +3613,6 @@
             "object": "mission",
             "name": "lotleasteregg",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
-            "parent": "null",
             "missionObject": "article",
             "static": "true",
             "conditionAttributes": {
@@ -4021,16 +4089,16 @@
         "attributes": {
           "weight": 15,
           "type": "junk",
-		  "customAction": "dry",
-		  "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels.",
+          "customAction": "dry",
+          "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels.",
           "canCollect": false,
-		  "breakable": true
+          "breakable": true
         },
         "synonyms": [
           "dryer",
           "hand-dryer",
-		  "hand",
-		  "hands"
+          "hand",
+          "hands"
         ]
       }
     ]
@@ -4186,7 +4254,7 @@
         "synonyms": [
           "card",
           "post-card",
-		  "post card",
+          "post card",
           "thankyou card",
           "thank-you card",
           "thank you card"
@@ -4541,7 +4609,7 @@
             "dialogue": [
               "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'"
             ],
-            "parent": "null",
+            "parent": "keyfob",
             "missionObject": "Amanda",
             "static": "true",
             "conditionAttributes": {
@@ -4668,86 +4736,6 @@
         "direction": "s",
         "source": "thinking-hats",
         "destination": "people-team-north-west"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "ground-floor-toilet",
-    "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "ground-floor-toilet",
-        "destination": "atrium"
-      },
-      {
-        "object": "exit",
-        "longname": "in",
-        "direction": "i",
-        "source": "ground-floor-toilet",
-        "destination": "ground-floor-toilet-cubicle"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "ground-floor-toilet-cubicle",
-    "description": "You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "out",
-        "direction": "o",
-        "source": "ground-floor-toilet-cubicle",
-        "destination": "ground-floor-toilet"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "article",
-        "description": "'Learn on the Loo' article",
-        "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
-        "attributes": {
-          "defaultAction": "read",
-          "weight": 3,
-          "carryWeight": 0,
-          "attackStrength": 5,
-          "type": "book",
-          "canCollect": true
-        },
-        "synonyms": [
-          "lotl",
-          "learn on the loo",
-          "learn on the loo article",
-          "loo article",
-          "learn article"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "lotleasteregg",
-            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
-            "parent": "null",
-            "missionObject": "article",
-            "static": "true",
-            "conditionAttributes": {
-              "isDestroyed": "false",
-              "read": "true"
-            },
-            "destination": "article",
-            "reward": {
-              "score": 20,
-              "repairSkill": "architecture",
-              "successMessage": "Congratulations. You've learned the basics on how to develop good software architecture."
-            }
-          }
-        ]
       }
     ]
   },

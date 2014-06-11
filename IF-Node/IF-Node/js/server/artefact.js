@@ -482,10 +482,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         };
 
-        self.getMissions = function() {
+        self.getMissions = function(includeChildren) {
             var missions = [];
             for (var i=0; i < _missions.length; i++) {
-                missions.push(_missions[i]);
+                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                    missions.push(_missions[i]);
+                };
             };
             return missions;
         };
@@ -735,7 +737,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.combinesWithContentsOf = function(anObject) {
             var objectInventory = anObject.getInventoryObject();
-            var items = objectInventory.getAllObjectsAndChildren();
+            var items = objectInventory.getAllObjectsAndChildren(false);
             for (var i=0; i<items.length;i++) {
                 if (self.combinesWith(items[i])) {
                     return true;

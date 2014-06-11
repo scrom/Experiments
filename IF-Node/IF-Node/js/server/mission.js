@@ -69,7 +69,10 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                 };
                 resultString+= ']';
             };
-            resultString +=',"parent":"'+_parent+'","missionObject":"'+_missionObject+'","static":"'+_isStatic+'","conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            if (_parent) {
+                resultString +=',"parent":"'+_parent+'"';
+            };
+            resultString +=',"missionObject":"'+_missionObject+'","static":"'+_isStatic+'","conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
             resultString+= '}';
             return resultString;
         };
@@ -112,6 +115,11 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
         self.checkParent = function(parent) {
             if (parent == _parent) {return true};
+            return false;
+        };
+
+        self.hasParent = function() {
+            if (_parent) {return true};
             return false;
         };
 

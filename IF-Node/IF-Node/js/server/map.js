@@ -357,6 +357,20 @@ exports.Map = function Map() { //inputs for constructor TBC
             return creatures;
         };
 
+        self.getAllMissions = function() {
+            //loop through each location, location inventory. 
+            //Get all missions
+            var missions = [];
+            for (var i=0;i<_locations.length;i++) {
+                missions = missions.concat(_locations[i].getMissions(true));
+                var locationInventory = _locations[i].getAllObjectsAndChildren(true);
+                for (var j=0;j<locationInventory.length;j++) {
+                    missions = missions.concat(locationInventory[j].getMissions(true));
+                };
+            };
+            return missions;
+        };
+
         self.getCreature = function(aCreatureName) {
             //get the first creature whose name matches the name passed in
             //loop through each location and location inventory. 
