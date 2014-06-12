@@ -21,7 +21,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         var _type = 'mission';
 
 	    var _objectName = "mission";
-        console.log(_objectName + ' created: '+_name+', '+_destination);
+        //console.log(_objectName + ' created: '+_name+', '+_destination);
 
         if (_dialogue == null || _dialogue == undefined || _dialogue == "") { _dialogue = [];} //ensure there's an array
         else {_isStatic = true;}; //override static setting if mission has dialogue

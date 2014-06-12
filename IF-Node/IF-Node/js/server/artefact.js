@@ -181,12 +181,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var validateType = function(type, subType) {
             var validobjectTypes = ['weapon','medical','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
-            console.log(_name+' type validated: '+type);
+            //console.log(_name+' type validated: '+type);
 
             if (type == "weapon") {
                 var validWeaponSubTypes = ['','blunt','sharp','projectile'];
                 if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
-                console.log(_name+' subtype validated: '+subType);
+                //console.log(_name+' subtype validated: '+subType);
             };
         };
 
@@ -1503,7 +1503,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
         //end public member functions
 
-        console.log(_objectName + " created: "+_name+", "+self.destinationName);
+        //console.log(_objectName + " created: "+_name+", "+self.destinationName);
     }
     catch(err) {
 	    console.log("Unable to create Artefact object: "+err);

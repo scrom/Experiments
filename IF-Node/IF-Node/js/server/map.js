@@ -175,7 +175,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         };
 
         self.unpackConditionAttributes = function(attributes) {
-            console.log("Unpacking condition attributes: "+attributes);
+            //console.log("Unpacking condition attributes: "+attributes);
             var returnObject = {};
             for (var attr in attributes) {
                 if (attributes.hasOwnProperty(attr)) {returnObject[attr] = attributes[attr];};
@@ -185,12 +185,12 @@ exports.Map = function Map() { //inputs for constructor TBC
                 if (returnObject[attr] == 'true') {returnObject[attr] = true;};
                 if (returnObject[attr] == 'false') {returnObject[attr] = false;};
             };
-            console.log("Unpacked condition attributes");
+            //console.log("Unpacked condition attributes");
             return returnObject;
         };
 
         self.unpackReward = function(reward) {
-            console.log("Unpacking reward: "+reward);
+            //console.log("Unpacking reward: "+reward);
             var returnObject = {};
             for (var attr in reward) {
                 if (reward.hasOwnProperty(attr)) {returnObject[attr] = reward[attr];};
@@ -202,13 +202,13 @@ exports.Map = function Map() { //inputs for constructor TBC
                 if (reward.score>0) {_maxScore += reward.score;};
             };
             if (reward.delivers) {
-                console.log("Delivers: "+returnObject.delivers);
+                //console.log("Delivers: "+returnObject.delivers);
                 var deliveryObject = self.buildArtefact(returnObject.delivers);
                 returnObject.delivers = deliveryObject;
-                console.log("Built delivery object");
+                //console.log("Built delivery object");
                 //returnObject.delivers = self.buildArtefact(returnObject.delivers);
             };
-            console.log("Unpacked Reward");
+            //console.log("Unpacked Reward");
             return returnObject;
         };
 
@@ -318,14 +318,14 @@ exports.Map = function Map() { //inputs for constructor TBC
         //note, "fromDirection" should be the lowercase short version (e.g. "u" or "n")
         self.link = function(fromDirection, fromLocationName, toLocationName, toIsHidden, fromIsHidden) {
              var toDirection = self.oppositeOf(fromDirection);
-             console.log('from:'+fromDirection+' to:'+toDirection);
+             //console.log('from:'+fromDirection+' to:'+toDirection);
              var fromLocation = self.getLocation(fromLocationName);
              var toLocation = self.getLocation(toLocationName);
              var temp = fromLocation.addExit(fromDirection,fromLocation.getName(),toLocation.getName(), toIsHidden);
              var temp2 = toLocation.addExit(toDirection,toLocation.getName(),fromLocation.getName(), fromIsHidden);
-             console.log('locations linked');
-             console.log ("Exit 1:"+temp.toString());
-             console.log ("Exit 2:"+temp2.toString());
+             //console.log('locations linked');
+             //console.log ("Exit 1:"+temp.toString());
+             //console.log ("Exit 2:"+temp2.toString());
              return fromLocation.getName()+' linked '+fromDirection+'/'+toDirection+' to '+toLocation.getName();
         };
 
@@ -388,6 +388,6 @@ exports.Map = function Map() { //inputs for constructor TBC
     }
 
     catch(err) {
-	    console.log('Unable to create Map object: '+err);
+	    console.log('Unable to create Map object: '+err.stack);
     };
 };	

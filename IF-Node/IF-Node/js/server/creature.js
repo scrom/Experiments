@@ -88,7 +88,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var validateType = function() {
             var validobjectTypes = ['creature','friendly'];
             if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid creature type."};
-            console.log(_name+' type validated: '+_type);
+            //console.log(_name+' type validated: '+_type);
         };
 
         validateType();
@@ -1361,7 +1361,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         //// end instance methods       
-	    console.log(_objectName + ' created: '+_name);
+	    //console.log(_objectName + ' created: '+_name);
     }
     catch(err) {
 	    console.log('Unable to create Creature object: '+err);

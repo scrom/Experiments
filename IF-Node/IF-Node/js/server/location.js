@@ -62,7 +62,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
             var newExit = new exitObjectModule.Exit(anExitDirection,aSource, aDestination,isHidden);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   
-            console.log('Exit from '+self.getName()+', '+storedExit.getDirection()+' to '+storedExit.getDestinationName()+' added.');   
+            //console.log('Exit from '+self.getName()+', '+storedExit.getDirection()+' to '+storedExit.getDestinationName()+' added.');   
             return 'Exit from '+self.getName()+', '+newExit.getDirection()+' to '+newExit.getDestinationName()+' added.';
         };
 
@@ -262,7 +262,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         //end public member functions
 
-        console.log(_objectName + ' created: '+self.toString());
+        console.log(_objectName +' created: '+self.getName());
 
     }
     catch(err) {

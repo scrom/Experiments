@@ -10,7 +10,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         var _items = [];
         var _money = openingCashBalance;
 
-        console.log(_objectName + ' created');
+        //console.log(_objectName + ' created');
 
         //captialise first letter of string.
         var initCap = function(aString){
