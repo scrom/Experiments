@@ -939,10 +939,52 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         
-        self.heal = function(pointsToAdd) {
+        self.heal = function(medicalArtefact, healer) {
+            if (_hitPoints == _maxHitPoints) { return self.getDisplayName()+" doesn't need healing.";};
+            if (self.isDead()) {return receiver.getDisplayName()+"'s dead, healing won't "+_genderSuffix+" any more.";};
+
+            //heal self...
+            var pointsToAdd = 0;
+            var pointsNeeded = _maxHitPoints-_hitPoints;
+            if (healthPercent() >60) {
+                //add 50% of remaining health to gain.
+                pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
+            } else {
+                //get health up to 60% only
+                pointsToAdd = Math.floor(((0.60*_maxHitPoints)-_hitPoints));
+            };
+
+            var resultString = "";
+
+            //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
+
+            //use up one charge and consume if all used up...
+            medicalArtefact.consume();
+            
+            if (medicalArtefact.chargesRemaining() == 0) {
+                resultString += "You used up the last of your "+medicalArtefact.getName()+" to heal "+self.getDisplayName()+". ";
+            } else {
+                resultString += "You use "+medicalArtefact.getDescription()+" to heal "+self.getDisplayName()+". ";
+            };
+
+            //reciver health points
             self.recover(pointsToAdd);
-            if (healthPercent() > _bleedingHealthThreshold) {_bleeding = false;};
-            console.log('Creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            
+            //did we stop the bleeding?
+            if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
+                _bleeding = false;
+                resultString += "You manage to stop "+_genderSuffix+" bleeding.<br>";
+            };
+
+            resultString += _genderPrefix+" seems much better but would benefit from a rest.";
+
+            if (healer) {
+                if (healer.getType() == "player") {self.increaseAffinity(1);};
+            };
+
+            console.log('creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+
+            return resultString;
         };
 
         self.feed = function(pointsToAdd) {

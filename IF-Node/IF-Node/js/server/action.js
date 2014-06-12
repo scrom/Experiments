@@ -194,7 +194,7 @@ exports.Action = function Action(aPlayer, aMap) {
                             description = _player.health();
                             break;
                         case 'heal':
-                            description = _player.heal();
+                            description = _player.heal(_object0);
                             break;
                         case 'stats':
                         case 'statistics':

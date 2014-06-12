@@ -182,7 +182,11 @@ module.exports.Player = function Player(aUsername) {
         self.toString = function() {
             return '{"username":"'+_username+'"}';
         };
-    
+
+        self.getType = function() {
+            return "player";
+        };    
+
         self.getUsername = function() {
             return _username;
         };
@@ -1424,8 +1428,45 @@ module.exports.Player = function Player(aUsername) {
             console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
-        self.heal = function() {
-            if (_hitPoints == _maxHitPoints) {return "You don't need healing at the moment.";};
+        self.heal = function(receiverName) {
+            var resultString = "";
+
+            if (receiverName) {
+                if (receiverName != "self") {
+                    var receiver = getObjectFromLocation(receiverName);
+                    if (!(receiver)) {return "There's no "+receiverName+" here.";};
+                    if (receiver.getType() != "creature") {receiver.getDisplayName()+" can't be healed.";}; 
+                };           
+            };
+
+            if (!(receiver)) {
+                if (_hitPoints == _maxHitPoints) {return "You don't need healing at the moment.";};
+            };
+
+            //get first aid kit or similar...
+            var locationObject = false;
+            var medicalArtefact = _inventory.getObjectByType("medical");
+            if (!(medicalArtefact)) {
+                medicalArtefact = _currentLocation.getObjectByType("medical");
+                locationObject = true;
+            };
+
+            if (!(medicalArtefact)) { return resultString+" don't have anything to heal with."};
+
+            //heal receiver (if set)
+            if (receiver) {
+                resultString = receiver.heal(medicalArtefact, self);
+                if (medicalArtefact.chargesRemaining() == 0) {
+                    if (locationObject) {
+                        _currentLocation.removeObject(medicalArtefact.getName());
+                    } else {
+                        _inventory.remove(medicalArtefact.getName());
+                    };
+                };                
+                return resultString;
+            };
+
+            //heal self...
             var pointsToAdd = 0;
             var pointsNeeded = _maxHitPoints-_hitPoints;
             if (healthPercent() >60) {
@@ -1436,19 +1477,9 @@ module.exports.Player = function Player(aUsername) {
                 pointsToAdd = Math.floor(((0.60*_maxHitPoints)-_hitPoints));
             };
 
-            var resultString = "You ";
+            resultString = "You ";
 
             //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
-
-            //get first aid kit or similar...
-            var locationObject = false;
-            var medicalArtefact = _inventory.getObjectByType("medical");
-            if (!(medicalArtefact)) {
-                medicalArtefact = _currentLocation.getObjectByType("medical");
-                locationObject = true;
-            };
-
-            if (!(medicalArtefact)) { return resultString+" don't have anything to heal yourself with."};
 
             //we do have something to heal with...
 
