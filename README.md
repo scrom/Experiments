@@ -19,6 +19,8 @@ The idea came from a game that ran for a number of weeks in the office where a g
 
 Invariably the adventure would descend into silliness around Justin Bieber riding a flaming Aardvark or similar but the concept seemed a neat way of (re)learning development.
 
+In the end, it's become just another text adventure engine at the moment but I still have a desire to add that real-time interaction back in (one day).
+
 Another key part of this was simply to get back into coding properly. But by deliberately creating a legacy codebase to start with in order to truly understand what most of my dev teams really face. Understanding the difference between cramming one more feature in in a spare hour vs being disciplined and writing tests first. Seeing that tipping point where complexity gets to the point where you can't just hack things in without a regression risk any more. The need to rework poor design decisions but not having the support of working tests.
 
 Having to cram in unit and integration tests to prize seams apart and facing the pain of adding coverage analysis (still to do!)
