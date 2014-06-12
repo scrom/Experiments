@@ -85,6 +85,261 @@ exports.canSetPluralAttributeAndRetrieveCorrectDescription = function (test) {
 
 exports.canSetPluralAttributeAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Attribute Trait", "Quantity Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
 
+exports.canUnlockDoor = function (test) {
+    var doorAttributes = {
+        weight: 200, 
+        type: "door", 
+        canOpen: true, 
+        isBreakable: true, 
+        lockable: true, 
+        locked: true, 
+        defaultAction: "open"};
+
+    var keyAttributes =  {
+          weight: 0.1,
+          type: "key",
+          canCollect: true,
+          unlocks: "door"
+    };
+    var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
+    var key = new artefact.Artefact('key','door key',"it unlocks doors", keyAttributes, null);
+    var expectedResult = "You unlock the door.";
+    var actualResult = door.unlock(key);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canUnlockDoor.meta = { traits: ["Artefact Test", "Door Trait", "Lock Trait"], description: "Test that a door object can be unlocked." };
+
+exports.cannotUnlockDoorWithWrongKey = function (test) {
+    var doorAttributes = {
+        weight: 200, 
+        type: "door", 
+        canOpen: true, 
+        isBreakable: true, 
+        lockable: true, 
+        locked: true, 
+        defaultAction: "open"};
+
+    var keyAttributes =  {
+          weight: 0.1,
+          type: "key",
+          canCollect: true,
+          unlocks: "something"
+    };
+    var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
+    var key = new artefact.Artefact('key','door key',"it unlocks doors", keyAttributes, null);
+    var expectedResult = "You need something else to unlock it.";
+    var actualResult = door.unlock(key);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotUnlockDoorWithWrongKey.meta = { traits: ["Artefact Test", "Door Trait", "Lock Trait"], description: "Test that a door object cannot be unlocked with wrong key." };
+
+exports.canLockDoor = function (test) {
+    var doorAttributes = {
+        weight: 200, 
+        type: "door", 
+        canOpen: true, 
+        isBreakable: true, 
+        lockable: true, 
+        locked: false, 
+        defaultAction: "open"};
+
+    var keyAttributes =  {
+          weight: 0.1,
+          type: "key",
+          canCollect: true,
+          unlocks: "door"
+    };
+    var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
+    var key = new artefact.Artefact('key','door key',"it unlocks doors", keyAttributes, null);
+    var expectedResult = "You lock the door.";
+    var actualResult = door.lock(key);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canLockDoor.meta = { traits: ["Artefact Test", "Door Trait", "Lock Trait"], description: "Test that a door object can be locked." };
+
+exports.canLockAndCloseOpenDoor = function (test) {
+    var doorAttributes = {
+        weight: 200, 
+        type: "door", 
+        canOpen: true,
+        isOpen: true, 
+        isBreakable: true, 
+        lockable: true, 
+        locked: false, 
+        defaultAction: "open"};
+
+    var keyAttributes =  {
+          weight: 0.1,
+          type: "key",
+          canCollect: true,
+          unlocks: "door"
+    };
+    var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
+    var key = new artefact.Artefact('key','door key',"it unlocks doors", keyAttributes, null);
+    var expectedResult = "You close and lock the door. "; //note trailing space
+    var actualResult = door.lock(key);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canLockAndCloseOpenDoor.meta = { traits: ["Artefact Test", "Door Trait", "Lock Trait"], description: "Test that a door object can be locked even when open." };
+
+
+exports.cannotLockDoorWithWrongKey = function (test) {
+    var doorAttributes = {
+        weight: 200, 
+        type: "door", 
+        canOpen: true, 
+        isBreakable: true, 
+        lockable: true, 
+        locked: false, 
+        defaultAction: "open"};
+
+    var keyAttributes =  {
+          weight: 0.1,
+          type: "key",
+          canCollect: true,
+          unlocks: "something"
+    };
+    var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
+    var key = new artefact.Artefact('key','door key',"it unlocks doors", keyAttributes, null);
+    var expectedResult = "You need something else to lock it.";
+    var actualResult = door.lock(key);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotLockDoorWithWrongKey.meta = { traits: ["Artefact Test", "Door Trait", "Lock Trait"], description: "Test that a door object cannot be locked with wrong key." };
+
+exports.cannotLockDoorWithoutKey = function (test) {
+    var doorAttributes = {
+        weight: 200, 
+        type: "door", 
+        canOpen: true, 
+        isBreakable: true, 
+        lockable: true, 
+        locked: false, 
+        defaultAction: "open"};
+
+    var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
+    var expectedResult = "You don't have a key that fits.";
+    var actualResult = door.lock();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotLockDoorWithoutKey.meta = { traits: ["Artefact Test", "Door Trait", "Lock Trait"], description: "Test that a door object cannot be locked with wrong key." };
+
+exports.canUnlockEmptyContainer = function (test) {
+    var containerAttributes = {
+        weight: 50, 
+        type: "container", 
+        canOpen: true, 
+        carryWeight: 25,
+        isBreakable: true, 
+        lockable: true, 
+        locked: true, 
+        defaultAction: "open"};
+
+    var keyAttributes =  {
+          weight: 0.1,
+          type: "key",
+          canCollect: true,
+          unlocks: "container"
+    };
+    var container = new artefact.Artefact('container', 'container', "locky container",containerAttributes, null);
+    var key = new artefact.Artefact('key','container key',"it unlocks container", keyAttributes, null);
+    var expectedResult = "You unlock the container. It's empty.";
+    var actualResult = container.unlock(key);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canUnlockEmptyContainer.meta = { traits: ["Artefact Test", "Container Trait", "Lock Trait"], description: "Test that an empty container can be unlocked." };
+
+exports.canUnlockContainerWithContents = function (test) {
+    var containerAttributes = {
+        weight: 50, 
+        type: "container", 
+        canOpen: true, 
+        carryWeight: 25,
+        isBreakable: true, 
+        lockable: true, 
+        locked: true, 
+        defaultAction: "open"};
+
+    var keyAttributes =  {
+          weight: 0.1,
+          type: "key",
+          canCollect: true,
+          unlocks: "container"
+    };
+
+    var junkAttributes = {
+        weight: 10, 
+        type: "junk",
+        plural: "true", 
+        canOpen: false, 
+        isBreakable: true
+    };
+    var container = new artefact.Artefact('container', 'container', "locky container",containerAttributes, null);
+    var containerInventory = container.getInventoryObject();
+    var junk = new artefact.Artefact('junk','junk',"lots of junk", junkAttributes, null);
+    var key = new artefact.Artefact('key','container key',"it unlocks container", keyAttributes, null);
+    containerInventory.add(junk);
+    var expectedResult = "You unlock the container. It contains some junk.";
+    var actualResult = container.unlock(key);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canUnlockContainerWithContents.meta = { traits: ["Artefact Test", "Container Trait", "Lock Trait"], description: "Test that a containter object can be unlocked and contents are described." };
+
+
+exports.cannotUnlockDoorWithoutKey = function (test) {
+    var doorAttributes = {
+        weight: 200, 
+        type: "door", 
+        canOpen: true, 
+        isBreakable: true, 
+        lockable: true, 
+        locked: true, 
+        defaultAction: "open"};
+
+    var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
+    var expectedResult = "You don't have a key that fits.";
+    var actualResult = door.unlock();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotUnlockDoorWithoutKey.meta = { traits: ["Artefact Test", "Door Trait", "Lock Trait"], description: "Test that a door object cannot be unlocked without a key." };
+
+
 exports.canCreateToxicFood = function (test) {
     var poisonAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, nutrition: -50, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var poison = new artefact.Artefact('poison', 'poison', "eek, don't eat it!",poisonAttributes, null);

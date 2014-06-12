@@ -1154,7 +1154,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (verb == 'open'||verb == 'unlock') {
                     var resultString = "You "+verb+" "+self.getDisplayName()+".";
                     if (_inventory.size() > 0) {resultString +=" It contains "+_inventory.describe()+".";}
-                    else {resultString +=" It's empty.";};
+                    else if (_inventory.getCarryWeight() > 0) {resultString +=" It's empty.";};
                     return resultString;
                 };
             };
@@ -1455,7 +1455,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = true;
-                    return self.close('close and lock',locationName);
+                    if (_open) {return self.close('close and lock',locationName);}
+                    else {return "You lock "+self.getDisplayName()+"."};
                 } else {
                     return "You need something else to lock "+_itemSuffix+".";
                 };

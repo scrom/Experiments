@@ -6,9 +6,9 @@ exports.Config = function Config() {
         //private class vars until I actually use them
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Config";
-	    var locationLimit = 100; //max locations
-	    var objectLimit = 25; //max objects
-	    var creatureLimit = 15; //max creatures
+	    var locationLimit = 300; //max locations
+	    var objectLimit = 300; //max objects
+	    var creatureLimit = 250; //max creatures
 	    var inventoryLimit = 10; //max inventory size
 	    var gameLimit = 10; //max active games
 	    var gameUserLimit = 10; //max active players (per game!)
