@@ -222,7 +222,7 @@ exports.drinkingToxicFoodHurtsPlayer = function (test) {
     l0.addObject(poison);
     p0.get('get', poison.getName());
     p0.drink('drink','poison');
-    var expectedResult = "You're bleeding heavily and really not in good shape.";
+    var expectedResult = "You're really not in good shape. It looks like you're bleeding. You might want to get that seen to.";
     var actualResult = p0.health();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
