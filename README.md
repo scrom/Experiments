@@ -30,9 +30,9 @@ In some way therefore, the commit history on this will be a history lesson in ho
 
 Direction
 ---------
-As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands about 90 verbs but there's a load of work to do (first of which is sort out the quality of the code and write more tests). I still have a desire to make this multiplayer which will require some significant work and thinking to decide which way to go (multiple single-user games, one (or more) multi-user games or both and server-side throttling to limit resource usage.
+As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands about 90 verbs but there's a load of work to do. I still have a desire to make this multiplayer which will require some significant work and thinking to decide which way to go (multiple single-user games, one (or more) multi-user games or both and server-side throttling to limit resource usage.
 
-Other than *loads* of additional game mechanics and sample content, the other major components to work on are:
+Other than *loads* of additional game mechanics, features and sample content, the other major components to work on are:
  - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently a single (large) json file and the set of attributes available for everything isn't documented.  Eventually I'd like players and watchers to choose, extend and reuse maps. Right now, there's just the one.
  - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game.
  - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.)
