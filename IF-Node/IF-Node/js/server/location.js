@@ -96,9 +96,16 @@ exports.Location = function Location(aName, aDescription, isDark) {
             var availableExits = self.getAvailableExits();
             var randomInt = 0;
             if (availableExits.length <= 1) {
-                //give them a 2 in 3 chance of not being able to use the only available exit
-                randomInt = Math.floor(Math.random() * 3);
+                //give them a 50% chance of being able to use the only available exit
+                randomInt = Math.floor(Math.random() * 2);
                 if (randomInt != 0) {
+                    return null;
+                };
+            } else {
+                //(slightly rebalance trying to catch up with wandering/escaping creatures).
+                //if there's more than 1 exit, 1 in 3 chance of staying where they are 
+                randomInt = Math.floor(Math.random() * 3);
+                if (randomInt == 0) {
                     return null;
                 };
             };

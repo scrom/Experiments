@@ -2324,7 +2324,24 @@
           "exit",
           "button"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "machine-room-east",
+    "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "machine-room-east",
+        "destination": "machine-room-west"
+      }
+    ],
+	"inventory": [
       {
         "object": "creature",
         "name": "spy",
@@ -2339,7 +2356,8 @@
           "carryWeight": 15,
           "health": 225,
           "affinity": -4,
-          "canTravel": true
+          "canTravel": true,
+          "traveller": true
         },
         "inventory": [
           {
@@ -2388,22 +2406,7 @@
           "successMessage": "Congratulations. You killed the spy! Have 50 points."
         }
       }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "machine-room-east",
-    "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "machine-room-east",
-        "destination": "machine-room-west"
-      }
-    ]
+	] 
   },
   {
     "object": "location",

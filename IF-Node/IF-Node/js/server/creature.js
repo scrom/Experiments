@@ -892,7 +892,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //add to new location
             _currentLocation.addObject(self);
 
-            return initCap(self.getDisplayName())+" follows you to the "+_currentLocation.getName()+".<br>";
+            return initCap(self.getDisplayName())+" follows you.<br>";
         };	
 
         self.getLocation = function() {
