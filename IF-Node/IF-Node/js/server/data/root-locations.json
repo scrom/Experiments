@@ -154,7 +154,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "door",
+        "name": "lawyer door",
         "description": "door heading south",
         "detailedDescription": "Peering through the window you see people in suits looking busy and important.",
         "attributes": {
@@ -177,7 +177,7 @@
         ],
         "synonyms": [
           "lawyer exit",
-          "lawyer door"
+          "door"
         ]
       },
       {
@@ -188,7 +188,7 @@
         "attributes": {
           "defaultAction": "rest",
           "weight": 80,
-          "carryWeight": 0,
+          "carryWeight": 0.1,
           "attackStrength": 0,
           "type": "bed",
           "isBreakable": true
@@ -198,7 +198,27 @@
           "leather chair",
           "red leather chair",
           "morpheus chair"
-        ]
+        ],
+		"inventory": [
+		  {
+			"object": "artefact",
+			"name": "key",
+			"description": "door key",
+			"detailedDescription": "It doesn't look familiar.",
+			"attributes": {
+			  "defaultAction": "open",
+			  "weight": 0.1,
+			  "type": "key",
+			  "canCollect": true,
+			  "isHidden": true,
+			  "unlocks": "lawyer door"
+			},
+			"synonyms": [
+			  "lawyer key",
+			  "door key"
+			]
+		  }
+		]
       },
       {
         "object": "artefact",
@@ -384,8 +404,8 @@
     "inventory": [
       {
         "object": "creature",
-        "name": "chris",
-        "displayname": "Chris",
+        "name": "chris george",
+        "displayname": "Chris George",
         "description": "Chris George",
         "detailedDescription": "Our resident head of Test.",
         "attributes": {
@@ -400,7 +420,7 @@
           "traveller": true
         },
         "synonyms": [
-          "chris george",
+          "chris",
           "chris g",
           "cg",
           "george",
@@ -459,8 +479,8 @@
       },
       {
         "object": "creature",
-        "name": "simon",
-        "displayname": "Simon",
+        "name": "simon cromarty",
+        "displayname": "Simon Cromarty",
         "description": "Simon Cromarty",
         "detailedDescription": "Our head of Project Management.",
         "attributes": {
@@ -475,7 +495,7 @@
           "traveller": true
         },
         "synonyms": [
-          "simon cromarty",
+          "simon",
           "simon c",
           "sc",
           "cromarty",
@@ -538,8 +558,8 @@
     "inventory": [
       {
         "object": "creature",
-        "name": "james",
-        "displayname": "James",
+        "name": "james dening",
+        "displayname": "James Dening",
         "description": "James Dening",
         "detailedDescription": "Our head of Sales. Like a 6-foot-plus tigger.",
         "attributes": {
@@ -555,7 +575,7 @@
           "traveller": true
         },
         "synonyms": [
-          "james dening",
+          "james",
           "james denning",
           "james d",
           "jd",
@@ -726,8 +746,8 @@
       },
       {
         "object": "creature",
-        "name": "chris",
-        "displayname": "Chris",
+        "name": "chris moore",
+        "displayname": "Chris Moore",
         "description": "Chris Moore",
         "detailedDescription": "Endlessly cheerful security guru extraordinaire. Keep him away from Rum and pub floors.",
         "attributes": {
@@ -743,7 +763,7 @@
           "traveller": true
         },
         "synonyms": [
-          "chris moore",
+          "chris",
           "chris m",
           "cm",
           "moore",
@@ -1101,7 +1121,50 @@
         "source": "finance-area",
         "destination": "second-floor-back-stairs-east"
       }
-    ]
+    ],
+	"inventory":[ 
+          {
+            "object": "artefact",
+            "name": "black book",
+            "description": "unassuming small black book",
+            "detailedDescription": "This one's a bit of an eye-opener about the challenges of theft in offices. Probably worth a read.",
+            "attributes": {
+              "defaultAction": "read",
+              "weight": 2,
+              "attackStrength": 5,
+              "type": "book",
+              "canCollect": true
+            },
+            "synonyms": [
+              "manual",
+			  "book",
+			  "black",
+              "theft book",
+              "corporate theft book",
+              "theft manual",
+              "corporate theft manual"
+            ],
+            "missions": [
+              {
+                "object": "mission",
+                "name": "learntosteal",
+                "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues!",
+                "missionObject": "black book",
+                "static": "true",
+                "conditionAttributes": {
+                  "isDestroyed": "false",
+                  "read": "true"
+                },
+                "destination": "black book",
+                "reward": {
+                  "repairSkill": "theft",
+				  "stealth": 3,
+                  "successMessage": "Interesting. You've learned some new stealth skills."
+                }
+              }
+            ]
+          }
+		]
   },
   {
     "object": "location",
@@ -2141,7 +2204,7 @@
               {
                 "object": "mission",
                 "name": "repaircoffeemachine",
-                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.",
+                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
                 "missionObject": "manual",
                 "static": "true",
                 "conditionAttributes": {
@@ -2577,8 +2640,8 @@
     "inventory": [
       {
         "object": "creature",
-        "name": "james",
-        "displayname": "James",
+        "name": "james moore",
+        "displayname": "James Moore",
         "description": "James Moore",
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
@@ -2593,7 +2656,7 @@
           "canTravel": true
         },
         "synonyms": [
-          "james moore",
+          "james",
           "moore",
           "jim",
           "him"
@@ -2823,8 +2886,8 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "key",
-        "description": "key",
+        "name": "plain key",
+        "description": "plain key",
         "detailedDescription": "Just a plain key.",
         "attributes": {
           "weight": 0.1,
@@ -2833,9 +2896,7 @@
           "unlocks": "nothing"
         },
         "synonyms": [
-          "plain key",
-          "fob",
-          "key fob"
+          "key"
         ]
       }
     ]
@@ -2901,8 +2962,8 @@
       },
       {
         "object": "creature",
-        "name": "simon",
-        "displayname": "Simon",
+        "name": "simon galbraith",
+        "displayname": "Simon Galbraith",
         "description": "Simon the CEO",
         "detailedDescription": "He runs the show.",
         "attributes": {
@@ -2942,7 +3003,7 @@
           "boss",
           "ceo",
           "simon g",
-          "simon galbraith",
+          "simon",
           "galbraith",
           "him"
         ],
@@ -3428,8 +3489,8 @@
       },
       {
         "object": "creature",
-        "name": "james",
-        "displayname": "James",
+        "name": "james king",
+        "displayname": "James King",
         "description": "James King",
         "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
         "attributes": {
@@ -3444,7 +3505,7 @@
           "traveller": true
         },
         "synonyms": [
-          "james king",
+          "james",
           "james k",
           "jk",
           "king",
@@ -3454,8 +3515,8 @@
       },
       {
         "object": "creature",
-        "name": "simon",
-        "displayname": "Simon",
+        "name": "simon johnson",
+        "displayname": "Simon Johnson",
         "description": "Simon Johnson",
         "detailedDescription": "He's a master of selling, seems like he's been here forever and now he's taking on Germany!",
         "attributes": {
@@ -3470,7 +3531,7 @@
           "traveller": true
         },
         "synonyms": [
-          "simon johnson",
+          "simon",
           "simon j",
           "sj",
           "johnson",
@@ -4798,8 +4859,8 @@
     "inventory": [
       {
         "object": "creature",
-        "name": "chris",
-        "displayname": "Chris",
+        "name": "chris allen",
+        "displayname": "Chris Allen",
         "description": "Chris Allen",
         "detailedDescription": "Support and music skills. What more could you need?",
         "attributes": {
@@ -4814,7 +4875,7 @@
           "traveller": true
         },
         "synonyms": [
-          "chris allen",
+          "chris",
           "chris a",
           "ca",
           "allen",

@@ -36,7 +36,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
                 resultString+= _exits[i].toString();
             };
             resultString += ']';
-            if (_inventory.size() >0) {resultString+= ',"inventory":'+_inventory.toString();};
+            if (_inventory.size(true) >0) {resultString+= ',"inventory":'+_inventory.toString();};
             if (_missions.length >0) {
                 resultString+= ', "missions":[';
                 for(var i=0; i<_missions.length;i++) {
@@ -140,8 +140,8 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return _inventory.getObjectByType(anObjectType);
         };
 
-        self.getAllObjects = function() {
-            return _inventory.getAllObjects();
+        self.getAllObjects = function(includeHiddenObjects) {
+            return _inventory.getAllObjects(includeHiddenObjects);
         };
 
         self.getAllObjectsAndChildren = function(includeInaccessible) {

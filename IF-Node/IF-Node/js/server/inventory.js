@@ -33,8 +33,15 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
        
         };
 
-        self.size = function() {
-            return _items.length;
+        self.size = function(countHiddenObjects) {
+            if (countHiddenObjects) {
+                return _items.length;
+            };
+            var objectCount = 0;
+            for (var i=0;i<_items.length;i++){
+                if (!(_items[i].isHidden())) {objectCount++;};
+            };
+            return objectCount;
         };
 
         self.setCashBalance = function (newBalance) {
@@ -73,21 +80,22 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         self.describe = function(additionalAttribute) {
             var description = '';
-            if (_items.length == 0) {description = "nothing"};
-            for(var i = 0; i < _items.length; i++) {
+            var items = self.getAllObjects();
+            if (items.length == 0) {description = "nothing"};
+            for(var i = 0; i < items.length; i++) {
                 if (additionalAttribute == "price") {
-                    if (_items.length >1 ) {description += "- ";};
+                    if (items.length >1 ) {description += "- ";};
                     
-                    if (_items.length >1 ) {description +=initCap(_items[i].getDescription());}
-                    else { description += _items[i].getDescription();};
+                    if (items.length >1 ) {description +=initCap(items[i].getDescription());}
+                    else { description += items[i].getDescription();};
                     
-                    description+= " (price: &pound;"+_items[i].getPrice().toFixed(2)+")"
+                    description+= " (price: &pound;"+items[i].getPrice().toFixed(2)+")"
                     
-                    if (_items.length >1 ) {description +="<br>";};
+                    if (items.length >1 ) {description +="<br>";};
                 } else {
-                    if (i > 0 && i < _items.length - 1) { description += ', '; };
-                    if (i > 0 && i == _items.length - 1) { description += ' and '; };
-                    description += _items[i].getDescription();
+                    if (i > 0 && i < items.length - 1) { description += ', '; };
+                    if (i > 0 && i == items.length - 1) { description += ' and '; };
+                    description += items[i].getDescription();
                 };
 
             };
@@ -138,7 +146,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
     
         self.remove = function(anObjectName) {
-                var localInventory = self.getAllObjects();
+                var localInventory = self.getAllObjects(true);
                 for(var index = 0; index < localInventory.length; index++) {
                     if (localInventory[index].syn(anObjectName)) {
                         var returnObject = _items[index];
@@ -165,21 +173,44 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return false;
         };
 
+        self.showHiddenObjects = function() {
+            var foundItems = [];
+            for(var i = 0; i < _items.length; i++) {
+                if (_items[i].isHidden()) {
+                    _items[i].show();
+                    foundItems.push(_items[i]);
+                };
+            };
+
+            //return foundItems;
+            if (foundItems.length==0) {return "nothing new";};
+            var list = "";
+            for(var i = 0; i < foundItems.length; i++) {
+                    if ((i>0)&&(i<foundItems.length-1)){list+=', ';};
+                    if ((i==foundItems.length-1)&&(i>0)){list+=' and ';};
+                    list+=foundItems[i].getDescription();
+            };
+            return list;
+        };
+
         self.listObjects = function() {
             var list = ''
-            for(var i = 0; i < _items.length; i++) {
-                    if ((i>0)&&(i<_items.length-1)){list+=', ';};
-                    if ((i==_items.length-1)&&(i>0)){list+=' and ';};
-                    list+=_items[i].getDescription();
+            var items = self.getAllObjects();
+            for(var i = 0; i < items.length; i++) {
+                    if ((i>0)&&(i<items.length-1)){list+=', ';};
+                    if ((i==items.length-1)&&(i>0)){list+=' and ';};
+                    list+=items[i].getDescription();
             };
             return list;
         };
 
         //recursively gets objects in other objects
+        //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
         self.getObject = function(anObjectName) {
             for(var index = 0; index < _items.length; index++) {
-                if(_items[index].syn(anObjectName)) {
+                if(_items[index].syn(anObjectName) ) {
                     //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
+                    _items[index].show(); //@todo this might not work or cause off problems with hidden objects
                     return _items[index];
                 };
                 if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
@@ -187,7 +218,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     //    console.log(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
                     //only confirm item from open, unlocked containers - this way we know the player has discovered them
                         var object = _items[index].getInventoryObject().getObject(anObjectName);
-                        if (object) {return object}; 
+                        if (object) {
+                            object.show();
+                            return object
+                        }; 
                     };
                 };
            };
@@ -197,7 +231,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         //this one doesn't cascase to contents of other objects.
         self.getObjectByType = function(anObjectType) {
            for(var index = 0; index < _items.length; index++) {
-                if(_items[index].getType() == anObjectType) {
+                if(_items[index].getType() == anObjectType  && (!(_items[index].isHidden()))) {
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
                 };
@@ -227,18 +261,23 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return returnObjects;
         };
 
-        self.getAllObjects = function() {
-            return _items;
+        self.getAllObjects = function(includeHiddenObjects) {
+            if (includeHiddenObjects) { return _items;};
+            var itemsToReturn = [];
+            for (var i=0;i<_items.length;i++) {
+                if (!(_items[i].isHidden())) {itemsToReturn.push(_items[i])};
+            };
+            return itemsToReturn;
         };
 
         self.getAllObjectsAndChildren = function(includeInaccessible) {
             var objects = _items;
             for (var i=0;i<_items.length;i++) {
                 //only return accessible children.
-                if ((_items[i].getType() != 'creature' && (!(_items[i].isLocked()))) || includeInaccessible == true) {
+                if ((_items[i].getType() != 'creature' && (!(_items[i].isLocked()))  && (!(_items[i].isHidden()))) || includeInaccessible == true) {
                     if (_items[i].isOpen()|| includeInaccessible == true) {
                         var itemInventory = _items[i].getInventoryObject();
-                        if (itemInventory.size()>0) {
+                        if (itemInventory.size(includeInaccessible)>0) {
                             objects = objects.concat(itemInventory.getAllObjectsAndChildren(includeInaccessible));
                         };
                     };
@@ -250,7 +289,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.getAllObjectsOfType = function(anObjectType) {
            var returnObjects = [];
            for(var index = 0; index < _items.length; index++) {
-                if(_items[index].getType() == anObjectType) {
+                if(_items[index].getType() == anObjectType  && (!(_items[index].isHidden()))) {
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     returnObjects.push(_items[index]);
                 } else {

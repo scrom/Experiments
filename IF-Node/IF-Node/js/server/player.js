@@ -119,9 +119,9 @@ module.exports.Player = function Player(aUsername) {
             var artefact = locationArtefact;
             if (!(artefact)) {artefact = getObjectFromPlayer(objectName);};
 
-            if (artefact.getType() != 'container') {return ""};
+            //if (artefact.getType() != 'container') {return ""};
 
-            var contents = artefact.getAllObjects();
+            var contents = artefact.getAllObjects(true);
             var contentCount = contents.length;
 
             //exit early if no contents.
@@ -214,6 +214,7 @@ module.exports.Player = function Player(aUsername) {
         self.setStealth = function(newStealthValue) {
             //used for stealing
             _stealth = newStealthValue;
+            console.log("Player stealth now set to:"+_stealth);
             return _stealth;
         };
 
@@ -729,6 +730,8 @@ module.exports.Player = function Player(aUsername) {
                             resultString += "<br>"+receiver.repair(_repairSkills, _inventory);                 
                         };
                     };
+                } else if (verb == "hide") { //can only hide if not a component
+                    collectedArtefact.hide();
                 };
 
                 return resultString;
@@ -964,6 +967,16 @@ module.exports.Player = function Player(aUsername) {
                 if (lamps[i].isPoweredOn()) {return true};
             };
             return false;
+        };
+
+        self.search = function (verb, artefactName) {
+            if (!(self.canSee())) {return "It's too dark to see anything here.";};
+            if (stringIsEmpty(artefactName)){ return verb+" what?";};
+            
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            return "You "+verb+" "+artefact.getDisplayName()+" and discover "+artefact.showHiddenObjects()+".";
         };
 
         self.examine = function(verb, artefactName) {
@@ -1570,7 +1583,7 @@ module.exports.Player = function Player(aUsername) {
             //reset hunger
             _timeSinceEating = 0;
             //drop all objects and return to start
-            var inventoryContents = _inventory.getAllObjects();
+            var inventoryContents = _inventory.getAllObjects(true);
             for(var i = 0; i < inventoryContents.length; i++) {
                 _currentLocation.addObject(removeObjectFromPlayer(inventoryContents[i].getName()));
             }; 
@@ -1654,6 +1667,7 @@ module.exports.Player = function Player(aUsername) {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
                         if (missionReward.score) { _score += missionReward.score;};
                         if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                        if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
                         if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                         if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                         _missions[i].processAffinityModifiers(map, missionReward);
@@ -1676,6 +1690,7 @@ module.exports.Player = function Player(aUsername) {
                         resultString += "<br>"+missionReward.successMessage+"<br>";
                         if (missionReward.score) { _score += missionReward.score;};
                         if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                        if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
                         if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                         if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                         locationMissions[j].processAffinityModifiers(map, missionReward);
@@ -1701,6 +1716,7 @@ module.exports.Player = function Player(aUsername) {
                             resultString += "<br>"+missionReward.successMessage+"<br>";
                             if (missionReward.score) { _score += missionReward.score;};
                             if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                            if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
                             if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                             if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                             artefactMissions[j].processAffinityModifiers(map, missionReward);

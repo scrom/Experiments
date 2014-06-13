@@ -58,6 +58,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _requiredContainer = null;
         var _liquid = false;
         var _holdsLiquid = false;
+        var _hidden = false; 
 
         //grammar support...
         var _itemPrefix = "It";
@@ -173,6 +174,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (artefactAttributes.holdsLiquid != undefined) {_holdsLiquid = artefactAttributes.holdsLiquid;};
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
+            if (artefactAttributes.isHidden != undefined) {_hidden = artefactAttributes.isHidden;};
 
         };
 
@@ -318,6 +320,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.requiredContainer = _requiredContainer;
             currentAttributes.liquid = _liquid;
             currentAttributes.holdsLiquid = _holdsLiquid;
+            currentAttributes.isHidden = _hidden;
 
             return currentAttributes;
 
@@ -439,6 +442,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var resultString = self.descriptionWithCorrectPrefix(_description);
             //if it's a container with a single item and it's open (or fixed open), include contents
             if (self.getType() == "container" && _inventory.size() == 1 && ((!_opens)||_open)) {
+
                 var inventoryItem = _inventory.getAllObjects()[0];
                 if (inventoryItem.requiresContainer()) { 
                     resultString = self.descriptionWithCorrectPrefix(_name);
@@ -636,6 +640,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString += "<br>"+initCap(_itemDescriptivePrefix)+" currently switched ";
                 if(self.isPoweredOn()) {resultString += "on.";} else {resultString += "off.";};
             };
+
+            
+            if ((_inventory.size() != _inventory.size(true)) && inventoryIsVisible) {
+                //something is hidden here
+                //50% chance of spotting something amiss
+                var randomInt = Math.floor(Math.random() * 2);
+                if (randomInt > 0) {
+                    resultString += "<br>You notice something odd about "+self.getDisplayName()+" it might bear even closer inspection.";
+                };  
+            };
+
             return resultString;
         };
 
@@ -646,6 +661,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isRead = function() {
             return _read;
+        };
+
+        self.isHidden = function() {
+            return _hidden;
+        };
+
+        self.hide = function() {
+            _hidden = true;
+            return _hidden;
+        };
+
+        self.show = function() {
+            _hidden = false;
+            return _hidden;
         };
 
         self.isDead = function() {
@@ -784,8 +813,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.getObject(anObjectName);
         };
 
-        self.getAllObjects = function() {
-            return _inventory.getAllObjects();
+        self.showHiddenObjects = function() {
+            return _inventory.showHiddenObjects();
+        };
+
+        self.getAllObjects = function(includeHiddenObjects) {
+            return _inventory.getAllObjects(includeHiddenObjects);
         };
 
         self.getComponents = function(anObjectName) {
@@ -1031,7 +1064,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
                 var destroyMessage = "You destroyed "+_itemSuffix;
-                if (_inventory.size() > 0) {destroyMessage;};
+                if (_inventory.size(true) > 0) {destroyMessage;};
                 return destroyMessage+"!";
             };
             _detailedDescription += _itemPrefix+" shows signs of abuse.";
@@ -1041,8 +1074,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.bash = function() {
             //cascade to contents
-            if (_inventory.size() > 0) {
-                var contents = _inventory.getAllObjects();
+            if (_inventory.size(true) > 0) {
+                var contents = _inventory.getAllObjects(true);
                 for (var i=0;i<contents.length;i++) {
                     //75% chance of damaging contents
                     var randomInt = Math.floor(Math.random() * 4);

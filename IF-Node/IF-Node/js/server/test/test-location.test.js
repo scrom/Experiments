@@ -39,3 +39,76 @@ exports.locationToStringReturnsValidJSON = function (test) {
 };
 
 exports.locationToStringReturnsValidJSON.meta = { traits: ["Location Test", "JSON Trait", "Mission Trait"], description: "Test that a location object converts to valid JSON via toString." };
+
+exports.canGetNamedCreatureInLocation = function (test) {
+
+    var reception = new location.Location('reception','a reception area',false);
+
+    var receptionist = new creature.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+    receptionist.addSyns(['receptionist','vic','heidi','her']);
+    receptionist.go(null, reception); 
+
+    var expectedResult = 'vic';
+    var actualResult = reception.getObject("Vic").getName();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetNamedCreatureInLocation.meta = { traits: ["Location Test", "Inventory Trait" , "Name Trait"], description: "Test that a location creature can be identified by name." };
+
+exports.canGetNamedCreatureWithSpacesInLocation = function (test) {
+
+    var reception = new location.Location('reception','a reception area',false);
+
+    var receptionist = new creature.Creature('Vic Reception', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+    receptionist.addSyns(['receptionist','vic','heidi','her']);
+    receptionist.go(null, reception); 
+
+    var expectedResult = 'vic reception';
+    var actualResult = reception.getObject("Vic Reception").getName();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetNamedCreatureWithSpacesInLocation.meta = { traits: ["Location Test", "Inventory Trait" , "Name Trait"], description: "Test that a location creature can be identified by name." };
+
+exports.canGetCapitalisedNamedCreatureWithSpacesInLocation = function (test) {
+
+    var reception = new location.Location('reception','a reception area',false);
+
+    var receptionist = new creature.Creature('Vic Reception', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+    receptionist.addSyns(['receptionist','vic','heidi','her']);
+    receptionist.go(null, reception); 
+
+    var expectedResult = 'vic reception';
+    var actualResult = reception.getObject("vic reception").getName();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetCapitalisedNamedCreatureWithSpacesInLocation.meta = { traits: ["Location Test", "Inventory Trait" , "Name Trait"], description: "Test that a location creature can be identified by name" };
+
+
+exports.canCheckCapitalisedNamedCreatureWithSpacesIsInLocation = function (test) {
+
+    var reception = new location.Location('reception','a reception area',false);
+
+    var receptionist = new creature.Creature('Vic Reception', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+    receptionist.addSyns(['receptionist','vic','heidi','her']);
+    receptionist.go(null, reception); 
+
+    var expectedResult = true;
+    var actualResult = reception.objectExists("vic reception");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCheckCapitalisedNamedCreatureWithSpacesIsInLocation.meta = { traits: ["Location Test", "Inventory Trait" , "Name Trait"], description: "Test that a location creature can be checked they exist." };

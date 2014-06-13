@@ -172,8 +172,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         //var _synonyms = [];
         //var _missions = [];
             var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
-            if (_inventory.size() > 0) { resultString += ',"inventory":' + _inventory.toString(); };
-            if (_salesInventory.size() > 0) { resultString += ',"sells":' + _salesInventory.toString(); };
+            if (_inventory.size(true) > 0) { resultString += ',"inventory":' + _inventory.toString(); };
+            if (_salesInventory.size(true) > 0) { resultString += ',"sells":' + _salesInventory.toString(); };
             if (_synonyms.length >0) {
                 resultString+= ',"synonyms":[';
                 for(var i=0; i<_synonyms.length;i++) {
@@ -363,6 +363,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_affinity <-2) {return _genderPrefix+" doesn't like you."};
             if (_affinity <0) {return _genderPrefix+" seems wary of you."};
             return ""; //neutral
+        };
+
+        self.isHidden = function() {
+            return false;
+        };
+
+        self.hide = function() {
+            return false;
+        };
+
+        self.show = function() {
+            return false;
         };
 
         self.isDead = function() {
@@ -768,8 +780,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _inventory.getObject(anObjectName);
         };
 
-        self.getAllObjects = function() {
-            return _inventory.getAllObjects();
+        self.showHiddenObjects = function() {
+            return _inventory.showHiddenObjects();
+        };
+
+        self.getAllObjects = function(includeHiddenObjects) {
+            return _inventory.getAllObjects(includeHiddenObjects);
         };
 
         self.fightOrFlight = function(map,player) {

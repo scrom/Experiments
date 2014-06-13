@@ -235,9 +235,9 @@ exports.Action = function Action(aPlayer, aMap) {
                             //if (_object1) {description = _map.find(_object1);}
                             //else {description = _map.find(_object0);};
                             break;  
+                        case 'inspect': 
                         case 'search':                  
-                            if (_object1) {description = "You'll need to say where you want to search.";}
-                            else {description = _player.examine(_verb, _object0);};
+                            description = _player.search(_verb, _object0);
                             break;
                         case 'examine':
                         case 'examin':
@@ -268,6 +268,7 @@ exports.Action = function Action(aPlayer, aMap) {
                             };
 
                             //or fall through to normal "put"
+                        case 'hide':
                         case 'combine':
                         case 'insert':
                         case 'add':

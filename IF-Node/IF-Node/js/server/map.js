@@ -143,7 +143,14 @@ exports.Map = function Map() { //inputs for constructor TBC
             //determine name (proper noun or just noun)
             var creatureName = creatureData.name;
             var initial = creatureData.displayname.substring(0,1);
-            if (initial == initial.toUpperCase()) {creatureName = creatureData.displayname;}; //creature name is a proper noun
+
+            //is their name a proper noun?
+            if (initial == initial.toUpperCase()) {
+                if (creatureName.toLowerCase() != creatureData.displayname.toLowerCase()) {
+                    console.log("Usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
+                };
+                creatureName = creatureData.displayname;
+            }; //creature name is a proper noun
 
             creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
             if (creatureData.synonyms) {creature.addSyns(creatureData.synonyms);};
