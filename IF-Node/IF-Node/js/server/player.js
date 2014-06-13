@@ -660,10 +660,10 @@ module.exports.Player = function Player(aUsername) {
                 var resultString = "";
 
                 if (stringIsEmpty(artefactName)){ return verb+" what?";};
-                if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" with what?";};
+                if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" where?";};
 
-                 var artefact = getObjectFromPlayerOrLocation(artefactName);
-                 if (!(artefact)) {return notFoundMessage(artefactName);};
+                var artefact = getObjectFromPlayerOrLocation(artefactName);
+                if (!(artefact)) {return notFoundMessage(artefactName);};
 
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
@@ -680,6 +680,8 @@ module.exports.Player = function Player(aUsername) {
                        return  "It's probably better to 'give' "+artefact.getSuffix()+" to "+receiver.getSuffix()+"."; 
                     };
                 };
+
+                if (verb == "hide" && _currentLocation.creaturesExist()) { return "You're being watched. Try again when it's a bit quieter around here.";};
 
                 //if objects combine together...
                 if (artefact.combinesWith(receiver)) {
