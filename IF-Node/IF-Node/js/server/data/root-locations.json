@@ -2602,6 +2602,26 @@
           "nerf",
           "gun"
         ]
+      },
+	  {
+        "object": "artefact",
+        "name": "drums",
+        "description": "drum kit",
+        "detailedDescription": "An electronic drum kit, cool!",
+        "attributes": {
+          "weight": 18,
+          "type": "treasure",
+          "canCollect": true,
+          "breakable": true,
+		  "price": 15,
+          "customAction": "play",
+          "defaultResult": "You bash the drums for a while. Your sense of rhythm feels a bit off today."
+        },
+        "synonyms": [
+          "drum",
+          "drum kit",
+		  "drumkit"
+        ]
       }
     ]
   },
@@ -2653,7 +2673,7 @@
           "attackStrength": 45,
           "gender": "male",
           "type": "friendly",
-          "carryWeight": 15,
+          "carryWeight": 18,
           "health": 200,
           "affinity": -1,
           "canTravel": true
@@ -2738,7 +2758,31 @@
         "source": "opportunities-south",
         "destination": "opportunities-north"
       }
-    ]
+    ],
+	"inventory": 
+		[ 
+		{
+        "object": "artefact",
+        "name": "google glasses",
+        "description": "pair of Google glasses",
+        "detailedDescription": "These are pretty hard to get hold of!<br>Wearing these makes you an instant hipster.",
+        "attributes": {
+          "weight": 0.5,
+          "customAction": "wear",
+          "defaultResult": "Nah, they don't really suit you.<br>You take them off again and blink a few times to recover your near-field vision.",
+          "type": "treasure",
+		  "price": 30,
+          "canCollect": true,
+		  "breakable": true
+        },
+        "synonyms": [
+          "glasses",
+          "glass",
+          "google glass",
+		  "pair of google glasses"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -3623,7 +3667,31 @@
         "source": "sales-seating",
         "destination": "traffic-jam-meeting-room"
       }
-    ]
+    ],
+	"inventory": [ 
+	{
+        "object": "artefact",
+        "name": "xbox",
+        "description": "Xbox 360",
+        "detailedDescription": "Fancy a game of Forza?",
+        "attributes": {
+          "weight": 6,
+          "customAction": "play",
+          "defaultResult": "After a few minutes of button-mashing you think it's probably time to go and do something useful instead.",
+          "type": "treasure",
+		  "price": 30,
+          "canCollect": true,
+		  "breakable": true
+        },
+        "synonyms": [
+          "console",
+          "xbox 360",
+          "x-box",
+		  "games console",
+		  "game"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -4324,7 +4392,28 @@
         "source": "servery-kitchen",
         "destination": "servery-salad-bar"
       }
-    ]
+    ],
+	"inventory": [
+	{
+        "object": "artefact",
+        "name": "marmite",
+        "description": "jar of marmite",
+        "detailedDescription": "Love it or hate it - your choice, but it <i>is</i> full of b-vitamins",
+        "attributes": {
+          "weight": 1,
+          "defaultAction": "eat",
+          "type": "food",
+          "canCollect": true,
+          "isEdible": true,
+          "nutrition": 35
+        },
+        "synonyms": [
+          "jar",
+          "marmite jar",
+          "food"
+        ]
+      }
+	]
   },
   {
     "object": "location",

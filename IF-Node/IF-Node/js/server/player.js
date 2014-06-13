@@ -857,7 +857,7 @@ module.exports.Player = function Player(aUsername) {
             if (buyer.getType() != 'creature') { return buyer.getDisplayName() + " can't buy anything." };
 
 
-            return giver.buy(objectToGive, self);
+            return buyer.buy(objectToGive, self);
         };
 
         self.take = function(verb, artefactName, giverName){
