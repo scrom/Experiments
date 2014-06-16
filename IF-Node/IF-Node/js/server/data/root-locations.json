@@ -2490,7 +2490,7 @@
         "name": "spy",
         "displayname": "the spy",
         "description": "a corporate spy",
-        "detailedDescription": "Very shifty. I'm sure nobody would notice if they disappeared.",
+        "detailedDescription": "Very shifty. I'm sure nobody would notice if he disappeared.",
         "attributes": {
           "weight": 140,
           "attackStrength": 12,
@@ -2527,17 +2527,11 @@
             ]
           }
         ],
-        "synonyms": [
-          "corporate spy",
-          "him"
-        ]
-      }
-    ],
     "missions": [
       {
         "object": "mission",
         "name": "killthespy",
-        "description": "Kill the spy.",
+        "description": "Kill the spy!",
         "missionObject": "spy",
         "static": "false",
         "conditionAttributes": {
@@ -2548,6 +2542,12 @@
           "score": 50,
           "successMessage": "Congratulations. You killed the spy! Have 50 points."
         }
+      }
+    ],
+        "synonyms": [
+          "corporate spy",
+          "him"
+        ]
       }
     ]
   },
