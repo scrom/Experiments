@@ -181,7 +181,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         processAttributes(attributes);
 
         var validateType = function(type, subType) {
-            var validobjectTypes = ['weapon','medical','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
+            var validobjectTypes = ['weapon','property','medical','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.log(_name+' type validated: '+type);
 
@@ -1195,6 +1195,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_opens && (_open)){return initCap(_itemDescriptivePrefix)+" already open";};                
                 return _itemPrefix+" doesn't open";
             };
+            if (verb == 'unlock') { return "You "+verb+" "+self.getDisplayName()+"."};
+
             return "You try to "+verb+" "+self.getDisplayName()+".<br>After a few minutes of yanking and shoving you conceed defeat.";
         };
 
@@ -1488,6 +1490,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = true;
+                    if (self.getType() == "property") {_collectable = false;};
                     if (_open) {return self.close('close and lock',locationName);}
                     else {return "You lock "+self.getDisplayName()+"."};
                 } else {
@@ -1507,6 +1510,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = false;
+                    if (self.getType() == "property") {_collectable = true;};
                     var resultString = self.moveOrOpen('unlock',locationName);
                     //unlocking with a breakable item will damage it
                     var bashResult = "";

@@ -254,7 +254,50 @@
         "source": "bike-ambulance",
         "destination": "west-bike-racks"
       }
-    ]
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "rick",
+        "displayname": "Rick",
+        "description": "Rick the bike ambulance guy",
+        "detailedDescription": "Bikes is his thing.",
+        "attributes": {
+          "weight": 140,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 18,
+          "health": 215
+        },
+        "synonyms": [
+          "bike guy",
+          "bike ambulance",
+          "ric",
+          "him"
+        ], 
+	"missions": [
+          {
+            "object": "mission",
+            "name": "collectchrisbike",
+            "description": "Chris booked his bike in for repairs.",
+			"parent": "fixchrisbike",
+            "missionObject": "bike",
+            "static": "true",
+            "conditionAttributes": {
+              "isDestroyed": "false"
+            },
+            "destination": "rick",
+            "reward": {
+              "score": 25,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "chris moore",
+              "successMessage": "Nice one! Helping people out feels good, doesn't it.<br> Have 25 points."
+            }
+          }
+        ]
+	   }
+	]
   },
   {
     "object": "location",
@@ -783,6 +826,41 @@
           "cm",
           "moore",
           "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "fixchrisbike",
+            "description": "Chris wants his bike fixed.",
+            "dialogue": [
+              "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'"
+            ],
+            "missionObject": "chris moore",
+            "static": "true",
+            "conditionAttributes": {
+              "alive": "true"
+            },
+            "destination": "chris moore",
+            "reward": {
+              "delivers": {
+                "object": "artefact",
+                "name": "bike key",
+                "description": "bike key",
+                "detailedDescription": "You'll need this to shift Chris' bike.",
+                "attributes": {
+                "type": "key",
+                "canCollect": true,
+				"unlocks": "bike"
+                },
+                "synonyms": [
+                  "key",
+                  "cycle key",
+                  "bicycle key"
+                ]
+              },
+              "successMessage": "Chris hands you a bike key."
+            }
+          }
         ]
       }
     ]
@@ -844,7 +922,31 @@
         "source": "east-bike-racks",
         "destination": "smoking-area"
       }
-    ]
+    ],
+	"inventory": [
+	{
+        "object": "artefact",
+        "name": "bike",
+        "description": "bike",
+        "detailedDescription": "It looks like Chris' new bike.",
+        "attributes": {
+          "weight": 15,
+          "type": "property",
+          "canCollect": false,
+          "breakable": true,
+          "price": 25,
+		  "lockable": true,
+          "locked": true,
+          "customAction": "ride",
+          "defaultResult": "You hop on the bike and pedal it around for a while.<br>It's probably best not to get caught on it."
+        },
+        "synonyms": [
+          "drum",
+          "drum kit",
+          "drumkit"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -3000,6 +3102,7 @@
             "object": "mission",
             "name": "repairprojector",
             "description": "The projector's broken, someone needs to fix it.",
+			"parent": "teachprojectorrepair",
             "missionObject": "projector",
             "static": "false",
             "conditionAttributes": {
