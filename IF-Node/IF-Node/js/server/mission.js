@@ -143,11 +143,11 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             if (reward.affinityModifier) { affinityModifier = reward.affinityModifier;};
             if (reward.increaseAffinityFor) { 
                 var creatureToIncrease = map.getCreature(reward.increaseAffinityFor);
-                if (creatureToIncrease) {creatureToIncrease.increaseAffinity(affinityModifier);};
+                if (creatureToIncrease) {creatureToIncrease.increaseAffinity(affinityModifier, true);};
             };
             if (reward.decreaseAffinityFor) { 
                 var creatureToDecrease = map.getCreature(reward.decreaseAffinityFor);
-                if (creatureToDecrease) {creatureToDecrease.decreaseAffinity(affinityModifier);};
+                if (creatureToDecrease) {creatureToDecrease.decreaseAffinity(affinityModifier, true);};
             };
         };
 

@@ -639,6 +639,26 @@
           "jd",
           "dening",
           "him"
+        ],        
+		"inventory": [
+          {
+            "object": "artefact",
+            "name": "wig",
+            "description": "blonde wig",
+            "detailedDescription": "A disturbing remnant from the sales team beating their records and making their management team wear fancy dress.",
+            "attributes": {
+              "weight": 1,
+              "type": "junk",
+              "canCollect": true,
+              "affinityModifier": 2
+            },
+            "synonyms": [
+              "blonde",
+              "blonde wig",
+              "hair",
+              "blonde hair"
+            ]
+          }
         ]
       },
       {
@@ -3582,6 +3602,28 @@
         "source": "rubbish-bins",
         "destination": "waste-area"
       }
+    ],
+	"inventory": [
+      {
+        "object": "artefact",
+        "name": "skip",
+        "description": "large rubbish skip",
+        "detailedDescription": "It's full of rubbish.<br>It looks like a great place to hide things you don't want found!",
+        "attributes": {
+          "weight": 400,
+		  "carryWeight": 120,
+          "customAction": "climb",
+          "defaultResult": "You clamber around in the skip.<br>After putting your hand in something slimy and nearly impaling yourself on a broken chair you decide to climb back out.",
+          "type": "junk"
+        },
+        "synonyms": [
+          "bin",
+          "waste skip",
+          "junk skip",
+          "rubbish bin",
+          "rubbish"
+        ]
+      }
     ]
   },
   {
@@ -3742,6 +3784,29 @@
           "sj",
           "johnson",
           "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "hidejameswig",
+            "description": "Make the wig 'go away'.",
+            "dialogue": [
+              "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'"
+            ],
+            "missionObject": "wig",
+            "static": "false",
+            "conditionAttributes": {
+              "isHidden": true
+            },
+            "destination": "wig",
+            "reward": {
+			  "score": 25,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "simon johnson",
+			  "decreaseAffinityFor": "james dening",
+              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Simon will have appreciated it.<br>Have 25 points."
+            }
+          }
         ]
       },
       {

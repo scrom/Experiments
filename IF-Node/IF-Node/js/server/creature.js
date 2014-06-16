@@ -337,16 +337,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return missions;
         };
 
-        self.increaseAffinity = function(changeBy) {
+        self.increaseAffinity = function(changeBy, isPermanent) {
             if (!(self.isDead())) {
                 _affinity+=changeBy;
+                if (isPermanent) {_baseAffinity +=changeBy;};
                 console.log("affinity for "+self.getName()+" is now "+_affinity);
             };
         };
 
-        self.decreaseAffinity = function(changeBy) {
+        self.decreaseAffinity = function(changeBy, isPermanent) {
             if (!(self.isDead())) {
                 _affinity-=changeBy;
+                if (isPermanent) {_baseAffinity -=changeBy;};
                 console.log("affinity for "+self.getName()+" is now "+_affinity);
             };
         };
