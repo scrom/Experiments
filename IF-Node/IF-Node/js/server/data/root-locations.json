@@ -275,13 +275,13 @@
           "bike ambulance",
           "ric",
           "him"
-        ], 
-	"missions": [
+        ],
+        "missions": [
           {
             "object": "mission",
             "name": "collectchrisbike",
             "description": "Chris booked his bike in for repairs.",
-			"parent": "fixchrisbike",
+            "parent": "fixchrisbike",
             "missionObject": "bike",
             "static": "true",
             "conditionAttributes": {
@@ -296,8 +296,8 @@
             }
           }
         ]
-	   }
-	]
+      }
+    ]
   },
   {
     "object": "location",
@@ -834,13 +834,13 @@
             "description": "Chris wants his bike fixed.",
             "dialogue": [
               "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
-			  "'Oops. You'll need the key. Here you go.'"
+              "'Oops. You'll need the key. Here you go.'"
             ],
             "missionObject": "chris moore",
             "static": "true",
             "conditionAttributes": {
               "alive": "true",
-			  "conversationState":2
+              "conversationState": 2
             },
             "destination": "chris moore",
             "reward": {
@@ -850,9 +850,9 @@
                 "description": "bike key",
                 "detailedDescription": "You'll need this to shift Chris' bike.",
                 "attributes": {
-                "type": "key",
-                "canCollect": true,
-				"unlocks": "bike"
+                  "type": "key",
+                  "canCollect": true,
+                  "unlocks": "bike"
                 },
                 "synonyms": [
                   "key",
@@ -925,17 +925,17 @@
         "destination": "smoking-area"
       }
     ],
-	"inventory": [
-	{
+    "inventory": [
+      {
         "object": "artefact",
         "name": "bike rack",
         "description": "bike racks",
         "detailedDescription": "There's dozens of bikes here. Are you looking for any in particular?",
         "attributes": {
           "weight": 45,
-		  "carryWeight":15,
+          "carryWeight": 15,
           "type": "junk",
-		  "plural": true,
+          "plural": true,
           "canCollect": false,
           "breakable": true
         },
@@ -943,36 +943,36 @@
           "rack",
           "racks",
           "cycle rack",
-		  "cycle racks",
-		  "bike racks"
+          "cycle racks",
+          "bike racks"
         ],
-		"inventory": [ 
-	{
-        "object": "artefact",
-        "name": "bike",
-        "description": "shiny new bike",
-        "detailedDescription": "It looks like Chris' new bike.",
-        "attributes": {
-          "weight": 15,
-          "type": "property",
-		  "isHidden": true,
-          "canCollect": false,
-          "breakable": true,
-          "price": 25,
-		  "lockable": true,
-          "locked": true,
-          "customAction": "ride",
-          "defaultResult": "You hop on the bike and pedal it around for a while.<br>It's probably best not to get caught on it."
-        },
-        "synonyms": [
-          "bicycle",
-          "cycle",
-          "chris bike"
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "bike",
+            "description": "shiny new bike",
+            "detailedDescription": "It looks like Chris' new bike.",
+            "attributes": {
+              "weight": 15,
+              "type": "property",
+              "isHidden": true,
+              "canCollect": false,
+              "breakable": true,
+              "price": 25,
+              "lockable": true,
+              "locked": true,
+              "customAction": "ride",
+              "defaultResult": "You hop on the bike and pedal it around for a while.<br>It's probably best not to get caught on it."
+            },
+            "synonyms": [
+              "bicycle",
+              "cycle",
+              "chris bike"
+            ]
+          }
         ]
       }
-	  ]
-	}
-	]
+    ]
   },
   {
     "object": "location",
@@ -2527,26 +2527,26 @@
             ]
           }
         ],
-    "missions": [
-      {
-        "object": "mission",
-        "name": "killthespy",
-        "description": "Kill the spy!",
-        "missionObject": "spy",
-        "static": "false",
-        "conditionAttributes": {
-          "dead": "true"
-        },
-        "destination": "spy",
-        "reward": {
-          "score": 50,
-          "successMessage": "Congratulations. You killed the spy! Have 50 points."
-        }
-      }
-    ],
         "synonyms": [
           "corporate spy",
           "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "killthespy",
+            "description": "Kill the spy!",
+            "missionObject": "spy",
+            "static": "false",
+            "conditionAttributes": {
+              "dead": "true"
+            },
+            "destination": "spy",
+            "reward": {
+              "score": 50,
+              "successMessage": "Congratulations. You killed the spy! Have 50 points."
+            }
+          }
         ]
       }
     ]
@@ -3128,7 +3128,7 @@
             "object": "mission",
             "name": "repairprojector",
             "description": "The projector's broken, someone needs to fix it.",
-			"parent": "teachprojectorrepair",
+            "parent": "teachprojectorrepair",
             "missionObject": "projector",
             "static": "false",
             "conditionAttributes": {
@@ -3377,7 +3377,7 @@
                   "amazon package",
                   "coffee parcel",
                   "coffee package",
-				  "box"
+                  "box"
                 ],
                 "inventory": [
                   {
@@ -4586,6 +4586,28 @@
         "source": "servery-main",
         "destination": "first-floor-fire-escape"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "soup",
+        "description": "bowl of soup",
+        "detailedDescription": "Butternut squash and coconut.",
+        "attributes": {
+          "weight": 1,
+          "defaultAction": "eat",
+          "type": "food",
+          "canCollect": true,
+          "isEdible": true,
+          "isLiquid": true,
+          "nutrition": 15
+        },
+        "synonyms": [
+          "bowl",
+          "bowl of soup",
+          "food"
+        ]
+      }
     ]
   },
   {
@@ -4685,6 +4707,27 @@
         "direction": "e",
         "source": "servery-salad-bar",
         "destination": "sales-south"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "salad",
+        "description": "plate of salad",
+        "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
+        "attributes": {
+          "weight": 2,
+          "defaultAction": "eat",
+          "type": "food",
+          "canCollect": true,
+          "isEdible": true,
+          "nutrition": 25
+        },
+        "synonyms": [
+          "plate of salad",
+          "plate",
+          "food"
+        ]
       }
     ]
   },
