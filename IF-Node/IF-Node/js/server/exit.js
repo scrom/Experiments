@@ -24,7 +24,7 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, i
         self.toString = function() {
             var resultString = '{"object":"'+_objectName+//'","name":"'+_name+
             '","longname":"'+_longName+'","direction":"'+_direction+'","source":"'+_sourceName+'","destination":"'+_destinationName+'"';
-            if (_hidden) { resultString += ', "hidden":"'+_hidden+'"'; };
+            if (_hidden) { resultString += ', "hidden":'+_hidden; };
             resultString += '}';
             return resultString;
         };

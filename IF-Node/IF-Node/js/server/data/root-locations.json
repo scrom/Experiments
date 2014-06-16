@@ -25,7 +25,7 @@
         "direction": "i",
         "source": "atrium",
         "destination": "lift-ground-floor",
-        "hidden": "true"
+        "hidden": true
       },
       {
         "object": "exit",
@@ -61,7 +61,7 @@
             "direction": "i",
             "source": "atrium",
             "destination": "lift-ground-floor",
-            "hidden": "true"
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -148,7 +148,7 @@
         "direction": "s",
         "source": "atrium-seating",
         "destination": "lawyer-lobby",
-        "hidden": "true"
+        "hidden": true
       }
     ],
     "inventory": [
@@ -172,7 +172,7 @@
             "direction": "s",
             "source": "atrium-seating",
             "destination": "lawyer-lobby",
-            "hidden": "true"
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -1116,7 +1116,7 @@
         "direction": "s",
         "source": "east-end-south-corridor-ground-floor",
         "destination": "smoking-area",
-        "hidden": "true"
+        "hidden": true
       },
       {
         "object": "exit",
@@ -1145,7 +1145,7 @@
             "direction": "s",
             "source": "east-end-south-corridor-ground-floor",
             "destination": "smoking-area",
-            "hidden": "true"
+            "hidden": true
           },
           {
             "object": "exit",
@@ -1153,7 +1153,7 @@
             "direction": "n",
             "source": "smoking-area",
             "destination": "east-end-south-corridor-ground-floor",
-            "hidden": "true"
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -2433,7 +2433,7 @@
         "direction": "o",
         "source": "lift-ground-floor",
         "destination": "atrium",
-        "hidden": "true"
+        "hidden": true
       }
     ],
     "inventory": [
@@ -2455,7 +2455,7 @@
             "direction": "o",
             "source": "lift-ground-floor",
             "destination": "atrium",
-            "hidden": "true"
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -3566,6 +3566,21 @@
           "canCollect": true,
           "isBreakable": true
         }
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "rubbish-bins",
+    "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "rubbish-bins",
+        "destination": "waste-area"
       }
     ]
   },
@@ -4795,7 +4810,7 @@
         "direction": "n",
         "source": "smoking-area",
         "destination": "east-end-south-corridor-ground-floor",
-        "hidden": "true"
+        "hidden": true
       },
       {
         "object": "exit",
@@ -5236,17 +5251,17 @@
         "source": "waste-area",
         "destination": "east-car-park"
       },
-	  {
+      {
         "object": "exit",
         "longname": "East",
         "direction": "e",
         "source": "waste-area",
         "destination": "rubbish-bins",
-		"hidden": true
+        "hidden": true
       }
     ],
     "inventory": [
-	{
+      {
         "object": "creature",
         "name": "pawel jonczak",
         "displayname": "Pawel Jonczak",
@@ -5263,15 +5278,8 @@
           "canTravel": true,
           "traveller": true
         },
-        "synonyms": [
-          "pawel",
-          "pavel",
-          "pj",
-          "jonczak",
-          "pawel j"
-        ],
-		"inventory": [
-		{
+        "inventory": [
+          {
             "object": "artefact",
             "name": "key",
             "description": "gate key",
@@ -5288,56 +5296,47 @@
               "key"
             ]
           }
-		] 
-	  },
-	  {
-    "object": "artefact",
-    "name": "waste gate",
-    "description": "large gate",
-    "detailedDescription": "You've always been curious what interesting things get thrown in here.",
-    "attributes": {
-        "defaultAction": "open",
-        "weight": 200,
-        "type": "door",
-        "canOpen": true,
-        "lockable": true,
-        "locked": true
-    },
-    "linkedexits": [
-        {
+        ],
+        "synonyms": [
+          "pawel",
+          "pavel",
+          "pj",
+          "jonczak",
+          "pawel j"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "waste gate",
+        "description": "large gate",
+        "detailedDescription": "You've always been curious what interesting things get thrown in here.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true
+        },
+        "linkedexits": [
+          {
             "object": "exit",
             "longname": "East",
             "direction": "e",
             "source": "waste-area",
             "destination": "rubbish-bins",
-            "hidden": "true"
-        }
-    ],
-    "synonyms": [
-        "waste",
-        "gate",
-        "large gate",
-        "door"
-    ]
-}
-	]
-  },
-    {
-    "object": "location",
-    "name": "rubbish-bins",
-    "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
-    "dark": "false",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "rubbish-bins",
-        "destination": "waste-area"
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "waste",
+          "gate",
+          "large gate",
+          "door"
+        ]
       }
     ]
-},
-
+  },
   {
     "object": "location",
     "name": "web-meeting-room",
