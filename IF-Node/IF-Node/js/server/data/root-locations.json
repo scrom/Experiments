@@ -5235,9 +5235,109 @@
         "direction": "w",
         "source": "waste-area",
         "destination": "east-car-park"
+      },
+	  {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "waste-area",
+        "destination": "rubbish-bins",
+		"hidden": true
+      }
+    ],
+    "inventory": [
+	{
+        "object": "creature",
+        "name": "pawel jonczak",
+        "displayname": "Pawel Jonczak",
+        "description": "Pawel Jonczak",
+        "detailedDescription": "One of the hidden heroes of our catering team.",
+        "attributes": {
+          "weight": 130,
+          "money": 10,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 100,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "pawel",
+          "pavel",
+          "pj",
+          "jonczak",
+          "pawel j"
+        ],
+		"inventory": [
+		{
+            "object": "artefact",
+            "name": "key",
+            "description": "gate key",
+            "detailedDescription": "This looks like the key to the waste area gate.",
+            "attributes": {
+              "defaultAction": "open",
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "waste gate"
+            },
+            "synonyms": [
+              "waste key",
+              "key"
+            ]
+          }
+		] 
+	  },
+	  {
+    "object": "artefact",
+    "name": "waste gate",
+    "description": "large gate",
+    "detailedDescription": "You've always been curious what interesting things get thrown in here.",
+    "attributes": {
+        "defaultAction": "open",
+        "weight": 200,
+        "type": "door",
+        "canOpen": true,
+        "lockable": true,
+        "locked": true
+    },
+    "linkedexits": [
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "waste-area",
+            "destination": "rubbish-bins",
+            "hidden": "true"
+        }
+    ],
+    "synonyms": [
+        "waste",
+        "gate",
+        "large gate",
+        "door"
+    ]
+}
+	]
+  },
+    {
+    "object": "location",
+    "name": "rubbish-bins",
+    "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "rubbish-bins",
+        "destination": "waste-area"
       }
     ]
-  },
+},
+
   {
     "object": "location",
     "name": "web-meeting-room",
