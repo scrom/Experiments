@@ -1724,13 +1724,13 @@ module.exports.Player = function Player(aUsername) {
                 };
             };
 
-            //check missions from location and inventory objects
+            //check missions from location and inventory objects/creatures
             var artefacts = _currentLocation.getAllObjectsAndChildren(false);
             artefacts = artefacts.concat(_inventory.getAllObjectsAndChildren(false));
             for (var i=0; i<artefacts.length; i++) {
                 var artefactMissions = artefacts[i].getMissions();
                 for (var j=0; j<artefactMissions.length;j++) {
-                    var missionReward = artefactMissions[j].checkState(_inventory, _currentLocation);
+                    var missionReward = artefactMissions[j].checkState(_inventory, _currentLocation, map);
                     if (missionReward) {
                         if (missionReward.hasOwnProperty("fail")) {
                             resultString += "<br>"+missionReward.failMessage+"<br>";
@@ -1754,6 +1754,28 @@ module.exports.Player = function Player(aUsername) {
             //clear parents from any child missions to make them accessible
             var allMissions = map.getAllMissions();
             for (var i=0;i<allMissions.length;i++) {
+                //is there a mission object in this location?
+                if (_currentLocation.objectExists(allMissions[i].getMissionObjectName())) {
+                    var missionReward = allMissions[i].checkState(_inventory, _currentLocation, map);
+                    if (missionReward) {
+                        if (missionReward.hasOwnProperty("fail")) {
+                            resultString += "<br>"+missionReward.failMessage+"<br>";
+                            _missionsFailed.push(allMissions[i].getName());
+                        } else {
+                            resultString += "<br>"+missionReward.successMessage+"<br>";
+                            if (missionReward.score) { _score += missionReward.score;};
+                            if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                            if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
+                            if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                            if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                            allMissions[i].processAffinityModifiers(map, missionReward);
+                            _missionsCompleted.push(allMissions[i].getName());
+                            newlyCompletedMissions.push(allMissions[i].getName());
+                        };
+                        //artefacts[i].removeMission(allMissions[i].getName());
+                    };
+                };
+
                 for (var j=0;j<newlyCompletedMissions.length;j++) {
                     var missionName = newlyCompletedMissions[j]; 
                     if (allMissions[i].checkParent(missionName)) {allMissions[i].clearParent();};

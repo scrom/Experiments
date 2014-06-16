@@ -86,6 +86,10 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             return _name;
         };
 
+        self.getMissionObjectName = function() {
+            return _missionObject;
+        };
+
         self.getDescription = function() {
             return _description;
         };
@@ -205,7 +209,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             return false;
         };
 
-        self.checkState = function (playerInventory, location) {
+        self.checkState = function (playerInventory, location, map) {
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible
@@ -224,18 +228,28 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                     default:
                         //this one allows you to have an object/creature in any location - the object's condition will determine success.
                         //this supports find, break, destroy, chew, kill
-                        if (location.getObject(_destination)) {
-                            //console.log('found mission destination object/creature in location');
-                            var destinationObjectOrCreature = location.getObject(_destination);
-                            if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                            else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                        } else if (playerInventory.getObject(_destination)) {
+                        if (playerInventory.getObject(_destination)) {
                             //creature or object in player inventory
                             //console.log('found mission destination object/creature in player inventory');
                             var destinationObjectOrCreature = playerInventory.getObject(_destination);
                             if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
                             else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                        };
+                        } else if (location.getObject(_destination)) {
+                            //console.log('found mission destination object/creature in location');
+                            var destinationObjectOrCreature = location.getObject(_destination);
+                            if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                            else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                        } else {
+                            var locations = map.getLocations();
+                            for (var i=0;i<locations.length;i++) {
+                                var destinationObjectOrCreature = locations[i].getObject(_destination);
+                                if (destinationObjectOrCreature) {
+                                    if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                                    else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                                };
+                                if (missionObject) {break;}; //exit early if we've found it.
+                            };
+                        }; 
                         break;
             };
             if (missionObject) {

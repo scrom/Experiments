@@ -1139,12 +1139,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";               
             };
 
-            //if creature has missions - return dialogue.
+            //if creature has incomplete missions - return dialogue.
+            var missionsToRemove = [];
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
-                    _missions[i].startTimer();
-                    response += "<br>"+_missions[i].getNextDialogue();
+                    if (_missions[i].isFailedOrComplete()) { 
+                        missionsToRemove.push(_missions[i].getName());
+                    } else {
+                        _missions[i].startTimer();
+                        response += "<br>"+_missions[i].getNextDialogue();
+                    };
                 };
+            };
+
+            //remove any completed missions (cleanup)
+            for (i=0; i<missionsToRemove.length;i++) {
+                self.removeMission(missionsToRemove[i]);
             };
 
             if (!(_spokenToPlayer)) {_spokenToPlayer = true;};
