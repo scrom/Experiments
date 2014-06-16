@@ -1114,6 +1114,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _spokenToPlayer;
         };
 
+        self.replyToMissionKeyword = function(keyword,playerAggression) {
+            for (i=0; i< _missions.length; i++) {
+                if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
+                    if (_missions[i].nextDialogueContainsKeyWord(keyword)) {
+                        return self.reply("",playerAggression);
+                    };
+                };
+            };
+            return null;
+        };
+
         self.reply = function(someSpeech,playerAggression) {
             if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};

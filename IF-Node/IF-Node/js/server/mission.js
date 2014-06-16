@@ -165,6 +165,16 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             return false;
         };
 
+        self.nextDialogueContainsKeyWord = function(keyword) {
+            if (_dialogue.length == 0) {return false;};
+            if (_conversationState < _dialogue.length) {
+                if (_dialogue[_conversationState].indexOf(keyword) >-1) {return true;};
+            } else {
+                return false;
+            };
+            return false;
+        };
+
         self.getNextDialogue = function() {
             var response ="";
             console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
@@ -247,6 +257,12 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                         successCount++;
                     } else {
                         return self.fail();
+                    };                           
+                };
+
+                if (_conditionAttributes["conversationState"]) {                       
+                    if (_conversationState >= _conditionAttributes["conversationState"]) {
+                        successCount++;
                     };                           
                 };
 

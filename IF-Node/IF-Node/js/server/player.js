@@ -916,7 +916,12 @@ module.exports.Player = function Player(aUsername) {
             if (stringIsEmpty(artefactName)){ return verb+" "+giver.getDisplayName()+" for what?";};
 
             var artefact = (getObjectFromLocation(artefactName)||giver.getObject(artefactName));
-            if (!(artefact)) {return "There's no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying any either.";};   
+            if (!(artefact)) {
+                //does the creature have dialogue instead?
+                var creatureResponse = giver.replyToMissionKeyword(artefactName);
+                if (creatureResponse) {return creatureResponse;};
+                return "There's no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying any either.";
+            };   
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
             if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying first.";};

@@ -833,12 +833,14 @@
             "name": "fixchrisbike",
             "description": "Chris wants his bike fixed.",
             "dialogue": [
-              "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'"
+              "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'",
+			  "'Oops. You'll need the key. Here you go.'"
             ],
             "missionObject": "chris moore",
             "static": "true",
             "conditionAttributes": {
-              "alive": "true"
+              "alive": "true",
+			  "conversationState":2
             },
             "destination": "chris moore",
             "reward": {
