@@ -70,7 +70,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.setCarryWeight = function(newWeight) {
             //ensure new weight is not set below current contents
             if (self.getWeight() < newWeight) {
-                _maxCarryingWeight = newWeight;
+                _maxCarryingWeight = parseFloat(newWeight);
             };
         };
 
@@ -108,7 +108,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             if (_items.length==0){return 0};
             var weight = 0
             for(var i = 0; i < _items.length; i++) {
-                    weight+=_items[i].getWeight();
+                    weight+=parseFloat(_items[i].getWeight());
             };
             return weight;
         };
@@ -129,7 +129,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
 
             if ((anObject.getWeight() + self.getWeight()) > _maxCarryingWeight) {
-                console.log("can't carry total weight of "+anObject.getWeight()+self.getWeight());
+                console.log("can't carry total weight of "+parseFloat(anObject.getWeight()+self.getWeight()));
                     return false;
             };
 

@@ -147,7 +147,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.chewed != undefined) {
                 if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
             };
-            if (artefactAttributes.weight != undefined) {_weight = artefactAttributes.weight;};
+            if (artefactAttributes.weight != undefined) {_weight = parseFloat(artefactAttributes.weight);};
             if (artefactAttributes.plural != undefined) {self.setPluralGrammar(artefactAttributes.plural);};
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.affinityModifier != undefined) {_affinityModifier = artefactAttributes.affinityModifier;};
@@ -682,7 +682,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.setWeight = function(newWeight) {
-            _weight = newWeight;
+            _weight = parseFloat(newWeight);
         };
 
         self.getWeight = function() {

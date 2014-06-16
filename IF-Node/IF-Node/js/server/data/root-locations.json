@@ -833,7 +833,7 @@
             "name": "fixchrisbike",
             "description": "Chris wants his bike fixed.",
             "dialogue": [
-              "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'",
+              "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
 			  "'Oops. You'll need the key. Here you go.'"
             ],
             "missionObject": "chris moore",
@@ -928,12 +928,34 @@
 	"inventory": [
 	{
         "object": "artefact",
+        "name": "bike rack",
+        "description": "bike racks",
+        "detailedDescription": "There's dozens of bikes here. Are you looking for any in particular?",
+        "attributes": {
+          "weight": 45,
+		  "carryWeight":15,
+          "type": "junk",
+		  "plural": true,
+          "canCollect": false,
+          "breakable": true
+        },
+        "synonyms": [
+          "rack",
+          "racks",
+          "cycle rack",
+		  "cycle racks",
+		  "bike racks"
+        ],
+		"inventory": [ 
+	{
+        "object": "artefact",
         "name": "bike",
-        "description": "bike",
+        "description": "shiny new bike",
         "detailedDescription": "It looks like Chris' new bike.",
         "attributes": {
           "weight": 15,
           "type": "property",
+		  "isHidden": true,
           "canCollect": false,
           "breakable": true,
           "price": 25,
@@ -943,11 +965,13 @@
           "defaultResult": "You hop on the bike and pedal it around for a while.<br>It's probably best not to get caught on it."
         },
         "synonyms": [
-          "drum",
-          "drum kit",
-          "drumkit"
+          "bicycle",
+          "cycle",
+          "chris bike"
         ]
       }
+	  ]
+	}
 	]
   },
   {
@@ -3352,7 +3376,8 @@
                   "amazon parcel",
                   "amazon package",
                   "coffee parcel",
-                  "coffee package"
+                  "coffee package",
+				  "box"
                 ],
                 "inventory": [
                   {

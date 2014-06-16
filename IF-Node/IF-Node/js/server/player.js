@@ -682,6 +682,7 @@ module.exports.Player = function Player(aUsername) {
                 };
 
                 if (verb == "hide" && _currentLocation.creaturesExist()) { return "You're being watched. Try again when it's a bit quieter around here.";};
+                if (verb == "hide" && receiver.getType() == "container") { return "That's a bit obvious. You'll need to hide "+artefact.getSuffix()+" somewhere else.";};
 
                 //if objects combine together...
                 if (artefact.combinesWith(receiver)) {
@@ -696,6 +697,21 @@ module.exports.Player = function Player(aUsername) {
                 //check receiver can carry item (container or not)
                 if (!(receiver.canContain(artefact))) {
                     if (receiver.isBroken()){return receiver.getDescriptivePrefix()+" broken. You'll need to fix "+receiver.getSuffix()+" first.";};
+
+                    //is it already there?
+                    if (receiver.getObject(artefact.getName())) {
+                        if (verb == "hide") {
+                            if (!(artefact.isHidden())) {
+                                artefact.hide();
+                                return "You "+verb+" "+artefact.getDisplayName()+" in "+receiver.getDisplayName()+".";
+                            } else {
+                                return artefact.getDescriptivePrefix()+" already hidden.";
+                            };
+                        } else {
+                            return artefact.getDescriptivePrefix()+" already in "+receiver.getDisplayName()+".";
+                        };
+                    };                    
+                    
                     return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 
                 };
 

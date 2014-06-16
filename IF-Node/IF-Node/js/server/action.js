@@ -62,7 +62,7 @@ exports.Action = function Action(aPlayer, aMap) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'frmo', 'for', 'at', 'on', 'off', 'in', 'is', 'are']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'is', 'are']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
@@ -72,6 +72,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         case 'with':
                         case 'from':
                         case 'frmo':
+                        case 'fomr':
                         case 'for':
                         case 'at':
                         case 'on':
