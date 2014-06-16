@@ -152,6 +152,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         var returnObject = _items[index];
                         localInventory.splice(index,1);
                         //console.log(anObjectName+" removed from "+_ownerName+" inventory");
+                        returnObject.show();
                         return returnObject;
                     };
                     if(localInventory[index].getType() != 'creature' && (!(localInventory[index].isLocked()))) {
@@ -160,7 +161,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                             var containerInventory = localInventory[index].getInventoryObject()
                             var object = containerInventory.remove(anObjectName);
                         };
-                        if (object) {return object;}; 
+                        if (object) {
+                            object.show();
+                            return object;
+                        }; 
                     };
                 };
                 //console.log(_ownerName+" is not carrying "+anObjectName);
@@ -210,7 +214,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].syn(anObjectName) ) {
                     //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
-                    _items[index].show(); //@todo this might not work or cause off problems with hidden objects
+                    //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
                     return _items[index];
                 };
                 if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
@@ -219,7 +223,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     //only confirm item from open, unlocked containers - this way we know the player has discovered them
                         var object = _items[index].getInventoryObject().getObject(anObjectName);
                         if (object) {
-                            object.show();
+                            //object.show();
                             return object
                         }; 
                     };

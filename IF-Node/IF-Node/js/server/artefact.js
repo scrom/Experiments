@@ -960,6 +960,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems()); //return a new instance of deliveryObject
             deliveredItem.addSyns(deliveryItemSource.getSyns());
+            deliveredItem.show();
             return deliveredItem;
         };
 
@@ -1186,8 +1187,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 if (verb == 'open'||verb == 'unlock') {
                     var resultString = "You "+verb+" "+self.getDisplayName()+".";
-                    if (_inventory.size() > 0) {resultString +=" It contains "+_inventory.describe()+".";}
-                    else if (_inventory.getCarryWeight() > 0) {resultString +=" It's empty.";};
+                    if (_inventory.size() > 0) {
+                        resultString += " "+initCap(_itemPrefix)+ " contain";
+                        if (!(_plural)) resultString += "s"
+                        resultString +=" "+_inventory.describe()+".";
+                    } else if (_inventory.getCarryWeight() > 0) {
+                        resultString +=initCap(_itemDescriptivePrefix)+" empty.";
+                    };
                     return resultString;
                 };
             };
