@@ -247,7 +247,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
                 resultString += ']';
             };
-            if (_inventory.size() >0) {resultString+= ',"inventory":'+_inventory.toString();};
+            if (_inventory.size(true) >0) {resultString+= ',"inventory":'+_inventory.toString();};
             if (_missions.length >0) {
                 resultString+= ',"missions":[';
                 for(var i=0; i<_missions.length;i++) {
@@ -850,7 +850,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.chargesRemaining = function() {
             if (self.isDestroyed()) {return 0;};
-            console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);
+            //console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);
             //we use -1 to mean unlimited
             return _charges;
         };

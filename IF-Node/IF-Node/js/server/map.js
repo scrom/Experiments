@@ -303,8 +303,8 @@ exports.Map = function Map() { //inputs for constructor TBC
             };
 
         //end of "init"
-        //self.addLocation("stairs-first-floor", "You're halfway up the main office staircase.", false);
-        //self.link("n", "second-floor-reception", "stairs-second-floor",false, false);
+        //self.addLocation("bike-ambulance", "You're standing in the west car park by the bike ambulance.", false);
+        //self.link("e", "bike-ambulance", "west-bike-racks",false, false);
 
 
 

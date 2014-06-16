@@ -199,26 +199,26 @@
           "red leather chair",
           "morpheus chair"
         ],
-		"inventory": [
-		  {
-			"object": "artefact",
-			"name": "key",
-			"description": "door key",
-			"detailedDescription": "It doesn't look familiar.",
-			"attributes": {
-			  "defaultAction": "open",
-			  "weight": 0.1,
-			  "type": "key",
-			  "canCollect": true,
-			  "isHidden": true,
-			  "unlocks": "lawyer door"
-			},
-			"synonyms": [
-			  "lawyer key",
-			  "door key"
-			]
-		  }
-		]
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "key",
+            "description": "door key",
+            "detailedDescription": "It doesn't look familiar.",
+            "attributes": {
+              "defaultAction": "open",
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "isHidden": true,
+              "unlocks": "lawyer door"
+            },
+            "synonyms": [
+              "lawyer key",
+              "door key"
+            ]
+          }
+        ]
       },
       {
         "object": "artefact",
@@ -238,6 +238,21 @@
           "chocolate cake",
           "food"
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "bike-ambulance",
+    "description": "You're standing in the west car park by the bike ambulance.",
+    "dark": "false",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "bike-ambulance",
+        "destination": "west-bike-racks"
       }
     ]
   },
@@ -1122,49 +1137,49 @@
         "destination": "second-floor-back-stairs-east"
       }
     ],
-	"inventory":[ 
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "black book",
+        "description": "unassuming small black book",
+        "detailedDescription": "This one's a bit of an eye-opener about the challenges of theft in offices. Probably worth a read.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 2,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "manual",
+          "book",
+          "black",
+          "theft book",
+          "corporate theft book",
+          "theft manual",
+          "corporate theft manual"
+        ],
+        "missions": [
           {
-            "object": "artefact",
-            "name": "black book",
-            "description": "unassuming small black book",
-            "detailedDescription": "This one's a bit of an eye-opener about the challenges of theft in offices. Probably worth a read.",
-            "attributes": {
-              "defaultAction": "read",
-              "weight": 2,
-              "attackStrength": 5,
-              "type": "book",
-              "canCollect": true
+            "object": "mission",
+            "name": "learntosteal",
+            "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues!",
+            "missionObject": "black book",
+            "static": "true",
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "read": "true"
             },
-            "synonyms": [
-              "manual",
-			  "book",
-			  "black",
-              "theft book",
-              "corporate theft book",
-              "theft manual",
-              "corporate theft manual"
-            ],
-            "missions": [
-              {
-                "object": "mission",
-                "name": "learntosteal",
-                "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues!",
-                "missionObject": "black book",
-                "static": "true",
-                "conditionAttributes": {
-                  "isDestroyed": "false",
-                  "read": "true"
-                },
-                "destination": "black book",
-                "reward": {
-                  "repairSkill": "theft",
-				  "stealth": 3,
-                  "successMessage": "Interesting. You've learned some new stealth skills."
-                }
-              }
-            ]
+            "destination": "black book",
+            "reward": {
+              "repairSkill": "theft",
+              "stealth": 3,
+              "successMessage": "Interesting. You've learned some new stealth skills."
+            }
           }
-		]
+        ]
+      }
+    ]
   },
   {
     "object": "location",
@@ -2341,7 +2356,7 @@
         "destination": "machine-room-west"
       }
     ],
-	"inventory": [
+    "inventory": [
       {
         "object": "creature",
         "name": "spy",
@@ -2406,7 +2421,7 @@
           "successMessage": "Congratulations. You killed the spy! Have 50 points."
         }
       }
-	] 
+    ]
   },
   {
     "object": "location",
@@ -2603,7 +2618,7 @@
           "gun"
         ]
       },
-	  {
+      {
         "object": "artefact",
         "name": "drums",
         "description": "drum kit",
@@ -2613,14 +2628,14 @@
           "type": "treasure",
           "canCollect": true,
           "breakable": true,
-		  "price": 15,
+          "price": 15,
           "customAction": "play",
           "defaultResult": "You bash the drums for a while. Your sense of rhythm feels a bit off today."
         },
         "synonyms": [
           "drum",
           "drum kit",
-		  "drumkit"
+          "drumkit"
         ]
       }
     ]
@@ -2759,9 +2774,8 @@
         "destination": "opportunities-north"
       }
     ],
-	"inventory": 
-		[ 
-		{
+    "inventory": [
+      {
         "object": "artefact",
         "name": "google glasses",
         "description": "pair of Google glasses",
@@ -2771,18 +2785,18 @@
           "customAction": "wear",
           "defaultResult": "Nah, they don't really suit you.<br>You take them off again and blink a few times to recover your near-field vision.",
           "type": "treasure",
-		  "price": 30,
+          "price": 30,
           "canCollect": true,
-		  "breakable": true
+          "breakable": true
         },
         "synonyms": [
           "glasses",
           "glass",
           "google glass",
-		  "pair of google glasses"
+          "pair of google glasses"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -3668,8 +3682,8 @@
         "destination": "traffic-jam-meeting-room"
       }
     ],
-	"inventory": [ 
-	{
+    "inventory": [
+      {
         "object": "artefact",
         "name": "xbox",
         "description": "Xbox 360",
@@ -3679,19 +3693,19 @@
           "customAction": "play",
           "defaultResult": "After a few minutes of button-mashing you think it's probably time to go and do something useful instead.",
           "type": "treasure",
-		  "price": 30,
+          "price": 30,
           "canCollect": true,
-		  "breakable": true
+          "breakable": true
         },
         "synonyms": [
           "console",
           "xbox 360",
           "x-box",
-		  "games console",
-		  "game"
+          "games console",
+          "game"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -4393,8 +4407,8 @@
         "destination": "servery-salad-bar"
       }
     ],
-	"inventory": [
-	{
+    "inventory": [
+      {
         "object": "artefact",
         "name": "marmite",
         "description": "jar of marmite",
@@ -4413,7 +4427,7 @@
           "food"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -5085,6 +5099,13 @@
         "direction": "n",
         "source": "west-bike-racks",
         "destination": "west-car-park"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "west-bike-racks",
+        "destination": "bike-ambulance"
       }
     ]
   },
