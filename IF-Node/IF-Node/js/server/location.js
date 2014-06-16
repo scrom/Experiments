@@ -59,6 +59,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
 
         self.addExit = function(anExitDirection, aSource, aDestination,isHidden) {
             self = this;
+            if (self.getExit(anExitDirection)) {console.log("Usability warning: duplicate exit direction '"+anExitDirection+"' from "+aSource+".");};
             var newExit = new exitObjectModule.Exit(anExitDirection,aSource, aDestination,isHidden);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   

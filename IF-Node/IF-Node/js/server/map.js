@@ -92,6 +92,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         self.buildArtefact = function(artefactData) {
             console.log('Building: '+artefactData.name);
+            if (self.checkExists(artefactData.name)) {console.log("Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};
             var artefact;
             var inventory;
             var linkedExits = [];
@@ -135,6 +136,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         self.buildCreature = function(creatureData) {
             //name, description, detailedDescription, attributes, carrying
             console.log('Building Creature: '+creatureData.name);
+            if (self.checkExists(creatureData.name)) {console.log("Usability warning: duplicate creature name/synonym '"+creatureData.name+"'.");};
             var creature;
             var inventory;
             var salesInventory;
@@ -230,6 +232,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         };
         
         self.addLocation = function(aName,aDescription,isDark){
+                if (self.getLocation(aName)) {console.log("Usability warning: duplicate location name '"+aName+"'.");};
                 if (isDark == "true" || isDark == true) {isDark = true;}
                 else {isDark=false;};
                 var newLocation = new locationObjectModule.Location(aName,aDescription,isDark);
@@ -245,7 +248,7 @@ exports.Map = function Map() { //inputs for constructor TBC
                     return _locations[index];
                 };
            };
-           console.log('location not found: '+aName);
+           //console.log('location not found: '+aName);
         };
 
 
@@ -346,6 +349,18 @@ exports.Map = function Map() { //inputs for constructor TBC
                 if (_locations[i].objectExists(anObjectName)) {return anObjectName+" found at "+_locations[i].getName()+".";};
             };
             return anObjectName+" not found in map.";
+        };
+
+        self.checkExists = function(anObjectName) {
+            //note, this *won't* find objects delivered by a mission or delivered by another object.
+
+            //loop through each location and location inventory. 
+            //Get object (by synonym)
+            //return when found
+            for (var i=0;i<_locations.length;i++) {
+                if (_locations[i].objectExists(anObjectName)) {return true};
+            };
+            return false;
         };
 
         self.globalAffinityChange = function() {
