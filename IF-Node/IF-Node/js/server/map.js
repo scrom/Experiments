@@ -185,6 +185,8 @@ exports.Map = function Map() { //inputs for constructor TBC
 
         self.unpackConditionAttributes = function(attributes) {
             //console.log("Unpacking condition attributes: "+attributes);
+            if (!(attributes)) {return null;};
+            if (attributes.length == 0) {return null;};
             var returnObject = {};
             for (var attr in attributes) {
                 if (attributes.hasOwnProperty(attr)) {returnObject[attr] = attributes[attr];};
@@ -224,9 +226,13 @@ exports.Map = function Map() { //inputs for constructor TBC
         self.buildMission = function(missionData) {
             console.log("Building mission: "+missionData.name);
             //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward
-            var conditionAttr = {};
+            var conditionAttr;
+            var initialAttr;
             if (missionData.conditionAttributes) {
                 conditionAttr = self.unpackConditionAttributes(missionData.conditionAttributes);
+            };
+            if (missionData.initialAttributes) {
+                initialAttr = self.unpackConditionAttributes(missionData.initialAttributes);
             };
             return new missionObjectModule.Mission(missionData.name, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
         };
@@ -361,6 +367,19 @@ exports.Map = function Map() { //inputs for constructor TBC
                 if (_locations[i].objectExists(anObjectName)) {return true};
             };
             return false;
+        };
+
+        self.getObject = function(anObjectName) {
+            //note, this *won't* find objects delivered by a mission or delivered by another object.
+
+            //loop through each location and location inventory. 
+            //Get object (by synonym)
+            //return when found
+            for (var i=0;i<_locations.length;i++) {
+                var object = _locations[i].getObject(anObjectName);
+                if (object) {return object};
+            };
+            return null;
         };
 
         self.globalAffinityChange = function() {

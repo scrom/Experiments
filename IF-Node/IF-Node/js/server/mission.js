@@ -1,6 +1,6 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, description, dialogue, parent, missionObject, isStatic, condition, conditionAttributes, destination, reward) { //add time limit of some form in later
+module.exports.Mission = function Mission(name, description, dialogue, parent, missionObject, isStatic, initialAttributes, conditionAttributes, destination, reward) { //add time limit of some form in later
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
@@ -12,7 +12,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
         var _conversationState = 0; //track dialogue
         var _missionObject = missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
-        var _condition = condition; //the required (numeric/enumerated) condition the object must be in for success 
+        var _initialAttributes = initialAttributes; //the attributes to be set against the mission object when the mission starts 
         var _conditionAttributes = conditionAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
         var _destination = destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
@@ -73,7 +73,11 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             if (_parent) {
                 resultString +=',"parent":"'+_parent+'"';
             };
-            resultString +=',"missionObject":"'+_missionObject+'","static":"'+_isStatic+'","conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            resultString +=',"missionObject":"'+_missionObject+'","static":"'+_isStatic+'"';
+            if (_initialAttributes) {
+                    resultString +='","initialAttributes":'+self.literalToString(_initialAttributes);
+            };
+            resultString +=',"conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
             resultString+= '}';
             return resultString;
         };

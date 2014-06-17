@@ -18,7 +18,7 @@ exports.tearDown = function (callback) {
 
 exports.canGetNamedCreatureFromMap = function (test) {
 
-    var expectedResult = 'Simon';
+    var expectedResult = 'Simon Cromarty';
     var actualResult = m0.getCreature('simon').getDisplayName();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

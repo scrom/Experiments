@@ -367,6 +367,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return ""; //neutral
         };
 
+        self.setBleeding = function(bool) {
+            _bleeding = bool;
+        };
+
         self.isHidden = function() {
             return false;
         };

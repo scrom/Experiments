@@ -1192,7 +1192,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         if (!(_plural)) resultString += "s"
                         resultString +=" "+_inventory.describe()+".";
                     } else if (_inventory.getCarryWeight() > 0) {
-                        resultString +=initCap(_itemDescriptivePrefix)+" empty.";
+                        resultString +=" "+initCap(_itemDescriptivePrefix)+" empty.";
                     };
                     return resultString;
                 };
