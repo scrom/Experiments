@@ -534,10 +534,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             null; //do nothing - this only works for artefacts
         };
 
-        self.reduceAffinity = function(reduceBy) {
-            _affinity -= reduceBy;
-        };
-
         self.getInventoryWeight = function() {
             if (_inventory.length==0){return ''};
             var inventoryWeight = 0
@@ -579,7 +575,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.rub = function(anObject) {
             if (self.isDead()) {return _genderPrefix+"'s dead. I'm not sure that's an appropriate thing to do to corpses."};
-            _affinity --;
+            self.decreaseAffinity(1);
             if (_affinity >=-1) {
                 return _genderPrefix+" really doesn't appreciate it. I recommend you stop now.";
             } else { return "Seriously. Stop that!";};
@@ -593,7 +589,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.offend = function(offenceLevel) {
             //offending a creature reduces affinity
             if (offenceLevel >0) {
-                _affinity -= offenceLevel;
+                self.decreaseAffinity(offenceLevel);
             };            
         };
 
@@ -601,7 +597,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if (!(self.canCarry(anObject))) {return '';};              
             
-            _affinity += anObject.getAffinityModifier();
+            self.increaseAffinity(anObject.getAffinityModifier());
             _inventory.add(anObject);
             return initCap(self.getDisplayName())+" now owns "+anObject.getDescription()+".";
             
@@ -662,7 +658,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
-                _affinity--;
+                self.decreaseAffinity(1);
 
                 //do they have it?
                 var objectToGive = _inventory.getObject(anObjectName);
@@ -700,7 +696,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 return "Sorry. You can't carry "+anObjectName+" at the moment."
             } else {
-                _affinity-=2; //larger dent to affinity
+                self.decreaseAffinity(2); //larger dent to affinity
                 return "Not smart! You were caught.";
             };
         };
@@ -742,7 +738,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from "+_genderPossessiveSuffix+" corpse.";};
   
             //reduce creature affinity by article modifier
-            _affinity -= affinityModifier;
+            self.decreaseAffinity(affinityModifier);
                  
             //reduce the level of affinity this item provides in future...
             //note this only happens when changing hands from a live creature to a player at the moment.
@@ -851,7 +847,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //erode affinity lower than base if following a player (prevents indefinite following)
                 //it'll recover again as part of bsic creature wandering.
                 if ((_affinity <= _baseAffinity) && _affinity>0) {
-                    if (_moves%5 == 0 && _moves>0) {_affinity--;};
+                    if (_moves%5 == 0 && _moves>0) {self.decreaseAffinity(1);};
                 };
                 return self.go(aDirection, aLocation)
             };
@@ -867,20 +863,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //affinity degrades slower the higher it is to start with. 
             if (_affinity > _baseAffinity) { 
                 if (_affinity < 5) {
-                    if (_moves%5 == 0 && _moves>0) {_affinity--;}; //degrade every 5 moves for affinity lower than 5
+                    if (_moves%5 == 0 && _moves>0) {self.decreaseAffinity(1);}; //degrade every 5 moves for affinity lower than 5
                 } else if (_affinity < 10) {
-                    if (_moves%10 == 0 && _moves>0) {_affinity--;}; //degrade every 10 moves for affinity 5-9
+                    if (_moves%10 == 0 && _moves>0) {self.decreaseAffinity(1);}; //degrade every 10 moves for affinity 5-9
                 } else if (_affinity >= 10) {
-                    if (_moves%20 == 0 && _moves>0) {_affinity--;}; //degrade every 20 moves for affinity 10 or more
+                    if (_moves%20 == 0 && _moves>0) {self.decreaseAffinity(1);}; //degrade every 20 moves for affinity 10 or more
                 };
             };
             if (_affinity < _baseAffinity) { 
                 if (_affinity > -5) {
-                    if (_moves%5 == 0 && _moves>0) {_affinity++;}; //degrade every 5 moves for affinity lower than 5
+                    if (_moves%5 == 0 && _moves>0) {self.increaseAffinity(1);}; //degrade every 5 moves for affinity lower than 5
                 } else if (_affinity > -10) {
-                    if (_moves%10 == 0 && _moves>0) {_affinity++;}; //degrade every 10 moves for affinity 5-9
+                    if (_moves%10 == 0 && _moves>0) {self.increaseAffinity(1);}; //degrade every 10 moves for affinity 5-9
                 } else if (_affinity < -10) {
-                    if (_moves%20 == 0 && _moves>0) {_affinity++;}; //degrade every 20 moves for affinity 10 or more
+                    if (_moves%20 == 0 && _moves>0) {self.increaseAffinity(1);}; //degrade every 20 moves for affinity 10 or more
                 };
             };
 
@@ -908,7 +904,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.hurt = function(player, weapon, verb) {
              if (self.isDead()) {return _genderPrefix+"'s dead already."};
             //regardless of outcome, you're not making yourself popular
-            _affinity--;
+            self.decreaseAffinity(1);
 
             var resultString = "";
 
@@ -1010,7 +1006,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.feed = function(pointsToAdd) {
-            _affinity++;
+            self.increaseAffinity(1);
             self.recover(pointsToAdd);
             console.log('Creature eats some food.');
         };
@@ -1073,7 +1069,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.break = function(verb, deliberateAction) {
-            _affinity--;  
+            self.decreaseAffinity(1);  
             if (verb == "force") {
                 return "That's not a reasonable thing to do to "+_genderSuffix+" is it?";
             };
@@ -1081,7 +1077,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.destroy = function(deliberateAction) {
-            _affinity--; 
+            self.decreaseAffinity(1); 
             return "That's an extremely vindictive thing to want to achieve. If that's really what you want you'll need to find an alternate means to 'destroy' "+_genderSuffix+".";
         };
 
@@ -1098,14 +1094,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.moveOpenOrClose = function(verb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and push at the corpse. "+_genderPrefix+" makes some squishy gurgling sounds and some vile-smelling fluid seeps onto the floor."};
-            _affinity--;
+            self.decreaseAffinity(1);
             if (verb == 'push'||verb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
 
         };
 
         self.moveOrOpen = function(verb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You pull and tear at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
-            _affinity--;
+            self.decreaseAffinity(1);
             if (verb == 'push'||verb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
             //open
             return "I suggest you don't try to "+verb+" "+self.getDisplayName()+" again, it's not going to end well.";

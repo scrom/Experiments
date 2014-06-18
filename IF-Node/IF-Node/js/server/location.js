@@ -262,7 +262,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
                 if (creatures[i].getSubType() == "friendly" && (creatures[i].getAffinity() <= 5)) {
                     if (creatures[i].getName() != excludedCreature) {
                         //console.log("reducing affinity for "+creatures[i].getName());
-                        creatures[i].reduceAffinity(changeValue);
+                        creatures[i].decreaseAffinity(changeValue);
                     };
                 };
             };
