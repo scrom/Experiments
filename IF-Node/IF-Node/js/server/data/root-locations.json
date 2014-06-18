@@ -1440,7 +1440,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "article",
+        "name": "security article",
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'Take security in your STRIDE'.",
         "attributes": {
@@ -1452,6 +1452,7 @@
           "canCollect": true
         },
         "synonyms": [
+		  "article",	
           "lotl",
           "learn on the loo",
           "learn on the loo article",
@@ -1463,13 +1464,13 @@
             "object": "mission",
             "name": "lotleasteregg",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
-            "missionObject": "article",
+            "missionObject": "security article",
             "static": "true",
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "article",
+            "destination": "security article",
             "reward": {
               "score": 20,
               "repairSkill": "security",
@@ -1862,7 +1863,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "article",
+        "name": "solid article",
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
         "attributes": {
@@ -1874,6 +1875,7 @@
           "canCollect": true
         },
         "synonyms": [
+		  "article",
           "lotl",
           "learn on the loo",
           "learn on the loo article",
@@ -1885,13 +1887,13 @@
             "object": "mission",
             "name": "lotleasteregg",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
-            "missionObject": "article",
+            "missionObject": "solid article",
             "static": "true",
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "article",
+            "destination": "solid article",
             "reward": {
               "score": 20,
               "repairSkill": "architecture",
@@ -4000,7 +4002,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "article",
+        "name": "boy scout article",
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'The Boy Scout Rule'.",
         "attributes": {
@@ -4012,6 +4014,7 @@
           "canCollect": true
         },
         "synonyms": [
+		  "article",
           "lotl",
           "learn on the loo",
           "learn on the loo article",
@@ -4023,13 +4026,13 @@
             "object": "mission",
             "name": "lotleasteregg",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
-            "missionObject": "article",
+            "missionObject": "boy scout article",
             "static": "true",
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "article",
+            "destination": "boy scout article",
             "reward": {
               "score": 20,
               "repairSkill": "clean code",
