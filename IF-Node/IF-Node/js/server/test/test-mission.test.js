@@ -1,6 +1,7 @@
 ﻿"use strict";
 var mission = require('../mission.js');
 var artefact = require('../artefact.js');
+var inventory = require('../inventory.js');
 var map = require('../map.js');
 var m0;
 
@@ -63,3 +64,29 @@ exports.rewardNegativelyModifiesCreatureAffinity = function (test) {
 };
 
 exports.rewardNegativelyModifiesCreatureAffinity.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+
+exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
+    var simon = m0.getCreature('simon galbraith');
+
+    //var m = new simon.getMissions()[0];
+    var disk = new artefact.Artefact("disk", "hard disk", "mission object", {weight: 3, price: 100, canCollect: true}, null, null);
+
+    var mission = new simon.getMissions()[0];
+    var inv = new inventory.Inventory(1,10,'player');
+    mission.startTimer();
+    mission.getNextDialogue();
+    mission.getNextDialogue();
+    simon.receive(disk);
+    
+    var result = mission.checkState(inv, simon.getLocation(), m0);
+
+    var expectedResult = true;
+    var actualResult = false
+    if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCompleteHardDiskMissionByGivingDiskToSimon.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
