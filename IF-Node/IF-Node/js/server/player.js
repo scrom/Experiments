@@ -1368,7 +1368,12 @@ module.exports.Player = function Player(aUsername) {
             //regardless of whether this is successful, 
             //by this point this is definitely an aggressive act. Increase aggression
             self.increaseAggression(1);
-            _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
+
+            if (receiver.getSubType() != "creature") {
+                //it's ok to hit "bad guys" in front of people but nothing else.
+                //killing them will still upset the locals though 
+                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
+            };
 
             //validate verb against weapon subType
             
@@ -1670,6 +1675,33 @@ module.exports.Player = function Player(aUsername) {
 
         };
 
+        self.processMissionState = function(mission, map, missionOwner, newlyCompletedMissions) {
+            var resultString = "";
+            var missionReward = mission.checkState(_inventory, _currentLocation, map);
+            if (missionReward) {
+                if (missionReward.hasOwnProperty("fail")) {
+                    resultString += "<br>"+missionReward.failMessage+"<br>";
+                    _missionsFailed.push(mission.getName());
+                } else {
+                    resultString += "<br>"+missionReward.successMessage+"<br>";
+                    if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                    if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
+                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                    mission.processAffinityModifiers(map, missionReward);
+                    _missionsCompleted.push(mission.getName());
+                    newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
+                };
+
+                if (missionOwner) {
+                    missionOwner.removeMission(mission.getName());
+                };
+            };
+
+            return resultString;
+        };
+
         self.tick = function(time, map) {
             //console.log("Player tick...");
 
@@ -1681,47 +1713,13 @@ module.exports.Player = function Player(aUsername) {
 
             //check mission status
             for (var i=0; i< _missions.length;i++) {
-                var missionReward = _missions[i].checkState(_inventory, _currentLocation);
-                if (missionReward) {
-                    if (missionReward.hasOwnProperty("fail")) {
-                        resultString += "<br>"+missionReward.failMessage+"<br>";
-                        _missionsFailed.push(_missions[i].getName());
-                    } else {
-                        resultString += "<br>"+missionReward.successMessage+"<br>";
-                        if (missionReward.score) { _score += missionReward.score;};
-                        if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
-                        if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
-                        if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                        if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                        _missions[i].processAffinityModifiers(map, missionReward);
-                        _missionsCompleted.push(_missions[i].getName());
-                        newlyCompletedMissions.push(_missions[i].getName());
-                    };
-                    self.removeMission(_missions[i].getName());
-                };
+                resultString+= self.processMissionState(_missions[i], map, self, newlyCompletedMissions);
             };
 
             //check missions from location
             var locationMissions = _currentLocation.getMissions();
             for (var j=0; j<locationMissions.length;j++) {
-                var missionReward = locationMissions[j].checkState(_inventory, _currentLocation);
-                if (missionReward) {
-                    if (missionReward.hasOwnProperty("fail")) {
-                        resultString += "<br>"+missionReward.failMessage+"<br>";
-                        _missionsFailed.push(locationMissions[j].getName());
-                    } else {
-                        resultString += "<br>"+missionReward.successMessage+"<br>";
-                        if (missionReward.score) { _score += missionReward.score;};
-                        if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
-                        if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
-                        if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                        if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                        locationMissions[j].processAffinityModifiers(map, missionReward);
-                        _missionsCompleted.push(locationMissions[j].getName());
-                        newlyCompletedMissions.push(locationMissions[j].getName());
-                    };
-                    _currentLocation.removeMission(locationMissions[j].getName());
-                };
+                resultString+= self.processMissionState(locationMissions[j], map, _currentLocation, newlyCompletedMissions);
             };
 
             //check missions from location and inventory objects/creatures
@@ -1730,56 +1728,25 @@ module.exports.Player = function Player(aUsername) {
             for (var i=0; i<artefacts.length; i++) {
                 var artefactMissions = artefacts[i].getMissions();
                 for (var j=0; j<artefactMissions.length;j++) {
-                    var missionReward = artefactMissions[j].checkState(_inventory, _currentLocation, map);
-                    if (missionReward) {
-                        if (missionReward.hasOwnProperty("fail")) {
-                            resultString += "<br>"+missionReward.failMessage+"<br>";
-                            _missionsFailed.push(artefactMissions[j].getName());
-                        } else {
-                            resultString += "<br>"+missionReward.successMessage+"<br>";
-                            if (missionReward.score) { _score += missionReward.score;};
-                            if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
-                            if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
-                            if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                            if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                            artefactMissions[j].processAffinityModifiers(map, missionReward);
-                            _missionsCompleted.push(artefactMissions[j].getName());
-                            newlyCompletedMissions.push(artefactMissions[j].getName());
-                        };
-                        artefacts[i].removeMission(artefactMissions[j].getName());
-                    };
+                    resultString+= self.processMissionState(artefactMissions[j], map, artefacts[i], newlyCompletedMissions);
                 };
             };
 
-            //clear parents from any child missions to make them accessible
+            //update missions where there's a mission object here
+            //clear parents from any child missions (from newly completed missions) to make them accessible
             var allMissions = map.getAllMissions();
             for (var i=0;i<allMissions.length;i++) {
                 //is there a mission object in this location?
                 if (_currentLocation.objectExists(allMissions[i].getMissionObjectName())) {
-                    var missionReward = allMissions[i].checkState(_inventory, _currentLocation, map);
-                    if (missionReward) {
-                        if (missionReward.hasOwnProperty("fail")) {
-                            resultString += "<br>"+missionReward.failMessage+"<br>";
-                            _missionsFailed.push(allMissions[i].getName());
-                        } else {
-                            resultString += "<br>"+missionReward.successMessage+"<br>";
-                            if (missionReward.score) { _score += missionReward.score;};
-                            if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
-                            if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
-                            if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                            if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                            allMissions[i].processAffinityModifiers(map, missionReward);
-                            _missionsCompleted.push(allMissions[i].getName());
-                            newlyCompletedMissions.push(allMissions[i].getName());
-                        };
-                        //artefacts[i].removeMission(allMissions[i].getName());
-                    };
+                    resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.
                 };
 
                 for (var j=0;j<newlyCompletedMissions.length;j++) {
                     var missionName = newlyCompletedMissions[j]; 
                     if (allMissions[i].checkParent(missionName)) {allMissions[i].clearParent();};
                 };
+
+                //tick all active missions
                 allMissions[i].addTicks(time);
             };
 
