@@ -159,8 +159,9 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             };
         };
 
-        self.fail = function() {
-            var failMessage = "<br>You failed to complete the "+self.getName()+" task in time.<br>";;
+        self.fail = function(failReason) {
+            var failMessage;
+            if (failReason == "time") {failMessage = "<br>You failed to complete the "+self.getName()+" task in time.<br>";};
             if (_reward.hasOwnProperty("failMessage")) {failMessage = _reward.failMessage;};
             _reward=null;
             _ticking = false;
@@ -230,6 +231,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                         missionObject = location.getObject(_missionObject);
                         break;
                     default:
+                        //@todo - check player destroyed objects list.
                         //this one allows you to have an object/creature in any location - the object's condition will determine success.
                         //this supports find, break, destroy, chew, kill
                         if (playerInventory.getObject(_destination)) {
@@ -274,7 +276,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                     if (self.getTimeTaken() <= _conditionAttributes["time"]) {
                         successCount++;
                     } else {
-                        return self.fail();
+                        return self.fail("time");
                     };                           
                 };
 

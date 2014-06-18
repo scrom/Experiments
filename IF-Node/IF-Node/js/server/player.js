@@ -421,7 +421,7 @@ module.exports.Player = function Player(aUsername) {
             };
 
             if (artefact.isDestroyed()) {
-                _destroyedObjects.push(artefact.getName());
+                _destroyedObjects.push(artefact);
                 resultString += emptyContentsOfContainer(artefact.getName());
                 removeObjectFromPlayerOrLocation(artefact.getName());
             };
@@ -452,7 +452,7 @@ module.exports.Player = function Player(aUsername) {
 
             //destroyed it!
             if (droppedObject.isDestroyed()) { 
-                _destroyedObjects.push(droppedObject.getName());
+                _destroyedObjects.push(droppedObject);
                 return "Oops. "+artefactDamage+ emptyContentsOfContainer(artefact.getName());
             }; 
 
@@ -1383,7 +1383,7 @@ module.exports.Player = function Player(aUsername) {
                 _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
                 resultString += emptyContentsOfContainer(receiver.getName());
                 removeObjectFromPlayerOrLocation(receiver.getName());
-                _destroyedObjects.push(receiver.getName());
+                _destroyedObjects.push(receiver);
                 resultString = "Oops. "+resultString 
             }; 
 
@@ -1403,7 +1403,7 @@ module.exports.Player = function Player(aUsername) {
                         resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+". "+weapon.getDescriptivePrefix()+" not the most durable of weapons.";
                         resultString += emptyContentsOfContainer(weapon.getName());
                         //remove destroyed item
-                        _destroyedObjects.push(weapon.getName());
+                        _destroyedObjects.push(weapon);
                         removeObjectFromPlayerOrLocation(artefactName);                    
                     } else {
                         resultString +="<br>You damaged "+weapon.getDisplayName()+"."
