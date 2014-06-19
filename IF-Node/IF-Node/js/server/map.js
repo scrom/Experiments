@@ -234,7 +234,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             if (missionData.initialAttributes) {
                 initialAttr = self.unpackConditionAttributes(missionData.initialAttributes);
             };
-            return new missionObjectModule.Mission(missionData.name, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
+            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
         };
         
         self.addLocation = function(aName,aDescription,isDark){
@@ -411,6 +411,44 @@ exports.Map = function Map() { //inputs for constructor TBC
             };
             return missions;
         };
+
+      /*  self.removeMissionAndChildren = function(missionName) {
+            //loop through each location, location inventory. 
+            //Get all missions to remove
+            var removedMissions = [];
+            for (var i=0;i<_locations.length;i++) {
+                var locationMissions = _locations[i].getMissions(true);
+                //loop through location missions, remove child missions, remove named mission
+                for (var x=0;x<locationMissions.length;x++) {
+                    if (locationMissions[x].getName(missionName)) {
+                        removedMissions.push(locationMissions[x]);
+                        _locations[i].removeMission(missionName);
+                    };
+                    if (locationMissions[x].checkParent(missionName)) {
+                        removedMissions.push(locationMissions[x]);
+                        _locations[i].removeMission(locationMissions[x].getName());
+                    };
+                };
+
+                var locationInventory = _locations[i].getAllObjectsAndChildren(true);
+                for (var j=0;j<locationInventory.length;j++) {
+                    var objectMissions = locationInventory[j].getMissions(true);
+                    //loop through object missions, remove child missions, remove named mission
+                    for (var x=0;x<objectMissions.length;x++) {
+                        if (objectMissions[x].getName(missionName)) {
+                            removedMissions.push(objectMissions[x]);
+                            locationInventory[j].removeMission(missionName);
+                        };
+                        if (objectMissions[x].checkParent(missionName)) {
+                            removedMissions.push(objectMissions[x]);
+                            locationInventory[j].removeMission(objectMissions[x].getName());
+                        };
+                    };
+                };
+            };
+            return removedMissions;
+        };
+      */
 
         self.getCreature = function(aCreatureName) {
             //get the first creature whose name matches the name passed in

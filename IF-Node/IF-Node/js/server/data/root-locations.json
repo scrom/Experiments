@@ -93,7 +93,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "destroyscreen",
+			"name": "destroyscreen",
+            "displayName": "destroy the screen",
             "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
             "missionObject": "screen",
             "static": "true",
@@ -105,7 +106,7 @@
             "reward": {
               "score": -25,
               "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points.",
-              "failMessage": "Ah well. You failed to destroy the screen quickly enough.<br>Never mind, it's probably better that way."
+              "failMessage": "Never mind, it's probably better that way."
             }
           }
         ]
@@ -114,7 +115,8 @@
     "missions": [
       {
         "object": "mission",
-        "name": "sweetcoffee",
+		"name": "sweetcoffee",
+        "displayName": "get yourself a coffee",
         "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet black coffee.",
         "missionObject": "sweet coffee",
         "static": "false",
@@ -279,8 +281,9 @@
         "missions": [
           {
             "object": "mission",
-            "name": "collectchrisbike",
-            "description": "Chris booked his bike in for repairs.",
+			"name": "collectchrisbike",
+            "displayName": "collect Chris' bike",
+            "description": "Chris booked his bike in for repairs, you'll need to <i>give</i> Chris' bike to Rick.",
             "parent": "fixchrisbike",
             "missionObject": "bike",
             "static": "true",
@@ -850,7 +853,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "fixchrisbike",
+			"name": "fixchrisbike",
+            "displayName": "fix Chris' bike",
             "description": "Chris wants his bike fixed.",
             "dialogue": [
               "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
@@ -977,7 +981,7 @@
               "type": "property",
               "isHidden": true,
               "canCollect": false,
-              "breakable": true,
+              "isBreakable": true,
               "price": 25,
               "lockable": true,
               "locked": true,
@@ -1310,7 +1314,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "learntosteal",
+			"name": "learntosteal",
+            "displayName": "improve your stealing skills",
             "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues!",
             "missionObject": "black book",
             "static": "true",
@@ -1462,7 +1467,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "lotleasteregg",
+			"name": "lotleasteregg",
+            "displayName": "read the lotl security article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
             "missionObject": "security article",
             "static": "true",
@@ -1885,7 +1891,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "lotleasteregg",
+			"name": "lotleasteregg",
+            "displayName": "read the lotl SOLID article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
             "missionObject": "solid article",
             "static": "true",
@@ -2226,7 +2233,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "beans",
+			"name": "beans",
+            "displayName": "fill the coffee machine with beans",
             "description": "Before you can get any coffee, this machine needs beans.",
             "missionObject": "machine",
             "static": "true",
@@ -2368,7 +2376,8 @@
             "missions": [
               {
                 "object": "mission",
-                "name": "repaircoffeemachine",
+				"name": "repaircoffeemachine",
+                "displayName": "repair the coffee machine",
                 "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
                 "missionObject": "manual",
                 "static": "true",
@@ -2556,7 +2565,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "killthespy",
+			"name": "killthespy",
+            "displayName": "kill the spy",
             "description": "Kill the spy!",
             "missionObject": "spy",
             "static": "false",
@@ -2698,7 +2708,7 @@
         "detailedDescription": "A random guy who occasionally has ice cream for sale.",
         "attributes": {
           "weight": 140,
-          "attackStrength": 35,
+          "attackStrength": 5,
           "gender": "male",
           "type": "friendly",
           "carryWeight": 15,
@@ -3148,7 +3158,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "repairprojector",
+			"name": "repairprojector",
+            "displayName": "repair the projector",
             "description": "The projector's broken, someone needs to fix it.",
             "parent": "teachprojectorrepair",
             "missionObject": "projector",
@@ -3222,7 +3233,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "retrievedisk",
+			"name": "retrievedisk",
+            "displayName": "retrieve the stolen hard disk",
             "description": "Retrieve a stolen hard drive.",
             "dialogue": [
               "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
@@ -3330,7 +3342,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "keyfob",
+			"name": "keyfob",
+            "displayName": "get a keyfob from vic",
             "description": "Vic has a key fob for you.",
             "dialogue": [
               "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
@@ -3366,7 +3379,8 @@
           },
           {
             "object": "mission",
-            "name": "vicsbook",
+			"name": "vicsbook",
+            "displayName": "give Vic something interesting to read",
             "description": "Vic has a parcel for you but she'd like something to read first.",
             "missionObject": "small book",
             "static": "true",
@@ -3790,7 +3804,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "hidejameswig",
+			"name": "hidejameswig",
+            "displayName": "hide James' wig",
             "description": "Make the wig 'go away'.",
             "dialogue": [
               "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'"
@@ -4024,7 +4039,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "lotleasteregg",
+			"name": "lotleasteregg",
+            "displayName": "read LOTL boy scout article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
             "missionObject": "boy scout article",
             "static": "true",
@@ -5127,7 +5143,8 @@
         "missions": [
           {
             "object": "mission",
-            "name": "teachprojectorrepair",
+			"name": "teachprojectorrepair",
+            "displayName": "learn projector repair from Amanda",
             "description": "Amanda knows how to fix stuff.",
             "dialogue": [
               "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'"

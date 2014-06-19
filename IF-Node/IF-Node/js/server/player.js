@@ -1042,20 +1042,22 @@ module.exports.Player = function Player(aUsername) {
                 return resultString;
             };
 
-            //if it's not a book, we'll get this far...
-            newMissions = artefact.getMissions();
-            //remove any with dialogue from this list.
-            for (var j=0; j< newMissions.length;j++) {
-                if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
-            };
-            if (newMissions.length>0) {resultString+= "<br>";};
-            for (var i=0; i< newMissions.length;i++) {
-                newMissions[i].startTimer();
-                if (!(newMissions[i].isStatic())) {
-                    self.addMission(newMissions[i]);
-                    artefact.removeMission(newMissions[i].getName());
+            if (!(artefact.isDead())) {
+                //if it's not a book, we'll get this far...
+                newMissions = artefact.getMissions();
+                //remove any with dialogue from this list.
+                for (var j=0; j< newMissions.length;j++) {
+                    if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
                 };
-                resultString+= newMissions[i].getDescription()+"<br>";
+                if (newMissions.length>0) {resultString+= "<br>";};
+                for (var i=0; i< newMissions.length;i++) {
+                    newMissions[i].startTimer();
+                    if (!(newMissions[i].isStatic())) {
+                        self.addMission(newMissions[i]);
+                        artefact.removeMission(newMissions[i].getName());
+                    };
+                    resultString+= newMissions[i].getDescription()+"<br>";
+                };
             };
 
             return resultString;
@@ -1677,7 +1679,7 @@ module.exports.Player = function Player(aUsername) {
 
         self.processMissionState = function(mission, map, missionOwner, newlyCompletedMissions) {
             var resultString = "";
-            var missionReward = mission.checkState(_inventory, _currentLocation, map);
+            var missionReward = mission.checkState(_inventory, _currentLocation, map, _destroyedObjects);
             if (missionReward) {
                 if (missionReward.hasOwnProperty("fail")) {
                     resultString += "<br>"+missionReward.failMessage+"<br>";
@@ -1697,6 +1699,8 @@ module.exports.Player = function Player(aUsername) {
                 if (missionOwner) {
                     missionOwner.removeMission(mission.getName());
                 };
+
+                //console.log("Completed processing mission state");
             };
 
             return resultString;
@@ -1739,6 +1743,13 @@ module.exports.Player = function Player(aUsername) {
                 //is there a mission object in this location?
                 if (_currentLocation.objectExists(allMissions[i].getMissionObjectName())) {
                     resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.
+                };
+
+                //have we destroyed anything recently?
+                for (var j=0;j<_destroyedObjects.length;j++) {
+                    if (_destroyedObjects[j].getName() == (allMissions[i].getMissionObjectName() || allMissions[i].getDestination())) {
+                        resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.
+                    };
                 };
 
                 for (var j=0;j<newlyCompletedMissions.length;j++) {

@@ -1,9 +1,10 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, description, dialogue, parent, missionObject, isStatic, initialAttributes, conditionAttributes, destination, reward) { //add time limit of some form in later
+module.exports.Mission = function Mission(name, displayName, description, dialogue, parent, missionObject, isStatic, initialAttributes, conditionAttributes, destination, reward) { //add time limit of some form in later
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
+        var _displayName = displayName;
         var _parent = parent; //parent mission - allows threads to be built up.
         var _description = description;
         var _dialogue = dialogue; //an array/collection of dialogue sentences. If a mission has dialogue, it'll override any static settings and be treated as static for now.
@@ -61,7 +62,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         ////public methods
 
         self.toString = function() {
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayName":"'+_displayName+'","description":"'+_description+'"';
             if (_dialogue.length >0) {
                 resultString+= ',"dialogue":[';
                 for(var i=0; i<_dialogue.length;i++) {
@@ -87,7 +88,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
         };
 
         self.getDisplayName = function() {
-            return _name;
+            return _displayName;
         };
 
         self.getMissionObjectName = function() {
@@ -126,7 +127,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             var returnObject = _reward;
             _reward=null;
             _ticking = false;
-            console.log("reward delivered from mission: "+returnObject);
+            console.log("reward delivered from "+self.getName()+": "+returnObject);
             return returnObject;
         };
 
@@ -146,7 +147,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
         self.processAffinityModifiers = function(map, reward) {
             //note, _reward is likely null at this point so we pass it back in.
-            console.log("Processing affinity modifiers from mission reward");
+            //console.log("Processing affinity modifiers from mission reward");
             var affinityModifier = 1;
             if (reward.affinityModifier) { affinityModifier = reward.affinityModifier;};
             if (reward.increaseAffinityFor) { 
@@ -161,8 +162,11 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
         self.fail = function(failReason) {
             var failMessage;
-            if (failReason == "time") {failMessage = "<br>You failed to complete the "+self.getName()+" task in time.<br>";};
-            if (_reward.hasOwnProperty("failMessage")) {failMessage = _reward.failMessage;};
+            if (failReason == "time") {failMessage = "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
+            if (failReason == "destroyedObject") {failMessage = "<br>You failed to "+self.getDisplayName()+". You destroyed something important.<br>";};
+            if (failReason == "destroyedDestination") {failMessage = "<br>Oh dear. You can no longer "+self.getDisplayName()+". You destroyed something important.<br>";};
+            
+            if (_reward.hasOwnProperty("failMessage")) {failMessage += _reward.failMessage;};
             _reward=null;
             _ticking = false;
             console.log("mission "+self.getName()+" failed");
@@ -186,7 +190,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
 
         self.getNextDialogue = function() {
             var response ="";
-            console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
+            //console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
             //move conversation forward
             //if we reach the end of the array, stop there.             
             if (_conversationState < _dialogue.length) {
@@ -207,20 +211,21 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
             };
       
             if (contentsCount == requiredContentsCount) {
-                console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+                //console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
                 return true;
             };
 
             return false;
         };
 
-        self.checkState = function (playerInventory, location, map) {
+        self.checkState = function (playerInventory, location, map, destroyedObjects) {
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible
             //we also exit early if the mission is already failed or completed
             if (self.isFailedOrComplete()||self.hasParent()) { return null; }; 
             var missionObject;
+            var destinationObject;
             //console.log('Checking state for mission: '+_name);
             switch(true) {
                     case (_destination == 'player'): //player inventory
@@ -231,7 +236,7 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                         missionObject = location.getObject(_missionObject);
                         break;
                     default:
-                        //@todo - check player destroyed objects list.
+                        
                         //this one allows you to have an object/creature in any location - the object's condition will determine success.
                         //this supports find, break, destroy, chew, kill
                         if (playerInventory.getObject(_destination)) {
@@ -246,14 +251,28 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                             if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
                             else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
                         } else {
-                            var locations = map.getLocations();
-                            for (var i=0;i<locations.length;i++) {
-                                var destinationObjectOrCreature = locations[i].getObject(_destination);
-                                if (destinationObjectOrCreature) {
-                                    if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                                    else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                            //check player destroyed objects list.
+                            for (var i=0;i<destroyedObjects.length;i++) {
+                                if (destroyedObjects[i].getName() == _missionObject) {
+                                    missionObject = destroyedObjects[i];
+                                    //console.log('mission object destroyed');
                                 };
-                                if (missionObject) {break;}; //exit early if we've found it.
+                                if (destroyedObjects[i].getName() == _destination) {
+                                    destinationObject = destroyedObjects[i];
+                                    //console.log('mission destination destroyed');
+                                };
+                            };
+
+                            if (!(missionObject)) {
+                                var locations = map.getLocations();
+                                for (var i=0;i<locations.length;i++) {
+                                    var destinationObjectOrCreature = locations[i].getObject(_destination);
+                                    if (destinationObjectOrCreature) {
+                                        if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                                        else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                                    };
+                                    if (missionObject) {break;}; //exit early if we've found it.
+                                };
                             };
                         }; 
                         break;
@@ -263,6 +282,28 @@ module.exports.Mission = function Mission(name, description, dialogue, parent, m
                 var objectAttributes = missionObject.getCurrentAttributes();
                 var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;
                 var successCount = 0;
+
+                //check/fail if the mission object shouldn't be destroyed!
+                if (missionObject.isDestroyed()) {
+                    if (!(_conditionAttributes["isDestroyed"])) {
+                        return self.fail("destroyedObject");
+                    } else {
+                        if (_conditionAttributes["isDestroyed"] == false) {
+                            return self.fail("destroyedObject");
+                        };
+                    }
+                };
+
+                //check if the destination object shouldn't be destroyed
+                if (destinationObject) {
+                    if (destinationObject.getName() != missionObject.getName()) {
+                        //fail, cannot complete if destination is lost
+                        return self.fail("destroyedDestination");
+                    };
+
+                    //if we get to this point, destination is the same as mission object
+                    //we've already checked if the mission object shouldn't be destroyed - so do nothing.
+                };
 
                 //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
                 if (_conditionAttributes["contains"]) {
