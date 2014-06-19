@@ -1065,7 +1065,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
                 var destroyMessage = "You destroyed "+_itemSuffix;
-                if (_inventory.size(true) > 0) {destroyMessage;};
+                if (_inventory.size(true) > 0) {destroyMessage;}; //@todo: WTF?
                 return destroyMessage+"!";
             };
             _detailedDescription += _itemPrefix+" shows signs of abuse.";
