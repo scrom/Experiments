@@ -73,7 +73,7 @@ I generally include a "pause" at the end of the batch file so that should there 
 Client Configuration
 --------------------
 The client consists of an index.html page in the root of the project and a series of referenced JS files under the js/client folder.
-There's also a css folder (although currently there's nothing in there)
+There's also a css folder with some *very* basic layout and styling.
 The express server coded into the server.js file will automatically server static files from the root of the node project (where the index.html file lives). 
 
 The client runs over http and assumes the game is running from the "root" of the node server on the node listening port.
