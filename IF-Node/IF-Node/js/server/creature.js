@@ -469,7 +469,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getDetailedDescription = function(playerAggression) {
             var resultString = _detailedDescription+"<br>"+self.getAffinityDescription();
             if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
-            
+            if (self.isDead()) {
+                if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; }
+                return resultString;
+            };
+
             if (_salesInventory.size() == 1) { resultString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
             else if (_salesInventory.size() > 1) { resultString += "<br>" + initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
             
@@ -483,7 +487,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (hasDialogue) {
                 if ((_affinity <0) && (playerAggression>0)) {resultString +="<br>"+_genderPrefix+" appears to have something on "+_genderSuffix+" mind but doesn't trust you enough to talk about it right now.";}
                 else { resultString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
-                };
+            };
             return resultString;
         };
 
