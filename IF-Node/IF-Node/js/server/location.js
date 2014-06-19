@@ -53,6 +53,10 @@ exports.Location = function Location(aName, aDescription, isDark) {
             return _name;
         };
 
+        self.getDisplayName = function() {
+            return _name;
+        };
+
         self.setDescription = function(aDescription) {
             _description=aDescription;
         };

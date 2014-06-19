@@ -89,6 +89,7 @@ exports.Action = function Action(aPlayer, aMap) {
                 //support case where first word of string is a "split" word
                 if (aString.indexOf(splitWordArray[i]+' ') == 0) {
                     //console.log('first word is split');
+                    _splitWord = splitWordArray[i];
                     return ["",aString.substr(aString.indexOf(' ')).trim()];
                 };
 
@@ -96,7 +97,8 @@ exports.Action = function Action(aPlayer, aMap) {
                 var endSplit = ' '+splitWordArray[i];
                 if (aString.indexOf(endSplit, aString.length - endSplit.length) !== -1) {
                     //console.log('last word is split');
-                    return [aString.substr(0,aString.indexOf(' ')).trim(),""];
+                    _splitWord = splitWordArray[i];
+                    return [aString.substr(0,aString.indexOf(' '+splitWordArray[i])).trim(),""];
                 };
 
             };
@@ -229,15 +231,13 @@ exports.Action = function Action(aPlayer, aMap) {
                         case 'where':                
                         case 'find':                   
                             ticks = 0;
-                            description = "Nice try $player. It was worth a shot...<br>You'll have to hunt things down yourself here I'm afraid.";
-                        
+                            description = "Nice try $player. It was worth a shot...<br>You'll either have to hunt things down yourself or <i>ask</i> someone to <i>find</i> out for you.";                        
                             //"find" is a cheat - disable it for now
                             //if player enters "search for x", we'll have an object 1 (but no object 0).
-                            //if (_object1) {description = _map.find(_object1);}
-                            //else {description = _map.find(_object0);};
                             break;  
                         case 'inspect': 
-                        case 'search':                  
+                        case 'search':    
+                            //would like to add "search for x" support here in future.              
                             description = _player.search(_verb, _object0);
                             break;
                         case 'examine':
@@ -352,6 +352,25 @@ exports.Action = function Action(aPlayer, aMap) {
                             description = _player.steal(_verb, _object0, _object1);            
                             break;
                         case 'ask':
+                            console.log("split: "+_splitWord);
+                            if (_splitWord == "is"||_splitWord == "to") {
+                                //check for "ask x to find y" or "ask x where y is" or "ask x where is y";
+                                if (_actionString.indexOf(" find ") >-1) {
+                                    description = _player.ask("find", _object0, _object1.replace("find ",""), _map); 
+                                    break;   
+                                };
+                                if (_actionString.indexOf(" where ") >-1) {
+                                    var objectPair = _actionString.split(" where ");
+                                    _object0 = objectPair[0].replace("ask ","");
+                                    _object1 = objectPair[1];
+                                    _object1 = " "+_object1+" ";
+                                    _object1 = _object1.replace(" is ", "");
+                                    console.log("O0: "+_object0+"O1:"+_object1);
+                                    description = _player.ask("find", _object0.trim(), _object1.trim(), _map);
+                                    break;
+                                };
+
+                            };
                             description = _player.ask(_verb, _object0, _object1);            
                             break;
                         case 'wave':
@@ -506,7 +525,8 @@ exports.Action = function Action(aPlayer, aMap) {
                 };
 
                 //fall-through checks...
-                //swearCheck(_verb);
+                //var swearing = swearCheck(_verb);
+                //if (swearing) {description = swearing;};
 
                 //final fall-through
                 if ((description == undefined)||(description == '')){

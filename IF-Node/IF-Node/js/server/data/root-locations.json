@@ -3237,7 +3237,7 @@
             "displayName": "retrieve the stolen hard disk",
             "description": "Retrieve a stolen hard drive.",
             "dialogue": [
-              "'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
+              "'Hi $player, welcome to Red Gate'<br>'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
               "'Have you found my missing data yet?'"
             ],
             "missionObject": "disk",
@@ -3808,7 +3808,8 @@
             "displayName": "hide James' wig",
             "description": "Make the wig 'go away'.",
             "dialogue": [
-              "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'"
+              "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
+			  "'Hey $player, how's that secret errand going?"
             ],
             "missionObject": "wig",
             "static": "false",
@@ -5147,7 +5148,8 @@
             "displayName": "learn projector repair from Amanda",
             "description": "Amanda knows how to fix stuff.",
             "dialogue": [
-              "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'"
+              "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
+			  "'Hi again $player.'<br>Any joy with the projector?"
             ],
             "parent": "keyfob",
             "missionObject": "Amanda",

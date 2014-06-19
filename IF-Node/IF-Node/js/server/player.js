@@ -922,12 +922,14 @@ module.exports.Player = function Player(aUsername) {
                     
         };
 
-        self.ask = function(verb, giverName, artefactName){
+        self.ask = function(verb, giverName, artefactName, map){
             if (stringIsEmpty(giverName)){ return verb+" what?";};
             var giver = getObjectFromLocation(giverName);
             if (!(giver)) {return "There's no "+giverName+" here.";};
 
             if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too
+
+            if (verb == "find") {return giver.find(artefactName, _aggression, map);};
 
             if (stringIsEmpty(artefactName)){ return verb+" "+giver.getDisplayName()+" for what?";};
 
@@ -1706,13 +1708,8 @@ module.exports.Player = function Player(aUsername) {
             return resultString;
         };
 
-        self.tick = function(time, map) {
-            //console.log("Player tick...");
-
+        self.updateMissions = function(time, map) {
             var resultString = "";
-            var damage = 0;
-            var healPoints = 0;
-
             var newlyCompletedMissions = [];
 
             //check mission status
@@ -1737,21 +1734,25 @@ module.exports.Player = function Player(aUsername) {
             };
 
             //update missions where there's a mission object here
-            //clear parents from any child missions (from newly completed missions) to make them accessible
             var allMissions = map.getAllMissions();
             for (var i=0;i<allMissions.length;i++) {
-                //is there a mission object in this location?
-                if (_currentLocation.objectExists(allMissions[i].getMissionObjectName())) {
-                    resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.
-                };
-
-                //have we destroyed anything recently?
-                for (var j=0;j<_destroyedObjects.length;j++) {
-                    if (_destroyedObjects[j].getName() == (allMissions[i].getMissionObjectName() || allMissions[i].getDestination())) {
+                if ((newlyCompletedMissions.indexOf(allMissions[i].getName()) == -1) && _missionsFailed.indexOf(allMissions[i].getName() == -1)) { 
+                    //is there a mission object/destination in this location?
+                    if (_currentLocation.objectExists(allMissions[i].getMissionObjectName() || allMissions[i].getDestination())) {
                         resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.
                     };
                 };
 
+                //have we destroyed anything recently?
+                if ((newlyCompletedMissions.indexOf(allMissions[i].getName()) == -1) && _missionsFailed.indexOf(allMissions[i].getName() == -1)) { 
+                    for (var j=0;j<_destroyedObjects.length;j++) {
+                        if (_destroyedObjects[j].getName() == (allMissions[i].getMissionObjectName() || allMissions[i].getDestination())) {
+                            resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.
+                        };
+                    };
+                };
+
+                //clear parents from any child missions (from newly completed missions) to make them accessible
                 for (var j=0;j<newlyCompletedMissions.length;j++) {
                     var missionName = newlyCompletedMissions[j]; 
                     if (allMissions[i].checkParent(missionName)) {allMissions[i].clearParent();};
@@ -1760,6 +1761,18 @@ module.exports.Player = function Player(aUsername) {
                 //tick all active missions
                 allMissions[i].addTicks(time);
             };
+
+            return resultString;
+        };
+
+        self.tick = function(time, map) {
+            //console.log("Player tick...");
+
+            var resultString = "";
+            var damage = 0;
+            var healPoints = 0;
+
+            resultString+= self.updateMissions(time, map);
 
             //check some stats
             if (_maxAggression < _aggression) {_maxAggression = _aggression;};

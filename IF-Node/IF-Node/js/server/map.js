@@ -352,9 +352,14 @@ exports.Map = function Map() { //inputs for constructor TBC
             //Get object (by synonym)
             //return location name when found
             for (var i=0;i<_locations.length;i++) {
-                if (_locations[i].objectExists(anObjectName)) {return anObjectName+" found at "+_locations[i].getName()+".";};
+                if (_locations[i].objectExists(anObjectName)) {
+                    var foundObject = _locations[i].getObject(anObjectName);
+                    if (foundObject.getType() == "creature") {
+                        return anObjectName+" is currently at '"+_locations[i].getDisplayName()+"'.";
+                    };
+                };
             };
-            return anObjectName+" not found in map.";
+            return "I'm sorry, there's nobody who answers to the name '"+anObjectName+"' in our records.";
         };
 
         self.checkExists = function(anObjectName) {
