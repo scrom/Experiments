@@ -2070,6 +2070,28 @@
           "coffee mug"
         ]
       },
+	  {
+        "object": "artefact",
+        "name": "coco pops",
+        "description": "bowl of coco pops",
+        "detailedDescription": "They're going a bit soggy but still tasty.",
+        "attributes": {
+          "weight": 1,
+          "type": "food",
+		  "nutrition": 20,
+		  "isEdible": true,
+          "canCollect": true
+        },
+        "synonyms": [
+          "food",
+          "cereal",
+		  "bowl",
+		  "pops",
+		  "coco",
+		  "bowl of coco pops"
+        ]
+      },
+
       {
         "object": "artefact",
         "name": "sugar",
@@ -4758,6 +4780,25 @@
           "firstaid kit",
           "first-aid kit",
           "first-aid"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "shreddies",
+        "description": "bowl of shreddies",
+        "detailedDescription": "Shreddies... 'Cereal in the daytime?!' wow, I've never had that before.",
+        "attributes": {
+          "weight": 1,
+          "type": "food",
+		  "nutrition": 20,
+		  "isEdible": true,
+          "canCollect": true
+        },
+        "synonyms": [
+          "food",
+          "cereal",
+		  "bowl",
+		  "bowl of shreddies"
         ]
       },
       {

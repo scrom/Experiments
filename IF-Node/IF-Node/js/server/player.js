@@ -1514,12 +1514,12 @@ module.exports.Player = function Player(aUsername) {
             //heal self...
             var pointsToAdd = 0;
             var pointsNeeded = _maxHitPoints-_hitPoints;
-            if (healthPercent() >60) {
+            if (healthPercent() >65) {
                 //add 50% of remaining health to gain.
                 pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
             } else {
-                //get health up to 60% only
-                pointsToAdd = Math.floor(((0.60*_maxHitPoints)-_hitPoints));
+                //get health up to 65% only
+                pointsToAdd = Math.floor(((0.65*_maxHitPoints)-_hitPoints));
             };
 
             resultString = "You ";
@@ -1568,6 +1568,8 @@ module.exports.Player = function Player(aUsername) {
             if (artefact.isLiquid()) {
                 return self.drink('drink',artefactName);
             };
+
+            if (_timeSinceEating < 5 || (_hitPoints > (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
 
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
