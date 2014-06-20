@@ -1124,7 +1124,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return _genderPrefix+"'s dead. I don't think "+_genderSuffix+" can help you."}; 
             if (_affinity <0) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
             if (playerAggression>1) {return _genderPrefix+" says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'"};            
-            if (_affinity <1) {return "When was the last time you did something for "+_genderSuffix+"?<br>It pays to be nice to people."};
+            if (_affinity <1) {return "When was the last time you did something for "+_genderSuffix+"?<br>It pays to be nice to others."};
             //if we're here, aggression is low and affinity is positive.
             return _genderPrefix+" says '"+map.find(artefactName)+"'"
         };

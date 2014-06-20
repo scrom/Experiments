@@ -2,6 +2,7 @@
 var creature = require('../creature.js');
 var artefact = require('../artefact.js');
 var mission = require('../mission.js');
+var map = require('../map.js');
 var junkAttributes;
 var a0;
 
@@ -120,7 +121,7 @@ exports.creatureCanReceiveObject = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.creatureCanReceiveObject.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature object can receive an object." };
 
@@ -151,7 +152,7 @@ exports.creatureIsUnfriendlyWhenAffinityLessThan0 = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.creatureIsUnfriendlyWhenAffinityLessThan0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a low affinity creature is unfriendly." };
 
@@ -165,7 +166,7 @@ exports.creatureIsUnfriendlyWhenAffinityIs0 = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.creatureIsUnfriendlyWhenAffinityIs0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a 0 affinity creature is unfriendly." };
 
@@ -179,7 +180,7 @@ exports.creatureIsFriendlyWhenAffinityIsGreaterThan0 = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.creatureIsFriendlyWhenAffinityIsGreaterThan0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a positive affinity creature is friendly when player is not aggressive." };
 
@@ -193,7 +194,7 @@ exports.creatureIsFriendlyWhenAffinityEqualsPlayerAggression = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.creatureIsFriendlyWhenAffinityEqualsPlayerAggression.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that an a positive affinity creature is friendly when affinity matches player aggression level." };
 
@@ -207,7 +208,7 @@ exports.creatureIsUnfriendlyWhenAffinityLessThanPlayerAggression = function (tes
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.creatureIsUnfriendlyWhenAffinityLessThanPlayerAggression.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a positive affinity creature is *not* friendly when affinity is less than player aggression level.." };
 
@@ -221,7 +222,7 @@ exports.unfriendlyCreatureWontShare = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.unfriendlyCreatureWontShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that an unfriendly creature won't share" };
 
@@ -236,7 +237,7 @@ exports.unfriendlyCreatureWontShareRegardlessOfAffinityImpact = function (test) 
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.unfriendlyCreatureWontShareRegardlessOfAffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that an unfriendly creature won't share even if taking an item from them actually *increases* affinity" };
 
@@ -251,7 +252,7 @@ exports.friendlyCreatureWillShare = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.friendlyCreatureWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature will share" };
 
@@ -265,7 +266,7 @@ exports.friendlyCreatureWillShareItemWith0AffinityImpact = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.friendlyCreatureWillShareItemWith0AffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature will share" };
 
@@ -280,7 +281,7 @@ exports.friendlyCreatureWontShareSomethingWithHighAffinityImpact = function (tes
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.friendlyCreatureWontShareSomethingWithHighAffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature won't share something that reduces affinity below 0" };
 
@@ -295,7 +296,7 @@ exports.deadCreatureWithNegativeAffinityWillShare = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.deadCreatureWithNegativeAffinityWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a dead creature will share" };
 
@@ -310,7 +311,7 @@ exports.deadCreaturesCantAcceptGifts = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.deadCreaturesCantAcceptGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a dead creature can't accept gifts" };
 
@@ -324,7 +325,7 @@ exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive = function (tes
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will accept gifts with minor affinity impact" };
 
@@ -339,7 +340,7 @@ exports.neutralCreaturesWillAcceptSmallGifts = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.neutralCreaturesWillAcceptSmallGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a neutral creature will accept gifts with minor affinity impact" };
 
@@ -353,7 +354,7 @@ exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive = function (
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will accept gifts with minor affinity impact is player is only slightly aggressive" };
 
@@ -368,7 +369,7 @@ exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive = functi
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will not accept gifts with minor affinity impact is player is aggressive" };
 
@@ -382,7 +383,7 @@ exports.veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressiv
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a very unfriendly creature will accept gifts with minor affinity impact regardless of agression" };
 
@@ -397,7 +398,7 @@ exports.veryUnfriendlyCreaturesWillRefuseLargeGifts = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.veryUnfriendlyCreaturesWillRefuseLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a very unfriendly creature will accept gifts with minor affinity impact regardless of agression" };
 
@@ -412,7 +413,7 @@ exports.friendlyCreaturesWillAcceptSmallGifts = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.friendlyCreaturesWillAcceptSmallGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
 
@@ -427,7 +428,7 @@ exports.friendlyCreaturesWillAcceptLargeGifts = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.friendlyCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
 
@@ -442,7 +443,7 @@ exports.waryCreaturesWillAcceptLargeGifts = function (test) {
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
-}
+};
 
 exports.waryCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
 
@@ -607,6 +608,89 @@ exports.creatureWillFleeWhenPlayerIsMoreAggressive = function (test) {
     test.done();
 };
 exports.creatureWillFleeWhenPlayerIsMoreAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+
+
+exports.friendlyCreatureWillFindForPlayer = function (test) {
+    var m = new map.Map();
+    m.init();
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = "It says 'simon g is currently at 'poppy'.'";
+    var playerAggression = 1; //1 point of aggression should be acceptable
+    var actual = c0.find("simon g", playerAggression, m);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.friendlyCreatureWillFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
+
+exports.friendlyCreatureWillNotFindForAggresivePlayer = function (test) {
+    var m = new map.Map();
+    m.init();
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
+    var expected = "It says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'";
+    var playerAggression = 2;
+    var actual = c0.find("simon g", playerAggression, m);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.friendlyCreatureWillNotFindForAggresivePlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait", "Find Trait"], description: "Test that a friendly creature will share" };
+
+
+exports.unfriendlyCreatureWillNotFindForPlayer = function (test) {
+    var m = new map.Map();
+    m.init();
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
+    var expected = "It doesn't like your attitude and doesn't want to talk to you at the moment.";
+    var playerAggression = 0;
+    var actual = c0.find("simon g", playerAggression, m);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.unfriendlyCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
+
+
+exports.neutralCreatureWillNotFindForPlayer = function (test) {
+    var m = new map.Map();
+    m.init();
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
+    var expected = "When was the last time you did something for it?<br>It pays to be nice to others.";
+    var playerAggression = 0;
+    var actual = c0.find("simon g", playerAggression, m);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.neutralCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
+
+exports.deadCreatureWillNotFindForPlayer = function (test) {
+    var m = new map.Map();
+    m.init();
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:0});
+    var expected = "It's dead. I don't think it can help you.";
+    var playerAggression = 0;
+    var actual = c0.find("simon g", playerAggression, m);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.deadCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
 
 
 /*
