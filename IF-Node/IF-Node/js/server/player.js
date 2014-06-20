@@ -211,6 +211,24 @@ module.exports.Player = function Player(aUsername) {
             return _aggression;
         };
 
+        self.increaseTimeSinceEating = function(changeValue) {
+            _timeSinceEating += changeValue;
+            return _timeSinceEating;
+        };
+
+        self.reduceHitPoints = function(pointsToRemove) {
+            _hitPoints-=pointsToRemove;
+            return _hitPoints;
+        };
+
+        self.recover = function(pointsToAdd) {
+            if (_hitPoints <_maxHitPoints) {_hitPoints += pointsToAdd;};
+            //limit to max
+            if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
+
+            console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+        };
+
         self.setStealth = function(newStealthValue) {
             //used for stealing
             _stealth = newStealthValue;
@@ -1326,7 +1344,7 @@ module.exports.Player = function Player(aUsername) {
 
         //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!
         self.hurt = function(pointsToRemove) {
-            _hitPoints -= pointsToRemove;
+            self.reduceHitPoints(pointsToRemove);
 
             console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
@@ -1447,11 +1465,11 @@ module.exports.Player = function Player(aUsername) {
             //time passes *before* any healing benefits are in place
             var resultString = "You "+verb+" for a while.<br>"+self.tick(duration, map);
 
-            _hitPoints += duration*3;
+            //note recover limits to max hp.
+            self.recover(duration*3);
             _aggression -= duration;
             if (_aggression <0) {self.setAggression(0);}; //don't reduce aggression too far.
-            //limit to max
-            if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
+
 
             console.log('player rested. HP remaining: '+_hitPoints);
 
@@ -1463,14 +1481,6 @@ module.exports.Player = function Player(aUsername) {
             if (verb == "rest") {_restsTaken++;};
             if (verb == "sleep") {_sleepsTaken++;};
             return resultString;
-        };
-
-        self.recover = function(pointsToAdd) {
-            if (_hitPoints <_maxHitPoints) {_hitPoints += pointsToAdd;};
-            //limit to max
-            if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
-
-            console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
         self.heal = function(receiverName) {
@@ -1610,8 +1620,6 @@ module.exports.Player = function Player(aUsername) {
             _score -= minusPoints;
             if (_score <-1000) {_score = -1000;}; //can't score less than -1000 (seriously!)
 
-            //reset hp before healing
-            _hitPoints = 0;
             //reset aggression
             self.setAggression(0);
             //reset hunger
@@ -1623,7 +1631,7 @@ module.exports.Player = function Player(aUsername) {
             }; 
 
             _bleeding = false;
-            self.recover(100);
+            self.recover(_maxHitPoints);
 
             resultString += "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>"+
                    "Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>"+
@@ -1798,7 +1806,7 @@ module.exports.Player = function Player(aUsername) {
                 };
 
                 //feed?
-                _timeSinceEating++;
+                self.increaseTimeSinceEating(1);
                 if (_timeSinceEating>_maxMovesUntilHungry+_additionalMovesUntilStarving) {damage+=_timeSinceEating-(_maxMovesUntilHungry+_additionalMovesUntilStarving);}; //gets worse the longer it's left.
             };
 

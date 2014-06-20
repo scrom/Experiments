@@ -178,6 +178,8 @@ exports.canGetWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action
 
 exports.canEatFood = function (test) {
     p0.get('get', food.getName());
+    p0.increaseTimeSinceEating(5);
+    p0.reduceHitPoints(5);
     var expectedResult = 'You eat the cake. You feel fitter, happier and healthier.';
     var actualResult = p0.eat('eat','cake');
     console.log("Expected: "+expectedResult);
@@ -187,6 +189,35 @@ exports.canEatFood = function (test) {
 };
 
 exports.canEatFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+exports.cannotEatFoodWhenNotHungry = function (test) {
+    p0.get('get', food.getName());
+    p0.increaseTimeSinceEating(4);
+    var expectedResult = "You're not hungry at the moment.";
+    var actualResult = p0.eat('eat','cake');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotEatFoodWhenNotHungry.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
+
+exports.cannotEatFoodWhenHealthGreaterThan95Percent = function (test) {
+    p0.get('get', food.getName());
+    p0.increaseTimeSinceEating(5);
+    p0.reduceHitPoints(4);
+    var expectedResult = "You're not hungry at the moment.";
+    var actualResult = p0.eat('eat','cake');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotEatFoodWhenHealthGreaterThan95Percent.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+
 
 exports.cannotDrinkSolidFood = function (test) {
     p0.get('get', food.getName());
@@ -793,6 +824,8 @@ exports.canEatDeadCreature = function (test) {
     var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
     deadCreature.go(null,l0); 
     p0.get('get','dead creature');
+    p0.increaseTimeSinceEating(5);
+    p0.reduceHitPoints(5);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature. It was a bit messy but you feel fitter, happier and healthier.';
     var actualResult = p0.eat('eat','dead creature');
@@ -807,6 +840,8 @@ exports.canEatDeadCreature.meta = { traits: ["Player Test", "Eat Trait", "Food T
 exports.cannotEatLiveCreature = function (test) {
 
     p0.get('get','creature');
+    p0.increaseTimeSinceEating(5);
+    p0.reduceHitPoints(5);
 
     var expectedResult = 'You try biting the creature but he dodges out of the way and bites you back.';
     var actualResult = p0.eat('eat','creature');
