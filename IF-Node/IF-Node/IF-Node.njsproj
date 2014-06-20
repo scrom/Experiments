@@ -54,6 +54,7 @@
     <Compile Include="js\server\server.js" />
     <Compile Include="js\server\simpleObject.js" />
     <Compile Include="js\server\tests.js" />
+    <Compile Include="js\server\test\stubs\stubFactory.js" />
     <Compile Include="js\server\test\test-map.test.js" />
     <Compile Include="js\server\test\test-artefact.test.js" />
     <Compile Include="js\server\test\test-location.test.js" />
@@ -68,6 +69,7 @@
     <Content Include="editor.html" />
     <Content Include="index.html" />
     <Content Include="js\server\data\root-locations.json" />
+    <Content Include="js\server\test\test-action.test.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
@@ -78,6 +80,7 @@
     <Folder Include="js\client-watcher\" />
     <Folder Include="js\server\" />
     <Folder Include="js\server\data\" />
+    <Folder Include="js\server\test\stubs\" />
     <Folder Include="js\server\watcher\" />
     <Folder Include="js\server\test\" />
   </ItemGroup>
