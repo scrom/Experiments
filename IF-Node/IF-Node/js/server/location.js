@@ -32,8 +32,8 @@ exports.Location = function Location(aName, aDescription, isDark, isStart) {
         self.toString = function() {
             //var _missions = [];
             var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
-            if (_dark) { resultString += ',"dark":"'+_dark+'"'; };
-            if (_start) { resultString += ',"start":"'+_start+'"'; };
+            if (_dark) { resultString += ',"dark":'+_dark; };
+            if (_start) { resultString += ',"start":'+_start; };
             resultString += ',"exits":[';
 
             for(var i=0; i<_exits.length;i++) {

@@ -3,7 +3,7 @@
     "object": "location",
     "name": "atrium",
     "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.",
-    "start": "true",
+    "start": true,
     "exits": [
       {
         "object": "exit",
@@ -1660,7 +1660,7 @@
     "object": "location",
     "name": "graffiti-a",
     "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
-    "dark": "true",
+    "dark": true,
     "exits": [
       {
         "object": "exit",
@@ -1728,7 +1728,7 @@
     "object": "location",
     "name": "ground-floor-back-stairs-west",
     "description": "You're in the bottom of the west fire escape stairs.",
-    "dark": "true",
+    "dark": true,
     "exits": [
       {
         "object": "exit",
@@ -3943,7 +3943,7 @@
     "object": "location",
     "name": "second-floor-cubicle",
     "description": "You're in a toilet cubicle. You feel even more disoriented. <br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
-    "dark": "true",
+    "dark": true,
     "exits": [
       {
         "object": "exit",
