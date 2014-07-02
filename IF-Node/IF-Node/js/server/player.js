@@ -26,9 +26,9 @@ module.exports.Player = function Player(aUsername) {
         var _additionalMovesUntilStarving = 10;
 
         //player stats
-        var _destroyedObjects = []; //track names of all objects player has destroyed
-        var _killedCreatures = []; //track names of all creatures player has killed (note if one bleeds to death the player doesn't get credit)
-        var _consumedObjects = []; //track names of all objects player has consumed
+        var _destroyedObjects = []; //track all objects player has destroyed
+        var _killedCreatures = []; //track all creatures player has killed (note if one bleeds to death the player doesn't get credit)
+        var _consumedObjects = []; //track all objects player has consumed
         var _stolenObjects = []; //track names of all objects player has stolen
         var _missionsCompleted = []; //track names of all missions completed
         var _missionsFailed = []; //track names of all missions failed
@@ -72,7 +72,7 @@ module.exports.Player = function Player(aUsername) {
         };
 
         var healthPercent = function() {
-            //avoid dividebyzero
+            //avoid dividebyzerot
             if (_maxHitPoints == 0) {return 0;};
 
             return (_hitPoints/_maxHitPoints)*100;
@@ -180,12 +180,132 @@ module.exports.Player = function Player(aUsername) {
         //public member functions
 
         self.toString = function() {
-            var resultString = '{"object":"'+_objectName+'","username":"'+_username+'", "currentLocation":"'+_currentLocation.getName()+'"';
+            var resultString = '{"object":"'+_objectName+'","username":"'+_username+'"';
+            resultString += ',"currentLocation":"'+_currentLocation.getName()+'"';
             resultString += ',"health":'+_hitPoints;
+            resultString += ',"maxHealth":'+_maxHitPoints;
+            resultString += ',"aggression":'+_aggression;
+            resultString += ',"stealth":'+_stealth;       
+               
             resultString += ',"money":'+_inventory.getCashBalance();
+
             if (_inventory.size() > 0) {
-                resultString += ', "inventory":'+_inventory.toString(); 
+                resultString += ',"inventory":'+_inventory.toString(); 
             };
+
+            if (_missions.length > 0) {
+                resultString+= ',"missions":[';
+                for(var i=0; i<_missions.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= _missions[i].toString();
+                };
+                resultString+= ']';
+            };
+
+            if (_repairSkills.length > 0) {
+                resultString+= ',"repairSkills":[';
+                for(var i=0; i<_repairSkills.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_repairSkills[i]+'"';
+                };
+                resultString+= ']';
+            };
+
+            if (_destroyedObjects.length > 0) {
+                resultString+= ',"destroyedObjects":[';
+                for(var i=0; i<_destroyedObjects.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= _destroyedObjects[i].toString();
+                };
+                resultString+= ']';
+            };
+
+            if (_killedCreatures.length > 0) {
+                resultString+= ',"killedCreatures":[';
+                for(var i=0; i<_killedCreatures.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= _killedCreatures[i].toString();
+                };
+                resultString+= ']';
+            };
+
+            if (_consumedObjects.length > 0) {
+                resultString+= ',"consumedObjects":[';
+                for(var i=0; i<_consumedObjects.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= _consumedObjects[i].toString();
+                };
+                resultString+= ']';
+            };
+
+            if (_stolenObjects.length > 0) {
+                resultString+= ',"stolenObjects":[';
+                for(var i=0; i<_stolenObjects.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_stolenObjects[i]+'"';
+                };
+                resultString+= ']';
+            };
+
+            if (_missionsCompleted.length > 0) {
+                resultString+= ',"missionsCompleted":[';
+                for(var i=0; i<_missionsCompleted.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_missionsCompleted[i]+'"';
+                };
+                resultString+= ']';
+            };
+
+            if (_missionsFailed.length > 0) {
+                resultString+= ',"missionsFailed":[';
+                for(var i=0; i<_missionsFailed.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_missionsFailed[i]+'"';
+                };
+                resultString+= ']';
+            };
+
+
+            resultString += ',"killedCount":'+_killedCount;
+            resultString += ',"bleeding":'+_bleeding;
+            resultString += ',"bleedingHealthThreshold":'+_bleedingHealthThreshold;
+            resultString += ',"startLocation":"'+_startLocation.getName()+'"';
+            resultString += ',"returnDirection":"'+_returnDirection+'"';
+
+            resultString += ',"timeSinceEating":'+_timeSinceEating;
+            resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;
+            resultString += ',"additionalMovesUntilStarving":'+_additionalMovesUntilStarving;
+            resultString += ',"stepsTaken":'+_stepsTaken;
+            resultString += ',"locationsFound":'+_locationsFound;
+            resultString += ',"maxAggression":'+_maxAggression;
+            resultString += ',"score":'+_score;
+            resultString += ',"_totalDamageReceived":'+_totalDamageReceived;
+            resultString += ',"booksRead":'+_booksRead;
+            resultString += ',"stolenCash":'+_stolenCash;
+            resultString += ',"creaturesSpokenTo":'+_creaturesSpokenTo;
+            resultString += ',"restsTaken":'+_restsTaken;
+            resultString += ',"sleepsTaken":'+_sleepsTaken;
+            resultString += ',"maxAffinity":'+_maxAffinity;
+            resultString += ',"injuriesReceived":'+_injuriesReceived;
+            resultString += ',"injuriesReceived":'+_injuriesReceived;
+            resultString += ',"injuriesReceived":'+_injuriesReceived;
+
+
+/*
+        //possible additional player stats
+        var _creatureHitsMade = 0;
+        var _totalCreatureDamageDelivered = 0;
+        var _totalCurrentAffinity = 0;
+        var _objectsChewed = 0;
+        var _objectsBroken = 0;
+        var _objectsGiven = 0;
+        var _objectsStolen = 0;
+        var _objectsReceived = 0;
+        var _objectsCollected = 0;
+        var _locksOpened = 0;
+        var _doorsOpened = 0;
+            */
+
             resultString +='}';
             return resultString;
         };
@@ -1426,7 +1546,7 @@ module.exports.Player = function Player(aUsername) {
                 //note artefacts return false for isDead - we check "isDestroyed" for those
                 self.increaseAggression(1); 
                 _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());    
-                _killedCreatures.push(receiver.getName());          
+                _killedCreatures.push(receiver);          
             };
 
             //did you use something fragile as a weapon?
@@ -1592,7 +1712,7 @@ module.exports.Player = function Player(aUsername) {
             if (artefact.isEdible()) {
                 //consume it
                 removeObjectFromPlayerOrLocation(artefactName); 
-                _consumedObjects.push(artefact.getName());
+                _consumedObjects.push(artefact);
                 _timeSinceEating = 0;
                 console.log('player eats some food.');
             };
@@ -1611,7 +1731,7 @@ module.exports.Player = function Player(aUsername) {
 
                 //consume it
                 removeObjectFromPlayerOrLocation(artefactName); 
-                _consumedObjects.push(artefact.getName());
+                _consumedObjects.push(artefact);
                 console.log('player drinks.');
             };
 
