@@ -39,6 +39,7 @@
     <Compile Include="js\server\action.js" />
     <Compile Include="js\server\artefact.js" />
     <Compile Include="js\server\config.js" />
+    <Compile Include="js\server\mapbuilder.js" />
     <Compile Include="js\server\objectStub.js" />
     <Compile Include="js\server\inventory.js" />
     <Compile Include="js\server\mission.js" />
