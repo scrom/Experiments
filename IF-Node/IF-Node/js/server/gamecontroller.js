@@ -1,10 +1,10 @@
 ﻿"use strict";
 //game controller object - manages set of games and communication with interpreter
-exports.GameController = function GameController(aRootMap) {
+exports.GameController = function GameController(mapBuilder) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         var _games = [];
-        var _rootMap = aRootMap; //
+        var _mapBuilder = mapBuilder; //
 	    var _objectName = "GameController";
 
         //module deps
@@ -15,7 +15,8 @@ exports.GameController = function GameController(aRootMap) {
         //// public methods      
         self.addGame = function(anotherUsername) {
             var newGameId = _games.length;
-            var game = new gameObjectModule.Game(anotherUsername,newGameId);
+            var newMap = _mapBuilder.buildMap();
+            var game = new gameObjectModule.Game(anotherUsername,newGameId, newMap);
             console.log('new game: '+game.toString());     
           
             _games.push(game);

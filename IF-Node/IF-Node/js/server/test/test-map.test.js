@@ -1,13 +1,13 @@
 ﻿"use strict";
-var map = require('../map.js');
+var mapBuilder = require('../mapbuilder.js');
+var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
 var m0;
 //var artefact = require('../artefact.js');
 //var location = require('../location.js');
 //var creature = require('../creature.js');
 
 exports.setUp = function (callback) {
-    m0 = new map.Map();
-    m0.init();
+    m0 = mb.buildMap();
     callback(); 
 };
 

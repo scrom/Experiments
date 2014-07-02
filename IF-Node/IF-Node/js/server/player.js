@@ -158,7 +158,7 @@ module.exports.Player = function Player(aUsername) {
             };
 
             //once the objects are in their new homes, we can remove them from the old.
-            //this sorts the array index splice problem out
+            //this resolves array index splicing issues (splicing an array being iterated over causes odd results)
             for (var i=0; i<contents.length;i++) {
                 if (locationArtefact) { locationArtefact.removeObject(contents[i].getName()); }
                 else { artefact.removeObject(contents[i].getName()); };

@@ -2,12 +2,12 @@
 var mission = require('../mission.js');
 var artefact = require('../artefact.js');
 var inventory = require('../inventory.js');
-var map = require('../map.js');
+var mapBuilder = require('../mapbuilder.js');
+var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
 var m0;
 
 exports.setUp = function (callback) {
-    m0 = new map.Map();
-    m0.init();
+    m0 = mb.buildMap();
     callback(); 
 };
 

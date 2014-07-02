@@ -2,7 +2,8 @@
 var creature = require('../creature.js');
 var artefact = require('../artefact.js');
 var mission = require('../mission.js');
-var map = require('../map.js');
+var mapBuilder = require('../mapbuilder.js');
+var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
 var junkAttributes;
 var a0;
 
@@ -611,8 +612,7 @@ exports.creatureWillFleeWhenPlayerIsMoreAggressive.meta = { traits: ["Creature T
 
 
 exports.friendlyCreatureWillFindForPlayer = function (test) {
-    var m = new map.Map();
-    m.init();
+    var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = "It says 'simon g is currently at 'poppy'.'";
@@ -627,8 +627,7 @@ exports.friendlyCreatureWillFindForPlayer = function (test) {
 exports.friendlyCreatureWillFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
 
 exports.friendlyCreatureWillNotFindForAggresivePlayer = function (test) {
-    var m = new map.Map();
-    m.init();
+    var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = "It says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'";
@@ -644,8 +643,7 @@ exports.friendlyCreatureWillNotFindForAggresivePlayer.meta = { traits: ["Creatur
 
 
 exports.unfriendlyCreatureWillNotFindForPlayer = function (test) {
-    var m = new map.Map();
-    m.init();
+    var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
     var expected = "It doesn't like your attitude and doesn't want to talk to you at the moment.";
@@ -661,8 +659,7 @@ exports.unfriendlyCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test"
 
 
 exports.neutralCreatureWillNotFindForPlayer = function (test) {
-    var m = new map.Map();
-    m.init();
+    var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = "When was the last time you did something for it?<br>It pays to be nice to others.";
@@ -677,8 +674,7 @@ exports.neutralCreatureWillNotFindForPlayer = function (test) {
 exports.neutralCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
 
 exports.deadCreatureWillNotFindForPlayer = function (test) {
-    var m = new map.Map();
-    m.init();
+    var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:0});
     var expected = "It's dead. I don't think it can help you.";
