@@ -1,13 +1,13 @@
 "use strict";
 //game object
-module.exports.Game = function Game(aUsername,aGameID, aMap) {
+module.exports.Game = function Game(playerAttributes,aGameID, aMap) {
     try{
         //module deps
         var actionObjectModule = require('./action');
         var playerObjectModule = require('./player');
 
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var _player = new playerObjectModule.Player(aUsername);
+        var _player = new playerObjectModule.Player(playerAttributes);
         var _id = aGameID;
         var _log = ''; //log of game script - not currently used
         var _map = aMap; //map of game locations

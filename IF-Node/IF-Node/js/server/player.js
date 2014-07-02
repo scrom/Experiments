@@ -1,13 +1,13 @@
 "use strict";
 //player object
-module.exports.Player = function Player(aUsername) {
+module.exports.Player = function Player(playerAttributes) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
 
         //member variables
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var _username = aUsername;
+        var _username = playerAttributes.username;
         var _inventory =  new inventoryObjectModule.Inventory(20, 5.00, _username);
         var _missions = []; //player can "carry" missions.
         var _repairSkills = []; //player can learn repair skills.

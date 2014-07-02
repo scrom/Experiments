@@ -13,10 +13,11 @@ exports.GameController = function GameController(mapBuilder) {
         console.log(_objectName + ' created');
 
         //// public methods      
-        self.addGame = function(anotherUsername) {
+        self.addGame = function(aUsername) {
             var newGameId = _games.length;
             var newMap = _mapBuilder.buildMap();
-            var game = new gameObjectModule.Game(anotherUsername,newGameId, newMap);
+            var playerAttributes = {"username":aUsername};
+            var game = new gameObjectModule.Game(playerAttributes,newGameId, newMap);
             console.log('new game: '+game.toString());     
           
             _games.push(game);
