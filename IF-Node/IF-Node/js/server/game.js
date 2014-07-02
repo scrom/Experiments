@@ -32,8 +32,13 @@ module.exports.Game = function Game(aUsername,aGameID, aMap) {
         };
 
         self.fullState = function() {
-            //modify this to retrieve current state (not initial state)
-            return _map.getLocationsJSON();
+            var stateData = [];
+            try {
+                stateData.push(JSON.parse(_player.toString()));
+            } catch (e) {console.log("Error parsing JSON for player: error = "+e+": "+_player.toString());};
+            
+            stateData = stateData.concat(_map.getLocationsJSON());
+            return stateData;
         };
 
         self.userAction = function(actionString) {

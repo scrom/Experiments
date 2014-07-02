@@ -58,7 +58,7 @@ module.exports.Player = function Player(aUsername) {
         var _locksOpened = 0;
         var _doorsOpened = 0;
 
-	    var _objectName = "Player";
+	    var _objectName = "player";
 
         //private functions
         var stringIsEmpty = function(aString){
@@ -180,7 +180,14 @@ module.exports.Player = function Player(aUsername) {
         //public member functions
 
         self.toString = function() {
-            return '{"username":"'+_username+'"}';
+            var resultString = '{"object":"'+_objectName+'","username":"'+_username+'", "currentLocation":"'+_currentLocation.getName()+'"';
+            resultString += ',"health":'+_hitPoints;
+            resultString += ',"money":'+_inventory.getCashBalance();
+            if (_inventory.size() > 0) {
+                resultString += ', "inventory":'+_inventory.toString(); 
+            };
+            resultString +='}';
+            return resultString;
         };
 
         self.getType = function() {

@@ -113,8 +113,10 @@ exports.Interpreter = function Interpreter(aGameController) {
                     return assembleResponse(commandJson, _gameController.userAction(username, gameId,actionString));
                 case 'state':
                 //note this isn't fully working yet - will probably be part of save/load support eventually
-                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");}
-                    return assembleResponse(commandJson, _gameController.getGame(username, gameId).fullState());
+                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");};
+                    var aGame = _gameController.getGame(username, gameId);
+                    if (!(aGame)) {return assembleResponse(commandJson,"Cannot retrieve game ID '"+gameId+"' for user '"+username+"'");};
+                    return aGame.fullState();
                 case 'events':
                     //respond to event requests
                     return 'ping.';
