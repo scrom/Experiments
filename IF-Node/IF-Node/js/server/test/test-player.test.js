@@ -11,6 +11,7 @@ var weaponAttributes;
 var foodAttributes;
 var containerAttributes;
 var playerName;
+var playerAttributes;
 var p0; // player object.
 var l0; //location object.
 var a0; //artefact object.
@@ -24,7 +25,8 @@ var breakable; //breakable object
 
 exports.setUp = function (callback) {
     playerName = 'player';
-    p0 = new player.Player(playerName);
+    playerAttributes = {"username":playerName};
+    p0 = new player.Player(playerAttributes);
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
@@ -55,6 +57,7 @@ exports.setUp = function (callback) {
 
 exports.tearDown = function (callback) {
     playerName = null;
+    playerAttributes = null;
     p0 = null;
     l0 = null;
     junkAttributes = null;
@@ -75,7 +78,7 @@ exports.tearDown = function (callback) {
 
 exports.canCreatePlayer = function (test) {
     //note player is actually created in "setup" - we're just validating that first step works ok.
-    var expectedResult = '{"username":"'+playerName+'"}';
+    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"maxHealth":100,"aggression":0,"stealth":1,"money":5,"killedCount":0,"bleeding":false,"bleedingHealthThreshold":50,"startLocation":"home","returnDirection":"undefined","timeSinceEating":0,"maxMovesUntilHungry":50,"additionalMovesUntilStarving":10,"stepsTaken":0,"locationsFound":1,"maxAggression":0,"score":0,"_totalDamageReceived":0,"booksRead":0,"stolenCash":0,"creaturesSpokenTo":0,"restsTaken":0,"sleepsTaken":0,"maxAffinity":0,"injuriesReceived":0,"injuriesReceived":0,"injuriesReceived":0}';
     var actualResult = p0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
