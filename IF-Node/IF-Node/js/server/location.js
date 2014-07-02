@@ -1,6 +1,6 @@
 ﻿"use strict";
 //location object - manage location details
-exports.Location = function Location(aName, aDescription, isDark) { 
+exports.Location = function Location(aName, aDescription, isDark, isStart) { 
     try{
         //module deps
         var artefactObjectModule = require('./artefact');
@@ -13,6 +13,7 @@ exports.Location = function Location(aName, aDescription, isDark) {
         var _name = aName.toLowerCase();
         var _visits = 0;
         var _dark = isDark;
+        var _start = isStart;
         var _description = aDescription;
         var _inventory =  new inventoryObjectModule.Inventory(99999, 0.00, _name);//unlimited //[]; //and creatures
         var _exits = [];
@@ -30,7 +31,11 @@ exports.Location = function Location(aName, aDescription, isDark) {
         //public member functions
         self.toString = function() {
             //var _missions = [];
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","dark":"'+_dark+'","exits":[';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
+            if (_dark) { resultString += ',"dark":"'+_dark+'"'; };
+            if (_start) { resultString += ',"start":"'+_start+'"'; };
+            resultString += ',"exits":[';
+
             for(var i=0; i<_exits.length;i++) {
                 if (i>0) {resultString+= ',';};
                 resultString+= _exits[i].toString();
@@ -242,6 +247,11 @@ exports.Location = function Location(aName, aDescription, isDark) {
         self.isDark = function () {
             //console.log("location is dark? "+_dark);
             if (_dark) {return true;};
+            return false;
+        };
+
+        self.isStart = function () {
+            if (_start) {return true;};
             return false;
         };
 

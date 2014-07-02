@@ -14,6 +14,7 @@ exports.Map = function Map() { //inputs for constructor TBC
 
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];
+        var _startLocationIndex = 0;
         var _maxScore = 0; //missions add score
 
         //consider storing all creatures and artefacts on map object (rather than in location, creature or player) 
@@ -237,13 +238,17 @@ exports.Map = function Map() { //inputs for constructor TBC
             return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
         };
         
-        self.addLocation = function(aName,aDescription,isDark){
+        self.addLocation = function(aName,aDescription,isDark, isStartLocation){
                 if (self.getLocation(aName)) {console.log("Usability warning: duplicate location name '"+aName+"'.");};
                 if (isDark == "true" || isDark == true) {isDark = true;}
                 else {isDark=false;};
-                var newLocation = new locationObjectModule.Location(aName,aDescription,isDark);
+                if (isStartLocation == "true" || isStartLocation == true) {isStartLocation = true;}
+                else {isStartLocation=false;};
+                var newLocation = new locationObjectModule.Location(aName,aDescription,isDark,isStartLocation);
                 _locations.push(newLocation);
-                return _locations.length-1;
+                var newIndex = _locations.length-1;
+                if (newLocation.isStart()) {_startLocationIndex = newIndex;};
+                return newIndex;
         };
 
         self.getLocation = function(aName){
@@ -275,7 +280,7 @@ exports.Map = function Map() { //inputs for constructor TBC
             //locations and links
             for (var i=0; i<_rootLocationsJSON.length;i++) {
                 var locationData = _rootLocationsJSON[i]
-                self.addLocation(locationData.name, locationData.description, locationData.dark, locationData);
+                self.addLocation(locationData.name, locationData.description, locationData.dark, locationData.start);
                 var newLocation = self.getLocation(locationData.name);
 
                 for (var j=0; j<locationData.exits.length;j++) {
@@ -320,11 +325,7 @@ exports.Map = function Map() { //inputs for constructor TBC
         };
 
         self.getStartLocation = function() {
-            return _locations[0]; //we just use the first location from the data.
-        };
-
-        self.getLocationByIndex = function(index) {
-            return _locations[index];
+            return _locations[_startLocationIndex]; //we just use the first location from the data.
         };
 
         self.getLocations = function() {
