@@ -12,6 +12,21 @@ exports.tearDown = function (callback) {
     callback();
 };  
 
+exports.canCreateSimpleLocation = function (test) {
+
+    var room = new location.Location('room','a room',false);
+
+    var expectedResult = 'a room<br>There are no visible exits.';
+    var actualResult = room.describe();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCreateSimpleLocation.meta = { traits: ["Location Test", "Constructor Trait"], description: "Test that a location creature can be identified by name." };
+
+
 exports.locationToStringReturnsValidJSON = function (test) {
     var keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: ""};
     var fob = new artefact.Artefact('keyfob', 'a key fob', "Carrying this ensures you have access to the office whenever you need.", keyAttributes);
