@@ -180,6 +180,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         };
                         description += "<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
                                         "To find out how you're doing try asking for 'stats' or 'status'<br>"+  
+                                        "You can save your progress by entering 'save'.<br>You can load a previously saved game by entering 'load <i>filename</i>' where <i>filename</i> is the name of your previously saved game file.<br>"+ 
                                         "Two of the more useful verbs are 'look' and 'examine'.<br>"+
                                         "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
                                         "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
@@ -467,8 +468,6 @@ exports.Action = function Action(aPlayer, aMap) {
                             return self.processAction(_actionString);
                         };
                         break;
-                    case 'save':
-                    case 'load':
                     case 'play':
                     case 'hum':
                     case 'whistle':

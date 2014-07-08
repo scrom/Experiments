@@ -39,6 +39,7 @@
     <Compile Include="js\server\action.js" />
     <Compile Include="js\server\artefact.js" />
     <Compile Include="js\server\config.js" />
+    <Compile Include="js\server\jsonfilemanager.js" />
     <Compile Include="js\server\mapbuilder.js" />
     <Compile Include="js\server\objectStub.js" />
     <Compile Include="js\server\inventory.js" />
@@ -56,6 +57,7 @@
     <Compile Include="js\server\simpleObject.js" />
     <Compile Include="js\server\tests.js" />
     <Compile Include="js\server\test\stubs\stubFactory.js" />
+    <Compile Include="js\server\test\test-gamecontroller.test.js" />
     <Compile Include="js\server\test\test-map.test.js" />
     <Compile Include="js\server\test\test-artefact.test.js" />
     <Compile Include="js\server\test\test-location.test.js" />
@@ -81,6 +83,7 @@
     <Folder Include="js\client-watcher\" />
     <Folder Include="js\server\" />
     <Folder Include="js\server\data\" />
+    <Folder Include="js\server\data\usergames\" />
     <Folder Include="js\server\test\stubs\" />
     <Folder Include="js\server\watcher\" />
     <Folder Include="js\server\test\" />

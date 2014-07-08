@@ -13,6 +13,7 @@
     "nodeunit": "^0.8.6",
     "coffee-script": "^1.7.1",
     "iced-coffee-script": "^1.7.1-a",
-    "streamline": "^0.10.8"
+    "streamline": "^0.10.8",
+    "jsonfile": "^1.2.0"
   }
 }

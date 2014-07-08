@@ -88,12 +88,17 @@ exports.Interpreter = function Interpreter(aGameController) {
         self.translate = function(aRequestUrl,someTempConfig) {
             //console.log('translate called: '+aRequestUrl);
             //note - only passing config in here until controlling game object is accessible
-        
+
             var command = extractCommand(aRequestUrl);
             var commandJson = '{"command":"'+command+'"}';
             var actionString = extractAction(aRequestUrl);
             var username = extractUsername(aRequestUrl);
             var gameId = extractGameId(aRequestUrl);
+            //console.log("req: "+aRequestUrl);
+            //console.log("cmd: "+command);
+            //console.log("act: "+actionString);
+            //console.log("usr: "+username);
+            //console.log("gid: "+gameId);
             //console.log('command: '+command+' action: '+actionString+' username: '+username+', gameId:'+gameId);
 
             switch(command)
@@ -104,19 +109,31 @@ exports.Interpreter = function Interpreter(aGameController) {
                     //list active games
                     return assembleResponse(commandJson,_gameController.listGames());
                 case 'new':
-                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");}
+                    if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
                     //add new user game
                     var aGameId = _gameController.addGame(username);
                     return assembleResponse(commandJson,_gameController.getGameState(username, aGameId));
                 case 'action':
-                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");}
+                    if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
                     return assembleResponse(commandJson, _gameController.userAction(username, gameId,actionString));
-                case 'state':
-                //note this isn't fully working yet - will probably be part of save/load support eventually
-                    if (!(validateUser)) {return assembleResponse(commandJson,"invalid user");};
+                case 'save':
+                    console.log("saving game");             
+                    if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);};
                     var aGame = _gameController.getGame(username, gameId);
-                    if (!(aGame)) {return assembleResponse(commandJson,"Cannot retrieve game ID '"+gameId+"' for user '"+username+"'");};
-                    return aGame.fullState();
+                    if (!(aGame)) {return assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}');};
+                    return assembleResponse(commandJson,aGame.save());
+                case 'load':
+                    var originalGameID = gameId;
+                    var newGameId = _gameController.loadGame(originalGameID, username);
+                    console.log(newGameId);
+                    //did we successfully load?...
+                    var savedUsername = _gameController.getUsernameForGameID(newGameId);
+                    if (savedUsername) {
+                        //file loaded...                       
+                        return assembleResponse(commandJson,_gameController.getGameState(savedUsername, newGameId));      
+                    };
+                    //file not loaded
+                    return assembleResponse(commandJson,'{"description":"Saved game file \''+username+'\' not found."}');                  
                 case 'events':
                     //respond to event requests
                     return 'ping.';

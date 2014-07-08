@@ -77,8 +77,7 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreatePlayer = function (test) {
-    //note player is actually created in "setup" - we're just validating that first step works ok.
-    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"maxHealth":100,"aggression":0,"stealth":1,"money":5,"killedCount":0,"bleeding":false,"bleedingHealthThreshold":50,"startLocation":"home","returnDirection":"undefined","timeSinceEating":0,"maxMovesUntilHungry":50,"additionalMovesUntilStarving":10,"stepsTaken":0,"locationsFound":1,"maxAggression":0,"score":0,"_totalDamageReceived":0,"booksRead":0,"stolenCash":0,"creaturesSpokenTo":0,"restsTaken":0,"sleepsTaken":0,"maxAffinity":0,"injuriesReceived":0,"injuriesReceived":0,"injuriesReceived":0}';
+    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"maxHealth":100,"aggression":0,"stealth":1,"money":5,"carryWeight":20,"killedCount":0,"bleeding":false,"bleedingHealthThreshold":50,"startLocation":"home","returnDirection":"undefined","saveCount":0,"loadCount":0,"timeSinceEating":0,"maxMovesUntilHungry":50,"additionalMovesUntilStarving":10,"stepsTaken":0,"locationsFound":1,"maxAggression":0,"score":0,"totalDamageReceived":0,"booksRead":0,"stolenCash":0,"creaturesSpokenTo":0,"restsTaken":0,"sleepsTaken":0,"maxAffinity":0,"injuriesReceived":0}';
     var actualResult = p0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

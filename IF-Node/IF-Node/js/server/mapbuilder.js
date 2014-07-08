@@ -182,16 +182,16 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         };
 
         self.buildLocation = function(locationData) {
-            return self.addLocation(locationData.name, locationData.description, locationData.dark, locationData.start);
+            return self.addLocation(locationData.name, locationData.description, locationData.dark, locationData.start, locationData.visits);
         };
         
-        self.addLocation = function(aName, aDescription, isDark, isStartLocation){
+        self.addLocation = function(aName, aDescription, isDark, isStartLocation, visits){
                 if (_map.getLocation(aName)) {console.log("Usability warning: duplicate location name '"+aName+"'.");};
                 if (isDark == "true" || isDark == true) {isDark = true;}
                 else {isDark=false;};
                 if (isStartLocation == "true" || isStartLocation == true) {isStartLocation = true;}
                 else {isStartLocation=false;};
-                var newLocation = new locationObjectModule.Location(aName,aDescription,isDark,isStartLocation);
+                var newLocation = new locationObjectModule.Location(aName,aDescription,isDark,isStartLocation, visits);
                 var newIndex = _map.addLocation(newLocation);
                 return newLocation;
         };
@@ -253,9 +253,11 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
              return fromLocation.getName()+' linked '+fromDirection+'/'+toDirection+' to '+toLocation.getName();
         };
 
-        self.buildMap = function(){
+        self.buildMap = function(mapData){
             _map = new mapObjectModule.Map();
-            self.buildGameObjects(_rootLocationsJSON);   
+            if (!(mapData)) {mapData = _rootLocationsJSON;};
+            if (mapData[0].object == "player") {mapData.splice(0, 1);};
+            self.buildGameObjects(mapData);   
             return _map;    
                      
             //end of "init"

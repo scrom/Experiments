@@ -1,13 +1,13 @@
 "use strict";
 //player object
-module.exports.Player = function Player(playerAttributes) {
+module.exports.Player = function Player(attributes, map, mapBuilder) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
 
         //member variables
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var _username = playerAttributes.username;
+        var _username = attributes.username;
         var _inventory =  new inventoryObjectModule.Inventory(20, 5.00, _username);
         var _missions = []; //player can "carry" missions.
         var _repairSkills = []; //player can learn repair skills.
@@ -27,7 +27,7 @@ module.exports.Player = function Player(playerAttributes) {
 
         //player stats
         var _destroyedObjects = []; //track all objects player has destroyed
-        var _killedCreatures = []; //track all creatures player has killed (note if one bleeds to death the player doesn't get credit)
+        var _killedCreatures = []; //track names of all creatures player has killed (note if one bleeds to death the player doesn't get credit)
         var _consumedObjects = []; //track all objects player has consumed
         var _stolenObjects = []; //track names of all objects player has stolen
         var _missionsCompleted = []; //track names of all missions completed
@@ -41,6 +41,8 @@ module.exports.Player = function Player(playerAttributes) {
         var _booksRead = 0;
         var _stolenCash = 0;
         var _creaturesSpokenTo = 0;
+        var _saveCount = 0;
+        var _loadCount = 0;
 
         //possible additional player stats
         var _restsTaken = 0;
@@ -176,6 +178,118 @@ module.exports.Player = function Player(playerAttributes) {
             return "There's no "+objectName+" here and you're not carrying any either.";
         };
 
+        var processAttributes = function(playerAttributes, map, mapBuilder) {
+            if (!playerAttributes) {return null;}; //leave defaults preset
+            if (playerAttributes.startLocation != undefined) {_startLocation = map.getLocation(playerAttributes.startLocation);};
+            if (playerAttributes.currentLocation != undefined) {
+                _currentLocation = map.getLocation(playerAttributes.currentLocation);
+            } else {
+                if (playerAttributes.startLocation != undefined) {
+                    _currentLocation = map.getLocation(playerAttributes.startLocation);
+                };
+            };
+            if (playerAttributes.aggression != undefined) {_aggression = playerAttributes.aggression;};
+            if (playerAttributes.stealth != undefined) {_stealth = playerAttributes.stealth;};
+            if (playerAttributes.money != undefined) {_inventory.setCashBalance(playerAttributes.money);};
+            if (playerAttributes.carryWeight != undefined) {_inventory.setCarryWeight(playerAttributes.carryWeight);};
+            if (playerAttributes.health != undefined) {
+                _hitPoints = playerAttributes.health;
+                _maxHitPoints = playerAttributes.health
+            };
+            //allow explicit setting of maxHealth
+            if (playerAttributes.maxHealth != undefined) {_maxHitPoints = playerAttributes.maxHealth;};
+            if (playerAttributes.bleedingHealthThreshold != undefined) {_bleedingHealthThreshold = playerAttributes.bleedingHealthThreshold;};
+            if (playerAttributes.bleeding != undefined) {_bleeding = playerAttributes.bleeding;};
+
+            if (playerAttributes.killedCount != undefined) {_killedCount = playerAttributes.killedCount;};
+            if (playerAttributes.returnDirection != undefined) {_returnDirection = playerAttributes.returnDirection;};
+            
+            
+            if (playerAttributes.saveCount != undefined) {_saveCount = parseInt(playerAttributes.saveCount);};
+
+            //increment loads
+            if (playerAttributes.loadCount != undefined) {
+                _loadCount = parseInt(playerAttributes.loadCount)+1;
+            } else {
+                if (_saveCount >0) {_loadCount++;};
+            }; 
+            if (playerAttributes.timeSinceEating != undefined) {_timeSinceEating = playerAttributes.timeSinceEating;};
+            if (playerAttributes.maxMovesUntilHungry != undefined) {_maxMovesUntilHungry = playerAttributes.maxMovesUntilHungry;};
+            if (playerAttributes.additionalMovesUntilStarving != undefined) {_additionalMovesUntilStarving = playerAttributes.additionalMovesUntilStarving;};
+
+            if (playerAttributes.stepsTaken != undefined) {_stepsTaken = playerAttributes.stepsTaken;};
+            if (playerAttributes.locationsFound != undefined) {_locationsFound = playerAttributes.locationsFound;};
+            if (playerAttributes.maxAggression != undefined) {_maxAggression = playerAttributes.maxAggression;};
+            if (playerAttributes.score != undefined) {_score = playerAttributes.score;};
+            if (playerAttributes.totalDamageReceived != undefined) {_totalDamageReceived = playerAttributes.totalDamageReceived;};
+            if (playerAttributes.booksRead != undefined) {_booksRead = playerAttributes.booksRead;};
+            if (playerAttributes.stolenCash != undefined) {_stolenCash = playerAttributes.stolenCash;};
+            if (playerAttributes.creaturesSpokenTo != undefined) {_creaturesSpokenTo = playerAttributes.creaturesSpokenTo;};
+            if (playerAttributes.restsTaken != undefined) {_restsTaken = playerAttributes.restsTaken;};
+            if (playerAttributes.sleepsTaken != undefined) {_sleepsTaken = playerAttributes.sleepsTaken;};
+            if (playerAttributes.maxAffinity != undefined) {_maxAffinity = playerAttributes.maxAffinity;};
+            if (playerAttributes.injuriesReceived != undefined) {_injuriesReceived = playerAttributes.injuriesReceived;};
+           
+            if (playerAttributes.repairskills != undefined) {
+                for(var i=0; i<playerAttributes.repairskills.length;i++) {
+                    _repairskills.push(playerAttributes.repairskills[i]);
+                };
+            };
+
+            if (playerAttributes.killedcreatures != undefined) {
+                for(var i=0; i<playerAttributes.killedcreatures.length;i++) {
+                    _killedcreatures.push(playerAttributes.killedcreatures[i]);
+                };
+            };
+
+            if (playerAttributes.stolenobjects != undefined) {
+                for(var i=0; i<playerAttributes.stolenobjects.length;i++) {
+                    _stolenobjects.push(playerAttributes.stolenobjects[i]);
+                };
+            };
+
+            if (playerAttributes.missionscompleted != undefined) {
+                for(var i=0; i<playerAttributes.missionscompleted.length;i++) {
+                    _missionscompleted.push(playerAttributes.missionscompleted[i]);
+                };
+            };
+
+            if (playerAttributes.missionsfailed != undefined) {
+                for(var i=0; i<playerAttributes.missionsfailed.length;i++) {
+                    _missionsfailed.push(playerAttributes.missionsfailed[i]);
+                };
+            };
+
+            //inventory, destroyedobjects, consumedobjects, 
+            if (playerAttributes.inventory != undefined) {
+                for(var i=0; i<playerAttributes.inventory.length;i++) {
+                    _inventory.add(mapBuilder.buildArtefact(playerAttributes.inventory[i]));
+                };
+            };
+
+            if (playerAttributes.destroyedobjects != undefined) {
+                for(var i=0; i<playerAttributes.destroyedobjects.length;i++) {
+                    _destroyedobjects.push(mapBuilder.buildArtefact(playerAttributes.destroyedobjects[i]));
+                };
+            };
+
+            if (playerAttributes.consumedobjects != undefined) {
+                for(var i=0; i<playerAttributes.consumedobjects.length;i++) {
+                    _consumedobjects.push(mapBuilder.buildArtefact(playerAttributes.consumedobjects[i]));
+                };
+            };
+
+            //missions
+            if (playerAttributes.missions != undefined) {
+                for(var i=0; i<playerAttributes.missions.length;i++) {
+                    _missions.push(mapBuilder.buildMission(playerAttributes.missions[i]));
+                };
+            };
+
+        };
+
+        processAttributes(attributes, map, mapBuilder);
+
 
         //public member functions
 
@@ -188,6 +302,7 @@ module.exports.Player = function Player(playerAttributes) {
             resultString += ',"stealth":'+_stealth;       
                
             resultString += ',"money":'+_inventory.getCashBalance();
+            resultString += ',"carryWeight":'+_inventory.getCarryWeight();
 
             if (_inventory.size() > 0) {
                 resultString += ',"inventory":'+_inventory.toString(); 
@@ -272,6 +387,8 @@ module.exports.Player = function Player(playerAttributes) {
             resultString += ',"startLocation":"'+_startLocation.getName()+'"';
             resultString += ',"returnDirection":"'+_returnDirection+'"';
 
+            resultString += ',"saveCount":'+_saveCount;
+            resultString += ',"loadCount":'+_loadCount;
             resultString += ',"timeSinceEating":'+_timeSinceEating;
             resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;
             resultString += ',"additionalMovesUntilStarving":'+_additionalMovesUntilStarving;
@@ -279,7 +396,7 @@ module.exports.Player = function Player(playerAttributes) {
             resultString += ',"locationsFound":'+_locationsFound;
             resultString += ',"maxAggression":'+_maxAggression;
             resultString += ',"score":'+_score;
-            resultString += ',"_totalDamageReceived":'+_totalDamageReceived;
+            resultString += ',"totalDamageReceived":'+_totalDamageReceived;
             resultString += ',"booksRead":'+_booksRead;
             resultString += ',"stolenCash":'+_stolenCash;
             resultString += ',"creaturesSpokenTo":'+_creaturesSpokenTo;
@@ -287,9 +404,6 @@ module.exports.Player = function Player(playerAttributes) {
             resultString += ',"sleepsTaken":'+_sleepsTaken;
             resultString += ',"maxAffinity":'+_maxAffinity;
             resultString += ',"injuriesReceived":'+_injuriesReceived;
-            resultString += ',"injuriesReceived":'+_injuriesReceived;
-            resultString += ',"injuriesReceived":'+_injuriesReceived;
-
 
 /*
         //possible additional player stats
@@ -336,6 +450,10 @@ module.exports.Player = function Player(playerAttributes) {
         self.getAggression = function() {
             //possibly replace the value with a "level" string 
             return _aggression;
+        };
+
+        self.incrementSaveCount = function() {
+            _saveCount++;
         };
 
         self.increaseTimeSinceEating = function(changeValue) {
@@ -1300,6 +1418,10 @@ module.exports.Player = function Player(playerAttributes) {
             return artefact.close(verb, _currentLocation.getName());
         };
 
+        self.getCurrentLocation = function() {
+            return _currentLocation;
+        };
+
         //mainly used for setting initial location but could also be used for warping even if no exit/direction
         //param is a location object, not a name.
         self.setLocation = function(location) { 
@@ -1546,7 +1668,7 @@ module.exports.Player = function Player(playerAttributes) {
                 //note artefacts return false for isDead - we check "isDestroyed" for those
                 self.increaseAggression(1); 
                 _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());    
-                _killedCreatures.push(receiver);          
+                _killedCreatures.push(receiver.getName());          
             };
 
             //did you use something fragile as a weapon?
@@ -2029,9 +2151,11 @@ module.exports.Player = function Player(playerAttributes) {
 
             var status = "";
 
-            status += "<i>Statistics:</i><br>";
+            status += "<i>Statistics for $player:</i><br>";
             status += "Your score is "+_score+" out of "+maxScore+"<br>";
             if (_killedCount > 0) { status += "You have been killed "+pluralise(_killedCount, "time")+".<br>"};
+            if (_saveCount > 0) { status += "You have saved your progress "+pluralise(_saveCount, "time")+".<br>"};
+            if (_loadCount > 0) { status += "You have loaded "+pluralise(_loadCount, "saved game")+".<br>"};
             status += "You have taken "+pluralise(_stepsTaken,"step")+".<br>"; 
             status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" possible locations.<br>";
             if (_missionsCompleted.length > 0) { status += "You have completed " + pluralise(_missionsCompleted.length,"task") + ".<br>"; };
@@ -2097,6 +2221,6 @@ module.exports.Player = function Player(playerAttributes) {
 
     }
     catch(err) {
-	    console.log('Unable to create Player object: '+err);
+	    console.log('Unable to create Player object: '+err.stack);
     }
 };

@@ -1,6 +1,6 @@
 ﻿"use strict";
 //location object - manage location details
-exports.Location = function Location(aName, aDescription, isDark, isStart) { 
+exports.Location = function Location(aName, aDescription, isDark, isStart, visits) { 
     try{
         //module deps
         var artefactObjectModule = require('./artefact');
@@ -12,6 +12,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart) {
         //self.location = {}; //JSON representation of location {description, objects, exits, creatures}
         var _name = aName.toLowerCase();
         var _visits = 0;
+        if (visits) {_visits = visits;}; //if passed in.
         var _dark = isDark;
         var _start = isStart;
         var _description = aDescription;
@@ -34,6 +35,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart) {
             var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
             if (_dark) { resultString += ',"dark":'+_dark; };
             if (_start) { resultString += ',"start":'+_start; };
+            if (_visits) { resultString += ',"visits":'+_visits; };
             resultString += ',"exits":[';
 
             for(var i=0; i<_exits.length;i++) {

@@ -33,7 +33,7 @@ function Client(aServerHost, aServerPort, aUi) {
 
     var untangleResponse = function(someJSONData) {
         var response = new Response(someJSONData, console);
-        if (username == ''){
+        if (response.getUsername() != "" && response.getUsername() != undefined){ //we've got a new username/id back
             username = response.getUsername();
             gameId = response.getGameId();
         };
@@ -65,6 +65,17 @@ function Client(aServerHost, aServerPort, aUi) {
         serverRequest('new/new/'+inputString);
     };
 
+    //load a game
+    var loadGame = function(aFileName) {
+        var inputString = sanitiseString(aFileName);
+        serverRequest('load/load/'+inputString+'/'+gameId);
+    };
+
+    //save a game
+    var saveGame = function() {
+        serverRequest('save/save/'+username+'/'+gameId);
+    };
+
     //request game list
     var requestGameList = function() {
         serverRequest('list/list/watcher');
@@ -73,7 +84,12 @@ function Client(aServerHost, aServerPort, aUi) {
     //generic client request
     var request = function(someUserInput) {
         var inputString = sanitiseString(someUserInput);
-        if (inputString == 'list') {
+        if (inputString.indexOf("load") >-1) {
+            var fileName = inputString.replace("load ","");
+            loadGame(fileName);
+        } else if (inputString.indexOf("save") >-1) {
+            saveGame();
+        } else if (inputString == "list") {
             requestGameList();
         } else {
             if (username == ''){
