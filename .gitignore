@@ -216,3 +216,4 @@ pip-log.txt
 
 #node install
 node_modules/
+/IF-Node/IF-Node/js/server/data/usergames/
