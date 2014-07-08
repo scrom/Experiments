@@ -944,7 +944,7 @@
           "type": "junk",
           "plural": true,
           "canCollect": false,
-          "breakable": true
+          "isBreakable": true
         },
         "synonyms": [
           "rack",
@@ -2412,7 +2412,7 @@
           "attackStrength": 20,
           "type": "junk",
           "canCollect": true,
-          "breakable": true,
+          "isBreakable": true,
           "customAction": "play",
           "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte."
         },
@@ -2750,7 +2750,7 @@
           "weight": 18,
           "type": "treasure",
           "canCollect": true,
-          "breakable": true,
+          "isBreakable": true,
           "price": 15,
           "customAction": "play",
           "defaultResult": "You bash the drums for a while. Your sense of rhythm feels a bit off today."
@@ -2906,7 +2906,7 @@
           "type": "treasure",
           "price": 30,
           "canCollect": true,
-          "breakable": true
+          "isBreakable": true
         },
         "synonyms": [
           "glasses",
@@ -3864,7 +3864,7 @@
           "type": "treasure",
           "price": 30,
           "canCollect": true,
-          "breakable": true
+          "isBreakable": true
         },
         "synonyms": [
           "console",
@@ -4466,7 +4466,7 @@
           "customAction": "dry",
           "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels.",
           "canCollect": false,
-          "breakable": true
+          "isBreakable": true
         },
         "synonyms": [
           "dryer",

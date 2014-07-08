@@ -156,6 +156,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.isBreakable != undefined) {
                 if (artefactAttributes.isBreakable== true || artefactAttributes.isBreakable == "true") { _breakable = true;};
             };
+            //catch bad data
+            if (artefactAttributes.breakable != undefined) {
+                if (artefactAttributes.breakable== true || artefactAttributes.breakable == "true") { _breakable = true;};
+            };
             if (artefactAttributes.isBroken != undefined) {
                 if (artefactAttributes.isBroken== true || artefactAttributes.isBroken == "true") { _broken = true;};
             };

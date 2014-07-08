@@ -73,7 +73,12 @@ function Client(aServerHost, aServerPort, aUi) {
 
     //save a game
     var saveGame = function() {
-        serverRequest('save/save/'+username+'/'+gameId);
+        if (!(gameId)) {
+            alert("You don't have an active game to save.");
+            ui.setState("Cannot save game. You don't have an active game to save.<br>Please either enter your name or <i>load</i> an existing game.");
+        } else {
+            serverRequest('save/save/'+username+'/'+gameId);
+        };
     };
 
     //request game list
