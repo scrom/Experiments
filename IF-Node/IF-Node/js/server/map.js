@@ -9,6 +9,9 @@ exports.Map = function Map() {
         var _locations = [];
         var _startLocationIndex = 0;
         var _maxScore = 0; //missions add score
+        var _missionCount = 0; //how many missions are there?
+        var _bookCount = 0; //how many books are there?
+        var _creatureCount = 0; //how many creatures are there?
 
         //consider storing all creatures and artefacts on map object (rather than in location, creature or player) 
         //this will need some major rework and tracking/linking who owns what
@@ -61,6 +64,33 @@ exports.Map = function Map() {
 
         self.getMaxScore = function() {
             return _maxScore;
+        };
+
+        self.incrementMissionCount = function() {
+            _missionCount++;
+            return _missionCount;
+        };
+
+        self.getMissionCount = function() {
+            return _missionCount;
+        };
+
+        self.incrementBookCount = function() {
+            _bookCount++;
+            return _bookCount;
+        };
+
+        self.getBookCount = function() {
+            return _bookCount;
+        };
+
+        self.incrementCreatureCount = function() {
+            _creatureCount++;
+            return _creatureCount;
+        };
+
+        self.getCreatureCount = function() {
+            return _creatureCount;
         };
 
         self.getLocationCount = function() {

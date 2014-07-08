@@ -72,6 +72,10 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 };
             };
 
+            if (artefact.getType() == "book") {
+                _map.incrementBookCount();
+            };
+
             //check artefact has syns
             if (artefact.getSyns().length ==0) {console.log("Usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
             return artefact;
@@ -122,6 +126,8 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     creature.addMission(self.buildMission(creatureData.missions[j]));
                 };
             };
+
+            _map.incrementCreatureCount();
 
             if (creature.getSyns().length ==0) {console.log("Usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
             return creature;
@@ -178,6 +184,8 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
             if (missionData.initialAttributes) {
                 initialAttr = self.unpackConditionAttributes(missionData.initialAttributes);
             };
+
+            _map.incrementMissionCount();
             return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
         };
 

@@ -1530,6 +1530,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(self.canSee())) {returnMessage += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
             else {returnMessage +=newLocationDescription;};
 
+            if (_locationsFound == map.getLocationCount()) {
+                returnMessage+= "Wow, You're quite an explorer! Well done. You've visited every possible location."
+            };
+
             //console.log('GO: '+returnMessage);
             return returnMessage;
         };	
@@ -1940,6 +1944,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.processMissionState = function(mission, map, missionOwner, newlyCompletedMissions) {
             var resultString = "";
+            var initialScore = _score;
             var missionReward = mission.checkState(_inventory, _currentLocation, map, _destroyedObjects);
             if (missionReward) {
                 if (missionReward.hasOwnProperty("fail")) {
@@ -1962,6 +1967,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 //console.log("Completed processing mission state");
+            };
+
+            if ((initialScore < _score) && (_score == map._maxScore)) {
+                resultString += "<br>Congratulations, you've scored "+_score+" points - the highest possible score for this game.<br>";
+                resultString += "Check your <i>stats</i> to see what else you could achieve?"
+            };
+
+            if ((_missionsCompleted.length == map.getMissionCount()) && (newlyCompletedMissions.length > 0)) {
+                resultString += "<br>Nice work, you've completed all the tasks in the game.<br>";
+                resultString += "Check your <i>stats</i> to see what else you could achieve?"
             };
 
             return resultString;
@@ -2157,12 +2172,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_saveCount > 0) { status += "You have saved your progress "+pluralise(_saveCount, "time")+".<br>"};
             if (_loadCount > 0) { status += "You have loaded "+pluralise(_loadCount, "saved game")+".<br>"};
             status += "You have taken "+pluralise(_stepsTaken,"step")+".<br>"; 
-            status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" possible locations.<br>";
-            if (_missionsCompleted.length > 0) { status += "You have completed " + pluralise(_missionsCompleted.length,"task") + ".<br>"; };
+            status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" locations.<br>";
+            if (_missionsCompleted.length > 0) { status += "You have completed "+_missionsCompleted.length+" out of "+map.getMissionCount() + " tasks.<br>"; };
             if (_missionsFailed.length > 0) { status += "You have failed " + pluralise(_missionsFailed.length,"task") + ".<br>"; };
              
-            if (_booksRead > 0) { status += "You have read " + pluralise(_booksRead, "item") + ".<br>"; };
-            if (_creaturesSpokenTo > 0) { status += "You have spoken to " + pluralise(_creaturesSpokenTo,"character") + ".<br>"; };
+            if (_booksRead > 0) { status += "You have read " + _booksRead +" out of "+map.getBookCount()+ " items" + ".<br>"; };
+            if (_creaturesSpokenTo > 0) { status += "You have spoken to " + _creaturesSpokenTo + " out of "+map.getCreatureCount()+" characters" + ".<br>"; };
             
             if (_repairSkills.length > 0) { status += "You have gained " + pluralise(_repairSkills.length,"skill") + ".<br>"; };
             if (_consumedObjects.length > 0) { status += "You have eaten or drunk " + pluralise(_consumedObjects.length,"item") + ".<br>"; };
