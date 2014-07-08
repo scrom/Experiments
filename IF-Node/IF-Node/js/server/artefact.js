@@ -651,7 +651,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //50% chance of spotting something amiss
                 var randomInt = Math.floor(Math.random() * 2);
                 if (randomInt > 0) {
-                    resultString += "<br>You notice something odd about "+self.getDisplayName()+" it might bear even closer inspection.";
+                    resultString += "<br>You notice something odd about "+self.getDisplayName()+". "+self.getPrefix()+" might bear even closer inspection.";
                 };  
             };
 

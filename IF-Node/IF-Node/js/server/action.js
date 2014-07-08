@@ -388,6 +388,9 @@ exports.Action = function Action(aPlayer, aMap) {
                         //};
                         description = _player.say(_verb, _object0,_object1);
                         break;
+                    case 'greet':
+                        description = _player.say(_verb, "Hello",_object0);    
+                        break;
                     case 'run':
                     case 'go':
                         //translate to "go north" etc. Overwrite the verb with direction. 
