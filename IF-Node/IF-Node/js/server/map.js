@@ -156,11 +156,11 @@ exports.Map = function Map() {
                 if (_locations[i].objectExists(anObjectName)) {
                     var foundObject = _locations[i].getObject(anObjectName);
                     if (foundObject.getType() == "creature") {
-                        return anObjectName+" is currently at '"+_locations[i].getDisplayName()+"'.";
+                        return foundObject.getDisplayName()+" is currently at '"+_locations[i].getDisplayName()+"'.";
                     };
                 };
             };
-            return "I'm sorry, there's nobody who answers to the name '"+anObjectName+"' in our records.";
+            return "I'm sorry, there's nobody who answers to the name '"+anObjectName+"' here.";
         };
 
         self.checkExists = function(anObjectName) {
