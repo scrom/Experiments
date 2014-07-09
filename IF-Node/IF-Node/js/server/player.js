@@ -444,6 +444,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.decreaseAggression = function(changeValue) {
             _aggression -= changeValue;
+            if (_aggression <0) {self.setAggression(0);}; //don't reduce aggression too far.
             return _aggression;
         };
 
@@ -1786,8 +1787,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //note recover limits to max hp.
             self.recover(duration*3);
-            _aggression -= duration;
-            if (_aggression <0) {self.setAggression(0);}; //don't reduce aggression too far.
+            self.decreaseAggression(duration);
 
 
             console.log('player rested. HP remaining: '+_hitPoints);
