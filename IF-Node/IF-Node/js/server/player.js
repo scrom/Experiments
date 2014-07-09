@@ -1719,7 +1719,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var pointsToRemove = weapon.getAttackStrength();
             var resultString = receiver.hurt(pointsToRemove);
 
-            if (receiver.getType() != "creature") {
+            if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
                 resultString +=  "Ding! You repeatedly attack "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent sort of way."
             }; 
 
@@ -1898,7 +1898,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return self.drink('drink',artefactName);
             };
 
-            if (_timeSinceEating < 5 && (_hitPoints > (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+            
+            //@todo: test this properly
+
+            //can't keep eating to heal in battle - must use medical item
+            if (_timeSinceEating < 5 && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
+            //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
+            if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
+            //can't eat unless hungry if health is nearly full.
+            if ((_timeSinceEating < _maxMovesUntilHungry-1) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
 
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
