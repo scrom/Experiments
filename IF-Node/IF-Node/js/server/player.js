@@ -1596,7 +1596,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return null;
         };
 
-        //inconsistent sig with artefact and creature for now. Eventually this could be turned into an automatic battle to the death!
         self.hurt = function(pointsToRemove) {
             self.reduceHitPoints(pointsToRemove);
 
@@ -1684,7 +1683,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return resultString+_genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
                     } else {
                         resultString += "You do no visible damage and end up coming worse-off. ";
-                        resultString += self.hurt(receiver.getAttackStrength());
+                        resultString += receiver.hit(self);
                     };
                 } else { //artefact
                         resultString += "That hurt. If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
@@ -1699,7 +1698,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString =  "You attack "+receiver.getDisplayName()+". Unfortunately you can't move "+weapon.getDisplayName()+" to use as a weapon.<br>";
                 if (receiver.getType() == "creature") {
                     resultString += receiver.getDisplayName()+ "retaliates. ";
-                    resultString += self.hurt(receiver.getAttackStrength()/5); //return 20% damage
+                    resultString += receiver.hit(self,0.2); //return 20% damage
                 };
                 return resultString;
             };
@@ -1710,7 +1709,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += weapon.bash();
                 if (receiver.getType() == "creature") {
                     resultString += receiver.getDisplayName()+ "retaliates. ";
-                    resultString += self.hurt(receiver.getAttackStrength()/5); //return 20% damage
+                    resultString += receiver.hit(self,0.2); //return 20% damage
                 };
                 return resultString;
             };
@@ -1897,9 +1896,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.isLiquid()) {
                 return self.drink('drink',artefactName);
             };
-
-            
-            //@todo: test this properly
 
             //can't keep eating to heal in battle - must use medical item
             if (_timeSinceEating < 5 && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};

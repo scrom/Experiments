@@ -794,6 +794,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _inventory.getAllObjects(includeHiddenObjects);
         };
 
+        self.hit = function(receiver, damageModifier) {
+            if (isNaN(damageModifier)) {
+                damageModifier = 1;      
+            };
+            //do something here around aggression or dislike/affinity for the thing they're hitting
+
+            //hurt thing
+            return receiver.hurt(Math.floor(self.getAttackStrength()*damageModifier));
+        };
+
         self.fightOrFlight = function(map,player) {
             var playerAggression = player.getAggression();
 
@@ -808,7 +818,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //for each hostile creature, attack the player
             if(self.isHostile(playerAggression)) {
                 console.log("Fight!");
-                return "<br>"+initCap(self.getDisplayName())+" attacks you. " + player.hurt(self.getAttackStrength());
+                return "<br>"+initCap(self.getDisplayName())+" attacks you. " + self.hit(player, 1);
             };
 
         return "";
@@ -991,7 +1001,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.eat = function(aPlayer) {
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
-                aPlayer.hurt(_attackStrength/4);
+                aPlayer.hurt(_attackStrength/4); //bites player (base attack strength / 4 - not with weapon)
                 return "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
             };
 
