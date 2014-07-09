@@ -835,7 +835,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     var exit = _currentLocation.getRandomExit();
                     if (exit) {
                         if (!(fled)) {
-                            resultString = initCap(self.getDisplayName())+" heads "+exit.getLongName()+"<br>";
+                            var movementVerb = "flees";
+                            if (_bleeding) {movementVerb = "staggers";};
+                            resultString = initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"<br>";
                             fled = true;
                         };
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
@@ -905,47 +907,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _currentLocation;
         };	
 
-        self.hurt = function(player, weapon, verb) {
-             if (self.isDead()) {return _genderPrefix+"'s dead already."};
-            //regardless of outcome, you're not making yourself popular
-            self.decreaseAffinity(1);
-
-            var resultString = "";
-
-            if (!(weapon)) {
-                if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
-                    resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
-                } else {
-                    resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
-                };
-
-                if (!(_type == 'friendly')) {
-                    resultString += "You do no visible damage and end up coming worse-off. ";
-                    resultString += player.hurt(self.getAttackStrength());
-                    return resultString;
-                };
-            };
-
-            if (_type == 'friendly') {
-                return resultString+_genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
-            };
-
-            //need to validate that artefact is a weapon (or at least is mobile)
-            if (!(weapon.isCollectable())||(weapon.getAttackStrength()<1)) {
-                resultString = "You try hitting "+self.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon. ";
-                resultString += weapon.bash();
-                resultString += player.hurt(self.getAttackStrength()/5); //return 20% damage
-                return resultString;
-            };
-
-            var pointsToRemove = weapon.getAttackStrength();
+        self.hurt = function(pointsToRemove) {
 
             _hitPoints -= pointsToRemove;
             //should really bash weapon here in case it's breakable too.
             if (self.isDead()) {return self.kill();};
 
             if (healthPercent() <=50) {_bleeding = true;};
-            return "You attack "+self.getDisplayName()+". "+self.health();
+            return initCap(self.getDisplayName())+" is hurt. "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
@@ -1288,10 +1257,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
                         //if creature ends up in player location (rather than starting there...
                         if (player.getLocation().getName() == _currentLocation.getName()) {
-                            resultString += "<br>"+initCap(self.getDisplayName())+" wanders in.";  
+                            var movementVerb = "wanders";
+                            if (_bleeding) {movementVerb = "stumbles";};
+                            resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" in.";  
                         } else {
                             //@todo bug  - this will never be seen by the player
-                            resultString += "<br>"+initCap(self.getDisplayName())+" heads "+exit.getLongName()+"."; 
+                            var movementVerb = "heads";
+                            if (_bleeding) {movementVerb = "limps";};
+                            resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"."; 
                         };  
                      };  
             
@@ -1313,8 +1286,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString += self.kill();
             };
             
-            if (healthPercent() <=50) {_bleeding = true;};
-            if (_bleeding) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
+            if ((healthPercent() <=50) && (!(self.isDead()))) {_bleeding = true;};
+            if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
 
             //only show what's going on if the player is in the same location
             //note we store playerLocation at the beginning in case the player was killed as a result of the tick.

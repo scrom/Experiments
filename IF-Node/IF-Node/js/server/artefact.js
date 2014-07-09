@@ -1104,30 +1104,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "";
         };
 
-        self.hurt = function(player, weapon, verb) {
-            if (self.isDestroyed()) {return "There's not enough left to to any more damage to.";};  
-            var resultString = "";    
-            if (!(weapon)) {
-                if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
-                    resultString = "You jab wildly at "+self.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
-                } else {
-                    resultString = "You attempt a bare-knuckle fight with "+self.getDisplayName()+".<br>"; 
+        self.hurt = function(pointsToRemove) {
+            //cascade to contents
+            if (_inventory.size(true) > 0) {
+                var contents = _inventory.getAllObjects(true);
+                for (var i=0;i<contents.length;i++) {
+                    //75% chance of damaging contents
+                    var randomInt = Math.floor(Math.random() * 4);
+                    if (randomInt > 0) {
+                        contents[i].bash();
+                    };                
                 };
-                resultString += "That hurt. If you're going to do that again, you might want to "+verb+" "+self.getSuffix()+" _with_ something.<br>"; 
-                resultString += player.hurt(15);
-                return resultString;
-            };
-        
-            //need to validate that artefact is a weapon (or at least is mobile)
-            if (!(weapon.isCollectable())) {
-                return "You attack "+self.getDisplayName()+". Unfortunately you can't move "+weapon.getDisplayName()+" to use as a weapon.";
-            };
-
-            //need to validate that artefact will do some damage
-            if (weapon.getAttackStrength()<1) {
-                resultString = "You attack "+self.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon. ";
-                resultString += weapon.bash();
-                return resultString;
             };
 
             if (((_broken) && (_breakable) && (_damaged))) {
@@ -1135,13 +1122,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         
             if (_breakable) {
-                return self.break(verb, false);
+                return self.break("hurt", false);
             };
             if (!(_damaged)) {
                 _damaged = true;
                 _detailedDescription += " and shows signs of damage beyond normal expected wear and tear.";
             };
-            return "Ding! You repeatedly attack "+self.getDisplayName()+". with "+weapon.getDisplayName()+" It feels good in a gratuitously violent sort of way."
+
+            return "";
         };
 
         self.moveOpenOrClose = function(verb, locationName) {

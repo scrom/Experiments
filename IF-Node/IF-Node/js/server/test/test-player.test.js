@@ -409,7 +409,7 @@ exports.canStealObjectFromCreature.meta = { traits: ["Player Test", "Inventory T
 
 exports.canHitCreatureWithInventoryWeapon = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "You attack the creature. He's not happy.";
+    var expectedResult = "The creature is hurt. He's not happy.";
     var actualResult = p0.hit('hit',c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -417,7 +417,73 @@ exports.canHitCreatureWithInventoryWeapon = function (test) {
     test.done();
 };
 
-exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+exports.hittingCreatureWhenUnarmedDamagesPlayer = function (test) {
+    var expectedResult = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. You feel weaker. ";
+    var actualResult = p0.hit('hit',c0.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingCreatureWhenUnarmedDamagesPlayer.meta = { traits: ["Player Test", "Action Trait", "Creature Trait", "Hit Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+exports.hittingArtefactWhenUnarmedDamagesPlayer = function (test) {
+    l0.addObject(a1);
+    var expectedResult = "You attempt a bare-knuckle fight with the box.<br>That hurt. If you're going to do that again, you might want to hit it <i>with</i> something.<br>You feel weaker. ";
+    var actualResult = p0.hit('hit',a1.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingArtefactWhenUnarmedDamagesPlayer.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+exports.hittingArtefactWhenArmedDamagesArtefact = function (test) {
+    l0.addObject(a1);
+    p0.get('get', weapon.getName());
+    var expectedResult = "You broke it!";
+    var actualResult = p0.hit('hit',a1.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingArtefactWhenArmedDamagesArtefact.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+exports.hittingContainerArtefactTwiceWhenArmedDestroysContainerAndScattersContents = function (test) {
+    container.receive(breakable);
+    p0.get('get', weapon.getName());
+    p0.hit('hit',container.getName());
+    var expectedResult = "Oops. You destroyed it!<br>The contents are scattered on the floor.";
+    var actualResult = p0.hit('hit',container.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingContainerArtefactTwiceWhenArmedDestroysContainerAndScattersContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Container Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+exports.hittingContainerArtefactTwiceWhenArmedDamagesContents = function (test) {
+    container.receive(breakable);
+    p0.get('get', weapon.getName());
+    p0.hit('hit',container.getName());
+    p0.hit('hit',container.getName());
+    var expectedResult = "It's broken.";
+    var actualResult = p0.examine("examine", "glass");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingContainerArtefactTwiceWhenArmedDamagesContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Container Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
 
 exports.cannotPutObjectInClosedContainer = function (test) {
     p0.get('get', food.getName());

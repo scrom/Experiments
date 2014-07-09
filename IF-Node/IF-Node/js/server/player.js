@@ -1651,10 +1651,76 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //validate verb against weapon subType
-            
 
+            //build result...
+            var resultString;
+
+            //initial dead/destroyed checks and affinity impact.
+            if (receiver.getType() == "creature") {
+                if (receiver.isDead()) {return _genderPrefix+"'s dead already."};
+                
+                //regardless of outcome, you're not making yourself popular
+                receiver.decreaseAffinity(1);
+            } else {
+                if (receiver.isDestroyed()) {return "There's not enough left to to any more damage to.";};     
+            };
+
+            //check if unarmed
+            if (!(weapon)) {
+                if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
+                    resultString = "You jab wildly at "+receiver.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
+                } else {
+                    resultString = "You attempt a bare-knuckle fight with "+receiver.getDisplayName()+".<br>"; 
+                };
+
+                if (receiver.getType() == "creature") {
+                    if (receiver.isDead()) {return _genderPrefix+"'s dead already."};
+
+                    //regardless of outcome, you're not making yourself popular
+                    receiver.decreaseAffinity(1);
+
+                    if (receiver.getSubType() == "friendly") {
+                        return resultString+_genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
+                    } else {
+                        resultString += "You do no visible damage and end up coming worse-off. ";
+                        resultString += self.hurt(receiver.getAttackStrength());
+                    };
+                } else { //artefact
+                        resultString += "That hurt. If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
+                        resultString += self.hurt(15);
+                };
+                
+                return resultString;
+            };
+
+            //need to validate that artefact is a weapon (or at least is mobile)
+            if (!(weapon.isCollectable())) {
+                resultString =  "You attack "+receiver.getDisplayName()+". Unfortunately you can't move "+weapon.getDisplayName()+" to use as a weapon.<br>";
+                if (receiver.getType() == "creature") {
+                    resultString += receiver.getDisplayName()+ "retaliates. ";
+                    resultString += self.hurt(receiver.getAttackStrength()/5); //return 20% damage
+                };
+                return resultString;
+            };
+
+            //need to validate that artefact will do some damage
+            if (weapon.getAttackStrength()<1) {
+                resultString = "You attack "+receiver.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon.<br>";
+                resultString += weapon.bash();
+                if (receiver.getType() == "creature") {
+                    resultString += receiver.getDisplayName()+ "retaliates. ";
+                    resultString += self.hurt(receiver.getAttackStrength()/5); //return 20% damage
+                };
+                return resultString;
+            };
+            
             //try to hurt the receiver
-            var resultString = receiver.hurt(self, weapon, verb);
+            var pointsToRemove = weapon.getAttackStrength();
+            var resultString = receiver.hurt(pointsToRemove);
+
+            if (receiver.getType() != "creature") {
+                resultString +=  "Ding! You repeatedly attack "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent sort of way."
+            };
 
             if (receiver.isDestroyed()) { 
                 //wilful destruction of objects increases aggression further...
@@ -1832,7 +1898,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return self.drink('drink',artefactName);
             };
 
-            if (_timeSinceEating < 5 || (_hitPoints > (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+            if (_timeSinceEating < 5 && (_hitPoints > (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
 
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
