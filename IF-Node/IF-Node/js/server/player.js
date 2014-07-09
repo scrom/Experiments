@@ -1720,7 +1720,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiver.getType() != "creature") {
                 resultString +=  "Ding! You repeatedly attack "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent sort of way."
-            };
+            }; 
 
             if (receiver.isDestroyed()) { 
                 //wilful destruction of objects increases aggression further...
