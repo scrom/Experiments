@@ -979,6 +979,76 @@ exports.cannotEatLiveCreature = function (test) {
 
 exports.cannotEatLiveCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player cannot eat a living creature." };
 
+exports.playerCanHealBleedingCreature = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(medikit);
+    //creatures start bleeding at 50% health or lower.
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var expected = "You use a first aid kit to heal the creature. You manage to stop it bleeding.<br>It seems much better but would benefit from a rest.";
+    var actual = c0.heal(medikit, p0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCanHealBleedingCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a bleeding creature can be healed by a player." };
+
+exports.playerCanHealNonBleedingCreature = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(medikit);
+    //creatures start bleeding at 50% health or lower.
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:80, maxHealth:150, affinity:-2, canTravel:true});
+    var expected = "You use a first aid kit to heal the creature. It seems much better but would benefit from a rest.";
+    var actual = c0.heal(medikit, p0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCanHealNonBleedingCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a creature can be healed by a player." };
+
+
+exports.playerCannotHealADeadCreature = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(medikit);
+    //creatures start bleeding at 50% health or lower.
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, maxHealth:150, affinity:-2, canTravel:true});
+    var expected = "The creature's dead, healing won't help it any more.";
+    var actual = c0.heal(medikit, p0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCannotHealADeadCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a dead creature cannot be healed by a player." };
+
+exports.playerCannotHealAHealthyCreature = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(medikit);
+    //creatures start bleeding at 50% health or lower.
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:149, maxHealth:150, affinity:-2, canTravel:true});
+    var expected = "The creature doesn't need healing.";
+    var actual = c0.heal(medikit, p0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCannotHealAHealthyCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a healthy creature cannot be healed by a player." };
+
+
 
 /*
 Methods needing testing:

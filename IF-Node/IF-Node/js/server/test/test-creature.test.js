@@ -564,7 +564,6 @@ exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility = function (test) {
 };
 exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
 
-
 exports.newCreatureWith50PercentHealthIsCreatedBleeding = function (test) {
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature';
@@ -576,6 +575,7 @@ exports.newCreatureWith50PercentHealthIsCreatedBleeding = function (test) {
     test.done();
 };
 exports.newCreatureWith50PercentHealthIsCreatedBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleeding Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
+
 exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding = function (test) {
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature';
@@ -878,6 +878,43 @@ exports.armedCreatureWillIgnoreWeakerWeapons = function (test) {
 };
 
 exports.armedCreatureWillIgnoreWeakerWeapons.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will not collect a weaker weapon" };
+
+exports.creatureCanHealAnotherBleedingCreature = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+
+    //creatures start bleeding at 50% health or lower.
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var c1 = new creature.Creature('creature 2','another beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, maxHealth:150, affinity:-2, canTravel:true});
+    var inv = c1.getInventoryObject();
+    inv.add(medikit);
+
+    var expected = "The creature 2 uses a first aid kit to heal the creature.";
+    var actual = c0.heal(medikit, c1);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureCanHealAnotherBleedingCreature.meta = { traits: ["Creature Test", "Heal Trait", "Bleeding Trait"], description: "Test that a bleeding creature can be healed by a player." };
+
+exports.creaturesCanHealThemselves = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+
+    //creatures start bleeding at 50% health or lower.
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var inv = c0.getInventoryObject();
+    inv.add(medikit);
+
+    var expected = "The creature uses a first aid kit to heal itself.";
+    var actual = c0.heal(medikit, c0);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creaturesCanHealThemselves.meta = { traits: ["Creature Test", "Heal Trait", "Bleeding Trait"], description: "Test that a bleeding creature can be healed by a player." };
 
 
 /*

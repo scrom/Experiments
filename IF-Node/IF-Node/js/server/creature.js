@@ -941,8 +941,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         
         self.heal = function(medicalArtefact, healer) {
-            if (_hitPoints == _maxHitPoints) { return self.getDisplayName()+" doesn't need healing.";};
-            if (self.isDead()) {return receiver.getDisplayName()+"'s dead, healing won't "+_genderSuffix+" any more.";};
+            if (_hitPoints >= _maxHitPoints-1) { return initCap(self.getDisplayName())+" doesn't need healing.";};
+            if (self.isDead()) {return initCap(self.getDisplayName())+"'s dead, healing won't help "+_genderSuffix+" any more.";};
 
             //heal self...
             var pointsToAdd = 0;
@@ -961,11 +961,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //use up one charge and consume if all used up...
             medicalArtefact.consume();
-            
-            if (medicalArtefact.chargesRemaining() == 0) {
-                resultString += "You used up the last of your "+medicalArtefact.getName()+" to heal "+self.getDisplayName()+". ";
-            } else {
-                resultString += "You use "+medicalArtefact.getDescription()+" to heal "+self.getDisplayName()+". ";
+ 
+            if (healer) {
+                if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
+                    if (medicalArtefact.chargesRemaining() == 0) {
+                        resultString += "You used up the last of your "+medicalArtefact.getName()+" to heal "+self.getDisplayName()+". ";
+                    } else {
+                        resultString += "You use "+medicalArtefact.getDescription()+" to heal "+self.getDisplayName()+". ";
+                    };
+                } else { 
+                    var recipient = self.getDisplayName();
+                    if (healer.getDisplayName() == recipient) {recipient = _genderSuffix+"self";};
+                    resultString += initCap(healer.getDisplayName())+" uses "+medicalArtefact.getDescription()+" to heal "+recipient+".";
+                };
             };
 
             //reciver health points
@@ -974,13 +982,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //did we stop the bleeding?
             if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
                 _bleeding = false;
-                resultString += "You manage to stop "+_genderSuffix+" bleeding.<br>";
+                if (healer) {
+                    if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
+                        resultString += "You manage to stop "+_genderSuffix+" bleeding.<br>";
+                    };
+                };
             };
 
-            resultString += _genderPrefix+" seems much better but would benefit from a rest.";
-
             if (healer) {
-                if (healer.getType() == "player") {self.increaseAffinity(1);};
+                if (healer.getType() == "player") {
+                    resultString += _genderPrefix+" seems much better but would benefit from a rest.";
+                    self.increaseAffinity(1);
+                };
             };
 
             console.log('creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
