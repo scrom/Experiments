@@ -2525,7 +2525,30 @@
               "disc drive",
               "disk drive"
             ]
-          }
+          },
+		  {
+        "object": "artefact",
+        "name": "emergency first aid kit",
+        "description": "single-use first aid kit",
+        "detailedDescription": "A one-off emergency first-aid kit.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 1
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+		  "emergency",
+		  "emergency kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
+        ]
+      }
         ],
         "synonyms": [
           "corporate spy",
@@ -2545,7 +2568,7 @@
             "destination": "spy",
             "reward": {
               "score": 50,
-              "successMessage": "Congratulations. You killed the spy! Have 50 points."
+              "successMessage": "Congratulations. The spy is dead! Have 50 points."
             }
           }
         ]

@@ -1134,6 +1134,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.reply = function(someSpeech,playerAggression) {
             if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
+            if (_affinity <-1) {return _genderPrefix+" doesn't want to talk to you."};
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
@@ -1307,7 +1308,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //bleed?
                 if (_bleeding) {
-                    damage+=2;
+                    //attempt to heal...
+
+                    //is there a medikit available?
+                    var medikit = _inventory.getObjectByType("medical");
+                    var locationObject = false;
+                    if (!(medikit)) {
+                         medikit = _currentLocation.getObjectByType("medical");
+                         locationObject = true;
+                    };
+
+                    if (medikit) {
+                        resultString += "<br>"+self.heal(medikit, self);
+
+                        //remove medikit if used up.
+                        if (medikit.chargesRemaining() == 0) {
+                            if (locationObject) {
+                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+medikit.getDisplayName()+"."
+                                _currentLocation.removeObject(medikit.getName());
+                            } else {
+                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medikit.getDisplayName()+"."
+                                _inventory.remove(medikit.getName());
+                            };
+                        };
+                    } else {
+                        damage+=2;
+                    };
                 } else {
                     //slowly recover health
                     healPoints++;
