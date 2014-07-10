@@ -1813,7 +1813,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (!(receiver)) {
-                if (_hitPoints == _maxHitPoints) {return "You don't need healing at the moment.";};
+                if (_hitPoints >= _maxHitPoints-1) {return "You don't need healing at the moment.";};
             };
 
             //get first aid kit or similar...
@@ -1824,7 +1824,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 locationObject = true;
             };
 
-            if (!(medicalArtefact)) { return resultString+" don't have anything to heal with."};
+            if (!(medicalArtefact)) { return "You don't have anything to heal with."};
 
             //heal receiver (if set)
             if (receiver) {
@@ -1842,7 +1842,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //heal self...
             var pointsToAdd = 0;
             var pointsNeeded = _maxHitPoints-_hitPoints;
-            if (healthPercent() >65) {
+            if (healthPercent() >=65) {
                 //add 50% of remaining health to gain.
                 pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
             } else {
@@ -1850,7 +1850,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 pointsToAdd = Math.floor(((0.65*_maxHitPoints)-_hitPoints));
             };
 
-            resultString = "You ";
+            resultString = "You";
 
             //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
 
@@ -1877,7 +1877,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //did we stop the bleeding?
             if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
                 _bleeding = false;
-                resultString += " manage to stop your bleeding and ";
+                resultString += " manage to stop your bleeding and";
             };
 
             resultString += " feel much better.<br>You'd still benefit from a rest though.";

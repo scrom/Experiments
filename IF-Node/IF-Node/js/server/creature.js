@@ -947,7 +947,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //heal self...
             var pointsToAdd = 0;
             var pointsNeeded = _maxHitPoints-_hitPoints;
-            if (healthPercent() >60) {
+            if (healthPercent() >=60) {
                 //add 50% of remaining health to gain.
                 pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
             } else {

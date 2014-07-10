@@ -979,6 +979,66 @@ exports.cannotEatLiveCreature = function (test) {
 
 exports.cannotEatLiveCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player cannot eat a living creature." };
 
+
+exports.playerCanHealSelfWhenBleeding = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(medikit);
+    p0.hurt(50);
+    //creatures start bleeding at 50% health or lower.
+    var expected = "You use a first aid kit to heal yourself. You manage to stop your bleeding and feel much better.<br>You'd still benefit from a rest though.";
+    var actual = p0.heal("self");
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCanHealSelfWhenBleeding.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player can heal themselves." };
+
+
+exports.playerCanHealSelfWhenNotBleeding = function (test) {
+
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(medikit);
+    p0.hurt(35);
+    //creatures start bleeding at 50% health or lower.
+    var expected = "You use a first aid kit to heal yourself. You feel much better.<br>You'd still benefit from a rest though.";
+    var actual = p0.heal("self");
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCanHealSelfWhenNotBleeding.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player can heal themselves." };
+
+exports.playerCannotHealWithoutMedikit = function (test) {
+
+    p0.hurt(35);
+    var expected = "You don't have anything to heal with.";
+    var actual = p0.heal("self");
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCannotHealWithoutMedikit.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player cannot heal if not carrying a medikit." };
+
+exports.playerCannotHealIfNotInjured = function (test) {
+    var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
+    var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(medikit);
+    p0.hurt(1); //pointless to heal with only 1 pt of damage
+    var expected = "You don't need healing at the moment.";
+    var actual = p0.heal("self");
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCannotHealIfNotInjured.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player cannot heal if not injured." };
+
+
 exports.playerCanHealBleedingCreature = function (test) {
 
     var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
@@ -986,10 +1046,11 @@ exports.playerCanHealBleedingCreature = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
-    var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
-    var expected = "You use a first aid kit to heal the creature. You manage to stop it bleeding.<br>It seems much better but would benefit from a rest.";
-    var actual = c0.heal(medikit, p0);
+    var creatureName = 'creature 3';
+    var c2 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    c2.go('n',l0);
+    var expected = "You use a first aid kit to heal the creature 3. You manage to stop it bleeding.<br>It seems much better but would benefit from a rest.";
+    var actual = p0.heal('creature 3');
     console.log("actual:"+actual);
     test.equal(actual, expected);
     test.done();
