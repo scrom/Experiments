@@ -2,6 +2,7 @@
 var creature = require('../creature.js');
 var artefact = require('../artefact.js');
 var mission = require('../mission.js');
+var location = require('../location.js');
 var mapBuilder = require('../mapbuilder.js');
 var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
 var junkAttributes;
@@ -687,6 +688,196 @@ exports.deadCreatureWillNotFindForPlayer = function (test) {
 };
 
 exports.deadCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
+
+//collectBestAvailableWeapon
+exports.weakUnarmedCreatureWillCollectWeapon = function (test) {
+    var l = new location.Location("room","a room", false, true, 0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
+    c0.go("n", l);
+    
+    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
+    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
+    //var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+    //var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    
+    var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
+    //var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    //var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
+
+    l.addObject(weakWeapon);
+    l.addObject(lightWeapon);
+    var expected = "<br>The creature picked up the light. Watch out!<br>";
+    var actual = c0.collectBestAvailableWeapon();
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.weakUnarmedCreatureWillCollectWeapon.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that a creature will collect a weapon" };
+
+exports.strongUnarmedCreatureWillNotCollectWeapon = function (test) {
+    var l = new location.Location("room","a room", false, true, 0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
+    c0.go("n", l);
+    
+    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
+    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
+    //var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+    //var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    
+    var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
+    //var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    //var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
+
+    l.addObject(weakWeapon);
+    l.addObject(lightWeapon);
+    var expected = "";
+    var actual = c0.collectBestAvailableWeapon();
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.strongUnarmedCreatureWillNotCollectWeapon.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that a creature will not collect a weapon" };
+
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne = function (test) {
+    var l = new location.Location("room","a room", false, true, 0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
+    c0.go("n", l);
+    
+    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
+    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    
+    var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
+    var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
+
+    c0.receive(weakWeapon);
+
+    l.addObject(mediumWeapon);
+    l.addObject(heavyWeapon);
+    l.addObject(lightWeapon);
+    var expected = "<br>The creature dropped the weak.<br>The creature picked up the heavy. Watch out!<br>";
+    var actual = c0.collectBestAvailableWeapon();
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will collect a better weapon" };
+
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect = function (test) {
+    var l = new location.Location("room","a room", false, true, 0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
+    c0.go("n", l);
+    
+    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
+    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    
+    var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
+    var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
+
+    c0.receive(weakWeapon);
+
+    l.addObject(mediumWeapon);
+    l.addObject(heavyWeapon);
+    l.addObject(lightWeapon);
+
+    c0.collectBestAvailableWeapon();
+
+    var expected = "a room<br>You can see a beastie, a medium weapon, a light weapon and a weak weapon.<br>There are no visible exits.";
+    var actual = l.describe();
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will collect a better weapon" };
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContentsAreCorrect = function (test) {
+    var l = new location.Location("room","a room", false, true, 0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
+    c0.go("n", l);
+    
+    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
+    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    
+    var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
+    var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
+
+    c0.receive(weakWeapon);
+
+    l.addObject(mediumWeapon);
+    l.addObject(heavyWeapon);
+    l.addObject(lightWeapon);
+
+    c0.collectBestAvailableWeapon();
+
+    var expected = "a small beastie<br>It seems to like you.<br>It's carrying an heavy weapon.";
+    var actual = c0.getDetailedDescription();
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContentsAreCorrect.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will collect a better weapon" };
+
+
+exports.armedCreatureWillIgnoreWeakerWeapons = function (test) {
+    var l = new location.Location("room","a room", false, true, 0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
+    c0.go("n", l);
+    
+    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
+    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+    //var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    
+    var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
+    var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    //var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
+
+    c0.receive(mediumWeapon);
+
+    l.addObject(weakWeapon);
+    //l.addObject(heavyWeapon);
+    l.addObject(lightWeapon);
+    var expected = "";
+    var actual = c0.collectBestAvailableWeapon();
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.armedCreatureWillIgnoreWeakerWeapons.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will not collect a weaker weapon" };
 
 
 /*

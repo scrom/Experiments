@@ -1176,7 +1176,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.getWeapon = function() {
-            //find the strongest non-breakable weapon the player is carrying.
+            //find the strongest non-breakable weapon the character is carrying.
             var selectedWeaponStrength = 0;
             var selectedWeapon = null;
             var weapons = _inventory.getAllObjectsOfType('weapon');
@@ -1200,8 +1200,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.collectBestAvailableWeapon = function() {
            // console.log("attempting to collect weapon");
-            //find the strongest non-breakable weapon the player is carrying.
-            var selectedWeaponStrength = 0;
+            //collect the strongest non-breakable weapon.
+            var resultString = "";
+            var selectedWeaponStrength = self.getAttackStrength(); //creatures have a base attack strength but if carrying a weapon, use that as a baseline.
+            var currentWeapon = self.getWeapon();
             var selectedWeapon = null;
             var weapons = _currentLocation.getAllObjectsOfType('weapon')
 
@@ -1224,11 +1226,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //nothing collected.
             if (!(selectedWeapon)) { return "";};
 
+            //we'll only get to this point if they found something better.
             console.log('Creature collected weapon: '+selectedWeapon.getDisplayName());
             _inventory.add(selectedWeapon);
             _currentLocation.removeObject(selectedWeapon.getName());
+            
+            //drop old weapon. (prevents creature weapon harvesting)
+            if (currentWeapon) {
+                _inventory.remove(currentWeapon.getName());
+                _currentLocation.addObject(currentWeapon);
+                resultString += '<br>'+initCap(self.getDisplayName())+" dropped "+currentWeapon.getDisplayName()+".";
+            };
 
-            return '<br>'+initCap(self.getDisplayName())+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
+            resultString += '<br>'+initCap(self.getDisplayName())+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
+
+            return resultString;
         };
 
         self.tick = function(time, map, player) {
