@@ -39,7 +39,7 @@ exports.setUp = function (callback) {
     food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     container = new artefact.Artefact('container', 'container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'box', 'just a box',breakableJunkAttributes, null);
-    breakable = new artefact.Artefact('glass', 'drinking glass', 'just a box',breakableJunkAttributes, null);
+    breakable = new artefact.Artefact('glass', 'drinking glass', 'a somewhat fragile drinking vessel',breakableJunkAttributes, null);
     c0 = new creature.Creature('creature', 'A creature', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:5, canTravel:true},[a1]);
     c0.go(null,l0); 
     c1 = new creature.Creature('evil', 'An evil unfriendly creature', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:-5, canTravel:true},[a1]);
@@ -527,7 +527,7 @@ exports.hittingContainerArtefactTwiceWhenArmedDestroysContainerAndScattersConten
 
 exports.hittingContainerArtefactTwiceWhenArmedDestroysContainerAndScattersContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Container Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
 
-exports.hittingContainerArtefactTwiceWhenArmedDamagesContents = function (test) {
+exports.hittingContainerArtefactTwiceWhenArmedUsuallyDamagesContents = function (test) {
     container.receive(breakable);
     p0.get('get', weapon.getName());
     p0.hit('hit',container.getName());
@@ -540,7 +540,7 @@ exports.hittingContainerArtefactTwiceWhenArmedDamagesContents = function (test) 
     test.done();
 };
 
-exports.hittingContainerArtefactTwiceWhenArmedDamagesContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Container Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+exports.hittingContainerArtefactTwiceWhenArmedUsuallyDamagesContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Container Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
 
 
 exports.cannotPutObjectInClosedContainer = function (test) {
