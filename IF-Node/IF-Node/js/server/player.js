@@ -1801,11 +1801,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString;
         };
 
+        self.isBleeding = function() {
+            return _bleeding;
+        };
+
         self.heal = function(receiverName) {
             var resultString = "";
 
             if (receiverName) {
-                if (receiverName != "self") {
+                if (receiverName != "self" && receiverName != "player") {
                     var receiver = getObjectFromLocation(receiverName);
                     if (!(receiver)) {return "There's no "+receiverName+" here.";};
                     if (receiver.getType() != "creature") {receiver.getDisplayName()+" can't be healed.";}; 
@@ -1846,8 +1850,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //add 50% of remaining health to gain.
                 pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
             } else {
-                //get health up to 65% only
-                pointsToAdd = Math.floor(((0.65*_maxHitPoints)-_hitPoints));
+                //get health up to 70% only
+                pointsToAdd = Math.floor(((0.70*_maxHitPoints)-_hitPoints));
             };
 
             resultString = "You";
@@ -1871,7 +1875,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += " use "+medicalArtefact.getDescription()+" to heal yourself. You";
             };
 
-            //reciver health points
+            //receive health points
             self.recover(pointsToAdd);
             
             //did we stop the bleeding?

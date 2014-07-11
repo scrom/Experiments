@@ -63,7 +63,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
-            if (healthPercent() <=50) {_bleeding = true;}; //set bleeding
+            if (creatureAttributes.bleedingHealthThreshold != undefined) {_bleedingHealthThreshold = creatureAttributes.bleedingHealthThreshold};
+            if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;}; //set bleeding
             if (creatureAttributes.canTravel != undefined) {
                 if (creatureAttributes.canTravel== true || creatureAttributes.canTravel == "true") { _canTravel = true;}
                 else {_canTravel = false;};
@@ -444,6 +445,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return true;
             };
             return false;
+        };
+
+        self.willHelpPlayer = function(player) {
+            //at the moment we don't care about aggression here, jusrt affinity.
+            if (_affinity >= 5) {return true;};
+            return false;
+        };
+
+        self.helpPlayer = function(player) {
+            var resultString = "";
+            //if (player.isBleeding()) {
+                //get medikit and heal player
+            //};
+
+            //if there's any *hostile* creatures that this creature dislikes (or aren't friendly), attack them...
+            //note, if they "dislike" the creature, they'll take one hit and then probably flee (and reduce affinity)
+            var creatures = _currentLocation.getCreatures();
+            for (var i=0; i<creatures.length;i++) {                
+                if (creatures[i].isHostile(player.getAggression())) {
+                    if ((_dislikes.indexOf(creatures[i].getName()) >-1) || (creatures[i].getSubType() != "friendly")) {
+                        resultString += "<br>"+self.getDisplayName()+" attacks "+creatures[i].getDisplayName()+".<br>"+self.hit(creatures[i],1);
+                    };
+                };    
+            };
+
+            return resultString;
         };
 
         self.willFlee = function(playerAggression) {
@@ -923,7 +950,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //should really bash weapon here in case it's breakable too.
             if (self.isDead()) {return self.kill();};
 
-            if (healthPercent() <=50) {_bleeding = true;};
+            if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
             return initCap(self.getDisplayName())+" is hurt. "+self.health();
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
@@ -1283,6 +1310,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
+                    if (self.willHelpPlayer(player)) {
+                        resultString += self.helpPlayer(player);
+                    };
                     resultString += self.fightOrFlight(map, player);
                     partialResultString = resultString;
                 } else if (_traveller && _canTravel) { //is a traveller
@@ -1310,25 +1340,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (_bleeding) {
                     //attempt to heal...
 
-                    //is there a medikit available?
-                    var medikit = _inventory.getObjectByType("medical");
+                    //is there a medicalArtefact available?
+                    var medicalArtefact = _inventory.getObjectByType("medical");
                     var locationObject = false;
-                    if (!(medikit)) {
-                         medikit = _currentLocation.getObjectByType("medical");
+                    if (!(medicalArtefact)) {
+                         medicalArtefact = _currentLocation.getObjectByType("medical");
                          locationObject = true;
                     };
 
-                    if (medikit) {
-                        resultString += "<br>"+self.heal(medikit, self);
+                    if (medicalArtefact) {
+                        resultString += "<br>"+self.heal(medicalArtefact, self);
 
-                        //remove medikit if used up.
-                        if (medikit.chargesRemaining() == 0) {
+                        //remove medicalArtefact if used up.
+                        if (medicalArtefact.chargesRemaining() == 0) {
                             if (locationObject) {
-                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+medikit.getDisplayName()+"."
-                                _currentLocation.removeObject(medikit.getName());
+                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+medicalArtefact.getDisplayName()+"."
+                                _currentLocation.removeObject(medicalArtefact.getName());
                             } else {
-                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medikit.getDisplayName()+"."
-                                _inventory.remove(medikit.getName());
+                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medicalArtefact.getDisplayName()+"."
+                                _inventory.remove(medicalArtefact.getName());
                             };
                         };
                     } else {
@@ -1347,7 +1377,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString += self.kill();
             };
             
-            if ((healthPercent() <=50) && (!(self.isDead()))) {_bleeding = true;};
+            if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
             if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
 
             //only show what's going on if the player is in the same location

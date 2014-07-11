@@ -179,11 +179,12 @@ exports.Action = function Action(aPlayer, aMap) {
                             description = "Stuck already?<br>Ok...";
                         };
                         description += "<br> I accept basic commands to move e.g. 'north','south','up','in' etc.<br>"+
+                                        "Your positive or negative interactions within the game may impact how others respond to you.<br>"+
                                         "To find out how you're doing try asking for 'stats' or 'status'<br>"+  
                                         "You can save your progress by entering 'save'.<br>You can load a previously saved game by entering 'load <i>filename</i>' where <i>filename</i> is the name of your previously saved game file.<br>"+ 
                                         "Two of the more useful verbs are 'look' and 'examine'.<br>"+
                                         "You can interact with objects and creatures by supplying a verb and the name of the object or creature. e.g. 'get sword' or 'eat apple'<br>"+
-                                        "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer' or 'hit door with sword'<br>"+
+                                        "You can also 'use' objects on others (and creatures) e.g. 'give sword to farmer', 'hit door with sword' or 'put key in box'<br>"+
                                         "I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy something more than a minimum viable adventure.";
                         break;
                     case 'map':
