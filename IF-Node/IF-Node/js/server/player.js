@@ -889,6 +889,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "Sorry, you can't carry "+newObject.getDisplayName()+" at the moment, try dropping something you're carrying first."
             };
 
+            var originalObjectIsInContainer = false;
+
+            //@todo would prefer to track the container of an artefact directly.
+            //as the below would be wrong where multiple objects share the same name or synonym...
+            if (container.contains(receiver.getName())) {
+                originalObjectIsInContainer = true; 
+            };
+
             removeObjectFromPlayerOrLocation(artefact.getName());
             removeObjectFromPlayerOrLocation(receiver.getName());
 
@@ -898,7 +906,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 container.receive(newObject);
 
                 if (containerIsInLocation) {
-                    return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+".";
+                    console.log(originalObjectIsInContainer);
+                    if (!(originalObjectIsInContainer)) {
+                        return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+".";
+                    } else {                        
+                        //assume the player knows what they're doing...  
+                        return resultString +" to produce "+newObject.getName()+".";
+                    };
                 } else {
                     return resultString +".<br>Your "+container.getName()+" now contains "+newObject.getName()+".";
                 };
@@ -916,7 +930,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 _inventory.add(newObject);
             };
 
-            return resultString+" to produce "+newObject.getDisplayName()+".";                
+            return resultString+" to produce "+newObject.getName()+".";                
         };
 
         /*Allow player to put something in an object */
