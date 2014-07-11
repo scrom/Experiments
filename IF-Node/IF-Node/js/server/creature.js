@@ -419,7 +419,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         //self.isHostileTo = function(aCreature) {
             //if self.dislikes(aCreature)
             //and self.isFriendly()
-            //and self.willDefendPlayer()
+            //and self.willDefendPlayer() //affinity >=5
             //consider defending other creatures too.
         //};
 

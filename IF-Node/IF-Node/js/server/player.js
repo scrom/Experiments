@@ -1072,7 +1072,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
             //treat this as a kind act (if successful)
-            if (_aggression >0) {self.decreaseAggression(1);};
+            self.decreaseAggression(1);
             return receiver.receive(collectedArtefact);
 
         };
@@ -1524,7 +1524,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _stepsTaken++;
 
             //reduce built up aggression every 2 moves
-            if ((_stepsTaken%2 == 0) && (_aggression>0)) {self.decreaseAggression(1);};
+            if (_stepsTaken%2 == 0) {self.decreaseAggression(1);};
 
             //set player's current location
             var newLocationDescription = self.setLocation(newLocation);
@@ -1605,7 +1605,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _totalDamageReceived += pointsToRemove;
 
             //reduce aggression
-            if (_aggression >0) {self.decreaseAggression(1);};
+            self.decreaseAggression(1);
             if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
 
             if (_hitPoints <=0) {return self.kill();};
