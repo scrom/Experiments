@@ -359,7 +359,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.getAffinityDescription = function() {
-              if (self.isDead()) {return ""};
+            if (self.isDead()) {return ""};
             if (_affinity >5) {return _genderPrefix+" really likes you."};
             if (_affinity >0) {return _genderPrefix+" seems to like you."};
             if (_affinity <-5) {return _genderPrefix+" really doesn't like you."};        
@@ -397,12 +397,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.isFriendly = function(playerAggression) {
+            if (self.isDead()) {return false;};
             //friendly if affinity is greater than or equal to aggression
             if ((_affinity >0) && (playerAggression <=_affinity)) {return true;};
             return false;
         };
 
         self.isHostile = function(playerAggression) {
+            if (self.isDead()) {return false;};
             //hostile if affinity is less than -5 (recently rebalanced) and is less than players -ve equivalent of aggression.
             //but only if you are also aggressive
             //will therefore *not* be hostile if you're _more_ aggressive than their negative affinity (will probably run away)
@@ -422,6 +424,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         //};
 
         self.dislikes = function(aCreature) {
+            if (self.isDead()) {return false;};
             var creatureName = aCreature.getName();
             for (var j=0; j<_dislikes.length;j++) {
                 if (creatureName == _dislikes[j]) {return true;};
@@ -430,6 +433,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.willFollow = function(playerAggression) {
+            if (self.isDead()) {return false;};
             if (!(self.canTravel())) { return false;} 
             if (self.isHostile(playerAggression)) {return true;};
             if (self.isFriendly(playerAggression)) {
@@ -447,27 +451,47 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.willHelpPlayer = function(player) {
-            //at the moment we don't care about aggression here, jusrt affinity.
-            if (_affinity >= 5) {return true;};
-            return false;
-        };
-
         self.helpPlayer = function(player) {
             var resultString = "";
-            //if (player.isBleeding()) {
-                //get medikit and heal player
-            //};
-
-            //if there's any *hostile* creatures that this creature dislikes (or aren't friendly), attack them...
-            //note, if they "dislike" the creature, they'll take one hit and then probably flee (and reduce affinity)
-            var creatures = _currentLocation.getCreatures();
-            for (var i=0; i<creatures.length;i++) {                
-                if (creatures[i].isHostile(player.getAggression())) {
-                    if ((_dislikes.indexOf(creatures[i].getName()) >-1) || (creatures[i].getSubType() != "friendly")) {
-                        resultString += "<br>"+self.getDisplayName()+" attacks "+creatures[i].getDisplayName()+".<br>"+self.hit(creatures[i],1);
+            if (_affinity >= 3) {
+                if (player.isBleeding()) {
+                    //get medikit and heal player
+                    //is there a medicalArtefact available?
+                    var medicalArtefact = _inventory.getObjectByType("medical");
+                    var locationObject = false;
+                    if (!(medicalArtefact)) {
+                         medicalArtefact = _currentLocation.getObjectByType("medical");
+                         locationObject = true;
                     };
-                };    
+
+                    if (medicalArtefact) {
+                        resultString += "<br>"+player.heal(medicalArtefact, self);
+
+                        //remove medicalArtefact if used up.
+                        if (medicalArtefact.chargesRemaining() == 0) {
+                            if (locationObject) {
+                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+medicalArtefact.getDisplayName()+"."
+                                _currentLocation.removeObject(medicalArtefact.getName());
+                            } else {
+                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medicalArtefact.getDisplayName()+"."
+                                _inventory.remove(medicalArtefact.getName());
+                            };
+                        };
+                    }; 
+                };
+            };
+
+            if (_affinity >= 5) {
+                //if there's any *hostile* creatures that this creature dislikes (or aren't friendly), attack them...
+                //note, if they "dislike" the creature, they'll take one hit and then probably flee (and reduce affinity)
+                var creatures = _currentLocation.getCreatures();
+                for (var i=0; i<creatures.length;i++) {                
+                    if (creatures[i].isHostile(player.getAggression())) {
+                        if ((_dislikes.indexOf(creatures[i].getName()) >-1) || (creatures[i].getSubType() != "friendly")) {
+                            resultString += "<br>"+self.getDisplayName()+" attacks "+creatures[i].getDisplayName()+".<br>"+self.hit(creatures[i],1);
+                        };
+                    };    
+                };
             };
 
             return resultString;
@@ -945,7 +969,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };	
 
         self.hurt = function(pointsToRemove) {
-
+            if (self.isDead()) {return self.getDisplayName()+"'s dead already. Hitting corpses is probably crossing a line somewhere.";};
             _hitPoints -= pointsToRemove;
             //should really bash weapon here in case it's breakable too.
             if (self.isDead()) {return self.kill();};
@@ -1310,9 +1334,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
-                    if (self.willHelpPlayer(player)) {
-                        resultString += self.helpPlayer(player);
-                    };
+                    resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
                     partialResultString = resultString;
                 } else if (_traveller && _canTravel) { //is a traveller

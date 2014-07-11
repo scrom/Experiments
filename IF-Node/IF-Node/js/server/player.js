@@ -1831,7 +1831,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += "You use "+medicalArtefact.getDescription()+" to heal yourself.<br>";
                     };
                 } else { 
-                    resultString += initCap(healer.getDisplayName())+" uses "+medicalArtefact.getDescription()+" to heal you.<br>";
+                    resultString += initCap(healer.getDisplayName())+" uses "+medicalArtefact.getDescription()+" to heal you.";
                 };
             };
 
