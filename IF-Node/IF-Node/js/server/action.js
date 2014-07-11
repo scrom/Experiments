@@ -170,6 +170,14 @@ exports.Action = function Action(aPlayer, aMap) {
                         _ticks = 0;
                         description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
                         break;
+                    case 'no':
+                        _ticks = 0;
+                        description = "Are you arguing with me?";
+                        break;
+                    case 'yes':
+                        _ticks = 0;
+                        description = "Fair enough but it's probably not going to help you here.";
+                        break;
                     case 'help':
                         _ticks = 0;
                         if (_failCount >=3) {
