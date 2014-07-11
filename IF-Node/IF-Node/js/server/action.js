@@ -55,7 +55,7 @@ exports.Action = function Action(aPlayer, aMap) {
 
         //ready for bad words to be added
         var swearCheck = function(aWord) {
-            var badWords = []; //put any bad language you want to filter in here
+            var badWords = ["fuck"]; //put any bad language you want to filter in here
             var checkWord = aWord.substring(0,4);
             if (badWords.indexOf(checkWord)>-1) { 
                  return aWord+" to you too. That's not very nice now, is it. Save that language for the office.";
@@ -605,8 +605,11 @@ exports.Action = function Action(aPlayer, aMap) {
             };
 
             //fall-through checks...
-            //var swearing = swearCheck(_verb);
-            //if (swearing) {description = swearing;};
+            var swearing = swearCheck(_verb);
+            if (swearing) {
+                description = swearing;
+                description = "Sorry, I take a hard line on verbal abuse and bad language..."+_player.kill();
+            };
 
             //final fall-through
             if ((description == undefined)||(description == "")){
