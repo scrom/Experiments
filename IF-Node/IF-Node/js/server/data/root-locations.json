@@ -1268,7 +1268,7 @@
         "object": "artefact",
         "name": "black book",
         "description": "unassuming small black book",
-        "detailedDescription": "This one's a bit of an eye-opener about the challenges of theft in offices. Probably worth a read.",
+        "detailedDescription": "This one's a bit of an eye-opener about the challenges of theft in offices.",
         "attributes": {
           "defaultAction": "read",
           "weight": 2,
@@ -2952,7 +2952,48 @@
         "source": "paint-pots",
         "destination": "people-team-north"
       }
-    ]
+    ],
+	"inventory": [
+      {
+        "object": "artefact",
+        "name": "people folder",
+        "description": "document folder",
+        "detailedDescription": "Leafing through the contents, it appears to be folder of notes on working effectively with others.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 1,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "notes",
+          "folder",
+          "document",
+          "document folder",
+          "working effectively with others",
+          "book"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "workingwithothers",
+            "displayName": "read about working with others",
+            "description": "Whilst in the real world working relationships are not transactional, working well with others here is largely about <i>give</i> and <i>take</i>.<br>The more you give, the more help you can ask for.<br>Be aware however that your kind deeds won't be remembered forever.<br>Acts of violence or unwanted attention will not be tolerated.<br>Those in favour can <i>ask</i> a friend <i>where</i> someone else is whilst colleagues with exceptionally strong working relationships may even support you in times of need.<br>",
+            "missionObject": "people folder",
+            "static": "true",
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "read": "true"
+            },
+            "destination": "people folder",
+            "reward": {
+              "score": 20,
+              "successMessage": "It looks like you've picked up a few hints on how to work more effectively with those around you!"
+            }
+          }
+        ]
+	}
+	]
   },
   {
     "object": "location",
