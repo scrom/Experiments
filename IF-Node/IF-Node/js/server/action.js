@@ -19,6 +19,7 @@ exports.Action = function Action(aPlayer, aMap) {
         var _object1 = '';
         var _ticks = 1; //assume a move passes time. Some won't - for these, ticks will be 0.
         var _failCount = 0; //count the number of consecutive user errors
+        var _awaitingPlayerAnswer = false; //initial support for asking the player questions.
 
 	    var objectName = "Action";
 
@@ -162,6 +163,8 @@ exports.Action = function Action(aPlayer, aMap) {
         self.performPlayerAction = function() {
             var description = "";
 
+            //if _awaitingPlayerAnswer is true, and answer is not yes or no, restate the question.
+
             //attempt action (note this catches errors from bugs)
             try {
                 //user commands
@@ -172,11 +175,23 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'no':
                         _ticks = 0;
-                        description = "Are you arguing with me?";
+                        if (_awaitingPlayerAnswer == true) {
+                            description = "Meh. OK.";
+                            _awaitingPlayerAnswer = false;                            
+                        } else {
+                            description = "Are you arguing with me?";
+                            _awaitingPlayerAnswer = true;
+                        };
                         break;
                     case 'yes':
                         _ticks = 0;
-                        description = "Fair enough but it's probably not going to help you here.";
+                        if (_awaitingPlayerAnswer == true) {
+                            description = "Fair enough but it's probably not going to help you here.";
+                            _awaitingPlayerAnswer = false;                            
+                        } else {
+                            description = "I'm sorry, I hadn't realised I asked you a question. Let's just get on with things shall we?";
+                            _awaitingPlayerAnswer = false;
+                        };
                         break;
                     case 'help':
                         _ticks = 0;
