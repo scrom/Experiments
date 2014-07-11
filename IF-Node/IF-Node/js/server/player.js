@@ -1805,7 +1805,61 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _bleeding;
         };
 
-        self.heal = function(receiverName) {
+        self.heal = function(medicalArtefact, healer) {
+            var resultString = "";
+            var pointsToAdd = 0;
+            var pointsNeeded = _maxHitPoints-_hitPoints;
+            if (healthPercent() >=65) {
+                //add 50% of remaining health to gain.
+                pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
+            } else {
+                //get health up to 70% only
+                pointsToAdd = Math.floor(((0.70*_maxHitPoints)-_hitPoints));
+            };
+
+            //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
+
+            //we do have something to heal with so...
+            //use up one charge and consume if all used up...
+            medicalArtefact.consume();
+
+            if (healer) {
+                if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
+                    if (medicalArtefact.chargesRemaining() == 0) {
+                        resultString += "You used up the last of your "+medicalArtefact.getName()+".<br>";
+                    } else {
+                        resultString += "You use "+medicalArtefact.getDescription()+" to heal yourself.<br>";
+                    };
+                } else { 
+                    resultString += initCap(healer.getDisplayName())+" uses "+medicalArtefact.getDescription()+" to heal you.<br>";
+                };
+            };
+
+            //receive health points
+            self.recover(pointsToAdd);
+            
+            //did we stop the bleeding?
+            if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
+                _bleeding = false;
+                if (healer) {
+                    if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
+                        resultString += "You manage to stop your bleeding.<br>";
+                    };
+                };
+            };
+
+            if (healer) {
+                if (healer.getType() == "player") {
+                    resultString += "You feel much better but would benefit from a rest.";
+                };
+            };
+
+            console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+
+            return resultString;
+        };
+
+        self.healCharacter = function(receiverName) {
             var resultString = "";
 
             if (receiverName) {
@@ -1844,49 +1898,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //heal self...
-            var pointsToAdd = 0;
-            var pointsNeeded = _maxHitPoints-_hitPoints;
-            if (healthPercent() >=65) {
-                //add 50% of remaining health to gain.
-                pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
-            } else {
-                //get health up to 70% only
-                pointsToAdd = Math.floor(((0.70*_maxHitPoints)-_hitPoints));
-            };
+            resultString = self.heal(medicalArtefact, self);
 
-            resultString = "You";
-
-            //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
-
-            //we do have something to heal with...
-
-            //use up one charge and consume if all used up...
-            medicalArtefact.consume();
-            
             if (medicalArtefact.chargesRemaining() == 0) {
                 if (locationObject) {
                     _currentLocation.removeObject(medicalArtefact.getName());
                 } else {
                     _inventory.remove(medicalArtefact.getName());
                 };
-
-                resultString += " used up the last of your "+medicalArtefact.getName()+" but";
-            } else {
-                resultString += " use "+medicalArtefact.getDescription()+" to heal yourself. You";
-            };
-
-            //receive health points
-            self.recover(pointsToAdd);
-            
-            //did we stop the bleeding?
-            if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
-                _bleeding = false;
-                resultString += " manage to stop your bleeding and";
-            };
-
-            resultString += " feel much better.<br>You'd still benefit from a rest though.";
-
-            console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            };            
 
             return resultString;
         };

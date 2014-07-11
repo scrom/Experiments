@@ -988,9 +988,10 @@ exports.playerCanHealSelfWhenBleeding = function (test) {
     inv.add(medikit);
     p0.hurt(50);
     //creatures start bleeding at 50% health or lower.
-    var expected = "You use a first aid kit to heal yourself. You manage to stop your bleeding and feel much better.<br>You'd still benefit from a rest though.";
-    var actual = p0.heal("self");
-    console.log("actual:"+actual);
+    var expected = "You use a first aid kit to heal yourself.<br>You manage to stop your bleeding.<br>You feel much better but would benefit from a rest.";
+    var actual = p0.healCharacter("self");
+    console.log("Expected: "+expected);
+    console.log("Actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
@@ -1005,9 +1006,10 @@ exports.playerCanHealSelfWhenNotBleeding = function (test) {
     inv.add(medikit);
     p0.hurt(35);
     //creatures start bleeding at 50% health or lower.
-    var expected = "You use a first aid kit to heal yourself. You feel much better.<br>You'd still benefit from a rest though.";
-    var actual = p0.heal("self");
-    console.log("actual:"+actual);
+    var expected = "You use a first aid kit to heal yourself.<br>You feel much better but would benefit from a rest.";
+    var actual = p0.healCharacter("self");
+    console.log("Expected: "+expected);
+    console.log("Actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
@@ -1017,8 +1019,9 @@ exports.playerCannotHealWithoutMedikit = function (test) {
 
     p0.hurt(35);
     var expected = "You don't have anything to heal with.";
-    var actual = p0.heal("self");
-    console.log("actual:"+actual);
+    var actual = p0.healCharacter("self");
+    console.log("Expected: "+expected);
+    console.log("aActual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
@@ -1031,8 +1034,9 @@ exports.playerCannotHealIfNotInjured = function (test) {
     inv.add(medikit);
     p0.hurt(1); //pointless to heal with only 1 pt of damage
     var expected = "You don't need healing at the moment.";
-    var actual = p0.heal("self");
-    console.log("actual:"+actual);
+    var actual = p0.healCharacter("self");
+    console.log("Expected: "+expected);
+    console.log("Actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
@@ -1050,8 +1054,9 @@ exports.playerCanHealBleedingCreature = function (test) {
     var c2 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     c2.go('n',l0);
     var expected = "You use a first aid kit to heal the creature 3. You manage to stop it bleeding.<br>It seems much better but would benefit from a rest.";
-    var actual = p0.heal('creature 3');
-    console.log("actual:"+actual);
+    var actual = p0.healCharacter('creature 3');
+    console.log("Expected: "+expected);
+    console.log("Actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
@@ -1064,11 +1069,13 @@ exports.playerCanHealNonBleedingCreature = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
-    var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:80, maxHealth:150, affinity:-2, canTravel:true});
-    var expected = "You use a first aid kit to heal the creature. It seems much better but would benefit from a rest.";
-    var actual = c0.heal(medikit, p0);
-    console.log("actual:"+actual);
+    var creatureName = 'creature 3';
+    var c3 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:80, maxHealth:150, affinity:-2, canTravel:true});
+    c3.go('n',l0);
+    var expected = "You use a first aid kit to heal the creature 3. It seems much better but would benefit from a rest.";
+    var actual = p0.healCharacter('creature 3');
+    console.log("Expected: "+expected);
+    console.log("Actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
@@ -1082,11 +1089,14 @@ exports.playerCannotHealADeadCreature = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
-    var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, maxHealth:150, affinity:-2, canTravel:true});
-    var expected = "The creature's dead, healing won't help it any more.";
-    var actual = c0.heal(medikit, p0);
-    console.log("actual:"+actual);
+    var creatureName = 'creature 3';
+    var c3 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:1, maxHealth:150, affinity:-2, canTravel:true});
+    c3.go('n',l0);
+    c3.kill();
+    var expected = "The creature 3's dead, healing won't help it any more.";
+    var actual = p0.healCharacter('creature 3');
+    console.log("Expected: "+expected);
+    console.log("Actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
@@ -1099,11 +1109,13 @@ exports.playerCannotHealAHealthyCreature = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
-    var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:149, maxHealth:150, affinity:-2, canTravel:true});
-    var expected = "The creature doesn't need healing.";
-    var actual = c0.heal(medikit, p0);
-    console.log("actual:"+actual);
+    var creatureName = 'creature 3';
+    var c3 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:149, maxHealth:150, affinity:-2, canTravel:true});
+    c3.go('n',l0);
+    var expected = "The creature 3 doesn't need healing.";
+    var actual = p0.healCharacter('creature 3');
+    console.log("Expected: "+expected);
+    console.log("Actual:"+actual);
     test.equal(actual, expected);
     test.done();
 };
