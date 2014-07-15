@@ -1672,7 +1672,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //initial dead/destroyed checks and affinity impact.
             if (receiver.getType() == "creature") {
-                if (receiver.isDead()) {return _genderPrefix+"'s dead already."};
+                if (receiver.isDead()) {return receiver.getPrefix()+"'s dead already."};
                 
                 //regardless of outcome, you're not making yourself popular
                 receiver.decreaseAffinity(1);
@@ -1689,13 +1689,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 if (receiver.getType() == "creature") {
-                    if (receiver.isDead()) {return _genderPrefix+"'s dead already."};
+                    if (receiver.isDead()) {return receiver.getPrefix()+"'s dead already."};
 
                     //regardless of outcome, you're not making yourself popular
                     receiver.decreaseAffinity(1);
 
                     if (receiver.getSubType() == "friendly") {
-                        return resultString+_genderPrefix+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
+                        return resultString+receiver.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
                     } else {
                         resultString += "You do no visible damage and end up coming worse-off. ";
                         resultString += receiver.hit(self);
