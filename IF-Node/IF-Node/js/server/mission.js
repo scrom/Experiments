@@ -101,7 +101,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         ////public methods
 
         self.toString = function() {
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayName":"'+_displayName+'","description":"'+_description+'","attributes":'+JSON.stringify(self.getCurrentAttributes());
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayName":"'+_displayName+'"';
+            if (_description) {
+                resultString += ',"description":"'+_description+'"';
+            };
+            resultString += ',"attributes":'+JSON.stringify(self.getCurrentAttributes());
             if (_initialAttributes) {
                     resultString +='","initialAttributes":'+self.literalToString(_initialAttributes);
             };
