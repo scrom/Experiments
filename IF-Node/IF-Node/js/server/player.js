@@ -1730,6 +1730,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
             //try to hurt the receiver
+            if (receiver.getSubType() == "friendly") {
+                return receiver.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
+            };
+
             var pointsToRemove = weapon.getAttackStrength();
             var resultString = receiver.hurt(pointsToRemove);
 
