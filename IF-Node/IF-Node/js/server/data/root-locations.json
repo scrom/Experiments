@@ -96,13 +96,14 @@
             "name": "destroyscreen",
             "displayName": "destroy the screen",
             "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
-            "missionObject": "screen",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "screen",
+				"static": "true"
+			},            
             "conditionAttributes": {
               "time": 10,
               "isDestroyed": "true"
             },
-            "destination": "screen",
             "reward": {
               "score": -25,
               "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points.",
@@ -118,12 +119,13 @@
         "name": "sweetcoffee",
         "displayName": "get yourself a coffee",
         "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet black coffee.",
-        "missionObject": "sweet coffee",
-        "static": "false",
+		"attributes": { 
+			"missionObject": "sweet coffee",
+			"destination": "player"
+		},  
         "conditionAttributes": {
           "isDestroyed": "false"
         },
-        "destination": "player",
         "reward": {
           "score": 50,
           "successMessage": "Congratulations. You managed to get your coffee, have 50 points!"
@@ -282,13 +284,15 @@
             "name": "collectchrisbike",
             "displayName": "collect Chris' bike",
             "description": "Chris booked his bike in for repairs, you'll need to <i>give</i> Chris' bike to Rick.",
-            "parent": "fixchrisbike",
-            "missionObject": "bike",
-            "static": "true",
+			"attributes": { 
+				"parent": "fixchrisbike",
+				"missionObject": "bike",
+				"static": "true",
+				"destination": "rick"
+			}, 
             "conditionAttributes": {
               "isDestroyed": "false"
             },
-            "destination": "rick",
             "reward": {
               "score": 25,
               "affinityModifier": 2,
@@ -842,17 +846,19 @@
             "name": "fixchrisbike",
             "displayName": "fix Chris' bike",
             "description": "Chris wants his bike fixed.",
-            "dialogue": [
-              "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
-              "'Oops. You'll need the key. Here you go.'"
-            ],
-            "missionObject": "chris moore",
-            "static": "true",
+			"attributes": { 
+				"dialogue": [
+				  "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
+				  "'Oops. You'll need the key. Here you go.'"
+				],
+				"missionObject": "chris moore",
+				"static": "true"
+			}, 
+
             "conditionAttributes": {
               "alive": "true",
               "conversationState": 2
             },
-            "destination": "chris moore",
             "reward": {
               "delivers": {
                 "object": "artefact",
@@ -1291,13 +1297,14 @@
             "name": "learntosteal",
             "displayName": "improve your stealing skills",
             "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues!",
-            "missionObject": "black book",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "black book",
+				"static": "true"
+			}, 
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "black book",
             "reward": {
               "repairSkill": "theft",
               "stealth": 3,
@@ -1440,13 +1447,14 @@
             "name": "lotleasteregg",
             "displayName": "read the lotl security article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
-            "missionObject": "security article",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "security article",
+				"static": "true"
+			}, 
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "security article",
             "reward": {
               "score": 20,
               "repairSkill": "security",
@@ -1850,13 +1858,14 @@
             "name": "lotleasteregg",
             "displayName": "read the lotl SOLID article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
-            "missionObject": "solid article",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "solid article",
+				"static": "true"
+			}, 
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "solid article",
             "reward": {
               "score": 20,
               "repairSkill": "architecture",
@@ -2209,8 +2218,10 @@
             "name": "beans",
             "displayName": "fill the coffee machine with beans",
             "description": "Before you can get any coffee, this machine needs beans.",
-            "missionObject": "coffee machine",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "coffee machine",
+				"static": "true"
+			}, 
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false",
@@ -2219,7 +2230,6 @@
                 "beans"
               ]
             },
-            "destination": "coffee machine",
             "reward": {
               "score": 50,
               "successMessage": "Congratulations. You got the coffee machine working, have 50 points!"
@@ -2230,14 +2240,15 @@
             "name": "planecrash",
             "displayName": "there's been a plane crash",
             "description": "xxxxx xxx x x x x",
-            "missionObject": "coffee machine",
-            "static": "false",
+			"attributes": { 
+				"missionObject": "coffee machine",
+				"destination": "crash-site",
+				"type": "event"
+			}, 
             "conditionAttributes": {
               "time": 2
             },
-            "destination": "crash-site",
 			"reward": {
-				"event":true,
 				"locations":[
 				{
 					"object": "location",
@@ -2390,13 +2401,14 @@
                 "name": "repaircoffeemachine",
                 "displayName": "repair the coffee machine",
                 "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
-                "missionObject": "manual",
-                "static": "true",
+				"attributes": { 
+					"missionObject": "manual",
+					"static": "true"
+				}, 
                 "conditionAttributes": {
                   "isDestroyed": "false",
                   "read": "true"
                 },
-                "destination": "manual",
                 "reward": {
                   "repairSkill": "coffee machine",
                   "successMessage": "Congratulations. You've learned how to repair a coffee machine."
@@ -2600,12 +2612,12 @@
             "name": "killthespy",
             "displayName": "kill the spy",
             "description": "Kill the spy!",
-            "missionObject": "spy",
-            "static": "false",
+			"attributes": { 
+				"missionObject": "spy"
+			}, 
             "conditionAttributes": {
               "dead": "true"
             },
-            "destination": "spy",
             "reward": {
               "score": 50,
               "successMessage": "Congratulations. The spy is dead! Have 50 points."
@@ -3019,13 +3031,14 @@
             "name": "workingwithothers",
             "displayName": "read about working with others",
             "description": "Whilst in the real world working relationships are not transactional, working well with others here is largely about <i>give</i> and <i>take</i>.<br>The more you give, the more help you can ask for.<br>Be aware however that your kind deeds won't be remembered forever.<br>Acts of violence or unwanted attention will not be tolerated.<br>Those in favour can <i>ask</i> a friend <i>where</i> someone else is whilst colleagues with exceptionally strong working relationships may even support you in times of need.<br>",
-            "missionObject": "people folder",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "people folder",
+				"static": "true"
+			}, 
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "people folder",
             "reward": {
               "score": 20,
               "successMessage": "It looks like you've picked up a few hints on how to work more effectively with those around you!"
@@ -3216,9 +3229,10 @@
             "name": "repairprojector",
             "displayName": "repair the projector",
             "description": "The projector's broken, someone needs to fix it.",
-            "parent": "teachprojectorrepair",
-            "missionObject": "projector",
-            "static": "false",
+			"attributes": { 
+				"parent": "teachprojectorrepair",
+				"missionObject": "projector"
+			},           
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false",
@@ -3228,7 +3242,6 @@
                 "bulb"
               ]
             },
-            "destination": "projector",
             "reward": {
               "score": 25,
               "affinityModifier": 2,
@@ -3291,18 +3304,20 @@
             "name": "retrievedisk",
             "displayName": "retrieve the stolen hard disk",
             "description": "Retrieve a stolen hard drive.",
-            "dialogue": [
-              "'Hi $player, welcome to Red Gate'<br>'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
-              "'Have you found my missing data yet?'"
-            ],
-            "missionObject": "disk",
-            "static": "true",
+			"attributes": { 
+				"dialogue": [
+				  "'Hi $player, welcome to Red Gate'<br>'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
+				  "'Have you found my missing data yet?'"
+				],
+				"missionObject": "disk",
+				"static": "true",
+				"destination": "simon galbraith"
+			},
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false",
               "isDamaged": "false"
             },
-            "destination": "simon galbraith",
             "reward": {
               "affinityModifier": 2,
               "increaseAffinityFor": "simon galbraith",
@@ -3397,15 +3412,16 @@
             "name": "keyfob",
             "displayName": "get a keyfob from vic",
             "description": "Vic has a key fob for you.",
-            "dialogue": [
-              "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
-            ],
-            "missionObject": "Vic",
-            "static": "true",
+			"attributes": { 
+				"dialogue": [
+				  "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
+				],
+				"missionObject": "Vic",
+				"static": "true"
+			},
             "conditionAttributes": {
               "alive": "true"
             },
-            "destination": "Vic",
             "reward": {
               "score": 10,
               "delivers": {
@@ -3434,13 +3450,15 @@
             "name": "vicsbook",
             "displayName": "give Vic something interesting to read",
             "description": "Vic has a parcel for you but she'd like something to read first.",
-            "missionObject": "small book",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "small book",
+				"static": "true",
+				"destination": "Vic"
+			},
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false"
             },
-            "destination": "Vic",
             "reward": {
               "score": 50,
               "increaseAffinityFor": "Vic",
@@ -3854,16 +3872,17 @@
             "name": "hidejameswig",
             "displayName": "hide James' wig",
             "description": "Make the wig 'go away'.",
-            "dialogue": [
-              "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
-              "'Hey $player, how's that secret errand going?"
-            ],
-            "missionObject": "wig",
-            "static": "true",
+			"attributes": { 
+				"dialogue": [
+				  "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
+				  "'Hey $player, how's that secret errand going?"
+				],
+				"missionObject": "wig",
+				"static": "true"
+			},
             "conditionAttributes": {
               "isHidden": "true"
             },
-            "destination": "wig",
             "reward": {
               "score": 25,
               "affinityModifier": 2,
@@ -4085,13 +4104,14 @@
             "name": "lotleasteregg",
             "displayName": "read LOTL boy scout article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
-            "missionObject": "boy scout article",
-            "static": "true",
+			"attributes": { 
+				"missionObject": "boy scout article",
+				"static": "true"
+			},
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
             },
-            "destination": "boy scout article",
             "reward": {
               "score": 20,
               "repairSkill": "clean code",
@@ -5174,17 +5194,18 @@
             "name": "teachprojectorrepair",
             "displayName": "learn projector repair from Amanda",
             "description": "Amanda knows how to fix stuff.",
-            "dialogue": [
-              "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
-              "'Hi again $player.'<br>Any joy with the projector?"
-            ],
-            "parent": "keyfob",
-            "missionObject": "Amanda",
-            "static": "true",
+			"attributes": { 
+				"dialogue": [
+				  "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
+				  "'Hi again $player.'<br>Any joy with the projector?"
+				],
+				"parent": "keyfob",
+				"missionObject": "Amanda",
+				"static": "true"
+			},
             "conditionAttributes": {
               "alive": "true"
             },
-            "destination": "Amanda",
             "reward": {
               "repairSkill": "projector",
               "delivers": {

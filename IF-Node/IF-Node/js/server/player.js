@@ -2060,7 +2060,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (missionReward.hasOwnProperty("fail")) {
                     resultString += "<br>"+missionReward.failMessage+"<br>";
                     _missionsFailed.push(mission.getName());
-                } else if (missionReward.hasOwnProperty("event")) {
+                } else if (mission.getType() == "event") {
                     resultString += "<br>"+missionReward.eventMessage+"<br>";
                     if (missionReward.locations) {
                         //add locations

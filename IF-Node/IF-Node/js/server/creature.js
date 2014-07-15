@@ -172,7 +172,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.toString = function() {
         //var _synonyms = [];
         //var _missions = [];
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);  //should use self.getCurrentAttributes()
             if (_inventory.size(true) > 0) { resultString += ',"inventory":' + _inventory.toString(); };
             if (_salesInventory.size(true) > 0) { resultString += ',"sells":' + _salesInventory.toString(); };
             if (_synonyms.length >0) {
@@ -224,7 +224,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var currentAttributes = {};
 
             //currentAttributes.synonyms = _synonyms;
-            //currentAttributes.dislikes = _dislikes;
+            currentAttributes.dislikes = _dislikes;
             currentAttributes.health = _hitPoints;
             if (_hitPoints > 0) {
                 currentAttributes.alive = true;

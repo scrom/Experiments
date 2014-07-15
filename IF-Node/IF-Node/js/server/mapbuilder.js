@@ -215,7 +215,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
             var rewardData = self.unpackReward(missionData.reward);
 
             _map.incrementMissionCount();
-            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, rewardData);
+            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, rewardData);
         };
 
         self.buildLocation = function(locationData) {

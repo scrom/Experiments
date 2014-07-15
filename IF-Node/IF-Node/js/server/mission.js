@@ -1,21 +1,19 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, displayName, description, dialogue, parent, missionObject, isStatic, initialAttributes, conditionAttributes, destination, reward) { //add time limit of some form in later
+module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, reward) { //add time limit of some form in later
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
         var _displayName = displayName;
-        var _parent = parent; //parent mission - allows threads to be built up.
         var _description = description;
-        var _dialogue = dialogue; //an array/collection of dialogue sentences. If a mission has dialogue, it'll override any static settings and be treated as static for now.
+        var _parent; //parent mission - allows threads to be built up.
+        var _dialogue = []; //an array/collection of dialogue sentences. 
         var _isStatic = false; //if true, mission stays in source location.
-        if (isStatic == true || isStatic == "true") { _isStatic = true;};
-
         var _conversationState = 0; //track dialogue
-        var _missionObject = missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
+        var _missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _initialAttributes = initialAttributes; //the attributes to be set against the mission object when the mission starts 
         var _conditionAttributes = conditionAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
-        var _destination = destination; //could be a creature, object or location - where the object needs to get to - name only
+        var _destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
         var _ticking = false; //is the timer running?
         var _timeTaken = 0; //track time taken to complete.
@@ -24,10 +22,45 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
 	    var _objectName = "mission";
         //console.log(_objectName + ' created: '+_name+', '+_destination);
 
-        if (_dialogue == null || _dialogue == undefined || _dialogue == "") { _dialogue = [];} //ensure there's an array
-        else {_isStatic = true;}; //override static setting if mission has dialogue
+        var processAttributes = function(missionAttributes) {
+            if (!missionAttributes) {return null;}; //leave defaults preset
+
+            if (missionAttributes.type != undefined) {_type = missionAttributes.type;};
+            if (missionAttributes.parent != undefined) {_parent = missionAttributes.parent;};
+            if (missionAttributes.missionObject != undefined) {_missionObject = missionAttributes.missionObject;};
+            if (missionAttributes.destination != undefined) {
+                _destination = missionAttributes.destination;
+            } else {
+               _destination = _missionObject; 
+            };
+            if (missionAttributes.timeTaken != undefined) {_timeTaken = missionAttributes.timeTaken;};
+            if (missionAttributes.ticking != undefined) {_ticking = missionAttributes.ticking;};
+            if (missionAttributes.conversationState != undefined) {_conversationState = missionAttributes.conversationState;};
+
+            if (missionAttributes.static != undefined) {
+                if (missionAttributes.static == true || missionAttributes.static == "true") { _isStatic = true;};
+            };
+
+            if (missionAttributes.dialogue == null || missionAttributes.dialogue == undefined || missionAttributes.dialogue == "") { 
+                _dialogue = []; //ensure there's an array
+            } else {
+                //If a mission has dialogue, it'll override any static settings and be treated as static for now.
+                _dialogue = missionAttributes.dialogue;
+                _isStatic = true;
+            }; //override static setting if mission has dialogue
+        };
+
+        processAttributes(attributes);
 
         if (_description == null || _description == undefined) { _description = "";} //ensure it's not undefined
+
+        var validateType = function() {
+            var validobjectTypes = ['mission','event'];
+            if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid mission type."};
+            //console.log(_name+' type validated: '+_type);
+        };
+
+        validateType();
 
         self.literalToString = function(literal) {
             var resultString = '{';
@@ -68,31 +101,27 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
         ////public methods
 
         self.toString = function() {
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayName":"'+_displayName+'","description":"'+_description+'"';
-            if (_dialogue.length >0) {
-                resultString+= ',"dialogue":[';
-                for(var i=0; i<_dialogue.length;i++) {
-                    if (i>0) {resultString+= ',';};
-                    resultString+= '"'+_dialogue[i]+'"';
-                };
-                resultString+= ']';
-            };
-            if (_parent) {
-                resultString +=',"parent":"'+_parent+'"';
-            };
-            if (_ticking) {
-                resultString +=',"ticking":"'+_ticking+'"';
-            };
-            if (_timeTaken > 0) {
-                resultString +=',"timeTaken":"'+_timeTaken+'"';
-            };
-            resultString +=',"missionObject":"'+_missionObject+'","static":"'+_isStatic+'"';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayName":"'+_displayName+'","description":"'+_description+'","attributes":'+JSON.stringify(self.getCurrentAttributes());
             if (_initialAttributes) {
                     resultString +='","initialAttributes":'+self.literalToString(_initialAttributes);
             };
-            resultString +=',"conditionAttributes":'+self.literalToString(_conditionAttributes)+',"destination":"'+_destination+'","reward":'+self.literalToString(_reward);
+            resultString +=',"conditionAttributes":'+self.literalToString(_conditionAttributes)+',"reward":'+self.literalToString(_reward);
             resultString+= '}';
             return resultString;
+        };
+
+        self.getCurrentAttributes = function() {
+            var currentAttributes = {};
+            if (_type != "mission") {currentAttributes.type = _type;};
+            if (_parent) {currentAttributes.parent = _parent;};
+            if (_missionObject) {currentAttributes.missionObject = _missionObject;};
+            if (_destination && (_destination != _missionObject)) {currentAttributes.destination = _destination;};
+            if (_timeTaken > 0) {currentAttributes.timeTaken = _timeTaken;};
+            if (_ticking) {currentAttributes.ticking = _ticking;};
+            if (_conversationState > 0) {currentAttributes.conversationState = _conversationState;};
+            if (_isStatic) {currentAttributes.static = _isStatic;};
+            if (_dialogue.length > 0) {currentAttributes.dialogue = _dialogue;};
+            return currentAttributes;
         };
 
         self.getName = function() {
@@ -113,6 +142,10 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
 
         self.getDestination = function() {
             return _destination;
+        };
+
+        self.getType = function() {
+            return _type;
         };
 
         self.isStatic = function() {
@@ -173,7 +206,7 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
         };
 
         self.timeExpired = function() {
-            if (_reward.hasOwnProperty("event")) {
+            if (self.getType() == "event") {
                 return self.event();
             };
 

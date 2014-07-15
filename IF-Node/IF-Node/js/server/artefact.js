@@ -2,7 +2,6 @@
 //artefact object 
                                     
 module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExits, delivers) { 
-    //attributes are: weight, carryWeight, attackStrength, type, canCollect, canOpen, isEdible, isBreakable, 
     try{  
         //module deps
         var inventoryObjectModule = require('./inventory');    
@@ -226,7 +225,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //public member functions
         self.toString = function() {
             //var _synonyms = [];
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailedDescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailedDescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes); //should use self.getCurrentAttributes()
             if (_linkedExits.length>0) {
                 resultString+= ',"linkedexits":[';
                 for(var i=0; i<_linkedExits.length;i++) {
@@ -287,9 +286,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
             //currentAttributes.synonyms = _synonyms;
-            //currentAttributes.defaultAction = _defaultAction;
-            //currentAttributes.defaultResult = _defaultResult;
-            //currentAttributes.customAction = _customAction;
+            currentAttributes.defaultAction = _defaultAction;
+            currentAttributes.defaultResult = _defaultResult;
+            currentAttributes.customAction = _customAction;
+            currentAttributes.price = _price;
             
             currentAttributes.extendedinventorydescription = _extendedInventoryDescription;
             currentAttributes.carryWeight = _inventory.getCarryWeight();
