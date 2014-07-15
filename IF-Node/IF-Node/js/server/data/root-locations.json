@@ -192,7 +192,6 @@
           "defaultAction": "rest",
           "weight": 80,
           "carryWeight": 0.1,
-          "attackStrength": 0,
           "type": "bed",
           "isBreakable": true
         },
@@ -229,8 +228,8 @@
         "description": "slice of chocolate cake",
         "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.",
         "attributes": {
-          "weight": 1,
           "defaultAction": "eat",
+          "weight": 1,
           "type": "food",
           "canCollect": true,
           "isEdible": true,
@@ -947,9 +946,8 @@
           "weight": 45,
           "carryWeight": 15,
           "type": "junk",
-          "plural": true,
-          "canCollect": false,
-          "isBreakable": true
+          "isBreakable": true,
+          "plural": true
         },
         "synonyms": [
           "rack",
@@ -967,12 +965,11 @@
             "attributes": {
               "weight": 15,
               "type": "property",
-              "isHidden": true,
-              "canCollect": false,
               "isBreakable": true,
-              "price": 25,
               "lockable": true,
               "locked": true,
+              "price": 25,
+              "isHidden": true,
               "customAction": "ride",
               "defaultResult": "You hop on the bike and pedal it around for a while.<br>It's probably best not to get caught on it."
             },
@@ -1427,7 +1424,6 @@
         "attributes": {
           "defaultAction": "read",
           "weight": 3,
-          "carryWeight": 0,
           "attackStrength": 5,
           "type": "book",
           "canCollect": true
@@ -1704,7 +1700,6 @@
           "type": "light",
           "canCollect": true,
           "isBreakable": true,
-          "charges": -1,
           "switched": true
         },
         "synonyms": [
@@ -1838,7 +1833,6 @@
         "attributes": {
           "defaultAction": "read",
           "weight": 3,
-          "carryWeight": 0,
           "attackStrength": 5,
           "type": "book",
           "canCollect": true
@@ -1989,15 +1983,15 @@
               "defaultAction": "drink",
               "weight": 1,
               "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
               "charges": 5,
               "chargeUnit": "cup",
               "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
               "plural": true,
-              "canCollect": true,
               "isEdible": true,
               "nutrition": 5,
-              "requiresContainer": true,
-              "isLiquid": true,
               "componentOf": [
                 "latte",
                 "mocha"
@@ -2038,9 +2032,9 @@
         "attributes": {
           "weight": 1,
           "type": "food",
-          "nutrition": 20,
+          "canCollect": true,
           "isEdible": true,
-          "canCollect": true
+          "nutrition": 20
         },
         "synonyms": [
           "food",
@@ -2058,9 +2052,9 @@
         "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
         "attributes": {
           "weight": 0.1,
-          "plural": true,
           "type": "food",
           "canCollect": true,
+          "plural": true,
           "isEdible": true,
           "nutrition": 5,
           "combinesWith": "coffee"
@@ -2074,14 +2068,14 @@
             "attributes": {
               "defaultAction": "drink",
               "weight": 0.5,
-              "plural": true,
               "type": "food",
-              "canCollect": true,
-              "isEdible": true,
-              "nutrition": 15,
               "requiresContainer": true,
               "isLiquid": true,
-              "requiredContainer": "cup"
+              "requiredContainer": "cup",
+              "canCollect": true,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 15
             },
             "synonyms": [
               "brew",
@@ -2104,8 +2098,8 @@
           "carryWeight": 25,
           "type": "junk",
           "holdsLiquid": true,
-          "canOpen": true,
           "isBreakable": true,
+          "canOpen": true,
           "lockable": true,
           "locked": true,
           "requiredComponentCount": 1
@@ -2126,12 +2120,12 @@
               "defaultAction": "drink",
               "weight": 1,
               "type": "food",
-              "canCollect": true,
-              "isEdible": true,
-              "nutrition": 12,
               "requiresContainer": true,
               "isLiquid": true,
               "requiredContainer": "cup",
+              "canCollect": true,
+              "isEdible": true,
+              "nutrition": 12,
               "requiredComponentCount": 1
             },
             "synonyms": [
@@ -2148,12 +2142,12 @@
               "defaultAction": "drink",
               "weight": 1,
               "type": "food",
-              "canCollect": true,
-              "isEdible": true,
-              "nutrition": 35,
               "requiresContainer": true,
               "isLiquid": true,
               "requiredContainer": "cup",
+              "canCollect": true,
+              "isEdible": true,
+              "nutrition": 35,
               "requiredComponentCount": 2
             },
             "synonyms": [
@@ -2169,14 +2163,14 @@
             "attributes": {
               "defaultAction": "drink",
               "weight": 0.5,
-              "plural": true,
               "type": "food",
-              "canCollect": true,
-              "isEdible": true,
-              "nutrition": 8,
               "requiresContainer": true,
               "isLiquid": true,
               "requiredContainer": "cup",
+              "canCollect": true,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 8,
               "combinesWith": "sugar"
             },
             "synonyms": [
@@ -2192,14 +2186,14 @@
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 1,
-                  "plural": true,
                   "type": "food",
-                  "canCollect": true,
-                  "isEdible": true,
-                  "nutrition": 15,
                   "requiresContainer": true,
                   "isLiquid": true,
-                  "requiredContainer": "cup"
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15
                 },
                 "synonyms": [
                   "brew",
@@ -2561,11 +2555,11 @@
             "detailedDescription": "Pretty sure it belongs to Red Gate.",
             "attributes": {
               "weight": 3,
-              "price": 100,
               "attackStrength": 5,
               "type": "junk",
               "canCollect": true,
-              "isBreakable": true
+              "isBreakable": true,
+              "price": 100
             },
             "synonyms": [
               "disc",
@@ -2975,12 +2969,12 @@
         "detailedDescription": "These are pretty hard to get hold of!<br>Wearing these makes you an instant hipster.",
         "attributes": {
           "weight": 0.5,
-          "customAction": "wear",
-          "defaultResult": "Nah, they don't really suit you.<br>You take them off again and blink a few times to recover your near-field vision.",
           "type": "treasure",
-          "price": 30,
           "canCollect": true,
-          "isBreakable": true
+          "isBreakable": true,
+          "price": 30,
+          "customAction": "wear",
+          "defaultResult": "Nah, they don't really suit you.<br>You take them off again and blink a few times to recover your near-field vision."
         },
         "synonyms": [
           "glasses",
@@ -3215,8 +3209,8 @@
           "type": "junk",
           "isBreakable": true,
           "isBroken": true,
-          "requiredComponentCount": 1,
-          "switched": true
+          "switched": true,
+          "requiredComponentCount": 1
         },
         "synonyms": [
           "ohp",
@@ -3277,8 +3271,8 @@
               "attackStrength": 5,
               "type": "treasure",
               "canCollect": true,
-              "affinityModifier": 5,
-              "isBreakable": true
+              "isBreakable": true,
+              "affinityModifier": 5
             },
             "synonyms": [
               "book",
@@ -3465,14 +3459,14 @@
                 "description": "parcel from Amazon",
                 "detailedDescription": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
                 "attributes": {
-                  "weight": 2,
                   "defaultAction": "open",
+                  "weight": 2,
                   "carryWeight": 25,
                   "attackStrength": 2,
                   "type": "container",
                   "canCollect": true,
-                  "canOpen": true,
-                  "isBreakable": true
+                  "isBreakable": true,
+                  "canOpen": true
                 },
                 "synonyms": [
                   "package",
@@ -3495,8 +3489,8 @@
                       "attackStrength": 2,
                       "type": "container",
                       "canCollect": true,
-                      "canOpen": true,
-                      "isBreakable": true
+                      "isBreakable": true,
+                      "canOpen": true
                     },
                     "synonyms": [
                       "bean bag",
@@ -3514,6 +3508,7 @@
                           "weight": 2,
                           "attackStrength": 5,
                           "type": "junk",
+                          "requiresContainer": true,
                           "canCollect": true,
                           "charges": 10,
                           "chargeUnit": "cup",
@@ -3521,8 +3516,7 @@
                           "plural": true,
                           "componentOf": [
                             "coffee machine"
-                          ],
-                          "requiresContainer": true
+                          ]
                         },
                         "synonyms": [
                           "coffee beans"
@@ -3598,14 +3592,14 @@
             "attributes": {
               "defaultAction": "eat",
               "weight": 1,
-              "price": 0.5,
               "type": "food",
+              "canCollect": true,
               "charges": 1,
               "chargeUnit": "bar",
               "chargesDescription": "$charges $chargeUnit",
-              "canCollect": true,
               "isEdible": true,
               "nutrition": 25,
+              "price": 0.5,
               "componentOf": [
                 "mocha"
               ]
@@ -3625,11 +3619,11 @@
             "attributes": {
               "defaultAction": "eat",
               "weight": 1,
-              "price": 0.5,
               "type": "food",
               "canCollect": true,
               "isEdible": true,
-              "nutrition": 25
+              "nutrition": 25,
+              "price": 0.5
             },
             "synonyms": [
               "packet",
@@ -3694,9 +3688,9 @@
         "attributes": {
           "weight": 400,
           "carryWeight": 120,
+          "type": "junk",
           "customAction": "climb",
-          "defaultResult": "You clamber around in the skip.<br>After putting your hand in something slimy and nearly impaling yourself on a broken chair you decide to climb back out.",
-          "type": "junk"
+          "defaultResult": "You clamber around in the skip.<br>After putting your hand in something slimy and nearly impaling yourself on a broken chair you decide to climb back out."
         },
         "synonyms": [
           "bin",
@@ -3981,12 +3975,12 @@
         "detailedDescription": "Fancy a game of Forza?",
         "attributes": {
           "weight": 6,
-          "customAction": "play",
-          "defaultResult": "After a few minutes of button-mashing you think it's probably time to go and do something useful instead.",
           "type": "treasure",
-          "price": 30,
           "canCollect": true,
-          "isBreakable": true
+          "isBreakable": true,
+          "price": 30,
+          "customAction": "play",
+          "defaultResult": "After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
         },
         "synonyms": [
           "console",
@@ -4084,7 +4078,6 @@
         "attributes": {
           "defaultAction": "read",
           "weight": 3,
-          "carryWeight": 0,
           "attackStrength": 5,
           "type": "book",
           "canCollect": true
@@ -4586,10 +4579,9 @@
         "attributes": {
           "weight": 15,
           "type": "junk",
+          "isBreakable": true,
           "customAction": "dry",
-          "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels.",
-          "canCollect": false,
-          "isBreakable": true
+          "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels."
         },
         "synonyms": [
           "dryer",
@@ -4685,8 +4677,8 @@
         "description": "jar of marmite",
         "detailedDescription": "Love it or hate it - your choice, but it <i>is</i> full of b-vitamins",
         "attributes": {
-          "weight": 1,
           "defaultAction": "eat",
+          "weight": 1,
           "type": "food",
           "canCollect": true,
           "isEdible": true,
@@ -4734,12 +4726,13 @@
         "description": "bowl of soup",
         "detailedDescription": "Butternut squash and coconut.",
         "attributes": {
-          "weight": 1,
           "defaultAction": "eat",
+          "weight": 1,
           "type": "food",
+          "requiresContainer": true,
+          "isLiquid": true,
           "canCollect": true,
           "isEdible": true,
-          "isLiquid": true,
           "nutrition": 15
         },
         "synonyms": [
@@ -4807,9 +4800,9 @@
         "attributes": {
           "weight": 1,
           "type": "food",
-          "nutrition": 20,
+          "canCollect": true,
           "isEdible": true,
-          "canCollect": true
+          "nutrition": 20
         },
         "synonyms": [
           "food",
@@ -4873,8 +4866,8 @@
         "description": "plate of salad",
         "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
         "attributes": {
-          "weight": 2,
           "defaultAction": "eat",
+          "weight": 2,
           "type": "food",
           "canCollect": true,
           "isEdible": true,

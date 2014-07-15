@@ -100,8 +100,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = attributes.defaultAction;};
             if (artefactAttributes.defaultResult != undefined) { _defaultResult = attributes.defaultResult;};
             if (artefactAttributes.customAction != undefined) { _customAction = attributes.customAction;};
-            if (artefactAttributes.extendedinventorydescription != undefined) {
-                _extendedInventoryDescription = artefactAttributes.extendedinventorydescription;
+            if (artefactAttributes.plural != undefined) {self.setPluralGrammar(artefactAttributes.plural);};
+            if (artefactAttributes.extendedInventoryDescription != undefined) {
+                _extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
             } else {
                 _extendedInventoryDescription = _itemPrefix+" contains $inventory."
             };
@@ -147,7 +148,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
             };
             if (artefactAttributes.weight != undefined) {_weight = parseFloat(artefactAttributes.weight);};
-            if (artefactAttributes.plural != undefined) {self.setPluralGrammar(artefactAttributes.plural);};
             if (artefactAttributes.attackStrength != undefined) {_attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.affinityModifier != undefined) {_affinityModifier = artefactAttributes.affinityModifier;};
             if (artefactAttributes.type != undefined) {_type = artefactAttributes.type;};
@@ -161,6 +161,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (artefactAttributes.isBroken != undefined) {
                 if (artefactAttributes.isBroken== true || artefactAttributes.isBroken == "true") { _broken = true;};
+            };
+            if (artefactAttributes.isDamaged != undefined) {
+                if (artefactAttributes.isDamaged== true || artefactAttributes.isDamaged == "true") { _damaged = true;};
+            };
+            if (artefactAttributes.isDestroyed != undefined) {
+                if (artefactAttributes.isDestroyed== true || artefactAttributes.isDestroyed == "true") { _destroyed = true;};
             };
             if (artefactAttributes.unlocks != undefined) {_unlocks = artefactAttributes.unlocks;};
 
@@ -225,7 +231,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //public member functions
         self.toString = function() {
             //var _synonyms = [];
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailedDescription":"'+_initialDetailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes); //should use self.getCurrentAttributes()
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'","detailedDescription":"'+_initialDetailedDescription;
+            resultString += '","attributes":'+JSON.stringify(self.getAttributesToSave()); //should use self.getCurrentAttributes()
             if (_linkedExits.length>0) {
                 resultString+= ',"linkedexits":[';
                 for(var i=0; i<_linkedExits.length;i++) {
@@ -289,9 +296,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.defaultAction = _defaultAction;
             currentAttributes.defaultResult = _defaultResult;
             currentAttributes.customAction = _customAction;
-            currentAttributes.price = _price;
-            
-            currentAttributes.extendedinventorydescription = _extendedInventoryDescription;
+            currentAttributes.price = _price;            
+            currentAttributes.extendedInventoryDescription = _extendedInventoryDescription;
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.lockable = _lockable;
             currentAttributes.locked = _locked;
@@ -300,6 +306,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.canOpen = _opens;                    
             currentAttributes.isOpen = _open;
             currentAttributes.charges = _charges;
+            currentAttributes.chargeUnit = _chargeUnit;
+            currentAttributes.chargesDescription = _chargesDescription;
             currentAttributes.checkComponents = self.checkComponents();
             currentAttributes.switched = _switched;
             currentAttributes.isOn = _on;
@@ -322,12 +330,62 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.requiredComponentCount = _requiredComponentCount;
             currentAttributes.requiresContainer = _requiresContainer;
             currentAttributes.requiredContainer = _requiredContainer;
-            currentAttributes.liquid = _liquid;
+            currentAttributes.isLiquid = _liquid;
             currentAttributes.holdsLiquid = _holdsLiquid;
             currentAttributes.isHidden = _hidden;
 
             return currentAttributes;
 
+        };
+
+       self.getAttributesToSave = function() {
+            var saveAttributes = {};
+            var artefactAttributes = self.getCurrentAttributes();
+
+            if (artefactAttributes.synonyms != undefined) { saveAttributes.synonyms = artefactAttributes.synonyms;};
+            
+            if (artefactAttributes.defaultAction != "examine") { saveAttributes.defaultAction = artefactAttributes.defaultAction;};
+            if (artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contains $inventory.") {
+                saveAttributes.extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
+            };
+            if (artefactAttributes.weight != 0) {saveAttributes.weight = parseFloat(artefactAttributes.weight);};
+            if (artefactAttributes.carryWeight != 0) {saveAttributes.carryWeight = artefactAttributes.carryWeight;};           
+            if (artefactAttributes.attackStrength != 0) {saveAttributes.attackStrength = artefactAttributes.attackStrength;};
+            if (artefactAttributes.type != undefined) {saveAttributes.type = artefactAttributes.type;};
+            if (artefactAttributes.subType != "") {saveAttributes.subType = artefactAttributes.subType;};           
+            if (artefactAttributes.requiresContainer == true) {saveAttributes.requiresContainer = true;};
+            if (artefactAttributes.isLiquid == true) {saveAttributes.isLiquid = artefactAttributes.isLiquid;};
+            if (artefactAttributes.holdsLiquid == true) {saveAttributes.holdsLiquid = artefactAttributes.holdsLiquid;};
+            if (artefactAttributes.requiredContainer != undefined) {saveAttributes.requiredContainer = artefactAttributes.requiredContainer;};
+            if (artefactAttributes.canCollect == true) { saveAttributes.canCollect = true;};
+            if (artefactAttributes.chewed == true) {saveAttributes.chewed = true;};
+            if (artefactAttributes.isBreakable == true) {saveAttributes.isBreakable = true;};
+            if (artefactAttributes.isBroken == true) {saveAttributes.isBroken = true;};
+            if (artefactAttributes.isDamaged == true) {saveAttributes.isDamaged = true;};
+            if (artefactAttributes.isDestroyed == true) {saveAttributes.isDestroyed = true;};
+            if (artefactAttributes.charges != -1) {saveAttributes.charges = artefactAttributes.charges;};
+            if (artefactAttributes.chargeUnit != "") {saveAttributes.chargeUnit = artefactAttributes.chargeUnit;};
+            if (artefactAttributes.chargesDescription != "") {saveAttributes.chargesDescription = artefactAttributes.chargesDescription;};
+            if (artefactAttributes.plural == true) {saveAttributes.plural = artefactAttributes.plural;};            
+            if (artefactAttributes.affinityModifier != 1) {saveAttributes.affinityModifier = artefactAttributes.affinityModifier;};
+            if (artefactAttributes.read == true) { saveAttributes.read = true;};
+            if (artefactAttributes.canOpen == true) { saveAttributes.canOpen = true;};                    
+            if (artefactAttributes.isOpen == true) { saveAttributes.isOpen = true;};
+            if (artefactAttributes.lockable == true) { saveAttributes.lockable = artefactAttributes.lockable;};
+            if (artefactAttributes.locked == true) {saveAttributes.locked = artefactAttributes.locked;};
+            if (artefactAttributes.isEdible == true) {saveAttributes.isEdible = true;};
+            if (artefactAttributes.nutrition != 0) { saveAttributes.nutrition = artefactAttributes.nutrition; };
+            if (artefactAttributes.price != 0) { saveAttributes.price = artefactAttributes.price; };
+            if (artefactAttributes.switched == true) {saveAttributes.switched = true;};
+            if (artefactAttributes.isOn == true) {saveAttributes.isOn = true;};
+            if (artefactAttributes.isHidden == true) {saveAttributes.isHidden = artefactAttributes.isHidden;};
+            if (artefactAttributes.unlocks != "") {saveAttributes.unlocks = artefactAttributes.unlocks;};
+            if (artefactAttributes.componentOf.length > 0) { saveAttributes.componentOf = artefactAttributes.componentOf; };
+            if (artefactAttributes.combinesWith != "") { saveAttributes.combinesWith = artefactAttributes.combinesWith; };            
+            if (artefactAttributes.requiredComponentCount != 0) {saveAttributes.requiredComponentCount = artefactAttributes.requiredComponentCount;};
+            if (artefactAttributes.customAction != undefined) { saveAttributes.customAction = artefactAttributes.customAction;};
+            if (artefactAttributes.defaultResult != undefined) { saveAttributes.defaultResult = artefactAttributes.defaultResult;};
+            return saveAttributes;
         };
 
         self.syn = function (synonym) {
