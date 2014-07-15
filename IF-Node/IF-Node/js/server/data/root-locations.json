@@ -96,10 +96,10 @@
             "name": "destroyscreen",
             "displayName": "destroy the screen",
             "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
-			"attributes": { 
-				"missionObject": "screen",
-				"static": "true"
-			},            
+            "attributes": {
+              "missionObject": "screen",
+              "static": true
+            },
             "conditionAttributes": {
               "time": 10,
               "isDestroyed": "true"
@@ -119,10 +119,10 @@
         "name": "sweetcoffee",
         "displayName": "get yourself a coffee",
         "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet black coffee.",
-		"attributes": { 
-			"missionObject": "sweet coffee",
-			"destination": "player"
-		},  
+        "attributes": {
+          "missionObject": "sweet coffee",
+          "destination": "player"
+        },
         "conditionAttributes": {
           "isDestroyed": "false"
         },
@@ -284,12 +284,12 @@
             "name": "collectchrisbike",
             "displayName": "collect Chris' bike",
             "description": "Chris booked his bike in for repairs, you'll need to <i>give</i> Chris' bike to Rick.",
-			"attributes": { 
-				"parent": "fixchrisbike",
-				"missionObject": "bike",
-				"static": "true",
-				"destination": "rick"
-			}, 
+            "attributes": {
+              "parent": "fixchrisbike",
+              "missionObject": "bike",
+              "destination": "rick",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false"
             },
@@ -846,15 +846,14 @@
             "name": "fixchrisbike",
             "displayName": "fix Chris' bike",
             "description": "Chris wants his bike fixed.",
-			"attributes": { 
-				"dialogue": [
-				  "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
-				  "'Oops. You'll need the key. Here you go.'"
-				],
-				"missionObject": "chris moore",
-				"static": "true"
-			}, 
-
+            "attributes": {
+              "missionObject": "chris moore",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
+                "'Oops. You'll need the key. Here you go.'"
+              ]
+            },
             "conditionAttributes": {
               "alive": "true",
               "conversationState": 2
@@ -1297,10 +1296,10 @@
             "name": "learntosteal",
             "displayName": "improve your stealing skills",
             "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues!",
-			"attributes": { 
-				"missionObject": "black book",
-				"static": "true"
-			}, 
+            "attributes": {
+              "missionObject": "black book",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
@@ -1447,10 +1446,10 @@
             "name": "lotleasteregg",
             "displayName": "read the lotl security article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
-			"attributes": { 
-				"missionObject": "security article",
-				"static": "true"
-			}, 
+            "attributes": {
+              "missionObject": "security article",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
@@ -1858,10 +1857,10 @@
             "name": "lotleasteregg",
             "displayName": "read the lotl SOLID article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
-			"attributes": { 
-				"missionObject": "solid article",
-				"static": "true"
-			}, 
+            "attributes": {
+              "missionObject": "solid article",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
@@ -2218,10 +2217,10 @@
             "name": "beans",
             "displayName": "fill the coffee machine with beans",
             "description": "Before you can get any coffee, this machine needs beans.",
-			"attributes": { 
-				"missionObject": "coffee machine",
-				"static": "true"
-			}, 
+            "attributes": {
+              "missionObject": "coffee machine",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false",
@@ -2239,40 +2238,40 @@
             "object": "mission",
             "name": "planecrash",
             "displayName": "there's been a plane crash",
-            "description": "xxxxx xxx x x x x",
-			"attributes": { 
-				"missionObject": "coffee machine",
-				"destination": "crash-site",
-				"type": "event"
-			}, 
+            "attributes": {
+              "type": "event",
+              "missionObject": "coffee machine",
+              "destination": "crash-site"
+            },
             "conditionAttributes": {
               "time": 2
             },
-			"reward": {
-				"locations":[
-				{
-					"object": "location",
-					"name": "crash-site",
-					"description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the fuselage you can hear a low moan.",
-					"exits": [
-					  {
-						"object": "exit",
-						"longname": "South",
-						"direction": "s",
-						"source": "crash-site",
-						"destination": "west-car-park"
-					  }
-					]
-				}],
-				"exits":[
-				  {
-					"object": "exit",
-					"longname": "North",
-					"direction": "n",
-					"source": "west-car-park",
-					"destination": "crash-site"
-				  }
-				],
+            "reward": {
+              "locations": [
+                {
+                  "object": "location",
+                  "name": "crash-site",
+                  "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the fuselage you can hear a low moan.",
+                  "exits": [
+                    {
+                      "object": "exit",
+                      "longname": "South",
+                      "direction": "s",
+                      "source": "crash-site",
+                      "destination": "west-car-park"
+                    }
+                  ]
+                }
+              ],
+              "exits": [
+                {
+                  "object": "exit",
+                  "longname": "North",
+                  "direction": "n",
+                  "source": "west-car-park",
+                  "destination": "crash-site"
+                }
+              ],
               "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
             }
           }
@@ -2401,10 +2400,10 @@
                 "name": "repaircoffeemachine",
                 "displayName": "repair the coffee machine",
                 "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
-				"attributes": { 
-					"missionObject": "manual",
-					"static": "true"
-				}, 
+                "attributes": {
+                  "missionObject": "manual",
+                  "static": true
+                },
                 "conditionAttributes": {
                   "isDestroyed": "false",
                   "read": "true"
@@ -2578,29 +2577,29 @@
               "disk drive"
             ]
           },
-		  {
-        "object": "artefact",
-        "name": "emergency first aid kit",
-        "description": "single-use first aid kit",
-        "detailedDescription": "A one-off emergency first-aid kit.",
-        "attributes": {
-          "defaultAction": "heal",
-          "weight": 1,
-          "type": "medical",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 1
-        },
-        "synonyms": [
-          "first aid",
-          "kit",
-		  "emergency",
-		  "emergency kit",
-          "firstaid kit",
-          "first-aid kit",
-          "first-aid"
-        ]
-      }
+          {
+            "object": "artefact",
+            "name": "emergency first aid kit",
+            "description": "single-use first aid kit",
+            "detailedDescription": "A one-off emergency first-aid kit.",
+            "attributes": {
+              "defaultAction": "heal",
+              "weight": 1,
+              "type": "medical",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 1
+            },
+            "synonyms": [
+              "first aid",
+              "kit",
+              "emergency",
+              "emergency kit",
+              "firstaid kit",
+              "first-aid kit",
+              "first-aid"
+            ]
+          }
         ],
         "synonyms": [
           "corporate spy",
@@ -2612,9 +2611,9 @@
             "name": "killthespy",
             "displayName": "kill the spy",
             "description": "Kill the spy!",
-			"attributes": { 
-				"missionObject": "spy"
-			}, 
+            "attributes": {
+              "missionObject": "spy"
+            },
             "conditionAttributes": {
               "dead": "true"
             },
@@ -3005,7 +3004,7 @@
         "destination": "people-team-north"
       }
     ],
-	"inventory": [
+    "inventory": [
       {
         "object": "artefact",
         "name": "people folder",
@@ -3031,10 +3030,10 @@
             "name": "workingwithothers",
             "displayName": "read about working with others",
             "description": "Whilst in the real world working relationships are not transactional, working well with others here is largely about <i>give</i> and <i>take</i>.<br>The more you give, the more help you can ask for.<br>Be aware however that your kind deeds won't be remembered forever.<br>Acts of violence or unwanted attention will not be tolerated.<br>Those in favour can <i>ask</i> a friend <i>where</i> someone else is whilst colleagues with exceptionally strong working relationships may even support you in times of need.<br>",
-			"attributes": { 
-				"missionObject": "people folder",
-				"static": "true"
-			}, 
+            "attributes": {
+              "missionObject": "people folder",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
@@ -3045,8 +3044,8 @@
             }
           }
         ]
-	}
-	]
+      }
+    ]
   },
   {
     "object": "location",
@@ -3229,10 +3228,10 @@
             "name": "repairprojector",
             "displayName": "repair the projector",
             "description": "The projector's broken, someone needs to fix it.",
-			"attributes": { 
-				"parent": "teachprojectorrepair",
-				"missionObject": "projector"
-			},           
+            "attributes": {
+              "parent": "teachprojectorrepair",
+              "missionObject": "projector"
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false",
@@ -3304,15 +3303,15 @@
             "name": "retrievedisk",
             "displayName": "retrieve the stolen hard disk",
             "description": "Retrieve a stolen hard drive.",
-			"attributes": { 
-				"dialogue": [
-				  "'Hi $player, welcome to Red Gate'<br>'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
-				  "'Have you found my missing data yet?'"
-				],
-				"missionObject": "disk",
-				"static": "true",
-				"destination": "simon galbraith"
-			},
+            "attributes": {
+              "missionObject": "disk",
+              "destination": "simon galbraith",
+              "static": true,
+              "dialogue": [
+                "'Hi $player, welcome to Red Gate'<br>'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
+                "'Have you found my missing data yet?'"
+              ]
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false",
@@ -3412,18 +3411,17 @@
             "name": "keyfob",
             "displayName": "get a keyfob from vic",
             "description": "Vic has a key fob for you.",
-			"attributes": { 
-				"dialogue": [
-				  "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
-				],
-				"missionObject": "Vic",
-				"static": "true"
-			},
+            "attributes": {
+              "missionObject": "Vic",
+              "static": true,
+              "dialogue": [
+                "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
+              ]
+            },
             "conditionAttributes": {
               "alive": "true"
             },
             "reward": {
-              "score": 10,
               "delivers": {
                 "object": "artefact",
                 "name": "keyfob",
@@ -3442,6 +3440,7 @@
                   "key ring"
                 ]
               },
+              "score": 10,
               "successMessage": "Have 10 points."
             }
           },
@@ -3450,18 +3449,16 @@
             "name": "vicsbook",
             "displayName": "give Vic something interesting to read",
             "description": "Vic has a parcel for you but she'd like something to read first.",
-			"attributes": { 
-				"missionObject": "small book",
-				"static": "true",
-				"destination": "Vic"
-			},
+            "attributes": {
+              "missionObject": "small book",
+              "destination": "Vic",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "isBroken": "false"
             },
             "reward": {
-              "score": 50,
-              "increaseAffinityFor": "Vic",
               "delivers": {
                 "object": "artefact",
                 "name": "parcel",
@@ -3535,6 +3532,8 @@
                   }
                 ]
               },
+              "score": 50,
+              "increaseAffinityFor": "Vic",
               "successMessage": "Congratulations. Vic likes the book! Have 50 points."
             }
           }
@@ -3872,14 +3871,14 @@
             "name": "hidejameswig",
             "displayName": "hide James' wig",
             "description": "Make the wig 'go away'.",
-			"attributes": { 
-				"dialogue": [
-				  "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
-				  "'Hey $player, how's that secret errand going?"
-				],
-				"missionObject": "wig",
-				"static": "true"
-			},
+            "attributes": {
+              "missionObject": "wig",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
+                "'Hey $player, how's that secret errand going?"
+              ]
+            },
             "conditionAttributes": {
               "isHidden": "true"
             },
@@ -4104,10 +4103,10 @@
             "name": "lotleasteregg",
             "displayName": "read LOTL boy scout article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
-			"attributes": { 
-				"missionObject": "boy scout article",
-				"static": "true"
-			},
+            "attributes": {
+              "missionObject": "boy scout article",
+              "static": true
+            },
             "conditionAttributes": {
               "isDestroyed": "false",
               "read": "true"
@@ -5194,20 +5193,19 @@
             "name": "teachprojectorrepair",
             "displayName": "learn projector repair from Amanda",
             "description": "Amanda knows how to fix stuff.",
-			"attributes": { 
-				"dialogue": [
-				  "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
-				  "'Hi again $player.'<br>Any joy with the projector?"
-				],
-				"parent": "keyfob",
-				"missionObject": "Amanda",
-				"static": "true"
-			},
+            "attributes": {
+              "parent": "keyfob",
+              "missionObject": "Amanda",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
+                "'Hi again $player.'<br>Any joy with the projector?"
+              ]
+            },
             "conditionAttributes": {
               "alive": "true"
             },
             "reward": {
-              "repairSkill": "projector",
               "delivers": {
                 "object": "artefact",
                 "name": "bulb",
@@ -5228,6 +5226,7 @@
                   "projector bulb"
                 ]
               },
+              "repairSkill": "projector",
               "successMessage": "Amanda hands you a projector bulb."
             }
           }
