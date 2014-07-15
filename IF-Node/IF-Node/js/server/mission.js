@@ -27,6 +27,8 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
         if (_dialogue == null || _dialogue == undefined || _dialogue == "") { _dialogue = [];} //ensure there's an array
         else {_isStatic = true;}; //override static setting if mission has dialogue
 
+        if (_description == null || _description == undefined) { _description = "";} //ensure it's not undefined
+
         self.literalToString = function(literal) {
             var resultString = '{';
             var counter = 0;
@@ -77,6 +79,12 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
             };
             if (_parent) {
                 resultString +=',"parent":"'+_parent+'"';
+            };
+            if (_ticking) {
+                resultString +=',"ticking":"'+_ticking+'"';
+            };
+            if (_timeTaken > 0) {
+                resultString +=',"timeTaken":"'+_timeTaken+'"';
             };
             resultString +=',"missionObject":"'+_missionObject+'","static":"'+_isStatic+'"';
             if (_initialAttributes) {
