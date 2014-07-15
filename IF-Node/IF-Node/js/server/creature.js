@@ -61,6 +61,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _hitPoints = creatureAttributes.health;
                 _maxHitPoints = creatureAttributes.health
             };
+            //can collect and eat if dead.
+            if (_hitPoints == 0) {
+                _collectable = true;
+                _edible = true;
+            };
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
             if (creatureAttributes.bleedingHealthThreshold != undefined) {_bleedingHealthThreshold = creatureAttributes.bleedingHealthThreshold};
@@ -73,10 +78,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (creatureAttributes.traveller== true || creatureAttributes.traveller == "true") { _traveller = true;};
             };
             if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
-            if (creatureAttributes.affinity != undefined) {
-                _affinity = creatureAttributes.affinity;
-                _baseAffinity = creatureAttributes.affinity;
-            };
+            if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
+            if (creatureAttributes.baseAffinity != undefined) {_baseAffinity = creatureAttributes.baseAffinity;}
+            else {_baseAffinity = creatureAttributes.affinity;};
+
             
             //if (creatureAttributes.dislikes != undefined) { _dislikes = creatureAttributes.dislikes;};
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
@@ -172,7 +177,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.toString = function() {
         //var _synonyms = [];
         //var _missions = [];
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'","attributes":'+JSON.stringify(_sourceAttributes);  //should use self.getCurrentAttributes()
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayname":"'+_displayName+'","description":"'+_description+'","detailedDescription":"'+_detailedDescription+'"';
+            resultString += ',"attributes":'+JSON.stringify(self.getAttributesToSave());
             if (_inventory.size(true) > 0) { resultString += ',"inventory":' + _inventory.toString(); };
             if (_salesInventory.size(true) > 0) { resultString += ',"sells":' + _salesInventory.toString(); };
             if (_synonyms.length >0) {
@@ -257,9 +263,38 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.weight = _weight;
             currentAttributes.attackStrength = _attackStrength;
             currentAttributes.type = _type;
+            currentAttributes.moves = _moves;
+            currentAttributes.spokenToPlayer = _spokenToPlayer;
 
             return currentAttributes;
 
+        };
+
+        self.getAttributesToSave = function() {
+            var saveAttributes = {};
+            var creatureAttributes = self.getCurrentAttributes();
+
+            
+            if (creatureAttributes.nutrition != 50) { saveAttributes.nutrition = creatureAttributes.nutrition;};
+            if (creatureAttributes.price != 0) { saveAttributes.price = creatureAttributes.price;};
+            if (creatureAttributes.weight != 0) {saveAttributes.weight = creatureAttributes.weight;};
+            if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};             
+            if (creatureAttributes.baseAffinity != 0) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
+            if (creatureAttributes.attackStrength != undefined) {saveAttributes.attackStrength = creatureAttributes.attackStrength;};
+            if (creatureAttributes.gender != undefined) {saveAttributes.gender = creatureAttributes.gender;};
+            if (creatureAttributes.type != undefined) {saveAttributes.type = creatureAttributes.type;};
+            if (creatureAttributes.carryWeight != undefined) {saveAttributes.carryWeight = creatureAttributes.carryWeight;};
+            if (creatureAttributes.health != 0) {saveAttributes.health = creatureAttributes.health;};
+            if (creatureAttributes.maxHealth != creatureAttributes.health) {saveAttributes.maxHealth = creatureAttributes.maxHealth};
+            if (creatureAttributes.bleedingHealthThreshold != 50) {saveAttributes.bleedingHealthThreshold = creatureAttributes.bleedingHealthThreshold};
+            if (creatureAttributes.affinity != 0) {saveAttributes.affinity = creatureAttributes.affinity;};
+            if (creatureAttributes.canTravel == true) {saveAttributes.canTravel = creatureAttributes.canTravel};
+            if (creatureAttributes.traveller == true) {saveAttributes.traveller = creatureAttributes.traveller};            
+            if (creatureAttributes.moves != 0) {saveAttributes.moves = creatureAttributes.moves;};
+            if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
+
+
+            return saveAttributes;
         };
 
         self.syn = function (synonym) {
