@@ -1755,7 +1755,7 @@
           "weight": 0.1,
           "type": "key",
           "canCollect": true,
-          "unlocks": "machine"
+          "unlocks": "coffee machine"
         },
         "synonyms": [
           "vending key",
@@ -2086,7 +2086,7 @@
       },
       {
         "object": "artefact",
-        "name": "machine",
+        "name": "coffee machine",
         "description": "coffee vending machine",
         "detailedDescription": "Given the right ingedients it makes a variety of coffees.",
         "attributes": {
@@ -2103,7 +2103,7 @@
           "requiredComponentCount": 1
         },
         "synonyms": [
-          "coffee machine",
+          "machine",
           "vending",
           "vending machine",
           "coffee vending machine"
@@ -2209,7 +2209,7 @@
             "name": "beans",
             "displayName": "fill the coffee machine with beans",
             "description": "Before you can get any coffee, this machine needs beans.",
-            "missionObject": "machine",
+            "missionObject": "coffee machine",
             "static": "true",
             "conditionAttributes": {
               "isDestroyed": "false",
@@ -2219,10 +2219,50 @@
                 "beans"
               ]
             },
-            "destination": "machine",
+            "destination": "coffee machine",
             "reward": {
               "score": 50,
               "successMessage": "Congratulations. You got the coffee machine working, have 50 points!"
+            }
+          },
+          {
+            "object": "mission",
+            "name": "planecrash",
+            "displayName": "there's been a plane crash",
+            "description": "xxxxx xxx x x x x",
+            "missionObject": "coffee machine",
+            "static": "false",
+            "conditionAttributes": {
+              "time": 2
+            },
+            "destination": "crash-site",
+			"reward": {
+				"event":true,
+				"locations":[
+				{
+					"object": "location",
+					"name": "crash-site",
+					"description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the fuselage you can hear a low moan.",
+					"exits": [
+					  {
+						"object": "exit",
+						"longname": "South",
+						"direction": "s",
+						"source": "crash-site",
+						"destination": "west-car-park"
+					  }
+					]
+				}],
+				"exits":[
+				  {
+					"object": "exit",
+					"longname": "North",
+					"direction": "n",
+					"source": "west-car-park",
+					"destination": "crash-site"
+				  }
+				],
+              "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
             }
           }
         ]
@@ -2358,7 +2398,7 @@
                 },
                 "destination": "manual",
                 "reward": {
-                  "repairSkill": "machine",
+                  "repairSkill": "coffee machine",
                   "successMessage": "Congratulations. You've learned how to repair a coffee machine."
                 }
               }
@@ -3465,7 +3505,7 @@
                           "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
                           "plural": true,
                           "componentOf": [
-                            "machine"
+                            "coffee machine"
                           ],
                           "requiresContainer": true
                         },
@@ -3518,7 +3558,7 @@
       },
       {
         "object": "artefact",
-        "name": "machine",
+        "name": "snack machine",
         "description": "snack vending machine",
         "detailedDescription": "An almost endless supply of snacks and treats!",
         "attributes": {
@@ -3528,7 +3568,7 @@
           "isBreakable": true
         },
         "synonyms": [
-          "snack machine",
+          "machine",
           "vending",
           "vending machine"
         ],

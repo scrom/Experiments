@@ -4,6 +4,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
+        var _mapBuilder = mapBuilder;
 
         //member variables
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -178,7 +179,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "There's no "+objectName+" here and you're not carrying any either.";
         };
 
-        var processAttributes = function(playerAttributes, map, mapBuilder) {
+        var processAttributes = function(playerAttributes, map) {
             if (!playerAttributes) {return null;}; //leave defaults preset
             if (playerAttributes.startLocation != undefined) {_startLocation = map.getLocation(playerAttributes.startLocation);};
             if (playerAttributes.currentLocation != undefined) {
@@ -263,32 +264,32 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //inventory, destroyedobjects, consumedobjects, 
             if (playerAttributes.inventory != undefined) {
                 for(var i=0; i<playerAttributes.inventory.length;i++) {
-                    _inventory.add(mapBuilder.buildArtefact(playerAttributes.inventory[i]));
+                    _inventory.add(_mapBuilder.buildArtefact(playerAttributes.inventory[i]));
                 };
             };
 
             if (playerAttributes.destroyedobjects != undefined) {
                 for(var i=0; i<playerAttributes.destroyedobjects.length;i++) {
-                    _destroyedobjects.push(mapBuilder.buildArtefact(playerAttributes.destroyedobjects[i]));
+                    _destroyedobjects.push(_mapBuilder.buildArtefact(playerAttributes.destroyedobjects[i]));
                 };
             };
 
             if (playerAttributes.consumedobjects != undefined) {
                 for(var i=0; i<playerAttributes.consumedobjects.length;i++) {
-                    _consumedobjects.push(mapBuilder.buildArtefact(playerAttributes.consumedobjects[i]));
+                    _consumedobjects.push(_mapBuilder.buildArtefact(playerAttributes.consumedobjects[i]));
                 };
             };
 
             //missions
             if (playerAttributes.missions != undefined) {
                 for(var i=0; i<playerAttributes.missions.length;i++) {
-                    _missions.push(mapBuilder.buildMission(playerAttributes.missions[i]));
+                    _missions.push(_mapBuilder.buildMission(playerAttributes.missions[i]));
                 };
             };
 
         };
 
-        processAttributes(attributes, map, mapBuilder);
+        processAttributes(attributes, map);
 
 
         //public member functions
@@ -2051,6 +2052,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.processMissionState = function(mission, map, missionOwner, newlyCompletedMissions) {
+            //console.log("checking mission:"+mission.getName()+" time taken:"+mission.getTimeTaken());
             var resultString = "";
             var initialScore = _score;
             var missionReward = mission.checkState(_inventory, _currentLocation, map, _destroyedObjects);
@@ -2058,8 +2060,52 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (missionReward.hasOwnProperty("fail")) {
                     resultString += "<br>"+missionReward.failMessage+"<br>";
                     _missionsFailed.push(mission.getName());
+                } else if (missionReward.hasOwnProperty("event")) {
+                    resultString += "<br>"+missionReward.eventMessage+"<br>";
+                    if (missionReward.locations) {
+                        //add locations
+                        for (var l=0; l<missionReward.locations.length;l++) {
+                            map.addLocation(missionReward.locations[l]);
+                            var locationName = missionReward.locations[l].getName();
+                            //console.log("Location added: "+map.getLocation(missionReward.locations[l].getName()));
+                        };                        
+                    };
+                    if (missionReward.exits) {
+                        //add exits
+                        for (var e=0; e<missionReward.exits.length;e++) {
+                            var exitData = missionReward.exits[e];
+                            var locationToModify = map.getLocation(exitData.getSourceName())
+                            var hidden = true;
+                            if (exitData.isVisible()) {hidden = false;};
+                            locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(),hidden);
+                            var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
+                            //console.log("Exit added: "+exitDestination);
+                        };
+                    };
+                    if (missionReward.score) { _score += missionReward.score;};
+                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                    if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
+                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                    mission.processAffinityModifiers(map, missionReward);
                 } else {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
+                    if (missionReward.locations) {
+                        //add locations
+                        for (var l=0; l<missionReward.locations.length;l++) {
+                            map.addLocation(missionReward.locations[l]);
+                        };                        
+                    };
+                    if (missionReward.exits) {
+                        //add exits
+                        for (var e=0; l<missionReward.exits.length;e++) {
+                            var exitData = missionReward.exits[e];
+                            var locationToModify = map.getLocation(exitData.getSourceName())
+                            var hidden = true;
+                            if (exitData.isVisible()) {hidden = false;};
+                            locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestination(),hidden);
+                        };
+                    };
                     if (missionReward.score) { _score += missionReward.score;};
                     if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
                     if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
@@ -2117,6 +2163,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //update missions where there's a mission object here
             var allMissions = map.getAllMissions();
+            allMissions = allMissions.concat(_missions); //add player missions!
+
             for (var i=0;i<allMissions.length;i++) {
                 if ((newlyCompletedMissions.indexOf(allMissions[i].getName()) == -1) && _missionsFailed.indexOf(allMissions[i].getName() == -1)) { 
                     //is there a mission object/destination in this location?

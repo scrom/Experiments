@@ -6,6 +6,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         var fs = require('fs');
         var mapObjectModule = require('./map');
         var locationObjectModule = require('./location'); 
+        var exitObjectModule = require('./exit'); 
         var artefactObjectModule = require('./artefact');
         var creatureObjectModule = require('./creature.js');
         var missionObjectModule = require('./mission.js');
@@ -153,22 +154,48 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         self.unpackReward = function(reward) {
             //console.log("Unpacking reward: "+reward);
             var returnObject = {};
-            for (var attr in reward) {
-                if (reward.hasOwnProperty(attr)) {returnObject[attr] = reward[attr];};
-            };
-
             //set maximum possible game score...
             if (reward.score) {
                 //note some missions reduce score so we only add  those > 0
                 if (reward.score>0) {_map.increaseMaxScore(reward.score);};
             };
             if (reward.delivers) {
+                returnObject.delivers = null;
                 //console.log("Delivers: "+returnObject.delivers);
-                var deliveryObject = self.buildArtefact(returnObject.delivers);
+                var deliveryObject = self.buildArtefact(reward.delivers);
                 returnObject.delivers = deliveryObject;
                 //console.log("Built delivery object");
                 //returnObject.delivers = self.buildArtefact(returnObject.delivers);
             };
+            if (reward.locations) {
+                returnObject.locations = [];
+                for (var l=0; l<reward.locations.length;l++) {
+                    var rewardLocation = self.buildLocation(reward.locations[l]);
+                    for (var j=0; j<reward.locations[l].exits.length;j++) {
+                        var exitData = reward.locations[l].exits[j];
+                        //manually add exits from each location (linking not needed)
+                        rewardLocation.addExit(exitData.direction,exitData.source,exitData.destination,exitData.hidden);
+                    }; 
+                    returnObject.locations.push(rewardLocation);
+                }; 
+            };
+            if (reward.exits) {
+               returnObject.exits = []; 
+               for (var e=0; e<reward.exits.length;e++) {
+                    var exitData = reward.exits[e];
+                    returnObject.exits.push(new exitObjectModule.Exit (exitData.direction,exitData.source,exitData.destination,exitData.hidden));
+                }; 
+            };
+
+            //add other attributes back in
+            for (var attr in reward) {
+                if (reward.hasOwnProperty(attr)) {
+                    if (!(returnObject.hasOwnProperty(attr))) {
+                        returnObject[attr] = reward[attr];                    
+                    };
+                };
+            };
+
             //console.log("Unpacked Reward");
             return returnObject;
         };
@@ -185,23 +212,24 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 initialAttr = self.unpackConditionAttributes(missionData.initialAttributes);
             };
 
+            var rewardData = self.unpackReward(missionData.reward);
+
             _map.incrementMissionCount();
-            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, self.unpackReward(missionData.reward));
+            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.dialogue, missionData.parent, missionData.missionObject, missionData.static, missionData.condition, conditionAttr,missionData.destination, rewardData);
         };
 
         self.buildLocation = function(locationData) {
-            return self.addLocation(locationData.name, locationData.description, locationData.dark, locationData.start, locationData.visits);
+            if (_map.getLocation(locationData.name)) {console.log("Usability warning: duplicate location name '"+locationData.name+"'.");};
+            if (locationData.dark == "true" || locationData.dark == true) {locationData.dark = true;}
+            else {locationData.dark=false;};
+            if (locationData.start == "true" || locationData.start == true) {locationData.start = true;}
+            else {locationData.start=false;};
+            var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.dark,locationData.start, locationData.visits);
+            return newLocation;
         };
         
-        self.addLocation = function(aName, aDescription, isDark, isStartLocation, visits){
-                if (_map.getLocation(aName)) {console.log("Usability warning: duplicate location name '"+aName+"'.");};
-                if (isDark == "true" || isDark == true) {isDark = true;}
-                else {isDark=false;};
-                if (isStartLocation == "true" || isStartLocation == true) {isStartLocation = true;}
-                else {isStartLocation=false;};
-                var newLocation = new locationObjectModule.Location(aName,aDescription,isDark,isStartLocation, visits);
-                var newIndex = _map.addLocation(newLocation);
-                return newLocation;
+        self.addLocation = function(location){
+                var newIndex = _map.addLocation(location);
         };
 
         self.buildGameObjects = function(gameDataAsJSON) {
@@ -209,7 +237,8 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
             //locations and links
             for (var i=0; i<gameDataAsJSON.length;i++) {
                 var locationData = gameDataAsJSON[i]
-                var newLocation = self.buildLocation(gameDataAsJSON[i]);
+                var builtLocation = self.buildLocation(gameDataAsJSON[i]);
+                self.addLocation(builtLocation);
                 var newLocation = _map.getLocation(locationData.name);
 
                 for (var j=0; j<locationData.exits.length;j++) {

@@ -43,7 +43,11 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
                         resultString += '[';
                         for (var j=0;j<obj.length;j++) {
                             if (j>0) {resultString += ",";};
-                            resultString += '"'+obj[j]+'"';
+                            if (typeof(obj[j]) == 'object') {
+                                resultString += obj[j].toString();
+                            } else {
+                                resultString += '"'+obj[j]+'"';
+                            };
                         };
                         resultString += ']';
                      } else {
@@ -160,8 +164,17 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
             };
         };
 
+        self.timeExpired = function() {
+            if (_reward.hasOwnProperty("event")) {
+                return self.event();
+            };
+
+            //if not an event
+            return self.fail("time");
+        };
+
         self.fail = function(failReason) {
-            var failMessage;
+            var failMessage = "";
             if (failReason == "time") {failMessage = "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
             if (failReason == "destroyedObject") {failMessage = "<br>You failed to "+self.getDisplayName()+". You destroyed something important.<br>";};
             if (failReason == "destroyedDestination") {failMessage = "<br>Oh dear. You can no longer "+self.getDisplayName()+". You destroyed something important.<br>";};
@@ -171,6 +184,14 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
             _ticking = false;
             console.log("mission "+self.getName()+" failed");
             return {"fail":true, "failMessage":failMessage};
+        };
+
+        self.event = function() {
+            var returnObject = _reward;
+            _reward=null;
+            _ticking = false;
+            console.log("mission "+self.getName()+" event ocurred");
+            return returnObject;
         };
 
         self.hasDialogue = function() {
@@ -228,60 +249,72 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
             var destinationObject;
             //console.log('Checking state for mission: '+_name);
             switch(true) {
-                    case (_destination == 'player'): //player inventory
-                        missionObject = playerInventory.getObject(_missionObject);
-                        break;
-                    case (_destination == location.getName()): //location
-                        //console.log('mission destination location reached');
-                        missionObject = location.getObject(_missionObject);
-                        break;
-                    default:
+                case (_destination == 'player'): //player inventory
+                    missionObject = playerInventory.getObject(_missionObject);
+                    break;
+                case (_destination == location.getName()): //location
+                    //console.log('mission destination location reached');
+                    missionObject = location.getObject(_missionObject);
+                    break;
+                default:
                         
-                        //this one allows you to have an object/creature in any location - the object's condition will determine success.
-                        //this supports find, break, destroy, chew, kill
-                        if (playerInventory.getObject(_destination)) {
-                            //creature or object in player inventory
-                            //console.log('found mission destination object/creature in player inventory');
-                            var destinationObjectOrCreature = playerInventory.getObject(_destination);
-                            if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                            else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                        } else if (location.getObject(_destination)) {
-                            //console.log('found mission destination object/creature in location');
-                            var destinationObjectOrCreature = location.getObject(_destination);
-                            if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                            else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                        } else {
-                            //check player destroyed objects list.
-                            for (var i=0;i<destroyedObjects.length;i++) {
-                                if (destroyedObjects[i].getName() == _missionObject) {
-                                    missionObject = destroyedObjects[i];
-                                    //console.log('mission object destroyed');
-                                };
-                                if (destroyedObjects[i].getName() == _destination) {
-                                    destinationObject = destroyedObjects[i];
-                                    //console.log('mission destination destroyed');
-                                };
+                    //this one allows you to have an object/creature in any location - the object's condition will determine success.
+                    //this supports find, break, destroy, chew, kill
+                    if (playerInventory.getObject(_destination)) {
+                        //creature or object in player inventory
+                        //console.log('found mission destination object/creature in player inventory');
+                        var destinationObjectOrCreature = playerInventory.getObject(_destination);
+                        if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                        else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                    } else if (location.getObject(_destination)) {
+                        //console.log('found mission destination object/creature in location');
+                        var destinationObjectOrCreature = location.getObject(_destination);
+                        if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                        else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                    } else {
+                        //check player destroyed objects list.
+                        for (var i=0;i<destroyedObjects.length;i++) {
+                            if (destroyedObjects[i].getName() == _missionObject) {
+                                missionObject = destroyedObjects[i];
+                                //console.log('mission object destroyed');
                             };
+                            if (destroyedObjects[i].getName() == _destination) {
+                                destinationObject = destroyedObjects[i];
+                                //console.log('mission destination destroyed');
+                            };
+                        };
 
-                            if (!(missionObject)) {
-                                var locations = map.getLocations();
-                                for (var i=0;i<locations.length;i++) {
-                                    var destinationObjectOrCreature = locations[i].getObject(_destination);
-                                    if (destinationObjectOrCreature) {
-                                        if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                                        else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                                    };
-                                    if (missionObject) {break;}; //exit early if we've found it.
+                        if (!(missionObject)) {
+                            var locations = map.getLocations();
+                            for (var i=0;i<locations.length;i++) {
+                                var destinationObjectOrCreature = locations[i].getObject(_destination);
+                                if (destinationObjectOrCreature) {
+                                    if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
+                                    else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
                                 };
+                                if (missionObject) {break;}; //exit early if we've found it.
                             };
-                        }; 
-                        break;
+                        };
+                    }; 
+                    break;
             };
+
+            //
+            var successCount = 0;
+
+            //regardless of mission object location, have we timed out?
+            if (_conditionAttributes["time"]) {                       
+                if (self.getTimeTaken() <= _conditionAttributes["time"]) {
+                    successCount++;
+                } else {
+                    return self.timeExpired();
+                };                           
+            };
+
             if (missionObject) {
                 //console.log('mission object retrieved. Checking condition attributes...');
                 var objectAttributes = missionObject.getCurrentAttributes();
-                var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;
-                var successCount = 0;
+                var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;               
 
                 //check/fail if the mission object shouldn't be destroyed!
                 if (missionObject.isDestroyed()) {
@@ -310,14 +343,6 @@ module.exports.Mission = function Mission(name, displayName, description, dialog
                         
                     if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
                         successCount++;
-                    };                           
-                };
-
-                if (_conditionAttributes["time"]) {                       
-                    if (self.getTimeTaken() <= _conditionAttributes["time"]) {
-                        successCount++;
-                    } else {
-                        return self.fail("time");
                     };                           
                 };
 
