@@ -571,7 +571,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if (hasDialogue) {
-                if ((_affinity <0) && (playerAggression>0)) {resultString +="<br>"+_genderPrefix+" appears to have something on "+_genderSuffix+" mind but doesn't trust you enough to talk about it right now.";}
+                if ((_affinity <0) && (playerAggression>0)) {resultString +="<br>"+_genderPrefix+" appears to have something on "+_genderPossessiveSuffix+" mind but doesn't trust you enough to talk about it right now.";}
                 else { resultString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
             };
             return resultString;
