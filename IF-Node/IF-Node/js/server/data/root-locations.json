@@ -1965,7 +1965,7 @@
         "description": "milk bottle",
         "detailedDescription": "A large milk bottle",
         "attributes": {
-          "extendedinventorydescription": "There's $inventory in it.",
+          "extendedInventoryDescription": "There's $inventory in it.",
           "weight": 1,
           "carryWeight": 3,
           "attackStrength": 1,
@@ -2015,7 +2015,7 @@
         "description": "coffee cup",
         "detailedDescription": "Just the right size for a decent brew.",
         "attributes": {
-          "extendedinventorydescription": "There's $inventory in it.",
+          "extendedInventoryDescription": "There's $inventory in it.",
           "weight": 2,
           "carryWeight": 1.1,
           "attackStrength": 2,
@@ -2099,7 +2099,7 @@
         "detailedDescription": "Given the right ingedients it makes a variety of coffees.",
         "attributes": {
           "defaultAction": "get coffee from machine",
-          "extendedinventorydescription": "It's fully loaded with ",
+          "extendedInventoryDescription": "It's fully loaded with ",
           "weight": 151,
           "carryWeight": 25,
           "type": "junk",
@@ -2328,7 +2328,7 @@
         "description": "set of bookcases",
         "detailedDescription": "Books on everything from travel to SQL server and from sales to C#.",
         "attributes": {
-          "extendedinventorydescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",
+          "extendedInventoryDescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",
           "weight": 80,
           "carryWeight": 50,
           "type": "container",
