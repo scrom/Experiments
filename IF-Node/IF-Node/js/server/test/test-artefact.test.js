@@ -2,6 +2,7 @@
 var artefact = require('../artefact.js');
 var location = require('../location.js');
 var inventory = require('../inventory.js');
+var player = require('../player.js');
 var a0;
 var attributes = null;
 var aName = 'name';
@@ -392,15 +393,15 @@ exports.canVendCoffeeIntoCup = function (test) {
 
     var bottomkitchen = new location.Location('kitchen-ground-floor',"You're in the atrium kitchen."); 
 
-    var _inventory = new inventory.Inventory(25);
+    var p0 = new player.Player({carryWeight:25},null,null);
+    var _inventory = p0.getInventoryObject();
     _inventory.add(cup);
                 
     coffeeMachine.unlock(key);
     coffeeMachine.receive(coffeeBeans);
-    coffeeMachine.relinquish('coffee', _inventory);
 
     var expectedResult = 'You now have a cup of coffee.';
-    var actualResult = coffeeMachine.relinquish('coffee', _inventory);
+    var actualResult = coffeeMachine.relinquish('coffee', p0);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -510,12 +511,13 @@ exports.canMakeSweetCoffeeFromVendedCoffee = function (test) {
 
     var bottomkitchen = new location.Location('kitchen-ground-floor',"You're in the atrium kitchen."); 
 
-    var _inventory = new inventory.Inventory(25);
+    var p0 = new player.Player({carryWeight:25},null,null);
+    var _inventory = p0.getInventoryObject();
     _inventory.add(cup);
                 
     coffeeMachine.unlock(key);
     coffeeMachine.receive(coffeeBeans);
-    console.log(coffeeMachine.relinquish('coffee', _inventory)); 
+    console.log(coffeeMachine.relinquish('coffee', p0)); 
 
     var newCoffee = coffee.combineWith(sugar);
 
