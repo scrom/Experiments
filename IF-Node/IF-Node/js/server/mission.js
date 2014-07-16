@@ -1,6 +1,6 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, reward) { //add time limit of some form in later
+module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, reward) {
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
@@ -101,7 +101,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         ////public methods
 
         self.toString = function() {
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayName":"'+_displayName+'"';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'"';
+            if (_displayName) {
+                resultString +=',"displayName":"'+_displayName+'"';
+            };
             if (_description) {
                 resultString += ',"description":"'+_description+'"';
             };
