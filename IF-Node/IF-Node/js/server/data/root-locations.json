@@ -828,7 +828,8 @@
           "health": 100,
           "affinity": 2,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "destination": "atrium"
         },
         "synonyms": [
           "chris",

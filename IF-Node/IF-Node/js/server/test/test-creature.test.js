@@ -919,6 +919,24 @@ exports.creaturesCanHealThemselves = function (test) {
 exports.creaturesCanHealThemselves.meta = { traits: ["Creature Test", "Heal Trait", "Bleeding Trait"], description: "Test that a bleeding creature can be healed by a player." };
 
 
+exports.creatureCanFindPathToGoal = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var m = mb.buildMap();
+    var destination = 'machine-room-east';
+    c0.go(null, m.getLocation('atrium'));
+
+    var expected = "e,e,s,e,e,e,n,n,e,s,s,s,s,e,s,s,u,n,n,w,w,s,w,w,w,n,n,n,e,n,u,s,w,s,e,n";
+    //var actual = c0.findPath(destination, m);
+    var actual = c0.findPath(destination, m, c0.getCurrentLocation());
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureCanFindPathToGoal.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+
+
 /*
 Methods needing testing:
 getName, 

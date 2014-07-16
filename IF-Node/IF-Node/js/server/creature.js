@@ -41,6 +41,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
         var _spokenToPlayer = false;
+        var _path = [];
+        var _destination;
 	    var _objectName = "creature";
 
         var healthPercent = function() {
@@ -87,6 +89,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
             if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
+            if (creatureAttributes.destination != undefined) {_destination = creatureAttributes.destination;};
         };
 
         processAttributes(attributes);
@@ -213,6 +216,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _name;
         };
 
+        self.getCurrentLocation = function() {
+            return _currentLocation;
+        };
+
         self.checkCustomAction = function(verb) {
             return false; 
         };
@@ -265,6 +272,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.type = _type;
             currentAttributes.moves = _moves;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
+            currentAttributes.destination = _destination;
 
             return currentAttributes;
 
@@ -292,6 +300,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.traveller == true) {saveAttributes.traveller = creatureAttributes.traveller};            
             if (creatureAttributes.moves != -1) {saveAttributes.moves = creatureAttributes.moves;};
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
+            if (creatureAttributes.destination != undefined) {saveAttributes.destination = creatureAttributes.destination;};
 
 
             return saveAttributes;
@@ -468,6 +477,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.willFollow = function(playerAggression) {
+            if (_destination) {return false;}; //don't follow player if heading elsewhere!
             if (self.isDead()) {return false;};
             if (!(self.canTravel())) { return false;} 
             if (self.isHostile(playerAggression)) {return true;};
@@ -936,7 +946,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (!(fled)) {
                             var movementVerb = "flees";
                             if (_bleeding) {movementVerb = "staggers";};
-                            resultString = initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"<br>";
+                            resultString = initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+".<br>";
+                            //if creature was heading somewhere, we'll need to regenerate their path later.
+                            if (_destination) {self.clearPath();};
                             fled = true;
                         };
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
@@ -1376,9 +1388,34 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     resultString += self.fightOrFlight(map, player);
                     partialResultString = resultString;
                 } else if (_traveller && _canTravel) { //is a traveller
-                    var exit = _currentLocation.getRandomExit();
+                    var exit;
+
+                    if (_destination) {
+                        if (_destination == _currentLocation.getName()) {
+                            console.log(self.getDisplayName()+" reached destination.");
+                            self.clearPath();
+                            self.clearDestination();                            
+                        } else {
+                            if (_path.length == 0) {
+                                self.setPath(self.findPath(_destination, map, _currentLocation));
+                            };
+                            var direction = _path.pop();
+                            if (!(direction)) {
+                                self.clearPath();
+                                self.clearDestination();
+                            } else {
+                                exit = _currentLocation.getExit(direction);
+                                console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
+                            };
+                        };
+                    };
+
+                    //no destination or path...
+                    if (!(exit)) {exit = _currentLocation.getRandomExit();};
                     //if only one exit, random exit won't work so get the only one we can...
                     if (!(exit)) {exit = _currentLocation.getAvailableExits()[0];}; 
+
+
                     if (exit) {
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
                         //if creature ends up in player location (rather than starting there...
@@ -1392,8 +1429,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (_bleeding) {movementVerb = "limps";};
                             resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"."; 
                         };  
-                     };  
-            
+                    };  
+          
                 };
 
                 //bleed?
@@ -1534,6 +1571,65 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.deliver = function(anObjectName) {
             return null;
+        };
+
+        self.setDestination = function(destination) {
+            console.log(self.getDisplayName()+" destination set to "+destination);
+            _destination = destination;
+        };
+
+        self.clearDestination = function() {
+            //console.log(self.getDisplayName()+" destination cleared");
+            _destination = null;
+        };
+
+        self.setPath = function(path) {
+            //console.log(self.getDisplayName()+" path set to "+path+"(will reach "+_destination+" in "+path.length+" moves)");
+            _path = path;
+        };
+
+        self.clearPath = function() {
+            //console.log(self.getDisplayName()+" path cleared.");
+            _path = [];
+        };
+
+        self.findPath = function(destinationName, map, startLocation, currentLocation, lastDirection, visitedLocations) {
+            if (!(currentLocation)) {currentLocation = startLocation;};
+
+            if (!(visitedLocations)) {visitedLocations = [currentLocation.getName()];}
+            else {visitedLocations.push(currentLocation.getName())};
+
+            //console.log("finding path from "+currentLocation.getName()+" to "+destinationName);
+
+            if (currentLocation.getName() == destinationName) {
+                console.log("pathfinder destination found");
+                return [];
+             };       
+
+            var exits = currentLocation.getAvailableExits();
+            if (exits.length == 1) {return null;};
+
+            for (var e=0;e<exits.length;e++) {
+                var direction = exits[e].getDirection();
+                if (direction == map.oppositeOf(lastDirection)) {
+                    continue;
+                };
+
+                if (exits[e].getDestinationName() == startLocation.getName()) {
+                    continue;
+                };
+
+                if (visitedLocations.indexOf(exits[e].getDestinationName()) >-1) {
+                    continue;
+                };
+
+                var newPath = self.findPath(destinationName, map, startLocation, map.getLocation(exits[e].getDestinationName()), direction, visitedLocations);
+
+                if (newPath) {
+                    newPath.push(exits[e].getDirection());
+                    return newPath;
+                };
+            };
         };
 
         //// end instance methods       
