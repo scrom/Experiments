@@ -937,6 +937,24 @@ exports.creatureCanFindPathToGoal = function (test) {
 exports.creatureCanFindPathToGoal.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
 
 
+exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true });
+    var m = mb.buildMap();
+    var destination = 'atrium';
+    c0.go(null, m.getLocation('machine-room-east'));
+
+    var expected = "s,w,n,e,n,d,s,e,s,s,w,w,w,n,n,n,w,s,s,s,d,n,n,n,e,e,e,e,s,s,w,w,w,n,w,w";
+    //var actual = c0.findPath(destination, m);
+    var actual = c0.findPath(destination, m, c0.getCurrentLocation());
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+
+
 /*
 Methods needing testing:
 getName, 

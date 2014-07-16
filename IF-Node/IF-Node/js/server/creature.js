@@ -1607,7 +1607,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
              };       
 
             var exits = currentLocation.getAvailableExits();
-            if (exits.length == 1) {return null;};
+            if (exits.length == 1 && currentLocation.getName() != startLocation.getName()) {return null;};
 
             for (var e=0;e<exits.length;e++) {
                 var direction = exits[e].getDirection();
