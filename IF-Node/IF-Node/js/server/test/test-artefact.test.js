@@ -20,7 +20,7 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreateArtefactObject = function (test) {
-    var expectedResult = '{"object":"artefact","name":"name","description":"description","detailedDescription":"detailed description","attributes":null}';
+    var expectedResult = '{"object":"artefact","name":"name","description":"description","detailedDescription":"detailed description","attributes":{}}';
     //artefact object is created in setUp
     var actualResult = a0.toString();
     console.log("Expected: "+expectedResult);

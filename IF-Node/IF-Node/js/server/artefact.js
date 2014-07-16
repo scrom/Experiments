@@ -345,13 +345,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.synonyms != undefined) { saveAttributes.synonyms = artefactAttributes.synonyms;};
             
             if (artefactAttributes.defaultAction != "examine") { saveAttributes.defaultAction = artefactAttributes.defaultAction;};
-            if (artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contains $inventory.") {
+            if (artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contains $inventory." && artefactAttributes.extendedInventoryDescription != "") {
                 saveAttributes.extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
             };
             if (artefactAttributes.weight != 0) {saveAttributes.weight = parseFloat(artefactAttributes.weight);};
             if (artefactAttributes.carryWeight != 0) {saveAttributes.carryWeight = artefactAttributes.carryWeight;};           
             if (artefactAttributes.attackStrength != 0) {saveAttributes.attackStrength = artefactAttributes.attackStrength;};
-            if (artefactAttributes.type != undefined) {saveAttributes.type = artefactAttributes.type;};
+            if (artefactAttributes.type != "junk") {saveAttributes.type = artefactAttributes.type;};
             if (artefactAttributes.subType != "") {saveAttributes.subType = artefactAttributes.subType;};           
             if (artefactAttributes.requiresContainer == true) {saveAttributes.requiresContainer = true;};
             if (artefactAttributes.isLiquid == true) {saveAttributes.isLiquid = artefactAttributes.isLiquid;};
@@ -1394,8 +1394,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return true;
         };
 
-        self.relinquish = function(anObjectName, playerInventory, locationInventory, playerAggression) {
-            //note we throw away playerAggression
+        self.relinquish = function(anObjectName, player, locationInventory) {
+            var playerInventory = player.getInventoryObject();
 
             //are we attempting to retrieve a delivery object?
             var objectToGive;
@@ -1418,7 +1418,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (objectToGive) {
                 if (self.isDestroyed() || self.isBroken()) { return initCap(_itemDescriptivePrefix) + " broken."; };
                 if (objectToGive.getPrice() > 0) { 
-                    if (!(playerInventory.canAfford(objectToGive.getPrice()))) {return "You can't afford " + objectToGive.getPrefix().toLowerCase() + ".";};
+                    if (!(player.canAfford(objectToGive.getPrice()))) {return "You can't afford " + objectToGive.getPrefix().toLowerCase() + ".";};
                 };
                 delivering = true;
             }; 
@@ -1444,7 +1444,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (!(deliveredItem)) { return initCap(_itemDescriptivePrefix) + " not working at the moment." };
                 objectToGive = deliveredItem;
                 if (objectToGive.getPrice() > 0) { 
-                    playerInventory.reduceCash(objectToGive.getPrice());
+                    player.reduceCash(objectToGive.getPrice());
                     _inventory.increaseCash(objectToGive.getPrice());
                 };
             };

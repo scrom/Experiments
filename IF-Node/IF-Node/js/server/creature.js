@@ -766,7 +766,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (cash <=0) {return _genderPrefix+" doesn't have any "+anObjectName+" to steal.";};
                         var randomCash = Math.round((cash * Math.random())*100)/100; //round to 2DP.
                         _inventory.reduceCash(randomCash);
-                        playerInventory.increaseCash(randomCash);
+                        player.increaseCash(randomCash);
                         player.addStolenCash(randomCash);
                         return "You steal &pound;"+randomCash.toFixed(2)+" from "+self.getDisplayName()+".";
                     };
@@ -810,8 +810,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return true;
         };
 
-        self.relinquish = function(anObjectName,playerInventory, locationInventory, playerAggression) {
+        self.relinquish = function(anObjectName,player,locationInventory) {
             //note we throw away locationInventory
+
+            var playerInventory = player.getInventoryObject();
+            var playerAggression = player.getAggression();
           
             var objectToGive = _inventory.getObject(anObjectName);
             if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};

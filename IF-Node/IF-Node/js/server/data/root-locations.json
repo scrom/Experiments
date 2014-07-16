@@ -79,7 +79,6 @@
         "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least *someone* is expecting you.",
         "attributes": {
           "weight": 51,
-          "type": "junk",
           "isBreakable": true
         },
         "synonyms": [
@@ -635,7 +634,6 @@
             "detailedDescription": "A disturbing remnant from the sales team beating their records and making their management team wear fancy dress.",
             "attributes": {
               "weight": 1,
-              "type": "junk",
               "canCollect": true,
               "affinityModifier": 2
             },
@@ -945,7 +943,6 @@
         "attributes": {
           "weight": 45,
           "carryWeight": 15,
-          "type": "junk",
           "isBreakable": true,
           "plural": true
         },
@@ -1607,7 +1604,6 @@
         "detailedDescription": "After careful inspection, you figure out where to push it and how to get soap out.",
         "attributes": {
           "weight": 1,
-          "type": "junk",
           "canCollect": true
         },
         "synonyms": [
@@ -2096,7 +2092,6 @@
           "extendedInventoryDescription": "It's fully loaded with ",
           "weight": 151,
           "carryWeight": 25,
-          "type": "junk",
           "holdsLiquid": true,
           "isBreakable": true,
           "canOpen": true,
@@ -2308,7 +2303,6 @@
         "detailedDescription": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
         "attributes": {
           "weight": 51,
-          "type": "junk",
           "isBreakable": true
         },
         "synonyms": [
@@ -2455,7 +2449,6 @@
         "attributes": {
           "weight": 3,
           "attackStrength": 20,
-          "type": "junk",
           "canCollect": true,
           "isBreakable": true,
           "customAction": "play",
@@ -2556,7 +2549,6 @@
             "attributes": {
               "weight": 3,
               "attackStrength": 5,
-              "type": "junk",
               "canCollect": true,
               "isBreakable": true,
               "price": 100
@@ -3206,7 +3198,6 @@
         "attributes": {
           "defaultAction": "turn on",
           "weight": 6,
-          "type": "junk",
           "isBreakable": true,
           "isBroken": true,
           "switched": true,
@@ -3507,7 +3498,6 @@
                         "attributes": {
                           "weight": 2,
                           "attackStrength": 5,
-                          "type": "junk",
                           "requiresContainer": true,
                           "canCollect": true,
                           "charges": 10,
@@ -3575,7 +3565,6 @@
         "attributes": {
           "weight": 151,
           "carryWeight": 25,
-          "type": "junk",
           "isBreakable": true
         },
         "synonyms": [
@@ -3688,7 +3677,6 @@
         "attributes": {
           "weight": 400,
           "carryWeight": 120,
-          "type": "junk",
           "customAction": "climb",
           "defaultResult": "You clamber around in the skip.<br>After putting your hand in something slimy and nearly impaling yourself on a broken chair you decide to climb back out."
         },
@@ -4578,7 +4566,6 @@
         "detailedDescription": "These things are good but loud.",
         "attributes": {
           "weight": 15,
-          "type": "junk",
           "isBreakable": true,
           "customAction": "dry",
           "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels."
@@ -5206,7 +5193,6 @@
                 "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
                 "attributes": {
                   "attackStrength": 5,
-                  "type": "junk",
                   "canCollect": true,
                   "isBreakable": true,
                   "componentOf": [

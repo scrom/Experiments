@@ -44,6 +44,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _creaturesSpokenTo = 0;
         var _saveCount = 0;
         var _loadCount = 0;
+        var _cashSpent = 0;
+        var _cashGained = 0;
 
         //possible additional player stats
         var _restsTaken = 0;
@@ -222,6 +224,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.locationsFound != undefined) {_locationsFound = playerAttributes.locationsFound;};
             if (playerAttributes.maxAggression != undefined) {_maxAggression = playerAttributes.maxAggression;};
             if (playerAttributes.score != undefined) {_score = playerAttributes.score;};
+            if (playerAttributes.cashSpent != undefined) {_cashSpent = playerAttributes.cashSpent;};
+            if (playerAttributes.cashGained != undefined) {_cashGained = playerAttributes.cashGained;};
             if (playerAttributes.totalDamageReceived != undefined) {_totalDamageReceived = playerAttributes.totalDamageReceived;};
             if (playerAttributes.booksRead != undefined) {_booksRead = playerAttributes.booksRead;};
             if (playerAttributes.stolenCash != undefined) {_stolenCash = playerAttributes.stolenCash;};
@@ -400,6 +404,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString += ',"totalDamageReceived":'+_totalDamageReceived;
             resultString += ',"booksRead":'+_booksRead;
             resultString += ',"stolenCash":'+_stolenCash;
+            resultString += ',"cashSpent":'+_cashSpent;
+            resultString += ',"cashGained":'+_cashGained;
             resultString += ',"creaturesSpokenTo":'+_creaturesSpokenTo;
             resultString += ',"restsTaken":'+_restsTaken;
             resultString += ',"sleepsTaken":'+_sleepsTaken;
@@ -516,10 +522,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.reduceCash = function(amount) {
+            _cashSpent += amount;
             _inventory.reduceCash(amount);
         };
 
         self.increaseCash = function (amount) {
+            _cashGained += amount;
             _inventory.increaseCash(amount);
         };
 
@@ -588,7 +596,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var locationInventory = _currentLocation.getInventoryObject();
                 for (var i=0;i<allLocationObjects.length;i++) {
                     if (allLocationObjects[i].getType() != 'creature') {
-                        var tempResultString = allLocationObjects[i].relinquish(artefactName, _inventory, locationInventory, _aggression);
+                        var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
                         if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
                             //we got the requested object back!
                             return tempResultString;
@@ -1050,7 +1058,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 var locationInventory = _currentLocation.getInventoryObject();
-                return receiver.relinquish(artefactName, _inventory, locationInventory, _aggression);
+                return receiver.relinquish(artefactName, self, locationInventory);
             };
 
         /*Allow player to give an object to a recipient*/
@@ -1196,7 +1204,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return giver.theft(artefactName, _inventory, self);
             } else {
                 var locationInventory = _currentLocation.getInventoryObject();
-                return giver.relinquish(artefactName, _inventory, locationInventory, _aggression);
+                return giver.relinquish(artefactName, self, locationInventory);
             };
                     
         };
@@ -1232,7 +1240,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
             var locationInventory = _currentLocation.getInventoryObject();
-            return giver.relinquish(artefactName, _inventory, locationInventory, _aggression);
+            return giver.relinquish(artefactName, self, locationInventory);
         };
 
         self.say = function(verb, speech, receiverName) {
@@ -2087,7 +2095,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     };
                     if (missionReward.score) { _score += missionReward.score;};
-                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                    if (missionReward.money) { self.increaseCash(missionReward.money);};
                     if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
@@ -2111,7 +2119,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     };
                     if (missionReward.score) { _score += missionReward.score;};
-                    if (missionReward.money) { _inventory.increaseCash(missionReward.money);};
+                    if (missionReward.money) { self.increaseCash(missionReward.money);};
                     if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
@@ -2345,7 +2353,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_restsTaken > 0) {status += "You have rested "+temporise(_restsTaken)+".<br>";};
             if (_sleepsTaken > 0) {status += "You have slept "+temporise(_sleepsTaken)+".<br>";};
 
-            if (_stolenCash > 0) status += "You have stolen a total of &pound;"+_stolenCash+" in cash.<br>";
+            if (_cashGained > 0) status += "You have gained a total of &pound;"+_cashGained.toFixed(2)+" in cash.<br>";
+            if (_stolenCash > 0) status += "Of the total cash you've gained, &pound;"+_stolenCash.toFixed(2)+" was acquired by stealing.<br>";
+            if (_cashSpent > 0) status += "You have spent a total of &pound;"+_cashSpent.toFixed(2)+" in cash.<br>";
+
             if (_stolenObjects.length > 0) {status += "You have stolen "+pluralise(_stolenObjects.length,"item")+".<br>";};             
             if (_destroyedObjects.length > 0) { status += "You have destroyed " + pluralise(_destroyedObjects.length, "item") + ".<br>"; };
             if (_killedCreatures.length > 0) {status += "You have killed "+pluralise(_killedCreatures.length,"character")+".<br>";};             
