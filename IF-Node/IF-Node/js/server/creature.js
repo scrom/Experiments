@@ -343,7 +343,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.affinity != 0) {saveAttributes.affinity = creatureAttributes.affinity;};
             if (creatureAttributes.canTravel == true) {saveAttributes.canTravel = creatureAttributes.canTravel};
             if (creatureAttributes.traveller == true) {saveAttributes.traveller = creatureAttributes.traveller};            
-            if (creatureAttributes.moves != -1) {saveAttributes.moves = creatureAttributes.moves;};
+            if (creatureAttributes.moves > 0) {saveAttributes.moves = creatureAttributes.moves;};
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
             if (creatureAttributes.clearedDestinations.length >0) {saveAttributes.clearedDestinations = creatureAttributes.clearedDestinations;};

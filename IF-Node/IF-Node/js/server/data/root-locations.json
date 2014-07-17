@@ -829,9 +829,13 @@
           "affinity": 2,
           "canTravel": true,
           "traveller": true,
-		  "loops": 1,
-		  "loopDelay":5,
-		  "destinations": ["customer-delight-south-west","east-bike-racks","atrium"]
+          "destinations": [
+            "customer-delight-south-west",
+            "east-bike-racks",
+            "atrium"
+          ],
+          "loops": 1,
+          "loopDelay": 5
         },
         "synonyms": [
           "chris",
@@ -1166,7 +1170,7 @@
           "fire door"
         ]
       },
-	  {
+      {
         "object": "creature",
         "name": "chris smith",
         "displayname": "Chris Smith",
@@ -1182,7 +1186,7 @@
           "health": 140,
           "affinity": 1,
           "canTravel": true,
-		  "traveller": true
+          "traveller": true
         },
         "synonyms": [
           "chris",
@@ -5411,11 +5415,18 @@
           "health": 100,
           "canTravel": true,
           "traveller": true,
-		  "destinations":["servery-kitchen","waste-area","servery-kitchen", "smoking-area"],
-		  "loops": -1,
-		  "loopDelay": 5,
-		  "destinationDelay": 1,
-		  "avoiding":["first-floor-fire-escape"]
+          "destinations": [
+            "servery-kitchen",
+            "waste-area",
+            "servery-kitchen",
+            "smoking-area"
+          ],
+          "avoiding": [
+            "first-floor-fire-escape"
+          ],
+          "loops": -1,
+          "loopDelay": 5,
+          "destinationDelay": 1
         },
         "inventory": [
           {
