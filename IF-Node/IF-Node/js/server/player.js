@@ -186,7 +186,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.startLocation != undefined) {
                 _startLocation = map.getLocation(playerAttributes.startLocation);
             } else {
-                _startLocation = map.getStartLocation();
+                if (map) {
+                    _startLocation = map.getStartLocation();
+                };
             };
             if (playerAttributes.currentLocation != undefined) {
                 _currentLocation = map.getLocation(playerAttributes.currentLocation);
