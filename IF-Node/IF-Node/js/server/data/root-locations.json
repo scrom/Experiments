@@ -5383,7 +5383,9 @@
           "carryWeight": 15,
           "health": 100,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "destinations":["servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area"],
+		  "avoiding":["first-floor-fire-escape"]
         },
         "inventory": [
           {

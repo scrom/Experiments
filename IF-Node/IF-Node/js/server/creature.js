@@ -43,6 +43,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _spokenToPlayer = false;
         var _path = [];
         var _destinations = [];
+        var _avoiding = [];
 	    var _objectName = "creature";
 
         var healthPercent = function() {
@@ -90,6 +91,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
             if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
             if (creatureAttributes.destinations != undefined) {_destinations = creatureAttributes.destinations;};
+            if (creatureAttributes.avoiding != undefined) {_avoiding = creatureAttributes.avoiding;};
         };
 
         processAttributes(attributes);
@@ -295,6 +297,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.moves = _moves;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
             currentAttributes.destinations = _destinations;
+            currentAttributes.avoiding = _avoiding;
 
             return currentAttributes;
 
@@ -323,6 +326,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.moves != -1) {saveAttributes.moves = creatureAttributes.moves;};
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
+            if (creatureAttributes.avoiding.length >0) {saveAttributes.avoiding = creatureAttributes.avoiding;};
 
 
             return saveAttributes;
@@ -964,6 +968,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.canTravel()) {             
                 for (var i=0; i<fearLevel; i++) {
                     var exit = _currentLocation.getRandomExit();
+                    if (exit) {                
+                        if (_avoiding.indexOf(exit.getDestinationName()) >-1) {
+                            exit = _currentLocation.getRandomExit(); //try to avoid (but not mandatory)
+                        };
+                    };
                     if (exit) {
                         if (!(fled)) {
                             var movementVerb = "flees";
@@ -1433,7 +1442,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
 
                     //no destination or path...
-                    if (!(exit)) {exit = _currentLocation.getRandomExit();};
+                    if (!(exit)) {
+                        exit = _currentLocation.getRandomExit();
+                        if (exit) {                
+                            if (_avoiding.indexOf(exit.getDestinationName()) >-1) {
+                                exit = _currentLocation.getRandomExit(); //try to avoid (but not mandatory)
+                            };
+                        };
+                    };
+                        
                     //if only one exit, random exit won't work so get the only one we can...
                     if (!(exit)) {exit = _currentLocation.getAvailableExits()[0];}; 
 
@@ -1667,6 +1684,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
 
                 if (visitedLocations.indexOf(exits[e].getDestinationName()) >-1) {
+                    continue;
+                };
+
+                if (_avoiding.indexOf(exits[e].getDestinationName()) >-1) {
                     continue;
                 };
 
