@@ -829,7 +829,7 @@
           "affinity": 2,
           "canTravel": true,
           "traveller": true,
-		  "destination": "atrium"
+		  "destinations": ["customer-delight-south-west","east-bike-racks","atrium"]
         },
         "synonyms": [
           "chris",

@@ -42,7 +42,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
         var _spokenToPlayer = false;
         var _path = [];
-        var _destination;
+        var _destinations = [];
 	    var _objectName = "creature";
 
         var healthPercent = function() {
@@ -89,7 +89,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
             if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
-            if (creatureAttributes.destination != undefined) {_destination = creatureAttributes.destination;};
+            if (creatureAttributes.destinations != undefined) {_destinations = creatureAttributes.destinations;};
         };
 
         processAttributes(attributes);
@@ -294,7 +294,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.type = _type;
             currentAttributes.moves = _moves;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
-            currentAttributes.destination = _destination;
+            currentAttributes.destinations = _destinations;
 
             return currentAttributes;
 
@@ -322,7 +322,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.traveller == true) {saveAttributes.traveller = creatureAttributes.traveller};            
             if (creatureAttributes.moves != -1) {saveAttributes.moves = creatureAttributes.moves;};
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
-            if (creatureAttributes.destination != undefined) {saveAttributes.destination = creatureAttributes.destination;};
+            if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
 
 
             return saveAttributes;
@@ -499,7 +499,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.willFollow = function(playerAggression) {
-            if (_destination) {return false;}; //don't follow player if heading elsewhere!
+            if (_destinations.length >0) {return false;}; //don't follow player if heading elsewhere!
             if (self.isDead()) {return false;};
             if (!(self.canTravel())) { return false;} 
             if (self.isHostile(playerAggression)) {return true;};
@@ -970,7 +970,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (_bleeding) {movementVerb = "staggers";};
                             resultString = initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+".<br>";
                             //if creature was heading somewhere, we'll need to regenerate their path later.
-                            if (_destination) {self.clearPath();};
+                            if (_destinations.length>0) {self.clearPath();};
                             fled = true;
                         };
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
@@ -1412,14 +1412,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else if (_traveller && _canTravel) { //is a traveller
                     var exit;
 
-                    if (_destination) {
-                        if (_destination == _currentLocation.getName()) {
+                    if (_destinations.length>0) {
+                        if (_destinations[_destinations.length-1] == _currentLocation.getName()) {
                             console.log(self.getDisplayName()+" reached destination.");
                             self.clearPath();
                             self.clearDestination();                            
                         } else {
                             if (_path.length == 0) {
-                                self.setPath(self.findBestPath(_destination, map));
+                                self.setPath(self.findBestPath(_destinations[_destinations.length-1], map));
                             };
                             var direction = _path.pop();
                             if (!(direction)) {
@@ -1596,13 +1596,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.setDestination = function(destination) {
-            console.log(self.getDisplayName()+" destination set to "+destination);
-            _destination = destination;
+            console.log(self.getDisplayName()+"new destination set "+destination);
+            _destinations.unshift(destination); //add new destination to front of array!
         };
 
         self.clearDestination = function() {
             //console.log(self.getDisplayName()+" destination cleared");
-            _destination = null;
+            _destinations.pop();
         };
 
         self.setPath = function(path) {
