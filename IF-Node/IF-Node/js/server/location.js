@@ -94,18 +94,56 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return null;
         };
 
+        /*self.getDoorForExit = function(direction) {
+            var doors = self.getAllObjectsOfType("door");
+            for (var d=0;d<doors.length;d++) {
+                if (!(doors[d].isLocked())) {
+                    var linkedExits = doors[d].getLinkedExits();
+                    for (var l=0;l<linkedExits.length;l++) {
+                        if (linkedExits[l].getSourceName()==self.getName()) {
+                            if (linkedExits[l].getDirection() == direction) {
+                                //we have a matching exit with a door
+                                return doors[d];
+                            };
+                        };
+                    };
+                };
+            };
+        };*/
 
-        self.getAvailableExits = function() {
+
+        self.getAvailableExits = function(includeUnlockedDoors) {
             var exitArray = [];
             for(var i = 0; i < _exits.length; i++) {
-                if (_exits[i].isVisible()){exitArray.push(_exits[i]);};
+                if (_exits[i].isVisible()){exitArray.push(_exits[i]);}
+                else {
+                    if (includeUnlockedDoors) {
+                        var doors = self.getAllObjectsOfType("door");
+                        for (var d=0;d<doors.length;d++) {
+                            if (!(doors[d].isLocked())) {
+                                //console.log(doors[d].getName());
+                                var linkedExits = doors[d].getLinkedExits();
+                                if (linkedExits.length == 0) {continue;};
+                                for (var l=0;l<linkedExits.length;l++) {
+                                    //console.log(linkedExits[l].toString());
+                                    if (linkedExits[l].getSourceName()==self.getName()) {
+                                        if (linkedExits[l].getDirection() == _exits[i].getDirection()) {
+                                            //we have a matching exit with a door
+                                            exitArray.push(_exits[i]);
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
             };
             exitArray.sort(compassSort);
             return exitArray;
         };
 
-        self.getRandomExit = function() {
-            var availableExits = self.getAvailableExits();
+        self.getRandomExit = function(includeUnlockedDoors) {
+            var availableExits = self.getAvailableExits(includeUnlockedDoors);
             var randomInt = 0;
             if (availableExits.length <= 1) {
                 //give them a 50% chance of being able to use the only available exit

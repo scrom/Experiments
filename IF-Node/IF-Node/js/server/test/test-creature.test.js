@@ -992,6 +992,48 @@ exports.creatureCanFindBestPathToGoal = function (test) {
 exports.creatureCanFindBestPathToGoal.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
 
 
+exports.creatureCantFindDirectPathToGoalThroughAOneWayDoor = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var m = mb.buildMap();
+    var destination = 'east-end-south-corridor-ground-floor';
+    c0.go(null, m.getLocation('smoking-area'));
+
+    var path = c0.findBestPath(destination, m);
+    var targetLength = 10;
+    var expected = true;
+    var actual = false;
+    if (path.length <= targetLength) {actual = true};
+    console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.ok(actual);
+    test.done();
+};
+exports.creatureCantFindDirectPathToGoalThroughAOneWayDoor.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+
+
+exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var m = mb.buildMap();
+    var destination = 'smoking-area';
+    c0.go(null, m.getLocation('east-end-south-corridor-ground-floor'));
+
+    var path = c0.findBestPath(destination, m);
+    var targetLength = 1;
+    var expected = true;
+    var actual = false;
+    if (path.length <= targetLength) {actual = true};
+    console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.ok(actual);
+    test.done();
+};
+exports.creatureCanFindDirectPathToGoalThroughADoor.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+
+
 
 /*
 Methods needing testing:

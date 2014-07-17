@@ -1443,7 +1443,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                     //no destination or path...
                     if (!(exit)) {
-                        exit = _currentLocation.getRandomExit();
+                        exit = _currentLocation.getRandomExit(true);
                         if (exit) {                
                             if (_avoiding.indexOf(exit.getDestinationName()) >-1) {
                                 exit = _currentLocation.getRandomExit(); //try to avoid (but not mandatory)
@@ -1456,7 +1456,30 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
 
                     if (exit) {
+                        if (!(exit.isVisible())) {
+                            //we have a door - we'll only get here if following a path (otherwise the random selected exit won't include a door)
+                            var doors = _currentLocation.getAllObjectsOfType("door");
+                            var openedDoor;
+                            for (var d=0;d<doors.length;d++) {
+                                if (!(doors[d].isLocked())) {
+                                    var linkedExits = doors[d].getLinkedExits();
+                                    for (var l=0;l<linkedExits.length;l++) {
+                                        if (linkedExits[l].getSourceName()==_currentLocation.getName()) {
+                                            if (linkedExits[l].getDirection() == exit.getDirection()) {
+                                                //we have a matching door
+                                                doors[d].moveOrOpen("open", _currentLocation.getName());
+                                                openedDoor = doors[d];
+                                                break;
+                                            };
+                                        };
+                                    };
+                                };
+                                if (openedDoor) {break;};
+                            };
+                        };
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                        //should really close the door behind us here.
+
                         //if creature ends up in player location (rather than starting there...
                         if (player.getLocation().getName() == _currentLocation.getName()) {
                             var movementVerb = "wanders";
@@ -1666,7 +1689,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return [];
              };       
 
-            var exits = currentLocation.getAvailableExits();
+            var exits = currentLocation.getAvailableExits(true);
             if (exits.length == 1 && currentLocation.getName() != startLocation.getName()) {return null;};
 
             if (randomiseSearch) {
