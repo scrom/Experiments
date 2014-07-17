@@ -967,12 +967,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if creature is mobile
             if (self.canTravel()) {             
                 for (var i=0; i<fearLevel; i++) {
-                    var exit = _currentLocation.getRandomExit();
-                    if (exit) {                
-                        if (_avoiding.indexOf(exit.getDestinationName()) >-1) {
-                            exit = _currentLocation.getRandomExit(); //try to avoid (but not mandatory)
-                        };
-                    };
+                    var exit = _currentLocation.getRandomExit(false, _avoiding);
                     if (exit) {
                         if (!(fled)) {
                             var movementVerb = "flees";
@@ -1398,7 +1393,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //quick return if already dead
             if (self.isDead()) {return resultString;};
 
-            var playerLocation = player.getLocation().getName();
+            var playerLocation = player.getCurrentLocation().getName();
             var startLocation = _currentLocation.getName();
 
             var damage = 0;
@@ -1428,31 +1423,35 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             self.clearDestination();                            
                         } else {
                             if (_path.length == 0) {
-                                self.setPath(self.findBestPath(_destinations[_destinations.length-1], map));
+                                self.setPath(self.findBestPath(_destinations[_destinations.length-1], map, 25));
                             };
-                            var direction = _path.pop();
-                            if (!(direction)) {
-                                self.clearPath();
-                                self.clearDestination();
-                            } else {
-                                exit = _currentLocation.getExit(direction);
-                                console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
+                            if (_path.length >0) {
+                                //we have a path now
+                                var direction = _path.pop();
+                                if (!(direction)) {
+                                    self.clearPath();
+                                    self.clearDestination();
+                                } else {
+                                    exit = _currentLocation.getExit(direction);
+                                    console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
+                                };
                             };
                         };
                     };
 
                     //no destination or path...
+                    //if they have a destination but no path by this point, they'll wander somewhere else and try to build a path again next time.
+                    //this stops creatures getting stuck behind "avoided" locations.
                     if (!(exit)) {
-                        exit = _currentLocation.getRandomExit(true);
-                        if (exit) {                
-                            if (_avoiding.indexOf(exit.getDestinationName()) >-1) {
-                                exit = _currentLocation.getRandomExit(); //try to avoid (but not mandatory)
-                            };
-                        };
+                        //console.log("getting random exit");
+                        exit = _currentLocation.getRandomExit(true, _avoiding);
                     };
                         
                     //if only one exit, random exit won't work so get the only one we can...
-                    if (!(exit)) {exit = _currentLocation.getAvailableExits()[0];}; 
+                    if (!(exit)) {
+                        //console.log("getting first available exit");
+                        exit = _currentLocation.getAvailableExits()[0];
+                    }; 
 
 
                     if (exit) {
@@ -1475,7 +1474,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     };
                                 } else {
                                     //the door got locked at some point on the path, recalculate path and try again next turn.
-                                    self.setPath(self.findBestPath(_destinations[_destinations.length-1], map));
+                                    self.setPath(self.findBestPath(_destinations[_destinations.length-1], map, 25));
                                     exit = null;
                                 };
                                 if (openedDoor) {break;};
@@ -1488,7 +1487,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //should really close the door behind us here.
 
                         //if creature ends up in player location (rather than starting there...
-                        if (player.getLocation().getName() == _currentLocation.getName()) {
+                        if (player.getCurrentLocation().getName() == _currentLocation.getName()) {
                             var movementVerb = "wanders";
                             if (_bleeding) {movementVerb = "stumbles";};
                             resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" in.";  
@@ -1662,18 +1661,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _path = [];
         };
 
-        self.findBestPath = function(destinationName, map) {
+        self.findBestPath = function(destinationName, map, attempts) {
+            if (!(attempts)){attempts = 25};
             var bestPathLength = 1/0; //infinity
             var path;
             var duplicateCount = 0;
-            for (i=0;i<25;i++) {
+            for (i=0;i<attempts;i++) {
                 //console.log("loop#"+i); //how many attempts are we making?
                 var tempPath = self.findPath(true, destinationName, map, _currentLocation);
+                if (tempPath.length <= 2) {
+                    //we've found the shortest possible path already, stop here.
+                    return tempPath;
+                };
                 if (tempPath.length == bestPathLength) {
                    duplicateCount ++;
                 }; 
-                if (duplicateCount > 2) {
-                    return path;
+                if (duplicateCount > 2  && attempts <=25) {
+                    return tempPath;
                 };
                 if (tempPath.length < bestPathLength) {
                     path = tempPath;

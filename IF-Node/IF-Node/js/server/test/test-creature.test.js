@@ -1,5 +1,6 @@
 ﻿"use strict";
 var creature = require('../creature.js');
+var player = require('../player.js');
 var artefact = require('../artefact.js');
 var mission = require('../mission.js');
 var location = require('../location.js');
@@ -978,7 +979,7 @@ exports.creatureCanFindBestPathToGoal = function (test) {
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
 
-    var path = c0.findBestPath(destination, m);
+    var path = c0.findBestPath(destination, m, 100);
     var targetLength = 10;
     var expected = true;
     var actual = false;
@@ -1000,11 +1001,11 @@ exports.creatureCantFindDirectPathToGoalThroughAOneWayDoor = function (test) {
     c0.go(null, m.getLocation('smoking-area'));
 
     var path = c0.findBestPath(destination, m);
-    var targetLength = 10;
+    var targetLength = 1;
     var expected = true;
     var actual = false;
-    if (path.length <= targetLength) {actual = true};
-    console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    if (path.length > targetLength) {actual = true};
+    console.log("Avoid path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.ok(actual);
@@ -1032,6 +1033,25 @@ exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
     test.done();
 };
 exports.creatureCanFindDirectPathToGoalThroughADoor.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+
+
+exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+    c0.go(null, m.getLocation('machine-room-east'));
+    c0.tick(1, m, p0);
+
+    var expected = 'machine-room-west';
+    var actual = c0.getCurrentLocation().getName()
+    //var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a creature can identify a path to a location." };
 
 
 

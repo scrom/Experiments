@@ -183,12 +183,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         var processAttributes = function(playerAttributes, map) {
             if (!playerAttributes) {return null;}; //leave defaults preset
-            if (playerAttributes.startLocation != undefined) {_startLocation = map.getLocation(playerAttributes.startLocation);};
+            if (playerAttributes.startLocation != undefined) {
+                _startLocation = map.getLocation(playerAttributes.startLocation);
+            } else {
+                _startLocation = map.getStartLocation();
+            };
             if (playerAttributes.currentLocation != undefined) {
                 _currentLocation = map.getLocation(playerAttributes.currentLocation);
             } else {
-                if (playerAttributes.startLocation != undefined) {
-                    _currentLocation = map.getLocation(playerAttributes.startLocation);
+                if (_startLocation != undefined) {
+                    _currentLocation = _startLocation;
                 };
             };
             if (playerAttributes.aggression != undefined) {_aggression = playerAttributes.aggression;};
@@ -1272,7 +1276,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.canSee = function() {
-            if (!(self.getLocation().isDark())) {return true;};  //location is not dark
+            if (!(self.getCurrentLocation().isDark())) {return true;};  //location is not dark
             var lamps = _inventory.getAllObjectsOfType("light");
             //console.log("Lamps found: "+lamps.length);
             for (var i=0; i<lamps.length; i++) {
@@ -1560,10 +1564,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //console.log('GO: '+returnMessage);
             return returnMessage;
-        };	
-
-        self.getLocation = function() {
-            return _currentLocation;
         };	
 
         self.getVisits = function() {

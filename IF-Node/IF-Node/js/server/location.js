@@ -142,8 +142,24 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return exitArray;
         };
 
-        self.getRandomExit = function(includeUnlockedDoors) {
-            var availableExits = self.getAvailableExits(includeUnlockedDoors);
+        self.getRandomExit = function(includeUnlockedDoors, avoidLocations) {
+            if (!(avoidLocations)) {avoidLocations = [];};
+            var allAvailableExits = self.getAvailableExits(includeUnlockedDoors);
+            var availableExits = [];
+
+            //filter out avoid locations...
+            for (var e=0;e<allAvailableExits.length;e++) {
+                if (avoidLocations.indexOf(allAvailableExits[e].getDestinationName()) == -1) {
+                    //not an avoid location, free to use it...
+                    availableExits.push(allAvailableExits[e]);
+                };
+            };
+
+            //if there's nowhere else go go *except* an avoided location, then it's an option they have to take...
+            if (availableExits.length == 0) {
+                availableExits = allAvailableExits;
+            };
+
             var randomInt = 0;
             if (availableExits.length <= 1) {
                 //give them a 50% chance of being able to use the only available exit
