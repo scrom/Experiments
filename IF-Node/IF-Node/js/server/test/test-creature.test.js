@@ -952,7 +952,7 @@ exports.creatureCanFindAlternatePathToGoalAvoidingALocation = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.creatureCanFindAlternatePathToGoalAvoidingALocation.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+exports.creatureCanFindAlternatePathToGoalAvoidingALocation.meta = { traits: ["Creature Test", "Hunting Trait", "Avoid Trait"], description: "Test that a creature can identify a path to a location." };
 
 
 exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit = function (test) {
@@ -1032,7 +1032,7 @@ exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
     test.ok(actual);
     test.done();
 };
-exports.creatureCanFindDirectPathToGoalThroughADoor.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+exports.creatureCanFindDirectPathToGoalThroughADoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait"], description: "Test that a creature can identify a path to a location." };
 
 
 exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = function (test) {
@@ -1051,7 +1051,7 @@ exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = functi
     test.equal(actual, expected);
     test.done();
 };
-exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a creature doesn't get stuck with avoiding locations." };
+exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit.meta = { traits: ["Creature Test", "Avoid Trait", "Tick Trait"], description: "Test that a creature doesn't get stuck with avoiding locations." };
 
 
 exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome = function (test) {
@@ -1069,7 +1069,7 @@ exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome = function (
     test.equal(actual, expected);
     test.done();
 };
-exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can return home after travelling." };
+exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome.meta = { traits: ["Creature Test", "Hunting Trait", "Travel Trait"], description: "Test that a creature can return home after travelling." };
 
 
 exports.ensureSettingDestinationForTravellerAddsToList = function (test) {
@@ -1088,7 +1088,7 @@ exports.ensureSettingDestinationForTravellerAddsToList = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.ensureSettingDestinationForTravellerAddsToList.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
+exports.ensureSettingDestinationForTravellerAddsToList.meta = { traits: ["Creature Test", "Hunting Trait", "Travel Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
 
 
 

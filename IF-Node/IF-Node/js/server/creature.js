@@ -50,7 +50,31 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _loopDelay = 0;
         var _destinationDelay = 0;
         var _currentDelay = -1;
+        var _returnDirection;
 	    var _objectName = "creature";
+
+        var oppositeOf = function(direction){
+            switch(direction)
+            {
+                case 'n':
+                    return 's'; 
+                case 's':
+                    return 'n';
+                case 'e':
+                    return 'w';
+                case 'w':
+                    return 'e';
+                case 'u':
+                    return 'd';
+                case 'd':
+                    return 'u';
+                case 'i':
+                    return 'o';
+                case 'o':
+                    return 'i';   
+            }; 
+            return null;       
+        };
 
         var healthPercent = function() {
             //avoid dividebyzero
@@ -104,7 +128,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.loopDelay != undefined) {_loopDelay = creatureAttributes.loopDelay;};
             if (creatureAttributes.destinationDelay != undefined) {_destinationDelay = creatureAttributes.destinationDelay;};
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
-            
+            if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
 
         };
 
@@ -270,6 +294,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
+        self.getReturnDirection = function() {
+            return _returnDirection;
+        };
+
+        self.setReturnDirection = function(direction) {
+            if (direction) { 
+                _returnDirection = direction;
+            };
+            return _returnDirection;
+        };
+
 
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
@@ -318,6 +353,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.loopDelay = _loopDelay;
             currentAttributes.destinationDelay = _destinationDelay;
             currentAttributes.currentDelay = _currentDelay;
+            currentAttributes.returnDirection = _returnDirection;            
 
             return currentAttributes;
 
@@ -354,6 +390,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.loopDelay >0) {saveAttributes.loopDelay = creatureAttributes.loopDelay;};
             if (creatureAttributes.destinationDelay >0) {saveAttributes.destinationDelay = creatureAttributes.destinationDelay;};
             if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
+            if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
 
             return saveAttributes;
         };
@@ -1011,22 +1048,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString;
         };
 
-        self.followPlayer = function(aDirection, aLocation) {
+        self.followPlayer = function(direction, aLocation) {
             if (self.canTravel()) {
                 //erode affinity lower than base if following a player (prevents indefinite following)
                 //it'll recover again as part of bsic creature wandering.
                 if ((_affinity <= _baseAffinity) && _affinity>0) {
                     if (_moves%5 == 0 && _moves>0) {self.decreaseAffinity(1);};
                 };
-                return self.go(aDirection, aLocation)
+                return self.go(direction, aLocation)
             };
             return "";
         };
 
-        self.go = function(aDirection, aLocation) {
+        self.go = function(direction, aLocation) {
             //@todo this if statement looks wrong.
-            if (aDirection && self.isDead()) {return ""}; //if aDirection is not set, we're placing a dead creature somewhere.
+            if (direction && self.isDead()) {return ""}; 
+            //note, if direction is *not* set, we're placing a dead creature somewhere.
+            //if it *is* set, something called then when it shouldn't.
+
             _moves++;
+
+            //
+            self.setReturnDirection(oppositeOf(direction));
 
             //slowly erode affinity back towards original level the more time they spend moving (without a benefit or impact).
             //affinity degrades slower the higher it is to start with. 
