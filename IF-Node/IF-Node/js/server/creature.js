@@ -1473,11 +1473,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                             };
                                         };
                                     };
+                                } else {
+                                    //the door got locked at some point on the path, recalculate path and try again next turn.
+                                    self.setPath(self.findBestPath(_destinations[_destinations.length-1], map));
+                                    exit = null;
                                 };
                                 if (openedDoor) {break;};
                             };
                         };
-                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+
+                        if (exit) {
+                            self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                        };
                         //should really close the door behind us here.
 
                         //if creature ends up in player location (rather than starting there...
