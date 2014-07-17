@@ -174,6 +174,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
+        //shuffle arrays
+        var shuffle = function(array) {
+          var currentIndex = array.length;
+          var temporaryValue;
+          var randomIndex;
+
+          // While there remain elements to shuffle...
+          while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          };
+
+          return array;
+        };
+
 
         //// instance methods
 
@@ -1397,7 +1419,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             self.clearDestination();                            
                         } else {
                             if (_path.length == 0) {
-                                self.setPath(self.findPath(_destination, map, _currentLocation));
+                                self.setPath(self.findBestPath(_destination, map));
                             };
                             var direction = _path.pop();
                             if (!(direction)) {
@@ -1593,7 +1615,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _path = [];
         };
 
-        self.findPath = function(destinationName, map, startLocation, currentLocation, lastDirection, visitedLocations) {
+        self.findBestPath = function(destinationName, map) {
+            var bestPathLength = 1/0; //infinity
+            var path;
+            var duplicateCount = 0;
+            for (i=0;i<25;i++) {
+                //console.log("loop#"+i); //how many attempts are we making?
+                var tempPath = self.findPath(true, destinationName, map, _currentLocation);
+                if (tempPath.length == bestPathLength) {
+                   duplicateCount ++;
+                }; 
+                if (duplicateCount > 2) {
+                    return path;
+                };
+                if (tempPath.length < bestPathLength) {
+                    path = tempPath;
+                    bestPathLength = path.length;
+                };
+            };
+            return path;
+        };
+
+        self.findPath = function(randomiseSearch, destinationName, map, startLocation, currentLocation, lastDirection, visitedLocations) {
             if (!(currentLocation)) {currentLocation = startLocation;};
 
             if (!(visitedLocations)) {visitedLocations = [currentLocation.getName()];}
@@ -1602,12 +1645,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log("finding path from "+currentLocation.getName()+" to "+destinationName);
 
             if (currentLocation.getName() == destinationName) {
-                console.log("pathfinder destination found");
+                //console.log("pathfinder destination found");
                 return [];
              };       
 
             var exits = currentLocation.getAvailableExits();
             if (exits.length == 1 && currentLocation.getName() != startLocation.getName()) {return null;};
+
+            if (randomiseSearch) {
+                exits = shuffle(exits);
+            };
 
             for (var e=0;e<exits.length;e++) {
                 var direction = exits[e].getDirection();
@@ -1623,7 +1670,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     continue;
                 };
 
-                var newPath = self.findPath(destinationName, map, startLocation, map.getLocation(exits[e].getDestinationName()), direction, visitedLocations);
+                var newPath = self.findPath(randomiseSearch, destinationName, map, startLocation, map.getLocation(exits[e].getDestinationName()), direction, visitedLocations);
 
                 if (newPath) {
                     newPath.push(exits[e].getDirection());

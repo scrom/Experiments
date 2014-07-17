@@ -928,7 +928,7 @@ exports.creatureCanFindPathToGoal = function (test) {
 
     var expected = "e,e,s,e,e,e,n,n,e,s,s,s,s,e,s,s,u,n,n,w,w,s,w,w,w,n,n,n,e,n,u,s,w,s,e,n";
     //var actual = c0.findPath(destination, m);
-    var actual = c0.findPath(destination, m, c0.getCurrentLocation());
+    var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);
@@ -946,13 +946,34 @@ exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit = function
 
     var expected = "s,w,n,e,n,d,s,e,s,s,w,w,w,n,n,n,w,s,s,s,d,n,n,n,e,e,e,e,s,s,w,w,w,n,w,w";
     //var actual = c0.findPath(destination, m);
-    var actual = c0.findPath(destination, m, c0.getCurrentLocation());
+    var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:" + expected);
     console.log("actual:" + actual);
     test.equal(actual, expected);
     test.done();
 };
 exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+
+exports.creatureCanFindBestPathToGoal = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var m = mb.buildMap();
+    var destination = 'machine-room-east';
+    c0.go(null, m.getLocation('atrium'));
+
+    var path = c0.findBestPath(destination, m);
+    var targetLength = 10;
+    var expected = true;
+    var actual = false;
+    if (path.length <= targetLength) {actual = true};
+    console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.ok(actual);
+    test.done();
+};
+exports.creatureCanFindBestPathToGoal.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+
 
 
 /*
