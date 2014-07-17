@@ -94,7 +94,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return null;
         };
 
-        /*self.getDoorForExit = function(direction) {
+        self.getDoorForExit = function(direction) {
             var doors = self.getAllObjectsOfType("door");
             for (var d=0;d<doors.length;d++) {
                 if (!(doors[d].isLocked())) {
@@ -109,7 +109,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
                     };
                 };
             };
-        };*/
+        };
 
 
         self.getAvailableExits = function(includeUnlockedDoors) {

@@ -9,6 +9,22 @@ var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
 var junkAttributes;
 var a0;
 
+var removeAllDoorsInMap = function(map) {
+    var locations = map.getLocations();
+    for (var l=0;l<locations.length;l++) {
+        var doors = locations[l].getAllObjectsOfType("door");
+        for (var d=0;d<doors.length;d++) {
+            var exits = doors[d].getLinkedExits();
+            for (var e=0;e<exits.length;e++) {
+                exits[e].show();
+            };
+            locations[l].removeObject(doors[d].getName());
+        };
+        var exits = locations[l].getE
+    };
+
+};
+
 exports.setUp = function (callback) {
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
@@ -924,10 +940,11 @@ exports.creatureCanFindPathToGoal = function (test) {
 
     var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
+    removeAllDoorsInMap(m);
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
-
-    var expected = "e,e,s,e,e,e,n,n,e,s,s,s,s,e,s,s,u,n,n,w,w,s,w,w,w,n,n,n,e,n,u,s,w,s,e,n";
+    
+    var expected = "e,e,n,w,w,s,s,s,u,n,n,e,n,n,e,e,s,s,u,n,n,n,w,w,n,w,s,e,n";
     //var actual = c0.findPath(destination, m);
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:"+expected);
@@ -941,10 +958,11 @@ exports.creatureCanFindAlternatePathToGoalAvoidingALocation = function (test) {
 
     var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, avoiding:["reception", "office-front", "northwest-corridor-ground-floor"]});
     var m = mb.buildMap();
+    removeAllDoorsInMap(m);
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
 
-    var expected = "e,e,n,w,w,s,s,s,u,n,n,e,n,n,e,e,s,s,u,w";
+    var expected = "e,e,s,e,e,e,n,n,e,s,s,s,s,e,s,s,u,u,n,n,w,n,w,w,n,n,d,s,e,s,s,u,w";
     //var actual = c0.findPath(destination, m);
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:"+expected);
@@ -959,10 +977,11 @@ exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit = function
 
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true });
     var m = mb.buildMap();
+    removeAllDoorsInMap(m);
     var destination = 'atrium';
     c0.go(null, m.getLocation('machine-room-east'));
 
-    var expected = "s,w,n,e,n,d,s,e,s,s,w,w,w,n,n,n,w,s,s,s,d,n,n,n,e,e,e,e,s,s,w,w,w,n,w,w";
+    var expected = "w,n,w,n,n,n,e,n,n,d,s,e,s,s,w,w,w,n,n,n,w,s,s,s,d,n,n,n,e,e,e,e,s,s,w,w,w,n,w,w";
     //var actual = c0.findPath(destination, m);
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:" + expected);
@@ -976,6 +995,7 @@ exports.creatureCanFindBestPathToGoal = function (test) {
 
     var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
+    removeAllDoorsInMap(m);
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
 
@@ -1018,6 +1038,7 @@ exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
 
     var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
+    removeAllDoorsInMap(m);
     var destination = 'smoking-area';
     c0.go(null, m.getLocation('east-end-south-corridor-ground-floor'));
 

@@ -1216,17 +1216,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         if (_linkedExits[i].getSourceName() == locationName) {
                             localExit = _linkedExits[i];
                             //toggle exit visibility
-                            if (!(_linkedExits[i].isVisible())) {
-                                exitResult = _linkedExits[i].show();
+                            if (_linkedExits[i].isVisible()) {
+                                if (verb != "open") {
+                                    exitResult = _linkedExits[i].hide();
+                                };
                             } else {
-                                exitResult = _linkedExits[i].hide();
+                                exitResult = _linkedExits[i].show();
                             };
                         } else {
                             //toggle exit visibility
-                            if (!(_linkedExits[i].isVisible())) {
-                                _linkedExits[i].show();  
+                            if (_linkedExits[i].isVisible()) {
+                                if (verb != "open") {
+                                    _linkedExits[i].hide();  
+                                };
                             } else {
-                                _linkedExits[i].hide();
+                                _linkedExits[i].show();
                             };
                         };
                     };
@@ -1276,12 +1280,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             localExit = _linkedExits[i];
                         }; 
                         //note, we don't toggle exit visibility for other exits here - only on "open"
-                        exitResult =_linkedExits[i].hide();  
+                        exitResult ="<br>"+_linkedExits[i].hide();  
                     };
 
                     if (!(localExit)) {
                         //we had no *local* exit
-                        exitResult = "A door closes somewhere.";
+                        exitResult = "<br>A door closes somewhere.";
                     };
                 };
 
@@ -1568,7 +1572,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
             if (_locked) {
-                if (!(aKey)) {return "You don't have a key that fits.";};
+                if (!(aKey)) {return "You don't have a key for "+self.getSuffix()+".";};
                 if (aKey.keyTo(self)) {
                     _locked = false;
                     if (self.getType() == "property") {_collectable = true;};

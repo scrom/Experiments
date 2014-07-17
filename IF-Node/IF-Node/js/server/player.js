@@ -1432,11 +1432,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.open = function(verb, artefactName) {
             //note artefact could be a creature!
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
-
+            var resultString = "";
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            return artefact.moveOrOpen(verb, _currentLocation.getName());
+            if (artefact.isLocked()) {
+                resultString +=self.unlock("open", artefact.getName())+"<br>";
+            } else {
+                resultString += artefact.moveOrOpen(verb, _currentLocation.getName());
+            };
+            return resultString;
         };
 
         self.close = function(verb, artefactName) {

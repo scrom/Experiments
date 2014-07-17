@@ -1441,10 +1441,48 @@
         "longname": "out",
         "direction": "o",
         "source": "first-floor-cubicle",
-        "destination": "first-floor-toilet"
+        "destination": "first-floor-toilet",
+		"hidden": true
       }
     ],
     "inventory": [
+		{
+        "object": "artefact",
+        "name": "cubicle door",
+        "description": "cubicle door",
+        "detailedDescription": "When you need to go...",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "in",
+			"direction": "i",
+			"source": "first-floor-toilet",
+			"destination": "first-floor-cubicle",
+			"hidden":true
+          },
+			{
+			"object": "exit",
+			"longname": "out",
+			"direction": "o",
+			"source": "first-floor-cubicle",
+			"destination": "first-floor-toilet",
+			"hidden":true
+		  }
+        ],
+        "synonyms": [
+          "toilet",
+		  "cubicle",
+		  "toilet door",
+          "door"
+        ]
+      },
       {
         "object": "artefact",
         "name": "security article",
@@ -1562,9 +1600,39 @@
         "longname": "South",
         "direction": "s",
         "source": "first-floor-landing-east",
-        "destination": "servery-back-corridor"
+        "destination": "servery-back-corridor",
+		"hidden": true
       }
-    ]
+    ],
+		"inventory":[	        {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "South",
+			"direction": "s",
+			"source": "first-floor-landing-east",
+			"destination": "servery-back-corridor",
+			"hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
+      }
+	  ] 
   },
   {
     "object": "location",
@@ -1625,10 +1693,48 @@
         "longname": "in",
         "direction": "i",
         "source": "first-floor-toilet",
-        "destination": "first-floor-cubicle"
+        "destination": "first-floor-cubicle",
+		"hidden": true
       }
     ],
     "inventory": [
+	{
+        "object": "artefact",
+        "name": "cubicle door",
+        "description": "cubicle door",
+        "detailedDescription": "When you need to go...",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "in",
+			"direction": "i",
+			"source": "first-floor-toilet",
+			"destination": "first-floor-cubicle",
+			"hidden":true
+          },
+			{
+			"object": "exit",
+			"longname": "out",
+			"direction": "o",
+			"source": "first-floor-cubicle",
+			"destination": "first-floor-toilet",
+			"hidden":true
+		  }
+        ],
+        "synonyms": [
+          "toilet",
+		  "cubicle",
+		  "toilet door",
+          "door"
+        ]
+      },
       {
         "object": "artefact",
         "name": "soap",
@@ -1835,24 +1941,100 @@
         "longname": "in",
         "direction": "i",
         "source": "ground-floor-toilet",
-        "destination": "ground-floor-toilet-cubicle"
+        "destination": "ground-floor-cubicle",
+		"hidden":true
       }
-    ]
+    ],
+	"inventory":[{
+        "object": "artefact",
+        "name": "cubicle door",
+        "description": "cubicle door",
+        "detailedDescription": "When you need to go...",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "in",
+			"direction": "i",
+			"source": "ground-floor-toilet",
+			"destination": "ground-floor-cubicle",
+			"hidden":true
+          },
+			{
+			"object": "exit",
+			"longname": "out",
+			"direction": "o",
+			"source": "ground-floor-cubicle",
+			"destination": "ground-floor-toilet",
+			"hidden":true
+		  }
+        ],
+        "synonyms": [
+          "toilet",
+		  "cubicle",
+		  "toilet door",
+          "door"
+        ]
+      }] 
   },
   {
     "object": "location",
-    "name": "ground-floor-toilet-cubicle",
+    "name": "ground-floor-cubicle",
     "description": "You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.",
     "exits": [
       {
         "object": "exit",
         "longname": "out",
         "direction": "o",
-        "source": "ground-floor-toilet-cubicle",
-        "destination": "ground-floor-toilet"
+        "source": "ground-floor-cubicle",
+        "destination": "ground-floor-toilet",
+		"hidden":true
       }
     ],
     "inventory": [
+	{
+        "object": "artefact",
+        "name": "cubicle door",
+        "description": "cubicle door",
+        "detailedDescription": "When you need to go...",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "in",
+			"direction": "i",
+			"source": "ground-floor-toilet",
+			"destination": "ground-floor-cubicle",
+			"hidden":true
+          },
+			{
+			"object": "exit",
+			"longname": "out",
+			"direction": "o",
+			"source": "ground-floor-cubicle",
+			"destination": "ground-floor-toilet",
+			"hidden":true
+		  }
+        ],
+        "synonyms": [
+          "toilet",
+		  "cubicle",
+		  "toilet door",
+          "door"
+        ]
+      },
       {
         "object": "artefact",
         "name": "solid article",
@@ -1950,6 +2132,76 @@
         "direction": "e",
         "source": "is-area",
         "destination": "core-area-west"
+      }
+    ],    "inventory": [
+      {
+        "object": "creature",
+        "name": "amanda",
+        "displayname": "Amanda",
+        "description": "Amanda from IS",
+        "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
+        "attributes": {
+          "weight": 90,
+          "attackStrength": 25,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 12,
+          "health": 215,
+          "canTravel": true,
+          "traveller": true
+        },
+        "synonyms": [
+          "mandy",
+          "manda",
+          "her"
+        ],
+        "dislikes": [
+          "james moore",
+          "spy"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "teachprojectorrepair",
+            "displayName": "learn projector repair from Amanda",
+            "description": "Amanda knows how to fix stuff.",
+            "attributes": {
+              "parent": "keyfob",
+              "missionObject": "Amanda",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
+                "'Hi again $player.'<br>Any joy with the projector?"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": "true"
+            },
+            "reward": {
+              "delivers": {
+                "object": "artefact",
+                "name": "bulb",
+                "description": "projector bulb",
+                "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
+                "attributes": {
+                  "attackStrength": 5,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "componentOf": [
+                    "projector"
+                  ]
+                },
+                "synonyms": [
+                  "lightbulb",
+                  "light bulb",
+                  "projector bulb"
+                ]
+              },
+              "repairSkill": "projector",
+              "successMessage": "Amanda hands you a projector bulb."
+            }
+          }
+        ]
       }
     ]
   },
@@ -3398,7 +3650,8 @@
         "longname": "South",
         "direction": "s",
         "source": "reception",
-        "destination": "east-corridor-ground-floor-north-west"
+        "destination": "east-corridor-ground-floor-north-west",
+		"hidden": true
       }
     ],
     "inventory": [
@@ -3448,7 +3701,7 @@
                   "weight": 0.1,
                   "type": "key",
                   "canCollect": true,
-                  "unlocks": "nothing"
+                  "unlocks": "office door"
                 },
                 "synonyms": [
                   "key fob",
@@ -3553,6 +3806,34 @@
               "successMessage": "Congratulations. Vic likes the book! Have 50 points."
             }
           }
+        ]
+      },
+	        {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "One of the main doors into the ground floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "South",
+			"direction": "s",
+			"source": "reception",
+			"destination": "east-corridor-ground-floor-north-west",
+			"hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
     ]
@@ -4086,10 +4367,48 @@
         "longname": "out",
         "direction": "o",
         "source": "second-floor-cubicle",
-        "destination": "second-floor-toilet"
+        "destination": "second-floor-toilet",
+		"hidden":true
       }
     ],
     "inventory": [
+	{
+        "object": "artefact",
+        "name": "cubicle door",
+        "description": "cubicle door",
+        "detailedDescription": "When you need to go...",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "in",
+			"direction": "i",
+			"source": "second-floor-toilet",
+			"destination": "second-floor-cubicle",
+			"hidden":true
+          },
+			{
+			"object": "exit",
+			"longname": "out",
+			"direction": "o",
+			"source": "second-floor-cubicle",
+			"destination": "second-floor-toilet",
+			"hidden":true
+		  }
+        ],
+        "synonyms": [
+          "toilet",
+		  "cubicle",
+		  "toilet door",
+          "door"
+        ]
+      },
       {
         "object": "artefact",
         "name": "boy scout article",
@@ -4265,9 +4584,39 @@
         "longname": "South",
         "direction": "s",
         "source": "second-floor-landing-east",
-        "destination": "second-floor-east-corridor"
+        "destination": "second-floor-east-corridor",
+		"hidden":true
       }
-    ]
+    ],
+			"inventory":[	        {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "South",
+			"direction": "s",
+			"source": "second-floor-landing-east",
+			"destination": "second-floor-east-corridor",
+			"hidden":true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
+      }
+	  ] 
   },
   {
     "object": "location",
@@ -4587,7 +4936,8 @@
         "longname": "in",
         "direction": "i",
         "source": "second-floor-toilet",
-        "destination": "second-floor-cubicle"
+        "destination": "second-floor-cubicle",
+		"hidden":true
       }
     ],
     "inventory": [
@@ -4609,6 +4959,42 @@
           "hand-dryer",
           "hand",
           "hands"
+        ]
+      },{
+        "object": "artefact",
+        "name": "cubicle door",
+        "description": "cubicle door",
+        "detailedDescription": "When you need to go...",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "in",
+			"direction": "i",
+			"source": "second-floor-toilet",
+			"destination": "second-floor-cubicle",
+			"hidden":true
+          },
+			{
+			"object": "exit",
+			"longname": "out",
+			"direction": "o",
+			"source": "second-floor-cubicle",
+			"destination": "second-floor-toilet",
+			"hidden":true
+		  }
+        ],
+        "synonyms": [
+          "toilet",
+		  "cubicle",
+		  "toilet door",
+          "door"
         ]
       }
     ]
@@ -5093,7 +5479,8 @@
         "longname": "South",
         "direction": "s",
         "source": "stairs-first-floor",
-        "destination": "servery-north-west"
+        "destination": "servery-north-west",
+		"hidden": true
       },
       {
         "object": "exit",
@@ -5102,7 +5489,36 @@
         "source": "stairs-first-floor",
         "destination": "first-floor-landing-west"
       }
-    ]
+    ],
+		"inventory":[	        {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "South",
+			"direction": "s",
+			"source": "stairs-first-floor",
+			"destination": "servery-north-west",
+			"hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
+      }
+	  ] 
   },
   {
     "object": "location",
@@ -5135,7 +5551,8 @@
         "longname": "South",
         "direction": "s",
         "source": "stairs-ground-floor",
-        "destination": "northwest-corridor-ground-floor"
+        "destination": "northwest-corridor-ground-floor",
+		"hidden": true
       },
       {
         "object": "exit",
@@ -5144,7 +5561,36 @@
         "source": "stairs-ground-floor",
         "destination": "stairs-first-floor"
       }
-    ]
+    ],
+	"inventory":[	        {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "One of the main doors into the ground floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true
+        },
+        "linkedexits": [
+          {
+			"object": "exit",
+			"longname": "South",
+			"direction": "s",
+			"source": "stairs-ground-floor",
+			"destination": "northwest-corridor-ground-floor",
+			"hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
+      }
+	  ] 
   },
   {
     "object": "location",
@@ -5163,7 +5609,8 @@
         "longname": "South",
         "direction": "s",
         "source": "stairs-second-floor",
-        "destination": "second-floor-reception"
+        "destination": "second-floor-reception",
+		"hidden":true
       },
       {
         "object": "exit",
@@ -5173,77 +5620,35 @@
         "destination": "second-floor-landing-west"
       }
     ],
-    "inventory": [
-      {
-        "object": "creature",
-        "name": "amanda",
-        "displayname": "Amanda",
-        "description": "Amanda from IS",
-        "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
+			"inventory":[	        {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
         "attributes": {
-          "weight": 90,
-          "attackStrength": 25,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 215,
-          "canTravel": true,
-          "traveller": true
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true
         },
-        "synonyms": [
-          "mandy",
-          "manda",
-          "her"
-        ],
-        "dislikes": [
-          "james moore",
-          "spy"
-        ],
-        "missions": [
+        "linkedexits": [
           {
-            "object": "mission",
-            "name": "teachprojectorrepair",
-            "displayName": "learn projector repair from Amanda",
-            "description": "Amanda knows how to fix stuff.",
-            "attributes": {
-              "parent": "keyfob",
-              "missionObject": "Amanda",
-              "static": true,
-              "dialogue": [
-                "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
-                "'Hi again $player.'<br>Any joy with the projector?"
-              ]
-            },
-            "conditionAttributes": {
-              "alive": "true"
-            },
-            "reward": {
-              "delivers": {
-                "object": "artefact",
-                "name": "bulb",
-                "description": "projector bulb",
-                "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
-                "attributes": {
-                  "attackStrength": 5,
-                  "canCollect": true,
-                  "isBreakable": true,
-                  "componentOf": [
-                    "projector"
-                  ]
-                },
-                "synonyms": [
-                  "lightbulb",
-                  "light bulb",
-                  "projector bulb"
-                ]
-              },
-              "repairSkill": "projector",
-              "successMessage": "Amanda hands you a projector bulb."
-            }
+			"object": "exit",
+			"longname": "South",
+			"direction": "s",
+			"source": "stairs-second-floor",
+			"destination": "second-floor-reception",
+			"hidden":true
           }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
-    ]
+	  ] 
   },
   {
     "object": "location",

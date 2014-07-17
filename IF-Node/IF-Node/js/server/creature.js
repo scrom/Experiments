@@ -51,6 +51,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _destinationDelay = 0;
         var _currentDelay = -1;
         var _returnDirection;
+        var _openedDoor = false;
 	    var _objectName = "creature";
 
         var oppositeOf = function(direction){
@@ -1472,6 +1473,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //console.log("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick();
 
+                //did we open a door on the last move?
+                if (_openedDoor) {
+                    _openedDoor = false;
+                    var returnDoor = _currentLocation.getDoorForExit(self.getReturnDirection());
+                    if (returnDoor) {
+                        returnDoor.close("close", _currentLocation.getName());
+                        console.log(self.getName()+" closed the door behind them.");
+                    };
+                };
+
                 //if creature is hostile, collect available weapons
                 if (self.isHostile(player.getAggression())) {
                     resultString += self.collectBestAvailableWeapon();
@@ -1566,6 +1577,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 };
                                 if (openedDoor) {break;};
                             };
+                        };
+
+                        if (openedDoor) {
+                            _openedDoor = true;
                         };
 
                         if (exit) {
@@ -1786,6 +1801,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             for (i=0;i<attempts;i++) {
                 //console.log("loop#"+i); //how many attempts are we making?
                 var tempPath = self.findPath(true, destinationName, map, _currentLocation);
+
+                //if we can't find a path at the moment.
+                if (!(tempPath)) {return [];};
+
                 if (tempPath.length <= 2) {
                     //we've found the shortest possible path already, stop here.
                     return tempPath;
