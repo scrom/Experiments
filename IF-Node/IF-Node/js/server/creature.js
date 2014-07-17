@@ -1413,7 +1413,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
                     partialResultString = resultString;
-                } else if (_traveller && _canTravel) { //is a traveller
+                } else if (_traveller || (_canTravel && _destinations.length>0)) { //is a traveller
                     var exit;
 
                     if (_destinations.length>0) {
@@ -1433,11 +1433,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     self.clearDestination();
                                 } else {
                                     exit = _currentLocation.getExit(direction);
-                                    console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
+                                    //console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
                                 };
                             };
-                        };
-                    };
+                        }; 
+                    };              
 
                     //no destination or path...
                     //if they have a destination but no path by this point, they'll wander somewhere else and try to build a path again next time.
@@ -1451,8 +1451,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (!(exit)) {
                         //console.log("getting first available exit");
                         exit = _currentLocation.getAvailableExits()[0];
-                    }; 
-
+                    };
 
                     if (exit) {
                         if (!(exit.isVisible())) {
@@ -1497,8 +1496,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (_bleeding) {movementVerb = "limps";};
                             resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"."; 
                         };  
-                    };  
-          
+                    };            
                 };
 
                 //bleed?
@@ -1641,9 +1639,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
+        self.getDestinations = function() {
+            return _destinations;
+        };
+
         self.setDestination = function(destination) {
-            console.log(self.getDisplayName()+"new destination set "+destination);
-            _destinations.unshift(destination); //add new destination to front of array!
+            console.log(self.getDisplayName()+" new destination set "+destination);
+            //add new destination to *front* of array as we pop destinations from the end.
+
+            _destinations.unshift(destination); 
+
+            //if not normally a traveller, set path to return home afterwards...
+            if (!(_traveller)) {
+                if (_startLocation) {
+                    _destinations.unshift(_startLocation.getName());
+                } else {
+                    _destinations.unshift(_currentLocation.getName());
+                };
+            };
         };
 
         self.clearDestination = function() {

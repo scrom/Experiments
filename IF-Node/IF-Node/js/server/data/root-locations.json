@@ -1180,8 +1180,7 @@
           "health": 140,
           "affinity": 1,
           "canTravel": true,
-		  "traveller": true,
-		  "destinations":["smoking-area"]
+		  "traveller": true
         },
         "synonyms": [
           "chris",

@@ -1051,7 +1051,44 @@ exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = functi
     test.equal(actual, expected);
     test.done();
 };
-exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a creature can identify a path to a location." };
+exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a creature doesn't get stuck with avoiding locations." };
+
+
+exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: false});
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+    c0.go(null, m.getLocation('machine-room-east'));
+    c0.setDestination('atrium');
+
+    var expected = 2;
+    var actual = c0.getDestinations().length;
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can return home after travelling." };
+
+
+exports.ensureSettingDestinationForTravellerAddsToList = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: true});
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+    c0.go(null, m.getLocation('machine-room-east'));
+    c0.setDestination('atrium');
+    c0.setDestination('smoking-area');
+
+    var expected = "smoking-area,atrium";
+    var actual = c0.getDestinations();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.ensureSettingDestinationForTravellerAddsToList.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
 
 
 
