@@ -43,7 +43,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _spokenToPlayer = false;
         var _path = [];
         var _destinations = [];
+        var _clearedDestinations = [];
         var _avoiding = [];
+        var _loops = 0;
+        var _loopCount = 0;
+        var _loopDelay = 0;
+        var _destinationDelay = 0;
+        var _currentDelay = -1;
 	    var _objectName = "creature";
 
         var healthPercent = function() {
@@ -91,7 +97,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
             if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
             if (creatureAttributes.destinations != undefined) {_destinations = creatureAttributes.destinations;};
+            if (creatureAttributes.clearedDestinations != undefined) {_clearedDestinations = creatureAttributes.clearedDestinations;};
             if (creatureAttributes.avoiding != undefined) {_avoiding = creatureAttributes.avoiding;};
+            if (creatureAttributes.loops != undefined) {_loops = creatureAttributes.loops;};
+            if (creatureAttributes.loopCount != undefined) {_loopCount = creatureAttributes.loopCount;};
+            if (creatureAttributes.loopDelay != undefined) {_loopDelay = creatureAttributes.loopDelay;};
+            if (creatureAttributes.destinationDelay != undefined) {_destinationDelay = creatureAttributes.destinationDelay;};
+            if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
+            
+
         };
 
         processAttributes(attributes);
@@ -297,7 +311,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.moves = _moves;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
             currentAttributes.destinations = _destinations;
+            currentAttributes.clearedDestinations = _clearedDestinations;
             currentAttributes.avoiding = _avoiding;
+            currentAttributes.loops = _loops;
+            currentAttributes.loopCount = _loopCount;
+            currentAttributes.loopDelay = _loopDelay;
+            currentAttributes.destinationDelay = _destinationDelay;
+            currentAttributes.currentDelay = _currentDelay;
 
             return currentAttributes;
 
@@ -326,8 +346,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.moves != -1) {saveAttributes.moves = creatureAttributes.moves;};
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
+            if (creatureAttributes.clearedDestinations.length >0) {saveAttributes.clearedDestinations = creatureAttributes.clearedDestinations;};
             if (creatureAttributes.avoiding.length >0) {saveAttributes.avoiding = creatureAttributes.avoiding;};
 
+            if (creatureAttributes.loops !=0) {saveAttributes.loops = creatureAttributes.loops;};
+            if (creatureAttributes.loopCount != 0) {saveAttributes.loopCount = creatureAttributes.loopCount;};
+            if (creatureAttributes.loopDelay >0) {saveAttributes.loopDelay = creatureAttributes.loopDelay;};
+            if (creatureAttributes.destinationDelay >0) {saveAttributes.destinationDelay = creatureAttributes.destinationDelay;};
+            if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
 
             return saveAttributes;
         };
@@ -1413,6 +1439,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
                     partialResultString = resultString;
+                } else if (_currentDelay > -1) {
+                    //we're in a delay of some sort
+                    var delay = 0;
+                    //determine which delay...
+                    if (_clearedDestinations.length == 0) {
+                        delay = _loopDelay;
+                        console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
+                    } else {
+                        delay = _destinationDelay;
+                        console.log(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
+                    };
+
+                    //increment or clear delay
+                    if (_currentDelay < delay-1) { 
+                        _currentDelay++;
+                    } else {
+                        _currentDelay = -1; //clear delay
+                    };
+                    
                 } else if (_traveller || (_canTravel && _destinations.length>0)) { //is a traveller
                     var exit;
 
@@ -1661,7 +1706,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.clearDestination = function() {
             //console.log(self.getDisplayName()+" destination cleared");
-            _destinations.pop();
+            _clearedDestinations.unshift(_destinations.pop());
+            if (_loops != 0 && _destinations.length == 0) {
+
+                if (_loopCount < _loops || _loops == -1) {
+                    //add cleared destinations back in
+                    _destinations = _destinations.concat(_clearedDestinations);
+                    _clearedDestinations = [];
+                };
+                if (_loops > 0) {
+                    _loopCount++;
+                };
+
+            }; 
+
+            if (_loopDelay > 0||_destinationDelay>0) {
+                _currentDelay = 0; //activate delay
+            };
         };
 
         self.setPath = function(path) {

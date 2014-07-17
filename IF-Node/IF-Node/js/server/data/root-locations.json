@@ -829,6 +829,8 @@
           "affinity": 2,
           "canTravel": true,
           "traveller": true,
+		  "loops": 1,
+		  "loopDelay":5,
 		  "destinations": ["customer-delight-south-west","east-bike-racks","atrium"]
         },
         "synonyms": [
@@ -5409,7 +5411,10 @@
           "health": 100,
           "canTravel": true,
           "traveller": true,
-		  "destinations":["servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area","servery-kitchen","waste-area","servery-kitchen", "smoking-area"],
+		  "destinations":["servery-kitchen","waste-area","servery-kitchen", "smoking-area"],
+		  "loops": -1,
+		  "loopDelay": 5,
+		  "destinationDelay": 1,
 		  "avoiding":["first-floor-fire-escape"]
         },
         "inventory": [
