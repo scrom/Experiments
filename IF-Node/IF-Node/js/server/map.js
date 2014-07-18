@@ -146,6 +146,20 @@ exports.Map = function Map() {
            console.log('exit not found from '+aSource+', '+aDirection+' to '+aDestination);
         };
 
+        self.getDoorFor = function(aSource, aDestination) {
+            var location = self.getLocation(aSource);
+            var doors = location.getAllObjectsOfType("door");
+            for (var d=0;d<doors.length;d++) {
+                var linkedExits = doors[d].getLinkedExits();
+                for (var e=0;e<linkedExits.length;e++) {
+                    if (linkedExits[e].getDestinationName() == aDestination) {return doors[d];};
+                };
+            };
+
+            //no matching door found
+            return null;
+        };
+
         self.find = function(anObjectName) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
 

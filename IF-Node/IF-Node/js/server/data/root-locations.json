@@ -1450,7 +1450,7 @@
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
+        "detailedDescription": "When you're finished...",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -2002,7 +2002,7 @@
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
+        "detailedDescription": "When you're finished...",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -4376,7 +4376,7 @@
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
+        "detailedDescription": "When you're finished...",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
