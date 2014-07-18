@@ -1746,11 +1746,27 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _destinations;
         };
 
-        self.setDestination = function(destination) {
-            console.log(self.getDisplayName()+" new destination set "+destination);
+        self.setAvoiding = function(locationNameToAvoid) {
+            //if not already avoiding
+            if (_avoiding.indexOf(locationNameToAvoid) == -1) {
+                _avoiding.push(locationNameToAvoid);
+                var itemToRemove;
+                while ((itemToRemove = _destinations.indexOf(locationNameToAvoid)) >-1) {
+                    _destinations.splice(itemToRemove,1);
+                };
+            };
+        };
+
+        self.getAvoiding = function() {
+            return _avoiding;
+        };
+
+        self.setDestination = function(destinationName) {
+            if (_avoiding.indexOf(destinationName) > -1) {return null};
+            console.log(self.getDisplayName()+" new destination set "+destinationName);
             //add new destination to *front* of array as we pop destinations from the end.
 
-            _destinations.unshift(destination); 
+            _destinations.unshift(destinationName); 
 
             //if not normally a traveller, set path to return home afterwards...
             if (!(_traveller)) {

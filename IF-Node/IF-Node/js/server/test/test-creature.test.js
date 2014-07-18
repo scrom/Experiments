@@ -1112,6 +1112,62 @@ exports.ensureSettingDestinationForTravellerAddsToList = function (test) {
 exports.ensureSettingDestinationForTravellerAddsToList.meta = { traits: ["Creature Test", "Hunting Trait", "Travel Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
 
 
+exports.ensureSettingDestinationFromAvoidListDoesNotAddDestination = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding:["atrium"],destinations:["reception", "office-front"]});
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+    c0.setDestination('atrium');
+    var expected = "reception,office-front";
+    var actual = c0.getDestinations();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.ensureSettingDestinationFromAvoidListDoesNotAddDestination.meta = { traits: ["Creature Test", "Hunting Trait", "Avoid Trait"], description: "Test that a creature does not receive additional destination if it's in their avoid list" };
+
+
+exports.addingNewAvoidLocationRemovesMatchingDestinations = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, destinations:["reception", "office-front", "northwest-corridor-ground-floor", "reception", "atrium", "reception"]});
+    c0.setAvoiding("reception");
+    var expected = "office-front,northwest-corridor-ground-floor,atrium";
+    var actual = c0.getDestinations();
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.addingNewAvoidLocationRemovesMatchingDestinations.meta = { traits: ["Creature Test", "Hunting Trait", "Avoid Trait"], description: "Test that when an new avoid location is added, it's removed from creature destinations." };
+
+exports.addingNewAvoidLocationIsCorrectlyStored = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, avoiding:["reception", "office-front", "northwest-corridor-ground-floor"]});
+    c0.setAvoiding("atrium");
+    var expected = "reception,office-front,northwest-corridor-ground-floor,atrium";
+    var actual = c0.getAvoiding();
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.addingNewAvoidLocationIsCorrectlyStored.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a new avoid location is added to 'avoiding' array." };
+
+exports.cannotAddDuplicateAvoidLocations = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, avoiding:["reception", "office-front", "northwest-corridor-ground-floor", "atrium"]});
+    c0.setAvoiding("atrium");
+    var expected = "reception,office-front,northwest-corridor-ground-floor,atrium";
+    var actual = c0.getAvoiding();
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.cannotAddDuplicateAvoidLocations.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a duplicate avoid location is not added to 'avoiding' array." };
+
+
 
 /*
 Methods needing testing:
