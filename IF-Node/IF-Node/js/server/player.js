@@ -1484,6 +1484,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _currentLocation;
         };
 
+        self.setStartLocation = function(location) { 
+            _startLocation = location;
+        };
+
         //mainly used for setting initial location but could also be used for warping even if no exit/direction
         //param is a location object, not a name.
         self.setLocation = function(location) { 

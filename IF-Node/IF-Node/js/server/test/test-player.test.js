@@ -32,7 +32,7 @@ exports.setUp = function (callback) {
     m0 = mb.buildMap();
     p0 = new player.Player(playerAttributes, m0, mb);
     l0 = new location.Location('home','a home location');
-    p0.setLocation(l0);
+    p0.setStartLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, affinityModifier: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
@@ -82,7 +82,7 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreatePlayer = function (test) {
-    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"money":5,"carryWeight":20,"startLocation":"home","locationsFound":1}';
+    var expectedResult = '{"object":"player","username":"player","currentLocation":"atrium","health":100,"money":5,"carryWeight":20,"startLocation":"home"}';
     var actualResult = p0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -357,6 +357,7 @@ exports.killPlayerReturnsExpectedStringResult.meta = { traits: ["Player Test", "
 
 exports.creatureRetaliationCanKillPlayer = function (test) {
     c0.setAttackStrength(104);
+    p0.setLocation(l0);
     var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: home<br>a home location<br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.";
     var actual = p0.hit('hit',c0.getName());
     console.log("expected:"+expected);
