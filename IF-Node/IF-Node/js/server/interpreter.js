@@ -7,6 +7,8 @@ exports.Interpreter = function Interpreter(aGameController) {
 
         //module deps
         var _gameController = aGameController;
+        var JSONFileManagerModule = require("./jsonfilemanager");
+        var fm = new JSONFileManagerModule.JSONFileManager();
 
         console.log(_objectName+' created');
 
@@ -105,6 +107,10 @@ exports.Interpreter = function Interpreter(aGameController) {
             {
                 case 'config':
                     return('' + JSON.stringify(someTempConfig));
+                case 'image':
+                    if (fm.imageExists(actionString)) {
+                        return fm.getImagePath(actionString);
+                    };
                 case 'list':
                     //list active games
                     return assembleResponse(commandJson,_gameController.listGames());

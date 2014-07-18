@@ -64,6 +64,17 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 response.end();
             });
 
+            _webServer.get('/image/*', function (request, response) {
+                request.socket.setTimeout(120);
+                var sanitisedRequestURL = sanitiseString(request.url);
+                var fileURL = _interpreter.translate(sanitisedRequestURL,_config);
+                if (fileURL) {
+                    response.sendfile(fileURL);
+                } else {
+                    res.end('err');
+                };
+            });
+
             //event source handler(!ooh) 
             _webServer.get('/events*', function (request, response) {
                 request.socket.setTimeout(0);

@@ -8,6 +8,7 @@ module.exports.JSONFileManager = function JSONFileManager() {
         var util = require('util');
         var path = require('path');
         var filePath = path.resolve(path.join(__dirname, "./data/usergames/"));
+        var imagePath = path.resolve(path.join(__dirname, "./data/images/"));
 
 	    var _objectName = "jsonfilemanager";
 
@@ -34,6 +35,20 @@ module.exports.JSONFileManager = function JSONFileManager() {
             } else {
                 return false;
             };
+        };
+
+        self.imageExists = function(fileName) {
+            var file = path.join(imagePath,fileName);
+
+            if (fs.existsSync(file)) {
+                return true;
+            } else {
+                return false;
+            };
+        };
+
+        self.getImagePath = function(fileName) {
+            return path.join(imagePath,fileName);
         };
 
         self.writeFile = function(fileName, data, overwrite) {
