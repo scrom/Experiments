@@ -308,9 +308,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = '{"object":"'+_objectName+'","username":"'+_username+'"';
             resultString += ',"currentLocation":"'+_currentLocation.getName()+'"';
             resultString += ',"health":'+_hitPoints;
-            resultString += ',"maxHealth":'+_maxHitPoints;
-            resultString += ',"aggression":'+_aggression;
-            resultString += ',"stealth":'+_stealth;       
+            if (_maxHitPoints != 100) {resultString += ',"maxHealth":'+_maxHitPoints;};
+            if (_aggression != 0) {resultString += ',"aggression":'+_aggression;};
+            if (_stealth != 1) {resultString += ',"stealth":'+_stealth;};
                
             resultString += ',"money":'+_inventory.getCashBalance();
             resultString += ',"carryWeight":'+_inventory.getCarryWeight();
@@ -391,32 +391,33 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString+= ']';
             };
 
+            if (_killedCount > 0) {resultString += ',"killedCount":'+_killedCount;};
+            if (_bleeding) {resultString += ',"bleeding":'+_bleeding;};
+            if (_bleedingHealthThreshold != 50) {resultString += ',"bleedingHealthThreshold":'+_bleedingHealthThreshold;};
 
-            resultString += ',"killedCount":'+_killedCount;
-            resultString += ',"bleeding":'+_bleeding;
-            resultString += ',"bleedingHealthThreshold":'+_bleedingHealthThreshold;
             resultString += ',"startLocation":"'+_startLocation.getName()+'"';
-            resultString += ',"returnDirection":"'+_returnDirection+'"';
 
-            resultString += ',"saveCount":'+_saveCount;
-            resultString += ',"loadCount":'+_loadCount;
-            resultString += ',"timeSinceEating":'+_timeSinceEating;
-            resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;
-            resultString += ',"additionalMovesUntilStarving":'+_additionalMovesUntilStarving;
-            resultString += ',"stepsTaken":'+_stepsTaken;
-            resultString += ',"locationsFound":'+_locationsFound;
-            resultString += ',"maxAggression":'+_maxAggression;
-            resultString += ',"score":'+_score;
-            resultString += ',"totalDamageReceived":'+_totalDamageReceived;
-            resultString += ',"booksRead":'+_booksRead;
-            resultString += ',"stolenCash":'+_stolenCash;
-            resultString += ',"cashSpent":'+_cashSpent;
-            resultString += ',"cashGained":'+_cashGained;
-            resultString += ',"creaturesSpokenTo":'+_creaturesSpokenTo;
-            resultString += ',"restsTaken":'+_restsTaken;
-            resultString += ',"sleepsTaken":'+_sleepsTaken;
-            resultString += ',"maxAffinity":'+_maxAffinity;
-            resultString += ',"injuriesReceived":'+_injuriesReceived;
+            if (_returnDirection) {resultString += ',"returnDirection":"'+_returnDirection+'"';};
+
+            if (_saveCount > 0) {resultString += ',"saveCount":'+_saveCount;};
+            if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
+            if (_timeSinceEating > 0) {resultString += ',"timeSinceEating":'+_timeSinceEating;};
+            if (_maxMovesUntilHungry != 50) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
+            if (_additionalMovesUntilStarving != 10) {resultString += ',"additionalMovesUntilStarving":'+_additionalMovesUntilStarving;};
+            if (_stepsTaken > 0) {resultString += ',"stepsTaken":'+_stepsTaken;};
+            if (_locationsFound > 0) {resultString += ',"locationsFound":'+_locationsFound;};
+            if (_maxAggression > 0) {resultString += ',"maxAggression":'+_maxAggression;};
+            if (_score != 0) {resultString += ',"score":'+_score;};
+            if (_totalDamageReceived > 0) {resultString += ',"totalDamageReceived":'+_totalDamageReceived;};
+            if (_booksRead > 0) {resultString += ',"booksRead":'+_booksRead;};
+            if (_stolenCash > 0) {resultString += ',"stolenCash":'+_stolenCash;};
+            if (_cashSpent > 0) {resultString += ',"cashSpent":'+_cashSpent;};
+            if (_cashGained > 0) {resultString += ',"cashGained":'+_cashGained;};
+            if (_creaturesSpokenTo > 0) {resultString += ',"creaturesSpokenTo":'+_creaturesSpokenTo;};
+            if (_restsTaken > 0) {resultString += ',"restsTaken":'+_restsTaken;};
+            if (_sleepsTaken > 0) {resultString += ',"sleepsTaken":'+_sleepsTaken;};
+            if (_maxAffinity != 0) {resultString += ',"maxAffinity":'+_maxAffinity;};
+            if (_injuriesReceived > 0) {resultString += ',"injuriesReceived":'+_injuriesReceived;};
 
 /*
         //possible additional player stats
