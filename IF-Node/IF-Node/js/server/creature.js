@@ -1478,6 +1478,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     _openedDoor = false;
                     var returnDoor = _currentLocation.getDoorForExit(self.getReturnDirection());
                     if (returnDoor) {
+                        var linkedDoors = returnDoor.getLinkedDoors(map, _currentLocation.getName());
+                        for (var l=0;l<linkedDoors.length;l++) {
+                            linkedDoors[l].close("close", _currentLocation.getName());
+                        };
+
                         returnDoor.close("close", _currentLocation.getName());
                         console.log(self.getName()+" closed the door behind them.");
                     };
@@ -1564,6 +1569,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                         if (linkedExits[l].getSourceName()==_currentLocation.getName()) {
                                             if (linkedExits[l].getDirection() == exit.getDirection()) {
                                                 //we have a matching door
+
+                                                var linkedDoors = doors[d].getLinkedDoors(map, _currentLocation.getName());
+                                                for (var l=0;l<linkedDoors.length;l++) {
+                                                    linkedDoors[l].moveOrOpen("open", _currentLocation.getName());
+                                                };
+
                                                 doors[d].moveOrOpen("open", _currentLocation.getName());
                                                 openedDoor = doors[d];
                                                 break;

@@ -57,3 +57,21 @@ exports.canFindSide2CorrespondingDoorFromMap = function (test) {
 };
 
 exports.canFindSide2CorrespondingDoorFromMap.meta = { traits: ["Map Test", "Door Trait"], description: "Test that given a specific door in one location, we can find its matching adjacent pair in the destination location." };
+
+
+exports.cangetLinkedDoor = function (test) {
+    var currentLocationName = "first-floor-toilet"
+    var destinationLocationName = "first-floor-cubicle";
+    var door1 = m0.getDoorFor(currentLocationName, destinationLocationName);
+    var linkedDoors = door1.getLinkedDoors(m0, currentLocationName);
+    console.log("Found "+linkedDoors.length+" linked doors.");
+
+    var expectedResult = "When you're finished... It's closed."; //door from inside cubicle to outside.
+    var actualResult = linkedDoors[0].getDetailedDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cangetLinkedDoor.meta = { traits: ["Map Test", "Door Trait"], description: "Test that given a specific door in one location, we can find its matching adjacent pair in the destination location." };

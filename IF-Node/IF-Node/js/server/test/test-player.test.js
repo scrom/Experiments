@@ -3,6 +3,8 @@ var player = require('../player.js');
 var creature = require('../creature.js');
 var location = require('../location.js');
 var artefact = require('../artefact.js');
+var mapBuilder = require('../mapbuilder.js');
+var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
 
 //these are used in setup and teardown - need to be accessible to all tests
 var junkAttributes;
@@ -18,6 +20,7 @@ var a0; //artefact object.
 var a1; //artefact object.
 var c0; //creature object.
 var c1; //creature object
+var m0; //map object
 var weapon; //weapon object
 var food; //food object
 var container; //container object
@@ -26,7 +29,8 @@ var breakable; //breakable object
 exports.setUp = function (callback) {
     playerName = 'player';
     playerAttributes = {"username":playerName};
-    p0 = new player.Player(playerAttributes);
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
@@ -60,6 +64,7 @@ exports.tearDown = function (callback) {
     playerAttributes = null;
     p0 = null;
     l0 = null;
+    m0 = null;
     junkAttributes = null;
     breakableJunkAttributes = null;
     weaponAttributes = null;
@@ -77,7 +82,7 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreatePlayer = function (test) {
-    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"maxHealth":100,"aggression":0,"stealth":1,"money":5,"carryWeight":20,"killedCount":0,"bleeding":false,"bleedingHealthThreshold":50,"startLocation":"home","returnDirection":"undefined","saveCount":0,"loadCount":0,"timeSinceEating":0,"maxMovesUntilHungry":50,"additionalMovesUntilStarving":10,"stepsTaken":0,"locationsFound":1,"maxAggression":0,"score":0,"totalDamageReceived":0,"booksRead":0,"stolenCash":0,"cashSpent":0,"cashGained":0,"creaturesSpokenTo":0,"restsTaken":0,"sleepsTaken":0,"maxAffinity":0,"injuriesReceived":0}';
+    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"money":5,"carryWeight":20,"startLocation":"home","locationsFound":1}';
     var actualResult = p0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1154,6 +1159,50 @@ exports.playerCannotHealAHealthyCreature = function (test) {
     test.done();
 };
 exports.playerCannotHealAHealthyCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a healthy creature cannot be healed by a player." };
+
+exports.openingADoorOpensRelatedDoor = function (test) {
+    var currentLocationName = "first-floor-toilet"
+    var currentLocation = m0.getLocation(currentLocationName);
+    p0.setLocation(currentLocation);
+    var destinationLocationName = "first-floor-cubicle";
+    var door1 = m0.getDoorFor(currentLocationName, destinationLocationName);
+    var linkedDoors = door1.getLinkedDoors(m0, currentLocationName);
+    console.log("Found "+linkedDoors.length+" linked doors.");
+
+    p0.open("open","door");
+
+    var expectedResult = true; //other door should be open
+    var actualResult = linkedDoors[0].isOpen();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.openingADoorOpensRelatedDoor.meta = { traits: ["Player Test", "Door Trait"], description: "Test that when opening a specific door in one location, we open its corresponding pair in another location." };
+
+
+exports.openingAndClosingDoorClosesRelatedDoor = function (test) {
+    var currentLocationName = "first-floor-toilet"
+    var currentLocation = m0.getLocation(currentLocationName);
+    p0.setLocation(currentLocation);
+    var destinationLocationName = "first-floor-cubicle";
+    var door1 = m0.getDoorFor(currentLocationName, destinationLocationName);
+    var linkedDoors = door1.getLinkedDoors(m0, currentLocationName);
+    console.log("Found "+linkedDoors.length+" linked doors.");
+
+    p0.open("open","door");
+    p0.close("close","door");
+
+    var expectedResult = false; //other door should be closed
+    var actualResult = linkedDoors[0].isOpen();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.openingAndClosingDoorClosesRelatedDoor.meta = { traits: ["Player Test", "Door Trait"], description: "Test that when closing a specific door in one location, we close its corresponding pair in another location." };
 
 
 

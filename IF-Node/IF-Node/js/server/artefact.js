@@ -58,6 +58,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _liquid = false;
         var _holdsLiquid = false;
         var _hidden = false; 
+        var _hasLinkedDoor = false;
 
         //grammar support...
         var _itemPrefix = "It";
@@ -184,6 +185,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.holdsLiquid != undefined) {_holdsLiquid = artefactAttributes.holdsLiquid;};
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
             if (artefactAttributes.isHidden != undefined) {_hidden = artefactAttributes.isHidden;};
+            if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
+            
 
         };
 
@@ -333,6 +336,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.isLiquid = _liquid;
             currentAttributes.holdsLiquid = _holdsLiquid;
             currentAttributes.isHidden = _hidden;
+            currentAttributes.hasLinkedDoor = _hasLinkedDoor;
 
             return currentAttributes;
 
@@ -385,6 +389,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.requiredComponentCount != 0) {saveAttributes.requiredComponentCount = artefactAttributes.requiredComponentCount;};
             if (artefactAttributes.customAction != undefined) { saveAttributes.customAction = artefactAttributes.customAction;};
             if (artefactAttributes.defaultResult != undefined) { saveAttributes.defaultResult = artefactAttributes.defaultResult;};
+            if (artefactAttributes.hasLinkedDoor == true) { saveAttributes.hasLinkedDoor = artefactAttributes.hasLinkedDoor;};
             return saveAttributes;
         };
 
@@ -424,6 +429,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getLinkedExits = function() {
             return _linkedExits;
         };
+
         //artefact only function at the moment
         self.setAttributes = function(attributes) {
             if (attributes.type != undefined) {
@@ -1201,6 +1207,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             } else {
                 return self.moveOrOpen(verb, locationName);
             };
+        };
+
+        self.getLinkedDoors = function(map, currentLocationName) {
+            if (!(_hasLinkedDoor)) {return [];};
+            var linkedDoors = [];
+
+            for (var i=0;i<_linkedExits.length;i++) {
+                if (_linkedExits[i].getSourceName() == currentLocationName) {
+                    var newSource = _linkedExits[i].getDestinationName();
+                    var newDoor = map.getDoorFor(newSource, currentLocationName);
+                    if (newDoor) {linkedDoors.push(newDoor)};
+                };
+            }; 
+            
+            return linkedDoors;        
         };
 
         self.moveOrOpen = function(verb, locationName) {

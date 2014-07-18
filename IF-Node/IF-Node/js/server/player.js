@@ -5,10 +5,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         //module deps
         var inventoryObjectModule = require('./inventory');
         var _mapBuilder = mapBuilder;
+        var _map = map;
 
         //member variables
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var _username = attributes.username;
+        var _username = attributes.username;       
         var _inventory =  new inventoryObjectModule.Inventory(20, 5.00, _username);
         var _missions = []; //player can "carry" missions.
         var _repairSkills = []; //player can learn repair skills.
@@ -849,6 +850,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //find a key
             var key = self.getMatchingKey(verb, artefact); //migrate this to artefact and pass all keys through.
             var resultString = artefact.unlock(key, _currentLocation.getName());
+            var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
+            for (var l=0;l<linkedDoors.length;l++) {
+                linkedDoors[l].unlock(key, _currentLocation.getName());
+            };
             if (key) {
                 if (key.isDestroyed()) {_inventory.remove(key.getName());};
             };
@@ -863,6 +868,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //find a key
             var key = self.getMatchingKey(verb, artefact); //migrate this to artefact and pass all keys through.
+
+            var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
+            for (var l=0;l<linkedDoors.length;l++) {
+                linkedDoors[l].lock(key, _currentLocation.getName());
+            };
+
             return artefact.lock(key, _currentLocation.getName());
         };
 
@@ -1427,6 +1438,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
+            var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
+            for (var l=0;l<linkedDoors.length;l++) {
+                linkedDoors[l].moveOpenOrClose(verb, _currentLocation.getName());
+            };
             return artefact.moveOpenOrClose(verb, _currentLocation.getName());
         };
 
@@ -1438,8 +1453,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
             if (artefact.isLocked()) {
+
                 resultString +=self.unlock("open", artefact.getName())+"<br>";
             } else {
+
+                var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
+                for (var l=0;l<linkedDoors.length;l++) {
+                    linkedDoors[l].moveOrOpen(verb, _currentLocation.getName());
+                };
                 resultString += artefact.moveOrOpen(verb, _currentLocation.getName());
             };
             return resultString;
@@ -1450,6 +1471,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
+            for (var l=0;l<linkedDoors.length;l++) {
+                linkedDoors[l].close(verb, _currentLocation.getName());
+            };
 
             return artefact.close(verb, _currentLocation.getName());
         };

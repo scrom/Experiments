@@ -1456,17 +1456,10 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
-          "lockable": true
+          "lockable": true,
+		  "hasLinkedDoor": true
         },
         "linkedexits": [
-          {
-			"object": "exit",
-			"longname": "in",
-			"direction": "i",
-			"source": "first-floor-toilet",
-			"destination": "first-floor-cubicle",
-			"hidden":true
-          },
 			{
 			"object": "exit",
 			"longname": "out",
@@ -1708,7 +1701,8 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
-          "lockable": true
+          "lockable": true,
+		  "hasLinkedDoor": true
         },
         "linkedexits": [
           {
@@ -1718,15 +1712,7 @@
 			"source": "first-floor-toilet",
 			"destination": "first-floor-cubicle",
 			"hidden":true
-          },
-			{
-			"object": "exit",
-			"longname": "out",
-			"direction": "o",
-			"source": "first-floor-cubicle",
-			"destination": "first-floor-toilet",
-			"hidden":true
-		  }
+          }
         ],
         "synonyms": [
           "toilet",
@@ -1955,7 +1941,8 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
-          "lockable": true
+          "lockable": true,
+		  "hasLinkedDoor": true
         },
         "linkedexits": [
           {
@@ -1965,15 +1952,7 @@
 			"source": "ground-floor-toilet",
 			"destination": "ground-floor-cubicle",
 			"hidden":true
-          },
-			{
-			"object": "exit",
-			"longname": "out",
-			"direction": "o",
-			"source": "ground-floor-cubicle",
-			"destination": "ground-floor-toilet",
-			"hidden":true
-		  }
+          }
         ],
         "synonyms": [
           "toilet",
@@ -2008,17 +1987,10 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
-          "lockable": true
+          "lockable": true,
+		  "hasLinkedDoor": true
         },
         "linkedexits": [
-          {
-			"object": "exit",
-			"longname": "in",
-			"direction": "i",
-			"source": "ground-floor-toilet",
-			"destination": "ground-floor-cubicle",
-			"hidden":true
-          },
 			{
 			"object": "exit",
 			"longname": "out",
@@ -4382,17 +4354,10 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
-          "lockable": true
+          "lockable": true,
+		  "hasLinkedDoor": true
         },
         "linkedexits": [
-          {
-			"object": "exit",
-			"longname": "in",
-			"direction": "i",
-			"source": "second-floor-toilet",
-			"destination": "second-floor-cubicle",
-			"hidden":true
-          },
 			{
 			"object": "exit",
 			"longname": "out",
@@ -4970,7 +4935,8 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
-          "lockable": true
+          "lockable": true,
+		  "hasLinkedDoor": true
         },
         "linkedexits": [
           {
@@ -4980,15 +4946,7 @@
 			"source": "second-floor-toilet",
 			"destination": "second-floor-cubicle",
 			"hidden":true
-          },
-			{
-			"object": "exit",
-			"longname": "out",
-			"direction": "o",
-			"source": "second-floor-cubicle",
-			"destination": "second-floor-toilet",
-			"hidden":true
-		  }
+          }
         ],
         "synonyms": [
           "toilet",
