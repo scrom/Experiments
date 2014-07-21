@@ -236,7 +236,8 @@
           "type": "food",
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 25
+          "nutrition": 25,
+		  "contagion": ["zombie"]
         },
         "synonyms": [
           "slice",

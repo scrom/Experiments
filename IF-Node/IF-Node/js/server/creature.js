@@ -54,6 +54,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _openedDoor = false;
 	    var _objectName = "creature";
         var _imageName;
+        var _contagion = [];
+        var _antibodies = [];
 
         var oppositeOf = function(direction){
             switch(direction)
@@ -132,6 +134,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
+            if (creatureAttributes.contagion != undefined) {_contagion = creatureAttributes.contagion;};                
+            if (creatureAttributes.antibodies != undefined) {_antibodies = creatureAttributes.antibodies;};                
 
         };
 
@@ -361,7 +365,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.destinationDelay = _destinationDelay;
             currentAttributes.currentDelay = _currentDelay;
             currentAttributes.returnDirection = _returnDirection;  
-            currentAttributes.imageName = _imageName;          
+            currentAttributes.imageName = _imageName;     
+            currentAttributes.contagion = _contagion;                     
+            currentAttributes.antibodies = _antibodies;                     
 
             return currentAttributes;
 
@@ -400,6 +406,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
+            if (creatureAttributes.contagion.length>0) {saveAttributes.contagion = creatureAttributes.contagion;};                
+            if (creatureAttributes.antibodies.length>0) {saveAttributes.antibodies = creatureAttributes.antibodies;};                
 
             return saveAttributes;
         };
@@ -508,6 +516,80 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_affinity <-2) {return _genderPrefix+" doesn't like you."};
             if (_affinity <0) {return _genderPrefix+" seems wary of you."};
             return ""; //neutral
+        };
+
+        self.getContagion = function() {
+            return _contagion;
+        };
+
+        self.getAntibodies = function() {
+            return _antibodies;
+        };
+
+        self.setContagion = function(contagion) {
+            //if not already carrying
+            if (_contagion.indexOf(contagion) == -1) {
+                _contagion.push(contagion);
+            };
+        };
+
+        self.setAntibody = function(antibody) {
+            //if not already carrying
+            if (_antibodies.indexOf(antibody) == -1) {
+                _antibodies.push(antibody);
+                self.removeContagion(antibody);
+            };
+        };
+
+        self.removeContagion = function(contagion) {
+            while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
+                _contagion.splice(itemToRemove,1);
+            };
+        };
+
+        self.transmitAntibodies = function() {
+            var antibodies = [];
+            for (var a=0;a<_antibodies.length;a++) {
+                antibodies.push(_antibodies[a]);
+            };
+            return antibodies;
+        };
+
+        self.transmitContagion = function() {
+            var diseases = [];
+            for (var c=0;c<_contagion.length;c++) {
+                var randomInt = Math.floor(Math.random() * 2); 
+                if (randomInt == 0) { //success
+                    diseases.push(_contagion[c]);
+                };
+            };
+            return diseases;
+        };
+
+        self.transmit = function(receiver) {
+            var diseases = self.transmitContagion();
+            var antibodies = self.transmitAntibodies();
+
+            for (var d=0;d<diseases.length;d++) {
+                if (antibodies.indexOf(diseases[d]) == -1) {
+                    receiver.setContagion(diseases[d]);
+                    console.log("contagion passed to "+receiver.getType());
+                };
+            };
+            for (var a=0;a<antibodies.length;a++) {
+                receiver.setAntibody(antibodies[a]);
+            };
+
+            //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
+            return "";
+        };
+
+        self.cure = function(contagion) {
+            itemToRemove = _antibodies.indexOf(contagion);
+            if (itemToRemove) {
+                self.removeContagion(contagion);
+                self.setAntibody(contagion);
+            };
         };
 
         self.setBleeding = function(bool) {
@@ -1221,16 +1303,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.eat = function(aPlayer) {
+            var resultString;
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
                 aPlayer.hurt(_attackStrength/4); //bites player (base attack strength / 4 - not with weapon)
-                return "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
+                resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
+                resultString += self.transmit(aPlayer);
+                return resultString;
             };
 
             _weight = 0;
             _description = "the remains of a well-chewed "+self.getDisplayName();
             _detailedDescription = "All that's left are a few scraps of skin and hair.";
-            var resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
+            resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
 
             if (_nutrition >0) {
                 aPlayer.recover(_nutrition);
@@ -1241,7 +1326,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     resultString += aPlayer.hurt(_nutrition*-1);
                 };
             };
-
+            resultString += self.transmit(aPlayer);
             return resultString;
 
          }; 

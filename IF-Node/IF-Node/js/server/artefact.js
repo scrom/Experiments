@@ -60,6 +60,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _hidden = false; 
         var _hasLinkedDoor = false;
         var _imageName;
+        var _contagion = [];
+        var _antibodies = [];
 
         //grammar support...
         var _itemPrefix = "It";
@@ -188,14 +190,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.isHidden != undefined) {_hidden = artefactAttributes.isHidden;};
             if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
-            
+            if (artefactAttributes.contagion != undefined) {_contagion = artefactAttributes.contagion;};                            
+            if (artefactAttributes.antibodies != undefined) {_antibodies = artefactAttributes.antibodies;};                            
 
         };
 
         processAttributes(attributes);
 
         var validateType = function(type, subType) {
-            var validobjectTypes = ['weapon','property','medical','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
+            var validobjectTypes = ['weapon','property','medical', 'cure','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.log(_name+' type validated: '+type);
 
@@ -344,6 +347,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.isHidden = _hidden;
             currentAttributes.hasLinkedDoor = _hasLinkedDoor;
             currentAttributes.imageName = _imageName;
+            currentAttributes.contagion = _contagion;
+            currentAttributes.antibodies = _antibodies;
 
             return currentAttributes;
 
@@ -398,6 +403,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.defaultResult != undefined) { saveAttributes.defaultResult = artefactAttributes.defaultResult;};
             if (artefactAttributes.hasLinkedDoor == true) { saveAttributes.hasLinkedDoor = artefactAttributes.hasLinkedDoor;};
             if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};
+            if (artefactAttributes.contagion.length>0) {saveAttributes.contagion = artefactAttributes.contagion;};                
+            if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;};                
             return saveAttributes;
         };
 
@@ -741,6 +748,82 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.isRead = function() {
             return _read;
         };
+
+
+        self.getContagion = function() {
+            return _contagion;
+        };
+
+        self.getAntibodies = function() {
+            return _antibodies;
+        };
+
+        self.setContagion = function(contagion) {
+            //if not already carrying
+            if (_contagion.indexOf(contagion) == -1) {
+                _contagion.push(contagion);
+            };
+        };
+
+        self.setAntibody = function(antibody) {
+            //if not already carrying
+            if (_antibodies.indexOf(antibody) == -1) {
+                _antibodies.push(antibody);
+                self.removeContagion(antibody);
+            };
+        };
+
+        self.removeContagion = function(contagion) {
+            while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
+                _contagion.splice(itemToRemove,1);
+            };
+        };
+
+        self.transmitAntibodies = function() {
+            var antibodies = [];
+            for (var a=0;a<_antibodies.length;a++) {
+                antibodies.push(_antibodies[a]);
+            };
+            return antibodies;
+        };
+
+        self.transmitContagion = function() {
+            var diseases = [];
+            for (var c=0;c<_contagion.length;c++) {
+                var randomInt = Math.floor(Math.random() * 2); 
+                if (randomInt == 0) { //success
+                    diseases.push(_contagion[c]);
+                };
+            };
+            return diseases;
+        };
+
+        self.transmit = function(receiver) {
+            var diseases = self.transmitContagion();
+            var antibodies = self.transmitAntibodies();
+
+            for (var d=0;d<diseases.length;d++) {
+                if (antibodies.indexOf(diseases[d]) == -1) {
+                    receiver.setContagion(diseases[d]);
+                    console.log("contagion passed to "+receiver.getType());
+                };
+            };
+            for (var a=0;a<antibodies.length;a++) {
+                receiver.setAntibody(antibodies[a]);
+            };
+
+            //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
+            return "";
+        };
+
+        self.cure = function(contagion) {
+            itemToRemove = _antibodies.indexOf(contagion);
+            if (itemToRemove) {
+                self.removeContagion(contagion);
+                self.setAntibody(contagion);
+            };
+        };
+
 
         self.isHidden = function() {
             return _hidden;
@@ -1346,6 +1429,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     resultString += aPlayer.hurt(_nutrition*-1);
                     resultString += "That wasn't a good idea.";
                 };
+                resultString += self.transmit(aPlayer);
                 return resultString;
             };
 
@@ -1366,6 +1450,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         resultString += "That wasn't a good idea. ";
                         resultString += aPlayer.hurt(_nutrition*-1);
                     };
+                    resultString += self.transmit(aPlayer);
                     return resultString;
 
                 } else {

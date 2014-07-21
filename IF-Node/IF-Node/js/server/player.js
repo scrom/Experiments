@@ -26,6 +26,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _timeSinceEating = 0; 
         var _maxMovesUntilHungry = 50;
         var _additionalMovesUntilStarving = 10;
+        var _contagion = [];
+        var _antibodies = [];
 
         //player stats
         var _destroyedObjects = []; //track all objects player has destroyed
@@ -204,7 +206,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.carryWeight != undefined) {_inventory.setCarryWeight(playerAttributes.carryWeight);};
             if (playerAttributes.health != undefined) {
                 _hitPoints = playerAttributes.health;
-                _maxHitPoints = playerAttributes.health
             };
             //allow explicit setting of maxHealth
             if (playerAttributes.maxHealth != undefined) {_maxHitPoints = playerAttributes.maxHealth;};
@@ -242,33 +243,45 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.maxAffinity != undefined) {_maxAffinity = playerAttributes.maxAffinity;};
             if (playerAttributes.injuriesReceived != undefined) {_injuriesReceived = playerAttributes.injuriesReceived;};
            
-            if (playerAttributes.repairskills != undefined) {
-                for(var i=0; i<playerAttributes.repairskills.length;i++) {
-                    _repairskills.push(playerAttributes.repairskills[i]);
+            if (playerAttributes.repairSkills != undefined) {
+                for(var i=0; i<playerAttributes.repairSkills.length;i++) {
+                    _repairSkills.push(playerAttributes.repairSkills[i]);
                 };
             };
 
-            if (playerAttributes.killedcreatures != undefined) {
-                for(var i=0; i<playerAttributes.killedcreatures.length;i++) {
-                    _killedcreatures.push(playerAttributes.killedcreatures[i]);
+            if (playerAttributes.contagion != undefined) {
+                for(var i=0; i<playerAttributes.contagion.length;i++) {
+                    _contagion.push(playerAttributes.contagion[i]);
                 };
             };
 
-            if (playerAttributes.stolenobjects != undefined) {
-                for(var i=0; i<playerAttributes.stolenobjects.length;i++) {
-                    _stolenobjects.push(playerAttributes.stolenobjects[i]);
+            if (playerAttributes.antibodies != undefined) {
+                for(var i=0; i<playerAttributes.antibodies.length;i++) {
+                    _antibodies.push(playerAttributes.antibodies[i]);
                 };
             };
 
-            if (playerAttributes.missionscompleted != undefined) {
-                for(var i=0; i<playerAttributes.missionscompleted.length;i++) {
-                    _missionscompleted.push(playerAttributes.missionscompleted[i]);
+            if (playerAttributes.killedCreatures != undefined) {
+                for(var i=0; i<playerAttributes.killedCreatures.length;i++) {
+                    _killedCreatures.push(playerAttributes.killedCreatures[i]);
                 };
             };
 
-            if (playerAttributes.missionsfailed != undefined) {
-                for(var i=0; i<playerAttributes.missionsfailed.length;i++) {
-                    _missionsfailed.push(playerAttributes.missionsfailed[i]);
+            if (playerAttributes.stolenObjects != undefined) {
+                for(var i=0; i<playerAttributes.stolenObjects.length;i++) {
+                    _stolenObjects.push(playerAttributes.stolenObjects[i]);
+                };
+            };
+
+            if (playerAttributes.missionsCompleted != undefined) {
+                for(var i=0; i<playerAttributes.missionsCompleted.length;i++) {
+                    _missionsCompleted.push(playerAttributes.missionsCompleted[i]);
+                };
+            };
+
+            if (playerAttributes.missionsFailed != undefined) {
+                for(var i=0; i<playerAttributes.missionsFailed.length;i++) {
+                    _missionsFailed.push(playerAttributes.missionsFailed[i]);
                 };
             };
 
@@ -279,15 +292,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
 
-            if (playerAttributes.destroyedobjects != undefined) {
-                for(var i=0; i<playerAttributes.destroyedobjects.length;i++) {
-                    _destroyedobjects.push(_mapBuilder.buildArtefact(playerAttributes.destroyedobjects[i]));
+            if (playerAttributes.destroyedObjects != undefined) {
+                for(var i=0; i<playerAttributes.destroyedObjects.length;i++) {
+                    _destroyedObjects.push(_mapBuilder.buildArtefact(playerAttributes.destroyedObjects[i]));
                 };
             };
 
-            if (playerAttributes.consumedobjects != undefined) {
-                for(var i=0; i<playerAttributes.consumedobjects.length;i++) {
-                    _consumedobjects.push(_mapBuilder.buildArtefact(playerAttributes.consumedobjects[i]));
+            if (playerAttributes.consumedObjects != undefined) {
+                for(var i=0; i<playerAttributes.consumedObjects.length;i++) {
+                    _consumedObjects.push(_mapBuilder.buildArtefact(playerAttributes.consumedObjects[i]));
                 };
             };
 
@@ -334,6 +347,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 for(var i=0; i<_repairSkills.length;i++) {
                     if (i>0) {resultString+= ',';};
                     resultString+= '"'+_repairSkills[i]+'"';
+                };
+                resultString+= ']';
+            };
+
+            if (_contagion.length > 0) {
+                resultString+= ',"contagion":[';
+                for(var i=0; i<_contagion.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_contagion[i]+'"';
+                };
+                resultString+= ']';
+            };
+
+            if (_antibodies.length > 0) {
+                resultString+= ',"antibodies":[';
+                for(var i=0; i<_antibodies.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_antibodies[i]+'"';
                 };
                 resultString+= ']';
             };
@@ -475,6 +506,81 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.increaseTimeSinceEating = function(changeValue) {
             _timeSinceEating += changeValue;
             return _timeSinceEating;
+        };
+
+
+        self.getContagion = function() {
+            return _contagion;
+        };
+
+        self.getAntibodies = function() {
+            return _antibodies;
+        };
+
+        self.setContagion = function(contagion) {
+            //if not already carrying
+            if (_contagion.indexOf(contagion) == -1) {
+                _contagion.push(contagion);
+            };
+        };
+
+        self.setAntibody = function(antibody) {
+            //if not already carrying
+            if (_antibodies.indexOf(antibody) == -1) {
+                _antibodies.push(antibody);
+                self.removeContagion(antibody);
+            };
+        };
+
+        self.removeContagion = function(contagion) {
+            while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
+                _contagion.splice(itemToRemove,1);
+            };
+        };
+
+        self.transmitAntibodies = function() {
+            var antibodies = [];
+            for (var a=0;a<_antibodies.length;a++) {
+                antibodies.push(_antibodies[a]);
+            };
+            return antibodies;
+        };
+
+        self.transmitContagion = function() {
+            var diseases = [];
+            for (var c=0;c<_contagion.length;c++) {
+                var randomInt = Math.floor(Math.random() * 2); 
+                if (randomInt == 0) { //success
+                    diseases.push(_contagion[c]);
+                };
+            };
+            return diseases;
+        };
+
+        self.transmit = function(receiver) {
+            var diseases = self.transmitContagion();
+            var antibodies = self.transmitAntibodies();
+
+            for (var d=0;d<diseases.length;d++) {
+                if (antibodies.indexOf(diseases[d]) == -1) {
+                    receiver.setContagion(diseases[d]);
+                    console.log("contagion passed to "+receiver.getType());
+                };
+            };
+            for (var a=0;a<antibodies.length;a++) {
+                receiver.setAntibody(antibodies[a]);
+            };
+
+            //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
+            return "";
+        };
+
+        self.cure = function(contagion) {
+            itemToRemove = _antibodies.indexOf(contagion);
+            if (itemToRemove) {
+                self.removeContagion(contagion);
+                self.setAntibody(contagion);
+            };
         };
 
         self.reduceHitPoints = function(pointsToRemove) {
@@ -1986,13 +2092,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return self.drink('drink',artefactName);
             };
 
-            //can't keep eating to heal in battle - must use medical item
-            if (_timeSinceEating < 5 && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
-            //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
-            if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
-            //can't eat unless hungry if health is nearly full.
-            if ((_timeSinceEating < _maxMovesUntilHungry-1) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
-
+            //don't protect from inedible things!
+            if (artefact.isEdible()) {
+                //can't keep eating to heal in battle - must use medical item
+                if (_timeSinceEating < 5 && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
+                //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
+                if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
+                //can't eat unless hungry if health is nearly full.
+                if ((_timeSinceEating < _maxMovesUntilHungry-1) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+            };
+            self.transmit(artefact);
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it
