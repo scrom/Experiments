@@ -916,7 +916,37 @@
         "source": "customer-delight-west",
         "destination": "customer-delight-south-west"
       }
-    ]
+    ],
+	"inventory":[
+      {
+        "object": "creature",
+        "name": "filippa vajda",
+        "displayname": "Filippa Vajda",
+        "description": "Filippa Vajda",
+        "detailedDescription": "Roaming UX redhead.",
+        "attributes": {
+          "weight": 110,
+          "money": 15,
+          "attackStrength": 15,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 100,
+          "canTravel": true,
+          "traveller": true,
+		  "imageName": "filippavajda.jpg"
+        },
+        "synonyms": [
+          "fil",
+          "fillippa",
+		  "fillipa",
+          "filippa",
+		  "filipa",
+		  "philippa",
+		  "phillippa",
+          "her"
+        ]
+      }]
   },
   {
     "object": "location",
@@ -2734,7 +2764,8 @@
   {
     "object": "location",
     "name": "lift-ground-floor",
-    "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
+    "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.", 
+	"imageName":"imag2698.jpg",
     "exits": [
       {
         "object": "exit",
@@ -2742,8 +2773,7 @@
         "direction": "o",
         "source": "lift-ground-floor",
         "destination": "atrium",
-        "hidden": true,
-		"imageName": "imag2698.jpg"
+        "hidden": true
       }
     ],
     "inventory": [
@@ -4185,8 +4215,8 @@
       },
       {
         "object": "creature",
-        "name": "cassi",
-        "displayname": "Cassi",
+        "name": "cassi roper",
+        "displayname": "Cassi Roper",
         "description": "Cassi Roper",
         "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
         "attributes": {
@@ -4202,7 +4232,8 @@
 		  "imageName": "cassiroper.jpg"
         },
         "synonyms": [
-          "cassi roper",
+          "cassi",
+		  "cassie",
           "cr",
           "roper",
           "her"
@@ -5657,7 +5688,7 @@
   {
     "object": "location",
     "name": "support-west",
-    "description": "You're in support area.",
+    "description": "You're in the support area.",
     "exits": [
       {
         "object": "exit",
