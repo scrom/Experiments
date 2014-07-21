@@ -177,6 +177,10 @@ exports.Action = function Action(aPlayer, aMap) {
                         _ticks = 0;
                         description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
                         break;
+                    case 'ok':
+                        _ticks = 0;
+                        description = "OK!";
+                        break;
                     case 'no':
                         _ticks = 0;
                         if (_awaitingPlayerAnswer == true) {
@@ -272,6 +276,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.examine(_verb, _object0);
                         break;  
                     case 'rest':
+                    case 'sit':
                         _ticks = 0;
                         description = _player.rest(_verb, 5, _map);
                         break;
