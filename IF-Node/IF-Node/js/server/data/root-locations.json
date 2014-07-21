@@ -138,6 +138,7 @@
     "object": "location",
     "name": "atrium-seating",
     "description": "You're in the atrium seating area.",
+	"imageName": "imag2702.jpg",
     "exits": [
       {
         "object": "exit",
@@ -194,7 +195,8 @@
           "weight": 80,
           "carryWeight": 0.1,
           "type": "bed",
-          "isBreakable": true
+          "isBreakable": true,
+		  "imageName": "morpheuschair.jpg"
         },
         "synonyms": [
           "red chair",
@@ -2312,7 +2314,8 @@
           "type": "container",
           "holdsLiquid": true,
           "canCollect": true,
-          "isBreakable": true
+          "isBreakable": true,
+		  "imageName": "mug.jpg"
         },
         "synonyms": [
           "mug",
@@ -2397,7 +2400,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "requiredComponentCount": 1
+          "requiredComponentCount": 1,
+		  "imageName": "coffeemachine.jpg"
         },
         "synonyms": [
           "machine",
@@ -2586,6 +2590,7 @@
     "object": "location",
     "name": "library",
     "description": "You're in the atrium Library.",
+	"imageName": "imag2700.jpg",
     "exits": [
       {
         "object": "exit",
@@ -2603,7 +2608,8 @@
         "detailedDescription": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
         "attributes": {
           "weight": 51,
-          "isBreakable": true
+          "isBreakable": true,
+		  "imageName": "librarytable.jpg"
         },
         "synonyms": [
           "glass",
@@ -2733,7 +2739,8 @@
           "attackStrength": 20,
           "type": "weapon",
           "subType": "sharp",
-          "canCollect": true
+          "canCollect": true,
+		  "imageName": "sword.jpg"
         },
         "synonyms": [
           "ornamental",
@@ -2752,7 +2759,8 @@
           "canCollect": true,
           "isBreakable": true,
           "customAction": "play",
-          "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte."
+          "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte.",
+		  "imageName": "guitar.jpg"
         },
         "synonyms": [
           "spanish",
@@ -5166,6 +5174,7 @@
     "object": "location",
     "name": "servery-north-west",
     "description": "You're in the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
+	"imageName": "imag2699.jpg",
     "exits": [
       {
         "object": "exit",

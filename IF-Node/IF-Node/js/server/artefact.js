@@ -59,7 +59,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _holdsLiquid = false;
         var _hidden = false; 
         var _hasLinkedDoor = false;
-        var _imageName = "IMAG0539.jpg";
+        var _imageName;
 
         //grammar support...
         var _itemPrefix = "It";
