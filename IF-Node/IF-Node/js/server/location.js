@@ -63,7 +63,8 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
         };
 
         self.getImageName = function() {
-            return _imageName;
+            //return _imageName; //if we want to show location images, restore this line and remove "return null".
+            return null;
         };
 
         self.getDisplayName = function() {
