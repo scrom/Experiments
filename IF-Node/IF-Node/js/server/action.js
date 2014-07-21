@@ -422,7 +422,11 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.say(_verb, _object0,_object1);
                         break;
                     case 'greet':
-                        description = _player.say(_verb, "Hello",_object0);    
+                    case 'hello':
+                        description = _player.say('greet', "Hello",_object0);    
+                        break;
+                    case 'hi':
+                        description = _player.say('say', "Hi",_object0);    
                         break;
                     case 'run':
                     case 'go':

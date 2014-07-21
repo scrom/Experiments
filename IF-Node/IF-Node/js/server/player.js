@@ -121,6 +121,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         //empty the contents of a container into player or location inventory.
         //if an item requires a container, it's lost. (even if inside another container)
+        //although we could pass the original object in at this point in all cases, 
+        //we'd need to also say its source which we don't always know.
+        //so we figure it out by retrieving it.
         var emptyContentsOfContainer = function(objectName) {
             var lostObjectCount = 0;
             var locationArtefact = getObjectFromLocation(objectName);
@@ -129,7 +132,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //if (artefact.getType() != 'container') {return ""};
 
-            var contents = artefact.getAllObjects(true);
+            //@todo - fix bug here when dropping an object and causing it to be destroyed.
+            //artefact is null because it's neither in the player nor location inventory.
+            var contents = artefact.getAllObjects(true); 
             var contentCount = contents.length;
 
             //exit early if no contents.
@@ -835,12 +840,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                if (artefact.requiresContainer()) { return "You need to put "+artefact.getDisplayName()+" <i>in</i> something.";};  
             };
 
+            //not destroyed (yet)... 
             var droppedObject = removeObjectFromPlayer(artefactName);
 
             //destroyed it!
             if (droppedObject.isDestroyed()) { 
                 _destroyedObjects.push(droppedObject);
-                return "Oops. "+artefactDamage+ emptyContentsOfContainer(artefact.getName());
+                
+                //temporarily add item to location so that contents can be emptied.                
+                _currentLocation.addObject(droppedObject); 
+                var tempResult = emptyContentsOfContainer(droppedObject.getName()); 
+                //then remove it again.
+                removeObjectFromLocation(artefactName);
+                return "Oops. "+artefactDamage+ tempResult;
             }; 
 
             //needs a container
@@ -1334,7 +1346,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.ask = function(verb, giverName, artefactName, map){
-            if (stringIsEmpty(giverName)){ return verb+" what?";};
+            if (stringIsEmpty(giverName)){ 
+                if (!stringIsEmpty(artefactName)) {
+                    //they're asking for something.
+                    var creatures = _currentLocation.getCreatures();
+                    if (creatures.length == 1) {
+                        giverName = creatures[0].getName();
+                    } else if (creatures.length == 0) {
+                        return "There's nobody here to "+verb+".";  
+                    } else {
+                        return initCap(verb)+" <i>who</i>?";
+                    };
+                } else {
+                    return initCap(verb)+" <i>who</i> for <i>what</i>?";  
+                };
+            };
+
             var giver = getObjectFromLocation(giverName);
             if (!(giver)) {return "There's no "+giverName+" here.";};
 
@@ -2037,7 +2064,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (receiverName != "self" && receiverName != "player") {
                     var receiver = getObjectFromLocation(receiverName);
                     if (!(receiver)) {return "There's no "+receiverName+" here.";};
-                    if (receiver.getType() != "creature") {receiver.getDisplayName()+" can't be healed.";}; 
+                    if (receiver.getType() != "creature") {return initCap(receiver.getDisplayName())+" can't be healed.";}; 
                 };           
             };
 

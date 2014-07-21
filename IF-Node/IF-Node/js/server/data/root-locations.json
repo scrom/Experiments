@@ -995,7 +995,8 @@
           "weight": 45,
           "carryWeight": 15,
           "isBreakable": true,
-          "plural": true
+          "plural": true,
+		  "extendedInventoryDescription": "They contain $inventory."
         },
         "synonyms": [
           "rack",
@@ -2714,7 +2715,7 @@
             "object": "artefact",
             "name": "small book",
             "description": "small book",
-            "detailedDescription": "It's a book on why not all customers are created equal.",
+            "detailedDescription": "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers.",
             "attributes": {
               "defaultAction": "read",
               "weight": 1,
@@ -3750,7 +3751,7 @@
             "object": "mission",
             "name": "vicsbook",
             "displayName": "give Vic something interesting to read",
-            "description": "Vic has a parcel for you but she'd like something to read first.",
+            "description": "Vic has a parcel for you but she'd like something interesting to read first.",
             "attributes": {
               "missionObject": "small book",
               "destination": "Vic",
@@ -5957,6 +5958,52 @@
         "direction": "w",
         "source": "west-bike-racks",
         "destination": "bike-ambulance"
+      }
+    ],
+	    "inventory": [
+      {
+        "object": "artefact",
+        "name": "bike rack",
+        "description": "bike racks",
+        "detailedDescription": "There's dozens of bikes here but most of them are locked.",
+        "attributes": {
+          "weight": 45,
+          "carryWeight": 18,
+          "isBreakable": true,
+          "plural": true,
+		  "extendedInventoryDescription": "After extensively picking through the crowded racks, you find $inventory."
+        },
+        "synonyms": [
+          "rack",
+          "racks",
+          "cycle rack",
+          "cycle racks",
+          "bike racks"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "your bike",
+            "description": "tatty old bike",
+            "detailedDescription": "It's yours. Yay :D",
+            "attributes": {
+              "weight": 18,
+              "type": "property",
+              "isBreakable": true,
+              "lockable": true,
+              "locked": false,
+              "price": 5,
+              "customAction": "ride",
+              "defaultResult": "You're meant to be working!<br>You cycle around for a while until you feel guilty for not doing something more useful."
+            },
+            "synonyms": [
+              "bicycle",
+              "cycle",
+              "bike",
+			  "my bike"
+            ]
+          }
+        ]
       }
     ]
   },

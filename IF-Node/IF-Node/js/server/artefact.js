@@ -1408,9 +1408,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             } else {return initCap(_itemDescriptivePrefix)+" not open."};
         };
 
+        self.hasSpoken = function() {
+            return false;
+        };
+
         self.reply = function(someSpeech,playerAggression) {
             if (self.isDestroyed()) {return "The remaining fragments of inanimate spirit from "+self.getDisplayName()+" ignore you.";};
-            return "The "+self.getDisplayName()+", is quietly aware of the sound of your voice but shows no sign of response.";
+            return initCap(self.getDisplayName())+", is quietly aware of the sound of your voice but shows no sign of response.";
         };
 
         self.canTravel = function() {
