@@ -20,6 +20,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
 	    var _objectName = "Game";
         
         var locationDescription = _player.setLocation(_player.getCurrentLocation());
+        var locationImage = _player.getCurrentLocation().getImageName();
 
         //log game created
         console.log(_objectName+' id: '+_id+' created for '+_player.getUsername());	
@@ -62,7 +63,12 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         };
 
         self.state = function() {
-            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+locationDescription+'"}';
+            var resultString = '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+locationDescription+'"';
+            if (locationImage) {
+                resultString += ',"image":"'+locationImage+'"';
+            };
+            resultString += '}';
+            return resultString;
         };
 
         self.fullState = function() {

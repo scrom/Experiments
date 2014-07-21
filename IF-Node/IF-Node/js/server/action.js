@@ -39,17 +39,21 @@ exports.Action = function Action(aPlayer, aMap) {
         };
 
         //private - store results in class variables
-        var buildResult = function(resultDescription) {
+        var buildResult = function(resultDescription, imageName) {
             _resultString = resultDescription;
             _resultJson = '{"verb":"'+_verb+
                               '","object0":"'+_object0+
                               '","object1":"'+_object1+
-                              '","description":"'+resultDescription+ '"}';
+                              '","description":"'+resultDescription+'"';
+            if (imageName) {
+                _resultJson += ',"image":"'+imageName+'"';
+            };
+            _resultJson += '}';
         };
 
         //- build and return result
-        var returnResultAsJson = function(resultDescription) {
-            buildResult(resultDescription);
+        var returnResultAsJson = function(resultDescription, imageName) {
+            buildResult(resultDescription, imageName);
             return _resultJson;
         };
 
@@ -624,6 +628,7 @@ exports.Action = function Action(aPlayer, aMap) {
   
         self.act = function(anActionString) {
             var description = "";
+            var imageName;
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);
@@ -637,8 +642,26 @@ exports.Action = function Action(aPlayer, aMap) {
             //replace any player substitution variables
             description = description.replace("$player",initCap(_player.getUsername())).replace("%20"," ");
 
+            //extract image link from response if set
+            var imageIndex = description.indexOf("$image");
+            if (imageIndex>-1) {
+                var endIndex = description.lastIndexOf("/$image"),
+                imageName = description.substring(imageIndex+6, endIndex);
+                console.log("imageName:"+imageName);
+            };
+            if (imageName) {
+                description = description.substring(0,imageIndex)+description.substring(endIndex+7);
+                console.log("description:"+description);
+            };           
+
+            //get an image path if not already set
+            if (!(imageName)) {
+                imageName = _player.getCurrentLocation().getImageName();
+            };
+
+
             //we're done processing, build the results...
-            return returnResultAsJson(description);
+            return returnResultAsJson(description, imageName);
         };
 
         self.getResultString = function() {

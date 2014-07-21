@@ -64,8 +64,31 @@ body
     width:200px
 }
 
+.pictureBox
+{
+    height:30vh;
+    width:30vh
+    
+}
+.inventoryBox
+{
+    height:30vh;
+    width:30vh
+}
+
+td {
+    vertical-align: top;
+}
+
+img{
+    width:100%;
+    height:100%;
+}
+
 .softBorder.smallBox{}
 .softBorder.oneLineBox{}
 .softBorder.bigBox.verticalScroll{}
 .softBorder.smallBox.verticalScroll{}
 .softBorder.narrowBox.verticalScroll{}
+.softBorder.pictureBox{}
+.softBorder.inventoryBox.verticalScroll{}

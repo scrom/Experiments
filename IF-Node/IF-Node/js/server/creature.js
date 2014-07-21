@@ -53,6 +53,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _returnDirection;
         var _openedDoor = false;
 	    var _objectName = "creature";
+        var _imageName;
 
         var oppositeOf = function(direction){
             switch(direction)
@@ -130,6 +131,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.destinationDelay != undefined) {_destinationDelay = creatureAttributes.destinationDelay;};
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
+            if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
 
         };
 
@@ -279,6 +281,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _name;
         };
 
+        self.getImageName = function() {
+            return _imageName;
+        };
+
         self.getCurrentLocation = function() {
             return _currentLocation;
         };
@@ -354,7 +360,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.loopDelay = _loopDelay;
             currentAttributes.destinationDelay = _destinationDelay;
             currentAttributes.currentDelay = _currentDelay;
-            currentAttributes.returnDirection = _returnDirection;            
+            currentAttributes.returnDirection = _returnDirection;  
+            currentAttributes.imageName = _imageName;          
 
             return currentAttributes;
 
@@ -392,6 +399,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.destinationDelay >0) {saveAttributes.destinationDelay = creatureAttributes.destinationDelay;};
             if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
+            if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
 
             return saveAttributes;
         };
@@ -673,6 +681,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (hasDialogue) {
                 if ((_affinity <0) && (playerAggression>0)) {resultString +="<br>"+_genderPrefix+" appears to have something on "+_genderPossessiveSuffix+" mind but doesn't trust you enough to talk about it right now.";}
                 else { resultString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
+            };
+
+            if (_imageName) {
+                resultString += "$image"+_imageName+"/$image";
             };
             return resultString;
         };
@@ -1361,6 +1373,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (!(_spokenToPlayer)) {_spokenToPlayer = true;};
+            if (_imageName) {
+                response += "$image"+_imageName+"/$image";
+            };
             return  response;
         };
 

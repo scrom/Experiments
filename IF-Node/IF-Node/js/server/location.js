@@ -1,6 +1,6 @@
 ﻿"use strict";
 //location object - manage location details
-exports.Location = function Location(aName, aDescription, isDark, isStart, visits) { 
+exports.Location = function Location(aName, aDescription, isDark, isStart, visits, imageName) { 
     try{
         //module deps
         var artefactObjectModule = require('./artefact');
@@ -19,6 +19,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
         var _inventory =  new inventoryObjectModule.Inventory(99999, 0.00, _name);//unlimited //[]; //and creatures
         var _exits = [];
         var _missions = [];
+        var _imageName = imageName;
 
 	    var _objectName = "location";
 
@@ -33,6 +34,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
         self.toString = function() {
             //var _missions = [];
             var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
+            if (_imageName) { resultString += ',"imageName":'+_imageName; };
             if (_dark) { resultString += ',"dark":'+_dark; };
             if (_start) { resultString += ',"start":'+_start; };
             if (_visits) { resultString += ',"visits":'+_visits; };
@@ -58,6 +60,10 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
 
         self.getName = function() {
             return _name;
+        };
+
+        self.getImageName = function() {
+            return _imageName;
         };
 
         self.getDisplayName = function() {

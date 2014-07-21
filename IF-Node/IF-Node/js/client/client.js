@@ -28,7 +28,7 @@ function Client(aServerHost, aServerPort, aUi) {
         We'll need to uncomment the console log from serverRequestCallback when trying to make this work
     */
     var sanitiseString = function(aString) {
-        return aString.replace(/[^a-zA-Z0-9 +-]+/g,"").toLowerCase().substring(0,255);
+        return aString.replace(/[^a-zA-Z0-9 +-.]+/g,"").toLowerCase().substring(0,255);
     };
 
     var untangleResponse = function(someJSONData) {
@@ -37,8 +37,13 @@ function Client(aServerHost, aServerPort, aUi) {
             username = response.getUsername();
             gameId = response.getGameId();
         };
-
+        if (response.getImage() != "" && response.getImage() != undefined){
+            requestImage(response.getImage());
+        } else {
+            ui.clearImage();
+        };
         ui.setState(response.getDescription());
+
     };
 
     //callback from server request (split out for readability)
@@ -51,7 +56,7 @@ function Client(aServerHost, aServerPort, aUi) {
     var serverRequest = function(requestString) {
         if(debug) {console.append('Client Request: '+requestString+'<br>');}
         var timestamp = new Date().getTime(); //used to avoid caching
-        var serverResponse = $.get(serverAddress + requestString+'/'+timestamp, function(data){serverRequestCallback(data);});
+            var serverResponse = $.get(serverAddress + requestString+'/'+timestamp, function(data){serverRequestCallback(data);});
     };
 
     //request an action
@@ -63,6 +68,17 @@ function Client(aServerHost, aServerPort, aUi) {
     var requestGame = function(aUsername) {
         var inputString = sanitiseString(aUsername);
         serverRequest('new/new/'+inputString);
+    };
+
+    //request an image file
+    var requestImage = function(anImageFileName) {
+        if (anImageFileName) {
+            var requestString = "image/"+sanitiseString(anImageFileName);
+            var timestamp = new Date().getTime(); //used to avoid caching
+            var imageURL = serverAddress + requestString+'/'+timestamp;
+            //if(debug) {console.append('Client Request URL: '+imageURL+'<br>');};
+            ui.setImage(imageURL);
+        };
     };
 
     //load a game

@@ -108,26 +108,33 @@ exports.Interpreter = function Interpreter(aGameController) {
                 case 'config':
                     return('' + JSON.stringify(someTempConfig));
                 case 'image':
+                    //console.log("image request:"+actionString);
                     if (fm.imageExists(actionString)) {
                         return fm.getImagePath(actionString);
                     };
+                    return "image "+actionString+" not found.";
+                    break;
                 case 'list':
                     //list active games
                     return assembleResponse(commandJson,_gameController.listGames());
+                    break;
                 case 'new':
                     if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
                     //add new user game
                     var aGameId = _gameController.addGame(username);
                     return assembleResponse(commandJson,_gameController.getGameState(username, aGameId));
+                    break;
                 case 'action':
                     if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
                     return assembleResponse(commandJson, _gameController.userAction(username, gameId,actionString));
+                    break;
                 case 'save':
                     console.log("saving game");             
                     if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);};
                     var aGame = _gameController.getGame(username, gameId);
                     if (!(aGame)) {return assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}');};
                     return assembleResponse(commandJson,aGame.save());
+                    break;
                 case 'load':
                     var originalGameID = gameId;
                     var newGameId = _gameController.loadGame(originalGameID, username);
@@ -140,9 +147,11 @@ exports.Interpreter = function Interpreter(aGameController) {
                     };
                     //file not loaded
                     return assembleResponse(commandJson,'{"description":"Saved game file \''+username+'\' not found."}');                  
+                    break;
                 case 'events':
                     //respond to event requests
                     return 'ping.';
+                    break;
                 default:
                     return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
             };            

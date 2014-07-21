@@ -1,16 +1,20 @@
 "use strict";
 //main user interface interactions
-function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleArea) {
+function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleArea, anImageArea) {
     try{
 	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Ui";
         var console = aConsoleArea;
         var state = aStateArea;
         var events = anEventArea;
+        var image = anImageArea;
         var input = anInputField;
         var inputHistory = [];
         var inputHistoryIndex = 0;
         var interaction = aninteractionArea;
+
+        var _lastImageURL = ""; //primitive hack to ensure image doesn't reload every move unless it's actually changed.
+
         state.append('Welcome To MVTA.<br>Please enter your name');
         console.append(objectName+" Initiated<br>");
     //end try
@@ -72,5 +76,24 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
                     };
     		    };
             });
+    };
+
+
+    Ui.prototype.setImage = function(imageData) {
+        if (imageData.substring(0,imageData.lastIndexOf("/")) == _lastImageURL) {return true;};
+        _lastImageURL = imageData.substring(0,imageData.lastIndexOf("/"));
+        var img = new Image();
+        img.src = imageData+".jpg"; //the extra suffix tells the browser it's a jpg image file (needs help!)
+        img.onload = function(){
+            // image  has been loaded
+        };    
+        image.addClass("softBorder");    
+        image.html(img);
+    };
+
+    Ui.prototype.clearImage = function() {
+        _lastImageURL = ""; 
+        image.removeClass("softBorder");   
+        image.html("");
     };
 };

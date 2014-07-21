@@ -40,4 +40,13 @@ function Response(someJsonData, aConsole) {
     Response.prototype.getDescription = function() {
         return response.description;
     };
+
+    Response.prototype.getImage = function() {
+            try {
+                return response.image;
+            }
+            catch(err){
+                return ''; //send empty string if we can't obtain username
+            }
+    };
 };

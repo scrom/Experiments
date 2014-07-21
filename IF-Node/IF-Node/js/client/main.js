@@ -4,11 +4,11 @@
     var serverPort = 1337;
 	var ui;
     var client;
-    var debug = false; //enable/disable client console logging
+    var debug = true; //enable/disable client console logging
 	
-function init(state, input, interaction, events, console, form) {
+function init(state, input, interaction, events, console, image) {
     //create UI
-	ui = new Ui(state, input, interaction, events, console, form);
+	ui = new Ui(state, input, interaction, events, console, image);
     
     //create client
     client = new Client(serverHost, serverPort, ui);

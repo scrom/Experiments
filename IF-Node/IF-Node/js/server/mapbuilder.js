@@ -224,7 +224,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
             else {locationData.dark=false;};
             if (locationData.start == "true" || locationData.start == true) {locationData.start = true;}
             else {locationData.start=false;};
-            var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.dark,locationData.start, locationData.visits);
+            var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.dark,locationData.start, locationData.visits, locationData.imageName);
             return newLocation;
         };
         

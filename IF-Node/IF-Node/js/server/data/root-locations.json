@@ -4,6 +4,7 @@
     "name": "atrium",
     "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.",
     "start": true,
+	"imageName": "imag2695.jpg",
     "exits": [
       {
         "object": "exit",
@@ -79,7 +80,8 @@
         "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least *someone* is expecting you.",
         "attributes": {
           "weight": 51,
-          "isBreakable": true
+          "isBreakable": true,
+		  "imageName": "imag2697.jpg"
         },
         "synonyms": [
           "display",
@@ -471,7 +473,8 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "chrisgeorge.jpg"
         },
         "synonyms": [
           "chris",
@@ -496,7 +499,8 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName":"markwightman.jpg"
         },
         "synonyms": [
           "mark wightman",
@@ -521,7 +525,8 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "jefffoster.jpg"
         },
         "synonyms": [
           "jeff foster",
@@ -546,7 +551,8 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "simoncromarty.jpg"
         },
         "synonyms": [
           "simon",
@@ -624,7 +630,8 @@
           "health": 120,
           "affinity": 2,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "jamesdening.jpg"
         },
         "inventory": [
           {
@@ -669,7 +676,8 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "alanplatt.jpg"
         },
         "synonyms": [
           "alan platt",
@@ -774,7 +782,8 @@
           "health": 100,
           "affinity": -1,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "jonathanwatts.jpg"
         },
         "synonyms": [
           "jonathan watts",
@@ -801,7 +810,8 @@
           "carryWeight": 15,
           "health": 140,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "aliceeasey.jpg"
         },
         "synonyms": [
           "alice easey",
@@ -829,6 +839,7 @@
           "affinity": 2,
           "canTravel": true,
           "traveller": true,
+		  "imageName": "chrismoore.jpg",
           "destinations": [
             "customer-delight-south-west",
             "east-bike-racks",
@@ -1186,7 +1197,8 @@
           "health": 140,
           "affinity": 1,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "chrissmith.jpg"
         },
         "synonyms": [
           "chris",
@@ -2108,8 +2120,8 @@
     ],    "inventory": [
       {
         "object": "creature",
-        "name": "amanda",
-        "displayname": "Amanda",
+        "name": "amanda mansfield",
+        "displayname": "Amanda Mansfield",
         "description": "Amanda from IS",
         "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
         "attributes": {
@@ -2120,11 +2132,13 @@
           "carryWeight": 12,
           "health": 215,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "amandamansfield.jpg"
         },
         "synonyms": [
           "mandy",
           "manda",
+		  "mansfield",
           "her"
         ],
         "dislikes": [
@@ -2728,7 +2742,8 @@
         "direction": "o",
         "source": "lift-ground-floor",
         "destination": "atrium",
-        "hidden": true
+        "hidden": true,
+		"imageName": "imag2698.jpg"
       }
     ],
     "inventory": [
@@ -2794,7 +2809,8 @@
           "health": 225,
           "affinity": -4,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "spy.jpg"
         },
         "inventory": [
           {
@@ -2992,7 +3008,8 @@
           "gender": "male",
           "type": "friendly",
           "carryWeight": 15,
-          "health": 215
+          "health": 215,
+		  "imageName": "icecreamman.jpg"
         },
         "sells": [
           {
@@ -3129,7 +3146,8 @@
           "carryWeight": 18,
           "health": 200,
           "affinity": -1,
-          "canTravel": true
+          "canTravel": true,
+		  "imageName": "jamesmoore.jpg"
         },
         "synonyms": [
           "james",
@@ -3485,7 +3503,7 @@
             "reward": {
               "score": 25,
               "affinityModifier": 2,
-              "increaseAffinityFor": "amanda",
+              "increaseAffinityFor": "amanda mansfield",
               "successMessage": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i><br> Have 25 points."
             }
           }
@@ -3505,7 +3523,8 @@
           "carryWeight": 15,
           "health": 500,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "simongalbraith.jpg"
         },
         "inventory": [
           {
@@ -3602,6 +3621,7 @@
     "object": "location",
     "name": "reception",
     "description": "You are stood by the big red reception desk in the Red Gate office atrium.",
+	"imageName": "imag2696.jpg",
     "exits": [
       {
         "object": "exit",
@@ -3639,7 +3659,8 @@
           "gender": "female",
           "type": "friendly",
           "carryWeight": 15,
-          "health": 215
+          "health": 215,
+		  "imageName": "vicwiseman.jpg" 
         },
         "synonyms": [
           "receptionist",
@@ -4046,7 +4067,8 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "alexfreeman.jpg"
         },
         "synonyms": [
           "alex freeman",
@@ -4072,7 +4094,8 @@
           "carryWeight": 15,
           "health": 110,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "willputtock.jpg"
         },
         "synonyms": [
           "will puttock",
@@ -4097,7 +4120,8 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "jamesking.jpg"
         },
         "synonyms": [
           "james",
@@ -4110,12 +4134,12 @@
       },
       {
         "object": "creature",
-        "name": "simon johnson",
-        "displayname": "Simon Johnson",
-        "description": "Simon Johnson",
-        "detailedDescription": "He's a master of selling, seems like he's been here forever and now he's taking on Germany!",
+        "name": "justin heron",
+        "displayname": "Justin Heron",
+        "description": "Justin Heron",
+        "detailedDescription": "He's a master of selling!",
         "attributes": {
-          "weight": 140,
+          "weight": 120,
           "money": 30,
           "attackStrength": 25,
           "gender": "male",
@@ -4123,13 +4147,13 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "justinheron.jpg"
         },
         "synonyms": [
-          "simon",
-          "simon j",
-          "sj",
-          "johnson",
+          "justin",
+          "jh",
+          "heron",
           "him"
         ],
         "missions": [
@@ -4152,7 +4176,7 @@
             "reward": {
               "score": 25,
               "affinityModifier": 2,
-              "increaseAffinityFor": "simon johnson",
+              "increaseAffinityFor": "justin heron",
               "decreaseAffinityFor": "james dening",
               "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Simon will have appreciated it.<br>Have 25 points."
             }
@@ -4174,7 +4198,8 @@
           "carryWeight": 15,
           "health": 100,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "cassiroper.jpg"
         },
         "synonyms": [
           "cassi roper",
@@ -5672,7 +5697,8 @@
           "carryWeight": 15,
           "health": 100,
           "canTravel": true,
-          "traveller": true
+          "traveller": true,
+		  "imageName": "chrisallen.jpg"
         },
         "synonyms": [
           "chris",
@@ -5778,6 +5804,7 @@
           "health": 100,
           "canTravel": true,
           "traveller": true,
+		  "imageName": "paweljonczak.jpg",
           "destinations": [
             "servery-kitchen",
             "waste-area",

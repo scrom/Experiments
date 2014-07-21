@@ -59,6 +59,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _holdsLiquid = false;
         var _hidden = false; 
         var _hasLinkedDoor = false;
+        var _imageName = "IMAG0539.jpg";
 
         //grammar support...
         var _itemPrefix = "It";
@@ -186,6 +187,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
             if (artefactAttributes.isHidden != undefined) {_hidden = artefactAttributes.isHidden;};
             if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
+            if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
             
 
         };
@@ -277,6 +279,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _name;
         }; 
 
+        self.getImageName = function() {
+            return _imageName;
+        };
+
         self.checkCustomAction = function(verb) {
             //console.log("custom action: "+_customAction+" verb:"+verb);
             if (_customAction == verb) { 
@@ -337,6 +343,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.holdsLiquid = _holdsLiquid;
             currentAttributes.isHidden = _hidden;
             currentAttributes.hasLinkedDoor = _hasLinkedDoor;
+            currentAttributes.imageName = _imageName;
 
             return currentAttributes;
 
@@ -390,6 +397,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.customAction != undefined) { saveAttributes.customAction = artefactAttributes.customAction;};
             if (artefactAttributes.defaultResult != undefined) { saveAttributes.defaultResult = artefactAttributes.defaultResult;};
             if (artefactAttributes.hasLinkedDoor == true) { saveAttributes.hasLinkedDoor = artefactAttributes.hasLinkedDoor;};
+            if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};
             return saveAttributes;
         };
 
@@ -719,6 +727,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };  
             };
 
+            if (_imageName) {
+                resultString += "$image"+_imageName+"/$image";
+            };
             return resultString;
         };
 
