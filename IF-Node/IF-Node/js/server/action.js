@@ -661,7 +661,11 @@ exports.Action = function Action(aPlayer, aMap) {
 
             //get an image path if not already set
             if (!(imageName)) {
-                imageName = _player.getCurrentLocation().getImageName();
+                var location = _player.getCurrentLocation();
+                try {
+                    //if this fails, it's not the end of the world. Log it but continue
+                    imageName = location.getImageName();
+                } catch (err) {console.log(err.stack);};
             };
 
 

@@ -33,6 +33,7 @@ exports.setUp = function (callback) {
     p0 = new player.Player(playerAttributes, m0, mb);
     l0 = new location.Location('home','a home location');
     p0.setStartLocation(l0);
+    p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, affinityModifier: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
@@ -82,7 +83,7 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreatePlayer = function (test) {
-    var expectedResult = '{"object":"player","username":"player","currentLocation":"atrium","health":100,"money":5,"carryWeight":20,"startLocation":"home"}';
+    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"money":5,"carryWeight":20,"startLocation":"home","locationsFound":1}';
     var actualResult = p0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -929,7 +930,6 @@ exports.failingToMakeSweetCoffeeDoesnotModifyIngredients.meta = { traits: ["Play
 
 
 exports.canDrinkCoffee = function (test) {
-
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
 
