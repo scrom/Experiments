@@ -1217,7 +1217,7 @@
           "fire exit",
           "fire door"
         ]
-      }     
+      }
     ]
   },
   {
@@ -2021,9 +2021,10 @@
         "direction": "n",
         "source": "ground-floor-fire-escape",
         "destination": "smoking-area",
-		"hidden": true
+        "hidden": true
       }
-    ],"inventory": [
+    ],
+    "inventory": [
       {
         "object": "artefact",
         "name": "door",
@@ -2044,20 +2045,20 @@
             "destination": "ground-floor-fire-escape",
             "hidden": true
           },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "ground-floor-fire-escape",
-        "destination": "smoking-area",
-		"hidden": true
-      }
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "ground-floor-fire-escape",
+            "destination": "smoking-area",
+            "hidden": true
+          }
         ],
         "synonyms": [
           "door",
           "gate",
           "steel door",
-		  "steel"
+          "steel"
         ]
       }
     ]
@@ -3332,7 +3333,7 @@
       }
     ],
     "inventory": [
-{
+      {
         "object": "creature",
         "name": "chris smith",
         "displayname": "Chris Smith",
@@ -4957,8 +4958,8 @@
         "destination": "second-floor-west-corridor"
       }
     ],
-	"inventory": [
-	      {
+    "inventory": [
+      {
         "object": "artefact",
         "name": "cupboard",
         "description": "stationery cupboard",
@@ -4968,13 +4969,13 @@
           "weight": 180,
           "carryWeight": 50,
           "type": "container",
-		  "canOpen": true
+          "canOpen": true
         },
         "synonyms": [
           "stationary",
-		  "stationery",
-		  "stationary cupboard",
-		  "stationery cupboard"
+          "stationery",
+          "stationary cupboard",
+          "stationery cupboard"
         ],
         "inventory": [
           {
@@ -4991,14 +4992,14 @@
               "stickies",
               "sticky notes",
               "post its",
-			  "postits",
-			  "post it notes",
-			  "post-it notes",
-			  "postit notes",
-			  "notes",
-			  "pack of post-its",
-			  "pack of post its",
-			  "pack of postits"
+              "postits",
+              "post it notes",
+              "post-it notes",
+              "postit notes",
+              "notes",
+              "pack of post-its",
+              "pack of post its",
+              "pack of postits"
             ]
           },
           {
@@ -5019,7 +5020,7 @@
           }
         ]
       }
-	] 
+    ]
   },
   {
     "object": "location",
@@ -5631,7 +5632,7 @@
         "direction": "s",
         "source": "smoking-area",
         "destination": "ground-floor-fire-escape",
-		"hidden": true
+        "hidden": true
       }
     ]
   },
