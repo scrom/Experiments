@@ -1341,7 +1341,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 self.decreaseAffinity(1);
                 aPlayer.hurt(Math.floor(_attackStrength/4)); //bites player (base attack strength / 4 - not with weapon)
                 var playerContagion = aPlayer.getContagion();
-                if (playerContagion.length==0) {
+                var playerAntibodies = aPlayer.getAntibodies();
+                if (playerContagion.length==0 && playerAntibodies.length == 0) {
                     resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back.";
                 } else {
                     resultString = "You sink your teeth into "+self.getDisplayName()+". "+_genderPrefix+" struggles free and bites you back.";
