@@ -445,6 +445,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _linkedExits;
         };
 
+        self.sells = function(anObjectName) {
+            return false;
+        };
+
+        self.check = function(anObjectName) {
+            return _inventory.check(anObjectName);
+        };
+
         //artefact only function at the moment
         self.setAttributes = function(attributes) {
             if (attributes.type != undefined) {

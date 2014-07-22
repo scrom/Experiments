@@ -997,6 +997,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _salesInventory.check(anObjectName);
         };
 
+        self.check = function (anObjectName) {
+            return _inventory.check(anObjectName);
+        };
+
         self.willTrade = function (playerAggression, anObject) {
             if (self.isDead()) { return false; };
             if (self.isHostile(playerAggression)) { return false; };

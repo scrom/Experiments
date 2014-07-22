@@ -723,6 +723,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
 
+                //if still no object, does a creature have it?
+                var creatures = _currentLocation.getCreatures();
+                for (var c=0;c<creatures.length;c++) {
+                    if (creatures[c].sells(artefactName)) {
+                        return "You'll need to <i>buy</i> that from "+creatures[c].getDisplayName()+".";
+                    };
+                    if (creatures[c].check(artefactName)) {
+                        return "I think "+creatures[c].getDisplayName()+" has what you're after.";
+                    };
+                };
+
                 return "There's no "+artefactName+" available here at the moment.";
             };
 
