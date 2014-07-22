@@ -1331,24 +1331,31 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //2 way transfer of contagion/antibodies!
             resultString+=self.transmit(recipient);
             resultString+=recipient.transmit(self);
+
+            //if biting player, *partially* reduce affinity and increase aggression.
+            if (recipient.getType() == "player") {
+                self.decreaseAffinity(0.5);
+                recipient.increaseAggression(0.25);
+            };
             return resultString+"<br>";
         };
 
-        self.eat = function(aPlayer) {
+        self.eat = function(player) {
             var resultString;
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
                 self.decreaseAffinity(1);
-                aPlayer.hurt(Math.floor(_attackStrength/4)); //bites player (base attack strength / 4 - not with weapon)
-                var playerContagion = aPlayer.getContagion();
-                var playerAntibodies = aPlayer.getAntibodies();
+                player.hurt(Math.floor(_attackStrength/4)); //bites player (base attack strength / 4 - not with weapon)
+                var playerContagion = player.getContagion();
+                var playerAntibodies = player.getAntibodies();
                 if (playerContagion.length==0 && playerAntibodies.length == 0) {
                     resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back.";
                 } else {
                     resultString = "You sink your teeth into "+self.getDisplayName()+". "+_genderPrefix+" struggles free and bites you back.";
                     resultString += "<br>"+self.hurt(10); //player injures creature.
+                    player.increaseAggression(0.5); //slowly increase aggression
                 };
-                resultString += self.transmit(aPlayer);
+                resultString += self.transmit(player);
                 return resultString;
             };
 
@@ -1358,15 +1365,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
 
             if (_nutrition >0) {
-                aPlayer.recover(_nutrition);
+                player.recover(_nutrition);
                 resultString += "It was a bit messy but you feel fitter, happier and healthier.";
             } else { //nutrition is zero or negative
                 resultString += "Dead "+self.getName()+" really doesn't taste so great. ";
                 if (_nutrition < 0) {
-                    resultString += aPlayer.hurt(_nutrition*-1);
+                    resultString += player.hurt(_nutrition*-1);
                 };
             };
-            resultString += self.transmit(aPlayer);
+            resultString += self.transmit(player);
             return resultString;
 
          }; 
