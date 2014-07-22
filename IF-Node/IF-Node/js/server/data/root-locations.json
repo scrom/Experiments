@@ -1576,7 +1576,8 @@
         "longname": "North",
         "direction": "n",
         "source": "first-floor-fire-escape",
-        "destination": "servery-main"
+        "destination": "servery-main",
+		"hidden":true
       },
       {
         "object": "exit",
@@ -4530,7 +4531,15 @@
         "direction": "u",
         "source": "second-floor-fire-escape",
         "destination": "top-fire-escape"
-      }
+      },
+	  {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-fire-escape",
+            "destination": "second-floor-seating-area-east",
+            "hidden": true
+          }
     ]
   },
   {
@@ -4919,8 +4928,53 @@
         "direction": "e",
         "source": "second-floor-seating-area-east",
         "destination": "is-area"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-seating-area-east",
+        "destination": "second-floor-fire-escape",
+		"hidden": true
       }
-    ]
+    ],
+	"inventory": [
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "fire exit",
+        "detailedDescription": "If you open the door, you'll probably set off an alarm.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true
+        },
+        "linkedexits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-seating-area-east",
+        "destination": "second-floor-fire-escape",
+		"hidden": true
+      },
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-fire-escape",
+            "destination": "second-floor-seating-area-east",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "bar",
+          "fire exit",
+          "fire door"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -5145,7 +5199,8 @@
         "longname": "South",
         "direction": "s",
         "source": "servery-main",
-        "destination": "first-floor-fire-escape"
+        "destination": "first-floor-fire-escape",
+		"hidden":true
       }
     ],
     "inventory": [
@@ -5168,6 +5223,41 @@
           "bowl",
           "bowl of soup",
           "food"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "fire exit",
+        "detailedDescription": "If you open the door, you'll probably set off an alarm.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "servery-main",
+            "destination": "first-floor-fire-escape",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "first-floor-fire-escape",
+            "destination": "servery-main",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "bar",
+          "fire exit",
+          "fire door"
         ]
       }
     ]
@@ -5245,11 +5335,12 @@
         "object": "artefact",
         "name": "postcard",
         "description": "thankyou postcard",
-        "detailedDescription": "It says thanks for being great, Chris! (there are loads of others with similar thank-yous)",
+        "detailedDescription": "It says thanks for being great! (there are loads of others with similar thank-yous)",
         "attributes": {
-          "weight": 1,
+          "weight": 0.5,
           "type": "book",
-          "canCollect": true
+          "canCollect": true,
+		  "affinityModifier": 3
         },
         "synonyms": [
           "card",
@@ -5777,7 +5868,28 @@
         "direction": "d",
         "source": "top-fire-escape",
         "destination": "second-floor-fire-escape"
-      }
+      },
+	  {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "top-fire-escape",
+            "destination": "roof"
+          }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "roof",
+    "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
+    "exits": [
+	  {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "roof",
+            "destination": "top-fire-escape"
+          }
     ]
   },
   {
