@@ -1617,7 +1617,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
                     if (_contagion.length >0) {
-                        resultString += self.bite(player);
+                        resultString += "<br>"+self.bite(player);
                     };
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
@@ -1743,7 +1743,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         var creatures = _currentLocation.getCreatures();
                         for (var c=0;c<creatures.length;c++) {
                             if (creatures[c].getName() != self.getName()) {
-                                resultString += self.bite(creatures[c]);
+                                resultString += "<br>"+self.bite(creatures[c]);
                             };
                         };
                     };
