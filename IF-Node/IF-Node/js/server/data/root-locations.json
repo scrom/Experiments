@@ -229,17 +229,14 @@
         "object": "artefact",
         "name": "cake",
         "description": "slice of chocolate cake",
-        "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.<br>It looks like it's been out here a while. I'm sure it'll be fine though.",
+        "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.",
         "attributes": {
           "defaultAction": "eat",
           "weight": 1,
           "type": "food",
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 25,
-          "contagion": [
-            "zombie"
-          ]
+          "nutrition": 25
         },
         "synonyms": [
           "slice",
@@ -2576,7 +2573,81 @@
                       "source": "crash-site",
                       "destination": "west-car-park"
                     }
-                  ]
+                  ],
+					"inventory": [
+					  {
+						"object": "artefact",
+						"name": "pool",
+						"description": "pool of zombie venom antibodies",
+						"detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
+						"attributes": {
+						  "defaultAction": "drink",
+						  "weight": 1,
+						  "isLiquid":true,
+						  "isEdible":true,
+						  "canCollect":true,
+						  "antibodies":["zombie"]
+						},
+						"synonyms": [
+						  "antivenom",
+						  "antibodies",
+						  "zombie venom",
+						  "zombie venom antibodies",
+						  "zombie antibodies",
+						  "venom", 
+						  "sample"
+						]
+					  },
+					  {
+        "object": "creature",
+        "name": "dave convery",
+        "displayname": "Dave Convery",
+        "description": "Dave Convery",
+        "detailedDescription": "Like a cynical but gentle, marketing wolverine.",
+        "attributes": {
+          "weight": 140,
+          "money": 10,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 18,
+          "health": 200,
+          "canTravel": true,
+		  "traveller": true,
+		  "contagion": ["zombie"], 
+          "imageName": "daveconvery.jpg"
+        },
+        "synonyms": [
+          "dave",
+          "convery",
+          "him"
+        ]
+      },					  {
+        "object": "creature",
+        "name": "roger hart",
+        "displayname": "Roger Hart",
+        "description": "Roger Hart",
+        "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.",
+        "attributes": {
+          "weight": 120,
+          "money": 10,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 18,
+          "health": 160,
+          "canTravel": true,
+		  "traveller": true,
+		  "contagion": ["zombie"], 
+          "imageName": "daveconvery.jpg"
+        },
+        "synonyms": [
+          "roger",
+          "hart",
+          "him"
+        ]
+      }
+					  ]
                 }
               ],
               "exits": [

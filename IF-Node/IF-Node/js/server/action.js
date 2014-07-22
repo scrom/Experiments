@@ -185,6 +185,11 @@ exports.Action = function Action(aPlayer, aMap) {
                         _ticks = 0;
                         description = "Getting frustrated?";
                         break;
+                    case 'thankyou':
+                    case 'thanks':
+                        _ticks = 0;
+                        description = "My pleasure :)";
+                        break;
                     case 'no':
                         _ticks = 0;
                         if (_awaitingPlayerAnswer == true) {

@@ -176,6 +176,16 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                         //manually add exits from each location (linking not needed)
                         rewardLocation.addExit(exitData.direction,exitData.source,exitData.destination,exitData.hidden);
                     }; 
+                    for (var i=0; i<reward.locations[l].inventory.length;i++) {
+                        var inventoryData = reward.locations[l].inventory[i];
+                        //manually add exits from each location (linking not needed)
+                        if (inventoryData.object == "artefact") {
+                            rewardLocation.addObject(self.buildArtefact(inventoryData));
+                        } else if (inventoryData.object == "creature") {
+                            var creature = self.buildCreature(inventoryData)
+                            creature.go(null, rewardLocation);                           
+                        };                        
+                    }; 
                     returnObject.locations.push(rewardLocation);
                 }; 
             };

@@ -744,6 +744,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getDetailedDescription = function(playerAggression) {
             var resultString = _detailedDescription+"<br>"+self.getAffinityDescription();
+            if (_contagion.length>0) {resultString+= "<br>"+_genderPrefix + " really doesn't look very well."};
             if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
             if (self.isDead()) {
                 if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; }

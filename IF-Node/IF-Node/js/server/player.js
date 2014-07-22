@@ -2307,6 +2307,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //add locations
                         for (var l=0; l<missionReward.locations.length;l++) {
                             map.addLocation(missionReward.locations[l]);
+                            if (missionReward.locations[l].inventory) {
+                                var newInventory = missionReward.locations[l].inventory;
+                                for (var i=0;i<newInventory.length;i++) {
+                                    console.log(newInventory[i]);
+                                    //add item to location inventory
+                                    if (newInventory[i].getType() == "creature") {
+                                        newInventory[i].go(null, missionReward.locations[l]);  
+                                    } else {
+                                        missionReward.locations[l].addObject(newInventory[i]);                         
+                                    }; 
+                                };
+
+                            };
                         };                        
                     };
                     if (missionReward.exits) {
