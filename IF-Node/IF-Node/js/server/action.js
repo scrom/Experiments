@@ -525,6 +525,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'sharpen':
                     case 'on':
                     case 'off':
+                    case 'empty':
+                    case 'fill':
+                    case 'water':
                     case 'climb':
                     case 'jump':
                     case 'attach':

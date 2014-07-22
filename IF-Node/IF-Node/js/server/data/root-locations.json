@@ -849,7 +849,7 @@
             "east-bike-racks",
             "atrium"
           ],
-          "loops": 1,
+          "loops": 3,
           "loopDelay": 5,
           "imageName": "chrismoore.jpg"
         },
@@ -5634,7 +5634,24 @@
         "destination": "ground-floor-fire-escape",
         "hidden": true
       }
-    ]
+    ],
+	"inventory": [ {
+        "object": "artefact",
+        "name": "bench",
+        "description": "wooden bench",
+        "detailedDescription": "A comfortable spot to sit and rest for a while.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 80,
+          "carryWeight": 0.1,
+          "type": "bed",
+          "isBreakable": true
+        },
+        "synonyms": [
+          "wooden bench",
+          "chair"
+        ]
+		}]
   },
   {
     "object": "location",

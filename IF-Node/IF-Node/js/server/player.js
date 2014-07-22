@@ -1428,7 +1428,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {
+                if (artefactName == "left"||artefactName == "right") {
+                    return "If you're exploring, try entering compass directions instead. E.g. <i>'go North'</i>.";
+                };
+                return notFoundMessage(artefactName);
+            };
 
             return artefact.switchOnOrOff(verb, action);           
         };
