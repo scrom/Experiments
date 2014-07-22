@@ -2546,25 +2546,30 @@
               "score": 50,
               "successMessage": "Congratulations. You got the coffee machine working, have 50 points!"
             }
-          },
-          {
+          }
+        ]
+      }
+    ],
+	"missions": [
+	          {
             "object": "mission",
             "name": "planecrash",
             "displayName": "there's been a plane crash",
             "attributes": {
               "type": "event",
+			  "parent": "sweetcoffee",
               "missionObject": "coffee machine",
               "destination": "crash-site"
             },
             "conditionAttributes": {
-              "time": 2
+              "time": 23
             },
             "reward": {
               "locations": [
                 {
                   "object": "location",
                   "name": "crash-site",
-                  "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the fuselage you can hear a low moan.",
+                  "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
                   "exits": [
                     {
                       "object": "exit",
@@ -2670,9 +2675,7 @@
               "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
             }
           }
-        ]
-      }
-    ]
+		]
   },
   {
     "object": "location",

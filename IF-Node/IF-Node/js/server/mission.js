@@ -162,6 +162,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.startTimer = function() {
             if (!(_ticking)) {_ticking = true;};
+            console.log("Mission timer started for "+self.getName());
             return _ticking;
         };
 

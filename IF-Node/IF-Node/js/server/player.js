@@ -2429,7 +2429,29 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //clear parents from any child missions (from newly completed missions) to make them accessible
                 for (var j=0;j<newlyCompletedMissions.length;j++) {
                     var missionName = newlyCompletedMissions[j]; 
-                    if (allMissions[i].checkParent(missionName)) {allMissions[i].clearParent();};
+                    if (allMissions[i].checkParent(missionName)) {
+
+                        allMissions[i].clearParent();
+
+                        //duplicated code from location examine - initiate any locatoin-based missions.
+                        var newMissions = _currentLocation.getMissions();
+                        //remove any with dialogue from this list.
+                        for (var m=0; m< newMissions.length;m++) {
+                            //note we're splicing a *copy*, not the original array!
+                            if (newMissions[m].hasDialogue()) {newMissions.splice(m,1);};
+                        };
+                        if (newMissions.length>0) {resultString+= "<br><br>";};
+                        for (var nm=0; nm< newMissions.length;nm++) {
+                            newMissions[nm].startTimer();
+                            if (!(newMissions[nm].isStatic())) {
+                                self.addMission(newMissions[nm]);
+                                _currentLocation.removeMission(newMissions[nm].getName());
+                            };
+                            resultString+= newMissions[nm].getDescription()+"<br>";
+                        };
+                        //end duplicated code
+
+                    };
                 };
 
                 //tick all active missions
