@@ -2471,10 +2471,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             var randomMessage = ["You seem to have been infected with something nasty", "You don't seem fully in control of your actions", "You're really not feeling right", "You twitch and jerk uncontrollably", "You may have eaten something you shouldn't have"];
                             var randomIndex = Math.floor(Math.random() * randomMessage.length);
                             resultString += "<br><br>"+randomMessage[randomIndex]+"."
-                        };
 
-                        for (var c=0;c<creatures.length;c++) {
-                            resultString += "<br>"+self.eat("bite", creatures[c].getName());
+                            //bite a random creature (just one)
+                            randomIndex = Math.floor(Math.random() * creatures.length);
+                            resultString += "<br>"+self.eat("bite", creatures[randomIndex].getName());
                         };
                     };
                 };
