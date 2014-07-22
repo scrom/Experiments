@@ -229,7 +229,7 @@
         "object": "artefact",
         "name": "cake",
         "description": "slice of chocolate cake",
-        "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.",
+        "detailedDescription": "Mmmm tasty *and* healthy. If only there were more.<br>It looks like it's been out here a while. I'm sure it'll be fine though.",
         "attributes": {
           "defaultAction": "eat",
           "weight": 1,
