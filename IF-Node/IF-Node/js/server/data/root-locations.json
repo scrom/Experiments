@@ -1217,33 +1217,7 @@
           "fire exit",
           "fire door"
         ]
-      },
-      {
-        "object": "creature",
-        "name": "chris smith",
-        "displayname": "Chris Smith",
-        "description": "Chris Smith",
-        "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
-        "attributes": {
-          "weight": 140,
-          "money": 40,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 9,
-          "health": 140,
-          "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
-          "imageName": "chrissmith.jpg"
-        },
-        "synonyms": [
-          "chris",
-          "smithy",
-          "smith",
-          "him"
-        ]
-      }
+      }     
     ]
   },
   {
@@ -2046,7 +2020,45 @@
         "longname": "North",
         "direction": "n",
         "source": "ground-floor-fire-escape",
-        "destination": "smoking-area"
+        "destination": "smoking-area",
+		"hidden": true
+      }
+    ],"inventory": [
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "steel gate",
+        "detailedDescription": "It only opens from this side. This has the potential to be a useful short-cut.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "smoking-area",
+            "destination": "ground-floor-fire-escape",
+            "hidden": true
+          },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "ground-floor-fire-escape",
+        "destination": "smoking-area",
+		"hidden": true
+      }
+        ],
+        "synonyms": [
+          "door",
+          "gate",
+          "steel door",
+		  "steel"
+        ]
       }
     ]
   },
@@ -3269,6 +3281,13 @@
       },
       {
         "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-south",
+        "destination": "opportunities-west"
+      },
+      {
+        "object": "exit",
         "longname": "North",
         "direction": "n",
         "source": "opportunities-south",
@@ -3295,6 +3314,48 @@
           "glass",
           "google glass",
           "pair of google glasses"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-west",
+    "description": "You're in West end of the opportunities and ventures area.<br>Peering through the window you see staff wandering past on their way to and from their bikes.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-west",
+        "destination": "opportunities-south"
+      }
+    ],
+    "inventory": [
+{
+        "object": "creature",
+        "name": "chris smith",
+        "displayname": "Chris Smith",
+        "description": "Chris Smith",
+        "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
+        "attributes": {
+          "weight": 140,
+          "money": 40,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 9,
+          "health": 140,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "chrissmith.jpg"
+        },
+        "synonyms": [
+          "chris",
+          "smithy",
+          "smith",
+          "him"
         ]
       }
     ]
@@ -4895,7 +4956,70 @@
         "source": "second-floor-printer-area",
         "destination": "second-floor-west-corridor"
       }
-    ]
+    ],
+	"inventory": [
+	      {
+        "object": "artefact",
+        "name": "cupboard",
+        "description": "stationery cupboard",
+        "detailedDescription": "Can haz all ur Scrum supplies.",
+        "attributes": {
+          "extendedInventoryDescription": "Amongst the mountains of redundant folders, staplers and pen holders you find $inventory that might be useful to you.",
+          "weight": 180,
+          "carryWeight": 50,
+          "type": "container",
+		  "canOpen": true
+        },
+        "synonyms": [
+          "stationary",
+		  "stationery",
+		  "stationary cupboard",
+		  "stationery cupboard"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "post-its",
+            "description": "pack of post-its",
+            "detailedDescription": "A pack of multicoloured post-it notes.",
+            "attributes": {
+              "weight": 0.5,
+              "canCollect": true
+            },
+            "synonyms": [
+              "pack",
+              "stickies",
+              "sticky notes",
+              "post its",
+			  "postits",
+			  "post it notes",
+			  "post-it notes",
+			  "postit notes",
+			  "notes",
+			  "pack of post-its",
+			  "pack of post its",
+			  "pack of postits"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "sharpie",
+            "description": "sharpie permanent marker",
+            "detailedDescription": "Invaluable tool of the agilist.",
+            "attributes": {
+              "weight": 0.1,
+              "canCollect": true
+            },
+            "synonyms": [
+              "pen",
+              "marker",
+              "permanent marker",
+              "sharpie permanent marker"
+            ]
+          }
+        ]
+      }
+	] 
   },
   {
     "object": "location",
@@ -5506,7 +5630,8 @@
         "longname": "South",
         "direction": "s",
         "source": "smoking-area",
-        "destination": "ground-floor-fire-escape"
+        "destination": "ground-floor-fire-escape",
+		"hidden": true
       }
     ]
   },
