@@ -757,6 +757,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _read;
         };
 
+        self.hasContagion = function(contagion) {
+            if (_contagion.indexOf(contagion) > -1) {
+                return true;
+            };
+            return false;
+        };
+
+        self.hasAntibodies = function(antibodies) {
+            if (_antibodies.indexOf(antibodies) > -1) {
+                return true;
+            };
+            return false;
+        };
+
 
         self.getContagion = function() {
             return _contagion;
@@ -767,8 +781,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.setContagion = function(contagion) {
-            //if not already carrying
-            if (_contagion.indexOf(contagion) == -1) {
+            //if not already carrying and not immune
+            if (_contagion.indexOf(contagion) == -1 && _antibodies.indexOf(contagion) == -1) {
                 _contagion.push(contagion);
             };
         };
@@ -782,6 +796,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.removeContagion = function(contagion) {
+            var itemToRemove = -1;
             while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
                 _contagion.splice(itemToRemove,1);
             };
@@ -790,7 +805,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.transmitAntibodies = function() {
             var antibodies = [];
             for (var a=0;a<_antibodies.length;a++) {
-                antibodies.push(_antibodies[a]);
+                var randomInt = Math.floor(Math.random() * 4); 
+                if (randomInt > 0) { //75% chance of success
+                    antibodies.push(_antibodies[a]);
+                };
             };
             return antibodies;
         };
@@ -811,10 +829,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var antibodies = self.transmitAntibodies();
 
             for (var d=0;d<diseases.length;d++) {
-                if (antibodies.indexOf(diseases[d]) == -1) {
-                    receiver.setContagion(diseases[d]);
-                    console.log("contagion passed to "+receiver.getType());
-                };
+                receiver.setContagion(diseases[d]);
             };
             for (var a=0;a<antibodies.length;a++) {
                 receiver.setAntibody(antibodies[a]);

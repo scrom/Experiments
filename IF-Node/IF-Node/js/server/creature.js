@@ -518,6 +518,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return ""; //neutral
         };
 
+        self.hasContagion = function(contagion) {
+            if (_contagion.indexOf(contagion) > -1) {
+                return true;
+            };
+            return false;
+        };
+
+        self.hasAntibodies = function(antibodies) {
+            if (_antibodies.indexOf(antibodies) > -1) {
+                return true;
+            };
+            return false;
+        };
+
         self.getContagion = function() {
             return _contagion;
         };
@@ -527,8 +541,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.setContagion = function(contagion) {
-            //if not already carrying
-            if (_contagion.indexOf(contagion) == -1) {
+            //if not already carrying and not immune
+            if (_contagion.indexOf(contagion) == -1 && _antibodies.indexOf(contagion) == -1) {
                 _contagion.push(contagion);
             };
         };
@@ -542,6 +556,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.removeContagion = function(contagion) {
+            var itemToRemove = -1;
             while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
                 _contagion.splice(itemToRemove,1);
             };
@@ -550,7 +565,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.transmitAntibodies = function() {
             var antibodies = [];
             for (var a=0;a<_antibodies.length;a++) {
-                antibodies.push(_antibodies[a]);
+                var randomInt = Math.floor(Math.random() * 4); 
+                if (randomInt > 0) { //75% chance of success
+                    antibodies.push(_antibodies[a]);
+                };
             };
             return antibodies;
         };
@@ -571,13 +589,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var antibodies = self.transmitAntibodies();
 
             for (var d=0;d<diseases.length;d++) {
-                if (antibodies.indexOf(diseases[d]) == -1) {
-                    receiver.setContagion(diseases[d]);
-                    console.log("contagion passed to "+receiver.getType());
-                };
+                receiver.setContagion(diseases[d]);
             };
             for (var a=0;a<antibodies.length;a++) {
                 receiver.setAntibody(antibodies[a]);
+                console.log("antibodies passed to "+receiver.getType());
             };
 
             //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
@@ -1308,10 +1324,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.bite = function(recipient) {
-            var resultString = "";
+            var resultString = "<br>";
             resultString+=initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
-            resultString+="<br>"+recipient.hurt(_attackStrength/4);
+            resultString+="<br>"+recipient.hurt(Math.floor(_attackStrength/4));
+
+            //2 way transfer of contagion/antibodies!
             resultString+=self.transmit(recipient);
+            resultString+=recipient.transmit(self);
             return resultString+"<br>";
         };
 
@@ -1320,7 +1339,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
                 self.decreaseAffinity(1);
-                aPlayer.hurt(_attackStrength/4); //bites player (base attack strength / 4 - not with weapon)
+                aPlayer.hurt(Math.floor(_attackStrength/4)); //bites player (base attack strength / 4 - not with weapon)
                 var playerContagion = aPlayer.getContagion();
                 if (playerContagion.length==0) {
                     resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back.";
@@ -1618,7 +1637,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
                     if (_contagion.length >0) {
-                        resultString += "<br>"+self.bite(player);
+                        var randomAttack = Math.floor(Math.random() * 3);
+                        if (randomAttack == 0) {
+                            resultString += self.bite(player);
+                        };
                     };
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
@@ -1739,12 +1761,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //bite?
                 if (_contagion.length >0) {
-                    var randomAttack = Math.floor(Math.random() * 3);
-                    if (randomAttack == 0) {
-                        var creatures = _currentLocation.getCreatures();
-                        for (var c=0;c<creatures.length;c++) {
+                    var creatures = _currentLocation.getCreatures();
+                    for (var c=0;c<creatures.length;c++) {
+                        var randomAttack = Math.floor(Math.random() * 3);
+                        if (randomAttack == 0) {
                             if (creatures[c].getName() != self.getName()) {
-                                resultString += "<br>"+self.bite(creatures[c]);
+                                resultString += self.bite(creatures[c]);
                             };
                         };
                     };
