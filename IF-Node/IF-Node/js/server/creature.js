@@ -1247,7 +1247,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _hitPoints += pointsToAdd;
                 if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;}
 
-                console.log('Creature health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+                //console.log('Creature health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
             };
         };
 
@@ -1774,9 +1774,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (randomAttack == 0) {
                         //bite a random creature (just one)
                         randomAttack = Math.floor(Math.random() * creatures.length);
-                            if (creatures[randomAttack].getName() != self.getName()) {
-                                resultString += self.bite(creatures[randomAttack]);
-                            };
+                        if (creatures[randomAttack].getName() != self.getName()) {
+                            resultString += self.bite(creatures[randomAttack]);
                         };
                     };
                 };
