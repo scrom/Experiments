@@ -3,8 +3,8 @@
     "object": "location",
     "name": "atrium",
     "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.",
+    "imageName": "imag2695.jpg",
     "start": true,
-	"imageName": "imag2695.jpg",
     "exits": [
       {
         "object": "exit",
@@ -81,7 +81,7 @@
         "attributes": {
           "weight": 51,
           "isBreakable": true,
-		  "imageName": "imag2697.jpg"
+          "imageName": "imag2697.jpg"
         },
         "synonyms": [
           "display",
@@ -138,7 +138,7 @@
     "object": "location",
     "name": "atrium-seating",
     "description": "You're in the atrium seating area.",
-	"imageName": "imag2702.jpg",
+    "imageName": "imag2702.jpg",
     "exits": [
       {
         "object": "exit",
@@ -196,7 +196,7 @@
           "carryWeight": 0.1,
           "type": "bed",
           "isBreakable": true,
-		  "imageName": "morpheuschair.jpg"
+          "imageName": "morpheuschair.jpg"
         },
         "synonyms": [
           "red chair",
@@ -237,7 +237,9 @@
           "canCollect": true,
           "isEdible": true,
           "nutrition": 25,
-		  "contagion": ["zombie"]
+          "contagion": [
+            "zombie"
+          ]
         },
         "synonyms": [
           "slice",
@@ -477,7 +479,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "chrisgeorge.jpg"
+          "imageName": "chrisgeorge.jpg"
         },
         "synonyms": [
           "chris",
@@ -503,7 +505,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName":"markwightman.jpg"
+          "imageName": "markwightman.jpg"
         },
         "synonyms": [
           "mark wightman",
@@ -529,7 +531,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "jefffoster.jpg"
+          "imageName": "jefffoster.jpg"
         },
         "synonyms": [
           "jeff foster",
@@ -555,7 +557,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "simoncromarty.jpg"
+          "imageName": "simoncromarty.jpg"
         },
         "synonyms": [
           "simon",
@@ -634,7 +636,7 @@
           "affinity": 2,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "jamesdening.jpg"
+          "imageName": "jamesdening.jpg"
         },
         "inventory": [
           {
@@ -680,7 +682,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "alanplatt.jpg"
+          "imageName": "alanplatt.jpg"
         },
         "synonyms": [
           "alan platt",
@@ -786,7 +788,7 @@
           "affinity": -1,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "jonathanwatts.jpg"
+          "imageName": "jonathanwatts.jpg"
         },
         "synonyms": [
           "jonathan watts",
@@ -814,7 +816,7 @@
           "health": 140,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "aliceeasey.jpg"
+          "imageName": "aliceeasey.jpg"
         },
         "synonyms": [
           "alice easey",
@@ -842,14 +844,14 @@
           "affinity": 2,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "chrismoore.jpg",
           "destinations": [
             "customer-delight-south-west",
             "east-bike-racks",
             "atrium"
           ],
           "loops": 1,
-          "loopDelay": 5
+          "loopDelay": 5,
+          "imageName": "chrismoore.jpg"
         },
         "synonyms": [
           "chris",
@@ -920,7 +922,7 @@
         "destination": "customer-delight-south-west"
       }
     ],
-	"inventory":[
+    "inventory": [
       {
         "object": "creature",
         "name": "filippa vajda",
@@ -937,19 +939,20 @@
           "health": 100,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "filippavajda.jpg"
+          "imageName": "filippavajda.jpg"
         },
         "synonyms": [
           "fil",
           "fillippa",
-		  "fillipa",
+          "fillipa",
           "filippa",
-		  "filipa",
-		  "philippa",
-		  "phillippa",
+          "filipa",
+          "philippa",
+          "phillippa",
           "her"
         ]
-      }]
+      }
+    ]
   },
   {
     "object": "location",
@@ -992,11 +995,11 @@
         "description": "bike racks",
         "detailedDescription": "There's dozens of bikes here. Are you looking for any in particular?",
         "attributes": {
+          "extendedInventoryDescription": "They contain $inventory.",
           "weight": 45,
           "carryWeight": 15,
           "isBreakable": true,
-          "plural": true,
-		  "extendedInventoryDescription": "They contain $inventory."
+          "plural": true
         },
         "synonyms": [
           "rack",
@@ -1232,7 +1235,7 @@
           "affinity": 1,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "chrissmith.jpg"
+          "imageName": "chrissmith.jpg"
         },
         "synonyms": [
           "chris",
@@ -1488,11 +1491,11 @@
         "direction": "o",
         "source": "first-floor-cubicle",
         "destination": "first-floor-toilet",
-		"hidden": true
+        "hidden": true
       }
     ],
     "inventory": [
-		{
+      {
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
@@ -1503,22 +1506,22 @@
           "type": "door",
           "canOpen": true,
           "lockable": true,
-		  "hasLinkedDoor": true
+          "hasLinkedDoor": true
         },
         "linkedexits": [
-			{
-			"object": "exit",
-			"longname": "out",
-			"direction": "o",
-			"source": "first-floor-cubicle",
-			"destination": "first-floor-toilet",
-			"hidden":true
-		  }
+          {
+            "object": "exit",
+            "longname": "out",
+            "direction": "o",
+            "source": "first-floor-cubicle",
+            "destination": "first-floor-toilet",
+            "hidden": true
+          }
         ],
         "synonyms": [
           "toilet",
-		  "cubicle",
-		  "toilet door",
+          "cubicle",
+          "toilet door",
           "door"
         ]
       },
@@ -1577,7 +1580,7 @@
         "direction": "n",
         "source": "first-floor-fire-escape",
         "destination": "servery-main",
-		"hidden":true
+        "hidden": true
       },
       {
         "object": "exit",
@@ -1641,10 +1644,11 @@
         "direction": "s",
         "source": "first-floor-landing-east",
         "destination": "servery-back-corridor",
-		"hidden": true
+        "hidden": true
       }
     ],
-		"inventory":[	        {
+    "inventory": [
+      {
         "object": "artefact",
         "name": "office door",
         "description": "office door",
@@ -1659,12 +1663,12 @@
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "South",
-			"direction": "s",
-			"source": "first-floor-landing-east",
-			"destination": "servery-back-corridor",
-			"hidden": true
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "first-floor-landing-east",
+            "destination": "servery-back-corridor",
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -1672,7 +1676,7 @@
           "door"
         ]
       }
-	  ] 
+    ]
   },
   {
     "object": "location",
@@ -1734,11 +1738,11 @@
         "direction": "i",
         "source": "first-floor-toilet",
         "destination": "first-floor-cubicle",
-		"hidden": true
+        "hidden": true
       }
     ],
     "inventory": [
-	{
+      {
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
@@ -1749,22 +1753,22 @@
           "type": "door",
           "canOpen": true,
           "lockable": true,
-		  "hasLinkedDoor": true
+          "hasLinkedDoor": true
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "in",
-			"direction": "i",
-			"source": "first-floor-toilet",
-			"destination": "first-floor-cubicle",
-			"hidden":true
+            "object": "exit",
+            "longname": "in",
+            "direction": "i",
+            "source": "first-floor-toilet",
+            "destination": "first-floor-cubicle",
+            "hidden": true
           }
         ],
         "synonyms": [
           "toilet",
-		  "cubicle",
-		  "toilet door",
+          "cubicle",
+          "toilet door",
           "door"
         ]
       },
@@ -1938,79 +1942,6 @@
   },
   {
     "object": "location",
-    "name": "ground-floor-fire-escape",
-    "description": "You're at the bottom of the rear fire escape staircase.<br>You're surrounded by large gas and water pipes leading in and out of the building.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "ground-floor-fire-escape",
-        "destination": "first-floor-fire-escape"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "ground-floor-fire-escape",
-        "destination": "smoking-area"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "ground-floor-toilet",
-    "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "ground-floor-toilet",
-        "destination": "atrium"
-      },
-      {
-        "object": "exit",
-        "longname": "in",
-        "direction": "i",
-        "source": "ground-floor-toilet",
-        "destination": "ground-floor-cubicle",
-		"hidden":true
-      }
-    ],
-	"inventory":[{
-        "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-		  "hasLinkedDoor": true
-        },
-        "linkedexits": [
-          {
-			"object": "exit",
-			"longname": "in",
-			"direction": "i",
-			"source": "ground-floor-toilet",
-			"destination": "ground-floor-cubicle",
-			"hidden":true
-          }
-        ],
-        "synonyms": [
-          "toilet",
-		  "cubicle",
-		  "toilet door",
-          "door"
-        ]
-      }] 
-  },
-  {
-    "object": "location",
     "name": "ground-floor-cubicle",
     "description": "You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.",
     "exits": [
@@ -2020,11 +1951,11 @@
         "direction": "o",
         "source": "ground-floor-cubicle",
         "destination": "ground-floor-toilet",
-		"hidden":true
+        "hidden": true
       }
     ],
     "inventory": [
-	{
+      {
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
@@ -2035,22 +1966,22 @@
           "type": "door",
           "canOpen": true,
           "lockable": true,
-		  "hasLinkedDoor": true
+          "hasLinkedDoor": true
         },
         "linkedexits": [
-			{
-			"object": "exit",
-			"longname": "out",
-			"direction": "o",
-			"source": "ground-floor-cubicle",
-			"destination": "ground-floor-toilet",
-			"hidden":true
-		  }
+          {
+            "object": "exit",
+            "longname": "out",
+            "direction": "o",
+            "source": "ground-floor-cubicle",
+            "destination": "ground-floor-toilet",
+            "hidden": true
+          }
         ],
         "synonyms": [
           "toilet",
-		  "cubicle",
-		  "toilet door",
+          "cubicle",
+          "toilet door",
           "door"
         ]
       },
@@ -2094,6 +2025,81 @@
               "successMessage": "Congratulations. You've learned the basics on how to develop good software architecture."
             }
           }
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "ground-floor-fire-escape",
+    "description": "You're at the bottom of the rear fire escape staircase.<br>You're surrounded by large gas and water pipes leading in and out of the building.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "ground-floor-fire-escape",
+        "destination": "first-floor-fire-escape"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "ground-floor-fire-escape",
+        "destination": "smoking-area"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "ground-floor-toilet",
+    "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "ground-floor-toilet",
+        "destination": "atrium"
+      },
+      {
+        "object": "exit",
+        "longname": "in",
+        "direction": "i",
+        "source": "ground-floor-toilet",
+        "destination": "ground-floor-cubicle",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "cubicle door",
+        "description": "cubicle door",
+        "detailedDescription": "When you need to go...",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "hasLinkedDoor": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "in",
+            "direction": "i",
+            "source": "ground-floor-toilet",
+            "destination": "ground-floor-cubicle",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "toilet",
+          "cubicle",
+          "toilet door",
+          "door"
         ]
       }
     ]
@@ -2152,7 +2158,8 @@
         "source": "is-area",
         "destination": "core-area-west"
       }
-    ],    "inventory": [
+    ],
+    "inventory": [
       {
         "object": "creature",
         "name": "amanda mansfield",
@@ -2168,12 +2175,12 @@
           "health": 215,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "amandamansfield.jpg"
+          "imageName": "amandamansfield.jpg"
         },
         "synonyms": [
           "mandy",
           "manda",
-		  "mansfield",
+          "mansfield",
           "her"
         ],
         "dislikes": [
@@ -2318,7 +2325,7 @@
           "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true,
-		  "imageName": "mug.jpg"
+          "imageName": "mug.jpg"
         },
         "synonyms": [
           "mug",
@@ -2404,7 +2411,7 @@
           "lockable": true,
           "locked": true,
           "requiredComponentCount": 1,
-		  "imageName": "coffeemachine.jpg"
+          "imageName": "coffeemachine.jpg"
         },
         "synonyms": [
           "machine",
@@ -2593,7 +2600,7 @@
     "object": "location",
     "name": "library",
     "description": "You're in the atrium Library.",
-	"imageName": "imag2700.jpg",
+    "imageName": "imag2700.jpg",
     "exits": [
       {
         "object": "exit",
@@ -2612,7 +2619,7 @@
         "attributes": {
           "weight": 51,
           "isBreakable": true,
-		  "imageName": "librarytable.jpg"
+          "imageName": "librarytable.jpg"
         },
         "synonyms": [
           "glass",
@@ -2743,7 +2750,7 @@
           "type": "weapon",
           "subType": "sharp",
           "canCollect": true,
-		  "imageName": "sword.jpg"
+          "imageName": "sword.jpg"
         },
         "synonyms": [
           "ornamental",
@@ -2763,7 +2770,7 @@
           "isBreakable": true,
           "customAction": "play",
           "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte.",
-		  "imageName": "guitar.jpg"
+          "imageName": "guitar.jpg"
         },
         "synonyms": [
           "spanish",
@@ -2775,8 +2782,8 @@
   {
     "object": "location",
     "name": "lift-ground-floor",
-    "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.", 
-	"imageName":"imag2698.jpg",
+    "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
+    "imageName": "imag2698.jpg",
     "exits": [
       {
         "object": "exit",
@@ -2851,7 +2858,7 @@
           "affinity": -4,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "spy.jpg"
+          "imageName": "spy.jpg"
         },
         "inventory": [
           {
@@ -3050,7 +3057,7 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 215,
-		  "imageName": "icecreamman.jpg"
+          "imageName": "icecreamman.jpg"
         },
         "sells": [
           {
@@ -3188,7 +3195,7 @@
           "health": 200,
           "affinity": -1,
           "canTravel": true,
-		  "imageName": "jamesmoore.jpg"
+          "imageName": "jamesmoore.jpg"
         },
         "synonyms": [
           "james",
@@ -3565,7 +3572,7 @@
           "health": 500,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "simongalbraith.jpg"
+          "imageName": "simongalbraith.jpg"
         },
         "inventory": [
           {
@@ -3662,7 +3669,7 @@
     "object": "location",
     "name": "reception",
     "description": "You are stood by the big red reception desk in the Red Gate office atrium.",
-	"imageName": "imag2696.jpg",
+    "imageName": "imag2696.jpg",
     "exits": [
       {
         "object": "exit",
@@ -3684,7 +3691,7 @@
         "direction": "s",
         "source": "reception",
         "destination": "east-corridor-ground-floor-north-west",
-		"hidden": true
+        "hidden": true
       }
     ],
     "inventory": [
@@ -3701,7 +3708,7 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 215,
-		  "imageName": "vicwiseman.jpg" 
+          "imageName": "vicwiseman.jpg"
         },
         "synonyms": [
           "receptionist",
@@ -3842,7 +3849,7 @@
           }
         ]
       },
-	        {
+      {
         "object": "artefact",
         "name": "office door",
         "description": "office door",
@@ -3857,12 +3864,12 @@
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "South",
-			"direction": "s",
-			"source": "reception",
-			"destination": "east-corridor-ground-floor-north-west",
-			"hidden": true
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "reception",
+            "destination": "east-corridor-ground-floor-north-west",
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -3969,6 +3976,20 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "roof",
+    "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "roof",
+        "destination": "top-fire-escape"
       }
     ]
   },
@@ -4109,7 +4130,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "alexfreeman.jpg"
+          "imageName": "alexfreeman.jpg"
         },
         "synonyms": [
           "alex freeman",
@@ -4136,7 +4157,7 @@
           "health": 110,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "willputtock.jpg"
+          "imageName": "willputtock.jpg"
         },
         "synonyms": [
           "will puttock",
@@ -4162,7 +4183,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "jamesking.jpg"
+          "imageName": "jamesking.jpg"
         },
         "synonyms": [
           "james",
@@ -4189,7 +4210,7 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "justinheron.jpg"
+          "imageName": "justinheron.jpg"
         },
         "synonyms": [
           "justin",
@@ -4240,11 +4261,11 @@
           "health": 100,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "cassiroper.jpg"
+          "imageName": "cassiroper.jpg"
         },
         "synonyms": [
           "cassi",
-		  "cassie",
+          "cassie",
           "cr",
           "roper",
           "her"
@@ -4407,11 +4428,11 @@
         "direction": "o",
         "source": "second-floor-cubicle",
         "destination": "second-floor-toilet",
-		"hidden":true
+        "hidden": true
       }
     ],
     "inventory": [
-	{
+      {
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
@@ -4422,22 +4443,22 @@
           "type": "door",
           "canOpen": true,
           "lockable": true,
-		  "hasLinkedDoor": true
+          "hasLinkedDoor": true
         },
         "linkedexits": [
-			{
-			"object": "exit",
-			"longname": "out",
-			"direction": "o",
-			"source": "second-floor-cubicle",
-			"destination": "second-floor-toilet",
-			"hidden":true
-		  }
+          {
+            "object": "exit",
+            "longname": "out",
+            "direction": "o",
+            "source": "second-floor-cubicle",
+            "destination": "second-floor-toilet",
+            "hidden": true
+          }
         ],
         "synonyms": [
           "toilet",
-		  "cubicle",
-		  "toilet door",
+          "cubicle",
+          "toilet door",
           "door"
         ]
       },
@@ -4532,14 +4553,14 @@
         "source": "second-floor-fire-escape",
         "destination": "top-fire-escape"
       },
-	  {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "second-floor-fire-escape",
-            "destination": "second-floor-seating-area-east",
-            "hidden": true
-          }
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-fire-escape",
+        "destination": "second-floor-seating-area-east",
+        "hidden": true
+      }
     ]
   },
   {
@@ -4625,10 +4646,11 @@
         "direction": "s",
         "source": "second-floor-landing-east",
         "destination": "second-floor-east-corridor",
-		"hidden":true
+        "hidden": true
       }
     ],
-			"inventory":[	        {
+    "inventory": [
+      {
         "object": "artefact",
         "name": "office door",
         "description": "office door",
@@ -4643,12 +4665,12 @@
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "South",
-			"direction": "s",
-			"source": "second-floor-landing-east",
-			"destination": "second-floor-east-corridor",
-			"hidden":true
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "second-floor-landing-east",
+            "destination": "second-floor-east-corridor",
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -4656,7 +4678,7 @@
           "door"
         ]
       }
-	  ] 
+    ]
   },
   {
     "object": "location",
@@ -4935,10 +4957,10 @@
         "direction": "s",
         "source": "second-floor-seating-area-east",
         "destination": "second-floor-fire-escape",
-		"hidden": true
+        "hidden": true
       }
     ],
-	"inventory": [
+    "inventory": [
       {
         "object": "artefact",
         "name": "door",
@@ -4951,14 +4973,14 @@
           "canOpen": true
         },
         "linkedexits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "second-floor-seating-area-east",
-        "destination": "second-floor-fire-escape",
-		"hidden": true
-      },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "second-floor-seating-area-east",
+            "destination": "second-floor-fire-escape",
+            "hidden": true
+          },
           {
             "object": "exit",
             "longname": "North",
@@ -4974,7 +4996,7 @@
           "fire door"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -5022,7 +5044,7 @@
         "direction": "i",
         "source": "second-floor-toilet",
         "destination": "second-floor-cubicle",
-		"hidden":true
+        "hidden": true
       }
     ],
     "inventory": [
@@ -5045,7 +5067,8 @@
           "hand",
           "hands"
         ]
-      },{
+      },
+      {
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
@@ -5056,22 +5079,22 @@
           "type": "door",
           "canOpen": true,
           "lockable": true,
-		  "hasLinkedDoor": true
+          "hasLinkedDoor": true
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "in",
-			"direction": "i",
-			"source": "second-floor-toilet",
-			"destination": "second-floor-cubicle",
-			"hidden":true
+            "object": "exit",
+            "longname": "in",
+            "direction": "i",
+            "source": "second-floor-toilet",
+            "destination": "second-floor-cubicle",
+            "hidden": true
           }
         ],
         "synonyms": [
           "toilet",
-		  "cubicle",
-		  "toilet door",
+          "cubicle",
+          "toilet door",
           "door"
         ]
       }
@@ -5200,7 +5223,7 @@
         "direction": "s",
         "source": "servery-main",
         "destination": "first-floor-fire-escape",
-		"hidden":true
+        "hidden": true
       }
     ],
     "inventory": [
@@ -5266,7 +5289,7 @@
     "object": "location",
     "name": "servery-north-west",
     "description": "You're in the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
-	"imageName": "imag2699.jpg",
+    "imageName": "imag2699.jpg",
     "exits": [
       {
         "object": "exit",
@@ -5340,7 +5363,7 @@
           "weight": 0.5,
           "type": "book",
           "canCollect": true,
-		  "affinityModifier": 3
+          "affinityModifier": 3
         },
         "synonyms": [
           "card",
@@ -5596,7 +5619,7 @@
         "direction": "s",
         "source": "stairs-first-floor",
         "destination": "servery-north-west",
-		"hidden": true
+        "hidden": true
       },
       {
         "object": "exit",
@@ -5606,7 +5629,8 @@
         "destination": "first-floor-landing-west"
       }
     ],
-		"inventory":[	        {
+    "inventory": [
+      {
         "object": "artefact",
         "name": "office door",
         "description": "office door",
@@ -5621,12 +5645,12 @@
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "South",
-			"direction": "s",
-			"source": "stairs-first-floor",
-			"destination": "servery-north-west",
-			"hidden": true
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "stairs-first-floor",
+            "destination": "servery-north-west",
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -5634,7 +5658,7 @@
           "door"
         ]
       }
-	  ] 
+    ]
   },
   {
     "object": "location",
@@ -5668,7 +5692,7 @@
         "direction": "s",
         "source": "stairs-ground-floor",
         "destination": "northwest-corridor-ground-floor",
-		"hidden": true
+        "hidden": true
       },
       {
         "object": "exit",
@@ -5678,7 +5702,8 @@
         "destination": "stairs-first-floor"
       }
     ],
-	"inventory":[	        {
+    "inventory": [
+      {
         "object": "artefact",
         "name": "office door",
         "description": "office door",
@@ -5693,12 +5718,12 @@
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "South",
-			"direction": "s",
-			"source": "stairs-ground-floor",
-			"destination": "northwest-corridor-ground-floor",
-			"hidden": true
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "stairs-ground-floor",
+            "destination": "northwest-corridor-ground-floor",
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -5706,7 +5731,7 @@
           "door"
         ]
       }
-	  ] 
+    ]
   },
   {
     "object": "location",
@@ -5726,7 +5751,7 @@
         "direction": "s",
         "source": "stairs-second-floor",
         "destination": "second-floor-reception",
-		"hidden":true
+        "hidden": true
       },
       {
         "object": "exit",
@@ -5736,7 +5761,8 @@
         "destination": "second-floor-landing-west"
       }
     ],
-			"inventory":[	        {
+    "inventory": [
+      {
         "object": "artefact",
         "name": "office door",
         "description": "office door",
@@ -5751,12 +5777,12 @@
         },
         "linkedexits": [
           {
-			"object": "exit",
-			"longname": "South",
-			"direction": "s",
-			"source": "stairs-second-floor",
-			"destination": "second-floor-reception",
-			"hidden":true
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "stairs-second-floor",
+            "destination": "second-floor-reception",
+            "hidden": true
           }
         ],
         "synonyms": [
@@ -5764,7 +5790,7 @@
           "door"
         ]
       }
-	  ] 
+    ]
   },
   {
     "object": "location",
@@ -5831,7 +5857,7 @@
           "health": 100,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "chrisallen.jpg"
+          "imageName": "chrisallen.jpg"
         },
         "synonyms": [
           "chris",
@@ -5869,27 +5895,13 @@
         "source": "top-fire-escape",
         "destination": "second-floor-fire-escape"
       },
-	  {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "top-fire-escape",
-            "destination": "roof"
-          }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "roof",
-    "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
-    "exits": [
-	  {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "roof",
-            "destination": "top-fire-escape"
-          }
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "top-fire-escape",
+        "destination": "roof"
+      }
     ]
   },
   {
@@ -5958,7 +5970,6 @@
           "health": 100,
           "canTravel": true,
           "traveller": true,
-		  "imageName": "paweljonczak.jpg",
           "destinations": [
             "servery-kitchen",
             "waste-area",
@@ -5970,7 +5981,8 @@
           ],
           "loops": -1,
           "loopDelay": 5,
-          "destinationDelay": 1
+          "destinationDelay": 1,
+          "imageName": "paweljonczak.jpg"
         },
         "inventory": [
           {
@@ -6072,18 +6084,18 @@
         "destination": "bike-ambulance"
       }
     ],
-	    "inventory": [
+    "inventory": [
       {
         "object": "artefact",
         "name": "bike rack",
         "description": "bike racks",
         "detailedDescription": "There's dozens of bikes here but most of them are locked.",
         "attributes": {
+          "extendedInventoryDescription": "After extensively picking through the crowded racks, you find $inventory.",
           "weight": 45,
           "carryWeight": 18,
           "isBreakable": true,
-          "plural": true,
-		  "extendedInventoryDescription": "After extensively picking through the crowded racks, you find $inventory."
+          "plural": true
         },
         "synonyms": [
           "rack",
@@ -6103,7 +6115,6 @@
               "type": "property",
               "isBreakable": true,
               "lockable": true,
-              "locked": false,
               "price": 5,
               "customAction": "ride",
               "defaultResult": "You're meant to be working!<br>You cycle around for a while until you feel guilty for not doing something more useful."
@@ -6112,7 +6123,7 @@
               "bicycle",
               "cycle",
               "bike",
-			  "my bike"
+              "my bike"
             ]
           }
         ]
