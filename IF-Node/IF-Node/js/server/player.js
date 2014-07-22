@@ -2213,6 +2213,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             self.setAggression(0);
             //reset hunger
             _timeSinceEating = 0;
+
+            //reset contagion (but leave antibodies)
+            _contagion = [];
+
             //drop all objects and return to start
             var inventoryContents = _inventory.getAllObjects(true);
             for(var i = 0; i < inventoryContents.length; i++) {
@@ -2637,6 +2641,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             status += "<i>Status:</i><br>";
             if (self.isStarving()) {status+="You're starving.<br>";}
             else if (self.isHungry()) {status+="You're hungry.<br>";};
+
+            if (_contagion.length>0) { status += "You're infected with something nasty.<br>"};
+            if (_antibodies.length>0) { status += "You've developed an immunity to something nasty that might be going around.<br>"};
             
             if (_bleeding) { status += "You're bleeding and need healing.<br>"};
             status += "Your health is at "+healthPercent()+"%.";//remove this in the final game

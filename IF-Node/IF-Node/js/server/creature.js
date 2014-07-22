@@ -1335,7 +1335,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if biting player, *partially* reduce affinity and increase aggression.
             if (recipient.getType() == "player") {
                 self.decreaseAffinity(0.5);
-                recipient.increaseAggression(0.25);
+                recipient.increaseAggression(0.5);
             };
             return resultString+"<br>";
         };
@@ -1353,7 +1353,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else {
                     resultString = "You sink your teeth into "+self.getDisplayName()+". "+_genderPrefix+" struggles free and bites you back.";
                     resultString += "<br>"+self.hurt(10); //player injures creature.
-                    player.increaseAggression(0.5); //slowly increase aggression
+                    player.increaseAggression(1); //slowly increase aggression
                 };
                 resultString += self.transmit(player);
                 return resultString;
