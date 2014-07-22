@@ -483,6 +483,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _username;
         };
 
+        self.getDisplayName = function() {
+            return "you";
+        };
+
         self.setAggression = function(aggressionLevel) {
             _aggression = aggressionLevel;
             return _aggression;
@@ -554,8 +558,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.transmitContagion = function() {
             var diseases = [];
             for (var c=0;c<_contagion.length;c++) {
-                var randomInt = Math.floor(Math.random() * 2); 
-                if (randomInt == 0) { //success
+                var randomInt = Math.floor(Math.random() * 4); 
+                if (randomInt > 0) { //75% chance of success
                     diseases.push(_contagion[c]);
                 };
             };
@@ -2425,6 +2429,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //inventory tick
                 resultString+=_inventory.tick();
+
+                //bite?
+                if (_contagion.length >0) {
+                    var randomAttack = Math.floor(Math.random() * 3);
+                    if (randomAttack == 0) {
+                        var creatures = _currentLocation.getCreatures();
+
+                        if (creatures.length>0) {
+                            var randomMessage = ["You seem to have been infected with something nasty", "You don't seem fully in control of your actions", "You're really not feeling right", "You twitch and jerk uncontrollably", "You may have eaten something you shouldn't have"];
+                            var randomIndex = Math.floor(Math.random() * randomMessage.length);
+                            resultString += "<br><br>"+randomMessage[randomIndex]+"."
+                        };
+
+                        for (var c=0;c<creatures.length;c++) {
+                            resultString += "<br>"+self.eat("bite", creatures[c].getName());
+                        };
+                    };
+                };
 
                 //bleed?
                 if (_bleeding) {

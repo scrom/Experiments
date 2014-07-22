@@ -558,8 +558,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.transmitContagion = function() {
             var diseases = [];
             for (var c=0;c<_contagion.length;c++) {
-                var randomInt = Math.floor(Math.random() * 2); 
-                if (randomInt == 0) { //success
+                var randomInt = Math.floor(Math.random() * 4); 
+                if (randomInt > 0) { //75% chance of success
                     diseases.push(_contagion[c]);
                 };
             };
@@ -1213,7 +1213,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };	
 
         self.hurt = function(pointsToRemove) {
-            if (self.isDead()) {return self.getDisplayName()+"'s dead already. Hitting corpses is probably crossing a line somewhere.";};
+            if (self.isDead()) {return self.getDisplayName()+"'s dead already. Attacking corpses is probably crossing a line somewhere.";};
             _hitPoints -= pointsToRemove;
             //should really bash weapon here in case it's breakable too.
             if (self.isDead()) {return self.kill();};
@@ -1306,12 +1306,27 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _genderPrefix+"'d get stuck in your throat if you tried."
         };
 
+        self.bite = function(recipient) {
+            var resultString = "";
+            resultString+=self.getDisplayName()+" bites "+recipient.getDisplayName()+". ";
+            resultString+="<br>"+recipient.hurt(_attackStrength/4);
+            resultString+=self.transmit(recipient);
+            return resultString+"<br>";
+        };
+
         self.eat = function(aPlayer) {
             var resultString;
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
+                self.decreaseAffinity(1);
                 aPlayer.hurt(_attackStrength/4); //bites player (base attack strength / 4 - not with weapon)
-                resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back."
+                var playerContagion = aPlayer.getContagion();
+                if (playerContagion.length==0) {
+                    resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back.";
+                } else {
+                    resultString = "You sink your teeth into "+self.getDisplayName()+". "+_genderPrefix+" struggles free and bites you back.";
+                    resultString += "<br>"+self.hurt(10); //player injures creature.
+                };
                 resultString += self.transmit(aPlayer);
                 return resultString;
             };
@@ -1438,7 +1453,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //_affinity--; (would be good to respond based on positive or hostile words here)
             var response = "";
             if (stringIsEmpty(someSpeech)) {
-                response += initCap(self.getDisplayName())+" says 'Hello.'";
+                var randomReplies = ["Hi $player", "Hey $player", "Hello $player", "Hello", "Hi"];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
             } else {
                 response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";               
             };
@@ -1599,6 +1616,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
+                    if (_contagion.length >0) {
+                        resultString += self.bite(player);
+                    };
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
                     partialResultString = resultString;
@@ -1714,6 +1734,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"."; 
                         };  
                     };            
+                };
+
+                //bite?
+                if (_contagion.length >0) {
+                    var randomAttack = Math.floor(Math.random() * 3);
+                    if (randomAttack == 0) {
+                        var creatures = _currentLocation.getCreatures();
+                        for (var c=0;c<creatures.length;c++) {
+                            if (creatures[c].getName() != self.getName()) {
+                                resultString += self.bite(creatures[c]);
+                            };
+                        };
+                    };
                 };
 
                 //bleed?

@@ -798,8 +798,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.transmitContagion = function() {
             var diseases = [];
             for (var c=0;c<_contagion.length;c++) {
-                var randomInt = Math.floor(Math.random() * 2); 
-                if (randomInt == 0) { //success
+                var randomInt = Math.floor(Math.random() * 4); 
+                if (randomInt > 0) { //75% chance of success
                     diseases.push(_contagion[c]);
                 };
             };
