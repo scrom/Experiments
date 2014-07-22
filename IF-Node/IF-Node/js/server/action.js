@@ -349,6 +349,8 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'stab':
                     case 'hurt':
                     case 'hit':
+                    case 'punch':
+                    case 'kick':
                         description = _player.hit(_verb, _object0, _object1);
                         break;
                     case 'buy':

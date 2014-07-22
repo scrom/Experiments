@@ -1830,7 +1830,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //try to get whatever the player might be armed with instead.
-            if (!(weapon)){
+            if (!(weapon) && verb != "punch" && verb != "kick"){
                 if (self.isArmed()) {
                     weapon = self.getWeapon(verb);
                 };
@@ -1874,6 +1874,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(weapon)) {
                 if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
                     resultString = "You jab wildly at "+receiver.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
+                } else if (verb=='kick') {
+                    resultString = "You lash out at "+receiver.getDisplayName()+" but your footwork is lacking something.<br>";
                 } else {
                     resultString = "You attempt a bare-knuckle fight with "+receiver.getDisplayName()+".<br>"; 
                 };
@@ -1891,7 +1893,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += receiver.hit(self);
                     };
                 } else { //artefact
-                        resultString += "That hurt. If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
+                        resultString += "That hurt.";
+                        if (verb=="punch"||verb=="kick") {
+                            resultString += " You haven't really mastered unarmed combat, you might want to use something as a weapon in future.<br>"; 
+                        } else {
+                            resultString += " If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
+                        };
                         resultString += self.hurt(15);
                 };
                 
