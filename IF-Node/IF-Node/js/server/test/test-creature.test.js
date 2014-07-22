@@ -944,7 +944,7 @@ exports.creatureCanFindPathToGoal = function (test) {
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
     
-    var expected = "e,e,n,w,w,s,s,s,u,n,n,e,n,n,e,e,s,s,u,n,n,n,w,w,n,w,s,e,n";
+    var expected = "e,e,n,e,n,u,s,e,s,s,u,n,n,n,w,w,n,w,s,e,n";
     //var actual = c0.findPath(destination, m);
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:"+expected);
@@ -962,7 +962,7 @@ exports.creatureCanFindAlternatePathToGoalAvoidingALocation = function (test) {
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
 
-    var expected = "e,e,s,e,e,e,n,n,e,s,s,s,s,e,s,s,u,u,n,n,w,n,w,w,n,n,d,s,e,s,s,u,w";
+    var expected = "e,e,n,e,n,u,s,e,s,s,u,w";
     //var actual = c0.findPath(destination, m);
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:"+expected);
@@ -981,7 +981,7 @@ exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit = function
     var destination = 'atrium';
     c0.go(null, m.getLocation('machine-room-east'));
 
-    var expected = "w,n,w,n,n,n,e,n,n,d,s,e,s,s,w,w,w,n,n,n,w,s,s,s,d,n,n,n,e,e,e,e,s,s,w,w,w,n,w,w";
+    var expected = "e,n,n,e,s,s,d,n,n,w,w,s,w,w,w,n,n,n,e,n,d,s,e,s,s,w,w,w,n,w,w";
     //var actual = c0.findPath(destination, m);
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:" + expected);
@@ -1017,11 +1017,11 @@ exports.creatureCantFindDirectPathToGoalThroughAOneWayDoor = function (test) {
 
     var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
-    var destination = 'east-end-south-corridor-ground-floor';
-    c0.go(null, m.getLocation('smoking-area'));
+    var destination = 'ground-floor-fire-escape';
+    c0.go(null, m.getLocation('east-end-south-corridor-ground-floor')); 
 
     var path = c0.findBestPath(destination, m);
-    var targetLength = 1;
+    var targetLength = 2;
     var expected = true;
     var actual = false;
     if (path.length > targetLength) {actual = true};
