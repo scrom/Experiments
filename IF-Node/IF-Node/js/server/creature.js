@@ -1584,7 +1584,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
 
                         returnDoor.close("close", _currentLocation.getName());
-                        console.log(self.getName()+" closed the door behind them.");
+                        //console.log(self.getName()+" closed the door behind them.");
                     };
                 };
 
@@ -1604,10 +1604,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //determine which delay...
                     if (_clearedDestinations.length == 0) {
                         delay = _loopDelay;
-                        console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
+                        //console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
                     } else {
                         delay = _destinationDelay;
-                        console.log(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
+                        //console.log(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
                     };
 
                     //increment or clear delay
@@ -1633,8 +1633,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 //we have a path now
                                 var direction = _path.pop();
                                 if (!(direction)) {
-                                    self.clearPath();
-                                    self.clearDestination();
+                                    self.clearPath(); //we'll try again next time.
                                 } else {
                                     exit = _currentLocation.getExit(direction);
                                     //console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
