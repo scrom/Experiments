@@ -1308,7 +1308,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.bite = function(recipient) {
             var resultString = "";
-            resultString+=self.getDisplayName()+" bites "+recipient.getDisplayName()+". ";
+            resultString+=initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
             resultString+="<br>"+recipient.hurt(_attackStrength/4);
             resultString+=self.transmit(recipient);
             return resultString+"<br>";
