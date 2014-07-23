@@ -6501,7 +6501,29 @@
         "source": "west-car-park",
         "destination": "west-bike-racks"
       }
-    ]
+    ],
+	"missions": [
+          {
+            "object": "mission",
+            "name": "saveredgate",
+            "displayName": "save Red Gate from the zombie contagion",
+            "description": "The scene of devastation nearby looks very bad...<br>You need to help all the Red Gate staff survive the zombie apocalypse. Act quickly!",
+            "attributes": {
+			  "parent": "planecrash",	
+              "missionObject": "alice easey",
+              "static": false
+            },
+            "conditionAttributes": {
+              "dead": false,
+              "contagion": [],
+			  "antibodies": ["zombie"]
+            },
+            "reward": {
+              "score": 250,
+              "successMessage": "Congratulations. You saved Red Gate from the zombie apocalpse. Now things can return to normal - right? Have 250 points!"
+            }
+          }
+        ]
   },
   {
     "object": "location",

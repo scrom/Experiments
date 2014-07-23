@@ -2323,6 +2323,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                     if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                     mission.processAffinityModifiers(map, missionReward);
+                    newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
                 } else {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                     if (missionReward.locations) {

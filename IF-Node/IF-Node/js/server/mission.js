@@ -295,6 +295,56 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
+        self.checkForRequiredAntibodies = function(missionObject, requiredAntibodies) {
+            var contentsCount = 0;
+            var requiredAntibodiesCount = requiredAntibodies.length;
+            var attribs = missionObject.getCurrentAttributes()
+            var antibodies = attribs.antibodies;
+
+            if (requiredAntibodies.length ==0 && antibodies.length>0) {
+                return false;
+            }; 
+            if (requiredAntibodies.length ==0 && antibodies.length==0) {
+                return true;
+            }; 
+
+            for (var i=0; i<requiredAntibodies.length;i++) {
+                if (antibodies.indexOf(requiredAntibodies[i]) >-1) {contentsCount++;};
+            };
+      
+            if (contentsCount == requiredAntibodiesCount) {
+                //console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+                return true;
+            };
+
+            return false;
+        };
+
+        self.checkForRequiredContagion = function(missionObject, requiredContagion) {
+            var contentsCount = 0;
+            var requiredContagionCount = requiredContagion.length;
+            var attribs = missionObject.getCurrentAttributes()
+            var contagion = attribs.contagion;
+
+            if (requiredContagion.length ==0 && contagion.length>0) {
+                return false;
+            }; 
+            if (requiredContagion.length ==0 && contagion.length==0) {
+                return true;
+            }; 
+
+            for (var i=0; i<requiredContagion.length;i++) {
+                if (contagion.indexOf(requiredContagion[i]) >-1) {contentsCount++;};
+            };
+      
+            if (contentsCount == requiredContagionCount) {
+                //console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+                return true;
+            };
+
+            return false;
+        };
+
         self.checkState = function (playerInventory, location, map, destroyedObjects) {
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
@@ -398,6 +448,22 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if (_conditionAttributes["contains"]) {
                         
                     if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
+                        successCount++;
+                    };                           
+                };
+
+                //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+                if (_conditionAttributes["antibodies"]) {
+                        
+                    if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
+                        successCount++;
+                    };                           
+                };
+
+                //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+                if (_conditionAttributes["contagion"]) {
+                        
+                    if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
                         successCount++;
                     };                           
                 };
