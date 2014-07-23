@@ -297,10 +297,10 @@
               "isDestroyed": "false"
             },
             "reward": {
-              "score": 25,
+              "score": 50,
               "affinityModifier": 2,
               "increaseAffinityFor": "chris moore",
-              "successMessage": "Nice one! Helping people out feels good, doesn't it.<br> Have 25 points."
+              "successMessage": "Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
             }
           }
         ]
@@ -4105,9 +4105,9 @@
                   }
                 ]
               },
-              "score": 50,
+              "score": 35,
               "increaseAffinityFor": "Vic",
-              "successMessage": "Congratulations. Vic likes the book! Have 50 points."
+              "successMessage": "Congratulations. Vic likes the book! Have 35 points."
             }
           }
         ]
@@ -4501,11 +4501,11 @@
               "isHidden": "true"
             },
             "reward": {
-              "score": 25,
+              "score": 50,
               "affinityModifier": 2,
               "increaseAffinityFor": "justin heron",
               "decreaseAffinityFor": "james dening",
-              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Simon will have appreciated it.<br>Have 25 points."
+              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Simon will have appreciated it.<br>Have 50 points."
             }
           }
         ]
@@ -6510,17 +6510,15 @@
             "description": "The scene of devastation nearby looks very bad...<br>You need to help all the Red Gate staff survive the zombie apocalypse. Act quickly!",
             "attributes": {
 			  "parent": "planecrash",	
-              "missionObject": "alice easey",
               "static": false
             },
             "conditionAttributes": {
-              "dead": false,
-              "contagion": [],
-			  "antibodies": ["zombie"]
+              "contagion":{},
+			  "contagionDeathToll":{ "friendly":0}
             },
             "reward": {
-              "score": 250,
-              "successMessage": "Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 250 points!"
+              "score": 200,
+              "successMessage": "Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty)."
             }
           }
         ]

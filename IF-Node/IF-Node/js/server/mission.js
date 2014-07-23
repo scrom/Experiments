@@ -85,6 +85,9 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                             };
                         };
                         resultString += ']';
+                     } else if (obj.toString() === '[object Object]'){
+                         //we have a simple literal object
+                         resultString += self.literalToString(obj);
                      } else {
                         resultString += obj.toString();
                      };
@@ -355,6 +358,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var destinationObject;
             //console.log('Checking state for mission: '+_name);
             switch(true) {
+                case (!(_destination) && (!(_missionObject))):
+                    //if destination and mission object are not set, we're after overall map stats.
+                    missionObject = map;
+                    break;
                 case (_destination == 'player'): //player inventory
                     missionObject = playerInventory.getObject(_missionObject);
                     break;
@@ -420,7 +427,22 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (missionObject) {
                 //console.log('mission object retrieved. Checking condition attributes...');
                 var objectAttributes = missionObject.getCurrentAttributes();
-                var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;               
+                var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;    //this needs to handle subkeys too. 
+                
+                //check sub-attributes
+                for (var attr in _conditionAttributes) {
+                    if (typeof(_conditionAttributes[attr]) == 'object') {
+                        if (Object.prototype.toString.call(_conditionAttributes[attr]) === '[object Array]') { 
+                            //do nothing
+                        } else {
+                            //how many child keys do we have that we want to match on?
+                            var keysToMatch = Object.keys(_conditionAttributes[attr]).length;
+                            //we've already counted one from the parent - that works if there's no children or only 1
+                            if (keysToMatch>1) {requiredAttributeSuccessCount+=keysToMatch-1;}
+                        };
+                    };
+                };
+                          
 
                 //check/fail if the mission object shouldn't be destroyed!
                 if (missionObject.isDestroyed()) {
@@ -477,9 +499,40 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 //check the rest of the object attributes if they exist
                 for (var attr in _conditionAttributes) {
                     if (objectAttributes.hasOwnProperty(attr)) {
-                        //console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);                        
-                        if (objectAttributes[attr] == _conditionAttributes[attr]) {
-                            successCount++;
+                        var keycheckName = attr;
+                        //console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);  
+                        if (typeof(_conditionAttributes[attr]) == 'object') {
+                            if (Object.prototype.toString.call(_conditionAttributes[attr]) === '[object Array]') { 
+                                //treat it as normal   
+                                if (objectAttributes[attr] == _conditionAttributes[attr]) {
+                                    successCount++;
+                                };
+                            } else {
+                                //we have an object we need to figure out more about...
+                                var conditionKeyCount = Object.keys(_conditionAttributes[attr]).length;
+                                var objectKeyCount = Object.keys(objectAttributes[attr]).length;
+                                if (conditionKeyCount == 0 && objectKeyCount>0) {
+                                    //no success count
+                                } else if (conditionKeyCount == 0 && objectKeyCount == 0) {
+                                    //both sides have no keys! - success
+                                    var keyname = attr;
+                                    successCount++;
+                                } else {
+                                    //match sub attributes
+                                    for (var subAttr in _conditionAttributes[attr]) {
+                                        if (objectAttributes[attr][subAttr] == _conditionAttributes[attr][subAttr]) {
+                                            var subkeyname = attr+"."+subAttr;
+                                            successCount++;
+                                        };
+                                    };
+                                };
+                                //console.log("oa[attr]"+objectAttributes[attr]+Object.keys(objectAttributes[attr]).length);
+                                //console.log("ca[attr]"+_conditionAttributes[attr]+Object.keys(_conditionAttributes[attr]).length);                                
+                            };
+                        } else {                                                                             
+                            if (objectAttributes[attr] == _conditionAttributes[attr]) {
+                                successCount++;
+                            };
                         };
                     };
                 };

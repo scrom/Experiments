@@ -237,7 +237,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.stepsTaken != undefined) {_stepsTaken = playerAttributes.stepsTaken;};
             if (playerAttributes.locationsFound != undefined) {_locationsFound = playerAttributes.locationsFound;};
             if (playerAttributes.maxAggression != undefined) {_maxAggression = playerAttributes.maxAggression;};
-            if (playerAttributes.score != undefined) {_score = playerAttributes.score;};
+            if (playerAttributes.score != undefined) {
+                _score = playerAttributes.score;
+                //as we don't track completed missions in their entirety, the max score on the map needs updating.
+                //to take into account the current player score.
+                map.increaseMaxScore(_score);
+            };
             if (playerAttributes.cashSpent != undefined) {_cashSpent = playerAttributes.cashSpent;};
             if (playerAttributes.cashGained != undefined) {_cashGained = playerAttributes.cashGained;};
             if (playerAttributes.totalDamageReceived != undefined) {_totalDamageReceived = playerAttributes.totalDamageReceived;};

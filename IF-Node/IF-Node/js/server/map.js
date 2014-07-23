@@ -32,6 +32,24 @@ exports.Map = function Map() {
         };
 
         console.log(_objectName + ' created');
+
+        self.getCurrentAttributes = function() {
+            var currentAttributes = {};
+            var creatures = self.getAllCreatures();
+
+            currentAttributes.contagion = self.gatherContagionStats(creatures);
+            currentAttributes.antibodies = self.gatherAntibodyStats(creatures);
+            currentAttributes.contagionDeathToll = self.gatherContagionDeathTollStats(creatures);
+            return currentAttributes;
+        };
+
+        self.isDestroyed = function() {
+            return false;
+        };
+
+        self.getName = function() {
+            return "$map";
+        };
         
         //direction opposites
         self.oppositeOf = function(aDirection){
