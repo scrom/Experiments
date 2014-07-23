@@ -51,6 +51,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _cashGained = 0;
 
         //possible additional player stats
+        var _waitCount = 0;
         var _restsTaken = 0;
         var _sleepsTaken = 0;
         var _creatureHitsMade = 0;
@@ -243,6 +244,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.booksRead != undefined) {_booksRead = playerAttributes.booksRead;};
             if (playerAttributes.stolenCash != undefined) {_stolenCash = playerAttributes.stolenCash;};
             if (playerAttributes.creaturesSpokenTo != undefined) {_creaturesSpokenTo = playerAttributes.creaturesSpokenTo;};
+            if (playerAttributes.waitCount != undefined) {_waitCount = playerAttributes.waitCount;};
             if (playerAttributes.restsTaken != undefined) {_restsTaken = playerAttributes.restsTaken;};
             if (playerAttributes.sleepsTaken != undefined) {_sleepsTaken = playerAttributes.sleepsTaken;};
             if (playerAttributes.maxAffinity != undefined) {_maxAffinity = playerAttributes.maxAffinity;};
@@ -451,6 +453,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_cashSpent > 0) {resultString += ',"cashSpent":'+_cashSpent;};
             if (_cashGained > 0) {resultString += ',"cashGained":'+_cashGained;};
             if (_creaturesSpokenTo > 0) {resultString += ',"creaturesSpokenTo":'+_creaturesSpokenTo;};
+            if (_waitCount > 0) {resultString += ',"waitCount":'+_waitCount;};
             if (_restsTaken > 0) {resultString += ',"restsTaken":'+_restsTaken;};
             if (_sleepsTaken > 0) {resultString += ',"sleepsTaken":'+_sleepsTaken;};
             if (_maxAffinity != 0) {resultString += ',"maxAffinity":'+_maxAffinity;};
@@ -510,6 +513,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.incrementSaveCount = function() {
             _saveCount++;
+        };
+
+        self.incrementWaitCount = function() {
+            _waitCount++;
         };
 
         self.increaseTimeSinceEating = function(changeValue) {
@@ -2627,6 +2634,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_repairSkills.length > 0) { status += "You have gained " + pluralise(_repairSkills.length,"skill") + ".<br>"; };
             if (_consumedObjects.length > 0) { status += "You have eaten or drunk " + pluralise(_consumedObjects.length,"item") + ".<br>"; };
             
+            if (_waitCount > 0) {status += "You've hung around waiting for something to happen "+temporise(_waitCount)+".<br>";};
             if (_restsTaken > 0) {status += "You have rested "+temporise(_restsTaken)+".<br>";};
             if (_sleepsTaken > 0) {status += "You have slept "+temporise(_sleepsTaken)+".<br>";};
 

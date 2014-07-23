@@ -294,6 +294,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         description = _player.rest(_verb, 10, _map);
                         break;
                     case 'wait':
+                        _player.incrementWaitCount();
                         description = "Time passes... ...slowly";
                         break;
                     case 'put':
