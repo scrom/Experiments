@@ -236,7 +236,8 @@
           "type": "food",
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 25
+          "nutrition": 25,
+		  "charges": 1
         },
         "synonyms": [
           "slice",
@@ -799,8 +800,8 @@
       },
       {
         "object": "creature",
-        "name": "alice",
-        "displayname": "Alice",
+        "name": "alice easey",
+        "displayname": "Alice Easey",
         "description": "Alice Easey",
         "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best best for survival in a zombie apocalypse.",
         "attributes": {
@@ -816,13 +817,123 @@
           "imageName": "aliceeasey.jpg"
         },
         "synonyms": [
-          "alice easey",
+          "alice",
           "alice easy",
           "alice e",
           "ae",
           "easey",
           "her"
+        ],"inventory": [
+		{
+        "object": "artefact",
+        "name": "vial",
+        "description": "glass vial",
+        "detailedDescription": "A small glass vial. The type used to carry medical samples.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 1,
+          "carryWeight": 3,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true
+        },
+        "synonyms": [
+          "bottle",
+          "glass vial",
+          "glass"
+        ]},
+		{
+        "object": "artefact",
+        "name": "first aid kit",
+        "description": "first aid kit",
+        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 5
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
         ]
+      },
+	  {
+        "object": "artefact",
+        "name": "food rations",
+        "description": "pack of survival food rations",
+        "detailedDescription": "A few days worth of rather dull but long-lasting dried food.",
+        "attributes": {
+          "defaultAction": "eat",
+          "weight": 1,
+          "type": "food",
+          "canCollect": true,
+          "isEdible": true,
+          "nutrition": 25,
+          "charges": 10
+        },
+        "synonyms": [
+          "food",
+          "ration",
+          "rations",
+          "dried food",
+		  "dried rations",
+          "survival rations",
+		  "survival food rations",
+		  "pack"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "survival book",
+        "description": "tattered old book",
+        "detailedDescription": "Tips and tricks for survival in a zombie apocalypse.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 1,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "manual",
+          "book",
+          "survival",
+          "survival manual",
+		  "zombie manual",
+		  "zombie book",
+		  "zombie survival manual",
+		  "zombie survival book",
+		  "old book",
+		  "tattered old book",
+		  "tattered book"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "survivezombies",
+            "displayName": "how to survive a zombie apocalypse",
+            "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of zombieism antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of zombie antibodies who is subsequently bitten may transfer those antibodies to their attacker.<br>Thus speed is of the essence, it is important to rapidly identify patient zero and all who have come into contact with them in order to pass on immunity and limit the contagion.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies and under no circumstances should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.",
+            "attributes": {
+              "missionObject": "survival book",
+              "static": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": "false",
+              "read": "true"
+            },
+            "reward": {
+              "successMessage": "I'm sure you'll never need to know any of this, right?"
+            }
+          }
+        ]
+      }
+    ]
       },
       {
         "object": "creature",
@@ -2353,7 +2464,8 @@
           "type": "food",
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 20
+          "nutrition": 20,
+		  "charges": 1
         },
         "synonyms": [
           "food",
@@ -2376,6 +2488,7 @@
           "plural": true,
           "isEdible": true,
           "nutrition": 5,
+		  "charges": 2,
           "combinesWith": "coffee"
         },
         "delivers": [
@@ -2394,7 +2507,8 @@
               "canCollect": true,
               "plural": true,
               "isEdible": true,
-              "nutrition": 15
+              "nutrition": 15,
+			  "charges": 1
             },
             "synonyms": [
               "brew",
@@ -2445,6 +2559,7 @@
               "canCollect": true,
               "isEdible": true,
               "nutrition": 12,
+		      "charges": 1,
               "requiredComponentCount": 1
             },
             "synonyms": [
@@ -2467,6 +2582,7 @@
               "canCollect": true,
               "isEdible": true,
               "nutrition": 35,
+		      "charges": 1,
               "requiredComponentCount": 2
             },
             "synonyms": [
@@ -2490,6 +2606,7 @@
               "plural": true,
               "isEdible": true,
               "nutrition": 8,
+		      "charges": 1,
               "combinesWith": "sugar"
             },
             "synonyms": [
@@ -2512,7 +2629,8 @@
                   "canCollect": true,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 15
+                  "nutrition": 15,
+		          "charges": 1
                 },
                 "synonyms": [
                   "brew",
@@ -3168,6 +3286,7 @@
               "affinityModifier": 5,
               "isEdible": true,
               "nutrition": 15,
+		      "charges": 1,
               "price": 3.5
             },
             "synonyms": [
@@ -4086,6 +4205,7 @@
               "chargesDescription": "$charges $chargeUnit",
               "isEdible": true,
               "nutrition": 25,
+		      "charges": 1,
               "price": 0.5,
               "componentOf": [
                 "mocha"
@@ -4110,6 +4230,7 @@
               "canCollect": true,
               "isEdible": true,
               "nutrition": 25,
+		      "charges": 1,
               "price": 0.5
             },
             "synonyms": [
@@ -5395,7 +5516,8 @@
           "type": "food",
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 35
+          "nutrition": 35,
+		  "charges": 2
         },
         "synonyms": [
           "jar",
@@ -5447,7 +5569,8 @@
           "isLiquid": true,
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 15
+          "nutrition": 15,
+		  "charges": 1
         },
         "synonyms": [
           "bowl",
@@ -5552,7 +5675,8 @@
           "type": "food",
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 20
+          "nutrition": 20,
+		  "charges": 1
         },
         "synonyms": [
           "food",
@@ -5622,7 +5746,8 @@
           "type": "food",
           "canCollect": true,
           "isEdible": true,
-          "nutrition": 25
+          "nutrition": 25,
+		  "charges": 1
         },
         "synonyms": [
           "plate of salad",

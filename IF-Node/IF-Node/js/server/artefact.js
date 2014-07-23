@@ -1447,7 +1447,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.drink = function(aPlayer) {
             if (self.isDestroyed()) {return "There's nothing left to drink.";};
             if(_edible && _liquid)  {
-                _weight = 0;
+                if (self.chargesRemaining() >0) {
+                    _charges--;
+                };
+                if (self.chargesRemaining() ==0) {
+                    _weight = 0;
+                };
                 var resultString = "You drink "+self.getDisplayName()+". "
                 if (_nutrition >=0) {
                     aPlayer.recover(_nutrition);
@@ -1465,10 +1470,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.eat = function(aPlayer) {
             if (self.isDestroyed()) {return "There's nothing left to chew on.";};
-            if (!(_chewed)) {
+            if ((!(_chewed)) || (_edible && self.chargesRemaining() !=0))  {
                 _chewed = true; 
                 if (_edible){
-                    _weight = 0;
+                    if (self.chargesRemaining() >0) {
+                        _charges--;
+                    };
+                    if (self.chargesRemaining() ==0) {
+                        _weight = 0;
+                    };
                     var resultString = "You eat "+self.getDisplayName()+". "
                     if (_nutrition >=0) {
                         aPlayer.recover(_nutrition);
@@ -1486,7 +1496,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return "You try and try but just can't seem to keep "+_itemSuffix+" in your mouth without doing yourself harm."
                 };
             } else {
-                return initCap(_itemDescriptivePrefix)+" really not worth trying to eat a second time."
+                return initCap(_itemDescriptivePrefix)+" really not worth trying to eat again."
             };
         };
 

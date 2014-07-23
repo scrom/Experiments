@@ -2173,8 +2173,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var result = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it
-                removeObjectFromPlayerOrLocation(artefactName); 
-                _consumedObjects.push(artefact);
+                if (artefact.chargesRemaining() == 0) {
+                    removeObjectFromPlayerOrLocation(artefactName); 
+                    _consumedObjects.push(artefact);
+                };
                 _timeSinceEating = 0;
                 console.log('player eats some food.');
             };
@@ -2192,8 +2194,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.isEdible() && artefact.isLiquid()) {
 
                 //consume it
-                removeObjectFromPlayerOrLocation(artefactName); 
-                _consumedObjects.push(artefact);
+                if (artefact.chargesRemaining() == 0) {
+                    removeObjectFromPlayerOrLocation(artefactName); 
+                    _consumedObjects.push(artefact);
+                };
                 console.log('player drinks.');
             };
 
