@@ -483,6 +483,60 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString;
         };
 
+        self.getCurrentAttributes = function() {
+            var currentAttributes = {};
+
+            currentAttributes.startLocation = _startLocation;
+            currentAttributes.currentLocation = _currentLocation;
+            currentAttributes.aggression = _aggression;
+            currentAttributes.stealth = _stealth;
+            currentAttributes.money = _inventory.getCashBalance();
+            currentAttributes.carryWeight = _inventory.getCarryWeight();
+            currentAttributes.health = _hitPoints;
+            currentAttributes.maxHealth = _maxHitPoints;
+            currentAttributes.bleedingHealthThreshold = _bleedingHealthThreshold;
+            currentAttributes.bleeding = _bleeding;
+            currentAttributes.killedCount = _killedCount;
+            currentAttributes.returnDirection = _returnDirection;
+            currentAttributes.saveCount = _saveCount;
+            currentAttributes.loadCount = _loadCount;
+            currentAttributes.timeSinceEating = _timeSinceEating;
+            currentAttributes.maxMovesUntilHungry = _maxMovesUntilHungry;
+            currentAttributes.additionalMovesUntilStarving = _additionalMovesUntilStarving;
+            currentAttributes.stepsTaken = _stepsTaken;
+            currentAttributes.locationsFound = _locationsFound;
+            currentAttributes.maxAggression = _maxAggression;
+            currentAttributes.score = _score;
+            currentAttributes.cashSpent = _cashSpent;
+            currentAttributes.cashGained = _cashGained;
+            currentAttributes.totalDamageReceived =_totalDamageReceived;
+            currentAttributes.booksRead = _booksRead;
+            currentAttributes.stolenCash = _stolenCash;
+            currentAttributes.creaturesSpokenTo = _creaturesSpokenTo;
+            currentAttributes.waitCount = _waitCount;
+            currentAttributes.restsTaken = _restsTaken;
+            currentAttributes.sleepsTaken = _sleepsTaken;
+            currentAttributes.maxAffinity =_maxAffinity = currentAttributes.maxAffinity;
+            currentAttributes.injuriesReceived = _injuriesReceived;
+            currentAttributes.repairSkills = _repairSkills;
+            currentAttributes.contagion =_contagion;
+            currentAttributes.antibodies = _antibodies;
+            currentAttributes.killedCreatures =_killedCreatures;
+            currentAttributes.stolenObjects =_stolenObjects;
+            currentAttributes.missionsCompleted = _missionsCompleted;
+            currentAttributes.missionsFailed = _missionsFailed;
+            currentAttributes.inventory = _inventory;
+            currentAttributes.destroyedObjects = _destroyedObjects;
+            currentAttributes.consumedObjects = _consumedObjects;
+            currentAttributes.missions = _missions;
+
+            return currentAttributes;
+        };
+
+        self.isDestroyed = function() {
+            return false;
+        };
+
         self.getType = function() {
             return "player";
         };    
@@ -2302,7 +2356,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //console.log("checking mission:"+mission.getName()+" time taken:"+mission.getTimeTaken());
             var resultString = "";
             var initialScore = _score;
-            var missionReward = mission.checkState(_inventory, _currentLocation, map, _destroyedObjects);
+            var missionReward = mission.checkState(self, _inventory, _currentLocation, map, _destroyedObjects);
             if (missionReward) {
                 if (missionReward.hasOwnProperty("fail")) {
                     resultString += "<br>"+missionReward.failMessage+"<br>";

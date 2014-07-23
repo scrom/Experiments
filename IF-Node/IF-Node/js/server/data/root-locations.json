@@ -115,6 +115,21 @@
       }
     ],
     "missions": [
+	      {
+        "object": "mission",
+        "name": "boring",
+        "attributes": {
+          "missionObject": "player",
+          "destination": "player"
+        },
+        "conditionAttributes": {
+          "waitCount": 25
+        },
+        "reward": {
+          "score": 5,
+          "successMessage": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>Have 5 points as some encouragement to get moving."
+        }
+      },
       {
         "object": "mission",
         "name": "sweetcoffee",

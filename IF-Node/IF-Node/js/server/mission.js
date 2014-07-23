@@ -348,7 +348,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
-        self.checkState = function (playerInventory, location, map, destroyedObjects) {
+        self.checkState = function (player, playerInventory, location, map, destroyedObjects) {
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible
@@ -363,7 +363,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     missionObject = map;
                     break;
                 case (_destination == 'player'): //player inventory
-                    missionObject = playerInventory.getObject(_missionObject);
+                    if (_missionObject == 'player') {
+                        missionObject = player;
+                    } else {
+                        missionObject = playerInventory.getObject(_missionObject);
+                    };
                     break;
                 case (_destination == location.getName()): //location
                     //console.log('mission destination location reached');
