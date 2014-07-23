@@ -393,6 +393,10 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'steal':
                         description = _player.steal(_verb, _object0, _object1);            
                         break;
+                    case 'borrow':
+                        //like ask but borrow object from person rather than ask person for object...
+                        description = _player.ask(_verb, _object1, _object0);            
+                        break;
                     case 'ask':
                         //console.log("split: "+_splitWord);
                         if (_splitWord == "is"||_splitWord == "to") {
