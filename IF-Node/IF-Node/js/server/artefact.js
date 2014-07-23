@@ -1447,13 +1447,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.drink = function(aPlayer) {
             if (self.isDestroyed()) {return "There's nothing left to drink.";};
             if(_edible && _liquid)  {
+                var drankAll = " ";
                 if (self.chargesRemaining() >0) {
                     _charges--;
                 };
                 if (self.chargesRemaining() ==0) {
                     _weight = 0;
+                    drankAll = " all ";
                 };
-                var resultString = "You drink "+self.getDisplayName()+". "
+                var resultString = "You drink"+drankAll+self.getDisplayName()+". "
                 if (_nutrition >=0) {
                     aPlayer.recover(_nutrition);
                     resultString += "You feel fitter, happier and healthier.";
@@ -1473,13 +1475,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if ((!(_chewed)) || (_edible && self.chargesRemaining() !=0))  {
                 _chewed = true; 
                 if (_edible){
+                    var eatenAll = " ";
                     if (self.chargesRemaining() >0) {
                         _charges--;
                     };
                     if (self.chargesRemaining() ==0) {
                         _weight = 0;
+                        eatenAll = " all "
                     };
-                    var resultString = "You eat "+self.getDisplayName()+". "
+                    var resultString = "You eat"+eatenAll+self.getDisplayName()+". "
                     if (_nutrition >=0) {
                         aPlayer.recover(_nutrition);
                         resultString += "You feel fitter, happier and healthier.";
