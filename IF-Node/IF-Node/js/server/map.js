@@ -220,6 +220,97 @@ exports.Map = function Map() {
             return creatures;
         };
 
+        self.gatherAntibodyStats = function(creatures) {
+            var antibodyData = {};
+            for (var c=0;c<creatures.length;c++) { 
+                var creatureAntibodies = creatures[c].getAntibodies();
+                if (creatureAntibodies.length>0) {
+                    for (var ca=0;ca<creatureAntibodies.length;ca++) {
+                        //get list of all antibodies active
+                        if (!(antibodyData.hasOwnProperty(creatureAntibodies[ca]))) {
+                            //new antibody
+                            antibodyData[creatureAntibodies[ca]] = 1;
+                        } else {
+                            //we've seen it before
+                            antibodyData[creatureAntibodies[ca]] = antibodyData[creatureAntibodies[ca]]+1;
+                        };
+                    };
+                };
+            };
+            return antibodyData;
+        };
+
+        self.gatherContagionStats = function(creatures) {
+            var contagionData = {};
+            for (var c=0;c<creatures.length;c++) {                
+                var creatureContagion = creatures[c].getContagion();
+                //var creatureAntibodies = creatures.getAntibodies();
+                if (creatureContagion.length>0) {
+                    for (var cc=0;cc<creatureContagion.length;cc++) {
+                        //get list of all contagions active
+                        if (!(contagionData.hasOwnProperty(creatureContagion[cc]))) {
+                            //new contagion
+                            contagionData[creatureContagion[cc]] = 1;
+                        } else {
+                            //we've seen it before
+                            contagionData[creatureContagion[cc]] = contagionData[creatureContagion[cc]]+1;
+                        };
+                    }
+                };
+
+            };
+
+            return contagionData;
+        };
+
+        self.gatherContagionDeathTollStats = function(creatures) {
+            var deathTollData = {"friendly":0, "hostile":0};
+            for (var c=0;c<creatures.length;c++) { 
+                if (creatures[c].isDead()) {
+                    var creatureContagion = creatures[c].getContagion();
+                    if (creatureContagion.length>0) {
+                        if (creatures[c].getSubType() == "friendly") {
+                            deathTollData.friendly++;
+                        } else {
+                            deathTollData.hostile++;
+                        };
+                    };
+                };
+            };
+
+            return deathTollData;
+        };
+
+        self.getContagionReport = function(player) {
+            var creatures = self.getAllCreatures();
+            creatures.push(player); //add player to end of creatures array. They honor the same methods!
+
+            var contagionData = self.gatherContagionStats(creatures);
+            var antibodyData = self.gatherAntibodyStats(creatures);
+            var deathTollData = self.gatherContagionDeathTollStats(creatures);
+           
+
+            console.log(contagionData);
+            console.log(antibodyData);
+
+            var contagionReport = "";
+
+            for (var attr in contagionData) {
+                contagionReport+= attr+ " infection level: "+Math.round((contagionData[attr]/creatures.length)*100)+"%<br>";
+            };
+            for (var attr in antibodyData) {
+                contagionReport+= attr+ " immunity level: "+Math.round((antibodyData[attr]/creatures.length)*100)+"%<br>";
+            };
+
+            if (deathTollData.friendly >0) {contagionReport+="Friendly death toll:"+deathTollData.friendly+"<br>";};
+            if (deathTollData.hostile >0) {contagionReport+="Hostile death toll:"+deathTollData.hostile+"<br>";};
+
+            console.log(contagionReport);
+            return contagionReport;
+        //{"contagion":contagionData, "antibodies":antibodyData, "total":creatures.length}
+
+        };
+
         self.getAllMissions = function() {
             //loop through each location, location inventory. 
             //Get all missions

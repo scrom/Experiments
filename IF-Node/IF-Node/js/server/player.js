@@ -2656,6 +2656,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return status;
         };
 
+        self.isDead = function() {
+            if (_hitPoints <= 0) {return true;};
+            return false;
+        };
+
         self.status = function(maxScore) {
             var status = "";
             var missions = _missions.concat(_currentLocation.getMissions());
@@ -2664,6 +2669,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 status+=missions[i].getDescription()+"<br>";
             };
             if (missions.length > 0) {status+="<br>";};
+
+            //check contagion:
+            var contagionReport = map.getContagionReport(self);
+            if (contagionReport.length>0) {
+                status += "<i>Contagion Report:</i><br>";
+                status += contagionReport;
+                status += "<br>";
+            };
 
             status += "<i>Status:</i><br>";
             if (self.isStarving()) {status+="You're starving.<br>";}
