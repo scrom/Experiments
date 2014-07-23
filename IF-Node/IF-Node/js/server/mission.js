@@ -143,6 +143,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return _missionObject;
         };
 
+        self.getRewardObject = function() {
+            if (_reward.delivers) {
+                return _reward.delivers;
+            };
+            return null;
+        };
+
         self.getDescription = function() {
             return _description;
         };

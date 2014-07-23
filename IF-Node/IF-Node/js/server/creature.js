@@ -1462,21 +1462,49 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _genderPrefix+" says '"+map.find(artefactName)+"'"
         };
 
-        self.replyToMissionKeyword = function(keyword,playerAggression) {
+        self.initialReplyString = function(playerAggression) {
+            if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
+            if (_affinity <-1) {return _genderPrefix+" doesn't want to talk to you."};
+            if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
+            return null;
+        };
+
+        self.replyToKeyword = function(keyword,playerAggression) {
+            var initialReply = self.initialReplyString(playerAggression);
+            if (initialReply) {return initialReply;};
+
+            var returnImage = "";
+            if (_imageName) {
+                returnImage= "$image"+_imageName+"/$image";
+            };
+
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
                     if (_missions[i].nextDialogueContainsKeyWord(keyword)) {
-                        return self.reply("",playerAggression);
+                        return self.reply("",playerAggression, keyword);
+                    };
+                } else if (!(_missions[i].hasParent())) {
+                    //no dialogue
+                    var rewardObject = _missions[i].getRewardObject();
+                    if (rewardObject) {
+                        if (rewardObject.getName() == keyword) {return self.getDisplayName()+" says 'Sorry $player, there's still some work left to do before you can have that.'"+returnImage};
                     };
                 };
             };
+
+            //if there's not what's being asked for nearby
+            if (!(_currentLocation.objectExists(keyword)) && (!(_inventory.check(keyword)))) {
+                var randomReplies = ["Sorry $player, I can't help you there.", "Nope, I've not seen any "+keyword+" around.", "I'm afraid you'll need to hunt that down yourself.", "Nope, sorry."];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+            };
+
             return null;
         };
 
         self.reply = function(someSpeech,playerAggression) {
-            if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
-            if (_affinity <-1) {return _genderPrefix+" doesn't want to talk to you."};
-            if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
+            var initialReply = self.initialReplyString(playerAggression);
+            if (initialReply) {return initialReply;};
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
             var response = "";

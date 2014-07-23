@@ -1403,7 +1403,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = (getObjectFromLocation(artefactName)||giver.getObject(artefactName));
             if (!(artefact)) {
                 //does the creature have dialogue instead?
-                var creatureResponse = giver.replyToMissionKeyword(artefactName);
+                var creatureResponse = giver.replyToKeyword(artefactName);
                 if (creatureResponse) {return creatureResponse;};
                 return "There's no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying any either.";
             };   

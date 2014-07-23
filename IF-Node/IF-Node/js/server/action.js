@@ -670,7 +670,9 @@ exports.Action = function Action(aPlayer, aMap) {
             description += _player.tick(_ticks, _map);
 
             //replace any player substitution variables
-            description = description.replace("$player",initCap(_player.getUsername())).replace("%20"," ");
+            while (description.indexOf("$player") > -1) {
+                description = description.replace("$player",initCap(_player.getUsername())).replace("%20"," ");
+            };
 
             //extract image link from response if set
             var imageIndex = description.indexOf("$image");
