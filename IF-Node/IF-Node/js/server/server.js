@@ -41,7 +41,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
             });
 
            _webServer.get('/new/*', function (request, response) {
-                request.socket.setTimeout(120);
+                request.socket.setTimeout(5);
                 var sanitisedRequestURL = sanitiseString(request.url);
                 response.writeHead(200, {'Content-type':'text/plain'});
                 response.write(_interpreter.translate(sanitisedRequestURL,_config));
@@ -57,7 +57,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
             });
 
             _webServer.get('/action/*', function (request, response) {
-                request.socket.setTimeout(120);
+                request.socket.setTimeout(5);
                 var sanitisedRequestURL = sanitiseString(request.url);
                 response.writeHead(200, {'Content-type':'text/plain'});
                 response.write(_interpreter.translate(sanitisedRequestURL,_config));
