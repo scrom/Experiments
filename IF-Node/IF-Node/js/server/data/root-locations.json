@@ -1434,6 +1434,59 @@
           "phillippa",
           "her"
         ]
+      },
+{
+        "object": "creature",
+        "name": "adam parker",
+        "displayname": "Adam Parker",
+        "description": "Adam Parker",
+        "detailedDescription": "Master of user experience and a somewhat problematic addiction to stationery.",
+        "attributes": {
+          "weight": 130,
+          "money": 20,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "adamparker.jpg"
+        },
+        "synonyms": [
+          "adam",
+          "adam p",
+          "ap",
+          "parker",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "findadamstrainers",
+            "displayName": "find Adam's trainers",
+            "description": "Adam soaked his feet.",
+            "attributes": {
+              "missionObject": "trainers",
+			  "destination": "adam parker",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I managed to get a soaking cycling into work this morning and can't find my spare trainers.'<br>'They're usually somewhere around my desk but they could be anywhere to be honest.'<br>'Could you do track them down and bring them back to me?'",
+                "'Hey $player. Any joy tracking my trainers down?'"
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+			"reward": {
+              "score": 25,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "adam parker",
+              "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.<br> Have 25 points."
+            }
+           
+          }
+        ]
       }
     ]
   },
@@ -4478,7 +4531,25 @@
         "source": "post-room",
         "destination": "east-corridor-ground-floor-north-west"
       }
-    ]
+    ],
+	"inventory": [
+          {
+            "object": "artefact",
+            "name": "trainers",
+            "description": "pair of trainers",
+            "detailedDescription": "These look pretty large. You're probably looking for a relatively tall owner for these.",
+            "attributes": {
+              "weight": 2,
+              "canCollect": true,
+			  "isBreakable": true,
+			  "customAction": "wear",
+              "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
+            },
+            "synonyms": [
+              "pair of trainers",
+              "adams trainers"
+            ]
+          }] 
   },
   {
     "object": "location",
