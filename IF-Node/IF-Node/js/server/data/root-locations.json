@@ -781,8 +781,8 @@
       },
       {
         "object": "creature",
-        "name": "mark",
-        "displayname": "Mark",
+        "name": "mark wightman",
+        "displayname": "Mark Wightman",
         "description": "Mark Wightman",
         "detailedDescription": "Our head of Development.",
         "attributes": {
@@ -798,7 +798,7 @@
           "imageName": "markwightman.jpg"
         },
         "synonyms": [
-          "mark wightman",
+          "mark",
           "mark w",
           "mw",
           "wightman",
@@ -807,8 +807,8 @@
       },
       {
         "object": "creature",
-        "name": "jeff",
-        "displayname": "Jeff",
+        "name": "jeff foster",
+        "displayname": "Jeff Foster",
         "description": "Jeff Foster",
         "detailedDescription": "Our head of Software Engineering.",
         "attributes": {
@@ -824,7 +824,7 @@
           "imageName": "jefffoster.jpg"
         },
         "synonyms": [
-          "jeff foster",
+          "jeff",
           "jeff f",
           "jf",
           "foster",
@@ -909,6 +909,61 @@
       }
     ],
     "inventory": [
+	{
+        "object": "creature",
+        "name": "brian harris",
+        "displayname": "Brian Harris",
+        "description": "Brian Harris",
+        "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe’s (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
+        "attributes": {
+          "weight": 110,
+          "money": 30,
+          "attackStrength": 15,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "canTravel": true,
+          "traveller": true,
+          "moves": 232,
+          "returnDirection": "n",
+          "imageName": "brianharris.jpg"
+        },
+        "synonyms": [
+          "brian",
+          "brian h",
+          "bh",
+          "harris",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "findbriansguardian",
+            "displayName": "find The Gaurdian for Brian",
+            "description": "Brian wants to do the crossword.",
+            "attributes": {
+              "missionObject": "guardian newspaper",
+			  "destination": "brian harris",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I seem to have mislaid my copy of The Guardian.'<br>'I've not done my daily cryptic crossword and feel like I'm getting withdrawal symptoms.'<br>'If you see one around can you bring me a copy?'",
+                "'Hey $player. Any sign of that newspaper?'"
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+			"reward": {
+              "score": 25,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "brian harris",
+              "successMessage": "Brian says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now.<br> Have 25 points."
+            }
+           
+          }
+        ]
+      },
       {
         "object": "creature",
         "name": "james dening",
@@ -976,8 +1031,8 @@
       },
       {
         "object": "creature",
-        "name": "alan",
-        "displayname": "Alan",
+        "name": "alan platt",
+        "displayname": "Alan Platt",
         "description": "Alan Platt",
         "detailedDescription": "The master of Customer Delight.",
         "attributes": {
@@ -993,7 +1048,7 @@
           "imageName": "alanplatt.jpg"
         },
         "synonyms": [
-          "alan platt",
+          "alan",
           "alan p",
           "ap",
           "platt",
@@ -5363,6 +5418,23 @@
           "door"
         ]
       },
+	  {
+            "object": "artefact",
+            "name": "guardian newspaper",
+            "description": "copy of today's Guardian newspaper",
+            "detailedDescription": "Middle class pulp propaganda trash to be honest.",
+            "attributes": {
+              "defaultAction": "read",
+              "weight": 1,
+              "attackStrength": 2,
+              "type": "book",
+              "canCollect": true
+            },
+            "synonyms": [
+              "guardian",
+              "newspaper"
+            ]
+          },
       {
         "object": "artefact",
         "name": "boy scout article",

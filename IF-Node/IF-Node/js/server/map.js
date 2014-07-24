@@ -308,8 +308,8 @@ exports.Map = function Map() {
             var deathTollData = self.gatherContagionDeathTollStats(creatures);
            
 
-            console.log(contagionData);
-            console.log(antibodyData);
+            //console.log(contagionData);
+            //console.log(antibodyData);
 
             var contagionReport = "";
 
