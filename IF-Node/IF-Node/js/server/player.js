@@ -1227,12 +1227,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (verb == "hide" && receiver.getType() == "container") { return "That's a bit obvious. You'll need to hide "+artefact.getSuffix()+" somewhere else.";};
 
                 //if objects combine together...
-                if (artefact.combinesWith(receiver)) {
+                if (artefact.combinesWith(receiver, true)) {
                     return self.combine(artefact, receiver)                   
                 };
                 //if object combines with something in contents...
                 if (artefact.combinesWithContentsOf(receiver)) {
-                    var newReceiver = receiver.getObject(artefact.getCombinesWith());
+                    var combinesWithResult = artefact.getCombinesWith();
+                    var newReceiver;
+                    //do we have one or more combinesWith items?
+                    if (Object.prototype.toString.call(combinesWithResult) === '[object Array]') {
+                        for (var i=0;i<combinesWithResult.length;i++) {
+                            newReceiver = receiver.getObject(combinesWithResult[i]);
+                            if (newReceiver) {break;};
+                        };
+                    } else {
+                        newReceiver = receiver.getObject(combinesWithResult);
+                    };
                     return self.combine(artefact, newReceiver)                   
                 };
                 

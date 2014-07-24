@@ -360,19 +360,19 @@
       },
       {
         "object": "mission",
-        "name": "sweetcoffee",
-        "displayName": "get yourself a coffee",
-        "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet black coffee.",
+        "name": "sweetlatte",
+        "displayName": "get yourself a latte",
+        "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet, sugary latte.",
         "attributes": {
-          "missionObject": "sweet coffee",
+          "missionObject": "sweet latte",
           "destination": "player"
         },
         "conditionAttributes": {
           "isDestroyed": "false"
         },
         "reward": {
-          "score": 50,
-          "successMessage": "Congratulations. You managed to get your coffee, have 50 points!"
+          "score": 75,
+          "successMessage": "Congratulations. You managed to get your latte, have 75 points!"
         }
       }
     ]
@@ -2864,7 +2864,7 @@
           "plural": true,
           "isEdible": true,
           "nutrition": 5,
-          "combinesWith": "coffee"
+          "combinesWith": ["coffee","latte","mocha"]
         },
         "delivers": [
           {
@@ -2890,6 +2890,58 @@
               "drink",
               "coffee",
               "sugary coffee"
+            ]
+          },
+			{
+            "object": "artefact",
+            "name": "sweet latte",
+            "description": "sweet latte",
+            "detailedDescription": "Hipster Development fuel with added sugar!",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 0.5,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "requiredContainer": "cup",
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 25
+            },
+            "synonyms": [
+              "brew",
+              "drink",
+              "coffee",
+              "sugary latte",
+			  "latte"
+            ]
+          },
+			{
+            "object": "artefact",
+            "name": "sweet mocha",
+            "description": "sweet mocha",
+            "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 0.5,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "requiredContainer": "cup",
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 25
+            },
+            "synonyms": [
+              "brew",
+              "drink",
+              "coffee",
+              "sugary mocha",
+			  "mocha"
             ]
           }
         ]
@@ -2935,12 +2987,39 @@
               "charges": 1,
               "isEdible": true,
               "nutrition": 12,
-              "requiredComponentCount": 1
+              "requiredComponentCount": 1,
+			  "combinesWith": "sugar"
             },
             "synonyms": [
               "brew",
               "drink"
+            ],
+			"delivers":[			{
+            "object": "artefact",
+            "name": "sweet latte",
+            "description": "sweet latte",
+            "detailedDescription": "Hipster Development fuel with added sugar!",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 0.5,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "requiredContainer": "cup",
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 25
+            },
+            "synonyms": [
+              "brew",
+              "drink",
+              "coffee",
+              "sugary latte",
+			  "latte"
             ]
+          }]
           },
           {
             "object": "artefact",
@@ -2958,12 +3037,39 @@
               "charges": 1,
               "isEdible": true,
               "nutrition": 35,
-              "requiredComponentCount": 2
+              "requiredComponentCount": 2,
+			  "combinesWith": "sugar"
             },
             "synonyms": [
               "brew",
               "drink"
+            ],
+			"delivers":[{
+            "object": "artefact",
+            "name": "sweet mocha",
+            "description": "sweet mocha",
+            "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 0.5,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "requiredContainer": "cup",
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 25
+            },
+            "synonyms": [
+              "brew",
+              "drink",
+              "coffee",
+              "sugary mocha",
+			  "mocha"
             ]
+          }] 
           },
           {
             "object": "artefact",
@@ -3050,7 +3156,7 @@
         "displayName": "there's been a plane crash",
         "attributes": {
           "type": "event",
-          "parent": "sweetcoffee",
+          "parent": "sweetlatte",
           "missionObject": "coffee machine",
           "destination": "crash-site"
         },

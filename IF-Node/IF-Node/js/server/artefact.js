@@ -940,11 +940,28 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _broken;
         };
 
-        self.combinesWith = function(anObject) {
+        self.combinesWith = function(anObject, crossCheck) {
             if (self.isDestroyed()) {return false;};
-            if (self.getCombinesWith() == anObject.getName() && anObject.getCombinesWith() == self.getName()) {
-            //objects combine with each other...
-            return true;
+            var combinesWithResult = self.getCombinesWith();
+            if (combinesWithResult == anObject.getName()) {
+                if (crossCheck) {
+                    if (anObject.combinesWith(self, false)) { return true;};
+                } else {
+                    //no need to cross-check
+                    return true;
+                };
+            };
+            if (Object.prototype.toString.call(combinesWithResult) === '[object Array]') {
+                for (var i=0;i<combinesWithResult.length;i++) {
+                    if (combinesWithResult[i] == anObject.getName()) {
+                        if (crossCheck) {
+                            if (anObject.combinesWith(self, false)) { return true;};
+                        } else {
+                            //no need to cross-check
+                            return true;
+                        };
+                    };
+                };
             };
             return false;
         };
@@ -953,7 +970,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var objectInventory = anObject.getInventoryObject();
             var items = objectInventory.getAllObjectsAndChildren(false);
             for (var i=0; i<items.length;i++) {
-                if (self.combinesWith(items[i])) {
+                if (self.combinesWith(items[i],true)) {
                     return true;
                 };
             };
@@ -961,7 +978,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.combineWith = function(anObject) {
-            if (!(self.combinesWith(anObject))) { return null; };
+            if (!(self.combinesWith(anObject,true))) { return null; };
             var deliveryItemSource = _delivers[0]; //@todo: we only take the first element for now+
             //console.log("o:" + anObject + " dis: " + deliveryItemSource);
             console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
