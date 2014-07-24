@@ -1590,6 +1590,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if ( !(objectToGive)) {return initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
 
+            if (!(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" doesn't seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong.";};
+
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
 
