@@ -49,15 +49,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _loadCount = 0;
         var _cashSpent = 0;
         var _cashGained = 0;
-
-        //possible additional player stats
+        var _healCount = 0;
         var _waitCount = 0;
         var _restsTaken = 0;
         var _sleepsTaken = 0;
+        var _maxAffinity = 0;
+
+        //possible additional player stats
         var _creatureHitsMade = 0;
         var _totalCreatureDamageDelivered = 0;
-        var _maxAffinity = 0;
-        var _totalCurrentAffinity = 0;
         var _objectsChewed = 0;
         var _objectsBroken = 0;
         var _objectsGiven = 0;
@@ -254,6 +254,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.sleepsTaken != undefined) {_sleepsTaken = playerAttributes.sleepsTaken;};
             if (playerAttributes.maxAffinity != undefined) {_maxAffinity = playerAttributes.maxAffinity;};
             if (playerAttributes.injuriesReceived != undefined) {_injuriesReceived = playerAttributes.injuriesReceived;};
+            if (playerAttributes.healCount != undefined) {_healCount = playerAttributes.healCount;};
            
             if (playerAttributes.repairSkills != undefined) {
                 for(var i=0; i<playerAttributes.repairSkills.length;i++) {
@@ -463,12 +464,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_sleepsTaken > 0) {resultString += ',"sleepsTaken":'+_sleepsTaken;};
             if (_maxAffinity != 0) {resultString += ',"maxAffinity":'+_maxAffinity;};
             if (_injuriesReceived > 0) {resultString += ',"injuriesReceived":'+_injuriesReceived;};
+            if (_healCount > 0) {resultString += ',"healCount":'+_healCount;};
+
 
 /*
         //possible additional player stats
         var _creatureHitsMade = 0;
         var _totalCreatureDamageDelivered = 0;
-        var _totalCurrentAffinity = 0;
         var _objectsChewed = 0;
         var _objectsBroken = 0;
         var _objectsGiven = 0;
@@ -505,30 +507,48 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.additionalMovesUntilStarving = _additionalMovesUntilStarving;
             currentAttributes.stepsTaken = _stepsTaken;
             currentAttributes.locationsFound = _locationsFound;
+            currentAttributes.locationsToFind = map.getLocationCount()-_locationsFound;
             currentAttributes.maxAggression = _maxAggression;
             currentAttributes.score = _score;
             currentAttributes.cashSpent = _cashSpent;
             currentAttributes.cashGained = _cashGained;
             currentAttributes.totalDamageReceived =_totalDamageReceived;
             currentAttributes.booksRead = _booksRead;
+            currentAttributes.booksToRead = map.getBookCount()-_booksRead;
+            
             currentAttributes.stolenCash = _stolenCash;
             currentAttributes.creaturesSpokenTo = _creaturesSpokenTo;
+            currentAttributes.creaturesToSpeakTo = map.getCreatureCount() - _creaturesSpokenTo;            
             currentAttributes.waitCount = _waitCount;
             currentAttributes.restsTaken = _restsTaken;
             currentAttributes.sleepsTaken = _sleepsTaken;
             currentAttributes.maxAffinity =_maxAffinity = currentAttributes.maxAffinity;
             currentAttributes.injuriesReceived = _injuriesReceived;
+            currentAttributes.healCount = _healCount;
             currentAttributes.repairSkills = _repairSkills;
             currentAttributes.contagion =_contagion;
             currentAttributes.antibodies = _antibodies;
             currentAttributes.killedCreatures =_killedCreatures;
+            currentAttributes.killedCreaturesCount =_killedCreatures.length;
             currentAttributes.stolenObjects =_stolenObjects;
+            currentAttributes.stolenObjectsCount =_stolenObjects.length;
             currentAttributes.missionsCompleted = _missionsCompleted;
+            currentAttributes.missionsCompletedCount = _missionsCompleted.length;
             currentAttributes.missionsFailed = _missionsFailed;
+            currentAttributes.missionsFailedCount = _missionsFailed.length;
             currentAttributes.inventory = _inventory;
             currentAttributes.destroyedObjects = _destroyedObjects;
+            currentAttributes.destroyedObjectsCount = _destroyedObjects.length;
             currentAttributes.consumedObjects = _consumedObjects;
+            currentAttributes.consumedObjectsCount = _consumedObjects.length;
             currentAttributes.missions = _missions;
+
+            var maxMinAffinity = self.getMaxMinAffinity(map);
+            currentAttributes.popularity = Math.ceil((maxMinAffinity.strongLike+maxMinAffinity.like)-(maxMinAffinity.wary+maxMinAffinity.strongDislike));
+            currentAttributes.strongLikePercent = Math.ceil(maxMinAffinity.strongLike);
+            currentAttributes.likePercent = Math.ceil(maxMinAffinity.like);
+            currentAttributes.waryPercent = Math.ceil(maxMinAffinity.wary);
+            currentAttributes.dislikePercent = Math.ceil(maxMinAffinity.strongDislike);
 
             return currentAttributes;
         };
@@ -576,6 +596,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.incrementWaitCount = function() {
             _waitCount++;
+        };
+
+        self.incrementHealCount = function() {
+            _healCount++;
         };
 
         self.increaseTimeSinceEating = function(changeValue) {
@@ -1553,19 +1577,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //retrieve missions from location:
 
                 newMissions = _currentLocation.getMissions();
+                var hiddenMissionCount = 0;
                 //remove any with dialogue from this list.
                 for (var j=0; j< newMissions.length;j++) {
                     //note we're splicing a *copy*, not the original array!
                     if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
+                    if (!(newMissions[j].getDescription())) { hiddenMissionCount++;};
                 };
-                if (newMissions.length>0) {resultString+= "<br><br>";};
+                if (newMissions.length>0 && (newMissions.length>hiddenMissionCount)) {resultString+= "<br><br>";};
                 for (var i=0; i< newMissions.length;i++) {
                     newMissions[i].startTimer();
                     if (!(newMissions[i].isStatic())) {
                         self.addMission(newMissions[i]);
                         _currentLocation.removeMission(newMissions[i].getName());
                     };
-                    resultString+= newMissions[i].getDescription()+"<br>";
+                    var missionDescription = newMissions[i].getDescription();
+                    if (missionDescription) {
+                        resultString+= missionDescription+"<br>";
+                    };
                 };
 
                 return resultString;
@@ -1746,9 +1775,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //retrieve missions from location:
             var newMissions = _currentLocation.getMissions();
 
+            var hiddenMissionCount = 0;
             //remove any with dialogue from this list.
             for (var j=0; j< newMissions.length;j++) {
                 if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
+                if (!(newMissions[j].getDescription())) { hiddenMissionCount++;};
             };
 
             if (newMissions.length>0) {resultString+= "<br><br>";};
@@ -1759,7 +1790,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     _currentLocation.removeMission(newMissions[i].getName());
                 };
 
-                resultString+= newMissions[i].getDescription()+"<br>";
+                var missionDescription = newMissions[i].getDescription();
+                if (missionDescription) {
+                    resultString+= newMissions[i].getDescription()+"<br>";
+                };
             };
 
             return resultString;
@@ -2129,7 +2163,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             medicalArtefact.consume();
 
             if (healer) {
-                if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
+                if (healer.getType() == "player") { //only show these messages is player is doing the healing. 
+                    self.incrementHealCount();                    
                     if (medicalArtefact.chargesRemaining() == 0) {
                         resultString += "You used up the last of your "+medicalArtefact.getName()+".<br>";
                     } else {
@@ -2715,6 +2750,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if (_objectsChewed > 0) status += "You have chewed "+_objectsChewed+" objects.<br>";
 
             status += "<br>In a survey of your popularity..."
+            status +="<br> Your overall popularity rating is "+Math.ceil((maxMinAffinity.strongLike+maxMinAffinity.like)-(maxMinAffinity.wary+maxMinAffinity.strongDislike))+".";
             if (Math.ceil(maxMinAffinity.strongLike) > 0) { status += "<br> " + Math.ceil(maxMinAffinity.strongLike) + "% of characters said they 'strongly liked' you."; };
             if (Math.ceil(maxMinAffinity.like) > 0) { status += "<br> " + Math.ceil(maxMinAffinity.like) + "% of characters said they 'liked' you."; };
             if (Math.ceil(maxMinAffinity.wary) > 0) { status += "<br> " + Math.ceil(maxMinAffinity.wary) + "% of characters said they were 'wary' of you."; };

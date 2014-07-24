@@ -1275,7 +1275,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             medicalArtefact.consume();
  
             if (healer) {
-                if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
+                if (healer.getType() == "player") { //only show these messages is player is doing the healing. 
+                    healer.incrementHealCount();                                        
                     if (medicalArtefact.chargesRemaining() == 0) {
                         resultString += "You used up the last of your "+medicalArtefact.getName()+" to heal "+self.getDisplayName()+". ";
                     } else {
