@@ -945,6 +945,24 @@
               "hair",
               "blonde hair"
             ]
+          },
+          {
+            "object": "artefact",
+            "name": "maracas",
+            "description": "pair of maracas",
+            "detailedDescription": "A reminder of one of our great days out and of Chris Whitworth's musical talents.",
+            "attributes": {
+			  "customAction": "play",
+			  "defaultResult": "They're <i>really</i> annoying. Please don't do that again.",
+              "weight": 1,
+              "canCollect": true,
+			  "isBreakable": true,
+              "affinityModifier": 2
+            },
+            "synonyms": [
+              "pair of maracas",
+			  "a pair of maracas"
+            ]
           }
         ],
         "synonyms": [
@@ -1038,7 +1056,69 @@
         "source": "customer-delight-south",
         "destination": "customer-delight-south-west"
       }
-    ]
+    ],
+	"inventory":[
+	      {
+        "object": "creature",
+        "name": "chris whitworth",
+        "displayname": "Chris Whitworth",
+        "description": "Chris Whitworth",
+        "detailedDescription": "Great developer, exceptional musician. Part of our customer delight development team.",
+        "attributes": {
+          "weight": 100,
+          "money": 20,
+          "attackStrength": 10,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 80,
+          "canTravel": true,
+          "traveller": true,
+          "destinations": [
+            "customer-delight-south",
+            "kitchen-ground-floor",
+			"customer-delight-south",
+			"second-floor-cubicle",
+			"graffiti-a"
+          ],
+          "loops": 12,
+          "loopDelay": 5,
+		  "destinationDelay": 4,
+          "imageName": "chriswhitworth.jpg"
+        },
+        "synonyms": [
+          "chris",
+          "chris w",
+          "cw",
+          "whitworth",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "destroymaracas",
+            "displayName": "destroy the maracas",
+            "description": "Chris gave James something really annoying.",
+            "attributes": {
+              "missionObject": "maracas",
+              "dialogue": [
+                "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Red Gate day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, James Dening won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'"
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": "true"
+            },
+            "reward": {
+              "score": 25,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "chris whitworth",
+			  "decreaseAffinityFor": "james dening",
+              "successMessage": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while.<br>Have 25 points."
+            }
+          }
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -1253,6 +1333,7 @@
           ],
           "loops": 3,
           "loopDelay": 5,
+		  "destinationDelay": 3,
           "imageName": "chrismoore.jpg"
         },
         "synonyms": [

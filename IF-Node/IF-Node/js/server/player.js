@@ -522,7 +522,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.waitCount = _waitCount;
             currentAttributes.restsTaken = _restsTaken;
             currentAttributes.sleepsTaken = _sleepsTaken;
-            currentAttributes.maxAffinity =_maxAffinity = currentAttributes.maxAffinity;
+            currentAttributes.maxAffinity =_maxAffinity;
             currentAttributes.injuriesReceived = _injuriesReceived;
             currentAttributes.healCount = _healCount;
             currentAttributes.repairSkills = _repairSkills;
