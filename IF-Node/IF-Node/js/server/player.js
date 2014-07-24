@@ -24,7 +24,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _returnDirection;
         var _currentLocation;
         var _timeSinceEating = 0; 
-        var _maxMovesUntilHungry = 50;
+        var _maxMovesUntilHungry = 55;
         var _additionalMovesUntilStarving = 10;
         var _contagion = [];
         var _antibodies = [];
@@ -447,7 +447,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_saveCount > 0) {resultString += ',"saveCount":'+_saveCount;};
             if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
             if (_timeSinceEating > 0) {resultString += ',"timeSinceEating":'+_timeSinceEating;};
-            if (_maxMovesUntilHungry != 50) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
+            if (_maxMovesUntilHungry != 55) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
             if (_additionalMovesUntilStarving != 10) {resultString += ',"additionalMovesUntilStarving":'+_additionalMovesUntilStarving;};
             if (_stepsTaken > 0) {resultString += ',"stepsTaken":'+_stepsTaken;};
             if (_locationsFound > 0) {resultString += ',"locationsFound":'+_locationsFound;};
@@ -2627,7 +2627,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //feed?
                 self.increaseTimeSinceEating(1);
-                if (_timeSinceEating>_maxMovesUntilHungry+_additionalMovesUntilStarving) {damage+=_timeSinceEating-(_maxMovesUntilHungry+_additionalMovesUntilStarving);}; //gets worse the longer it's left.
+                if (_timeSinceEating>_maxMovesUntilHungry+_additionalMovesUntilStarving) {damage+=Math.floor((_timeSinceEating-(_maxMovesUntilHungry+_additionalMovesUntilStarving))/1.5);}; //gets worse the longer it's left.
             };
 
             if (self.isStarving()) {resultString+="<br>You're starving. ";}
