@@ -560,7 +560,7 @@
         "longname": "West",
         "direction": "w",
         "source": "buenosaires",
-        "destination": "east-corridor-ground-floor-north-west"
+        "destination": "east-corridor-ground-floor-north-east"
       }
     ]
   },
