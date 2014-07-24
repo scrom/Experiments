@@ -682,11 +682,11 @@ exports.Action = function Action(aPlayer, aMap) {
             if (imageIndex>-1) {
                 var endIndex = description.lastIndexOf("/$image"),
                 imageName = description.substring(imageIndex+6, endIndex);
-                console.log("imageName:"+imageName);
+                //console.log("imageName:"+imageName);
             };
             if (imageName) {
                 description = description.substring(0,imageIndex)+description.substring(endIndex+7);
-                console.log("description:"+description);
+                //console.log("description:"+description);
             };           
 
             //get an image path if not already set

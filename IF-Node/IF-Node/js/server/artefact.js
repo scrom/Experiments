@@ -98,6 +98,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         };
 
+        var doesPlural = function() {
+            if (_plural) {
+                return "don't";
+             };
+            return "doesn't";
+        };
+
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
@@ -1412,8 +1419,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             if (verb == 'open') {
-                if (_opens && (_open)){return initCap(_itemDescriptivePrefix)+" already open";};                
-                return _itemPrefix+" doesn't open";
+                if (_opens && (_open)){return initCap(_itemDescriptivePrefix)+" already open";};               
+                return _itemPrefix+" "+doesPlural()+" open";
             };
             if (verb == 'unlock') { return "You "+verb+" "+self.getDisplayName()+"."};
 
@@ -1607,7 +1614,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if ( !(objectToGive)) {return initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
 
-            if (!(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" doesn't seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong.";};
+            if (!(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" "+doesPlural()+" seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong.";};
 
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
@@ -1727,7 +1734,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.lock = function(aKey, locationName) {
             if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
-            if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
+            if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
             if (!(_locked)) {
                 if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
@@ -1747,7 +1754,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _locked = false;
                 return _itemDescriptivePrefix+" broken. No need to unlock "+_itemSuffix+".";
             };
-            if (!(_lockable)) {return _itemPrefix+" doesn't have a lock.";};
+            if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
             if (_locked) {
                 if (!(aKey)) {return "You don't have a key for "+self.getSuffix()+".";};
                 if (aKey.keyTo(self)) {

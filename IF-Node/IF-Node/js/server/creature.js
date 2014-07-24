@@ -1581,8 +1581,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     
                 };
             };
-            if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());}
-            else {console.log('Creature is not carrying an automatically usable weapon')};
+            if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());};
+            //else {console.log('Creature is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
         };
