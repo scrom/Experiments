@@ -186,7 +186,7 @@ exports.canGetWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action
 
 exports.canEatFoodWhenHungry = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(49);
+    p0.increaseTimeSinceEating(54);
     //p0.reduceHitPoints(6);
     var expectedResult = 'You eat the cake. You feel fitter, happier and healthier.';
     var actualResult = p0.eat('eat','cake');
@@ -228,7 +228,7 @@ exports.cannotEatFoodWhenNotHungryEvenIfInjured.meta = { traits: ["Player Test",
 
 exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(26);
+    p0.increaseTimeSinceEating(27);
     p0.reduceHitPoints(6); //test boundary
     var expectedResult = "You eat the cake. You feel fitter, happier and healthier.";
     var actualResult = p0.eat('eat','cake');
@@ -990,7 +990,7 @@ exports.canEatDeadCreature = function (test) {
     var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
     deadCreature.go(null,l0); 
     p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(25);
+    p0.increaseTimeSinceEating(28);
     p0.reduceHitPoints(6);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature. It was a bit messy but you feel fitter, happier and healthier.';
