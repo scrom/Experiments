@@ -524,6 +524,8 @@ exports.Action = function Action(aPlayer, aMap) {
                             return self.processAction(_actionString);
                         };
                         break;
+                    case 'kiss':
+                    case 'hug':
                     case 'wink':
                         description = "That's a slightly over-friendly thing to do don't you think?<br>It won't actually make you any more popular either.";
                         break;

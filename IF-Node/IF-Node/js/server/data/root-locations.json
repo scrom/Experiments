@@ -3311,7 +3311,7 @@
             "object": "artefact",
             "name": "small book",
             "description": "small book",
-            "detailedDescription": "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers.",
+            "detailedDescription": "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers.<br>This kind of thing is perfect for someone in a customer-facing role.",
             "attributes": {
               "defaultAction": "read",
               "weight": 1,
@@ -3668,7 +3668,8 @@
               "ice",
               "icecream",
               "99",
-              "99 flake"
+              "99 flake",
+			  "99 flake ice cream"
             ]
           }
         ],
