@@ -115,12 +115,11 @@
       }
     ],
     "missions": [
-	      {
+      {
         "object": "mission",
         "name": "boring",
         "attributes": {
-          "missionObject": "player",
-          "destination": "player"
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "waitCount": 25
@@ -130,12 +129,11 @@
           "successMessage": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>Have 5 points as some encouragement to get moving."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "explorer",
         "attributes": {
-          "missionObject": "player",
-          "destination": "player"
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "locationsToFind": 0
@@ -145,12 +143,11 @@
           "successMessage": "<br>You're quite the explorer!<br>Congratulations, you've found every location. Have 50 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "psycho",
         "attributes": {
-          "missionObject": "player",
-          "destination": "player"
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "maxAggression": 25
@@ -160,12 +157,11 @@
           "successMessage": "<br>Whoa, you're out of control. You need to seriously work on your anger management. You lose 25 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "liability",
         "attributes": {
-          "missionObject": "player",
-          "destination": "player"
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "destroyedObjectsCount": 15
@@ -175,12 +171,11 @@
           "successMessage": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe?. You lose 15 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "thief",
         "attributes": {
-          "missionObject": "player",
-          "destination": "player"
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "stolenObjectsCount": 5
@@ -190,12 +185,11 @@
           "successMessage": "<br>I know stealing may be one way of achieving your goals but it really doesn't fit in with our values. You lose 35 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "bookworm",
         "attributes": {
-          "missionObject": "player",
-          "destination": "player"
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "booksToRead": 1
@@ -205,13 +199,12 @@
           "successMessage": "<br>I like your attitude to learning, keep it up<br>Only one more item left to read! Have 50 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "scholar",
         "attributes": {
-	      "parent": "bookworm",		
-          "missionObject": "player",
-          "destination": "player"
+          "parent": "bookworm",
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "booksToRead": 0
@@ -221,13 +214,12 @@
           "successMessage": "<br>Nice one. You read 'all the things'.<br>Have another 25 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "chatterbox",
         "attributes": {
-	      "parent": "keyfob",		
-          "missionObject": "player",
-          "destination": "player"
+          "parent": "keyfob",
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "creaturesToSpeakTo": 5
@@ -237,13 +229,12 @@
           "successMessage": "<br>You're quite a chatterbox. We like people who talk and collaborate.<br>Have 25 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "networker",
         "attributes": {
-	      "parent": "chatterbox",		
-          "missionObject": "player",
-          "destination": "player"
+          "parent": "chatterbox",
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "creaturesToSpeakTo": 0
@@ -253,12 +244,11 @@
           "successMessage": "<br>Wow, you spoke to <i>everyone</i>. That's quite a network you're building up.<br>Have 50 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "bff",
-        "attributes": {		
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "maxAffinity": 25
@@ -268,12 +258,11 @@
           "successMessage": "<br>You're making a real effort here. Looks like you've almost got a best friend forever!<br>Have 50 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "first-aider",
-        "attributes": {		
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "healCount": 5
@@ -283,13 +272,12 @@
           "successMessage": "<br>We could do with someone like you on the first-aid team. You've got quite the healing skills.<br>Have 25 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "doctor",
-        "attributes": {	
-		  "parent": "first-aider",	
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "parent": "first-aider",
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "healCount": 11
@@ -299,13 +287,12 @@
           "successMessage": "<br>You've really gone out of your way to do plenty of healing<br>Have 50 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "asshole",
-        "attributes": {	
-		  "parent": "thinice",
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "parent": "thinice",
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "popularity": "<-24"
@@ -315,12 +302,11 @@
           "successMessage": "<br>You need to sort yourself out, you're turning into quite the piece of work.<br>We have a 'no assholes' rule here you know.<br>You lose 100 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "thinice",
-        "attributes": {	
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "popularity": "<-4"
@@ -330,12 +316,11 @@
           "successMessage": "<br>You're treading a fine line here. I know you can't make an ommelette without breaking some eggs but you're not making yourself popular.<br>I'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good though.<br>Have 5 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "spendthrift",
-        "attributes": {	
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "cashSpent": ">100"
@@ -345,12 +330,11 @@
           "successMessage": "<br>You're quite the big spender. We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</> spending wisely, aren't you?<br>Have 5 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "moneymaker",
-        "attributes": {	
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "cashGained": ">100"
@@ -360,12 +344,11 @@
           "successMessage": "<br>You've made quite a bit of money there, great job!<br>I hope you didn't come about it through foul means though.<br>Have 50 points."
         }
       },
-	      {
+      {
         "object": "mission",
         "name": "pickpocket",
-        "attributes": {	
-          "missionObject": "player",
-          "destination": "player"
+        "attributes": {
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "stolenCash": ">50"
@@ -495,9 +478,9 @@
           "weight": 1,
           "type": "food",
           "canCollect": true,
+          "charges": 1,
           "isEdible": true,
-          "nutrition": 25,
-		  "charges": 1
+          "nutrition": 25
         },
         "synonyms": [
           "slice",
@@ -1076,6 +1059,118 @@
           "traveller": true,
           "imageName": "aliceeasey.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "vial",
+            "description": "glass vial",
+            "detailedDescription": "A small glass vial. The type used to carry medical samples.",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "type": "container",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true
+            },
+            "synonyms": [
+              "bottle",
+              "glass vial",
+              "glass"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "first aid kit",
+            "description": "first aid kit",
+            "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+            "attributes": {
+              "defaultAction": "heal",
+              "weight": 1,
+              "type": "medical",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 5
+            },
+            "synonyms": [
+              "first aid",
+              "kit",
+              "firstaid kit",
+              "first-aid kit",
+              "first-aid"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "food rations",
+            "description": "pack of survival food rations",
+            "detailedDescription": "A few days worth of rather dull but long-lasting dried food.",
+            "attributes": {
+              "defaultAction": "eat",
+              "weight": 1,
+              "type": "food",
+              "canCollect": true,
+              "charges": 10,
+              "isEdible": true,
+              "nutrition": 25
+            },
+            "synonyms": [
+              "food",
+              "ration",
+              "rations",
+              "dried food",
+              "dried rations",
+              "survival rations",
+              "survival food rations",
+              "pack"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "survival book",
+            "description": "tattered old book",
+            "detailedDescription": "Tips and tricks for survival in a zombie apocalypse.",
+            "attributes": {
+              "defaultAction": "read",
+              "weight": 1,
+              "type": "book",
+              "canCollect": true
+            },
+            "synonyms": [
+              "manual",
+              "book",
+              "survival",
+              "survival manual",
+              "zombie manual",
+              "zombie book",
+              "zombie survival manual",
+              "zombie survival book",
+              "old book",
+              "tattered old book",
+              "tattered book"
+            ],
+            "missions": [
+              {
+                "object": "mission",
+                "name": "survivezombies",
+                "displayName": "how to survive a zombie apocalypse",
+                "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of zombieism antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of zombie antibodies who is subsequently bitten may transfer those antibodies to their attacker.<br>Thus speed is of the essence, it is important to rapidly identify patient zero and all who have come into contact with them in order to pass on immunity and limit the contagion.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies and under no circumstances should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.",
+                "attributes": {
+                  "missionObject": "survival book",
+                  "static": true
+                },
+                "conditionAttributes": {
+                  "isDestroyed": "false",
+                  "read": "true"
+                },
+                "reward": {
+                  "successMessage": "I'm sure you'll never need to know any of this, right?"
+                }
+              }
+            ]
+          }
+        ],
         "synonyms": [
           "alice",
           "alice easy",
@@ -1083,117 +1178,7 @@
           "ae",
           "easey",
           "her"
-        ],"inventory": [
-		{
-        "object": "artefact",
-        "name": "vial",
-        "description": "glass vial",
-        "detailedDescription": "A small glass vial. The type used to carry medical samples.",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 1,
-          "carryWeight": 3,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true
-        },
-        "synonyms": [
-          "bottle",
-          "glass vial",
-          "glass"
-        ]},
-		{
-        "object": "artefact",
-        "name": "first aid kit",
-        "description": "first aid kit",
-        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
-        "attributes": {
-          "defaultAction": "heal",
-          "weight": 1,
-          "type": "medical",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 5
-        },
-        "synonyms": [
-          "first aid",
-          "kit",
-          "firstaid kit",
-          "first-aid kit",
-          "first-aid"
         ]
-      },
-	  {
-        "object": "artefact",
-        "name": "food rations",
-        "description": "pack of survival food rations",
-        "detailedDescription": "A few days worth of rather dull but long-lasting dried food.",
-        "attributes": {
-          "defaultAction": "eat",
-          "weight": 1,
-          "type": "food",
-          "canCollect": true,
-          "isEdible": true,
-          "nutrition": 25,
-          "charges": 10
-        },
-        "synonyms": [
-          "food",
-          "ration",
-          "rations",
-          "dried food",
-		  "dried rations",
-          "survival rations",
-		  "survival food rations",
-		  "pack"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "survival book",
-        "description": "tattered old book",
-        "detailedDescription": "Tips and tricks for survival in a zombie apocalypse.",
-        "attributes": {
-          "defaultAction": "read",
-          "weight": 1,
-          "type": "book",
-          "canCollect": true
-        },
-        "synonyms": [
-          "manual",
-          "book",
-          "survival",
-          "survival manual",
-		  "zombie manual",
-		  "zombie book",
-		  "zombie survival manual",
-		  "zombie survival book",
-		  "old book",
-		  "tattered old book",
-		  "tattered book"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "survivezombies",
-            "displayName": "how to survive a zombie apocalypse",
-            "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of zombieism antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of zombie antibodies who is subsequently bitten may transfer those antibodies to their attacker.<br>Thus speed is of the essence, it is important to rapidly identify patient zero and all who have come into contact with them in order to pass on immunity and limit the contagion.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies and under no circumstances should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.",
-            "attributes": {
-              "missionObject": "survival book",
-              "static": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": "false",
-              "read": "true"
-            },
-            "reward": {
-              "successMessage": "I'm sure you'll never need to know any of this, right?"
-            }
-          }
-        ]
-      }
-    ]
       },
       {
         "object": "creature",
@@ -2723,9 +2708,9 @@
           "weight": 1,
           "type": "food",
           "canCollect": true,
+          "charges": 1,
           "isEdible": true,
-          "nutrition": 20,
-		  "charges": 1
+          "nutrition": 20
         },
         "synonyms": [
           "food",
@@ -2745,10 +2730,10 @@
           "weight": 0.1,
           "type": "food",
           "canCollect": true,
+          "charges": 2,
           "plural": true,
           "isEdible": true,
           "nutrition": 5,
-		  "charges": 2,
           "combinesWith": "coffee"
         },
         "delivers": [
@@ -2765,10 +2750,10 @@
               "isLiquid": true,
               "requiredContainer": "cup",
               "canCollect": true,
+              "charges": 1,
               "plural": true,
               "isEdible": true,
-              "nutrition": 15,
-			  "charges": 1
+              "nutrition": 15
             },
             "synonyms": [
               "brew",
@@ -2817,9 +2802,9 @@
               "isLiquid": true,
               "requiredContainer": "cup",
               "canCollect": true,
+              "charges": 1,
               "isEdible": true,
               "nutrition": 12,
-		      "charges": 1,
               "requiredComponentCount": 1
             },
             "synonyms": [
@@ -2840,9 +2825,9 @@
               "isLiquid": true,
               "requiredContainer": "cup",
               "canCollect": true,
+              "charges": 1,
               "isEdible": true,
               "nutrition": 35,
-		      "charges": 1,
               "requiredComponentCount": 2
             },
             "synonyms": [
@@ -2863,10 +2848,10 @@
               "isLiquid": true,
               "requiredContainer": "cup",
               "canCollect": true,
+              "charges": 1,
               "plural": true,
               "isEdible": true,
               "nutrition": 8,
-		      "charges": 1,
               "combinesWith": "sugar"
             },
             "synonyms": [
@@ -2887,10 +2872,10 @@
                   "isLiquid": true,
                   "requiredContainer": "cup",
                   "canCollect": true,
+                  "charges": 1,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 15,
-		          "charges": 1
+                  "nutrition": 15
                 },
                 "synonyms": [
                   "brew",
@@ -2928,132 +2913,132 @@
         ]
       }
     ],
-	"missions": [
-	          {
-            "object": "mission",
-            "name": "planecrash",
-            "displayName": "there's been a plane crash",
-            "attributes": {
-              "type": "event",
-			  "parent": "sweetcoffee",
-              "missionObject": "coffee machine",
-              "destination": "crash-site"
-            },
-            "conditionAttributes": {
-              "time": 23
-            },
-            "reward": {
-              "locations": [
-                {
-                  "object": "location",
-                  "name": "crash-site",
-                  "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
-                  "exits": [
-                    {
-                      "object": "exit",
-                      "longname": "South",
-                      "direction": "s",
-                      "source": "crash-site",
-                      "destination": "west-car-park"
-                    }
-                  ],
-                  "inventory": [
-                    {
-                      "object": "artefact",
-                      "name": "pool",
-                      "description": "pool of zombie venom antibodies",
-                      "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
-                      "attributes": {
-                        "defaultAction": "drink",
-                        "weight": 1,
-                        "requiresContainer": true,
-                        "isLiquid": true,
-                        "canCollect": true,
-                        "isEdible": true,
-                        "antibodies": [
-                          "zombie"
-                        ]
-                      },
-                      "synonyms": [
-                        "antivenom",
-                        "antibodies",
-                        "zombie venom",
-                        "zombie venom antibodies",
-                        "zombie antibodies",
-                        "venom",
-                        "sample"
-                      ]
-                    },
-                    {
-                      "object": "creature",
-                      "name": "dave convery",
-                      "displayname": "Dave Convery",
-                      "description": "Dave Convery",
-                      "detailedDescription": "Like a cynical but gentle, marketing wolverine.",
-                      "attributes": {
-                        "weight": 140,
-                        "money": 10,
-                        "attackStrength": 25,
-                        "gender": "male",
-                        "type": "friendly",
-                        "carryWeight": 18,
-                        "health": 200,
-                        "canTravel": true,
-                        "traveller": true,
-                        "imageName": "daveconvery.jpg",
-                        "contagion": [
-                          "zombie"
-                        ]
-                      },
-                      "synonyms": [
-                        "dave",
-                        "convery",
-                        "him"
-                      ]
-                    },
-                    {
-                      "object": "creature",
-                      "name": "roger hart",
-                      "displayname": "Roger Hart",
-                      "description": "Roger Hart",
-                      "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.",
-                      "attributes": {
-                        "weight": 120,
-                        "money": 10,
-                        "attackStrength": 25,
-                        "gender": "male",
-                        "type": "friendly",
-                        "carryWeight": 18,
-                        "health": 160,
-                        "canTravel": true,
-                        "traveller": true,
-                        "imageName": "rogerhart.jpg",
-                        "contagion": [
-                          "zombie"
-                        ]
-                      },
-                      "synonyms": [
-                        "roger",
-                        "hart",
-                        "him"
-                      ]
-                    }
-                  ]
-                }
-              ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "planecrash",
+        "displayName": "there's been a plane crash",
+        "attributes": {
+          "type": "event",
+          "parent": "sweetcoffee",
+          "missionObject": "coffee machine",
+          "destination": "crash-site"
+        },
+        "conditionAttributes": {
+          "time": 23
+        },
+        "reward": {
+          "locations": [
+            {
+              "object": "location",
+              "name": "crash-site",
+              "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
               "exits": [
                 {
                   "object": "exit",
-                  "longname": "North",
-                  "direction": "n",
-                  "source": "west-car-park",
-                  "destination": "crash-site"
+                  "longname": "South",
+                  "direction": "s",
+                  "source": "crash-site",
+                  "destination": "west-car-park"
                 }
               ],
-              "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
+              "inventory": [
+                {
+                  "object": "artefact",
+                  "name": "pool",
+                  "description": "pool of zombie venom antibodies",
+                  "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
+                  "attributes": {
+                    "defaultAction": "drink",
+                    "weight": 1,
+                    "requiresContainer": true,
+                    "isLiquid": true,
+                    "canCollect": true,
+                    "isEdible": true,
+                    "antibodies": [
+                      "zombie"
+                    ]
+                  },
+                  "synonyms": [
+                    "antivenom",
+                    "antibodies",
+                    "zombie venom",
+                    "zombie venom antibodies",
+                    "zombie antibodies",
+                    "venom",
+                    "sample"
+                  ]
+                },
+                {
+                  "object": "creature",
+                  "name": "dave convery",
+                  "displayname": "Dave Convery",
+                  "description": "Dave Convery",
+                  "detailedDescription": "Like a cynical but gentle, marketing wolverine.",
+                  "attributes": {
+                    "weight": 140,
+                    "money": 10,
+                    "attackStrength": 25,
+                    "gender": "male",
+                    "type": "friendly",
+                    "carryWeight": 18,
+                    "health": 200,
+                    "canTravel": true,
+                    "traveller": true,
+                    "imageName": "daveconvery.jpg",
+                    "contagion": [
+                      "zombie"
+                    ]
+                  },
+                  "synonyms": [
+                    "dave",
+                    "convery",
+                    "him"
+                  ]
+                },
+                {
+                  "object": "creature",
+                  "name": "roger hart",
+                  "displayname": "Roger Hart",
+                  "description": "Roger Hart",
+                  "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.",
+                  "attributes": {
+                    "weight": 120,
+                    "money": 10,
+                    "attackStrength": 25,
+                    "gender": "male",
+                    "type": "friendly",
+                    "carryWeight": 18,
+                    "health": 160,
+                    "canTravel": true,
+                    "traveller": true,
+                    "imageName": "rogerhart.jpg",
+                    "contagion": [
+                      "zombie"
+                    ]
+                  },
+                  "synonyms": [
+                    "roger",
+                    "hart",
+                    "him"
+                  ]
+                }
+              ]
             }
-          }
-		]
+          ],
+          "exits": [
+            {
+              "object": "exit",
+              "longname": "North",
+              "direction": "n",
+              "source": "west-car-park",
+              "destination": "crash-site"
+            }
+          ],
+          "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
+        }
+      }
+    ]
   },
   {
     "object": "location",
@@ -3543,10 +3528,10 @@
               "weight": 1,
               "type": "food",
               "canCollect": true,
+              "charges": 1,
               "affinityModifier": 5,
               "isEdible": true,
               "nutrition": 15,
-		      "charges": 1,
               "price": 3.5
             },
             "synonyms": [
@@ -4465,7 +4450,6 @@
               "chargesDescription": "$charges $chargeUnit",
               "isEdible": true,
               "nutrition": 25,
-		      "charges": 1,
               "price": 0.5,
               "componentOf": [
                 "mocha"
@@ -4488,9 +4472,9 @@
               "weight": 1,
               "type": "food",
               "canCollect": true,
+              "charges": 1,
               "isEdible": true,
               "nutrition": 25,
-		      "charges": 1,
               "price": 0.5
             },
             "synonyms": [
@@ -5775,9 +5759,9 @@
           "weight": 1,
           "type": "food",
           "canCollect": true,
+          "charges": 2,
           "isEdible": true,
-          "nutrition": 35,
-		  "charges": 2
+          "nutrition": 35
         },
         "synonyms": [
           "jar",
@@ -5828,9 +5812,9 @@
           "requiresContainer": true,
           "isLiquid": true,
           "canCollect": true,
+          "charges": 1,
           "isEdible": true,
-          "nutrition": 15,
-		  "charges": 1
+          "nutrition": 15
         },
         "synonyms": [
           "bowl",
@@ -5934,9 +5918,9 @@
           "weight": 1,
           "type": "food",
           "canCollect": true,
+          "charges": 1,
           "isEdible": true,
-          "nutrition": 20,
-		  "charges": 1
+          "nutrition": 20
         },
         "synonyms": [
           "food",
@@ -6005,9 +5989,9 @@
           "weight": 2,
           "type": "food",
           "canCollect": true,
+          "charges": 1,
           "isEdible": true,
-          "nutrition": 25,
-		  "charges": 1
+          "nutrition": 25
         },
         "synonyms": [
           "plate of salad",
@@ -6762,26 +6746,27 @@
         "destination": "west-bike-racks"
       }
     ],
-	"missions": [
-          {
-            "object": "mission",
-            "name": "saveredgate",
-            "displayName": "save Red Gate from the zombie contagion",
-            "description": "The scene of devastation nearby looks very bad...<br>You need to help all the Red Gate staff survive the zombie apocalypse. Act quickly!",
-            "attributes": {
-			  "parent": "planecrash",	
-              "static": false
-            },
-            "conditionAttributes": {
-              "contagion":{},
-			  "contagionDeathToll":{ "friendly":0}
-            },
-            "reward": {
-              "score": 200,
-              "successMessage": "Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty)."
-            }
+    "missions": [
+      {
+        "object": "mission",
+        "name": "saveredgate",
+        "displayName": "save Red Gate from the zombie contagion",
+        "description": "The scene of devastation nearby looks very bad...<br>You need to help all the Red Gate staff survive the zombie apocalypse. Act quickly!",
+        "attributes": {
+          "parent": "planecrash"
+        },
+        "conditionAttributes": {
+          "contagion": {},
+          "contagionDeathToll": {
+            "friendly": 0
           }
-        ]
+        },
+        "reward": {
+          "score": 200,
+          "successMessage": "Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty)."
+        }
+      }
+    ]
   },
   {
     "object": "location",
