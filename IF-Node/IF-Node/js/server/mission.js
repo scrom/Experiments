@@ -510,6 +510,21 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                                 //treat it as normal   
                                 if (objectAttributes[attr] == _conditionAttributes[attr]) {
                                     successCount++;
+                                } else {
+                                    if (typeof(_conditionAttributes[attr]) == 'string') {
+                                        if (_conditionAttributes[attr].substring(0,1) == ">") {
+                                            var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
+                                            if (objectAttributes[attr] > conditionValue) {
+                                                successCount++;
+                                            };
+                                        };
+                                        if (_conditionAttributes[attr].substring(0,1) == "<") {
+                                            var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
+                                            if (objectAttributes[attr] < conditionValue) {
+                                                successCount++;
+                                            };
+                                        };
+                                    };
                                 };
                             } else {
                                 //we have an object we need to figure out more about...
@@ -527,6 +542,21 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                                         if (objectAttributes[attr][subAttr] == _conditionAttributes[attr][subAttr]) {
                                             var subkeyname = attr+"."+subAttr;
                                             successCount++;
+                                        } else {
+                                            if (typeof(_conditionAttributes[attr][subAttr]) == 'string') {
+                                                if (_conditionAttributes[attr][subAttr].substring(0,1) == ">") {
+                                                    var conditionValue = parseFloat(_conditionAttributes[attr][subAttr].substring(1,_conditionAttributes[attr][subAttr].length));
+                                                    if (objectAttributes[attr][subAttr] > conditionValue) {
+                                                        successCount++;
+                                                    };
+                                                };
+                                                if (_conditionAttributes[attr][subAttr].substring(0,1) == "<") {
+                                                    var conditionValue = parseFloat(_conditionAttributes[attr][subAttr].substring(1,_conditionAttributes[attr][subAttr].length));
+                                                    if (objectAttributes[attr][subAttr] < conditionValue) {
+                                                        successCount++;
+                                                    };
+                                                };
+                                            };
                                         };
                                     };
                                 };
@@ -536,6 +566,21 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                         } else {                                                                             
                             if (objectAttributes[attr] == _conditionAttributes[attr]) {
                                 successCount++;
+                            } else {
+                                if (typeof(_conditionAttributes[attr]) == 'string') {
+                                    if (_conditionAttributes[attr].substring(0,1) == ">") {
+                                        var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
+                                        if (objectAttributes[attr] > conditionValue) {
+                                            successCount++;
+                                        };
+                                    };
+                                    if (_conditionAttributes[attr].substring(0,1) == "<") {
+                                        var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
+                                        if (objectAttributes[attr] < conditionValue) {
+                                            successCount++;
+                                        };
+                                    };
+                                };
                             };
                         };
                     };
