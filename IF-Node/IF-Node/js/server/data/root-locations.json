@@ -611,7 +611,56 @@
         "source": "core-area-east",
         "destination": "core-area-west"
       }
-    ]
+    ],
+	"inventory":[      {
+        "object": "creature",
+        "name": "zara sheldrake",
+        "displayname": "Zara Sheldrake",
+        "description": "Zara Sheldrake",
+        "detailedDescription": "Our one and only business analyst. She mostly works with the core team but is also one of our first-aiders.",
+        "attributes": {
+          "weight": 100,
+          "money": 25,
+          "attackStrength": 15,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 140,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "zarasheldrake.jpg"
+        },
+		"inventory": [
+{
+        "object": "artefact",
+        "name": "first aid kit",
+        "description": "first aid kit",
+        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 5
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
+        ]
+      }		
+		], 
+        "synonyms": [
+          "zara",
+          "sheldrake",
+		  "zs",
+          "her"
+        ]
+      }
+	  ]
   },
   {
     "object": "location",
@@ -3742,6 +3791,90 @@
       }
     ],
     "inventory": [
+	      {
+        "object": "creature",
+        "name": "lucy boyes",
+        "displayname": "Lucy Boyes",
+        "description": "Lucy Boyes",
+        "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.",
+        "attributes": {
+          "weight": 120,
+          "money": 20,
+          "attackStrength": 20,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 160,
+		  "affinity": -1,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "lucyboyes.jpg"
+        },
+		"inventory": [
+{
+        "object": "artefact",
+        "name": "axe",
+        "description": "fire axe",
+        "detailedDescription": "I have no idea why a PA would carry such a dangerous weapon but I wouldn't mess with anyone carrying this.",
+        "attributes": {
+          "weight": 6,
+          "attackStrength": 30,
+          "type": "weapon",
+          "subType": "blunt",
+          "canCollect": true,
+          "imageName": "axe.jpg"
+        },
+        "synonyms": [
+          "axe",
+          "fireaxe"
+        ]
+      }
+		],
+        "synonyms": [
+          "lucy",
+          "lucy b",
+          "lb",
+          "boyes",
+          "her"
+        ]
+      },
+
+      {
+        "object": "creature",
+        "name": "sara stopford pickering",
+        "displayname": "Sara Stopford-Pickering",
+        "description": "Sara Stopford-Pickering",
+        "detailedDescription": "One of our super-capable and friendly PA team.",
+        "attributes": {
+          "weight": 100,
+          "money": 20,
+          "attackStrength": 15,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+		  "affinity": 1,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "sarastopfordpickering.jpg"
+        },
+        "synonyms": [
+          "sara",
+          "sarah",
+		  "sara sp",
+          "sarah sp",
+		  "ssp",
+		  "sp",
+          "sarah stopford",
+		  "sara stopford pickering",
+		  "sara stopfordpickering",
+		  "sara pickering",
+		  "sarah stopford pickering",
+		  "sarah stopfordpickering",
+		  "sarah pickering",
+          "her"
+        ]
+      },
       {
         "object": "artefact",
         "name": "google glasses",
