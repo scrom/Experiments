@@ -2769,7 +2769,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var missions = _missions.concat(_currentLocation.getMissions());
             if (missions.length > 0) {status+="<i>Tasks:</i><br>";};
             for (var i=0; i< missions.length;i++) {
-                status+=missions[i].getDescription()+"<br>";
+                var missionDescription = missions[i].getDescription();
+                if (missionDescription) {
+                        status+=missionDescription+"<br>";
+                };                
             };
             if (missions.length > 0) {status+="<br>";};
 
