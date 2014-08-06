@@ -1161,7 +1161,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 originalObjectIsInContainer = true; 
             };
 
-            removeObjectFromPlayerOrLocation(artefact.getName());
+            if (artefact.chargesRemaining() == 0) {
+                removeObjectFromPlayerOrLocation(artefact.getName());
+            };
+
             removeObjectFromPlayerOrLocation(receiver.getName());
 
             resultString = "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName();

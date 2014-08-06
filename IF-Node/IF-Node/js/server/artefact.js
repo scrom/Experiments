@@ -994,9 +994,24 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
             deliveredItem.addSyns(deliveryItemSource.getSyns());
 
+            //consume charge
+            var originalArtefactCharges = anObject.chargesRemaining();
+            if (originalArtefactCharges > 0) {
+                anObject.consume();
+            };
+
             //zero the weights of both source objects. Unfortunately the caller must remove them from wherever they came from 
             self.setWeight(0);
-            anObject.setWeight(0);
+
+            //set weight.
+            if (anObject.chargesRemaining() == 0) {              
+                anObject.setWeight(0);
+            } else if (anObject.chargesRemaining() > 0) {
+                var newWeight = anObject.getWeight();
+                //new weight rounded to 1 decimal place
+                newWeight = Math.round((newWeight/originalArtefactCharges)*anObject.chargesRemaining()*10)/10;
+            };
+
 
             return deliveredItem;
         };
@@ -1684,7 +1699,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //if object combines with something in contents...
             if (anObject.combinesWithContentsOf(self)) {
-                var newReceiver = self.getObject(anObject.getCombinesWith());
+                var newReceiver = self.getObject(anObject.getCombinesWith()); //@bug @todo - this assumes only a single combinesWith Item.
                 var newObject = newReceiver.combineWith(anObject);  
                 var requiredContainer = newObject.getRequiredContainer(); 
                 if (requiredContainer) {
