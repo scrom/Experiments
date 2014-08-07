@@ -103,7 +103,7 @@
             },
             "conditionAttributes": {
               "time": 10,
-              "isDestroyed": "true"
+              "isDestroyed": true
             },
             "reward": {
               "score": -25,
@@ -368,7 +368,7 @@
           "destination": "player"
         },
         "conditionAttributes": {
-          "isDestroyed": "false"
+          "isDestroyed": false
         },
         "reward": {
           "score": 75,
@@ -458,9 +458,9 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": -1,
               "isHidden": true,
-              "unlocks": "lawyer door",
-			  "affinityModifier": -1
+              "unlocks": "lawyer door"
             },
             "synonyms": [
               "lawyer key",
@@ -538,7 +538,7 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false"
+              "isDestroyed": false
             },
             "reward": {
               "score": 50,
@@ -613,7 +613,8 @@
         "destination": "core-area-west"
       }
     ],
-	"inventory":[      {
+    "inventory": [
+      {
         "object": "creature",
         "name": "zara sheldrake",
         "displayname": "Zara Sheldrake",
@@ -631,37 +632,37 @@
           "traveller": true,
           "imageName": "zarasheldrake.jpg"
         },
-		"inventory": [
-{
-        "object": "artefact",
-        "name": "first aid kit",
-        "description": "first aid kit",
-        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
-        "attributes": {
-          "defaultAction": "heal",
-          "weight": 1,
-          "type": "medical",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 5
-        },
-        "synonyms": [
-          "first aid",
-          "kit",
-          "firstaid kit",
-          "first-aid kit",
-          "first-aid"
-        ]
-      }		
-		], 
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "first aid kit",
+            "description": "first aid kit",
+            "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+            "attributes": {
+              "defaultAction": "heal",
+              "weight": 1,
+              "type": "medical",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 5
+            },
+            "synonyms": [
+              "first aid",
+              "kit",
+              "firstaid kit",
+              "first-aid kit",
+              "first-aid"
+            ]
+          }
+        ],
         "synonyms": [
           "zara",
           "sheldrake",
-		  "zs",
+          "zs",
           "her"
         ]
       }
-	  ]
+    ]
   },
   {
     "object": "location",
@@ -910,7 +911,7 @@
       }
     ],
     "inventory": [
-	{
+      {
         "object": "creature",
         "name": "brian harris",
         "displayname": "Brian Harris",
@@ -926,7 +927,6 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-          "moves": 232,
           "returnDirection": "n",
           "imageName": "brianharris.jpg"
         },
@@ -945,7 +945,7 @@
             "description": "Brian wants to do the crossword.",
             "attributes": {
               "missionObject": "guardian newspaper",
-			  "destination": "brian harris",
+              "destination": "brian harris",
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'I seem to have mislaid my copy of The Guardian.'<br>'I've not done my daily cryptic crossword and feel like I'm getting withdrawal symptoms.'<br>'If you see one around can you bring me a copy?'",
@@ -955,13 +955,12 @@
             "conditionAttributes": {
               "isDestroyed": false
             },
-			"reward": {
+            "reward": {
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "brian harris",
               "successMessage": "Brian says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now.<br> Have 25 points."
             }
-           
           }
         ]
       },
@@ -1008,16 +1007,16 @@
             "description": "pair of maracas",
             "detailedDescription": "A reminder of one of our great days out and of Chris Whitworth's musical talents.",
             "attributes": {
-			  "customAction": "play",
-			  "defaultResult": "They're <i>really</i> annoying. Please don't do that again.",
               "weight": 1,
               "canCollect": true,
-			  "isBreakable": true,
-              "affinityModifier": 2
+              "isBreakable": true,
+              "affinityModifier": 2,
+              "customAction": "play",
+              "defaultResult": "They're <i>really</i> annoying. Please don't do that again."
             },
             "synonyms": [
               "pair of maracas",
-			  "a pair of maracas"
+              "a pair of maracas"
             ]
           }
         ],
@@ -1113,8 +1112,8 @@
         "destination": "customer-delight-south-west"
       }
     ],
-	"inventory":[
-	      {
+    "inventory": [
+      {
         "object": "creature",
         "name": "chris whitworth",
         "displayname": "Chris Whitworth",
@@ -1133,13 +1132,13 @@
           "destinations": [
             "customer-delight-south",
             "kitchen-ground-floor",
-			"customer-delight-south",
-			"second-floor-cubicle",
-			"graffiti-a"
+            "customer-delight-south",
+            "second-floor-cubicle",
+            "graffiti-a"
           ],
           "loops": 12,
           "loopDelay": 5,
-		  "destinationDelay": 4,
+          "destinationDelay": 4,
           "imageName": "chriswhitworth.jpg"
         },
         "synonyms": [
@@ -1157,24 +1156,25 @@
             "description": "Chris gave James something really annoying.",
             "attributes": {
               "missionObject": "maracas",
+              "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Red Gate day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, James Dening won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'"
               ]
             },
             "conditionAttributes": {
-              "isDestroyed": "true"
+              "isDestroyed": true
             },
             "reward": {
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "chris whitworth",
-			  "decreaseAffinityFor": "james dening",
+              "decreaseAffinityFor": "james dening",
               "successMessage": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while.<br>Have 25 points."
             }
           }
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -1346,8 +1346,8 @@
                   "static": true
                 },
                 "conditionAttributes": {
-                  "isDestroyed": "false",
-                  "read": "true"
+                  "isDestroyed": false,
+                  "read": true
                 },
                 "reward": {
                   "successMessage": "I'm sure you'll never need to know any of this, right?"
@@ -1389,7 +1389,7 @@
           ],
           "loops": 3,
           "loopDelay": 5,
-		  "destinationDelay": 3,
+          "destinationDelay": 3,
           "imageName": "chrismoore.jpg"
         },
         "synonyms": [
@@ -1414,7 +1414,7 @@
               ]
             },
             "conditionAttributes": {
-              "alive": "true",
+              "alive": true,
               "conversationState": 2
             },
             "reward": {
@@ -1426,8 +1426,8 @@
                 "attributes": {
                   "type": "key",
                   "canCollect": true,
-                  "unlocks": "bike",
-				  "affinityModifier": 0
+                  "affinityModifier": 0,
+                  "unlocks": "bike"
                 },
                 "synonyms": [
                   "key",
@@ -1492,7 +1492,7 @@
           "her"
         ]
       },
-{
+      {
         "object": "creature",
         "name": "adam parker",
         "displayname": "Adam Parker",
@@ -1525,7 +1525,7 @@
             "description": "Adam soaked his feet.",
             "attributes": {
               "missionObject": "trainers",
-			  "destination": "adam parker",
+              "destination": "adam parker",
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'I managed to get a soaking cycling into work this morning and can't find my spare trainers.'<br>'They're usually somewhere around my desk but they could be anywhere to be honest.'<br>'Could you do track them down and bring them back to me?'",
@@ -1535,13 +1535,12 @@
             "conditionAttributes": {
               "isDestroyed": false
             },
-			"reward": {
+            "reward": {
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "adam parker",
               "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.<br> Have 25 points."
             }
-           
           }
         ]
       }
@@ -1922,7 +1921,7 @@
           "attackStrength": 5,
           "type": "book",
           "canCollect": true,
-		  "affinityModifier": -1
+          "affinityModifier": -1
         },
         "synonyms": [
           "manual",
@@ -1944,8 +1943,8 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "read": "true"
+              "isDestroyed": false,
+              "read": true
             },
             "reward": {
               "repairSkill": "theft",
@@ -2093,7 +2092,7 @@
           "door"
         ]
       },
-	  {
+      {
         "object": "artefact",
         "name": "brush",
         "description": "toilet brush",
@@ -2101,8 +2100,8 @@
         "attributes": {
           "weight": 1,
           "canCollect": true,
-		  "isBreakable": true,
-		  "affinityModifier": -2
+          "isBreakable": true,
+          "affinityModifier": -2
         },
         "synonyms": [
           "toilet brush"
@@ -2139,8 +2138,8 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "read": "true"
+              "isDestroyed": false,
+              "read": true
             },
             "reward": {
               "score": 20,
@@ -2363,8 +2362,8 @@
         "attributes": {
           "weight": 1,
           "canCollect": true,
-		  "isBreakable": true,
-		  "affinityModifier": -1
+          "isBreakable": true,
+          "affinityModifier": -1
         },
         "synonyms": [
           "dispenser",
@@ -2513,8 +2512,8 @@
           "weight": 0.1,
           "type": "key",
           "canCollect": true,
-          "unlocks": "coffee machine",
-		  "affinityModifier": 0
+          "affinityModifier": 0,
+          "unlocks": "coffee machine"
         },
         "synonyms": [
           "vending key",
@@ -2602,8 +2601,8 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "read": "true"
+              "isDestroyed": false,
+              "read": true
             },
             "reward": {
               "score": 20,
@@ -2828,7 +2827,7 @@
               ]
             },
             "conditionAttributes": {
-              "alive": "true"
+              "alive": true
             },
             "reward": {
               "delivers": {
@@ -2840,7 +2839,7 @@
                   "attackStrength": 5,
                   "canCollect": true,
                   "isBreakable": true,
-				  "affinityModifier": 0,
+                  "affinityModifier": 0,
                   "componentOf": [
                     "projector"
                   ]
@@ -2901,7 +2900,7 @@
           "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true,
-		  "affinityModifier": 0
+          "affinityModifier": 0
         },
         "synonyms": [
           "bottle",
@@ -2931,12 +2930,14 @@
                 "latte",
                 "mocha"
               ],
-			  "combinesWith": ["coffee"]
+              "combinesWith": [
+                "coffee"
+              ]
             },
             "synonyms": [
               "cow juice"
             ],
-			"delivers": [
+            "delivers": [
               {
                 "object": "artefact",
                 "name": "white coffee",
@@ -2961,7 +2962,8 @@
                   "coffee",
                   "milky coffee"
                 ]
-              }]
+              }
+            ]
           }
         ]
       },
@@ -3020,10 +3022,14 @@
           "canCollect": true,
           "charges": 3,
           "plural": true,
+          "affinityModifier": 0,
           "isEdible": true,
           "nutrition": 5,
-          "combinesWith": ["coffee","latte","mocha"],
-		  "affinityModifier": 0
+          "combinesWith": [
+            "coffee",
+            "latte",
+            "mocha"
+          ]
         },
         "delivers": [
           {
@@ -3051,7 +3057,7 @@
               "sugary coffee"
             ]
           },
-			{
+          {
             "object": "artefact",
             "name": "sweet latte",
             "description": "sweet latte",
@@ -3074,10 +3080,10 @@
               "drink",
               "coffee",
               "sugary latte",
-			  "latte"
+              "latte"
             ]
           },
-			{
+          {
             "object": "artefact",
             "name": "sweet mocha",
             "description": "sweet mocha",
@@ -3100,7 +3106,7 @@
               "drink",
               "coffee",
               "sugary mocha",
-			  "mocha"
+              "mocha"
             ]
           }
         ]
@@ -3144,42 +3150,44 @@
               "requiredContainer": "cup",
               "canCollect": true,
               "charges": 1,
+              "affinityModifier": 2,
               "isEdible": true,
               "nutrition": 12,
-              "requiredComponentCount": 1,
-			  "combinesWith": "sugar",
-			  "affinityModifier": 2
+              "combinesWith": "sugar",
+              "requiredComponentCount": 1
             },
             "synonyms": [
               "brew",
               "drink"
             ],
-			"delivers":[			{
-            "object": "artefact",
-            "name": "sweet latte",
-            "description": "sweet latte",
-            "detailedDescription": "Hipster Development fuel with added sugar!",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 0.5,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 25
-            },
-            "synonyms": [
-              "brew",
-              "drink",
-              "coffee",
-              "sugary latte",
-			  "latte"
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "sweet latte",
+                "description": "sweet latte",
+                "detailedDescription": "Hipster Development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary latte",
+                  "latte"
+                ]
+              }
             ]
-          }]
           },
           {
             "object": "artefact",
@@ -3195,43 +3203,45 @@
               "requiredContainer": "cup",
               "canCollect": true,
               "charges": 1,
+              "affinityModifier": 2,
               "isEdible": true,
               "nutrition": 35,
-              "requiredComponentCount": 2,
-			  "combinesWith": "sugar",
-			  "affinityModifier": 2
+              "combinesWith": "sugar",
+              "requiredComponentCount": 2
             },
             "synonyms": [
               "brew",
               "drink"
             ],
-			"delivers":[{
-            "object": "artefact",
-            "name": "sweet mocha",
-            "description": "sweet mocha",
-            "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 0.5,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 25,
-			  "affinityModifier": 2
-            },
-            "synonyms": [
-              "brew",
-              "drink",
-              "coffee",
-              "sugary mocha",
-			  "mocha"
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "sweet mocha",
+                "description": "sweet mocha",
+                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "affinityModifier": 2,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary mocha",
+                  "mocha"
+                ]
+              }
             ]
-          }] 
           },
           {
             "object": "artefact",
@@ -3250,7 +3260,10 @@
               "plural": true,
               "isEdible": true,
               "nutrition": 8,
-              "combinesWith": ["milk", "sugar"]
+              "combinesWith": [
+                "milk",
+                "sugar"
+              ]
             },
             "synonyms": [
               "brew",
@@ -3321,9 +3334,9 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "isBroken": "false",
-              "checkComponents": "true",
+              "isDestroyed": false,
+              "isBroken": false,
+              "checkComponents": true,
               "contains": [
                 "beans"
               ]
@@ -3377,8 +3390,8 @@
                     "requiresContainer": true,
                     "isLiquid": true,
                     "canCollect": true,
+                    "affinityModifier": 0,
                     "isEdible": true,
-					"affinityModifier": 0,
                     "antibodies": [
                       "zombie"
                     ]
@@ -3409,15 +3422,15 @@
                     "health": 200,
                     "canTravel": true,
                     "traveller": true,
+                    "destinations": [
+                      "reception",
+                      "ground-floor-back-stairs-west",
+                      "sales-north"
+                    ],
                     "imageName": "daveconvery.jpg",
                     "contagion": [
                       "zombie"
-                    ],
-					"destinations": [
-						"reception",
-						"ground-floor-back-stairs-west",
-						"sales-north"
-					]
+                    ]
                   },
                   "synonyms": [
                     "dave",
@@ -3441,15 +3454,15 @@
                     "health": 160,
                     "canTravel": true,
                     "traveller": true,
+                    "destinations": [
+                      "smoking-area",
+                      "core-area-west",
+                      "customer-delight-central"
+                    ],
                     "imageName": "rogerhart.jpg",
                     "contagion": [
                       "zombie"
-                    ],
-					"destinations": [
-						"smoking-area",
-						"core-area-west",
-						"customer-delight-central"
-					]
+                    ]
                   },
                   "synonyms": [
                     "roger",
@@ -3576,7 +3589,7 @@
               "attackStrength": 5,
               "type": "book",
               "canCollect": true,
-			  "affinityModifier": 0
+              "affinityModifier": 0
             },
             "synonyms": [
               "book",
@@ -3602,8 +3615,8 @@
                   "static": true
                 },
                 "conditionAttributes": {
-                  "isDestroyed": "false",
-                  "read": "true"
+                  "isDestroyed": false,
+                  "read": true
                 },
                 "reward": {
                   "repairSkill": "coffee machine",
@@ -3814,7 +3827,7 @@
               "missionObject": "spy"
             },
             "conditionAttributes": {
-              "dead": "true"
+              "dead": true
             },
             "reward": {
               "score": 50,
@@ -3974,7 +3987,7 @@
               "icecream",
               "99",
               "99 flake",
-			  "99 flake ice cream"
+              "99 flake ice cream"
             ]
           }
         ],
@@ -4011,7 +4024,7 @@
           "type": "weapon",
           "subType": "projectile",
           "canCollect": true,
-		  "affinityModifier": 2
+          "affinityModifier": 2
         },
         "synonyms": [
           "nerf",
@@ -4179,7 +4192,7 @@
       }
     ],
     "inventory": [
-	      {
+      {
         "object": "creature",
         "name": "lucy boyes",
         "displayname": "Lucy Boyes",
@@ -4193,31 +4206,31 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 160,
-		  "affinity": -1,
+          "affinity": -1,
           "canTravel": true,
           "traveller": true,
           "imageName": "lucyboyes.jpg"
         },
-		"inventory": [
-{
-        "object": "artefact",
-        "name": "axe",
-        "description": "fire axe",
-        "detailedDescription": "I have no idea why a PA would carry such a dangerous weapon but I wouldn't mess with anyone carrying this.",
-        "attributes": {
-          "weight": 6,
-          "attackStrength": 30,
-          "type": "weapon",
-          "subType": "blunt",
-          "canCollect": true,
-          "imageName": "axe.jpg"
-        },
-        "synonyms": [
-          "axe",
-          "fireaxe"
-        ]
-      }
-		],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "axe",
+            "description": "fire axe",
+            "detailedDescription": "I have no idea why a PA would carry such a dangerous weapon but I wouldn't mess with anyone carrying this.",
+            "attributes": {
+              "weight": 6,
+              "attackStrength": 30,
+              "type": "weapon",
+              "subType": "blunt",
+              "canCollect": true,
+              "imageName": "axe.jpg"
+            },
+            "synonyms": [
+              "axe",
+              "fireaxe"
+            ]
+          }
+        ],
         "synonyms": [
           "lucy",
           "lucy b",
@@ -4226,10 +4239,9 @@
           "her"
         ]
       },
-
       {
         "object": "creature",
-        "name": "sara stopford pickering",
+        "name": "sara stopford-pickering",
         "displayname": "Sara Stopford-Pickering",
         "description": "Sara Stopford-Pickering",
         "detailedDescription": "One of our super-capable and friendly PA team.",
@@ -4241,7 +4253,7 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-		  "affinity": 1,
+          "affinity": 1,
           "canTravel": true,
           "traveller": true,
           "imageName": "sarastopfordpickering.jpg"
@@ -4249,17 +4261,17 @@
         "synonyms": [
           "sara",
           "sarah",
-		  "sara sp",
+          "sara sp",
           "sarah sp",
-		  "ssp",
-		  "sp",
+          "ssp",
+          "sp",
           "sarah stopford",
-		  "sara stopford pickering",
-		  "sara stopfordpickering",
-		  "sara pickering",
-		  "sarah stopford pickering",
-		  "sarah stopfordpickering",
-		  "sarah pickering",
+          "sara stopford pickering",
+          "sara stopfordpickering",
+          "sara pickering",
+          "sarah stopford pickering",
+          "sarah stopfordpickering",
+          "sarah pickering",
           "her"
         ]
       },
@@ -4352,7 +4364,7 @@
           "weight": 1,
           "type": "book",
           "canCollect": true,
-		  "affinityModifier": 0
+          "affinityModifier": 0
         },
         "synonyms": [
           "notes",
@@ -4373,8 +4385,8 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "read": "true"
+              "isDestroyed": false,
+              "read": true
             },
             "reward": {
               "score": 20,
@@ -4520,8 +4532,8 @@
           "weight": 0.1,
           "type": "key",
           "canCollect": true,
-          "unlocks": "nothing",
-		  "affinityModifier": 0
+          "affinityModifier": 0,
+          "unlocks": "nothing"
         },
         "synonyms": [
           "key"
@@ -4571,10 +4583,10 @@
               "missionObject": "projector"
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "isBroken": "false",
-              "isDamaged": "false",
-              "checkComponents": "true",
+              "isDestroyed": false,
+              "isBroken": false,
+              "isDamaged": false,
+              "checkComponents": true,
               "contains": [
                 "bulb"
               ]
@@ -4652,9 +4664,9 @@
               ]
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "isBroken": "false",
-              "isDamaged": "false"
+              "isDestroyed": false,
+              "isBroken": false,
+              "isDamaged": false
             },
             "reward": {
               "affinityModifier": 2,
@@ -4681,24 +4693,25 @@
         "destination": "east-corridor-ground-floor-north-west"
       }
     ],
-	"inventory": [
-          {
-            "object": "artefact",
-            "name": "trainers",
-            "description": "pair of trainers",
-            "detailedDescription": "These look pretty large. You're probably looking for a relatively tall owner for these.",
-            "attributes": {
-              "weight": 2,
-              "canCollect": true,
-			  "isBreakable": true,
-			  "customAction": "wear",
-              "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
-            },
-            "synonyms": [
-              "pair of trainers",
-              "adams trainers"
-            ]
-          }] 
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "trainers",
+        "description": "pair of trainers",
+        "detailedDescription": "These look pretty large. You're probably looking for a relatively tall owner for these.",
+        "attributes": {
+          "weight": 2,
+          "canCollect": true,
+          "isBreakable": true,
+          "customAction": "wear",
+          "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
+        },
+        "synonyms": [
+          "pair of trainers",
+          "adams trainers"
+        ]
+      }
+    ]
   },
   {
     "object": "location",
@@ -4779,7 +4792,7 @@
               ]
             },
             "conditionAttributes": {
-              "alive": "true"
+              "alive": true
             },
             "reward": {
               "delivers": {
@@ -4815,8 +4828,8 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "isBroken": "false"
+              "isDestroyed": false,
+              "isBroken": false
             },
             "reward": {
               "delivers": {
@@ -4832,8 +4845,8 @@
                   "type": "container",
                   "canCollect": true,
                   "isBreakable": true,
-                  "canOpen": true,
-				  "affinityModifier": 0
+                  "affinityModifier": 0,
+                  "canOpen": true
                 },
                 "synonyms": [
                   "package",
@@ -4857,8 +4870,8 @@
                       "type": "container",
                       "canCollect": true,
                       "isBreakable": true,
-                      "canOpen": true,
-					  "affinityModifier": 0
+                      "affinityModifier": 0,
+                      "canOpen": true
                     },
                     "synonyms": [
                       "bean bag",
@@ -4881,7 +4894,7 @@
                           "chargeUnit": "cup",
                           "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
                           "plural": true,
-						  "affinityModifier": 0,
+                          "affinityModifier": 0,
                           "componentOf": [
                             "coffee machine"
                           ]
@@ -5072,7 +5085,7 @@
           "subType": "blunt",
           "canCollect": true,
           "isBreakable": true,
-		  "affinityModifier": 0
+          "affinityModifier": 0
         }
       }
     ]
@@ -5287,7 +5300,7 @@
               ]
             },
             "conditionAttributes": {
-              "isHidden": "true"
+              "isHidden": true
             },
             "reward": {
               "score": 50,
@@ -5516,23 +5529,23 @@
           "door"
         ]
       },
-	  {
-            "object": "artefact",
-            "name": "guardian newspaper",
-            "description": "copy of today's Guardian newspaper",
-            "detailedDescription": "Middle class pulp propaganda trash to be honest.",
-            "attributes": {
-              "defaultAction": "read",
-              "weight": 1,
-              "attackStrength": 2,
-              "type": "book",
-              "canCollect": true
-            },
-            "synonyms": [
-              "guardian",
-              "newspaper"
-            ]
-          },
+      {
+        "object": "artefact",
+        "name": "guardian newspaper",
+        "description": "copy of today's Guardian newspaper",
+        "detailedDescription": "Middle class pulp propaganda trash to be honest.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 1,
+          "attackStrength": 2,
+          "type": "book",
+          "canCollect": true
+        },
+        "synonyms": [
+          "guardian",
+          "newspaper"
+        ]
+      },
       {
         "object": "artefact",
         "name": "boy scout article",
@@ -5564,8 +5577,8 @@
               "static": true
             },
             "conditionAttributes": {
-              "isDestroyed": "false",
-              "read": "true"
+              "isDestroyed": false,
+              "read": true
             },
             "reward": {
               "score": 20,
@@ -6506,8 +6519,8 @@
           "card",
           "post-card",
           "post card",
-		  "wall",
-		  "thankyou postcard",
+          "wall",
+          "thankyou postcard",
           "thankyou card",
           "thank-you card",
           "thank you card"
@@ -7155,8 +7168,8 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
-              "unlocks": "waste gate",
-			  "affinityModifier": 2
+              "affinityModifier": 2,
+              "unlocks": "waste gate"
             },
             "synonyms": [
               "waste key",

@@ -93,7 +93,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                      };
                  }
                  else if (typeof(obj) == 'string') {resultString += '"'+obj+'"';}
-                 else if (typeof(obj) == 'boolean') {resultString += '"'+obj+'"';}
+                 else if (typeof(obj) == 'boolean') {resultString += obj;}
                  else {resultString += obj;};
             };
             resultString+= '}';
