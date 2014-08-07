@@ -3384,7 +3384,11 @@
                     "imageName": "daveconvery.jpg",
                     "contagion": [
                       "zombie"
-                    ]
+                    ],
+					"destinations": [
+						"kitchen-ground-floor",
+						"sales-north"
+					]
                   },
                   "synonyms": [
                     "dave",
@@ -3411,7 +3415,11 @@
                     "imageName": "rogerhart.jpg",
                     "contagion": [
                       "zombie"
-                    ]
+                    ],
+					"destinations": [
+						"smoking-area",
+						"core-area-west"
+					]
                   },
                   "synonyms": [
                     "roger",
