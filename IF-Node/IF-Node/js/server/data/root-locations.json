@@ -2907,11 +2907,38 @@
               "componentOf": [
                 "latte",
                 "mocha"
-              ]
+              ],
+			  "combinesWith": ["coffee"]
             },
             "synonyms": [
               "cow juice"
-            ]
+            ],
+			"delivers": [
+              {
+                "object": "artefact",
+                "name": "white coffee",
+                "description": "white coffee",
+                "detailedDescription": "Milky development fuel",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 1,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 18
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "milky coffee"
+                ]
+              }]
           }
         ]
       },
@@ -2968,7 +2995,7 @@
           "weight": 0.1,
           "type": "food",
           "canCollect": true,
-          "charges": 2,
+          "charges": 3,
           "plural": true,
           "isEdible": true,
           "nutrition": 5,
@@ -3196,7 +3223,7 @@
               "plural": true,
               "isEdible": true,
               "nutrition": 8,
-              "combinesWith": "sugar"
+              "combinesWith": ["milk", "sugar"]
             },
             "synonyms": [
               "brew",
@@ -3226,6 +3253,31 @@
                   "drink",
                   "coffee",
                   "sugary coffee"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "white coffee",
+                "description": "white coffee",
+                "detailedDescription": "Milky development fuel",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 1,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 18
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "milky coffee"
                 ]
               }
             ]

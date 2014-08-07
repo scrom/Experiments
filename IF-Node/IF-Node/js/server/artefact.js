@@ -986,8 +986,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.combineWith = function(anObject) {
             if (!(self.combinesWith(anObject,true))) { return null; };
-            var deliveryItemSource = _delivers[0]; //@todo: we only take the first element for now+
-            //console.log("o:" + anObject + " dis: " + deliveryItemSource);
+
+            //get first available delivery item that matches both combine objects.
+            var deliveryItemSource;
+            var objectDeliveryItems = anObject.getDeliveryItems();
+            for (var d = 0;d<objectDeliveryItems.length;d++) {
+                for (var dd=0;dd<_delivers.length;dd++) {
+                    if (_delivers[dd].getName() == objectDeliveryItems[d].getName())  {
+                        deliveryItemSource = _delivers[dd];
+                    };
+                };   
+            };            
+            
             console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
 
             //return a new instance of deliveryObject
@@ -1657,22 +1667,33 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //add to suitable container or to player inventory
             //if container is required, we _know_ we have a suitable container by this point.
             if (requiresContainer) {
-                suitableContainer.receive(objectToGive);
+                var resultString = suitableContainer.receive(objectToGive);
                 //return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
 
                 if (playerInventory.check(suitableContainer.getName())) {
                     //player has container
-                    return "You now have a " + suitableContainer.getName() + " of " + objectToGive.getName() + ".";
+                    //did it combine with something and "vanish"?
+                    if (playerInventory.check(objectToGive.getName(), true)) {
+                        return "You now have a " + suitableContainer.getName() + " of " + objectToGive.getName() + ".";
+                    } else {
+                        return resultString;
+                    };
+                    
                 };
 
                 //location has container
-                var resultString = "You collect " + objectToGive.getName() + " into a nearby " + suitableContainer.getName() + ".";
+                if (suitableContainer.getInventoryObject().check(objectToGive.getName(), true)) {
+                    resultString = "You collect " + objectToGive.getName() + " into a nearby " + suitableContainer.getName() + ".<br>";
+                } else {
+                    resultString = resultString.replace(suitableContainer.getDisplayName(), "a nearby " + suitableContainer.getName())+ "<br>You collect "+suitableContainer.getDisplayName()+".";
+                };
 
                 //automatically collect the container if possible
                 if (playerInventory.canCarry(suitableContainer)) {
                     locationInventory.remove(suitableContainer.getName());
                     playerInventory.add(suitableContainer);
-                    return resultString;
+                    
+                    return resultString ;
                 };
 
                 //if the player can't pick it up.
@@ -1699,7 +1720,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //if object combines with something in contents...
             if (anObject.combinesWithContentsOf(self)) {
-                var newReceiver = self.getObject(anObject.getCombinesWith()); //@bug @todo - this assumes only a single combinesWith Item.
+                var newReceiver;
+                var items = _inventory.getAllObjectsAndChildren(false);
+                for (var i=0; i<items.length;i++) {
+                    if (anObject.combinesWith(items[i],true)) {
+                        newReceiver = items[i];
+                    };
+                };
+
                 var newObject = newReceiver.combineWith(anObject);  
                 var requiredContainer = newObject.getRequiredContainer(); 
                 if (requiredContainer) {
@@ -1708,7 +1736,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         _inventory.remove(newReceiver.getName());  
                         _inventory.add(newObject);   
                         resultString = "You add "+anObject.getDisplayName()+" to "+self.getDisplayName()+".<br>";
-                        return resultString+self.getDisplayName()+" now contains "+newObject.getDescription()+".";   
+                        return resultString+initCap(self.getDisplayName())+" now contains "+newObject.getDescription()+".";   
                     } else {
                         resultString = "You attempt to make "+newObject.getDescription()+" by adding "+anObject.getDisplayName()+" to "+newReceiver.getDisplayName();
                         resultString += " in "+self.getDisplayName()+" but you need something else to put "+newObject.getPrefix().toLowerCase()+" in.<br>"

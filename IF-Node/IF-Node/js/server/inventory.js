@@ -171,9 +171,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 return null;
         };
     
-        self.check = function(anObjectName) {
+        self.check = function(anObjectName, ignoreSynonyms) {
             //check if passed in object name is in inventory
-            if (self.getObject(anObjectName)){return true;};
+            if (self.getObject(anObjectName, ignoreSynonyms)){return true;};
             return false;
         };
 
@@ -210,12 +210,20 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //recursively gets objects in other objects
         //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
-        self.getObject = function(anObjectName) {
+        self.getObject = function(anObjectName, ignoreSynonyms) {
             for(var index = 0; index < _items.length; index++) {
-                if(_items[index].syn(anObjectName) ) {
-                    //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
-                    //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
-                    return _items[index];
+                if (ignoreSynonyms) {
+                    if( _items[index].getName() == anObjectName ) {
+                        //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
+                        //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
+                        return _items[index];
+                    };
+                } else {
+                    if(_items[index].syn(anObjectName) ) {
+                        //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
+                        //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
+                        return _items[index];
+                    };
                 };
                 if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
                     if (_items[index].isOpen()) {
