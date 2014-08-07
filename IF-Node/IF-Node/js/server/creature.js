@@ -1807,12 +1807,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             break;
                         };
                     };
+
                     //if there's any creatures remaining
                     if (creatures.length > 0) {
+                        //partially randomise order creatures will be processed in.
+                        creatures.sort(function() {return .5 - Math.random();});
+
                         //randomly bite creatures in location.
                         for (var c=0;c<creatures.length;c++) {
-                            var randomAttack = Math.floor(Math.random() * 3);
-                            if (randomAttack == 0) {
+                            //% chance of biting a given creature decreases the more creatures there are in a location.
+                            //(a bit like getting tired or running out of time)
+                            //we shuffle the creatures array beforehand so that the selected creature to be bitten first may vary.
+                            randomAttack = Math.floor(Math.random() * (Math.ceil(c/2)*3)); 
+                            if (randomAttack == 0) { 
                                 resultString += self.bite(creatures[c]);
                             };
                         };
