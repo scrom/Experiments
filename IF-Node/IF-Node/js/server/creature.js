@@ -1421,7 +1421,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.kill = function(){//
             _hitPoints = 0;
-            if (_affinity >=0) {_affinity=-1;}; //just in case!
+            if (_affinity >=0) {_affinity=0;}; //just in case!
             _edible = true;
             _bleeding = false;
             _collectable = true; 
@@ -1800,9 +1800,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (_contagion.length >0) {
                     var creatures = _currentLocation.getCreatures();
 
-                    //splice out self
+                    //splice out self and dead creatures
                     for (var i=0;i<creatures.length;i++) {
-                        if (creatures[i].getName() == self.getName()) {
+                        if (creatures[i].getName() == self.getName() || creatures[i].isDead()) {
                             creatures.splice(i, 1);
                             break;
                         };
@@ -1810,6 +1810,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                     //if there's any creatures remaining
                     if (creatures.length > 0) {
+                        //limit to only biting a maximum of 2 times per turn.
+                        var biteCount = 0;
                         //partially randomise order creatures will be processed in.
                         creatures.sort(function() {return .5 - Math.random();});
 
@@ -1819,8 +1821,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //(a bit like getting tired or running out of time)
                             //we shuffle the creatures array beforehand so that the selected creature to be bitten first may vary.
                             randomAttack = Math.floor(Math.random() * (Math.ceil(c/2)*3)); 
-                            if (randomAttack == 0) { 
+                            if (randomAttack == 0 && biteCount <2) { 
                                 resultString += self.bite(creatures[c]);
+                                biteCount ++;
                             };
                         };
                     };
