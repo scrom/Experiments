@@ -1799,12 +1799,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //bite?
                 if (_contagion.length >0) {
                     var creatures = _currentLocation.getCreatures();
-                    var randomAttack = Math.floor(Math.random() * 3);
-                    if (randomAttack == 0) {
-                        //bite a random creature (just one)
-                        randomAttack = Math.floor(Math.random() * creatures.length);
-                        if (creatures[randomAttack].getName() != self.getName()) {
-                            resultString += self.bite(creatures[randomAttack]);
+
+                    //splice out self
+                    for (var i=0;i<creatures.length;i++) {
+                        if (creatures[i].getName() == self.getName()) {
+                            creatures.splice(i, 1);
+                            break;
+                        };
+                    };
+                    //if there's any creatures remaining
+                    if (creatures.length > 0) {
+                        //randomly bite creatures in location.
+                        for (var c=0;c<creatures.length;c++) {
+                            var randomAttack = Math.floor(Math.random() * 3);
+                            if (randomAttack == 0) {
+                                resultString += self.bite(creatures[c]);
+                            };
                         };
                     };
                 };
