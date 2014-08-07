@@ -459,7 +459,8 @@
               "type": "key",
               "canCollect": true,
               "isHidden": true,
-              "unlocks": "lawyer door"
+              "unlocks": "lawyer door",
+			  "affinityModifier": -1
             },
             "synonyms": [
               "lawyer key",
@@ -1425,7 +1426,8 @@
                 "attributes": {
                   "type": "key",
                   "canCollect": true,
-                  "unlocks": "bike"
+                  "unlocks": "bike",
+				  "affinityModifier": 0
                 },
                 "synonyms": [
                   "key",
@@ -1919,7 +1921,8 @@
           "weight": 2,
           "attackStrength": 5,
           "type": "book",
-          "canCollect": true
+          "canCollect": true,
+		  "affinityModifier": -1
         },
         "synonyms": [
           "manual",
@@ -2088,6 +2091,21 @@
           "cubicle",
           "toilet door",
           "door"
+        ]
+      },
+	  {
+        "object": "artefact",
+        "name": "brush",
+        "description": "toilet brush",
+        "detailedDescription": "Be nice and clean up after yourself when you're done.<br>This one looks like it's been used recently (yum!)",
+        "attributes": {
+          "weight": 1,
+          "canCollect": true,
+		  "isBreakable": true,
+		  "affinityModifier": -2
+        },
+        "synonyms": [
+          "toilet brush"
         ]
       },
       {
@@ -2344,7 +2362,9 @@
         "detailedDescription": "After careful inspection, you figure out where to push it and how to get soap out.",
         "attributes": {
           "weight": 1,
-          "canCollect": true
+          "canCollect": true,
+		  "isBreakable": true,
+		  "affinityModifier": -1
         },
         "synonyms": [
           "dispenser",
@@ -2493,7 +2513,8 @@
           "weight": 0.1,
           "type": "key",
           "canCollect": true,
-          "unlocks": "coffee machine"
+          "unlocks": "coffee machine",
+		  "affinityModifier": 0
         },
         "synonyms": [
           "vending key",
@@ -2819,6 +2840,7 @@
                   "attackStrength": 5,
                   "canCollect": true,
                   "isBreakable": true,
+				  "affinityModifier": 0,
                   "componentOf": [
                     "projector"
                   ]
@@ -2878,7 +2900,8 @@
           "type": "container",
           "holdsLiquid": true,
           "canCollect": true,
-          "isBreakable": true
+          "isBreakable": true,
+		  "affinityModifier": 0
         },
         "synonyms": [
           "bottle",
@@ -2999,7 +3022,8 @@
           "plural": true,
           "isEdible": true,
           "nutrition": 5,
-          "combinesWith": ["coffee","latte","mocha"]
+          "combinesWith": ["coffee","latte","mocha"],
+		  "affinityModifier": 0
         },
         "delivers": [
           {
@@ -3123,7 +3147,8 @@
               "isEdible": true,
               "nutrition": 12,
               "requiredComponentCount": 1,
-			  "combinesWith": "sugar"
+			  "combinesWith": "sugar",
+			  "affinityModifier": 2
             },
             "synonyms": [
               "brew",
@@ -3173,7 +3198,8 @@
               "isEdible": true,
               "nutrition": 35,
               "requiredComponentCount": 2,
-			  "combinesWith": "sugar"
+			  "combinesWith": "sugar",
+			  "affinityModifier": 2
             },
             "synonyms": [
               "brew",
@@ -3195,7 +3221,8 @@
               "charges": 1,
               "plural": true,
               "isEdible": true,
-              "nutrition": 25
+              "nutrition": 25,
+			  "affinityModifier": 2
             },
             "synonyms": [
               "brew",
@@ -3351,6 +3378,7 @@
                     "isLiquid": true,
                     "canCollect": true,
                     "isEdible": true,
+					"affinityModifier": 0,
                     "antibodies": [
                       "zombie"
                     ]
@@ -3547,7 +3575,8 @@
               "weight": 2,
               "attackStrength": 5,
               "type": "book",
-              "canCollect": true
+              "canCollect": true,
+			  "affinityModifier": 0
             },
             "synonyms": [
               "book",
@@ -3981,7 +4010,8 @@
           "attackStrength": 5,
           "type": "weapon",
           "subType": "projectile",
-          "canCollect": true
+          "canCollect": true,
+		  "affinityModifier": 2
         },
         "synonyms": [
           "nerf",
@@ -4321,7 +4351,8 @@
           "defaultAction": "read",
           "weight": 1,
           "type": "book",
-          "canCollect": true
+          "canCollect": true,
+		  "affinityModifier": 0
         },
         "synonyms": [
           "notes",
@@ -4489,7 +4520,8 @@
           "weight": 0.1,
           "type": "key",
           "canCollect": true,
-          "unlocks": "nothing"
+          "unlocks": "nothing",
+		  "affinityModifier": 0
         },
         "synonyms": [
           "key"
@@ -4800,7 +4832,8 @@
                   "type": "container",
                   "canCollect": true,
                   "isBreakable": true,
-                  "canOpen": true
+                  "canOpen": true,
+				  "affinityModifier": 0
                 },
                 "synonyms": [
                   "package",
@@ -4824,7 +4857,8 @@
                       "type": "container",
                       "canCollect": true,
                       "isBreakable": true,
-                      "canOpen": true
+                      "canOpen": true,
+					  "affinityModifier": 0
                     },
                     "synonyms": [
                       "bean bag",
@@ -4847,6 +4881,7 @@
                           "chargeUnit": "cup",
                           "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
                           "plural": true,
+						  "affinityModifier": 0,
                           "componentOf": [
                             "coffee machine"
                           ]
@@ -5036,7 +5071,8 @@
           "type": "weapon",
           "subType": "blunt",
           "canCollect": true,
-          "isBreakable": true
+          "isBreakable": true,
+		  "affinityModifier": 0
         }
       }
     ]
@@ -7119,7 +7155,8 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
-              "unlocks": "waste gate"
+              "unlocks": "waste gate",
+			  "affinityModifier": 2
             },
             "synonyms": [
               "waste key",

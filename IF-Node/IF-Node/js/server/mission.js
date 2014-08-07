@@ -348,6 +348,49 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
+        self.calculateAttributeCount = function(attributes) {
+            var attributeCount = Object.keys(attributes).length;    //this needs to handle subkeys too. 
+                
+            //check sub-attributes
+            for (var attr in attributes) {
+                if (typeof(attributes[attr]) == 'object') {
+                    if (Object.prototype.toString.call(attributes[attr]) === '[object Array]') { 
+                        //do nothing
+                    } else {
+                        //how many child keys do we have that we want to match on?
+                        var keysToMatch = Object.keys(attributes[attr]).length;
+                        //we've already counted one from the parent - that works if there's no children or only 1
+                        if (keysToMatch>1) {attributeCount+=keysToMatch-1;}
+                    };
+                };
+            };
+
+            return attributeCount;
+        };
+
+        self.checkAttribute = function(objectAttribute, conditionAttribute) {
+            if (objectAttribute == conditionAttribute) {
+                return 1;
+            } else {
+                if (typeof(conditionAttribute) == 'string') {
+                    if (conditionAttribute.substring(0,1) == ">") {
+                        var conditionValue = parseFloat(conditionAttribute.substring(1,conditionAttribute.length));
+                        if (objectAttribute > conditionValue) {
+                            return 1;
+                        };
+                    };
+                    if (conditionAttribute.substring(0,1) == "<") {
+                        var conditionValue = parseFloat(conditionAttribute.substring(1,conditionAttribute.length));
+                        if (objectAttribute < conditionValue) {
+                            return 1;
+                        };
+                    };
+                };
+            };
+
+            return 0;
+        };
+
         self.checkState = function (player, playerInventory, location, map, destroyedObjects) {
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
@@ -355,23 +398,32 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //we also exit early if the mission is already failed or completed
             if (self.isFailedOrComplete()||self.hasParent()) { return null; }; 
             var missionObject;
+            var missionObjectName;
             var destinationObject;
             //console.log('Checking state for mission: '+_name);
             switch(true) {
                 case (!(_destination) && (!(_missionObject))):
                     //if destination and mission object are not set, we're after overall map stats.
                     missionObject = map;
+                    missionObjectName = "map";
                     break;
-                case (_destination == 'player'): //player inventory
-                    if (_missionObject == 'player') {
+                case (_destination == "player"): //player inventory
+                    if (_missionObject == "player") {
                         missionObject = player;
+                        missionObjectName = "player";
                     } else {
                         missionObject = playerInventory.getObject(_missionObject);
+                        if (missionObject) {
+                            missionObjectName = missionObject.getName();
+                        };
                     };
                     break;
                 case (_destination == location.getName()): //location
                     //console.log('mission destination location reached');
                     missionObject = location.getObject(_missionObject);
+                    if (missionObject) {
+                        missionObjectName = missionObject.getName();
+                    };
                     break;
                 default:
                         
@@ -428,173 +480,101 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };                           
             };
 
-            if (missionObject) {
-                //console.log('mission object retrieved. Checking condition attributes...');
-                var objectAttributes = missionObject.getCurrentAttributes();
-                var requiredAttributeSuccessCount = Object.keys(_conditionAttributes).length;    //this needs to handle subkeys too. 
-                
-                //check sub-attributes
-                for (var attr in _conditionAttributes) {
+            //check if the destination object shouldn't be destroyed
+            if (destinationObject) {
+                if (destinationObject.getName() != missionObject.getName()) {
+                    //fail, cannot complete if destination is lost
+                    return self.fail("destroyedDestination");
+                };
+
+                //if we get to this point, destination is the same as mission object
+                //we've already checked if the mission object shouldn't be destroyed - so do nothing.
+            };
+
+
+            //if we don't have a mission object by this point, there's nothing we can check.
+            if (!(missionObject)) {  
+                return null;
+            };   
+                       
+            //check/fail if the mission object shouldn't be destroyed!
+            if (missionObject.isDestroyed()) {
+                if ((!(_conditionAttributes["isDestroyed"])) || (_conditionAttributes["isDestroyed"] == false)){
+                    return self.fail("destroyedObject");
+                }; 
+            };
+
+            //console.log('mission object retrieved. Checking condition attributes...');
+            var objectAttributes = missionObject.getCurrentAttributes();
+            var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
+
+            //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+            if (_conditionAttributes["contains"]) {                        
+                if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
+                    successCount++;
+                };                           
+            };
+
+            //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+            if (_conditionAttributes["antibodies"]) {                        
+                if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
+                    successCount++;
+                };                           
+            };
+
+            //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+            if (_conditionAttributes["contagion"]) {                        
+                if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
+                    successCount++;
+                };                           
+            };
+
+            //checkConversation - has conversation reached required state
+            if (_conditionAttributes["conversationState"]) {                       
+                if (_conversationState >= _conditionAttributes["conversationState"]) {
+                    successCount++;
+                };                           
+            };
+
+            //check the rest of the object attributes if they exist
+            for (var attr in _conditionAttributes) {
+                if (objectAttributes.hasOwnProperty(attr)) {
+                    var keycheckName = attr;
+                    //console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);  
                     if (typeof(_conditionAttributes[attr]) == 'object') {
                         if (Object.prototype.toString.call(_conditionAttributes[attr]) === '[object Array]') { 
-                            //do nothing
+                            successCount += self.checkAttribute(objectAttributes[attr], _conditionAttributes[attr]);
                         } else {
-                            //how many child keys do we have that we want to match on?
-                            var keysToMatch = Object.keys(_conditionAttributes[attr]).length;
-                            //we've already counted one from the parent - that works if there's no children or only 1
-                            if (keysToMatch>1) {requiredAttributeSuccessCount+=keysToMatch-1;}
-                        };
-                    };
-                };
-                          
-
-                //check/fail if the mission object shouldn't be destroyed!
-                if (missionObject.isDestroyed()) {
-                    if (!(_conditionAttributes["isDestroyed"])) {
-                        return self.fail("destroyedObject");
-                    } else {
-                        if (_conditionAttributes["isDestroyed"] == false) {
-                            return self.fail("destroyedObject");
-                        };
-                    }
-                };
-
-                //check if the destination object shouldn't be destroyed
-                if (destinationObject) {
-                    if (destinationObject.getName() != missionObject.getName()) {
-                        //fail, cannot complete if destination is lost
-                        return self.fail("destroyedDestination");
-                    };
-
-                    //if we get to this point, destination is the same as mission object
-                    //we've already checked if the mission object shouldn't be destroyed - so do nothing.
-                };
-
-                //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-                if (_conditionAttributes["contains"]) {
-                        
-                    if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
-                        successCount++;
-                    };                           
-                };
-
-                //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-                if (_conditionAttributes["antibodies"]) {
-                        
-                    if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
-                        successCount++;
-                    };                           
-                };
-
-                //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-                if (_conditionAttributes["contagion"]) {
-                        
-                    if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
-                        successCount++;
-                    };                           
-                };
-
-                if (_conditionAttributes["conversationState"]) {                       
-                    if (_conversationState >= _conditionAttributes["conversationState"]) {
-                        successCount++;
-                    };                           
-                };
-
-                //check the rest of the object attributes if they exist
-                for (var attr in _conditionAttributes) {
-                    if (objectAttributes.hasOwnProperty(attr)) {
-                        var keycheckName = attr;
-                        //console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);  
-                        if (typeof(_conditionAttributes[attr]) == 'object') {
-                            if (Object.prototype.toString.call(_conditionAttributes[attr]) === '[object Array]') { 
-                                //treat it as normal   
-                                if (objectAttributes[attr] == _conditionAttributes[attr]) {
-                                    successCount++;
-                                } else {
-                                    if (typeof(_conditionAttributes[attr]) == 'string') {
-                                        if (_conditionAttributes[attr].substring(0,1) == ">") {
-                                            var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
-                                            if (objectAttributes[attr] > conditionValue) {
-                                                successCount++;
-                                            };
-                                        };
-                                        if (_conditionAttributes[attr].substring(0,1) == "<") {
-                                            var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
-                                            if (objectAttributes[attr] < conditionValue) {
-                                                successCount++;
-                                            };
-                                        };
-                                    };
-                                };
-                            } else {
-                                //we have an object we need to figure out more about...
-                                var conditionKeyCount = Object.keys(_conditionAttributes[attr]).length;
-                                var objectKeyCount = Object.keys(objectAttributes[attr]).length;
-                                if (conditionKeyCount == 0 && objectKeyCount>0) {
-                                    //no success count
-                                } else if (conditionKeyCount == 0 && objectKeyCount == 0) {
-                                    //both sides have no keys! - success
-                                    var keyname = attr;
-                                    successCount++;
-                                } else {
-                                    //match sub attributes
-                                    for (var subAttr in _conditionAttributes[attr]) {
-                                        if (objectAttributes[attr][subAttr] == _conditionAttributes[attr][subAttr]) {
-                                            var subkeyname = attr+"."+subAttr;
-                                            successCount++;
-                                        } else {
-                                            if (typeof(_conditionAttributes[attr][subAttr]) == 'string') {
-                                                if (_conditionAttributes[attr][subAttr].substring(0,1) == ">") {
-                                                    var conditionValue = parseFloat(_conditionAttributes[attr][subAttr].substring(1,_conditionAttributes[attr][subAttr].length));
-                                                    if (objectAttributes[attr][subAttr] > conditionValue) {
-                                                        successCount++;
-                                                    };
-                                                };
-                                                if (_conditionAttributes[attr][subAttr].substring(0,1) == "<") {
-                                                    var conditionValue = parseFloat(_conditionAttributes[attr][subAttr].substring(1,_conditionAttributes[attr][subAttr].length));
-                                                    if (objectAttributes[attr][subAttr] < conditionValue) {
-                                                        successCount++;
-                                                    };
-                                                };
-                                            };
-                                        };
-                                    };
-                                };
-                                //console.log("oa[attr]"+objectAttributes[attr]+Object.keys(objectAttributes[attr]).length);
-                                //console.log("ca[attr]"+_conditionAttributes[attr]+Object.keys(_conditionAttributes[attr]).length);                                
-                            };
-                        } else {                                                                             
-                            if (objectAttributes[attr] == _conditionAttributes[attr]) {
+                            //we have an object we need to figure out more about...
+                            var conditionKeyCount = Object.keys(_conditionAttributes[attr]).length;
+                            var objectKeyCount = Object.keys(objectAttributes[attr]).length;
+                            if (conditionKeyCount == 0 && objectKeyCount>0) {
+                                //no success count
+                            } else if (conditionKeyCount == 0 && objectKeyCount == 0) {
+                                //both sides have no keys! - success
+                                //var keyname = attr;
                                 successCount++;
                             } else {
-                                if (typeof(_conditionAttributes[attr]) == 'string') {
-                                    if (_conditionAttributes[attr].substring(0,1) == ">") {
-                                        var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
-                                        if (objectAttributes[attr] > conditionValue) {
-                                            successCount++;
-                                        };
-                                    };
-                                    if (_conditionAttributes[attr].substring(0,1) == "<") {
-                                        var conditionValue = parseFloat(_conditionAttributes[attr].substring(1,_conditionAttributes[attr].length));
-                                        if (objectAttributes[attr] < conditionValue) {
-                                            successCount++;
-                                        };
-                                    };
+                                //match sub attributes
+                                for (var subAttr in _conditionAttributes[attr]) {
+                                    successCount += self.checkAttribute(objectAttributes[attr][subAttr], _conditionAttributes[attr][subAttr]);
                                 };
                             };
+                            //console.log("oa[attr]"+objectAttributes[attr]+Object.keys(objectAttributes[attr]).length);
+                            //console.log("ca[attr]"+_conditionAttributes[attr]+Object.keys(_conditionAttributes[attr]).length);                                
                         };
+                    } else {                                                                             
+                        successCount += self.checkAttribute(objectAttributes[attr], _conditionAttributes[attr]);
                     };
                 };
+            };
 
-                //console.log('condition matches: '+successCount+" out of "+requiredAttributeSuccessCount);
-                if (successCount == requiredAttributeSuccessCount) {
-                    //if mission has dialogue, ensure that has been triggered at least once...
-                    if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
-                        return self.success();
-                    };
+            //console.log('condition matches: '+successCount+" out of "+requiredSuccessCount);
+            if (successCount == requiredSuccessCount) {
+                //if mission has dialogue, ensure that has been triggered at least once...
+                if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
+                    return self.success();
                 };
-
-
             };
         };
 
