@@ -880,7 +880,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(artefact.isCollectable())) {collectibleArtefactCount --;};
 
                                 //bug workaround. get all won't auto-support required containers --V
-                if ((artefact.isCollectable()) && (_inventory.canCarry(artefact)) && (!(artefact.getRequiredContainer()))) {
+                if ((artefact.isCollectable()) && (_inventory.canCarry(artefact)) && (!(artefact.requiresContainer()))) {
                     var artefactToCollect = getObjectFromLocation(artefact.getName());
                     _inventory.add(artefactToCollect);
                     collectedArtefacts.push(artefactToCollect);
