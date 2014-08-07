@@ -3386,7 +3386,8 @@
                       "zombie"
                     ],
 					"destinations": [
-						"kitchen-ground-floor",
+						"reception",
+						"ground-floor-back-stairs-west",
 						"sales-north"
 					]
                   },
@@ -3418,7 +3419,8 @@
                     ],
 					"destinations": [
 						"smoking-area",
-						"core-area-west"
+						"core-area-west",
+						"customer-delight-central"
 					]
                   },
                   "synonyms": [
