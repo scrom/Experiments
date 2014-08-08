@@ -418,7 +418,7 @@ exports.Action = function Action(aPlayer, aMap) {
                             };
 
                         };
-                        description = _player.ask(_verb, _object0, _object1);            
+                        description = _player.ask(_verb, _object0, _object1, _map);            
                         break;
                     case 'wave':
                         description = _player.wave(_verb, _object0, _object1);
@@ -594,9 +594,22 @@ exports.Action = function Action(aPlayer, aMap) {
                 return "Player Stealth set: "+_player.setStealth(parseInt(_object0));
             };
 
+            if (_verb == '+heal') {
+                return "Player Health set: "+_player.recover(parseInt(_object0));
+            };
+
+            if (_verb == '+go') {
+                var location = _map.getLocation(_object0);
+                if (location) {
+                    return "Player teleported:<br> "+_player.setLocation(location);
+                } else {
+                    return "location '"+_object0+"' not found.";
+                };
+            };
+
             if (_verb == '+find'||_verb == '+where') {
-                if(_object1) { return _map.find(_object1);}
-                else { return _map.find(_object0); };
+                if(_object1) { return _map.find(_object1, true);}
+                else { return _map.find(_object0, true); };
             };
         };
 

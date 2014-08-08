@@ -178,24 +178,39 @@ exports.Map = function Map() {
             return null;
         };
 
-        self.find = function(anObjectName) {
+        self.find = function(objectName, includeArtefacts) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
 
             //loop through each location and location inventory. 
             //Get object (by synonym)
             //return location name when found
             for (var i=0;i<_locations.length;i++) {
-                if (_locations[i].objectExists(anObjectName)) {
-                    var foundObject = _locations[i].getObject(anObjectName);
+                if (_locations[i].objectExists(objectName)) {
+                    var foundObject = _locations[i].getObject(objectName);
                     if (foundObject.getType() == "creature") {
                         return foundObject.getDisplayName()+" is currently at '"+_locations[i].getDisplayName()+"'.";
                     };
+                    if (includeArtefacts) {
+                        return "I believe you'll find something like that at '"+_locations[i].getDisplayName()+"'.";
+                    };
                 };
             };
-            return "I'm sorry, there's nobody who answers to the name '"+anObjectName+"' here.";
+
+            //notfound replies
+            var randomReplies = ["Sorry $player, I can't help you there.","Nope, sorry."];
+            if (includeArtefacts) {
+                randomReplies.push("I'm sorry, I'm not aware of any '"+objectName+"' here.");
+                randomReplies.push("Nope, I've not seen any "+objectName+" around.", "I'm afraid you'll need to hunt that down yourself.");
+            } else {
+                randomReplies.push("I'm sorry, there's nobody who answers to the name '"+objectName+"' here.");    
+            };
+
+            var randomIndex = Math.floor(Math.random() * randomReplies.length);
+            return randomReplies[randomIndex];
+            
         };
 
-        self.checkExists = function(anObjectName) {
+        self.checkExists = function(objectName) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it *will* find creatures
 
@@ -203,12 +218,12 @@ exports.Map = function Map() {
             //Get object (by synonym)
             //return when found
             for (var i=0;i<_locations.length;i++) {
-                if (_locations[i].objectExists(anObjectName)) {return true};
+                if (_locations[i].objectExists(objectName)) {return true};
             };
             return false;
         };
 
-        self.getObject = function(anObjectName) {
+        self.getObject = function(objectName) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it *will* retrieve creatures
 
@@ -216,7 +231,7 @@ exports.Map = function Map() {
             //Get object (by synonym)
             //return when found
             for (var i=0;i<_locations.length;i++) {
-                var object = _locations[i].getObject(anObjectName);
+                var object = _locations[i].getObject(objectName);
                 if (object) {return object};
             };
             return null;

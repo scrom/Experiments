@@ -1455,12 +1455,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.find = function(artefactName, playerAggression, map) {
+            var willFindArtefacts = false;
             if (self.isDead()) {return _genderPrefix+"'s dead. I don't think "+_genderSuffix+" can help you."}; 
             if (_affinity <0) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
+            if (_affinity >=2) {willFindArtefacts = true};
             if (playerAggression>1) {return _genderPrefix+" says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'"};            
             if (_affinity <1) {return "When was the last time you did something for "+_genderSuffix+"?<br>It pays to be nice to others."};
             //if we're here, aggression is low and affinity is positive.
-            return _genderPrefix+" says '"+map.find(artefactName)+"'"
+            return _genderPrefix+" says '"+map.find(artefactName, willFindArtefacts)+"'"
         };
 
         self.initialReplyString = function(playerAggression) {
@@ -1470,7 +1472,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
-        self.replyToKeyword = function(keyword,playerAggression) {
+        self.replyToKeyword = function(keyword,playerAggression, map) {
             var initialReply = self.initialReplyString(playerAggression);
             if (initialReply) {return initialReply;};
 
@@ -1495,6 +1497,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //if there's not what's being asked for nearby
             if (!(_currentLocation.objectExists(keyword)) && (!(_inventory.check(keyword)))) {
+                //if high affinity, try to find item for player
+                if (self.getAffinity() >= 2) {
+                    return self.find(keyword, playerAggression, map);
+                };
+
                 var randomReplies = ["Sorry $player, I can't help you there.", "Nope, I've not seen any "+keyword+" around.", "I'm afraid you'll need to hunt that down yourself.", "Nope, sorry."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
