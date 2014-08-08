@@ -313,7 +313,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (playerAttributes.consumedObjects != undefined) {
                 for(var i=0; i<playerAttributes.consumedObjects.length;i++) {
-                    _consumedObjects.push(_mapBuilder.buildArtefact(playerAttributes.consumedObjects[i]));
+                    if (playerAttributes.consumedObjects[i].object == "creature") {
+                        _consumedObjects.push(_mapBuilder.buildCreature(playerAttributes.consumedObjects[i]));
+                    } else {
+                        _consumedObjects.push(_mapBuilder.buildArtefact(playerAttributes.consumedObjects[i]));
+                    };
                 };
             };
 
