@@ -763,8 +763,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _inventory;
         };	
 
+        //call through to inventory getObject
+        self.getObject = function(objectName) {
+            return _inventory.getObject(objectName, true);
+        };
+
+        self.getDestroyedObjects = function(){
+            return _destroyedObjects;
+        };
+
         self.addSkill = function(skill) {
             _repairSkills.push(skill);
+        };
+
+        self.getSkills = function() {
+            return _repairSkills;
         };
 
         self.describeInventory = function() {
@@ -2404,87 +2417,91 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //console.log("checking mission:"+mission.getName()+" time taken:"+mission.getTimeTaken());
             var resultString = "";
             var initialScore = _score;
-            var missionReward = mission.checkState(self, _inventory, _currentLocation, map, _destroyedObjects);
-            if (missionReward) {
-                if (missionReward.hasOwnProperty("fail")) {
-                    resultString += "<br>"+missionReward.failMessage+"<br>";
-                    _missionsFailed.push(mission.getName());
-                } else if (mission.getType() == "event") {
-                    resultString += "<br>"+missionReward.eventMessage+"<br>";
-                    if (missionReward.locations) {
-                        //add locations
-                        for (var l=0; l<missionReward.locations.length;l++) {
-                            map.addLocation(missionReward.locations[l]);
-                            var locationName = missionReward.locations[l].getName();
-                            //console.log("Location added: "+map.getLocation(missionReward.locations[l].getName()));
-                        };                        
-                    };
-                    if (missionReward.exits) {
-                        //add exits
-                        for (var e=0; e<missionReward.exits.length;e++) {
-                            var exitData = missionReward.exits[e];
-                            var locationToModify = map.getLocation(exitData.getSourceName())
-                            var hidden = true;
-                            if (exitData.isVisible()) {hidden = false;};
-                            locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(),hidden);
-                            var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
-                            //console.log("Exit added: "+exitDestination);
-                        };
-                    };
-                    if (missionReward.score) { _score += missionReward.score;};
-                    if (missionReward.money) { self.increaseCash(missionReward.money);};
-                    if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
-                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                    mission.processAffinityModifiers(map, missionReward);
-                    newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
-                } else {
-                    resultString += "<br>"+missionReward.successMessage+"<br>";
-                    if (missionReward.locations) {
-                        //add locations
-                        for (var l=0; l<missionReward.locations.length;l++) {
-                            map.addLocation(missionReward.locations[l]);
-                            if (missionReward.locations[l].inventory) {
-                                var newInventory = missionReward.locations[l].inventory;
-                                for (var i=0;i<newInventory.length;i++) {
-                                    console.log(newInventory[i]);
-                                    //add item to location inventory
-                                    if (newInventory[i].getType() == "creature") {
-                                        newInventory[i].go(null, missionReward.locations[l]);  
-                                    } else {
-                                        missionReward.locations[l].addObject(newInventory[i]);                         
-                                    }; 
-                                };
+            var missionName = mission.getName();
+            var missionReward = mission.checkState(self, map);
+            if (!(missionReward)) {return "";};
 
+            if (missionReward.hasOwnProperty("fail")) {
+                resultString += "<br>"+missionReward.failMessage+"<br>";
+                _missionsFailed.push(mission.getName());
+            } else if (mission.getType() == "event") {
+                resultString += "<br>"+missionReward.eventMessage+"<br>";
+                if (missionReward.locations) {
+                    //add locations
+                    for (var l=0; l<missionReward.locations.length;l++) {
+                        map.addLocation(missionReward.locations[l]);
+                        var locationName = missionReward.locations[l].getName();
+                        //console.log("Location added: "+map.getLocation(missionReward.locations[l].getName()));
+                    };                        
+                };
+                if (missionReward.exits) {
+                    //add exits
+                    for (var e=0; e<missionReward.exits.length;e++) {
+                        var exitData = missionReward.exits[e];
+                        var locationToModify = map.getLocation(exitData.getSourceName())
+                        var hidden = true;
+                        if (exitData.isVisible()) {hidden = false;};
+                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(),hidden);
+                        var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
+                        //console.log("Exit added: "+exitDestination);
+                    };
+                };
+                if (missionReward.score) { _score += missionReward.score;};
+                if (missionReward.money) { self.increaseCash(missionReward.money);};
+                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
+                if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                mission.processAffinityModifiers(map, missionReward);
+                newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
+            } else {
+                resultString += "<br>"+missionReward.successMessage+"<br>";
+                if (missionReward.locations) {
+                    //add locations
+                    for (var l=0; l<missionReward.locations.length;l++) {
+                        map.addLocation(missionReward.locations[l]);
+                        if (missionReward.locations[l].inventory) {
+                            var newInventory = missionReward.locations[l].inventory;
+                            for (var i=0;i<newInventory.length;i++) {
+                                console.log(newInventory[i]);
+                                //add item to location inventory
+                                if (newInventory[i].getType() == "creature") {
+                                    newInventory[i].go(null, missionReward.locations[l]);  
+                                } else {
+                                    missionReward.locations[l].addObject(newInventory[i]);                         
+                                }; 
                             };
-                        };                        
-                    };
-                    if (missionReward.exits) {
-                        //add exits
-                        for (var e=0; l<missionReward.exits.length;e++) {
-                            var exitData = missionReward.exits[e];
-                            var locationToModify = map.getLocation(exitData.getSourceName())
-                            var hidden = true;
-                            if (exitData.isVisible()) {hidden = false;};
-                            locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestination(),hidden);
+
                         };
+                    };                        
+                };
+                if (missionReward.exits) {
+                    //add exits
+                    for (var e=0; l<missionReward.exits.length;e++) {
+                        var exitData = missionReward.exits[e];
+                        var locationToModify = map.getLocation(exitData.getSourceName())
+                        var hidden = true;
+                        if (exitData.isVisible()) {hidden = false;};
+                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestination(),hidden);
                     };
-                    if (missionReward.score) { _score += missionReward.score;};
-                    if (missionReward.money) { self.increaseCash(missionReward.money);};
-                    if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
-                    if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                    if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                    mission.processAffinityModifiers(map, missionReward);
-                    _missionsCompleted.push(mission.getName());
-                    newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
                 };
-
-                if (missionOwner) {
-                    missionOwner.removeMission(mission.getName());
-                };
-
-                //console.log("Completed processing mission state");
+                if (missionReward.score) { _score += missionReward.score;};
+                if (missionReward.money) { self.increaseCash(missionReward.money);};
+                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
+                if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
+                if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
+                mission.processAffinityModifiers(map, missionReward);
+                _missionsCompleted.push(mission.getName());
+                newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
             };
+
+            if (!missionOwner) {
+                missionOwner = map.getMissionOwner(mission.getName());
+            };
+            if (missionOwner) {
+                missionOwner.removeMission(mission.getName());
+            };
+
+            //console.log("Completed processing mission state");
 
             if ((initialScore < _score) && (_score == map._maxScore)) {
                 resultString += "<br>Congratulations, you've scored "+_score+" points - the highest possible score for this game.<br>";
@@ -2502,25 +2519,39 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.updateMissions = function(time, map) {
             var resultString = "";
             var newlyCompletedMissions = [];
+            var processedMissions = [];
 
             //check mission status
             for (var i=0; i< _missions.length;i++) {
+                processedMissions.push(_missions[i].getName());
                 resultString+= self.processMissionState(_missions[i], map, self, newlyCompletedMissions);
             };
 
             //check missions from location
             var locationMissions = _currentLocation.getMissions();
             for (var j=0; j<locationMissions.length;j++) {
+                processedMissions.push(locationMissions[j].getName());
                 resultString+= self.processMissionState(locationMissions[j], map, _currentLocation, newlyCompletedMissions);
             };
 
-            //check missions from location and inventory objects/creatures
+            //check missions from location and inventory objects
             var artefacts = _currentLocation.getAllObjectsAndChildren(false);
             artefacts = artefacts.concat(_inventory.getAllObjectsAndChildren(false));
             for (var i=0; i<artefacts.length; i++) {
                 var artefactMissions = artefacts[i].getMissions();
                 for (var j=0; j<artefactMissions.length;j++) {
+                    processedMissions.push(artefactMissions[j].getName());
                     resultString+= self.processMissionState(artefactMissions[j], map, artefacts[i], newlyCompletedMissions);
+                };
+            };
+
+            //check missions from location creatures
+            var creatures = _currentLocation.getCreatures();
+            for (var i=0; i<creatures.length; i++) {
+                var creatureMissions = creatures[i].getMissions();
+                for (var j=0; j<creatureMissions.length;j++) {
+                    processedMissions.push(creatureMissions[j].getName());
+                    resultString+= self.processMissionState(creatureMissions[j], map, creatures[i], newlyCompletedMissions);
                 };
             };
 
@@ -2529,10 +2560,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             allMissions = allMissions.concat(_missions); //add player missions!
 
             for (var i=0;i<allMissions.length;i++) {
-                if ((newlyCompletedMissions.indexOf(allMissions[i].getName()) == -1) && _missionsFailed.indexOf(allMissions[i].getName() == -1)) { 
+                if ((processedMissions.indexOf(allMissions[i].getName()) == -1) && _missionsFailed.indexOf(allMissions[i].getName() == -1)) { 
                     //is there a mission object/destination in this location?
                     if (_currentLocation.objectExists(allMissions[i].getMissionObjectName() || allMissions[i].getDestination())) {
-                        resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.
+                        processedMissions.push(allMissions[i].getName());
+                        resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.                        
                     };
                 };
 

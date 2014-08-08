@@ -1539,7 +1539,7 @@
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "adam parker",
-              "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.<br> Have 25 points."
+              "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'<br> Have 25 points."
             }
           }
         ]
@@ -1807,7 +1807,8 @@
         "synonyms": [
           "bar",
           "fire exit",
-          "fire door"
+          "fire door",
+		  "exit"
         ]
       }
     ]
@@ -2802,6 +2803,7 @@
           "imageName": "amandamansfield.jpg"
         },
         "synonyms": [
+		  "amanda",
           "mandy",
           "manda",
           "mansfield",
@@ -2819,7 +2821,7 @@
             "description": "Amanda knows how to fix stuff.",
             "attributes": {
               "parent": "keyfob",
-              "missionObject": "Amanda",
+              "missionObject": "Amanda Mansfield",
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
@@ -3423,9 +3425,7 @@
                     "canTravel": true,
                     "traveller": true,
                     "destinations": [
-                      "reception",
-                      "ground-floor-back-stairs-west",
-                      "sales-north"
+                      "reception"
                     ],
                     "imageName": "daveconvery.jpg",
                     "contagion": [
@@ -3455,9 +3455,7 @@
                     "canTravel": true,
                     "traveller": true,
                     "destinations": [
-                      "smoking-area",
-                      "core-area-west",
-                      "customer-delight-central"
+                      "smoking-area"
                     ],
                     "imageName": "rogerhart.jpg",
                     "contagion": [
@@ -5307,7 +5305,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "justin heron",
               "decreaseAffinityFor": "james dening",
-              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Simon will have appreciated it.<br>Have 50 points."
+              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Justin will have appreciated it.<br>Have 50 points."
             }
           }
         ]
@@ -6140,7 +6138,8 @@
         "synonyms": [
           "bar",
           "fire exit",
-          "fire door"
+          "fire door",
+		  "exit"
         ]
       }
     ]
@@ -6429,7 +6428,8 @@
         "synonyms": [
           "bar",
           "fire exit",
-          "fire door"
+          "fire door",
+		  "exit"
         ]
       }
     ]
@@ -7334,7 +7334,7 @@
           "parent": "planecrash"
         },
         "conditionAttributes": {
-          "contagion": {},
+          "contagion": [],
           "contagionDeathToll": {
             "friendly": 0
           }

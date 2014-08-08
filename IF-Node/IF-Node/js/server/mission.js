@@ -391,87 +391,137 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return 0;
         };
 
-        self.checkState = function (player, playerInventory, location, map, destroyedObjects) {
+        self.obtainMissionObjectWhereDestinationIsNotAnArtefactOrCreature = function(map, player, location) {
+            var missionObject;
+            switch(true) {
+            case (!(_destination) && (!(_missionObject))):
+                //if destination and mission object are not set, we're after overall map stats.
+                return map;
+                break;
+            case (_destination == "player"): //player inventory
+                if (_missionObject == "player") {
+                    missionObject = player;
+                } else {
+                    return player.getObject(_missionObject);
+                };
+                break;
+            case (_destination == location.getName()): //location
+                //console.log('mission destination location reached');
+                return location.getObject(_missionObject);
+                break;
+            };
+
+            return null;
+        };
+
+        self.obtainMissionObjectWhereDestinationIsAnArtefactOrCreature = function(map, player, location) {
+            //this function allows you to have an object/creature in any location - the object's condition will determine success.
+            //this supports find, break, destroy, chew, kill
+            var missionObject;
+            var destinationObjectOrCreature;
+
+            //try player first...
+            destinationObjectOrCreature = player.getObject(_destination);
+            if (destinationObjectOrCreature) {
+                if (_destination == _missionObject) {return destinationObjectOrCreature}
+                else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                if (missionObject) { return missionObject;};
+            };
+
+            //try destroyed objects
+            missionObject = self.getDestroyedObject(player, _missionObject);
+            if (missionObject) { return missionObject;};
+
+            //try current location
+            destinationObjectOrCreature = location.getObject(_destination);
+            if (destinationObjectOrCreature) {
+                if (_destination == _missionObject) {return destinationObjectOrCreature}
+                else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                if (missionObject) { return missionObject;};
+            };
+
+            //try all locations
+            var locations = map.getLocations();
+            for (var i=0;i<locations.length;i++) {
+                destinationObjectOrCreature = locations[i].getObject(_destination);
+                if (destinationObjectOrCreature) {
+                    if (_destination == _missionObject) {return destinationObjectOrCreature}
+                    else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
+                };
+                if (missionObject) {return missionObject;}; //exit early if we've found it.
+            };
+
+            return null;
+
+        };
+
+        self.getDestroyedObject = function(player, objectName) {
+            var destroyedObjects = player.getDestroyedObjects();
+            //check player destroyed objects list.
+            for (var i=0;i<destroyedObjects.length;i++) {
+                if (destroyedObjects[i].getName() == objectName) {
+                    return destroyedObjects[i];
+                };
+            };
+        };
+
+        self.checkAttributes = function (missionObject, attributesToCheck) {
+            var objectAttributes = missionObject.getCurrentAttributes();
+            var checkCount = 0;
+            for (var attr in attributesToCheck) {
+                if (objectAttributes.hasOwnProperty(attr)) {
+                    var keycheckName = attr;
+                    //console.log("required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
+                    if (typeof(attributesToCheck[attr]) == 'object') {
+                        if (Object.prototype.toString.call(attributesToCheck[attr]) === '[object Array]') { 
+                            checkCount += self.checkAttribute(objectAttributes[attr], attributesToCheck[attr]);
+                        } else {
+                            //we have an object we need to figure out more about...
+                            var conditionKeyCount = Object.keys(attributesToCheck[attr]).length;
+                            var objectKeyCount = Object.keys(objectAttributes[attr]).length;
+                            if (conditionKeyCount == 0 && objectKeyCount>0) {
+                                //no success count
+                            } else if (conditionKeyCount == 0 && objectKeyCount == 0) {
+                                //both sides have no keys! - success
+                                //var keyname = attr;
+                                checkCount++;
+                            } else {
+                                //match sub attributes
+                                for (var subAttr in attributesToCheck[attr]) {
+                                    checkCount += self.checkAttribute(objectAttributes[attr][subAttr], attributesToCheck[attr][subAttr]);
+                                };
+                            };
+                            //console.log("oa[attr]"+objectAttributes[attr]+Object.keys(objectAttributes[attr]).length);
+                            //console.log("ca[attr]"+attributesToCheck[attr]+Object.keys(attributesToCheck[attr]).length);                                
+                        };
+                    } else {                                                                             
+                        checkCount += self.checkAttribute(objectAttributes[attr], attributesToCheck[attr]);
+                    };
+                };
+            };
+
+            return checkCount;
+        };
+
+        self.checkState = function (player, map) {
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible
             //we also exit early if the mission is already failed or completed
             if (self.isFailedOrComplete()||self.hasParent()) { return null; }; 
-            var missionObject;
-            var missionObjectName;
-            var destinationObject;
-            //console.log('Checking state for mission: '+_name);
-            switch(true) {
-                case (!(_destination) && (!(_missionObject))):
-                    //if destination and mission object are not set, we're after overall map stats.
-                    missionObject = map;
-                    missionObjectName = "map";
-                    break;
-                case (_destination == "player"): //player inventory
-                    if (_missionObject == "player") {
-                        missionObject = player;
-                        missionObjectName = "player";
-                    } else {
-                        missionObject = playerInventory.getObject(_missionObject);
-                        if (missionObject) {
-                            missionObjectName = missionObject.getName();
-                        };
-                    };
-                    break;
-                case (_destination == location.getName()): //location
-                    //console.log('mission destination location reached');
-                    missionObject = location.getObject(_missionObject);
-                    if (missionObject) {
-                        missionObjectName = missionObject.getName();
-                    };
-                    break;
-                default:
-                        
-                    //this one allows you to have an object/creature in any location - the object's condition will determine success.
-                    //this supports find, break, destroy, chew, kill
-                    if (playerInventory.getObject(_destination)) {
-                        //creature or object in player inventory
-                        //console.log('found mission destination object/creature in player inventory');
-                        var destinationObjectOrCreature = playerInventory.getObject(_destination);
-                        if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                        else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                    } else if (location.getObject(_destination)) {
-                        //console.log('found mission destination object/creature in location');
-                        var destinationObjectOrCreature = location.getObject(_destination);
-                        if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                        else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                    } else {
-                        //check player destroyed objects list.
-                        for (var i=0;i<destroyedObjects.length;i++) {
-                            if (destroyedObjects[i].getName() == _missionObject) {
-                                missionObject = destroyedObjects[i];
-                                //console.log('mission object destroyed');
-                            };
-                            if (destroyedObjects[i].getName() == _destination) {
-                                destinationObject = destroyedObjects[i];
-                                //console.log('mission destination destroyed');
-                            };
-                        };
 
-                        if (!(missionObject)) {
-                            var locations = map.getLocations();
-                            for (var i=0;i<locations.length;i++) {
-                                var destinationObjectOrCreature = locations[i].getObject(_destination);
-                                if (destinationObjectOrCreature) {
-                                    if (_destination == _missionObject) {missionObject = destinationObjectOrCreature}
-                                    else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
-                                };
-                                if (missionObject) {break;}; //exit early if we've found it.
-                            };
-                        };
-                    }; 
-                    break;
+            //console.log('Checking state for mission: '+_name);
+
+            if (self.getDestroyedObject(player, _destination) && (_destination != _missionObject)) {
+                //if destination is not the same as mission object, fail as player cannot complete if destination is lost
+                //console.log('mission destination destroyed');
+                return self.fail("destroyedDestination");
             };
 
-            //
+            //we need to track how many attributes are successful.
             var successCount = 0;
 
-            //regardless of mission object location, have we timed out?
+            //before doing any additional processing, have we timed out?
             if (_conditionAttributes["time"]) {                       
                 if (self.getTimeTaken() <= _conditionAttributes["time"]) {
                     successCount++;
@@ -479,18 +529,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     return self.timeExpired();
                 };                           
             };
+            
+            //we use player location to reduce the need for checking all locations as much as possible
+            var location = player.getCurrentLocation();
 
-            //check if the destination object shouldn't be destroyed
-            if (destinationObject) {
-                if (destinationObject.getName() != missionObject.getName()) {
-                    //fail, cannot complete if destination is lost
-                    return self.fail("destroyedDestination");
-                };
-
-                //if we get to this point, destination is the same as mission object
-                //we've already checked if the mission object shouldn't be destroyed - so do nothing.
+            //obtain mission object
+            var missionObject = self.obtainMissionObjectWhereDestinationIsNotAnArtefactOrCreature(map, player, location);
+            if (!(missionObject)) {
+                missionObject = self.obtainMissionObjectWhereDestinationIsAnArtefactOrCreature(map, player, location);
             };
-
 
             //if we don't have a mission object by this point, there's nothing we can check.
             if (!(missionObject)) {  
@@ -505,20 +552,25 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //console.log('mission object retrieved. Checking condition attributes...');
-            var objectAttributes = missionObject.getCurrentAttributes();
             var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
 
             //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
             if (_conditionAttributes["contains"]) {                        
                 if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
                     successCount++;
-                };                           
+                } else {
+                    //short-circuit here as cannot be successful
+                    return null; 
+                };                          
             };
 
             //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
             if (_conditionAttributes["antibodies"]) {                        
                 if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
                     successCount++;
+                } else {
+                    //short-circuit here as cannot be successful
+                    return null; 
                 };                           
             };
 
@@ -526,48 +578,25 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_conditionAttributes["contagion"]) {                        
                 if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
                     successCount++;
-                };                           
+                } else {
+                    //short-circuit here as cannot be successful
+                    return null; 
+                };                          
             };
 
             //checkConversation - has conversation reached required state
             if (_conditionAttributes["conversationState"]) {                       
                 if (_conversationState >= _conditionAttributes["conversationState"]) {
                     successCount++;
-                };                           
+                } else {
+                    //short-circuit here as cannot be successful
+                    return null; 
+                };                          
             };
 
             //check the rest of the object attributes if they exist
-            for (var attr in _conditionAttributes) {
-                if (objectAttributes.hasOwnProperty(attr)) {
-                    var keycheckName = attr;
-                    //console.log("required condition: "+_conditionAttributes[attr]+" actual condition: "+objectAttributes[attr]);  
-                    if (typeof(_conditionAttributes[attr]) == 'object') {
-                        if (Object.prototype.toString.call(_conditionAttributes[attr]) === '[object Array]') { 
-                            successCount += self.checkAttribute(objectAttributes[attr], _conditionAttributes[attr]);
-                        } else {
-                            //we have an object we need to figure out more about...
-                            var conditionKeyCount = Object.keys(_conditionAttributes[attr]).length;
-                            var objectKeyCount = Object.keys(objectAttributes[attr]).length;
-                            if (conditionKeyCount == 0 && objectKeyCount>0) {
-                                //no success count
-                            } else if (conditionKeyCount == 0 && objectKeyCount == 0) {
-                                //both sides have no keys! - success
-                                //var keyname = attr;
-                                successCount++;
-                            } else {
-                                //match sub attributes
-                                for (var subAttr in _conditionAttributes[attr]) {
-                                    successCount += self.checkAttribute(objectAttributes[attr][subAttr], _conditionAttributes[attr][subAttr]);
-                                };
-                            };
-                            //console.log("oa[attr]"+objectAttributes[attr]+Object.keys(objectAttributes[attr]).length);
-                            //console.log("ca[attr]"+_conditionAttributes[attr]+Object.keys(_conditionAttributes[attr]).length);                                
-                        };
-                    } else {                                                                             
-                        successCount += self.checkAttribute(objectAttributes[attr], _conditionAttributes[attr]);
-                    };
-                };
-            };
+            successCount += self.checkAttributes(missionObject, _conditionAttributes);
+
 
             //console.log('condition matches: '+successCount+" out of "+requiredSuccessCount);
             if (successCount == requiredSuccessCount) {

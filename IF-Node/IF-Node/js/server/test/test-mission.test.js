@@ -3,16 +3,26 @@ var mission = require('../mission.js');
 var artefact = require('../artefact.js');
 var inventory = require('../inventory.js');
 var mapBuilder = require('../mapbuilder.js');
+var player = require('../player.js');
+var playerName;
+var playerAttributes;
+var p0;
 var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
 var m0;
 
 exports.setUp = function (callback) {
     m0 = mb.buildMap();
+    playerName = 'player';
+    playerAttributes = {"username":playerName};
+    p0 = new player.Player(playerAttributes, m0, mb);
     callback(); 
 };
 
 exports.tearDown = function (callback) {
     m0 = null;
+    playerName = null;
+    playerAttributes = null;
+    p0 = null;
     callback();
 };  
 
@@ -72,13 +82,13 @@ exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
     var disk = new artefact.Artefact("disk", "hard disk", "mission object", {weight: 3, price: 100, canCollect: true}, null, null);
 
     var mission = new simon.getMissions()[0];
-    var inv = new inventory.Inventory(1,10,'player');
     mission.startTimer();
     mission.getNextDialogue();
     mission.getNextDialogue();
     simon.receive(disk);
     
-    var result = mission.checkState(inv, simon.getLocation(), m0);
+    //var result = mission.checkState(inv, simon.getLocation(), m0);
+    var result = mission.checkState(p0, m0);
 
     var expectedResult = true;
     var actualResult = false
@@ -90,3 +100,117 @@ exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
 };
 
 exports.canCompleteHardDiskMissionByGivingDiskToSimon.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+exports.canCompleteKillSpyMission = function (test) {
+    var spy = m0.getCreature('spy');
+
+    //var mission = new spy.getMissions()[0];
+    //mission.startTimer();
+    var location = m0.getLocation("machine-room-east");
+    p0.setLocation(location);
+    spy.kill();
+    
+    //var result = mission.checkState(inv, simon.getLocation(), m0);
+    var resultString = p0.updateMissions(1, m0);
+
+    var expectedResult = "<br>Congratulations. The spy is dead! Have 50 points.<br>";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCompleteKillSpyMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (test) {
+    var spy = m0.getCreature('spy');
+
+    //var mission = new spy.getMissions()[0];
+    //mission.startTimer();
+    spy.kill();
+    var location = m0.getLocation("machine-room-east");
+    p0.setLocation(location);
+    
+    //var result = mission.checkState(inv, simon.getLocation(), m0);
+    var resultString = p0.updateMissions(1, m0);
+
+    var expectedResult = "<br>Congratulations. The spy is dead! Have 50 points.<br>";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+
+exports.canCompleteReadArticleMission = function (test) {
+    var book = m0.getObject("solid article");
+    var inventory = p0.getInventoryObject();
+    inventory.add(book);
+
+    p0.read("read", "article");
+    var resultString = p0.updateMissions(1, m0);
+    var expectedResult = "<br>Congratulations. You've learned the basics on how to develop good software architecture.<br>";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCompleteReadArticleMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+exports.canGainSkillsFromReadingManual = function (test) {
+    var book = m0.getObject("coffee machine manual");
+    var inventory = p0.getInventoryObject();
+    inventory.add(book);
+
+    p0.read("read", "manual");
+    p0.updateMissions(1, m0);
+    var resultString = p0.getSkills();
+    var expectedResult = "coffee machine";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGainSkillsFromReadingManual.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+exports.canGetBulbFromAmandaTalkingMission = function (test) {
+    var missions = m0.getAllMissions();
+    for (var i=0;i<missions.length;i++) {
+        if (missions[i].getName() == "teachprojectorrepair") {
+            missions[i].clearParent();
+        };
+    };
+
+    var amanda = m0.getCreature('amanda');
+
+    //var mission = new spy.getMissions()[0];
+    //mission.startTimer();
+    var location = m0.getLocation("is-area");
+    p0.setLocation(location);
+    
+    //var resultString = 
+    p0.say("talk",null,"amanda");
+    var resultString = p0.updateMissions(1, m0);
+
+    var expectedResult = "<br>Amanda hands you a projector bulb.<br>You receive a projector bulb.";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetBulbFromAmandaTalkingMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };

@@ -343,6 +343,20 @@ exports.Map = function Map() {
             return missions;
         };
 
+        self.getMissionOwner = function(missionName) {
+            for (var i=0;i<_locations.length;i++) {
+                var locationInventory = _locations[i].getAllObjectsAndChildren(true);
+                for (var j=0;j<locationInventory.length;j++) {
+                    var missions = locationInventory[j].getMissions(true);
+                    for (var k=0;k<missions.length;k++) {
+                        if (missions[k].getName() == missionName) {
+                            return locationInventory[j];
+                        };
+                    };
+                };
+            };
+        };
+
       /*  self.removeMissionAndChildren = function(missionName) {
             //loop through each location, location inventory. 
             //Get all missions to remove
