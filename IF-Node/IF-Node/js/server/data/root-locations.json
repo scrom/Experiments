@@ -7339,9 +7339,15 @@
             "friendly": 0
           }
         },
+        "failAttributes": {
+          "contagionDeathToll": {
+            "friendly": ">0"
+          }
+        },
         "reward": {
           "score": 200,
-          "successMessage": "Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty)."
+          "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty).",
+		  "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
         }
       }
     ]

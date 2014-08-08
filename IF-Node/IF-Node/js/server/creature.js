@@ -1367,13 +1367,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (_nutrition >0) {
                 player.recover(_nutrition);
-                resultString += "It was a bit messy but you feel fitter, happier and healthier.";
+                resultString += "That was pretty messy but you actually managed to get some nutrition out of "+_genderSuffix+".";
             } else { //nutrition is zero or negative
                 resultString += "Dead "+self.getName()+" really doesn't taste so great. ";
                 if (_nutrition < 0) {
                     resultString += player.hurt(_nutrition*-1);
                 };
             };
+            if (self.getSubType() == "friendly") {resultString += "<br>It's a bit of a sick thing to do if you ask me.";};
             resultString += self.transmit(player);
             return resultString;
 
@@ -1427,6 +1428,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+self.getDisplayName().replace("the ","");
+            self.addSyns(["corpse","body"]);
             return "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
          };
 
@@ -1810,7 +1812,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //splice out self and dead creatures
                     for (var i=0;i<creatures.length;i++) {
                         if (creatures[i].getName() == self.getName() || creatures[i].isDead()) {
-                            creatures.splice(i, 1);
+                            creatures.splice(i-1, 1);
                             break;
                         };
                     };

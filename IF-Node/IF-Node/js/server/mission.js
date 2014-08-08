@@ -1,6 +1,6 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, reward) {
+module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, failAttributes, reward) {
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
@@ -13,6 +13,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _initialAttributes = initialAttributes; //the attributes to be set against the mission object when the mission starts 
         var _conditionAttributes = conditionAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
+        var _failAttributes = failAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
         var _destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
         var _ticking = false; //is the timer running?
@@ -113,7 +114,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
             resultString += ',"attributes":'+JSON.stringify(self.getCurrentAttributes());
             if (_initialAttributes) {
-                    resultString +='","initialAttributes":'+self.literalToString(_initialAttributes);
+                    resultString +=',"initialAttributes":'+self.literalToString(_initialAttributes);
+            };
+            if (_failAttributes) {
+                    resultString +=',"failAttributes":'+self.literalToString(_failAttributes);
             };
             resultString +=',"conditionAttributes":'+self.literalToString(_conditionAttributes)+',"reward":'+self.literalToString(_reward);
             resultString+= '}';
@@ -303,11 +307,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var requiredAntibodiesCount = requiredAntibodies.length;
             var attribs = missionObject.getCurrentAttributes()
             var antibodies = attribs.antibodies;
+            var antibodiesLength = Object.keys(antibodies).length;
 
-            if (requiredAntibodies.length ==0 && antibodies.length>0) {
+            if (requiredAntibodiesCount ==0 && antibodiesLength>0) {
                 return false;
             }; 
-            if (requiredAntibodies.length ==0 && antibodies.length==0) {
+            if (requiredAntibodiesCount ==0 && antibodiesLength==0) {
                 return true;
             }; 
 
@@ -328,11 +333,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var requiredContagionCount = requiredContagion.length;
             var attribs = missionObject.getCurrentAttributes()
             var contagion = attribs.contagion;
+            var contagionLength = Object.keys(contagion).length;
 
-            if (requiredContagion.length ==0 && contagion.length>0) {
+            if (requiredContagionCount ==0 && contagionLength>0) {
                 return false;
             }; 
-            if (requiredContagion.length ==0 && contagion.length==0) {
+            if (requiredContagionCount ==0 && contagionLength==0) {
                 return true;
             }; 
 
@@ -521,6 +527,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //we need to track how many attributes are successful.
             var successCount = 0;
 
+            var failCount = 0;
+
             //before doing any additional processing, have we timed out?
             if (_conditionAttributes["time"]) {                       
                 if (self.getTimeTaken() <= _conditionAttributes["time"]) {
@@ -549,6 +557,16 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if ((!(_conditionAttributes["isDestroyed"])) || (_conditionAttributes["isDestroyed"] == false)){
                     return self.fail("destroyedObject");
                 }; 
+            };
+
+            if (self.getName() == "saveredgate") {
+                console.log("debug time");
+            };
+
+            //have we failed anything?
+            failCount += self.checkAttributes(missionObject, _failAttributes);
+            if (failCount > 0) {
+                return self.fail("failAttributes");
             };
 
             //console.log('mission object retrieved. Checking condition attributes...');

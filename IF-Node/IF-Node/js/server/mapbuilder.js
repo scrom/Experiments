@@ -215,17 +215,21 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
             //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward
             var conditionAttr;
             var initialAttr;
+            var failAttr;
             if (missionData.conditionAttributes) {
                 conditionAttr = self.unpackConditionAttributes(missionData.conditionAttributes);
             };
             if (missionData.initialAttributes) {
                 initialAttr = self.unpackConditionAttributes(missionData.initialAttributes);
             };
+            if (missionData.failAttributes) {
+                failAttr = self.unpackConditionAttributes(missionData.failAttributes);
+            };
 
             var rewardData = self.unpackReward(missionData.reward);
 
             _map.incrementMissionCount();
-            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, rewardData);
+            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData);
         };
 
         self.buildLocation = function(locationData) {
