@@ -2301,10 +2301,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if ((_timeSinceEating < _maxMovesUntilHungry-1) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
             };
             self.transmit(artefact);
-            var result = artefact.eat(self); //trying to eat some things give interesting results.
+            var resultString = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it
                 if (artefact.chargesRemaining() == 0) {
+                    resultString += emptyContentsOfContainer(artefactName);
                     removeObjectFromPlayerOrLocation(artefactName); 
                     _consumedObjects.push(artefact);
                 };
@@ -2312,7 +2313,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 console.log('player eats some food.');
             };
 
-            return result;
+            return resultString;
         };
 
         self.drink = function(verb, artefactName) {

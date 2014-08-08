@@ -1090,6 +1090,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _inventory.getObject(anObjectName);
         };
 
+        self.removeObject = function(anObjectName) {
+            return _inventory.remove(anObjectName);
+        };
+
         self.showHiddenObjects = function() {
             return _inventory.showHiddenObjects();
         };
@@ -1807,13 +1811,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //bite?
                 if (_contagion.length >0) {
-                    var creatures = _currentLocation.getCreatures();
+                    var initialCreatures = _currentLocation.getCreatures();
+                    var creatures = [];
 
                     //splice out self and dead creatures
-                    for (var i=0;i<creatures.length;i++) {
-                        if (creatures[i].getName() == self.getName() || creatures[i].isDead()) {
-                            creatures.splice(i-1, 1);
-                            break;
+                    for (var i=0;i<initialCreatures.length;i++) {
+                        if (initialCreatures[i].getName() != self.getName() && (!(initialCreatures[i].isDead()))) {
+                            creatures.push(initialCreatures[i]);
                         };
                     };
 
