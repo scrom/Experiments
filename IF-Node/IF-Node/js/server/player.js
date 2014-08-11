@@ -1105,7 +1105,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {return notFoundMessage(artefactName);};
             
             //find a key
-            var key = self.getMatchingKey(verb, artefact); //migrate this to artefact and pass all keys through.
+            var key = artefact.getMatchingKey(verb, _inventory);
             var resultString = artefact.unlock(key, _currentLocation.getName());
             var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
             for (var l=0;l<linkedDoors.length;l++) {
@@ -1124,7 +1124,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
             //find a key
-            var key = self.getMatchingKey(verb, artefact); //migrate this to artefact and pass all keys through.
+            var key = artefact.getMatchingKey(verb, _inventory);
 
             var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
             for (var l=0;l<linkedDoors.length;l++) {
@@ -1939,22 +1939,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             else {console.log('Player is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
-        };
-        
-        self.getMatchingKey = function(verb, object) {
-            //find the strongest non-breakable key the player is carrying.
-            var keys = _inventory.getAllObjectsOfType('key');
-            for(var index = 0; index < keys.length; index++) {
-                //player must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
-                if ((keys[index].getType() == 'key') && ((!(keys[index].isBreakable()))||verb == "pick")) {
-                    if (keys[index].keyTo(object)) {
-                        console.log('Key found for: '+object.getName());
-                        return keys[index];
-                    };                   
-                };
-            };
-            console.log('Matching key not found');
-            return null;
         };
 
         self.hurt = function(pointsToRemove) {

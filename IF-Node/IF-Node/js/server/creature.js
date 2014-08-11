@@ -124,7 +124,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
             if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
             if (creatureAttributes.baseAffinity != undefined) {_baseAffinity = creatureAttributes.baseAffinity;}
-            else {_baseAffinity = creatureAttributes.affinity;};
+            else {_baseAffinity = _affinity};
 
             
             //if (creatureAttributes.dislikes != undefined) { _dislikes = creatureAttributes.dislikes;};
@@ -686,7 +686,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.willFollow = function(playerAggression) {
-            if (_destinations.length >0) {return false;}; //don't follow player if heading elsewhere!
+            if (_destinations.length >0 && _affinity <=3) {return false;}; //don't follow player if heading elsewhere! (unless they really like you)
             if (self.isDead()) {return false;};
             if (!(self.canTravel())) { return false;} 
             if (self.isHostile(playerAggression)) {return true;};
@@ -719,6 +719,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
 
                     if (medicalArtefact) {
+                        
+                        //turn on delay
+                        _currentDelay = 0;
+
                         resultString += "<br>"+player.heal(medicalArtefact, self);
 
                         //remove medicalArtefact if used up.
@@ -742,6 +746,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 for (var i=0; i<creatures.length;i++) {                
                     if (creatures[i].isHostile(player.getAggression())) {
                         if ((_dislikes.indexOf(creatures[i].getName()) >-1) || (creatures[i].getSubType() != "friendly")) {
+                            //turn on delay
+                            _currentDelay = 0;
+
                             resultString += "<br>"+self.getDisplayName()+" attacks "+creatures[i].getDisplayName()+".<br>"+self.hit(creatures[i],1);
                         };
                     };    
@@ -913,6 +920,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             self.increaseAffinity(anObject.getAffinityModifier());
             _inventory.add(anObject);
+
+            //turn on delay
+            _currentDelay = 0;
+
             return initCap(self.getDisplayName())+" now owns "+anObject.getDescription()+".";
             
         };
@@ -939,6 +950,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var playerInventory = player.getInventoryObject();
             playerInventory.remove(anObject.getName());
             _salesInventory.add(anObject);
+
+            //turn on delay
+            _currentDelay = 0;
 
             return initCap(self.getDisplayName()) + " bought " + anObject.getDisplayName() + ".";
         };
@@ -1064,6 +1078,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //reduce the level of affinity this item provides in future...
             //note this only happens when changing hands from a live creature to a player at the moment.
             objectToGive.reduceAffinityModifier();
+            
+            //turn on delay
+            _currentDelay = 0;
                 
             return initCap(self.getDisplayName())+" hands you "+objectToGive.getDisplayName()+".";
         };
@@ -1094,6 +1111,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //transfer to player
             playerInventory.add(objectToGive);
             _salesInventory.remove(anObjectName);
+            
+            //turn on delay
+            _currentDelay = 0;
 
             return initCap(self.getDisplayName()) + " sells you " + objectToGive.getDescription() + ".";
         };
@@ -1133,7 +1153,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //otherwise they try to flee but can't get past you
             if(self.willFlee(playerAggression)) {
                 console.log("Flee!");
-                return "<br>"+self.flee(map, playerAggression);
+                return "<br>"+self.flee(map, playerAggression, player.getCurrentLocation());
             };
 
             //for each hostile creature, attack the player
@@ -1145,7 +1165,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         return "";
         };
 
-        self.flee = function(map, playerAggression) {
+        self.flee = function(map, playerAggression, playerLocation) {
             //run away the number of moves of player aggression vs (-ve)affinity difference
             var fearLevel;
             var fled = false;
@@ -1161,7 +1181,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var resultString = "";
             //if creature is mobile
-            if (self.canTravel()) {             
+            if (self.canTravel()) {
+                _avoiding.push(playerLocation.getName()); //avoid player location             
                 for (var i=0; i<fearLevel; i++) {
                     var exit = _currentLocation.getRandomExit(false, _avoiding);
                     if (exit) {
@@ -1174,10 +1195,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             fled = true;
                         };
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
+
+                        //try not to end up in player location - flee an extra move...
+                        if ((_currentLocation.getName() == playerLocation.getName()) && (i==fearLevel-1)) {
+                            i--;
+                        };
                     };
                 };
+
+                _avoiding.pop(); //stop avoiding player location
             };
             console.log('Creature flees. Fear = '+fearLevel+'. End location = '+ _currentLocation.getName());
+
+            //clear delay if fleeing
+            _currentDelay = -1;
             return resultString;
         };
 
@@ -1323,6 +1354,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (healer.getType() == "player") {
                     resultString += _genderPrefix+" seems much better but would benefit from a rest.";
                     self.increaseAffinity(1);
+                    
+                    //turn on delay
+                    _currentDelay = 0;
                 };
             };
 
@@ -1498,6 +1532,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (playerAggression>1) {return _genderPrefix+" says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'"};            
             if (_affinity <1) {return "When was the last time you did something for "+_genderSuffix+"?<br>It pays to be nice to others."};
             //if we're here, aggression is low and affinity is positive.
+            
+            //turn on delay
+            _currentDelay = 0;
             return _genderPrefix+" says '"+map.find(artefactName, willFindArtefacts)+"'"
         };
 
@@ -1505,6 +1542,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
             if (_affinity <-1) {return _genderPrefix+" doesn't want to talk to you."};
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
+
+            
+            //turn on delay
+            _currentDelay = 0;
             return null;
         };
 
@@ -1716,6 +1757,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
+                    if (self.willFollow(player.getAggression())) {
+                        //switch off delay to follow player instead
+                        _currentDelay = -1;
+                    } else {
+                        //process delay if set...
+                        if (_currentDelay >= 3) { 
+                            //switch off delay after 3 turns without interaction - this will override any loop or destination delays
+                            _currentDelay = -1;
+                        } else {
+                            //will switch on delay if not already set
+                            _currentDelay++;
+                        };
+                    };
+
                     if (_contagion.length >0) {
                         var randomAttack = Math.floor(Math.random() * 3);
                         if (randomAttack == 0) {
@@ -1744,7 +1799,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         _currentDelay = -1; //clear delay
                     };
                     
-                } else if (_traveller || (_canTravel && _destinations.length>0)) { //is a traveller
+                }; 
+                
+                //is a traveller, not delayed, not following player, not already acted...
+                if (((_traveller || (_canTravel && _destinations.length>0)) && (_currentDelay == -1)) && (!self.willFollow(player.getAggression())) && (partialResultString.length ==0)) { 
+                    var showMoveToPlayer = false;
+                    if (playerLocation == _currentLocation.getName()) {showMoveToPlayer = true;};
+
                     var exit;
 
                     if (_destinations.length>0) {
@@ -1831,10 +1892,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (_bleeding) {movementVerb = "stumbles";};
                             resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" in.";  
                         } else {
-                            //@todo bug  - this will never be seen by the player
                             var movementVerb = "heads";
                             if (_bleeding) {movementVerb = "limps";};
                             resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"."; 
+                            if (showMoveToPlayer) {
+                                partialResultString += resultString;
+                            };
                         };  
                     };            
                 };
@@ -1935,6 +1998,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.isLocked = function() {
             return false;
+        };
+
+        self.getMatchingKey = function() {
+            return null;
         };
 
         self.lock = function(aKey) {

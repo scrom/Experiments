@@ -1775,6 +1775,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
+        self.getMatchingKey = function(verb, inventoryObject) {
+            //find the strongest non-breakable key the player is carrying.
+            var keys = inventoryObject.getAllObjectsOfType('key');
+            for(var index = 0; index < keys.length; index++) {
+                //player must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
+                if ((keys[index].getType() == 'key') && ((!(keys[index].isBreakable()))||verb == "pick")) {
+                    if (keys[index].keyTo(self)) {
+                        console.log('Key found for: '+self.getName());
+                        return keys[index];
+                    };                   
+                };
+            };
+            console.log('Matching key not found');
+            return null;
+        };
+
         self.lock = function(aKey, locationName) {
             if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
