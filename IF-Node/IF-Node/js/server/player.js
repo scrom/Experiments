@@ -2459,7 +2459,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 mission.processAffinityModifiers(map, missionReward);
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
             } else {
-                resultString += "<br>"+missionReward.successMessage+"<br>";
+                if (missionReward.successMessage) {
+                    resultString += "<br>"+missionReward.successMessage+"<br>";
+                };
                 if (missionReward.locations) {
                     //add locations
                     for (var l=0; l<missionReward.locations.length;l++) {

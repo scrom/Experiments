@@ -3422,12 +3422,32 @@
                     "sample"
                   ]
                 },
+				{
+                  "object": "artefact",
+                  "name": "comic",
+                  "description": "book with charred pages",
+                  "detailedDescription": "It looks like the tattered and charred remnants of a comic book.<br>It could be a clue.",
+                  "attributes": {
+                    "defaultAction": "read",
+                    "weight": 1,
+                    "canCollect": true,
+                    "affinityModifier": 0
+                  },
+                  "synonyms": [
+                    "book",
+                    "burned book",
+                    "charred book",
+                    "burned comic",
+                    "charred comic",
+                    "comic book"
+                  ]
+                },
                 {
                   "object": "creature",
                   "name": "dave convery",
                   "displayname": "Dave Convery",
                   "description": "Dave Convery",
-                  "detailedDescription": "Like a cynical but gentle, marketing wolverine.",
+                  "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
                   "attributes": {
                     "weight": 140,
                     "money": 10,
@@ -3439,8 +3459,11 @@
                     "canTravel": true,
                     "traveller": true,
                     "destinations": [
-                      "reception"
+                      "atrium-seating",
+					  "sales-north"
                     ],
+					"loopDelay": 3,
+					"destinationDelay": 2,
                     "imageName": "daveconvery.jpg",
                     "contagion": [
                       "zombie"
@@ -3457,7 +3480,7 @@
                   "name": "roger hart",
                   "displayname": "Roger Hart",
                   "description": "Roger Hart",
-                  "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.",
+                  "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.<br>He runs a regular podcast on comics (along with Dave and Lucy)",
                   "attributes": {
                     "weight": 120,
                     "money": 10,
@@ -3469,8 +3492,9 @@
                     "canTravel": true,
                     "traveller": true,
                     "destinations": [
-                      "smoking-area"
+                      "east-bike-racks"
                     ],
+					"destinationDelay": 2,
                     "imageName": "rogerhart.jpg",
                     "contagion": [
                       "zombie"
@@ -4209,7 +4233,7 @@
         "name": "lucy boyes",
         "displayname": "Lucy Boyes",
         "description": "Lucy Boyes",
-        "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.",
+        "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.<br>She runs a regular podcast on comics (along with Roger and Dave)",
         "attributes": {
           "weight": 120,
           "money": 20,
@@ -4249,6 +4273,30 @@
           "lb",
           "boyes",
           "her"
+        ],
+		"missions": [
+          {
+            "object": "mission",
+            "name": "finddaveandroger",
+            "displayName": "find the rest of the podcast team.",
+            "description": "Lucy's trying to find Dave and Roger.",
+            "attributes": {
+              "missionObject": "lucy boyes",
+              "destination": "lucy boyes",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I don't suppose you've seen Dave or Roger around anywhere have you?'<br>'They're supposed to be flying back from a comic book convention today.'",
+                "'Hey $player. Any sign of Dave or Roger yet?'",
+				"'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 3
+            },
+			"reward": {
+            }
+          }
         ]
       },
       {
