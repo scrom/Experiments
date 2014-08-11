@@ -2301,7 +2301,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
                 if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
                 //can't eat unless hungry if health is nearly full.
-                if ((_timeSinceEating < _maxMovesUntilHungry-9) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+                if ((_timeSinceEating < _maxMovesUntilHungry-15) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
             };
             self.transmit(artefact);
             var resultString = artefact.eat(self); //trying to eat some things give interesting results.

@@ -90,6 +90,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
+            if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
             //if (creatureAttributes.synonyms != undefined) { _synonyms = creatureAttributes.synonyms;};
             if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(creatureAttributes.carryWeight);};
             if (creatureAttributes.nutrition != undefined) { _nutrition = creatureAttributes.nutrition; };
@@ -102,7 +103,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //can collect and eat if dead.
             if (_hitPoints == 0) {
                 _collectable = true;
-                if (self.getSubType() != "friendly") {
+                if (_type != "friendly") {
                     _edible = true;
                 };
             };
@@ -129,7 +130,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if (creatureAttributes.dislikes != undefined) { _dislikes = creatureAttributes.dislikes;};
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
-            if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
             if (creatureAttributes.destinations != undefined) {_destinations = creatureAttributes.destinations;};
             if (creatureAttributes.clearedDestinations != undefined) {_clearedDestinations = creatureAttributes.clearedDestinations;};
             if (creatureAttributes.avoiding != undefined) {_avoiding = creatureAttributes.avoiding;};

@@ -196,11 +196,26 @@ exports.canEatFoodWhenHungry = function (test) {
     test.done();
 };
 
-exports.canEatFoodWhenHungry.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.canEatFoodWhenHungry.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait"], description: "Test that a player can eat food when hungry." };
+
+
+exports.canEatFoodWhenHungryTestBoundaryCase = function (test) {
+    p0.get('get', food.getName());
+    p0.increaseTimeSinceEating(40);
+    var expectedResult = "You eat the cake. You feel fitter, happier and healthier.";
+    var actualResult = p0.eat('eat','cake');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canEatFoodWhenHungryTestBoundaryCase.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait"], description: "Test that a player can eat food when hungry (having not eaten for n moves)." };
+
 
 exports.cannotEatFoodWhenNotHungry = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(48);
+    p0.increaseTimeSinceEating(39);
     var expectedResult = "You're not hungry at the moment.";
     var actualResult = p0.eat('eat','cake');
     console.log("Expected: "+expectedResult);
@@ -209,7 +224,7 @@ exports.cannotEatFoodWhenNotHungry = function (test) {
     test.done();
 };
 
-exports.cannotEatFoodWhenNotHungry.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.cannotEatFoodWhenNotHungry.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait"], description: "Test that a player cannot eat food when not hungry (boundary case test)." };
 
 
 exports.cannotEatFoodWhenNotHungryEvenIfInjured = function (test) {
@@ -224,7 +239,7 @@ exports.cannotEatFoodWhenNotHungryEvenIfInjured = function (test) {
     test.done();
 };
 
-exports.cannotEatFoodWhenNotHungryEvenIfInjured.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait", "Health Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.cannotEatFoodWhenNotHungryEvenIfInjured.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait", "Health Trait"], description: "Test that a player cannot eat food when not hungry and injured." };
 
 exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     p0.get('get', food.getName());
@@ -238,7 +253,7 @@ exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     test.done();
 };
 
-exports.canEatFoodWhenMoreHungryAndModeratelyInjured.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait", "Health Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.canEatFoodWhenMoreHungryAndModeratelyInjured.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait", "Health Trait"], description: "Test that a player can eat food when slightly hungry and injured." };
 
 
 exports.cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured = function (test) {
@@ -253,7 +268,7 @@ exports.cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured = function (test) 
     test.done();
 };
 
-exports.cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait", "Health Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait", "Health Trait"], description: "Test that a player cannot eat food when moderately hungry and not injured enough." };
 
 
 exports.cannotEatFoodWhenHealthGreaterThan95Percent = function (test) {
@@ -268,7 +283,7 @@ exports.cannotEatFoodWhenHealthGreaterThan95Percent = function (test) {
     test.done();
 };
 
-exports.cannotEatFoodWhenHealthGreaterThan95Percent.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.cannotEatFoodWhenHealthGreaterThan95Percent.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait", "Hunger Trait"], description: "Test that a player cannot eat food when healthly (>95%) and not moved much." };
 
 
 exports.cannotDrinkSolidFood = function (test) {
@@ -281,7 +296,7 @@ exports.cannotDrinkSolidFood = function (test) {
     test.done();
 };
 
-exports.cannotDrinkSolidFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.cannotDrinkSolidFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Eat Trait"], description: "Test that a player cannot drink a solid food item." };
 
 
 exports.canDrinkToxicFood = function (test) {
@@ -297,7 +312,7 @@ exports.canDrinkToxicFood = function (test) {
     test.done();
 };
 
-exports.canDrinkToxicFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Drink Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.canDrinkToxicFood.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Drink Trait"], description: "Test that a player can drink something toxic an be harmed." };
 
 exports.drinkingToxicFoodHurtsPlayer = function (test) {
     var poisonAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, nutrition: -50, type: "food", isLiquid: true, canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -313,7 +328,7 @@ exports.drinkingToxicFoodHurtsPlayer = function (test) {
     test.done();
 };
 
-exports.drinkingToxicFoodHurtsPlayer.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Action Trait", "Food Trait", "Liquid Trait", "Drink Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.drinkingToxicFoodHurtsPlayer.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Action Trait", "Food Trait", "Liquid Trait", "Drink Trait"], description: "Test that a player can drink something toxic an be harmed." };
 
 
 exports.eatLiquidAutomaticallyDrinksInstead = function (test) {
@@ -329,7 +344,7 @@ exports.eatLiquidAutomaticallyDrinksInstead = function (test) {
     test.done();
 };
 
-exports.eatLiquidAutomaticallyDrinksInstead.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Eat Trait", "Drink Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.eatLiquidAutomaticallyDrinksInstead.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Eat Trait", "Drink Trait"], description: "Test that eating a liquid item reverts to 'drink'." };
 
 
 exports.canBeKilledAndDropInventory = function (test) {
@@ -993,7 +1008,7 @@ exports.canEatDeadCreature = function (test) {
     p0.increaseTimeSinceEating(28);
     p0.reduceHitPoints(6);
 
-    var expectedResult = 'You tear into the raw flesh of the dead creature. It was a bit messy but you feel fitter, happier and healthier.';
+    var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';
     var actualResult = p0.eat('eat','dead creature');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1002,6 +1017,25 @@ exports.canEatDeadCreature = function (test) {
 };
 
 exports.canEatDeadCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature." };
+
+exports.cannotEatDeadFriendlyCreature = function (test) {
+
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:0, affinity:5, canTravel:true});
+    deadCreature.go(null,l0); 
+    p0.get('get','dead creature');
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+
+    var expectedResult = 'You sink your teeth into the dead creature but gag at the thought of eating corpses. You feel weaker. ';
+    var actualResult = p0.eat('eat','dead creature');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotEatDeadFriendlyCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player cannot eat a dead friendly creature." };
+
 
 exports.cannotEatLiveCreature = function (test) {
 
