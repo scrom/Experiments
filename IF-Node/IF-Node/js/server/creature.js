@@ -1182,6 +1182,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString = "";
             //if creature is mobile
             if (self.canTravel()) {
+                var retryCount = 0;
                 _avoiding.push(playerLocation.getName()); //avoid player location             
                 for (var i=0; i<fearLevel; i++) {
                     var exit = _currentLocation.getRandomExit(false, _avoiding);
@@ -1197,8 +1198,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
 
                         //try not to end up in player location - flee an extra move...
-                        if ((_currentLocation.getName() == playerLocation.getName()) && (i==fearLevel-1)) {
+                        if ((_currentLocation.getName() == playerLocation.getName()) && (i==fearLevel-1) && (retryCount <3)) {
                             i--;
+                            retryCount++;
                         };
                     };
                 };
