@@ -598,6 +598,21 @@ exports.Action = function Action(aPlayer, aMap) {
                 return "Player Health set: "+_player.recover(parseInt(_object0));
             };
 
+            if (_verb == '+kill') {
+                var creature = _map.getObject(_object0);
+                if (creature) {
+                    if (creature.getType() == "creature") {
+                        return "Killing "+creature.getName()+":<br>"+creature.kill();
+                    };
+                };
+                return "cannot kill "+_object0;               
+            };
+
+            if (_verb == '+wait') {
+                _ticks = parseInt(_object0);
+                return "Waiting "+_object0+" ticks..."+_player.incrementWaitCount(_ticks);       
+            };
+
             if (_verb == '+go') {
                 var location = _map.getLocation(_object0);
                 if (location) {

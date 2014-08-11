@@ -598,8 +598,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _saveCount++;
         };
 
-        self.incrementWaitCount = function() {
-            _waitCount++;
+        self.incrementWaitCount = function(incrementBy) {
+            if (!(incrementBy)) {
+                incrementBy = 1;
+            }
+            _waitCount+=incrementBy;
         };
 
         self.incrementHealCount = function() {
@@ -2298,7 +2301,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
                 if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
                 //can't eat unless hungry if health is nearly full.
-                if ((_timeSinceEating < _maxMovesUntilHungry-1) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+                if ((_timeSinceEating < _maxMovesUntilHungry-9) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
             };
             self.transmit(artefact);
             var resultString = artefact.eat(self); //trying to eat some things give interesting results.
@@ -2306,7 +2309,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //consume it
                 if (artefact.chargesRemaining() == 0) {
                     resultString += emptyContentsOfContainer(artefactName);
-                    removeObjectFromPlayerOrLocation(artefactName); 
+                    if (artefact.isCollectable()) {
+                        removeObjectFromPlayerOrLocation(artefactName); 
+                    };
                     _consumedObjects.push(artefact);
                 };
                 _timeSinceEating = 0;

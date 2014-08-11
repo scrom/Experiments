@@ -35,6 +35,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _collectable = false; //can't carry a living creature
         var _bleeding = false;
         var _edible = false; //can't eat a living creature
+        var _charges = 0;
         var _nutrition = 50; //default
         var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _startLocation;
@@ -101,8 +102,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //can collect and eat if dead.
             if (_hitPoints == 0) {
                 _collectable = true;
-                _edible = true;
+                if (self.getSubType() != "friendly") {
+                    _edible = true;
+                };
             };
+            if (creatureAttributes.canCollect  != undefined) { _collectable= creatureAttributes.canCollect;};
+            if (creatureAttributes.isEdible  != undefined) { _edible = creatureAttributes.isEdible;};
+            if (creatureAttributes.charges != undefined) {_charges = creatureAttributes.charges};
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
             if (creatureAttributes.bleedingHealthThreshold != undefined) {_bleedingHealthThreshold = creatureAttributes.bleedingHealthThreshold};
@@ -349,6 +355,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.money = _inventory.getCashBalance();
             currentAttributes.canCollect = _collectable;
             currentAttributes.isEdible = _edible;
+            currentAttributes.charges = _charges;
             currentAttributes.nutrition = _nutrition;
             currentAttributes.bleeding = _bleeding;
             currentAttributes.weight = _weight;
@@ -376,12 +383,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getAttributesToSave = function() {
             var saveAttributes = {};
             var creatureAttributes = self.getCurrentAttributes();
-
-            
+         
             if (creatureAttributes.nutrition != 50) { saveAttributes.nutrition = creatureAttributes.nutrition;};
             if (creatureAttributes.price != 0) { saveAttributes.price = creatureAttributes.price;};
             if (creatureAttributes.weight != 0) {saveAttributes.weight = creatureAttributes.weight;};
-            if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};             
+            if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};      
+            if (creatureAttributes.canCollect == true) {saveAttributes.canCollect = creatureAttributes.canCollect;};
+            if (creatureAttributes.charges !=0) {saveAttributes.charges = creatureAttributes.charges;};
+            if (creatureAttributes.isEdible == true) {saveAttributes.isEdible = creatureAttributes.isEdible;};
             if (creatureAttributes.baseAffinity != 0) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
             if (creatureAttributes.attackStrength != undefined) {saveAttributes.attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {saveAttributes.gender = creatureAttributes.gender;};
@@ -631,7 +640,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.isEdible = function() {
-            if (self.isDead()) { _edible = true;}; //in case not already set.
+            if (self.isDead()) { 
+                if (self.getSubType() != "friendly") {
+                    _edible = true;
+                };               
+            }; //in case not already set.
             //console.log("edible = "+_edible);
             return _edible;
         };
@@ -1346,9 +1359,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.eat = function(player) {
-            var resultString;
+            var resultString = "";
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
+                if (self.isDead()) {
+                    resultString += "You sink your teeth into "+self.getDisplayName()+" but gag at the thought of eating corpses. "
+                    resultString += player.hurt(3);
+                    return resultString;
+                };
                 self.decreaseAffinity(1);
                 player.hurt(Math.floor(_attackStrength/4)); //bites player (base attack strength / 4 - not with weapon)
                 var playerContagion = player.getContagion();
@@ -1364,10 +1382,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return resultString;
             };
 
-            _weight = 0;
+            if (self.chargesRemaining() >0) {
+                _charges--;
+            };
+            if (self.chargesRemaining() ==0) {
+                _weight = 0;
+                _edible = false;
+                _collectable = false;
+                _detailedDescription = "All that's left are a few scraps of skin and hair.";
+            };
+
             _description = "the remains of a well-chewed "+self.getDisplayName();
-            _detailedDescription = "All that's left are a few scraps of skin and hair.";
-            resultString = "You tear into the raw flesh of "+self.getDisplayName()+". "
+
+            resultString = "You tear into the raw flesh of "+self.getDisplayName()+".<br>"
 
             if (_nutrition >0) {
                 player.recover(_nutrition);
@@ -1427,7 +1454,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.kill = function(){//
             _hitPoints = 0;
             if (_affinity >=0) {_affinity=0;}; //just in case!
-            _edible = true;
+            if (self.getSubType() != "friendly")  {
+                _edible = true;
+                _charges = Math.ceil(self.getWeight()/25);
+            };
             _bleeding = false;
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
@@ -1950,7 +1980,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.chargesRemaining = function() {
-            return 0;
+            return _charges;
         };
 
         self.hasPower = function() {
