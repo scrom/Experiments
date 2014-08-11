@@ -626,6 +626,10 @@ exports.Action = function Action(aPlayer, aMap) {
                 if(_object1) { return _map.find(_object1, true);}
                 else { return _map.find(_object0, true); };
             };
+
+            if (_verb == '+missions') {
+                return _map.listAllMissions(_player);
+            };
         };
 
         self.catchPlayerNotUnderstood = function() {

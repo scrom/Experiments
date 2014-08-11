@@ -531,11 +531,16 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //before doing any additional processing, have we timed out?
             if (_conditionAttributes["time"]) {                       
-                if (self.getTimeTaken() <= _conditionAttributes["time"]) {
+                if (self.getTimeTaken() >= _conditionAttributes["time"]) {
                     successCount++;
-                } else {
-                    return self.timeExpired();
                 };                           
+            };
+            if (_failAttributes) {
+                if (_failAttributes["time"]) {                       
+                    if (self.getTimeTaken() >= _failAttributes["time"]) {
+                        return self.timeExpired();
+                    };                           
+                };
             };
             
             //we use player location to reduce the need for checking all locations as much as possible

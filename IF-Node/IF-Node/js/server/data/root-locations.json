@@ -102,9 +102,11 @@
               "static": true
             },
             "conditionAttributes": {
-              "time": 10,
               "isDestroyed": true
             },
+			"failAttributes": {
+				"time": 10
+			  },
             "reward": {
               "score": -25,
               "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points.",
@@ -3374,10 +3376,11 @@
           "type": "event",
           "parent": "latte",
           "missionObject": "player",
-          "destination": "crash-site"
+          "destination": "player"
         },
         "conditionAttributes": {
-          "time": 34
+          "time": 34,
+		  "missionsCompletedCount": ">8"
         },
         "reward": {
           "locations": [

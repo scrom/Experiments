@@ -289,6 +289,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.missionsCompleted != undefined) {
                 for(var i=0; i<playerAttributes.missionsCompleted.length;i++) {
                     _missionsCompleted.push(playerAttributes.missionsCompleted[i]);
+                    _map.incrementMissionCount();
                 };
             };
 
@@ -749,6 +750,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     break;
                 };
             };
+        };
+
+        self.getMissions = function(includeChildren) {
+            var missions = [];
+            for (var i=0; i < _missions.length; i++) {
+                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                    missions.push(_missions[i]);
+                };
+            };
+            return missions;
         };
 
         self.canAfford = function (price) {

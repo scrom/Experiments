@@ -358,6 +358,18 @@ exports.Map = function Map() {
             return missions;
         };
 
+        self.listAllMissions = function(player) {
+            //loop through each location, location inventory. 
+            //Get all missions
+            var missions = self.getAllMissions();
+            missions = missions.concat(player.getMissions(true));
+            var missionList = "";
+            for (var i=0;i<missions.length;i++) {
+                missionList+= i+1+": "+missions[i].getName()+" - "+missions[i].getDisplayName()+"<br>";
+            };
+            return missionList;
+        };
+
         self.getMissionOwner = function(missionName) {
             for (var i=0;i<_locations.length;i++) {
                 var locationInventory = _locations[i].getAllObjectsAndChildren(true);
