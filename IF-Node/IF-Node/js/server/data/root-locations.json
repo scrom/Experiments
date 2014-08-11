@@ -139,8 +139,22 @@
           "locationsToFind": 0
         },
         "reward": {
+          "score": 100,
+          "successMessage": "<br>You're quite the explorer!<br>Congratulations, you've found every location. Have 100 points."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "adventurer",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "locationsFound": 100
+        },
+        "reward": {
           "score": 50,
-          "successMessage": "<br>You're quite the explorer!<br>Congratulations, you've found every location. Have 50 points."
+          "successMessage": "<br>Hey, that's some impressive adventuring!<br>You've found 100 locations. Have 50 points."
         }
       },
       {
@@ -251,7 +265,7 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "maxAffinity": 25
+          "maxAffinity": 15
         },
         "reward": {
           "score": 50,
@@ -309,11 +323,11 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "popularity": "<-4"
+          "popularity": "<-5"
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>You're treading a fine line here. I know you can't make an ommelette without breaking some eggs but you're not making yourself popular.<br>I'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good though.<br>Have 5 points."
+          "successMessage": "<br>You're treading a fine line here. I know you can't make an ommelette without breaking some eggs but you'r actions aren't making you popular.<br>I'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good though.<br>Have 5 points."
         }
       },
       {
@@ -327,7 +341,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>You're quite the big spender. We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</> spending wisely, aren't you?<br>Have 5 points."
+          "successMessage": "<br>Hey big spender.<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?<br>Have 5 points."
         }
       },
       {
@@ -355,16 +369,16 @@
         },
         "reward": {
           "score": -150,
-          "successMessage": "<br>Yeah... About that money you made.<br>That level of dishonesty will get you fired pretty much immediately.<br>You lose 150 points."
+          "successMessage": "<br>Yeah... About that all money you made.<br>That level of dishonesty will get you fired pretty much immediately.<br>You lose 150 points."
         }
       },
       {
         "object": "mission",
-        "name": "sweetlatte",
+        "name": "latte",
         "displayName": "get yourself a latte",
-        "description": "It's your first day in the office. Time for a boost. Get yourself a cup of sweet, sugary latte.",
+        "description": "It's your first day in the office. Time for a boost. Get yourself a latte.",
         "attributes": {
-          "missionObject": "sweet latte",
+          "missionObject": "latte",
           "destination": "player"
         },
         "conditionAttributes": {
@@ -3358,8 +3372,8 @@
         "displayName": "there's been a plane crash",
         "attributes": {
           "type": "event",
-          "parent": "sweetlatte",
-          "missionObject": "coffee machine",
+          "parent": "latte",
+          "missionObject": "player",
           "destination": "crash-site"
         },
         "conditionAttributes": {

@@ -406,7 +406,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 break;
             case (_destination == "player"): //player inventory
                 if (_missionObject == "player") {
-                    missionObject = player;
+                    return player;
                 } else {
                     return player.getObject(_missionObject);
                 };
@@ -557,10 +557,6 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if ((!(_conditionAttributes["isDestroyed"])) || (_conditionAttributes["isDestroyed"] == false)){
                     return self.fail("destroyedObject");
                 }; 
-            };
-
-            if (self.getName() == "saveredgate") {
-                console.log("debug time");
             };
 
             //have we failed anything?
