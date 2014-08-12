@@ -2000,7 +2000,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //by this point this is definitely an aggressive act. Increase aggression
             self.increaseAggression(1);
 
-            if (receiver.getSubType() != "creature") {
+            if (receiver.getSubType() == "friendly") {
                 //it's ok to hit "bad guys" in front of people but nothing else.
                 //killing them will still upset the locals though 
                 _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
