@@ -1711,7 +1711,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.receive = function(anObject) {
-            if (self.getType() == "container" && _broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
+            if (self.getType() == "container" && self.isBroken()) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
             if (_locked) {return initCap(_itemDescriptivePrefix)+" locked.";};
             var resultString = "";
