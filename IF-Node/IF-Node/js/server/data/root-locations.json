@@ -101,12 +101,12 @@
               "missionObject": "screen",
               "static": true
             },
+            "failAttributes": {
+              "time": 10
+            },
             "conditionAttributes": {
               "isDestroyed": true
             },
-			"failAttributes": {
-				"time": 10
-			  },
             "reward": {
               "score": -25,
               "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points.",
@@ -1824,7 +1824,7 @@
           "bar",
           "fire exit",
           "fire door",
-		  "exit"
+          "exit"
         ]
       }
     ]
@@ -2819,7 +2819,7 @@
           "imageName": "amandamansfield.jpg"
         },
         "synonyms": [
-		  "amanda",
+          "amanda",
           "mandy",
           "manda",
           "mansfield",
@@ -3375,12 +3375,11 @@
         "attributes": {
           "type": "event",
           "parent": "latte",
-          "missionObject": "player",
-          "destination": "player"
+          "missionObject": "player"
         },
         "conditionAttributes": {
           "time": 34,
-		  "missionsCompletedCount": ">8"
+          "missionsCompletedCount": ">8"
         },
         "reward": {
           "locations": [
@@ -3425,7 +3424,7 @@
                     "sample"
                   ]
                 },
-				{
+                {
                   "object": "artefact",
                   "name": "comic",
                   "description": "book with charred pages",
@@ -3463,10 +3462,10 @@
                     "traveller": true,
                     "destinations": [
                       "atrium-seating",
-					  "sales-north"
+                      "sales-north"
                     ],
-					"loopDelay": 3,
-					"destinationDelay": 2,
+                    "loopDelay": 3,
+                    "destinationDelay": 2,
                     "imageName": "daveconvery.jpg",
                     "contagion": [
                       "zombie"
@@ -3497,7 +3496,7 @@
                     "destinations": [
                       "east-bike-racks"
                     ],
-					"destinationDelay": 2,
+                    "destinationDelay": 2,
                     "imageName": "rogerhart.jpg",
                     "contagion": [
                       "zombie"
@@ -4277,7 +4276,7 @@
           "boyes",
           "her"
         ],
-		"missions": [
+        "missions": [
           {
             "object": "mission",
             "name": "finddaveandroger",
@@ -4285,20 +4284,18 @@
             "description": "Lucy's trying to find Dave and Roger.",
             "attributes": {
               "missionObject": "lucy boyes",
-              "destination": "lucy boyes",
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'I don't suppose you've seen Dave or Roger around anywhere have you?'<br>'They're supposed to be flying back from a comic book convention today.'",
                 "'Hey $player. Any sign of Dave or Roger yet?'",
-				"'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'"
+                "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'"
               ]
             },
             "conditionAttributes": {
               "alive": true,
               "conversationState": 3
             },
-			"reward": {
-            }
+            "reward": {}
           }
         ]
       },
@@ -6204,7 +6201,7 @@
           "bar",
           "fire exit",
           "fire door",
-		  "exit"
+          "exit"
         ]
       }
     ]
@@ -6494,7 +6491,7 @@
           "bar",
           "fire exit",
           "fire door",
-		  "exit"
+          "exit"
         ]
       }
     ]
@@ -7398,21 +7395,21 @@
         "attributes": {
           "parent": "planecrash"
         },
+        "failAttributes": {
+          "contagionDeathToll": {
+            "friendly": ">0"
+          }
+        },
         "conditionAttributes": {
           "contagion": [],
           "contagionDeathToll": {
             "friendly": 0
           }
         },
-        "failAttributes": {
-          "contagionDeathToll": {
-            "friendly": ">0"
-          }
-        },
         "reward": {
           "score": 200,
           "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty).",
-		  "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+          "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
         }
       }
     ]

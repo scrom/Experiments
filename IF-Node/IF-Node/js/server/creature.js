@@ -130,7 +130,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if (creatureAttributes.dislikes != undefined) { _dislikes = creatureAttributes.dislikes;};
             if (creatureAttributes.attackStrength != undefined) {_attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
-            if (creatureAttributes.destinations != undefined) {_destinations = creatureAttributes.destinations;};
+            if (creatureAttributes.destinations != undefined) {
+                //copy array contents, don't copy reference to original.
+                for (var i=0;i<creatureAttributes.destinations.length;i++) {
+                    _destinations.push(creatureAttributes.destinations[i]);
+                };
+            };
             if (creatureAttributes.clearedDestinations != undefined) {_clearedDestinations = creatureAttributes.clearedDestinations;};
             if (creatureAttributes.avoiding != undefined) {_avoiding = creatureAttributes.avoiding;};
             if (creatureAttributes.loops != undefined) {_loops = creatureAttributes.loops;};
