@@ -1386,8 +1386,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
             if (receiver.isDead()) { return  initCap(receiver.getDisplayName())+"'s dead. Gifts won't help now.";};
             if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+artefact.getDescriptivePrefix()+" too heavy for "+receiver.getSuffix()+" at the moment.";};
-            var affinityModifier = artefact.getAffinityModifier();
-            if (!(receiver.willAcceptGift(_aggression, affinityModifier))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to take gifts from you at the moment.";};
+            if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to take gifts from you at the moment.";};
 
             //we know they *can* carry it...
 
@@ -2079,14 +2078,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 return resultString;
             };
-            
-            //try to hurt the receiver
-            if (receiver.getSubType() == "friendly") {
-                return receiver.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
-            };
 
             var pointsToRemove = weapon.getAttackStrength();
-            var resultString = receiver.hurt(pointsToRemove);
+            var resultString = receiver.hurt(pointsToRemove, self);
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
                 resultString +=  "Ding! You repeatedly attack "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent sort of way."

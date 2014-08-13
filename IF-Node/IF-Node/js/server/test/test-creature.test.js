@@ -323,6 +323,7 @@ exports.deadCreatureWithNegativeAffinityWillShare.meta = { traits: ["Creature Te
 
 
 exports.deadCreaturesCantAcceptGifts = function (test) {
+
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:-1});
     var expected = false;

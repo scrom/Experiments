@@ -11,6 +11,7 @@ var junkAttributes;
 var breakableJunkAttributes;
 var weaponAttributes;
 var foodAttributes;
+var iceCreamAttributes;
 var containerAttributes;
 var playerName;
 var playerAttributes;
@@ -23,6 +24,7 @@ var c1; //creature object
 var m0; //map object
 var weapon; //weapon object
 var food; //food object
+var iceCream; //a bribe
 var container; //container object
 var breakable; //breakable object
 
@@ -38,10 +40,12 @@ exports.setUp = function (callback) {
     breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, affinityModifier: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    iceCreamAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, affinityModifier:5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
     weapon = new artefact.Artefact('sword', 'mighty sword', 'chop chop chop',weaponAttributes, null);
     food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
+    iceCream = new artefact.Artefact('ice cream', 'great bribe', 'nom nom nom',iceCreamAttributes, null);
     container = new artefact.Artefact('container', 'container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'box', 'just a box',breakableJunkAttributes, null);
     breakable = new artefact.Artefact('glass', 'drinking glass', 'a somewhat fragile drinking vessel',breakableJunkAttributes, null);
@@ -70,12 +74,14 @@ exports.tearDown = function (callback) {
     breakableJunkAttributes = null;
     weaponAttributes = null;
     foodAttributes = null;
+    iceCreamAttributes = null;
     containerAttributes = null;
     a0 = null;
     a1 = null;
     weapon = null;
     breakable = null;
     food = null;
+    iceCream = null;
     container = null;
     c0 = null;
     c1 = null;
@@ -484,6 +490,89 @@ exports.canHitCreatureWithInventoryWeapon = function (test) {
 };
 
 exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+
+exports.canTurnFriendlyCreatureToFightableByHitting3Times = function (test) {
+    var friendlyCreature = new creature.Creature('friend', 'A friend', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:215, affinity:2, canTravel:true});
+    friendlyCreature.go(null,l0); 
+    p0.get('get', weapon.getName());
+    
+    p0.hit('hit',friendlyCreature.getName());
+    p0.hit('hit',friendlyCreature.getName());
+
+    var expectedResult = "You're obviously determined to fight him. Fair enough, on your head be it.<br>The friend is hurt. He's not happy.";
+    var actualResult = p0.hit('hit',friendlyCreature.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canTurnFriendlyCreatureToFightableByHitting3Times.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that repeatedly hitting a friendly creature will make it possible to fight." };
+
+
+exports.friendlyCreatureHitCountErodesSuccessfullyByWalkigTheEffectsOff = function (test) {
+    var friendlyCreature = new creature.Creature('friend', 'A friend', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:215, affinity:2, canTravel:true});
+    friendlyCreature.go(null,l0); 
+    p0.get('get', weapon.getName());
+    
+    p0.hit('hit',friendlyCreature.getName());
+    p0.hit('hit',friendlyCreature.getName());
+    friendlyCreature.go(null,l0);
+    friendlyCreature.go(null,l0); //after 2 moves, hitcount should reduce by 1 so that they don't "turn" on the next hit.
+    var expectedResult = "You missed. This is your last chance. Seriously, don't do that again any time soon.";
+    var actualResult = p0.hit('hit',friendlyCreature.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.friendlyCreatureHitCountErodesSuccessfullyByWalkigTheEffectsOff.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that after hitting a friendly creature the tracking of this will decline given enough walking." };
+
+
+exports.canRevertPreviouslyFriendlyCreatureBack = function (test) {
+    var friendlyCreature = new creature.Creature('friend', 'A friend', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:215, affinity:2, canTravel:true});
+    friendlyCreature.go(null,l0); 
+    p0.get('get', weapon.getName());
+    
+    p0.hit('hit',friendlyCreature.getName());
+    p0.hit('hit',friendlyCreature.getName());
+    p0.hit('hit',friendlyCreature.getName());
+
+    console.log(friendlyCreature.receive(iceCream));
+
+    var expectedResult = "friendly";
+    var actualResult = friendlyCreature.getSubType();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canRevertPreviouslyFriendlyCreatureBack.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that a previously turned friendly creature can be recovered." };
+
+exports.cannotRevertPreviouslyFriendlyCreatureBackWithInsufficientBribe = function (test) {
+    var friendlyCreature = new creature.Creature('friend', 'A friend', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:215, affinity:2, canTravel:true});
+    friendlyCreature.go(null,l0); 
+    p0.get('get', weapon.getName());
+    
+    p0.hit('hit',friendlyCreature.getName());
+    p0.hit('hit',friendlyCreature.getName());
+    p0.hit('hit',friendlyCreature.getName());
+
+    console.log(friendlyCreature.receive(food));
+
+    var expectedResult = "creature";
+    var actualResult = friendlyCreature.getSubType();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotRevertPreviouslyFriendlyCreatureBackWithInsufficientBribe.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that a previously turned friendly creature cannot be recovered without a decent bribe." };
+
 
 exports.hittingCreatureWhenUnarmedDamagesPlayer = function (test) {
     var expectedResult = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. You feel weaker. ";

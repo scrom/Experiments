@@ -58,6 +58,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _contagion = [];
         var _antibodies = [];
 
+        //tracking of player attacks
+        var _originalType = "creature";
+        var _originalBaseAffinity = 0;
+        var _friendlyAttackCount = 0;
+
         var oppositeOf = function(direction){
             switch(direction)
             {
@@ -146,14 +151,26 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
             if (creatureAttributes.contagion != undefined) {_contagion = creatureAttributes.contagion;};                
-            if (creatureAttributes.antibodies != undefined) {_antibodies = creatureAttributes.antibodies;};                
+            if (creatureAttributes.antibodies != undefined) {_antibodies = creatureAttributes.antibodies;};    
+    
+            if (creatureAttributes.originalType) {
+                _originalType = creatureAttributes.originalType;
+            } else {
+                _originalType = _type;
+            };
+            if (creatureAttributes.originalBaseAffinity) {
+                _originalBaseAffinity = creatureAttributes.originalBaseAffinity;
+            } else {
+                _originalBaseAffinity = _baseAffinity;
+            };
+            if (creatureAttributes.friendlyAttackCount) {_friendlyAttackCount = creatureAttributes.friendlyAttackCount;};             
 
         };
 
         processAttributes(attributes);
         
         var validateType = function() {
-            var validobjectTypes = ['creature','friendly'];
+            var validobjectTypes = ['creature','friendly', 'animal'];
             if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid creature type."};
             //console.log(_name+' type validated: '+_type);
         };
@@ -344,6 +361,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.maxHealth = _maxHitPoints;
             currentAttributes.canTravel = _canTravel;
             currentAttributes.traveller = _traveller;
+            currentAttributes.baseAffinity = _baseAffinity;
             currentAttributes.affinity = _affinity;
             if (_affinity > 0) {
                 currentAttributes.friendly = true;
@@ -379,7 +397,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.returnDirection = _returnDirection;  
             currentAttributes.imageName = _imageName;     
             currentAttributes.contagion = _contagion;                     
-            currentAttributes.antibodies = _antibodies;                     
+            currentAttributes.antibodies = _antibodies;  
+                
+            currentAttributes.originalType = _originalType;
+            currentAttributes.originalBaseAffinity = _originalBaseAffinity;
+            currentAttributes.friendlyAttackCount = _friendlyAttackCount;             
+                            
 
             return currentAttributes;
 
@@ -421,7 +444,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
             if (creatureAttributes.contagion.length>0) {saveAttributes.contagion = creatureAttributes.contagion;};                
-            if (creatureAttributes.antibodies.length>0) {saveAttributes.antibodies = creatureAttributes.antibodies;};                
+            if (creatureAttributes.antibodies.length>0) {saveAttributes.antibodies = creatureAttributes.antibodies;};     
+    
+            if (creatureAttributes.originalType != creatureAttributes.type) {saveAttributes.originalType = creatureAttributes.originalType;};     
+            if (creatureAttributes.originalBaseAffinity != creatureAttributes.baseAffinity) {saveAttributes.originalBaseAffinity = creatureAttributes.originalBaseAffinity;};     
+            if (creatureAttributes.friendlyAttackCount >0) {saveAttributes.friendlyAttackCount = creatureAttributes.friendlyAttackCount;};
 
             return saveAttributes;
         };
@@ -505,7 +532,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.increaseAffinity = function(changeBy, isPermanent) {
             if (!(self.isDead())) {
                 _affinity+=changeBy;
+
+                //is this a friendly creature that's previously been "tipped over"
+                if ((_originalType == "friendly") && (_type == "creature")) {
+                    if (_originalBaseAffinity != _baseAffinity) {
+                        if ((_affinity >= _originalBaseAffinity+2) && (_affinity >1)) {
+                            _baseAffinity = _originalBaseAffinity;
+                            _type = _originalType;
+                        };
+                    };
+                };
+
                 if (isPermanent) {_baseAffinity +=changeBy;};
+
                 console.log("affinity for "+self.getName()+" is now "+_affinity);
             };
         };
@@ -701,7 +740,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 var creatures = _currentLocation.getCreatures();
                 for (var i=0;i<creatures.length;i++) {
                     if (self.dislikes(creatures[i])) {
-                        if (_affinity >1) {_affinity--;}; //reduce affinity for encountering someone they don't like
+                        if (_affinity >1) {self.decreaseAffinity(1,false);}; //reduce affinity for encountering someone they don't like
                         return false;
                     };
                 };
@@ -775,7 +814,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var creatures = _currentLocation.getCreatures();
             for (var i=0;i<creatures.length;i++) {
                 if (self.dislikes(creatures[i])) {
-                    if (_affinity >1) {_affinity--;}; //reduce affinity for encountering someone they don't like
+                    if (_affinity >1) {self.decreaseAffinity(1,false);}; //reduce affinity for encountering someone they don't like
                     return true;
                 };
             };
@@ -962,7 +1001,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return initCap(self.getDisplayName()) + " bought " + anObject.getDisplayName() + ".";
         };
 
-        self.willAcceptGift = function(playerAggression, affinityModifier) {
+        self.willAcceptGift = function(playerAggression, artefact) {
+            var affinityModifier = artefact.getAffinityModifier();
             //more tolerant than fight or flight but not by much...
             //this allows a moderate bribe to get a flighty creature to stick around
             //but prevents them taking something and running away immediately afterward
@@ -970,8 +1010,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //cannot give a single gift of affinity impact enough to transform their response.
             //this still leaves bad situations recoverable but at a high cost
             if (self.isDead()) {return false;};
-            if ((_affinity <=-5) && (0-affinityModifier<=_affinity)) {return false;};
+            if (_affinity <-5) {return false;};
+            if ((_affinity <=-4) && (0-affinityModifier<=_affinity)) {return false;};
             if ((_affinity <-1) && (playerAggression>1)) {return false;};
+            if ((_affinity <0) && (_missions.length >0)) {
+                for (var i=0;i<_missions.length;i++) {
+                    if (_missions[i].getMissionObjectName() == artefact.getName()) {
+                        return false; 
+                    };
+                };
+            };
             if ((_affinity <0) && (playerAggression>=2)) {return false;};
 
             return true;
@@ -1239,8 +1287,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             _moves++;
 
-            //
             self.setReturnDirection(oppositeOf(direction));
+
+            //slowly erode friendly attack count
+            if (_friendlyAttackCount >0) {
+                if (_moves%2 == 0 && _moves>0) {_friendlyAttackCount--;}; //degrade every 2 moves
+            };
 
             //slowly erode affinity back towards original level the more time they spend moving (without a benefit or impact).
             //affinity degrades slower the higher it is to start with. 
@@ -1254,7 +1306,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if (_affinity < _baseAffinity) { 
-                if (_affinity > -5) {
+                if (_affinity >= -5) {
                     if (_moves%5 == 0 && _moves>0) {self.increaseAffinity(1);}; //degrade every 5 moves for affinity lower than 5
                 } else if (_affinity > -10) {
                     if (_moves%10 == 0 && _moves>0) {self.increaseAffinity(1);}; //degrade every 10 moves for affinity 5-9
@@ -1284,15 +1336,46 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _currentLocation;
         };	
 
-        self.hurt = function(pointsToRemove) {
+        self.hurt = function(pointsToRemove, attacker) {
             if (self.isDead()) {return self.getDisplayName()+"'s dead already. Attacking corpses is probably crossing a line somewhere.";};
+
+            var resultString = "";
+
+            //if player is attacking a friendly...
+            if (self.getSubType() == "friendly") {
+                if (attacker) {
+                    if (attacker.getType() == "player")  { 
+                        console.log("player attacks friendly");        
+                        _friendlyAttackCount ++;
+                    
+                        if (_friendlyAttackCount >2) {
+                            //switch to unfriendly
+                            _type = "creature";
+                            _canTravel = true;
+                            _traveller = true;
+                            _friendlyAttackCount = 0;
+                            _baseAffinity = -1;
+                            if (_affinity > -1) {_affinity = -1;};
+                            resultString +="You're obviously determined to fight "+_genderSuffix+". Fair enough, on your head be it.<br>"; 
+                        } else if (_friendlyAttackCount ==2) {
+                            return "You missed. This is your last chance. Seriously, don't do that again any time soon.";
+                        } else {
+                            return self.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again.";
+                        };     
+                    };
+                };
+            };
+
             _hitPoints -= pointsToRemove;
             //should really bash weapon here in case it's breakable too.
             if (self.isDead()) {return self.kill();};
 
             if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
-            return initCap(self.getDisplayName())+" is hurt. "+self.health();
+
+            resultString += initCap(self.getDisplayName())+" is hurt. "+self.health();
+
             console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+            return resultString;
 
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
         };
