@@ -36,7 +36,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _bleeding = false;
         var _edible = false; //can't eat a living creature
         var _charges = 0;
-        var _nutrition = 50; //default
+        var _nutrition = 20; //default
         var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _startLocation;
         var _currentLocation;
@@ -389,7 +389,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var saveAttributes = {};
             var creatureAttributes = self.getCurrentAttributes();
          
-            if (creatureAttributes.nutrition != 50) { saveAttributes.nutrition = creatureAttributes.nutrition;};
+            if (creatureAttributes.nutrition != 20) { saveAttributes.nutrition = creatureAttributes.nutrition;};
             if (creatureAttributes.price != 0) { saveAttributes.price = creatureAttributes.price;};
             if (creatureAttributes.weight != 0) {saveAttributes.weight = creatureAttributes.weight;};
             if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};      
@@ -1427,13 +1427,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _charges--;
             };
             if (self.chargesRemaining() ==0) {
-                _weight = 0;
+                if (_weight >= 25) { //same threshold that means they're more than a single meal - ensures remains stay.
+                    _collectable = false;
+                    _weight = 1;
+                } else {
+                    _weight = 0;
+                };
                 _edible = false;
-                _collectable = false;
                 _detailedDescription = "All that's left are a few scraps of skin and hair.";
             };
 
-            _description = "the remains of a well-chewed "+self.getDisplayName();
+            _description = "the remains of a well-chewed "+self.getName();
 
             resultString = "You tear into the raw flesh of "+self.getDisplayName()+".<br>"
 

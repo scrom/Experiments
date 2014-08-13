@@ -141,7 +141,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //exit early if no contents.
             if (contentCount == 0) return "";
 
-            console.log("Removing "+contentCount+" items from wreckage.");
+            console.log("Removing "+contentCount+" items from wreckage/remains.");
             for (var i=0; i<contents.length;i++) {
                 //console.log("Contents "+contents[i].getName());
             };
@@ -178,12 +178,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 else { artefact.removeObject(contents[i].getName()); };
             };
 
-            if (contentCount == lostObjectCount) {return "<br>"+initCap(artefact.getPossessiveSuffix())+" contents are beyond recovery.";};
+            var contents = "contents";
+            if (artefact.getType() == "creature") {contents = "possessions";};
+
+            if (contentCount == lostObjectCount) {return "<br>"+initCap(artefact.getPossessiveSuffix())+" "+contents+" are beyond recovery.";};
             var remaining = "";
             if (lostObjectCount > 0) {remaining = "remaining ";};
 
-            if (locationArtefact) {return "<br>The "+remaining+"contents are scattered on the floor.";};
-            return "<br>You manage to gather up the "+remaining+"contents."
+            if (locationArtefact) {return "<br>"+initCap(artefact.getPossessiveSuffix())+" "+remaining+""+contents+" are scattered on the floor.";};
+            return "<br>You manage to gather up "+artefact.getPossessiveSuffix()+" "+remaining+""+contents+"."
         };
 
         var notFoundMessage = function(objectName) {

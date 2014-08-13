@@ -539,7 +539,7 @@ exports.hittingContainerArtefactTwiceWhenArmedDestroysContainerAndScattersConten
     container.receive(breakable);
     p0.get('get', weapon.getName());
     p0.hit('hit',container.getName());
-    var expectedResult = "Oops. You destroyed it!<br>The contents are scattered on the floor.";
+    var expectedResult = "Oops. You destroyed it!<br>Its contents are scattered on the floor.";
     var actualResult = p0.hit('hit',container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1000,7 +1000,26 @@ exports.cannotDrinkDeadCreature = function (test) {
 
 exports.cannotDrinkDeadCreature.meta = { traits: ["Player Test", "Drink Trait", "Food Trait"], description: "Test that player cannot drink a dead creature." };
 
-exports.canEatDeadCreature = function (test) {
+exports.canEatDeadCreatureFromLocation = function (test) {
+
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
+    deadCreature.go(null,l0); 
+    p0.setLocation(l0);
+    //p0.get('get','dead creature');
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+
+    var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';
+    var actualResult = p0.eat('eat','dead creature');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canEatDeadCreatureFromLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature that is in a location." };
+
+exports.canEatDeadCreatureFromInventory = function (test) {
 
     var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
     deadCreature.go(null,l0); 
@@ -1016,7 +1035,134 @@ exports.canEatDeadCreature = function (test) {
     test.done();
 };
 
-exports.canEatDeadCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature." };
+exports.canEatDeadCreatureFromInventory.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature that is in their inventory." };
+
+
+exports.eatingAllOfDeadCreatureCarryingItemsDropsContents = function (test) {
+
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:5, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true},[food, breakable, weapon, container]);
+    deadCreature.go(null,l0); 
+    p0.setLocation(l0);
+    //console.log(p0.examine("examine","dead creature"));
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+
+    var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>His possessions are scattered on the floor.';
+    var actualResult = p0.eat('eat','dead creature');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.eatingAllOfDeadCreatureCarryingItemsDropsContents.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature that is carrying items." };
+
+
+exports.eatingAllOfDeadCreatureCarryingItemsReturnsContentsToPlayer = function (test) {
+
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:5, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true},[food, breakable, weapon, container]);
+    deadCreature.go(null,l0); 
+    p0.setLocation(l0);
+    p0.get('get','dead creature');
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+
+    var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>You manage to gather up his possessions.';
+    var actualResult = p0.eat('eat','dead creature');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.eatingAllOfDeadCreatureCarryingItemsReturnsContentsToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature (from their inventory) that is carrying items." };
+
+
+exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation = function (test) {
+    var homeLoc = new location.Location('homeloc','a home location');
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:5, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true},[food, breakable, weapon, container]);
+    deadCreature.go(null,homeLoc); 
+    p0.setLocation(homeLoc);
+    //console.log(p0.examine("examine","dead creature"));
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+    p0.eat('eat','dead creature');
+
+    var expectedResult = 'a home location<br>You can see a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.';
+    var actualResult = p0.examine("look");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature with inventory that their possessions are returned to the location." };
+
+
+exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation = function (test) {
+    var homeLoc = new location.Location('homeloc','a home location');
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:25, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true},[food, breakable, weapon, container]);
+    deadCreature.go(null,homeLoc); 
+    p0.setLocation(homeLoc);
+    //console.log(p0.examine("examine","dead creature"));
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+    p0.eat('eat','dead creature');
+
+    var expectedResult = 'a home location<br>You can see the remains of a well-chewed dead creature, a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.';
+    var actualResult = p0.examine("look");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature with inventory that their possessions are returned to the location." };
+
+
+exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToPlayer = function (test) {
+    var homeLoc = new location.Location('homeloc','a home location');
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:5, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true},[food, breakable, weapon, container]);
+    deadCreature.go(null,homeLoc); 
+    p0.setLocation(homeLoc);
+    p0.get('get','dead creature');
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+    p0.eat('eat','dead creature');
+
+    var expectedResult = "You're carrying a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>You have &pound;5.00 in cash.<br>";
+    var actualResult = p0.describeInventory();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature that they're carrying that their possessions are returned to the player inventory." };
+
+
+exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToPlayer = function (test) {
+    var inv = p0.getInventoryObject();
+    inv.setCarryWeight(50);
+    var homeLoc = new location.Location('homeloc','a home location');
+    var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:25, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true},[food, breakable, weapon, container]);
+    deadCreature.go(null,homeLoc); 
+    p0.setLocation(homeLoc);
+    p0.get('get','dead creature');
+    p0.increaseTimeSinceEating(28);
+    p0.reduceHitPoints(6);
+    p0.eat('eat','dead creature');
+
+    var expectedResult = "You're carrying the remains of a well-chewed dead creature, a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>You have &pound;5.00 in cash.<br>";
+    var actualResult = p0.describeInventory();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature that they're carrying that their possessions are returned to the player inventory." };
+
 
 exports.cannotEatDeadFriendlyCreature = function (test) {
 
