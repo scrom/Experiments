@@ -328,7 +328,8 @@ exports.deadCreaturesCantAcceptGifts = function (test) {
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:-1});
     var expected = false;
     var playerAggression = 0;
-    var actual = c0.willAcceptGift(playerAggression, 1);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -342,7 +343,8 @@ exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive = function (tes
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = true;
     var playerAggression = 0;
-    var actual = c0.willAcceptGift(playerAggression, 1);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -357,7 +359,8 @@ exports.neutralCreaturesWillAcceptSmallGifts = function (test) {
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:0});
     var expected = true;
     var playerAggression = 0;
-    var actual = c0.willAcceptGift(playerAggression, 1);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -371,7 +374,8 @@ exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive = function (
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = true;
     var playerAggression = 1;
-    var actual = c0.willAcceptGift(playerAggression, 1);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -386,7 +390,8 @@ exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive = functi
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = false;
     var playerAggression = 2;
-    var actual = c0.willAcceptGift(playerAggression, 1);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -395,12 +400,32 @@ exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive = functi
 
 exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will not accept gifts with minor affinity impact is player is aggressive" };
 
+
+exports.waryCreaturesWillRefuseMissionObjects = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var m0 = new mission.Mission("mission","a mission", "a mission", {missionObject:gift.getName()},null,null,null,{});
+    c0.addMission(m0);
+    var expected = false;
+    var playerAggression = 0;    
+    var actual = c0.willAcceptGift(playerAggression, gift);
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.waryCreaturesWillRefuseMissionObjects.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will not accept gifts if they're a mission object" };
+
+
 exports.veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressive = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-5});
     var expected = true;
     var playerAggression = 1;
-    var actual = c0.willAcceptGift(playerAggression, 1);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -415,7 +440,8 @@ exports.veryUnfriendlyCreaturesWillRefuseLargeGifts = function (test) {
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-5});
     var expected = false;
     var playerAggression = 1;
-    var actual = c0.willAcceptGift(playerAggression, 5);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:5,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -430,7 +456,8 @@ exports.friendlyCreaturesWillAcceptSmallGifts = function (test) {
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:1});
     var expected = true;
     var playerAggression = 0;
-    var actual = c0.willAcceptGift(playerAggression, 1);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -445,7 +472,8 @@ exports.friendlyCreaturesWillAcceptLargeGifts = function (test) {
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:1});
     var expected = true;
     var playerAggression = 0;
-    var actual = c0.willAcceptGift(playerAggression, 99);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:99,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
@@ -460,7 +488,8 @@ exports.waryCreaturesWillAcceptLargeGifts = function (test) {
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = true;
     var playerAggression = 0;
-    var actual = c0.willAcceptGift(playerAggression, 99);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:99,canCollect:true}, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
