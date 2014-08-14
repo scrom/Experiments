@@ -677,6 +677,58 @@
           "zs",
           "her"
         ]
+      },
+	  {
+        "object": "creature",
+        "name": "dene boulton",
+        "displayname": "Dene Boulton",
+        "description": "Dene Boulton",
+        "detailedDescription": "CORE team tester and specialist in the art of looking grumpy and happy at the same time.",
+        "attributes": {
+          "weight": 110,
+          "money": 30,
+          "attackStrength": 15,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 15,
+          "health": 120,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "deneboulton.jpg"
+        },
+        "synonyms": [
+          "dene",
+          "dean",
+          "boulton",
+          "db",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "getchocolatefordene",
+            "displayName": "get Dene some chocolate.",
+            "description": "Dene's wants to warm up some chocolate.",
+            "attributes": {
+              "missionObject": "chocolate",
+              "destination": "dene boulton",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'You don't have any chocolate do you?'<br>'I'm flat-out on the Salesforce project and will need to skip lunch.'<br>'If you manage to get any I'd really appreciate some.'",
+                "'How about that chocolate?'"
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+            "reward": {
+              "score": 25,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "dene boulton",
+              "successMessage": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated'<br> Have 25 points."
+            }
+          }
+        ]
       }
     ]
   },
