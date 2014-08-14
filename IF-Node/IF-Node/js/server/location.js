@@ -241,12 +241,15 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
 
             if (_inventory.size() > 0) {
                 //clean up grammar here (there is/there are)
-                resultString+="<br>You can see "+self.listObjects()+".";
+                resultString+="<br><br>You can see "+self.listObjects()+".";
             };
             if (self.getAvailableExits().length > 0) {
-                //clean the grammar up here. (in particular - better answer when there are no exits)
-                resultString+="<br>Exits are: "+self.listExits()+".";
-            } else { resultString+= "<br>There are no visible exits.";};
+                if (self.getAvailableExits().length == 1) {
+                    resultString+="<br>There is a single exit "+self.listExits()+".";
+                } else {;
+                    resultString+="<br>There are exits "+self.listExits()+".";
+                };
+            } else { resultString+= "<br>There are no visible exits at the moment.";};
 
             return resultString;
         };
@@ -297,8 +300,9 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
         self.listExits = function () {
             var exitList = "";
             var exits = self.getAvailableExits();
-
+            var compassExits = ["North","South","East","West"];
             for (var i = 0; i < exits.length; i++) {
+                if ((i==0) && (compassExits.indexOf(exits[i].getLongName()) >-1)) {exitList += "to the ";};
                 if ((i > 0) && (i < exits.length - 1)) { exitList += ', '; };
                 if ((i == exits.length - 1) && (i > 0)) { exitList += ' and '; };
                 exitList += exits[i].getLongName();
