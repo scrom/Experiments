@@ -378,7 +378,7 @@
         "object": "mission",
         "name": "latte",
         "displayName": "get yourself a latte",
-        "description": "It's your first day in the office. Time for a boost. Get yourself a latte.",
+        "description": "It's your first day in the office. Get yourself off to a good start with a nice latte.",
         "attributes": {
           "missionObject": "latte",
           "destination": "player"
