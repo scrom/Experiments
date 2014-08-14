@@ -1703,7 +1703,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         missionsToRemove.push(_missions[i].getName());
                     } else {
                         _missions[i].startTimer();
-                        response += "<br>"+_missions[i].getNextDialogue();
+                        response += "<br>"+_missions[i].getNextDialogue(someSpeech);
                     };
                 };
             };

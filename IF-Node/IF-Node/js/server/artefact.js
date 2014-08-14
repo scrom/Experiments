@@ -1298,6 +1298,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_breakable) {
                 _broken = true;
                 _destroyed = true;
+
+                //mark delivery items as destroyed too
+                var deliveryItems = self.getDeliveryItems();
+                for (var i=0;i<deliveryItems;i++) {
+                    deliveryItems[i].destroy(deliberateAction);
+                };
+
                 if (_lockable) {_locked = false;};
                 _description = _description.replace(" (broken)","")
                 _description = "some wreckage that was once "+self.descriptionWithCorrectPrefix(_description);

@@ -236,11 +236,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return self.fail("time");
         };
 
-        self.fail = function(failReason) {
+        self.fail = function(failReason, failObject) {
             var failMessage = "";
             if (failReason == "time") {failMessage = "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
-            if (failReason == "destroyedObject") {failMessage = "<br>You failed to "+self.getDisplayName()+". You destroyed something important.<br>";};
-            if (failReason == "destroyedDestination") {failMessage = "<br>Oh dear. You can no longer "+self.getDisplayName()+". You destroyed something important.<br>";};
+            if (failReason == "destroyedObject") {failMessage = "<br>You failed to "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.<br>";};
+            if (failReason == "destroyedDestination") {failMessage = "<br>Oh dear. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.<br>";};
+            if (failReason == "killedObject" || failReason == "killedMissionObject") {failMessage = "<br>Hmm, that's bad. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" is dead.<br>";};
+            if (failReason == "destroyedSource") {failMessage = "<br>Well that's a bit of a problem.<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.<br>";};
             
             if (_reward.hasOwnProperty("failMessage")) {failMessage += _reward.failMessage;};
             _reward=null;
@@ -272,7 +274,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
-        self.getNextDialogue = function() {
+        self.getNextDialogue = function(inputSpeech) {
             var response ="";
             //console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
             //move conversation forward
@@ -471,6 +473,37 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
         };
 
+        self.getDeliverySourceFromDestroyedObject = function(player, objectName) {
+            var destroyedObjects = player.getDestroyedObjects();
+            //check player destroyed objects list.
+            for (var i=0;i<destroyedObjects.length;i++) {
+                var deliveryItems = destroyedObjects[i].getDeliveryItems();
+                for (var j=0;j<deliveryItems.length;j++) {
+                    if (deliveryItems[j].getName() == objectName) {
+                        return destroyedObjects[i]; //we return the source, not the delivery item itself.
+                    };
+                };
+            };
+        };
+
+        self.getDeadCreature = function(player, map, objectName) {
+            var creature = map.getCreature(objectName);
+            if (!(creature)) { 
+                var item = player.getObject(objectName);
+                if (item) {
+                    if (item.getType() == "creature") {
+                        creature = item;
+                    };
+                };
+            };
+
+            if (creature) {
+                if (creature.isDead()) {return creature;};
+            };
+
+            return false;
+        };
+
         self.checkAttributes = function (missionObject, attributesToCheck) {
             var objectAttributes = missionObject.getCurrentAttributes();
             var checkCount = 0;
@@ -517,11 +550,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (self.isFailedOrComplete()||self.hasParent()) { return null; }; 
 
             //console.log('Checking state for mission: '+_name);
+            var destroyedDestination = self.getDestroyedObject(player, _destination);
 
-            if (self.getDestroyedObject(player, _destination) && (_destination != _missionObject)) {
+            if ((destroyedDestination) && (_destination != _missionObject)) {
                 //if destination is not the same as mission object, fail as player cannot complete if destination is lost
                 //console.log('mission destination destroyed');
-                return self.fail("destroyedDestination");
+                return self.fail("destroyedDestination", destroyedDestination);
             };
 
             //we need to track how many attributes are successful.
@@ -552,16 +586,69 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 missionObject = self.obtainMissionObjectWhereDestinationIsAnArtefactOrCreature(map, player, location);
             };
 
-            //if we don't have a mission object by this point, there's nothing we can check.
+            //if we don't have a mission object by this point, have we destroyed the source?
+            
             if (!(missionObject)) {  
+                var source = self.getDeliverySourceFromDestroyedObject(player, _destination);
+                if (!(source)) {
+                    source = self.getDeliverySourceFromDestroyedObject(player, _missionObject);
+                };
+
+                if (source) {
+                    //fail as player cannot complete if source is lost
+                    //console.log('mission item source destroyed');
+                    return self.fail("destroyedSource", source);
+                };
+                //if not, there's nothing else we can do for now.
                 return null;
             };   
                        
             //check/fail if the mission object shouldn't be destroyed!
             if (missionObject.isDestroyed()) {
                 if ((!(_conditionAttributes["isDestroyed"])) || (_conditionAttributes["isDestroyed"] == false)){
-                    return self.fail("destroyedObject");
+                    return self.fail("destroyedObject", missionObject);
                 }; 
+            };
+
+            //is something critical dead?
+            var failIfDead = false;
+            if (_conditionAttributes["dead"]) {
+                if (_conditionAttributes["dead"] != true) {
+                    failIfDead = true;
+                };
+            };
+            if (_conditionAttributes["alive"]) {
+                if (_conditionAttributes["alive"] == true) {
+                    failIfDead = true;
+                };
+            };
+            if (_failAttributes) {
+                if (_failAttributes["dead"]) {
+                    if (_failAttributes["dead"] == true) {
+                        failIfDead = true;
+                    };
+                };
+                if (_failAttributes["alive"]) {
+                    if (_failAttributes["alive"] == false) {
+                        failIfDead = true;
+                    };
+                };
+            };
+            //
+
+            var deadCreature;
+            if (failIfDead) {
+                deadCreature = self.getDeadCreature(player, map, _missionObject);
+            };
+
+            if (!(deadCreature)) {
+                if (_missionObject != _destination) {
+                    deadCreature = self.getDeadCreature(player, map, _destination);
+                };
+            };
+
+            if (deadCreature) {
+                return self.fail("killedObject",deadCreature);
             };
 
             //have we failed anything?
