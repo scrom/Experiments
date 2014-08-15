@@ -352,10 +352,15 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
 
         self.tick = function() {
-            //iterate through each object.
-            //for those turned on (or ticking), decrement relevant stats
-            //not implemented yet
-            return "";
+            //iterate through each object and tick for each
+            var resultString = "";
+            for (var i=0;i<_items.length;i++) {
+                if (_items[i].getType() != "creature") {
+                    resultString += _items[i].tick();
+                };
+            };
+            if (resultString.length >0) {resultString = "<br>"+resultString;};
+            return resultString;
         };
 
         ////end public methods

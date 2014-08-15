@@ -36,6 +36,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _opens = false;
         var _open = false;
         var _charges =-1; //-1 means unlimited
+        var _burnRate = 0; //doesn't used up charges by default
         var _chargeUnit = "";
         var _chargesDescription = "";
         var _switched = false;
@@ -105,6 +106,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "doesn't";
         };
 
+        var hasPlural = function() {
+            if (_plural) {
+                return "have";
+             };
+            return "has";
+        };
+
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
@@ -141,6 +149,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.isOpen== true || artefactAttributes.isOpen == "true") { _open = true;};
             };
             if (artefactAttributes.charges != undefined) {_charges = artefactAttributes.charges;};
+            if (artefactAttributes.burnRate != undefined) {_burnRate = parseFloat(artefactAttributes.burnRate);};
             if (artefactAttributes.chargeUnit != undefined) {_chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != undefined) {_chargesDescription = artefactAttributes.chargesDescription;};
 
@@ -325,6 +334,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.canOpen = _opens;                    
             currentAttributes.isOpen = _open;
             currentAttributes.charges = _charges;
+            currentAttributes.burnRate = _burnRate;            
             currentAttributes.chargeUnit = _chargeUnit;
             currentAttributes.chargesDescription = _chargesDescription;
             currentAttributes.checkComponents = self.checkComponents();
@@ -387,6 +397,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.isDamaged == true) {saveAttributes.isDamaged = true;};
             if (artefactAttributes.isDestroyed == true) {saveAttributes.isDestroyed = true;};
             if (artefactAttributes.charges != -1) {saveAttributes.charges = artefactAttributes.charges;};
+            if (artefactAttributes.burnRate != 0) {saveAttributes.burnRate = artefactAttributes.burnRate;};
             if (artefactAttributes.chargeUnit != "") {saveAttributes.chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != "") {saveAttributes.chargesDescription = artefactAttributes.chargesDescription;};
             if (artefactAttributes.plural == true) {saveAttributes.plural = artefactAttributes.plural;};            
@@ -631,7 +642,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString = resultString.replace("$inventory",_inventory.describe());
             };
 
-            if (!(self.checkComponents())) { 
+            if (_switched) {
+                if (!(self.hasPower())) {
+                    resultString += "<br>"+initCap(_itemDescriptivePrefix)+" not working.";
+                } else {
+                    resultString += "<br>"+initCap(_itemDescriptivePrefix)+" switched ";
+                    if(self.isPoweredOn()) {resultString += "on.";} else {resultString += "off.";};
+                };
+            } else if (!(self.checkComponents())) { 
                 resultString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
             } else {
                 if (_delivers.length > 0) {
@@ -710,7 +728,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //describe remaining charges (if not unlimited)
             if (self.chargesRemaining() == 0) {
-                resultString += "<br>"+_self.getDescriptivePrefix+" all used up.";
+                resultString += "<br>"+initCap(self.getDescriptivePrefix())+" all used up.";
             }
             else if (self.chargesRemaining() >1) { //we don't report when there's only a single use left.
                 //if (_detailedDescription.indexOf('$') >-1) {//we have custom placeholders in the description
@@ -733,12 +751,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     resultString += "<br>There are "+self.chargesRemaining()+" uses remaining."
                 };
             };
-
-            if (_switched) {
-                resultString += "<br>"+initCap(_itemDescriptivePrefix)+" currently switched ";
-                if(self.isPoweredOn()) {resultString += "on.";} else {resultString += "off.";};
-            };
-
             
             if ((_inventory.size() != _inventory.size(true)) && inventoryIsVisible) {
                 //something is hidden here
@@ -1146,9 +1158,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
-        self.consume = function() {
+        self.consume = function(quantity) {
+            if (!(quantity)) {quantity = 1;};
             if (_charges == 0) {return false;};
-            if (_charges > 0) {_charges --;};
+            if (_charges > 0) {_charges -=quantity;};
             console.log("Consumed "+self.getDisplayName()+" charges remaining: ");
             return true; //deliberately works but does nothing if charges are -ve
         };
@@ -1166,8 +1179,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (someComponents) {
                 components = components.concat(someComponents);
             };
-            //eventually make this more intelligent than a simple count!
             //console.log("Required components for "+self.getName()+": " + _requiredComponentCount + " Current Components: " + components.length);
+            for (var i=0;i<components.length;i++) {
+                if (components[i].chargesRemaining() == 0) {return false;};
+            };
             if (components.length == _requiredComponentCount) {return true;}; //we have everything we need yet.
             return false;
         };
@@ -1881,6 +1896,37 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getInventoryObject = function() {
             return _inventory;
         };
+
+        self.tick = function() {
+            //if turned on and "burnRate" set, decrement charges on self and/or contents.
+            //for those turned on (or ticking), decrement relevant stats
+            //not implemented yet
+            var usedItem; 
+            if (_on) {
+                if (_burnRate >0) {
+                    self.consume(_burnRate)
+                    if (self.chargesRemaining() == 0) {usedItem = self.getName();};
+                    if (!(usedItem)) {
+                        var components = _inventory.getComponents(self.getName());
+                        for (var i=0;i<components.length;i++) {
+                            components[i].consume();
+                            if (components[i].chargesRemaining() == 0) {
+                                usedItem = components[i].getName();
+                                break;
+                            };
+                        };
+                    };
+                };
+
+                if (usedItem) {
+                    _on = false;
+                    if (usedItem != self.getName()) {usedItem = self.getName()+" "+usedItem;};
+                    return "Your "+usedItem+" "+hasPlural()+" run out."
+                };
+            };
+            return "";
+        };
+
         //end public member functions
 
         //console.log(_objectName + " created: "+_name+", "+self.destinationName);

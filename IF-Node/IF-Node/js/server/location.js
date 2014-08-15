@@ -349,6 +349,13 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             };
         };
 
+        self.tick = function(time, map, player) {
+            //note, we don't tell the player about this...
+            for (var t=0; t < time; t++) {
+                _inventory.tick();
+            };
+        };
+
         //end public member functions
 
         console.log(_objectName +' created: '+self.getName());

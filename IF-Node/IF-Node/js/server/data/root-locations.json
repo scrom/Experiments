@@ -2517,15 +2517,19 @@
         "object": "artefact",
         "name": "torch",
         "description": "emergency torch",
-        "detailedDescription": "Great for when it's dark. It looks like it'll work too!",
+        "detailedDescription": "Great for when it's dark.",
         "attributes": {
           "defaultAction": "turn on",
           "weight": 1,
+		  "carryWeight": 1,
+		  "burnRate": 0.2,
+		  "canOpen": true,
           "attackStrength": 5,
           "type": "light",
           "canCollect": true,
           "isBreakable": true,
-          "switched": true
+          "switched": true,
+		  "requiredComponentCount": 1
         },
         "synonyms": [
           "light",
@@ -2533,7 +2537,31 @@
           "emergency torch",
           "emergency lamp",
           "emergency light"
-        ]
+        ],
+                    "inventory": [
+                      {
+                        "object": "artefact",
+                        "name": "batteries",
+                        "description": "torch batteries",
+                        "detailedDescription": "Shine a light on the world.",
+                        "attributes": {
+                          "weight": 1,
+                          "canCollect": true,
+						  "plural": true,
+                          "charges": 8,
+                          "chargeUnit": "minutes",
+                          "chargesDescription": "There's enough for about $charges $chargeUnit of power",
+                          "plural": true,
+                          "affinityModifier": 0,
+                          "componentOf": [
+                            "torch"
+                          ]
+                        },
+                        "synonyms": [
+                          "battery",
+						  "torch batteries"
+                        ]
+                      }]
       }
     ]
   },
@@ -6152,7 +6180,31 @@
               "permanent marker",
               "sharpie permanent marker"
             ]
-          }
+          },
+
+                      {
+                        "object": "artefact",
+                        "name": "batteries",
+                        "description": "torch batteries",
+                        "detailedDescription": "Shine a light on the world.",
+                        "attributes": {
+                          "weight": 1,
+						  "plural": true,
+                          "canCollect": true,
+                          "charges": 45,
+                          "chargeUnit": "minutes",
+                          "chargesDescription": "There's enough for about $charges $chargeUnit of power",
+                          "plural": true,
+                          "affinityModifier": 0,
+                          "componentOf": [
+                            "torch"
+                          ]
+                        },
+                        "synonyms": [
+                          "battery",
+						  "torch batteries"
+                        ]
+                      }
         ]
       }
     ]

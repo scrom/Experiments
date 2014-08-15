@@ -133,6 +133,18 @@ exports.Action = function Action(aPlayer, aMap) {
             return resultString;
         };
 
+        var processLocationTicks = function(time, map, player) {
+            var resultString = "";
+            if (time>0) {
+                var locations = _map.getLocations();
+                if (typeof(locations) == "string") {return "";}; //mainly for stub testability - prevents crashing
+                for(var i=0; i < locations.length; i++) {
+                    resultString += locations[i].tick(time, map, player);
+                };
+            };
+            return resultString;
+        };
+
         //end private functions
 
         //public member functions
@@ -698,8 +710,11 @@ exports.Action = function Action(aPlayer, aMap) {
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);
 
-            //check creatures for fightOrFlight
+            //perform creature actions.
             description += processCreatureTicks(_ticks, _map, _player);
+
+            //if anything is happening in locations (includes ticks on inventory)
+            processLocationTicks(_ticks, _map, _player);
 
             //if time is passing, what additional things happen to a player?
             description += _player.tick(_ticks, _map);
