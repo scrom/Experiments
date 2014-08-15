@@ -856,11 +856,23 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var allLocationObjects = _currentLocation.getAllObjects();
                 var locationInventory = _currentLocation.getInventoryObject();
                 for (var i=0;i<allLocationObjects.length;i++) {
+                    var deliversRequestedItem = false;
                     if (allLocationObjects[i].getType() != 'creature') {
-                        var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
-                        if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
-                            //we got the requested object back!
-                            return tempResultString;
+                        var deliveryItems = allLocationObjects[i].getDeliveryItems();
+                        for (var d=0;d<deliveryItems.length;d++) {
+                            if (deliveryItems[d].getName() == artefactName) {
+                                deliversRequestedItem = true;
+                                break;
+                            };
+                        };
+                        if (deliversRequestedItem) {
+                            var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
+                            if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
+                                //we got the requested object back!
+                                return tempResultString;
+                            } else {
+                                return "You'll need to figure out what's wrong with "+allLocationObjects[i].getDisplayName()+" before you can get any "+artefactName+"."
+                            };
                         };
                     };
                 };
@@ -880,7 +892,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
-            if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
+            if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";};
             if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getSuffix()+".";};
 
             var requiresContainer = artefact.requiresContainer();
