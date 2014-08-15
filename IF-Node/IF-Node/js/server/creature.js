@@ -41,6 +41,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _startLocation;
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
+        var _returnHomeIn = -1 //set when first not at home and reset when home.
         var _spokenToPlayer = false;
         var _path = [];
         var _destinations = [];
@@ -96,6 +97,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
             if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
+            
             //if (creatureAttributes.synonyms != undefined) { _synonyms = creatureAttributes.synonyms;};
             if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(creatureAttributes.carryWeight);};
             if (creatureAttributes.nutrition != undefined) { _nutrition = creatureAttributes.nutrition; };
@@ -385,6 +387,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.attackStrength = _attackStrength;
             currentAttributes.type = _type;
             currentAttributes.moves = _moves;
+            currentAttributes.returnHomeIn = _returnHomeIn;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
             currentAttributes.destinations = _destinations;
             currentAttributes.clearedDestinations = _clearedDestinations;
@@ -419,7 +422,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.canCollect == true) {saveAttributes.canCollect = creatureAttributes.canCollect;};
             if (creatureAttributes.charges !=0) {saveAttributes.charges = creatureAttributes.charges;};
             if (creatureAttributes.isEdible == true) {saveAttributes.isEdible = creatureAttributes.isEdible;};
-            if (creatureAttributes.baseAffinity != 0) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
+            if (creatureAttributes.baseAffinity != creatureAttributes.affinity) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
             if (creatureAttributes.attackStrength != undefined) {saveAttributes.attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != undefined) {saveAttributes.gender = creatureAttributes.gender;};
             if (creatureAttributes.type != undefined) {saveAttributes.type = creatureAttributes.type;};
@@ -431,6 +434,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.canTravel == true) {saveAttributes.canTravel = creatureAttributes.canTravel};
             if (creatureAttributes.traveller == true) {saveAttributes.traveller = creatureAttributes.traveller};            
             if (creatureAttributes.moves > 0) {saveAttributes.moves = creatureAttributes.moves;};
+            if (creatureAttributes.returnHomeIn > 0) {saveAttributes.returnHomeIn = creatureAttributes.returnHomeIn;};           
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
             if (creatureAttributes.clearedDestinations.length >0) {saveAttributes.clearedDestinations = creatureAttributes.clearedDestinations;};
@@ -1324,6 +1328,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (_startLocation == undefined) {
                 _startLocation = _currentLocation;
+            } else {;
+
+                //return home every n moves if we don't have another destination
+                if (_destinations.length == 0 && _canTravel) {
+                    if (_startLocation != _currentLocation) { 
+                        if (_returnHomeIn <0) {
+                            _returnHomeIn = 25+Math.floor(Math.random() * 50);
+                        } else if (_returnHomeIn == 0) {
+                            _returnHomeIn = 25+Math.floor(Math.random() * 50);
+                            self.setDestination(_startLocation.getName());
+                        } else {
+                            _returnHomeIn--;   
+                        };        
+                    };
+                };
             };
 
             //add to new location
@@ -2249,7 +2268,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.clearDestination = function() {
             //console.log(self.getDisplayName()+" destination cleared");
-            _clearedDestinations.unshift(_destinations.pop());
+            var clearedDestination = _destinations.pop()           
+            if (_loops != 0) { _clearedDestinations.unshift(clearedDestination);}; 
+
             if (_loops != 0 && _destinations.length == 0) {
 
                 if (_loopCount < _loops || _loops == -1) {

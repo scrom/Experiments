@@ -678,7 +678,7 @@
           "her"
         ]
       },
-	  {
+      {
         "object": "creature",
         "name": "dene boulton",
         "displayname": "Dene Boulton",
@@ -726,7 +726,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "dene boulton",
               "successMessage": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated'<br> Have 25 points.",
-			  "failMessage": "Dene wanted some chocolate :("
+              "failMessage": "Dene wanted some chocolate :("
             }
           }
         ]
@@ -996,7 +996,6 @@
           "health": 120,
           "canTravel": true,
           "traveller": true,
-          "returnDirection": "n",
           "imageName": "brianharris.jpg"
         },
         "synonyms": [
@@ -2521,15 +2520,15 @@
         "attributes": {
           "defaultAction": "turn on",
           "weight": 1,
-		  "carryWeight": 1,
-		  "burnRate": 0.2,
-		  "canOpen": true,
+          "carryWeight": 1,
           "attackStrength": 5,
           "type": "light",
           "canCollect": true,
           "isBreakable": true,
+          "burnRate": 0.2,
+          "canOpen": true,
           "switched": true,
-		  "requiredComponentCount": 1
+          "requiredComponentCount": 1
         },
         "synonyms": [
           "light",
@@ -2538,30 +2537,30 @@
           "emergency lamp",
           "emergency light"
         ],
-                    "inventory": [
-                      {
-                        "object": "artefact",
-                        "name": "batteries",
-                        "description": "torch batteries",
-                        "detailedDescription": "Shine a light on the world.",
-                        "attributes": {
-                          "weight": 1,
-                          "canCollect": true,
-						  "plural": true,
-                          "charges": 8,
-                          "chargeUnit": "minutes",
-                          "chargesDescription": "There's enough for about $charges $chargeUnit of power",
-                          "plural": true,
-                          "affinityModifier": 0,
-                          "componentOf": [
-                            "torch"
-                          ]
-                        },
-                        "synonyms": [
-                          "battery",
-						  "torch batteries"
-                        ]
-                      }]
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "batteries",
+            "description": "torch batteries",
+            "detailedDescription": "Shine a light on the world.",
+            "attributes": {
+              "weight": 1,
+              "canCollect": true,
+              "charges": 8,
+              "chargeUnit": "minutes",
+              "chargesDescription": "There's enough for about $charges $chargeUnit of power",
+              "plural": true,
+              "affinityModifier": 0,
+              "componentOf": [
+                "torch"
+              ]
+            },
+            "synonyms": [
+              "battery",
+              "torch batteries"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -6181,30 +6180,28 @@
               "sharpie permanent marker"
             ]
           },
-
-                      {
-                        "object": "artefact",
-                        "name": "batteries",
-                        "description": "torch batteries",
-                        "detailedDescription": "Shine a light on the world.",
-                        "attributes": {
-                          "weight": 1,
-						  "plural": true,
-                          "canCollect": true,
-                          "charges": 45,
-                          "chargeUnit": "minutes",
-                          "chargesDescription": "There's enough for about $charges $chargeUnit of power",
-                          "plural": true,
-                          "affinityModifier": 0,
-                          "componentOf": [
-                            "torch"
-                          ]
-                        },
-                        "synonyms": [
-                          "battery",
-						  "torch batteries"
-                        ]
-                      }
+          {
+            "object": "artefact",
+            "name": "batteries",
+            "description": "torch batteries",
+            "detailedDescription": "Shine a light on the world.",
+            "attributes": {
+              "weight": 1,
+              "canCollect": true,
+              "charges": 45,
+              "chargeUnit": "minutes",
+              "chargesDescription": "There's enough for about $charges $chargeUnit of power",
+              "plural": true,
+              "affinityModifier": 0,
+              "componentOf": [
+                "torch"
+              ]
+            },
+            "synonyms": [
+              "battery",
+              "torch batteries"
+            ]
+          }
         ]
       }
     ]
@@ -7428,7 +7425,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "bike rack",
+        "name": "bike racks",
         "description": "bike racks",
         "detailedDescription": "There's dozens of bikes here but most of them are locked.",
         "attributes": {
@@ -7443,7 +7440,8 @@
           "racks",
           "cycle rack",
           "cycle racks",
-          "bike racks"
+          "bike rack",
+          "bikes"
         ],
         "inventory": [
           {
