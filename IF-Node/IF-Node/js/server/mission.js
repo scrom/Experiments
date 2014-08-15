@@ -150,6 +150,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return _missionObject;
         };
 
+        self.getConditionAttributes = function() {
+            return _conditionAttributes;
+        };
+
         self.getRewardObject = function() {
             if (_reward.delivers) {
                 return _reward.delivers;

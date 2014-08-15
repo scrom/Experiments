@@ -1591,7 +1591,45 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+self.getDisplayName().replace("the ","");
             self.addSyns(["corpse","body"]);
-            return "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+
+            var resultString = "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+
+            //remove inactive missions - active ones will be handled elsewhere
+            var missionsToKeep = [];
+            for (var m=0;m<_missions.length;m++) {
+                var keepFlag = false;
+                if (_missions[m].isActive()) {
+                    missionsToKeep.push(_missions[m]);
+                    keepFlag = true;
+                };
+                //handle "kill" missions...
+                if (!(keepFlag)) {                   
+                    if (_missions[m].getMissionObjectName() == self.getName()) {
+                        var conditionAttributes = _missions[m].getConditionAttributes();
+                        if (conditionAttributes["dead"]) {
+                            if (conditionAttributes["dead"] == true) {
+                                missionsToKeep.push(_missions[m]);
+                            };
+                        } else if (conditionAttributes["alive"]) {
+                            if (conditionAttributes["alive"] == false) {
+                                missionsToKeep.push(_missions[m]);
+                            };
+                        };
+                    };
+                };
+            };
+            var numberOfMissionsToRemove = _missions.length - missionsToKeep.length;
+            if (numberOfMissionsToRemove > 0) {
+                var missionCountString = "some tasks"
+                if (numberOfMissionsToRemove == 1) { missionCountString = "a task";};
+                resultString += "<br>Unfortunately "+_genderPrefix.toLowerCase()+" had "+missionCountString+" for you that you'll no longer be able to complete.<br>";
+                //notify player here is any missions would have given them objects too
+                resultString += "You're welcome to carry on and see how well you do without "+_genderSuffix+" though."
+
+                _missions = missionsToKeep;
+            };
+
+            return resultString;
          };
 
         self.moveOpenOrClose = function(verb) {
