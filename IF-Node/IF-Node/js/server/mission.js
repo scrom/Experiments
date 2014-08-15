@@ -242,13 +242,17 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.fail = function(failReason, failObject) {
             var failMessage = "";
-            if (failReason == "time") {failMessage = "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
-            if (failReason == "destroyedObject") {failMessage = "<br>You failed to "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.<br>";};
-            if (failReason == "destroyedDestination") {failMessage = "<br>Oh dear. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.<br>";};
-            if (failReason == "killedObject" || failReason == "killedMissionObject") {failMessage = "<br>Hmm, that's bad. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" is dead.<br>";};
-            if (failReason == "destroyedSource") {failMessage = "<br>Well that's a bit of a problem.<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.<br>";};
+
+            if (failReason == "time") {failMessage += "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
+
+            if (_reward.hasOwnProperty("failMessage")) {failMessage += "<br>"+_reward.failMessage;};
+
+            if (failReason == "destroyedObject") {failMessage += "<br>You failed to "+self.getDisplayName()+". "+failObject.getDisplayName()+" has been destroyed.";};
+            if (failReason == "destroyedDestination") {failMessage += "<br>Oh dear. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.";};
+            if (failReason == "killedObject" || failReason == "killedMissionObject") {failMessage += "<br>Hmm, that's bad. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" is dead.";};
+            if (failReason == "destroyedSource") {failMessage += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.";};
             
-            if (_reward.hasOwnProperty("failMessage")) {failMessage += _reward.failMessage;};
+
             _reward=null;
             _ticking = false;
             console.log("mission "+self.getName()+" failed");

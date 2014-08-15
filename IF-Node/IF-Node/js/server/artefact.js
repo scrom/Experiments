@@ -1310,9 +1310,37 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _description = "some wreckage that was once "+self.descriptionWithCorrectPrefix(_description);
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
-                var destroyMessage = "You destroyed "+_itemSuffix;
-                if (_inventory.size(true) > 0) {destroyMessage;}; //@todo: WTF?
-                return destroyMessage+"!";
+                var resultString = "You destroyed "+_itemSuffix+"!";
+
+                //remove inactive missions - active ones will be handled elsewhere
+                var missionsToKeep = [];
+                for (var m=0;m<_missions.length;m++) {
+                    var keepFlag = false;
+                    if (_missions[m].isActive()) {
+                        missionsToKeep.push(_missions[m]);
+                        keepFlag = true;
+                    };
+                    //handle "destroy" missions...
+                    if (!(keepFlag)) {                   
+                        if (_missions[m].getMissionObjectName() == self.getName()) {
+                            var conditionAttributes = _missions[m].getConditionAttributes();
+                            if (conditionAttributes["isDestroyed"]) {
+                                if (conditionAttributes["isDestroyed"] == true) {
+                                    missionsToKeep.push(_missions[m]);
+                                };
+                            };
+                        };
+                    };
+                };
+                var numberOfMissionsToRemove = _missions.length - missionsToKeep.length;
+                if (numberOfMissionsToRemove > 0) {
+                    resultString += "<br>Unfortunately you needed "+self.getDisplayName()+".<br>";
+                    resultString += "You're welcome to carry on and see how well you do without "+_itemSuffix+" though."
+
+                    _missions = missionsToKeep;
+                };
+
+                return resultString;
             };
             _detailedDescription += _itemPrefix+" shows signs of abuse.";
             if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};

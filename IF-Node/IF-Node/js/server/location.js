@@ -249,7 +249,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
                 } else {;
                     resultString+="<br>There are exits "+self.listExits()+".";
                 };
-            } else { resultString+= "<br>There are no visible exits at the moment.";};
+            } else { resultString+= "<br>There are no visible exits.";};
 
             return resultString;
         };

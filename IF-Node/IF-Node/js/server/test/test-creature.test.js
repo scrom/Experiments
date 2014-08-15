@@ -852,7 +852,7 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContents
 
     c0.collectBestAvailableWeapon();
 
-    var expected = "a room<br>You can see a beastie, a medium weapon, a light weapon and a weak weapon.<br>There are no visible exits.";
+    var expected = "a room<br><br>You can see a beastie, a medium weapon, a light weapon and a weak weapon.<br>There are no visible exits.";
     var actual = l.describe();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
