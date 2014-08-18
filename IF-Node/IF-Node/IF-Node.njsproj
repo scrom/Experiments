@@ -54,8 +54,6 @@
     <Compile Include="js\server\creature.js" />
     <Compile Include="js\server\player.js" />
     <Compile Include="js\server\server.js" />
-    <Compile Include="js\server\simpleObject.js" />
-    <Compile Include="js\server\tests.js" />
     <Compile Include="js\server\test\stubs\stubFactory.js" />
     <Compile Include="js\server\test\test-filemanager.test.js" />
     <Compile Include="js\server\test\test-gamecontroller.test.js" />
