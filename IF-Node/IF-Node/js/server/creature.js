@@ -1730,6 +1730,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _waitDelay = duration;
 
             if (_affinity >1) {
+                self.decreaseAffinity(1); //erode affinity
                 return self.getDisplayName()+" says 'OK. See you in "+duration+"?'"+returnImage; 
             };
             
@@ -1773,6 +1774,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (_affinity >1) {
                 var randomReplies;
+                self.decreaseAffinity(1); //erode affinity
                 self.setDestination(locationName);
                 if (_destinations.length+_clearedDestinations.length >1) {
                     randomReplies = ["I've got a few things to sort out first but I'll be over there in a while.", "Sure. Just let me tie some loose ends up first. I might be a while", "OK. I'll catch you up when I'm done here."];
