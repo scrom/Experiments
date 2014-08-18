@@ -11,7 +11,7 @@ var watcherObjectModule = require('./watcher/watcher.js');
 //load and initialise map
 var mapBuilderModule = require('./mapbuilder');
 //source data: 
-var gameDataJSONPath = './data/root-locations.json';  
+var gameDataJSONPath = '../../data/root-locations.json';  
 var mapBuilder = new mapBuilderModule.MapBuilder(gameDataJSONPath);
 
 var gameController = new gameControllerModule.GameController(mapBuilder);

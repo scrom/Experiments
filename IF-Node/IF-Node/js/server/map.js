@@ -3,7 +3,7 @@
 exports.Map = function Map() {
     try{   
         //source data: 
-        var _rootLocationsJSON = require('./data/root-locations.json');          
+        var _rootLocationsJSON = require('../../data/root-locations.json');          
 
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];

@@ -1,7 +1,7 @@
 ﻿"use strict";
 var mapbuilder = require('../mapbuilder.js');
 var gamecontroller = require('../gamecontroller.js');
-var mb = new mapbuilder.MapBuilder('./data/root-locations.json');
+var mb = new mapbuilder.MapBuilder('../../data/root-locations.json');
 var gc = new gamecontroller.GameController(mb);
 
 exports.setUp = function (callback) {

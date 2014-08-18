@@ -7,7 +7,7 @@ var player = require('../player.js');
 var playerName;
 var playerAttributes;
 var p0;
-var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
+var mb = new mapBuilder.MapBuilder('../../data/root-locations.json');
 var m0;
 
 exports.setUp = function (callback) {

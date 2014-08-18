@@ -1,6 +1,6 @@
 ﻿"use strict";
 var mapBuilder = require('../mapbuilder.js');
-var mb = new mapBuilder.MapBuilder('./data/root-locations.json');
+var mb = new mapBuilder.MapBuilder('../../data/root-locations.json');
 var m0;
 //var artefact = require('../artefact.js');
 //var location = require('../location.js');

@@ -454,6 +454,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.originalBaseAffinity != creatureAttributes.baseAffinity) {saveAttributes.originalBaseAffinity = creatureAttributes.originalBaseAffinity;};     
             if (creatureAttributes.friendlyAttackCount >0) {saveAttributes.friendlyAttackCount = creatureAttributes.friendlyAttackCount;};
 
+            if (_startLocation) {
+                if (_startLocation.getName() != _currentLocation.getName()) {saveAttributes.startLocationName = _startLocation.getName();};
+            };
+
             return saveAttributes;
         };
 
@@ -1281,6 +1285,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return self.go(direction, aLocation)
             };
             return "";
+        };
+
+        self.setStartLocation = function(location) {
+            _startLocation = location;
+            //console.log("start location set for "+self.getName());
         };
 
         self.go = function(direction, aLocation) {

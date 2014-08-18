@@ -7,8 +7,8 @@ module.exports.JSONFileManager = function JSONFileManager() {
         var fs = require('fs');
         var util = require('util');
         var path = require('path');
-        var filePath = path.resolve(path.join(__dirname, "./data/usergames/"));
-        var imagePath = path.resolve(path.join(__dirname, "./data/images/"));
+        var filePath = path.resolve(path.join(__dirname, "../../data/usergames/"));
+        var imagePath = path.resolve(path.join(__dirname, "../../data/images/"));
 
 	    var _objectName = "jsonfilemanager";
 

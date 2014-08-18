@@ -30,7 +30,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 } catch(err) {console.log("JSON Parse error: "+err+": ")};
         };
 
-        fs.readFile('./js/server/data/root-locations.json',{encoding: 'utf8'},jsonFileReader);
+        fs.readFile('../../data/root-locations.json',{encoding: 'utf8'},jsonFileReader);
         */
         console.log(_objectName + ' created');
         
@@ -183,6 +183,12 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                             rewardLocation.addObject(self.buildArtefact(inventoryData));
                         } else if (inventoryData.object == "creature") {
                             var creature = self.buildCreature(inventoryData)
+                            if (inventoryData.attributes) {
+                                if (inventoryData.attributes.startLocationName) {
+                                    var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
+                                    creature.setStartLocation(startLocation);
+                                };
+                            };
                             creature.go(null, rewardLocation);                           
                         };                        
                     }; 
@@ -275,6 +281,13 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                         if (locationData.inventory[k].object == "artefact") {location.addObject(self.buildArtefact(locationData.inventory[k]));}
                         else if (locationData.inventory[k].object == "creature") {
                             var creature = self.buildCreature(locationData.inventory[k])
+                            if (locationData.inventory[k].attributes) {
+                                if (locationData.inventory[k].attributes.startLocationName) {
+                                    var startLocation = _map.getLocation(locationData.inventory[k].attributes.startLocationName);
+                                    creature.setStartLocation(startLocation);
+                                };
+                            };
+
                             creature.go(null, location);                           
                         };
                     };
@@ -305,8 +318,8 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         };
 
         self.buildMap = function(mapData){
-            _map = new mapObjectModule.Map();
             if (!(mapData)) {mapData = _rootLocationsJSON;};
+            _map = new mapObjectModule.Map();
             if (mapData[0].object == "player") {mapData.splice(0, 1);};
             self.buildGameObjects(mapData);   
             return _map;    

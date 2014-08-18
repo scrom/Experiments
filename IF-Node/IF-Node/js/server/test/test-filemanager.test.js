@@ -13,7 +13,7 @@ exports.tearDown = function (callback) {
 exports.canFindImagePath = function (test) {
     var path = fm.getImagePath("kitty.jpg");
     var actual = path.substr(path.length-29);
-    var expected = "\\server\\data\\images\\kitty.jpg";
+    var expected = "IF-Node\\data\\images\\kitty.jpg";
     console.log("Expected: "+expected);
     console.log("Actual  : "+actual);
     test.equal(actual, expected);
