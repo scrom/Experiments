@@ -54,7 +54,26 @@ exports.Interpreter = function Interpreter(aGameController) {
                 stringArgs = stringArgs.substring(1);
             };
             return stringArgs.split("/")[3]; 
-        }
+        };
+
+        /*convert the tail of incoming request into timestamp.
+          This should be the set of numbers after the last /(if any)
+        */
+        var extractTimestamp = function(aString) {
+
+            var stringArgs = aString.trim();
+
+            //trim leading / if it exists
+            var startFrom = stringArgs.lastIndexOf("/")+1;
+            if (startFrom > 0) { 
+                try {
+                    return new Date(parseInt(stringArgs.substring(startFrom))); 
+                } 
+                catch (e) {
+                    //fail silently                  
+                };
+            };            
+        };
     
         /*convert the incoming request into action string.
         the first word on the string is the command. 
@@ -96,11 +115,13 @@ exports.Interpreter = function Interpreter(aGameController) {
             var actionString = extractAction(aRequestUrl);
             var username = extractUsername(aRequestUrl);
             var gameId = extractGameId(aRequestUrl);
+            var timestamp = extractTimestamp(aRequestUrl);
             //console.log("req: "+aRequestUrl);
             //console.log("cmd: "+command);
             //console.log("act: "+actionString);
             //console.log("usr: "+username);
             //console.log("gid: "+gameId);
+            //console.log(timestamp);
             //console.log('command: '+command+' action: '+actionString+' username: '+username+', gameId:'+gameId);
 
             switch(command)
