@@ -1347,9 +1347,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (_destinations.length == 0 && _canTravel) {
                     if (_startLocation != _currentLocation) { 
                         if (_returnHomeIn <0) {
-                            _returnHomeIn = 25+Math.floor(Math.random() * 50);
+                            _returnHomeIn = 25+Math.floor(Math.random() * 35);
                         } else if (_returnHomeIn == 0) {
-                            _returnHomeIn = 25+Math.floor(Math.random() * 50);
+                            _returnHomeIn = 25+Math.floor(Math.random() * 35);
                             self.setDestination(_startLocation.getName());
                         } else {
                             _returnHomeIn--;   
@@ -2060,7 +2060,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (_destinations[_destinations.length-1] == _currentLocation.getName()) {
                             console.log(self.getDisplayName()+" reached destination.");
                             self.clearPath();
-                            self.clearDestination();                            
+                            self.clearDestination();
+                            //if creature is in home location, stay there a short while.
+                            if (_currentLocation.getName() == _startLocation.getName()) {
+                                var randomWait = Math.floor(Math.random() * 5);
+                                _waitDelay = 3+randomWait;
+                                _currentDelay = 0;
+                            };                            
                         } else {
                             if (_path.length == 0) {
                                 self.setPath(self.findBestPath(_destinations[_destinations.length-1], map, 25));
