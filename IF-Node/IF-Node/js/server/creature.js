@@ -51,6 +51,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _loopCount = 0;
         var _loopDelay = 0;
         var _destinationDelay = 0;
+        var _waitDelay = 0;
         var _currentDelay = -1;
         var _returnDirection;
         var _openedDoor = false;
@@ -149,6 +150,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.loopCount != undefined) {_loopCount = creatureAttributes.loopCount;};
             if (creatureAttributes.loopDelay != undefined) {_loopDelay = creatureAttributes.loopDelay;};
             if (creatureAttributes.destinationDelay != undefined) {_destinationDelay = creatureAttributes.destinationDelay;};
+            if (creatureAttributes.waitDelay != undefined) {_waitDelay = creatureAttributes.waitDelay;};
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
@@ -396,6 +398,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.loopCount = _loopCount;
             currentAttributes.loopDelay = _loopDelay;
             currentAttributes.destinationDelay = _destinationDelay;
+            currentAttributes.waitDelay = _waitDelay;
             currentAttributes.currentDelay = _currentDelay;
             currentAttributes.returnDirection = _returnDirection;  
             currentAttributes.imageName = _imageName;     
@@ -444,6 +447,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.loopCount != 0) {saveAttributes.loopCount = creatureAttributes.loopCount;};
             if (creatureAttributes.loopDelay >0) {saveAttributes.loopDelay = creatureAttributes.loopDelay;};
             if (creatureAttributes.destinationDelay >0) {saveAttributes.destinationDelay = creatureAttributes.destinationDelay;};
+            if (creatureAttributes.waitDelay >0) {saveAttributes.waitDelay = creatureAttributes.waitDelay;};
             if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
@@ -1709,6 +1713,80 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
+        self.wait = function(playerAggression, duration) {            
+
+            var initialReply = self.initialReplyString(playerAggression);
+            if (initialReply) {return initialReply;};
+
+            var returnImage = "";
+            if (_imageName) {
+                returnImage= "$image"+_imageName+"/$image";
+            };
+
+            if ((!(_canTravel))||(!(_traveller))) {return self.getDisplayName()+" says 'I'm not planning on going anywhere.'"+returnImage; };
+
+            if (!(duration)) {duration = 10;};
+            _currentDelay = 0; //turn on delay
+            _waitDelay = duration;
+
+            if (_affinity >1) {
+                return self.getDisplayName()+" says 'OK. See you in "+duration+"?'"+returnImage; 
+            };
+            
+            return "I think "+self.getPrefix().toLowerCase()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
+        };
+
+        self.goTo = function(locationName, playerAggression, map) {
+            var initialReply = self.initialReplyString(playerAggression);
+            var returnImage = "";
+
+            var randomReplies;
+            if (initialReply) {return initialReply;};
+
+            if (_imageName) {
+                returnImage= "$image"+_imageName+"/$image";
+            };
+
+            if (locationName == _currentLocation.getName()) {
+                return self.getDisplayName()+" says 'we're both here already.'"+returnImage;
+            };
+
+            var destinationIndex = _destinations.indexOf(locationName);
+            if (destinationIndex >-1) {
+                var replyString = "'I'm already planning to go there later.'";
+                if (self.getNextDestination() == locationName) {
+                    replyString = "'I'm on my way there now.'";
+                };
+                return self.getDisplayName()+" says "+replyString+returnImage;
+            };
+
+            var location = map.getLocation(locationName);
+            if (!(location)) {
+                randomReplies = ["Sorry $player, I don't know where that is.", "I don't think there's a "+locationName+" anywhere around here.", "I think you might have the wrong place.", "Where's that? Are you sure you've got the name right"];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+            };
+
+            if (!(_canTravel)) {
+                return "Sorry $player, I need to stick around here at the moment. Maybe later?"+returnImage;
+            };
+
+            if (_affinity >1) {
+                var randomReplies;
+                self.setDestination(locationName);
+                if (_destinations.length+_clearedDestinations.length >1) {
+                    randomReplies = ["I've got a few things to sort out first but I'll be over there in a while.", "Sure. Just let me tie some loose ends up first. I might be a while", "OK. I'll catch you up when I'm done here."];
+                } else {
+                    randomReplies = ["OK.", "Okay. See you there?", "I'm on my way.", "I'll be over there shortly."];
+                };
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+            };
+
+            return "I think "+self.getPrefix().toLowerCase()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
+
+        };
+
         self.replyToKeyword = function(keyword,playerAggression, map) {
             var initialReply = self.initialReplyString(playerAggression);
             if (initialReply) {return initialReply;};
@@ -1917,7 +1995,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
-                    if (self.willFollow(player.getAggression())) {
+                    if (_waitDelay >0) {
+                        _waitDelay--; //wait 
+                    } else if (self.willFollow(player.getAggression())) {
                         //switch off delay to follow player instead
                         _currentDelay = -1;
                     } else {
@@ -1943,8 +2023,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else if (_currentDelay > -1) {
                     //we're in a delay of some sort
                     var delay = 0;
-                    //determine which delay...
-                    if (_clearedDestinations.length == 0) {
+                    //determine which delay to use...
+                    if (_waitDelay>0) {
+                        delay = _waitDelay;
+                        //console.log(self.getDisplayName()+": wait delay. Time remaining:"+eval(delay-_currentDelay));
+                    } else if (_clearedDestinations.length == 0) {
                         delay = _loopDelay;
                         //console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
                     } else {
@@ -1957,6 +2040,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         _currentDelay++;
                     } else {
                         _currentDelay = -1; //clear delay
+                        if (_waitDelay>0) {
+                            _waitDelay = 0; //clear wait delay if set
+                        };
                     };
                     
                 }; 
@@ -2054,6 +2140,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         } else {
                             var movementVerb = "heads";
                             if (_bleeding) {movementVerb = "limps";};
+                            if (exit.getLongName() == "in") {movementVerb = "goes";};
                             resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"."; 
                             if (showMoveToPlayer) {
                                 partialResultString += resultString;
@@ -2243,6 +2330,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _destinations;
         };
 
+        self.getNextDestination = function() {
+            return _destinations[_destinations.length-1];
+        };
+
         self.setAvoiding = function(locationNameToAvoid) {
             //if not already avoiding
             if (_avoiding.indexOf(locationNameToAvoid) == -1) {
@@ -2293,7 +2384,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             }; 
 
-            if (_loopDelay > 0||_destinationDelay>0) {
+            if (_loopDelay > 0||_destinationDelay>0||_waitDelay>0) {
                 _currentDelay = 0; //activate delay
             };
         };

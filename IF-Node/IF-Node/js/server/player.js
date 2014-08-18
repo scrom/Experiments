@@ -1545,6 +1545,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too
 
             if (verb == "find") {return giver.find(artefactName, _aggression, map);};
+            if (verb == "go") {return giver.goTo(artefactName, _aggression, map);}; //artefactName will actually be location name
+            if (verb == "wait") {return giver.wait(_aggression);};
 
             if (stringIsEmpty(artefactName)){ return verb+" "+giver.getDisplayName()+" for what?";};
 

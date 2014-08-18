@@ -410,6 +410,9 @@ exports.Action = function Action(aPlayer, aMap) {
                         //like ask but borrow object from person rather than ask person for object...
                         description = _player.ask(_verb, _object1, _object0);            
                         break;
+                    case 'tell':
+                        description = "We <i>ask</i> people things here, we don't <i>tell</i>.";
+                        break;
                     case 'ask':
                         //console.log("split: "+_splitWord);
                         if (_splitWord == "is"||_splitWord == "to") {
@@ -426,6 +429,29 @@ exports.Action = function Action(aPlayer, aMap) {
                                 _object1 = _object1.replace(" is ", "");
                                 //console.log("O0: "+_object0+"O1:"+_object1);
                                 description = _player.ask("find", _object0.trim(), _object1.trim(), _map);
+                                break;
+                            };
+                            //check for "ask x to go y" or "ask x to go to y"
+                            if (_actionString.indexOf(" go ") >-1) {
+                                var objectPair = _actionString.split(" to go ");
+                                _object0 = objectPair[0].replace("ask ","");
+                                _object1 = objectPair[1];
+                                _object1 = " "+_object1+" ";
+                                _object1 = _object1.replace(" to ", "");
+                                console.log("O0: "+_object0+"O1:"+_object1);
+                                description = _player.ask("go", _object0.trim(), _object1.trim(), _map);
+                                break;
+                            };
+                            //check for "ask x to wait"
+                            _actionString += " ";
+                            if (_actionString.indexOf(" wait ") >-1) {
+                                var objectPair = _actionString.split(" to wait ");
+                                _object0 = objectPair[0].replace("ask ","");
+                                _object1 = objectPair[1];
+                                _object1 = " "+_object1+" ";
+                                _object1 = _object1.replace(" to ", "");
+                                console.log("O0: "+_object0+"O1:"+_object1);
+                                description = _player.ask("wait", _object0.trim(), _object1.trim(), _map);
                                 break;
                             };
 
