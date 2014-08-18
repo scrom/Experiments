@@ -1725,11 +1725,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if ((!(_canTravel))||(!(_traveller))) {return self.getDisplayName()+" says 'I'm not planning on going anywhere.'"+returnImage; };
 
-            if (!(duration)) {duration = 10;};
-            _currentDelay = 0; //turn on delay
-            _waitDelay = duration;
-
             if (_affinity >1) {
+                //would be quite neat to set this duration to some factor of affinity and erode down to -1 affinity.
+                if (!(duration)) {duration = 10;}; 
+                _currentDelay = 0; //turn on delay
+                _waitDelay = duration;
+
                 self.decreaseAffinity(1); //erode affinity
                 return self.getDisplayName()+" says 'OK. See you in "+duration+"?'"+returnImage; 
             };
