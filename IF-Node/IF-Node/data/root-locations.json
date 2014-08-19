@@ -2359,34 +2359,6 @@
   },
   {
     "object": "location",
-    "name": "lift-first-floor",
-    "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "out",
-        "direction": "o",
-        "source": "lift-first-floor",
-        "destination": "first-floor-landing-central"
-      },
-	  {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "lift-first-floor",
-        "destination": "lift-ground-floor"
-      },
-	  {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "lift-first-floor",
-        "destination": "lift-second-floor"
-      }
-    ]
-  },
-  {
-    "object": "location",
     "name": "first-floor-toilet",
     "description": "You're in the first floor toilet.<br>It's a lot like all the others here although there's a subtle difference in colour.",
     "exits": [
@@ -3819,6 +3791,34 @@
   },
   {
     "object": "location",
+    "name": "lift-first-floor",
+    "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "lift-first-floor",
+        "destination": "first-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "lift-first-floor",
+        "destination": "lift-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "lift-first-floor",
+        "destination": "lift-second-floor"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "lift-ground-floor",
     "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
     "imageName": "imag2698.jpg",
@@ -3831,7 +3831,7 @@
         "destination": "atrium",
         "hidden": true
       },
-	  {
+      {
         "object": "exit",
         "longname": "up",
         "direction": "u",
@@ -3870,6 +3870,27 @@
           "exit",
           "button"
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "lift-second-floor",
+    "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "lift-second-floor",
+        "destination": "second-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "lift-second-floor",
+        "destination": "lift-first-floor"
       }
     ]
   },
@@ -3997,30 +4018,30 @@
         "destination": "machine-room-east"
       }
     ],
-	"inventory": [
-          {
-            "object": "artefact",
-            "name": "screwdriver",
-            "description": "large flat-headed screwdriver",
-            "detailedDescription": "Not much use for working on electronics but I'm sure it has other uses.",
-            "attributes": {
-              "defaultAction": "open",
-              "weight": 0.1,
-              "type": "key",
-			  "subType": "sharp",
-			  "attackStrength": 15,
-              "canCollect": true,
-              "affinityModifier": 2,
-              "unlocks": "cubicle door"
-            },
-            "synonyms": [
-              "flat scredriver",
-              "large screwdriver",
-			  "large flat-head screwdriver",
-			  "flat-head screwdriver"
-            ]
-          }
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "screwdriver",
+        "description": "large flat-headed screwdriver",
+        "detailedDescription": "Not much use for working on electronics but I'm sure it has other uses.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 0.1,
+          "attackStrength": 15,
+          "type": "key",
+          "subType": "sharp",
+          "canCollect": true,
+          "affinityModifier": 2,
+          "unlocks": "cubicle door"
+        },
+        "synonyms": [
+          "flat scredriver",
+          "large screwdriver",
+          "large flat-head screwdriver",
+          "flat-head screwdriver"
         ]
+      }
+    ]
   },
   {
     "object": "location",
@@ -5979,27 +6000,6 @@
   },
   {
     "object": "location",
-    "name": "lift-second-floor",
-    "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "out",
-        "direction": "o",
-        "source": "lift-second-floor",
-        "destination": "second-floor-landing-central"
-      },
-	  {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "lift-second-floor",
-        "destination": "lift-first-floor"
-      }
-    ]
-  },
-  {
-    "object": "location",
     "name": "second-floor-north-west-corridor-central",
     "description": "You're part-way along a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the East and West.",
     "exits": [
@@ -6441,7 +6441,7 @@
           "type": "door",
           "canOpen": true,
           "lockable": true,
-		  "locked": true,
+          "locked": true,
           "hasLinkedDoor": true
         },
         "linkedexits": [
