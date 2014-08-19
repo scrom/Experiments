@@ -58,6 +58,29 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return resultString;
         };
 
+        self.getCurrentAttributes = function() {
+            var currentAttributes = {};
+
+            currentAttributes.friendlyCreatureCount = self.countCreatures("friendly");
+            currentAttributes.totalCreatureCount = self.countCreatures();
+            currentAttributes.creatureCount = self.countCreatures("creature");
+            currentAttributes.animalCount = self.countCreatures("animal");
+            currentAttributes.itemCount = _inventory.size(true);
+            currentAttributes.dark = _dark;
+            currentAttributes.visits = _visits;
+            currentAttributes.inventoryValue = 0; //add this later on, total the sales value of all items           
+
+            return currentAttributes;
+        };
+
+        self.isDestroyed = function() {
+            return false;
+        };
+        
+        self.isDead = function() {
+            return false;
+        };
+
         self.getName = function() {
             return _name;
         };
@@ -230,6 +253,10 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
 
         self.getAllObjectsOfType = function(anObjectType) {
             return _inventory.getAllObjectsOfType(anObjectType);
+        };
+
+        self.countCreatures = function(subType) {
+            return _inventory.creatureCount(subType);
         };
 
         self.getDescription = function() {

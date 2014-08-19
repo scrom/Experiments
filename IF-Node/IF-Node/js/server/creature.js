@@ -407,7 +407,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 
             currentAttributes.originalType = _originalType;
             currentAttributes.originalBaseAffinity = _originalBaseAffinity;
-            currentAttributes.friendlyAttackCount = _friendlyAttackCount;             
+            currentAttributes.friendlyAttackCount = _friendlyAttackCount;       
+            currentAttributes.inventoryValue = _inventory.getInventoryValue();  
+            currentAttributes.salesInventoryValue = _salesInventory.getInventoryValue();     
                             
 
             return currentAttributes;
@@ -1045,7 +1047,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //attempt to steal...
             //will randomly return 0 to 6 by default(<15% chance of success)
             var successDivider = 7; 
-            if (self.getSubType == 'friendly') {successDivider = 20;}; //only 5% chance of success when stealing from a friend
+            if (self.getSubType() == 'friendly') {successDivider = 20;}; //only 5% chance of success when stealing from a friend
             if (self.isDead()) {successDivider = 0;}; //guaranteed success if dead.
             var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
             console.log('Stealing from creature. Successresult (0 is good)='+randomInt);

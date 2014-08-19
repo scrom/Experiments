@@ -362,6 +362,20 @@
       },
       {
         "object": "mission",
+        "name": "collector",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "inventoryValue": ">100"
+        },
+        "reward": {
+          "score": 35,
+          "successMessage": "<br>You've collected quite a lot of valuable stuff there!<br>Have you considered <i>sell</i>ing any of it?<br>Have 35 points."
+        }
+      },
+      {
+        "object": "mission",
         "name": "pickpocket",
         "attributes": {
           "missionObject": "player"
@@ -874,7 +888,33 @@
           "mw",
           "wightman",
           "him"
-        ]
+        ],
+    "missions": [
+        {"object": "mission",
+		"name": "partybus",
+		"displayName": "get everyone on the party bus",
+		"description": "You did a great job of saving the company. Let's celebrate. Get everyone a drink and onto the party bus before it leaves!",
+		"attributes": {
+		  "missionObject": "party-bus",
+		  "parent": "saveredgate",
+              "dialogue": [
+                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'I've ordered a bus to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> everyone to <i>go</i> to the party-bus as soon as they can?'<br>'Once everyone's on board (including yourself), it'll be time to relax.'",
+                "'Hey $player. How's the party organising going?'"
+              ]
+		},
+		"failAttributes": {
+		  "time": 250
+		},
+		"conditionAttributes": {              
+			  "friendlyCreatureCount": ">31"
+		},
+		"reward": {
+		  "score": 250,
+		  "successMessage": "<br>Congratulations. You managed to get the whole team on the bus and ready to party. That's quite a feat!<br>Have 250 points!<br> blah.",
+		  "failMessage": "<br>Oh no! The party bus is leaving and you haven't got everyone on board!<br>Well that's your crowning glory failed. What else is left to do?"
+		}
+	  }
+    ]
       },
       {
         "object": "creature",
@@ -1079,6 +1119,7 @@
               "canCollect": true,
               "isBreakable": true,
               "affinityModifier": 2,
+			  "price": 5,
               "customAction": "play",
               "defaultResult": "They're <i>really</i> annoying. Please don't do that again."
             },
@@ -3494,11 +3535,12 @@
                   "object": "artefact",
                   "name": "comic",
                   "description": "book with charred pages",
-                  "detailedDescription": "It looks like the tattered and charred remnants of a comic book.<br>It could be a clue.",
+                  "detailedDescription": "It looks like the tattered and charred remnants of a very rare comic book.<br>It could be a clue.",
                   "attributes": {
                     "defaultAction": "read",
                     "weight": 1,
                     "canCollect": true,
+					"price": 15,
                     "affinityModifier": 0
                   },
                   "synonyms": [
@@ -3778,6 +3820,7 @@
           "attackStrength": 20,
           "canCollect": true,
           "isBreakable": true,
+		  "price": 10,
           "customAction": "play",
           "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte.",
           "imageName": "guitar.jpg"
@@ -3937,7 +3980,7 @@
               "attackStrength": 5,
               "canCollect": true,
               "isBreakable": true,
-              "price": 100
+              "price": 50
             },
             "synonyms": [
               "disc",
@@ -4232,7 +4275,8 @@
         "synonyms": [
           "drum",
           "drum kit",
-          "drumkit"
+          "drumkit",
+		  "kit"
         ]
       }
     ]
@@ -4910,6 +4954,7 @@
           "canCollect": true,
           "isBreakable": true,
           "customAction": "wear",
+		  "price": 20,
           "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
         },
         "synonyms": [
@@ -6199,6 +6244,7 @@
             "detailedDescription": "A pack of multicoloured post-it notes.",
             "attributes": {
               "weight": 0.5,
+			  "price": 2,
               "canCollect": true
             },
             "synonyms": [
@@ -6223,6 +6269,7 @@
             "detailedDescription": "Invaluable tool of the agilist.",
             "attributes": {
               "weight": 0.1,
+			  "price":2,
               "canCollect": true
             },
             "synonyms": [
@@ -7565,7 +7612,32 @@
         "reward": {
           "score": 200,
           "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been <i>very</i> nasty).",
-          "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+          "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse.",
+          "locations": [
+            {
+              "object": "location",
+              "name": "party-bus",
+              "description": "There's a bus parked out here. Looks like someone's setting up for a celebration!",
+              "exits": [
+                {
+                  "object": "exit",
+                  "longname": "South",
+                  "direction": "s",
+                  "source": "party-bus",
+                  "destination": "office-front"
+                }
+              ]
+            }
+          ],
+          "exits": [
+            {
+              "object": "exit",
+              "longname": "North",
+              "direction": "n",
+              "source": "office-front",
+              "destination": "party-bus"
+            }
+          ]
         }
       }
     ]

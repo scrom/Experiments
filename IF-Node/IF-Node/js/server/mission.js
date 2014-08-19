@@ -422,8 +422,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
                 break;
             case (_destination == location.getName()): //location
-                //console.log('mission destination location reached');
-                return location.getObject(_missionObject);
+                if (_destination == _missionObject) {
+                    return location;
+                } else {
+                    //console.log('mission destination location reached');
+                    return location.getObject(_missionObject);
+                };
                 break;
             };
 

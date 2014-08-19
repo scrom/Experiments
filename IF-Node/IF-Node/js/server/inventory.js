@@ -44,12 +44,36 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return objectCount;
         };
 
+        self.creatureCount = function(subType) {
+            var objectCount = 0;
+            for (var i=0;i<_items.length;i++){
+                if (_items[i].getType() == "creature") {
+                    if (subType) {
+                        if (_items[i].getSubType() == subType) {
+                            objectCount++;
+                        };
+                    } else {
+                        objectCount++;
+                    };
+                };
+            };
+            return objectCount;
+        };
+
         self.setCashBalance = function (newBalance) {
             _money = newBalance;
         };
 
         self.getCashBalance = function () {
             return _money;
+        };
+
+        self.getInventoryValue = function () {
+            var value = 0;
+            for (var i=0;i<_items.length;i++) {
+               value += _items[i].getPrice(); 
+            };
+            return value;
         };
 
         self.canAfford = function (price) {

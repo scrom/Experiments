@@ -557,6 +557,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.likePercent = Math.ceil(maxMinAffinity.like);
             currentAttributes.waryPercent = Math.ceil(maxMinAffinity.wary);
             currentAttributes.dislikePercent = Math.ceil(maxMinAffinity.strongDislike);
+            currentAttributes.inventoryValue = _inventory.getInventoryValue();  
 
             return currentAttributes;
         };

@@ -373,6 +373,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.imageName = _imageName;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;
+            currentAttributes.inventoryValue = _inventory.getInventoryValue();  
 
             return currentAttributes;
 

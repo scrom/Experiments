@@ -176,22 +176,24 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                         //manually add exits from each location (linking not needed)
                         rewardLocation.addExit(exitData.direction,exitData.source,exitData.destination,exitData.hidden);
                     }; 
-                    for (var i=0; i<reward.locations[l].inventory.length;i++) {
-                        var inventoryData = reward.locations[l].inventory[i];
-                        //manually add exits from each location (linking not needed)
-                        if (inventoryData.object == "artefact") {
-                            rewardLocation.addObject(self.buildArtefact(inventoryData));
-                        } else if (inventoryData.object == "creature") {
-                            var creature = self.buildCreature(inventoryData)
-                            if (inventoryData.attributes) {
-                                if (inventoryData.attributes.startLocationName) {
-                                    var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
-                                    creature.setStartLocation(startLocation);
+                    if (reward.locations[l].inventory) {
+                        for (var i=0; i<reward.locations[l].inventory.length;i++) {
+                            var inventoryData = reward.locations[l].inventory[i];
+                            //manually add exits from each location (linking not needed)
+                            if (inventoryData.object == "artefact") {
+                                rewardLocation.addObject(self.buildArtefact(inventoryData));
+                            } else if (inventoryData.object == "creature") {
+                                var creature = self.buildCreature(inventoryData)
+                                if (inventoryData.attributes) {
+                                    if (inventoryData.attributes.startLocationName) {
+                                        var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
+                                        creature.setStartLocation(startLocation);
+                                    };
                                 };
-                            };
-                            creature.go(null, rewardLocation);                           
-                        };                        
-                    }; 
+                                creature.go(null, rewardLocation);                           
+                            };                        
+                        }; 
+                    };
                     returnObject.locations.push(rewardLocation);
                 }; 
             };
