@@ -1082,8 +1082,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if(stealingFromSalesInventory) {_salesInventory.remove(anObjectName);}
                     else {_inventory.remove(anObjectName);};
 
-                    if (self.isDead()) { return "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+"'s corpse.";};
                     player.addStolenObject(objectToGive.getName());
+                    if (self.isDead()) { return "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+"'s corpse.";};
+                    self.decreaseAffinity(objectToGive.getAffinityModifier());
                     return "You steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";                   
                 };
 
@@ -2022,6 +2023,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
+                    //re-fetch player location in case we just killed them!
+                    //playerLocation = player.getCurrentLocation().getName();
                     partialResultString = resultString;
                 } else if (_currentDelay > -1) {
                     //we're in a delay of some sort
