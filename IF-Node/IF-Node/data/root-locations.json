@@ -6434,7 +6434,7 @@
         "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
+        "detailedDescription": "The lock on the door has a slot to allow turning from the outside with a suitable tool.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
