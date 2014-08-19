@@ -113,6 +113,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "has";
         };
 
+        var showsPlural = function() {
+            if (_plural) {
+                return "show";
+             };
+            return "shows";
+        };
+
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
@@ -1302,7 +1309,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _detailedDescription = initCap(_itemDescriptivePrefix)+" broken.";
                 return "You broke "+_itemSuffix+"!";
             };
-            _detailedDescription += " "+_itemPrefix+" shows signs of abuse.";
+            _detailedDescription += " "+_itemPrefix+" "+showsPlural()+" signs of abuse.";
             if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to break "+_itemSuffix+".";};
             return "";
         };
@@ -1357,7 +1364,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 return resultString;
             };
-            _detailedDescription += _itemPrefix+" shows signs of abuse.";
+            _detailedDescription += _itemPrefix+" "+showsPlural()+" signs of abuse.";
             if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
             return "";
         };
@@ -1384,7 +1391,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (!(_damaged)) {
                 _damaged = true;
-                _detailedDescription += " "+_itemPrefix+" shows signs of being dropped or abused.";
+                _detailedDescription += " "+_itemPrefix+" "+showsPlural()+" signs of being dropped or abused.";
             };
             return "";
         };
@@ -1411,7 +1418,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (!(_damaged)) {
                 _damaged = true;
-                _detailedDescription += " and shows signs of damage beyond normal expected wear and tear.";
+                _detailedDescription += " "+_itemPrefix+" "+showsPlural()+" signs of damage beyond normal expected wear and tear.";
             };
 
             return "";
@@ -1536,7 +1543,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.reply = function(someSpeech,playerAggression) {
             if (self.isDestroyed()) {return "The remaining fragments of inanimate spirit from "+self.getDisplayName()+" ignore you.";};
-            return initCap(self.getDisplayName())+", is quietly aware of the sound of your voice but shows no sign of response.";
+            return _itemDescriptivePrefix+" quietly aware of the sound of your voice but "+showsPlural()+" no sign of response.";
         };
 
         self.canTravel = function() {
@@ -1557,7 +1564,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 var resultString = "You drink"+drankAll+self.getDisplayName()+". "
                 if (_nutrition >=0) {
                     aPlayer.recover(_nutrition);
-                    resultString += "You feel fitter, happier and healthier.";
+                        var randomReplies = ["You feel better for a drink.", "Tasty. Much better!", "That hit the spot.", "That quenched your thirst."];
+                        var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        return resultString +=randomReplies[randomIndex];
                 } else { //nutrition is negative
                     resultString += aPlayer.hurt(_nutrition*-1);
                     resultString += "That wasn't a good idea.";
@@ -1585,7 +1594,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     var resultString = "You eat"+eatenAll+self.getDisplayName()+". "
                     if (_nutrition >=0) {
                         aPlayer.recover(_nutrition);
-                        resultString += "You feel fitter, happier and healthier.";
+                        var randomReplies = ["You feel fitter, happier and healthier.", "Mmm, tasty. Much better!", "That hit the spot.", "That should keep you going for a while."];
+                        var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        return resultString +=randomReplies[randomIndex];
                     } else { //nutrition is negative
                         resultString += "That wasn't a good idea. ";
                         resultString += aPlayer.hurt(_nutrition*-1);
@@ -1594,7 +1605,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return resultString;
 
                 } else {
-                    _detailedDescription += ' and shows signs of being chewed.';
+                    _detailedDescription += ".<br>"+_itemPrefix+" looks like "+_itemDescriptivePrefix.toLowerCase()+" been chewed by something.";
                     aPlayer.hurt(5);
                     return "You try and try but just can't seem to keep "+_itemSuffix+" in your mouth without doing yourself harm."
                 };
@@ -1865,7 +1876,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
             if (_locked) {
-                if (!(aKey)) {return "You don't have a key for "+self.getSuffix()+".";};
+                if (!(aKey)) {return "You need something to unlock "+self.getSuffix()+" with.";};
                 if (aKey.keyTo(self)) {
                     _locked = false;
                     if (self.getType() == "property") {_collectable = true;};

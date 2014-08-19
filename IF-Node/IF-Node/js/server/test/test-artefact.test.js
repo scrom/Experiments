@@ -330,7 +330,7 @@ exports.cannotUnlockDoorWithoutKey = function (test) {
         defaultAction: "open"};
 
     var door = new artefact.Artefact('door', 'door', "locky door",doorAttributes, null);
-    var expectedResult = "You don't have a key for it.";
+    var expectedResult = "You need something to unlock it with.";
     var actualResult = door.unlock();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

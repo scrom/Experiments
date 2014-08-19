@@ -194,8 +194,8 @@ exports.canEatFoodWhenHungry = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(54);
     //p0.reduceHitPoints(6);
-    var expectedResult = 'You eat the cake. You feel fitter, happier and healthier.';
-    var actualResult = p0.eat('eat','cake');
+    var expectedResult = 'You eat the cake. ';
+    var actualResult = p0.eat('eat','cake').substring(0,18);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -208,8 +208,8 @@ exports.canEatFoodWhenHungry.meta = { traits: ["Player Test", "Inventory Trait",
 exports.canEatFoodWhenHungryTestBoundaryCase = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(40);
-    var expectedResult = "You eat the cake. You feel fitter, happier and healthier.";
-    var actualResult = p0.eat('eat','cake');
+    var expectedResult = "You eat the cake. ";
+    var actualResult = p0.eat('eat','cake').substring(0,18);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -251,8 +251,8 @@ exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(27);
     p0.reduceHitPoints(6); //test boundary
-    var expectedResult = "You eat the cake. You feel fitter, happier and healthier.";
-    var actualResult = p0.eat('eat','cake');
+    var expectedResult = "You eat the cake. ";
+    var actualResult = p0.eat('eat','cake').substring(0,18);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1044,8 +1044,8 @@ exports.canDrinkCoffee = function (test) {
     cup.receive(coffee);
     p0.get('get','cup');
 
-    var expectedResult = 'You drink the coffee. You feel fitter, happier and healthier.';
-    var actualResult = p0.drink('drink','coffee');
+    var expectedResult = 'You drink the coffee. ';
+    var actualResult = p0.drink('drink','coffee').substring(0,22);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);

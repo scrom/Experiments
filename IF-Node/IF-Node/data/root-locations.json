@@ -2270,10 +2270,10 @@
       },
       {
         "object": "exit",
-        "longname": "South",
-        "direction": "s",
+        "longname": "in",
+        "direction": "i",
         "source": "first-floor-landing-central",
-        "destination": "first-floor-lift"
+        "destination": "lift-first-floor"
       }
     ]
   },
@@ -2359,15 +2359,29 @@
   },
   {
     "object": "location",
-    "name": "first-floor-lift",
-    "description": "You're in the first floor lift.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
+    "name": "lift-first-floor",
+    "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
     "exits": [
       {
         "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "first-floor-lift",
+        "longname": "out",
+        "direction": "o",
+        "source": "lift-first-floor",
         "destination": "first-floor-landing-central"
+      },
+	  {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "lift-first-floor",
+        "destination": "lift-ground-floor"
+      },
+	  {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "lift-first-floor",
+        "destination": "lift-second-floor"
       }
     ]
   },
@@ -3816,6 +3830,13 @@
         "source": "lift-ground-floor",
         "destination": "atrium",
         "hidden": true
+      },
+	  {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "lift-ground-floor",
+        "destination": "lift-first-floor"
       }
     ],
     "inventory": [
@@ -3959,7 +3980,7 @@
   {
     "object": "location",
     "name": "machine-room-west",
-    "description": "You're in the IS storage area.<br>You're not meant to be in here unaccompanied I think. There are cables, wires and spare pieces of hardware arrayed around you.",
+    "description": "You're in the IS storage area.<br>You're not meant to be in here unaccompanied I think. There are cables, wires, tools and spare pieces of hardware arrayed around you.",
     "exits": [
       {
         "object": "exit",
@@ -3975,7 +3996,31 @@
         "source": "machine-room-west",
         "destination": "machine-room-east"
       }
-    ]
+    ],
+	"inventory": [
+          {
+            "object": "artefact",
+            "name": "screwdriver",
+            "description": "large flat-headed screwdriver",
+            "detailedDescription": "Not much use for working on electronics but I'm sure it has other uses.",
+            "attributes": {
+              "defaultAction": "open",
+              "weight": 0.1,
+              "type": "key",
+			  "subType": "sharp",
+			  "attackStrength": 15,
+              "canCollect": true,
+              "affinityModifier": 2,
+              "unlocks": "cubicle door"
+            },
+            "synonyms": [
+              "flat scredriver",
+              "large screwdriver",
+			  "large flat-head screwdriver",
+			  "flat-head screwdriver"
+            ]
+          }
+        ]
   },
   {
     "object": "location",
@@ -5845,10 +5890,10 @@
       },
       {
         "object": "exit",
-        "longname": "South",
-        "direction": "s",
+        "longname": "in",
+        "direction": "i",
         "source": "second-floor-landing-central",
-        "destination": "second-floor-lift"
+        "destination": "lift-second-floor"
       }
     ]
   },
@@ -5934,15 +5979,22 @@
   },
   {
     "object": "location",
-    "name": "second-floor-lift",
+    "name": "lift-second-floor",
     "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
     "exits": [
       {
         "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "second-floor-lift",
+        "longname": "out",
+        "direction": "o",
+        "source": "lift-second-floor",
         "destination": "second-floor-landing-central"
+      },
+	  {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "lift-second-floor",
+        "destination": "lift-first-floor"
       }
     ]
   },
@@ -6339,7 +6391,7 @@
   {
     "object": "location",
     "name": "second-floor-toilet",
-    "description": "You're in a bathroom. You can't quite remember what floor you're on. Do those soap dispensers look different to you?",
+    "description": "You're in a bathroom. You can't quite remember what floor you're on. Do those soap dispensers look different to you?<br>A sign on the cubicle door says 'Temporarily out of order'",
     "exits": [
       {
         "object": "exit",
@@ -6389,6 +6441,7 @@
           "type": "door",
           "canOpen": true,
           "lockable": true,
+		  "locked": true,
           "hasLinkedDoor": true
         },
         "linkedexits": [

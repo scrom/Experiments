@@ -1829,8 +1829,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //is this a new location?
             if (_currentLocation.getVisits() == 1) {_locationsFound++;};
 
-            
-            resultString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
+            if (!(self.canSee())) {
+                resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";
+            } else {
+                resultString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
+            };
 
             //retrieve missions from location:
             var newMissions = _currentLocation.getMissions();
