@@ -1567,7 +1567,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     aPlayer.recover(_nutrition);
                         var randomReplies = ["You feel better for a drink.", "Tasty. Much better!", "That hit the spot.", "That quenched your thirst."];
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                        return resultString +=randomReplies[randomIndex];
+                        resultString +=randomReplies[randomIndex];
                 } else { //nutrition is negative
                     resultString += aPlayer.hurt(_nutrition*-1);
                     resultString += "That wasn't a good idea.";
