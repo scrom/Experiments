@@ -889,32 +889,34 @@
           "wightman",
           "him"
         ],
-    "missions": [
-        {"object": "mission",
-		"name": "partybus",
-		"displayName": "get everyone on the party bus",
-		"description": "You did a great job of saving the company. Let's celebrate. Get everyone a drink and onto the party bus before it leaves!",
-		"attributes": {
-		  "missionObject": "party-bus",
-		  "parent": "saveredgate",
+        "missions": [
+          {
+            "object": "mission",
+            "name": "partybus",
+            "displayName": "get everyone on the party bus",
+            "description": "You did a great job of saving the company. Let's celebrate. Get everyone a drink and onto the party bus before it leaves!",
+            "attributes": {
+              "parent": "saveredgate",
+              "missionObject": "party-bus",
+              "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'I've ordered a bus to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> everyone to <i>go</i> to the party-bus as soon as they can?'<br>'Once everyone's on board (including yourself), it'll be time to relax.'",
                 "'Hey $player. How's the party organising going?'"
               ]
-		},
-		"failAttributes": {
-		  "time": 250
-		},
-		"conditionAttributes": {              
-			  "friendlyCreatureCount": ">31"
-		},
-		"reward": {
-		  "score": 250,
-		  "successMessage": "<br>Congratulations. You managed to get the whole team on the bus and ready to party. That's quite a feat!<br>Have 250 points!<br> blah.",
-		  "failMessage": "<br>Oh no! The party bus is leaving and you haven't got everyone on board!<br>Well that's your crowning glory failed. What else is left to do?"
-		}
-	  }
-    ]
+            },
+            "failAttributes": {
+              "time": 250
+            },
+            "conditionAttributes": {
+              "friendlyCreatureCount": ">31"
+            },
+            "reward": {
+              "score": 250,
+              "successMessage": "<br>Congratulations. You managed to get the whole team on the bus and ready to party. That's quite a feat!<br>Have 250 points!<br> blah.",
+              "failMessage": "<br>Oh no! The party bus is leaving and you haven't got everyone on board!<br>Well that's your crowning glory failed. What else is left to do?"
+            }
+          }
+        ]
       },
       {
         "object": "creature",
@@ -1119,7 +1121,7 @@
               "canCollect": true,
               "isBreakable": true,
               "affinityModifier": 2,
-			  "price": 5,
+              "price": 5,
               "customAction": "play",
               "defaultResult": "They're <i>really</i> annoying. Please don't do that again."
             },
@@ -3540,8 +3542,8 @@
                     "defaultAction": "read",
                     "weight": 1,
                     "canCollect": true,
-					"price": 15,
-                    "affinityModifier": 0
+                    "affinityModifier": 0,
+                    "price": 15
                   },
                   "synonyms": [
                     "book",
@@ -3576,17 +3578,22 @@
                     "destinationDelay": 2,
                     "imageName": "daveconvery.jpg",
                     "contagion": [
-                        {   "object": "contagion",
-							"name": "zombie",
-							"displayName": "zombie",
-							"attributes":{   
-								"incubationPeriod": 10,
-								"communicability": 0.5,
-								"transmission": "bite",
-								"symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0}],
-								"duration": -1
-							}
-						  }
+                      {
+                        "object": "Contagion",
+                        "name": "zombie",
+                        "displayName": "zombie",
+                        "attributes": {
+                          "incubationPeriod": 10,
+                          "communicability": 0.5,
+                          "symptoms": [
+                            {
+                              "action": "bite",
+                              "frequency": 0.3,
+                              "escalation": 0
+                            }
+                          ]
+                        }
+                      }
                     ]
                   },
                   "synonyms": [
@@ -3617,17 +3624,22 @@
                     "destinationDelay": 2,
                     "imageName": "rogerhart.jpg",
                     "contagion": [
-                        {   "object": "contagion",
-							"name": "zombie",
-							"displayName": "zombie",
-							"attributes":{   
-								"incubationPeriod": 10,
-								"communicability": 0.5,
-								"transmission": "bite",
-								"symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0}],
-								"duration": -1
-							}
-						  }
+                      {
+                        "object": "Contagion",
+                        "name": "zombie",
+                        "displayName": "zombie",
+                        "attributes": {
+                          "incubationPeriod": 10,
+                          "communicability": 0.5,
+                          "symptoms": [
+                            {
+                              "action": "bite",
+                              "frequency": 0.3,
+                              "escalation": 0
+                            }
+                          ]
+                        }
+                      }
                     ]
                   },
                   "synonyms": [
@@ -3840,7 +3852,7 @@
           "attackStrength": 20,
           "canCollect": true,
           "isBreakable": true,
-		  "price": 10,
+          "price": 10,
           "customAction": "play",
           "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte.",
           "imageName": "guitar.jpg"
@@ -4296,7 +4308,7 @@
           "drum",
           "drum kit",
           "drumkit",
-		  "kit"
+          "kit"
         ]
       }
     ]
@@ -4973,8 +4985,8 @@
           "weight": 2,
           "canCollect": true,
           "isBreakable": true,
+          "price": 20,
           "customAction": "wear",
-		  "price": 20,
           "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
         },
         "synonyms": [
@@ -6264,8 +6276,8 @@
             "detailedDescription": "A pack of multicoloured post-it notes.",
             "attributes": {
               "weight": 0.5,
-			  "price": 2,
-              "canCollect": true
+              "canCollect": true,
+              "price": 2
             },
             "synonyms": [
               "pack",
@@ -6289,8 +6301,8 @@
             "detailedDescription": "Invaluable tool of the agilist.",
             "attributes": {
               "weight": 0.1,
-			  "price":2,
-              "canCollect": true
+              "canCollect": true,
+              "price": 2
             },
             "synonyms": [
               "pen",
@@ -7630,9 +7642,6 @@
           }
         },
         "reward": {
-          "score": 200,
-          "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been <i>very</i> nasty).",
-          "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse.",
           "locations": [
             {
               "object": "location",
@@ -7657,7 +7666,10 @@
               "source": "office-front",
               "destination": "party-bus"
             }
-          ]
+          ],
+          "score": 200,
+          "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been <i>very</i> nasty).",
+          "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
         }
       }
     ]
