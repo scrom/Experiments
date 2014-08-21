@@ -7,6 +7,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
         var _name = name;
         var _displayName = displayName;
         var _incubationPeriod = 0;
+        var _originalIncubationPeriod = 0;
         var _communicability = 0;
         var _transmission = "bite";
         var _symptoms = [];
@@ -28,20 +29,34 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                     _symptoms.push(contagionAttributes.symptoms[i]);
                 };
             };
+
             if (contagionAttributes.originalSymptoms != undefined) {
-                for (var i = 0; i < contagionAttributes.originalSymptoms.length; i++) {
+                for (var i = 0; i < contagionAttributes.originalSymptoms.length; i++) {                    
                     _originalSymptoms.push(contagionAttributes.originalSymptoms[i]);
                 };
             } else {
                 for (var i = 0; i < contagionAttributes.symptoms.length; i++) {
-                    _originalSymptoms.push(contagionAttributes.symptoms[i]);
+                    //note, the symptoms object is passed by reference so we need to create a new copy of the symptoms.
+                    var newSymptom = {}
+                    for (var k in contagionAttributes.symptoms[i]) {
+                        newSymptom[k] = contagionAttributes.symptoms[i][k];
+                    };
+                    _originalSymptoms.push(newSymptom);
                 };
             };
+
             if (contagionAttributes.duration != undefined) { _duration = contagionAttributes.duration; };
+
             if (contagionAttributes.originalDuration != undefined) {
                 _originalDuration = contagionAttributes.originalDuration;
             } else {
                 _originalDuration = contagionAttributes.duration;
+            };
+
+            if (contagionAttributes.originalIncubationPeriod != undefined) {
+                _originalIncubationPeriod = contagionAttributes.originalIncubationPeriod;
+            } else {
+                _originalIncubationPeriod = contagionAttributes.incubationPeriod;
             };
         };
 
@@ -59,6 +74,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
         self.getCurrentAttributes = function () {
             var currentAttributes = {};
             currentAttributes.incubationPeriod = _incubationPeriod;
+            currentAttributes.originalIncubationPeriod = _originalIncubationPeriod;          
             currentAttributes.communicability = _communicability;
             currentAttributes.transmission = _transmission;
             currentAttributes.symptoms = _symptoms;
@@ -68,11 +84,22 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             return currentAttributes;
         };
 
+        self.getCloneAttributes = function () {
+            var cloneAttributes = {};
+            cloneAttributes.incubationPeriod = _originalIncubationPeriod;          
+            cloneAttributes.communicability = _communicability;
+            cloneAttributes.transmission = _transmission;
+            cloneAttributes.symptoms = _originalSymptoms;
+            cloneAttributes.duration = _originalDuration;
+            return cloneAttributes;
+        };
+
         self.getAttributesToSave = function () {
             var saveAttributes = {};
             var contagionAttributes = self.getCurrentAttributes();
 
             if (contagionAttributes.incubationPeriod > 0) { saveAttributes.incubationPeriod = contagionAttributes.incubationPeriod; };
+            if (contagionAttributes.incubationPeriod != contagionAttributes.originalIncubationPeriod) { saveAttributes.originalIncubationPeriod = contagionAttributes.originalIncubationPeriod; };
             if (contagionAttributes.communicability > 0) { saveAttributes.communicability = contagionAttributes.communicability; };
             if (contagionAttributes.transmission != "bite") { saveAttributes.transmission = contagionAttributes.transmission; };
             if (contagionAttributes.symptoms.length > 0) { saveAttributes.symptoms = contagionAttributes.symptoms; };
@@ -112,22 +139,26 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
         self.transmit = function () {
             var randomInt = Math.floor(Math.random() * (_communicability*10));
             if (randomInt > 0) { 
-                return self;
+                return new Contagion(_name,_displayName, self.getCloneAttributes());
             };
         };
 
         self.enactSymptoms = function (carrier, location, player) {
-            //example: "symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0},{ "action":"health", "hp":5, "frequency":0.1,"escalation":0.1}],
+            //example: "symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0},{ "action":"hurt", "health":5, "frequency":0.1,"escalation":0.1}],
             var resultString = "";
             if (_duration == 0) { return resultString; }; //contagion should no longer exist
+            if (_incubationPeriod > 0) {
+                _incubationPeriod--; //reduce incubation, do nothing else yet
+                return resultString;
+            }; 
             for (var i = 0; i < _symptoms.length; i++) {
                 //set symptom defaults
                 var frequency = 1;
                 var escalation = 0;
                 var hp = 0;
                 //set actual symptom values if available
-                if (_symptoms[i].hp) {
-                    hp = parseInt(_symptoms[i].hp);
+                if (_symptoms[i].health) {
+                    hp = parseInt(_symptoms[i].health);
                 };
                 if (_symptoms[i].escalation) {
                     escalation = parseFloat(_symptoms[i].escalation);
@@ -135,11 +166,15 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                 if (_symptoms[i].frequency) {
                     frequency = parseFloat(_symptoms[i].frequency) * 10;
                 };
+
+                console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
                 //perform actions
                 if (_symptoms[i].action) {
                     switch (_symptoms[i].action) {
                         case "bite":
-                            var initialVictims = location.getCreatures();
+                            console.log("bite symptom firing.");
+                            var initialVictims = [];
+                            if (location) { initialVictims = location.getCreatures() };
                             var victims = [];
 
                             //splice out dead creatures
@@ -189,9 +224,11 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                             };
 
                             break;
-                        case "health":
+                        case "hurt":
+                            if (carrier.isDead()) { break; }; //do nothing
                             var rand = Math.floor(Math.random() * frequency);
-                            if (rand == 0) {
+                            console.log("health symptom firing. Rand = "+rand);
+                            if (rand > 0) {
                                 resultString += carrier.hurt(hp);
                             };
                             break;
@@ -202,12 +239,14 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                 };
                 //escalate
                 if (_symptoms[i].frequency) {
-                    _symptoms[i].frequency += escalation
+                    var newFrequency = Math.round((parseFloat(_symptoms[i].escalation) + parseFloat(_symptoms[i].frequency))*100)/100;
+                    _symptoms[i].frequency += newFrequency
                 };
 
                 if (_duration > 0) { _duration-- };
+                console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
             };
-
+            
             return resultString;
         };
 
