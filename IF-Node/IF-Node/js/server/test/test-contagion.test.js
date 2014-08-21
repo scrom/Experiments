@@ -149,3 +149,104 @@ exports.checkIncubationPeriodDeclinesBy1PointWith1Enaction = function (test) {
 
 exports.checkIncubationPeriodDeclinesBy1PointWith1Enaction.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a contagion with symptoms triggered has a declining incubation period of 1 point per hit." };
 
+
+exports.checkBitingWorksCorrectlyWithJustSelfCreatureInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWithSelfAnd1CreatureInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWith2CreaturesInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWith3CreaturesInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWith5CreaturesInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWithPlayerAnd2CreaturesInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWithInfectedCreatureAndUninfectedPlayerInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWithJustSelfPlayerInLocation = function (test) {
+
+    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "bite", "frequency": 0.5}],"duration": -1});
+    var cr = new creature.Creature("creature", "creature","creature", {"health":25});
+
+    //clear down incubation period and start escalation
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+
+    var expectedResult = 'biting happens';
+    var actualResult = c.enactSymptoms(cr);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.checkBitingWorksCorrectlyWithJustSelfCreatureInLocation.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a transmitted contagion doesn't use 'live' attrbiutes for new instance." };
+
+
+exports.testSymptomsStopIfDurationIsSet = function (test) {
+
+    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "hurt", "health":1,"frequency": 1}],"duration": 5});
+    var cr = new creature.Creature("creature", "creature","creature", {"health":25});
+
+    var actualResult = c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);//should only see 5 sets of symptoms logged
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+    actualResult +=c.enactSymptoms(cr);
+
+    var expectedResult = "The creature is hurt. It's not happy.The creature is hurt. It's not happy.The creature is hurt. It's not happy.The creature is hurt. It's not happy.The creature is hurt. It's taken a fair beating.";
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.testSymptomsStopIfDurationIsSet.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a contagion symptom stops ocurring after a while if duration set." };
+
+
+exports.testSymptomDurationDeclinesIfSet = function (test) {
+
+    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "hurt", "health":1,"frequency": 1}],"duration": 5});
+    var cr = new creature.Creature("creature", "creature","creature", {"health":25});
+
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+
+    var actualResult =c.toString();
+
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":1,"frequency":1}],"duration":3,"originalDuration":5}}';
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.testSymptomDurationDeclinesIfSet.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a contagion duration reduces if set." };
+
+
+exports.testSymptomsMarkedAsExpiredOnObjectIfDurationIsSet = function (test) {
+
+    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "hurt", "health":1,"frequency": 1}],"duration": 5});
+    var cr = new creature.Creature("creature", "creature","creature", {"health":25});
+
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+
+    var actualResult =c.toString();
+
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":1,"frequency":1}],"duration":0,"originalDuration":5}}';
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.testSymptomsMarkedAsExpiredOnObjectIfDurationIsSet.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a contagion deactivates after a while if set." };
