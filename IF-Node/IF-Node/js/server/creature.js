@@ -1686,6 +1686,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _missions = missionsToKeep;
             };
 
+            console.log('Creature "'+self.getDisplayName()+'" killed');
             return resultString;
          };
 

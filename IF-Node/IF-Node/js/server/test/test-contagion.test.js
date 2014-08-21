@@ -39,9 +39,10 @@ exports.checkContagionEscalationOccurs = function (test) {
     c.enactSymptoms(cr);
     c.enactSymptoms(cr);
     c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
 
-    var expectedResult = "The creature is hurt. It's taken a fair beating.";
-    var actualResult = c.enactSymptoms(cr);
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":1,"escalation":0.3}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.3}]}}';
+    var actualResult = c.toString();
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -49,7 +50,43 @@ exports.checkContagionEscalationOccurs = function (test) {
 
 };
 
-exports.checkContagionEscalationOccurs.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test how contagion escalationworks." };
+exports.checkContagionEscalationOccurs.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test how contagion escalation works." };
+
+exports.checkSlowContagionEscalationManifestsCorrectly = function (test) {
+
+    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "hurt", "health":5, "frequency": 0.05, "escalation": 0.05 }],"duration": -1});
+    var cr = new creature.Creature("creature", "creature","creature", {"health":25});
+
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":0.95,"escalation":0.05}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.05,"escalation":0.05}]}}';
+    var actualResult = c.toString();
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.checkSlowContagionEscalationManifestsCorrectly.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test how contagion escalation works." };
+
 
 exports.checkTransmitUsesOriginalAttributes = function (test) {
 

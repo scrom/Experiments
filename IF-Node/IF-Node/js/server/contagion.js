@@ -164,15 +164,15 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                     escalation = parseFloat(_symptoms[i].escalation);
                 };
                 if (_symptoms[i].frequency) {
-                    frequency = parseFloat(_symptoms[i].frequency) * 10;
+                    frequency = (1-parseFloat(_symptoms[i].frequency)) * 10;
                 };
 
-                console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
+                //console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
                 //perform actions
                 if (_symptoms[i].action) {
                     switch (_symptoms[i].action) {
                         case "bite":
-                            console.log("bite symptom firing.");
+                            //console.log("bite symptom firing.");
                             var initialVictims = [];
                             if (location) { initialVictims = location.getCreatures() };
                             var victims = [];
@@ -227,8 +227,8 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                         case "hurt":
                             if (carrier.isDead()) { break; }; //do nothing
                             var rand = Math.floor(Math.random() * frequency);
-                            console.log("health symptom firing. Rand = "+rand);
-                            if (rand > 0) {
+                            //console.log("health symptom firing. Rand = "+rand);
+                            if (rand == 0) {
                                 resultString += carrier.hurt(hp);
                             };
                             break;
@@ -239,12 +239,16 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                 };
                 //escalate
                 if (_symptoms[i].frequency) {
-                    var newFrequency = Math.round((parseFloat(_symptoms[i].escalation) + parseFloat(_symptoms[i].frequency))*100)/100;
-                    _symptoms[i].frequency += newFrequency
+                    if (_symptoms[i].frequency < 1) {
+                        //console.log("original frequency " + _symptoms[i].frequency)
+                        _symptoms[i].frequency = Math.round((parseFloat(_symptoms[i].escalation) + parseFloat(_symptoms[i].frequency)) * 100) / 100;
+                        if (_symptoms[i].frequency > 1) { _symptoms[i].frequency = 1; };
+                        //console.log("new frequency " + _symptoms[i].frequency);
+                    };
                 };
 
                 if (_duration > 0) { _duration-- };
-                console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
+                //console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
             };
             
             return resultString;

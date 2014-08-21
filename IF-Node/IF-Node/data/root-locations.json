@@ -3583,12 +3583,12 @@
                         "name": "zombie",
                         "displayName": "zombie",
                         "attributes": {
-                          "incubationPeriod": 10,
+                          "incubationPeriod": 5,
                           "communicability": 0.5,
                           "symptoms": [
                             {
                               "action": "bite",
-                              "frequency": 0.3,
+                              "frequency": 0.33,
                               "escalation": 0
                             }
                           ]
@@ -3629,12 +3629,12 @@
                         "name": "zombie",
                         "displayName": "zombie",
                         "attributes": {
-                          "incubationPeriod": 10,
+                          "incubationPeriod": 5,
                           "communicability": 0.5,
                           "symptoms": [
                             {
                               "action": "bite",
-                              "frequency": 0.3,
+                              "frequency": 0.33,
                               "escalation": 0
                             }
                           ]
