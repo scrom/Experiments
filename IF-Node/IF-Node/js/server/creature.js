@@ -5,6 +5,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         //module deps
         var inventoryObjectModule = require('./inventory');
         var missionObjectModule = require('./mission.js');
+        var contagionObjectModule = require('./contagion.js');
 
 	    var self=this; //closure so we don't lose reference in callbacks
         var _name = name.toLowerCase();
@@ -154,7 +155,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
-            if (creatureAttributes.contagion != undefined) {_contagion = creatureAttributes.contagion;};                
+            if (creatureAttributes.contagion != undefined) {
+                for (var i=0;i<creatureAttributes.contagion.length;i++) {
+                    _contagion.push(new contagionObjectModule.Contagion(creatureAttributes.contagion[i].name, creatureAttributes.contagion[i].displayName, creatureAttributes.contagion[i].attributes));
+                };
+            };                
             if (creatureAttributes.antibodies != undefined) {_antibodies = creatureAttributes.antibodies;};    
     
             if (creatureAttributes.originalType) {
@@ -453,7 +458,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
-            if (creatureAttributes.contagion.length>0) {saveAttributes.contagion = creatureAttributes.contagion;};                
+            if (creatureAttributes.contagion.length>0) {
+                saveAttributes.contagion = [];
+                for (var c=0;c<creatureAttributes.contagion.length;c++) {
+                    saveAttributes.contagion.push(JSON.parse(creatureAttributes.contagion[c].toString()));
+                };                
+            };                
             if (creatureAttributes.antibodies.length>0) {saveAttributes.antibodies = creatureAttributes.antibodies;};     
     
             if (creatureAttributes.originalType != creatureAttributes.type) {saveAttributes.originalType = creatureAttributes.originalType;};     
@@ -585,10 +595,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return ""; //neutral
         };
 
-        self.hasContagion = function(contagion) {
-            if (_contagion.indexOf(contagion) > -1) {
-                return true;
+        self.hasContagion = function(contagionName) {
+            for (var i=0;i<_contagion.length;i++) {
+                if (_contagion[i].getName() == contagion[i].getName()) {
+                    return true;
+                };
             };
+
             return false;
         };
 
@@ -609,24 +622,33 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.setContagion = function(contagion) {
             //if not already carrying and not immune
-            if (_contagion.indexOf(contagion) == -1 && _antibodies.indexOf(contagion) == -1) {
-                _contagion.push(contagion);
+            if (_antibodies.indexOf(contagion.getName()) == -1) {
+                var alreadyInfected = false;
+                for (var i=0;i<_contagion.length;i++) {
+                    if (_contagion[i].getName() == contagion.getName()) {
+                        alreadyInfected = true;
+                    };
+                };
+                if (!(alreadyInfected)) {_contagion.push(contagion);};
             };
         };
 
-        self.setAntibody = function(antibody) {
+        self.setAntibody = function(antibodyName) {
             //if not already carrying
-            if (_antibodies.indexOf(antibody) == -1) {
-                _antibodies.push(antibody);
-                self.removeContagion(antibody);
+            if (_antibodies.indexOf(antibodyName) == -1) {
+                _antibodies.push(antibodyName);
+                self.removeContagion(antibodyName);
             };
         };
 
-        self.removeContagion = function(contagion) {
-            var itemToRemove = -1;
-            while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
-                _contagion.splice(itemToRemove,1);
+        self.removeContagion = function(contagionName) {
+            var contagionToKeep = [];
+            for (var i=0;i<_contagion.length;i++) {
+                if (!(_contagion[i].getName() == contagionName)) {
+                    contagionToKeep.push(_contagion[i]);
+                };
             };
+            _contagion = contagionToKeep;
         };
 
         self.transmitAntibodies = function() {
@@ -643,8 +665,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.transmitContagion = function() {
             var diseases = [];
             for (var c=0;c<_contagion.length;c++) {
-                var randomInt = Math.floor(Math.random() * 4); 
-                if (randomInt > 0) { //75% chance of success
+                var disease = _contagion[c].transmit();
+                if (disease) {
                     diseases.push(_contagion[c]);
                 };
             };
@@ -667,11 +689,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "";
         };
 
-        self.cure = function(contagion) {
-            itemToRemove = _antibodies.indexOf(contagion);
+        self.cure = function(contagionName) {
+            itemToRemove = _antibodies.indexOf(contagionName);
             if (itemToRemove) {
-                self.removeContagion(contagion);
-                self.setAntibody(contagion);
+                self.removeContagion(contagionName);
+                self.setAntibody(contagionName);
             };
         };
 
@@ -2163,36 +2185,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };            
                 };
 
-                //bite?
+                //contagion?
                 if (_contagion.length >0) {
-                    var initialCreatures = _currentLocation.getCreatures();
-                    var creatures = [];
-
-                    //splice out self and dead creatures
-                    for (var i=0;i<initialCreatures.length;i++) {
-                        if (initialCreatures[i].getName() != self.getName() && (!(initialCreatures[i].isDead()))) {
-                            creatures.push(initialCreatures[i]);
-                        };
-                    };
-
-                    //if there's any creatures remaining
-                    if (creatures.length > 0) {
-                        //limit to only biting a maximum of 2 times per turn.
-                        var biteCount = 0;
-                        //partially randomise order creatures will be processed in.
-                        creatures.sort(function() {return .5 - Math.random();});
-
-                        //randomly bite creatures in location.
-                        for (var c=0;c<creatures.length;c++) {
-                            //% chance of biting a given creature decreases the more creatures there are in a location.
-                            //(a bit like getting tired or running out of time)
-                            //we shuffle the creatures array beforehand so that the selected creature to be bitten first may vary.
-                            randomAttack = Math.floor(Math.random() * (Math.ceil(c/2)*3)); 
-                            if (randomAttack == 0 && biteCount <2) { 
-                                resultString += self.bite(creatures[c]);
-                                biteCount ++;
-                            };
-                        };
+                    for (var c=0; c<_contagion.length;c++) {
+                        resultString += _contagion[c].enactSymptoms(self, _currentLocation);
                     };
                 };
 

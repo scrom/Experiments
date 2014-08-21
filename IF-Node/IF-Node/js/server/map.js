@@ -7,6 +7,7 @@ exports.Map = function Map() {
 
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locations = [];
+        var _spawnDefinitions = [];
         var _startLocationIndex = 0;
         var _maxScore = 0; //missions add score
         var _missionCount = 0; //how many missions are there?
@@ -277,16 +278,15 @@ exports.Map = function Map() {
             var contagionData = {};
             for (var c=0;c<creatures.length;c++) {                
                 var creatureContagion = creatures[c].getContagion();
-                //var creatureAntibodies = creatures.getAntibodies();
                 if (creatureContagion.length>0) {
-                    for (var cc=0;cc<creatureContagion.length;cc++) {
+                    for (var i=0;i<creatureContagion.length;i++) {
                         //get list of all contagions active
-                        if (!(contagionData.hasOwnProperty(creatureContagion[cc]))) {
+                        if (!(contagionData.hasOwnProperty(creatureContagion[i].getName()))) {
                             //new contagion
-                            contagionData[creatureContagion[cc]] = 1;
+                            contagionData[creatureContagion[i].getName()] = 1;
                         } else {
                             //we've seen it before
-                            contagionData[creatureContagion[cc]] = contagionData[creatureContagion[cc]]+1;
+                            contagionData[creatureContagion[i].getName()] = contagionData[creatureContagion[i].getName()]+1;
                         };
                     }
                 };

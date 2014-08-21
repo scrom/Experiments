@@ -6,6 +6,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //module deps
         var inventoryObjectModule = require('./inventory');    
         var missionObjectModule = require('./mission.js');
+        var contagionObjectModule = require('./contagion.js');
 
         //attributes
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -122,10 +123,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         var processAttributes = function(artefactAttributes) {
             if (!artefactAttributes) {return null;};
-            if (artefactAttributes.synonyms != undefined) { _synonyms = attributes.synonyms;};
-            if (artefactAttributes.defaultAction != undefined) { _defaultAction = attributes.defaultAction;};
-            if (artefactAttributes.defaultResult != undefined) { _defaultResult = attributes.defaultResult;};
-            if (artefactAttributes.customAction != undefined) { _customAction = attributes.customAction;};
+            if (artefactAttributes.synonyms != undefined) { _synonyms = artefactAttributes.synonyms;};
+            if (artefactAttributes.defaultAction != undefined) { _defaultAction = artefactAttributes.defaultAction;};
+            if (artefactAttributes.defaultResult != undefined) { _defaultResult = artefactAttributes.defaultResult;};
+            if (artefactAttributes.customAction != undefined) { _customAction = artefactAttributes.customAction;};
             if (artefactAttributes.plural != undefined) {self.setPluralGrammar(artefactAttributes.plural);};
             if (artefactAttributes.extendedInventoryDescription != undefined) {
                 _extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
@@ -213,7 +214,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.isHidden != undefined) {_hidden = artefactAttributes.isHidden;};
             if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
-            if (artefactAttributes.contagion != undefined) {_contagion = artefactAttributes.contagion;};                            
+            if (artefactAttributes.contagion != undefined) {
+                for (var i=0;i<artefactAttributes.contagion.length;i++) {
+                    _contagion.push(new contagionObjectModule.Contagion(artefactAttributes.contagion[i].name, artefactAttributes.contagion[i].displayName, artefactAttributes.contagion[i].attributes));
+                };
+            };                                        
             if (artefactAttributes.antibodies != undefined) {_antibodies = artefactAttributes.antibodies;};                            
 
         };
@@ -428,8 +433,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.customAction != undefined) { saveAttributes.customAction = artefactAttributes.customAction;};
             if (artefactAttributes.defaultResult != undefined) { saveAttributes.defaultResult = artefactAttributes.defaultResult;};
             if (artefactAttributes.hasLinkedDoor == true) { saveAttributes.hasLinkedDoor = artefactAttributes.hasLinkedDoor;};
-            if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};
-            if (artefactAttributes.contagion.length>0) {saveAttributes.contagion = artefactAttributes.contagion;};                
+            if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};    
+            if (artefactAttributes.contagion.length>0) {
+                saveAttributes.contagion = [];
+                for (var c=0;c<artefactAttributes.contagion.length;c++) {
+                    saveAttributes.contagion.push(JSON.parse(artefactAttributes.contagion[c].toString()));
+                };                
+            };                        
             if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;};                
             return saveAttributes;
         };
@@ -784,10 +794,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _read;
         };
 
-        self.hasContagion = function(contagion) {
-            if (_contagion.indexOf(contagion) > -1) {
-                return true;
+        self.hasContagion = function(contagionName) {
+            for (var i=0;i<_contagion.length;i++) {
+                if (_contagion[i].getName() == contagion[i].getName()) {
+                    return true;
+                };
             };
+
             return false;
         };
 
@@ -797,7 +810,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             return false;
         };
-
 
         self.getContagion = function() {
             return _contagion;
@@ -809,24 +821,33 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.setContagion = function(contagion) {
             //if not already carrying and not immune
-            if (_contagion.indexOf(contagion) == -1 && _antibodies.indexOf(contagion) == -1) {
-                _contagion.push(contagion);
+            if (_antibodies.indexOf(contagion.getName()) == -1) {
+                var alreadyInfected = false;
+                for (var i=0;i<_contagion.length;i++) {
+                    if (_contagion[i].getName() == contagion.getName()) {
+                        alreadyInfected = true;
+                    };
+                };
+                if (!(alreadyInfected)) {_contagion.push(contagion);};
             };
         };
 
-        self.setAntibody = function(antibody) {
+        self.setAntibody = function(antibodyName) {
             //if not already carrying
-            if (_antibodies.indexOf(antibody) == -1) {
-                _antibodies.push(antibody);
-                self.removeContagion(antibody);
+            if (_antibodies.indexOf(antibodyName) == -1) {
+                _antibodies.push(antibodyName);
+                self.removeContagion(antibodyName);
             };
         };
 
-        self.removeContagion = function(contagion) {
-            var itemToRemove = -1;
-            while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
-                _contagion.splice(itemToRemove,1);
+        self.removeContagion = function(contagionName) {
+            var contagionToKeep = [];
+            for (var i=0;i<_contagion.length;i++) {
+                if (!(_contagion[i].getName() == contagionName)) {
+                    contagionToKeep.push(_contagion[i]);
+                };
             };
+            _contagion = contagionToKeep;
         };
 
         self.transmitAntibodies = function() {
@@ -843,8 +864,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.transmitContagion = function() {
             var diseases = [];
             for (var c=0;c<_contagion.length;c++) {
-                var randomInt = Math.floor(Math.random() * 4); 
-                if (randomInt > 0) { //75% chance of success
+                var disease = _contagion[c].transmit();
+                if (disease) {
                     diseases.push(_contagion[c]);
                 };
             };
@@ -860,20 +881,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             for (var a=0;a<antibodies.length;a++) {
                 receiver.setAntibody(antibodies[a]);
+                console.log("antibodies passed to "+receiver.getType());
             };
 
             //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
             return "";
         };
 
-        self.cure = function(contagion) {
-            itemToRemove = _antibodies.indexOf(contagion);
+        self.cure = function(contagionName) {
+            itemToRemove = _antibodies.indexOf(contagionName);
             if (itemToRemove) {
-                self.removeContagion(contagion);
-                self.setAntibody(contagion);
+                self.removeContagion(contagionName);
+                self.setAntibody(contagionName);
             };
         };
-
 
         self.isHidden = function() {
             return _hidden;

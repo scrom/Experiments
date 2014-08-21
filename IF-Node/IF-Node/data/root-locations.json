@@ -3576,7 +3576,17 @@
                     "destinationDelay": 2,
                     "imageName": "daveconvery.jpg",
                     "contagion": [
-                      "zombie"
+                        {   "object": "contagion",
+							"name": "zombie",
+							"displayName": "zombie",
+							"attributes":{   
+								"incubationPeriod": 10,
+								"communicability": 0.5,
+								"transmission": "bite",
+								"symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0}],
+								"duration": -1
+							}
+						  }
                     ]
                   },
                   "synonyms": [
@@ -3607,7 +3617,17 @@
                     "destinationDelay": 2,
                     "imageName": "rogerhart.jpg",
                     "contagion": [
-                      "zombie"
+                        {   "object": "contagion",
+							"name": "zombie",
+							"displayName": "zombie",
+							"attributes":{   
+								"incubationPeriod": 10,
+								"communicability": 0.5,
+								"transmission": "bite",
+								"symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0}],
+								"duration": -1
+							}
+						  }
                     ]
                   },
                   "synonyms": [

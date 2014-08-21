@@ -89,7 +89,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
             var creature;
             var inventory;
             var salesInventory;
-            var missions; //not implemented yet
+            var missions;
 
             //determine name (proper noun or just noun)
             var creatureName = creatureData.name;
@@ -258,50 +258,62 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
             //locations and links
             for (var i=0; i<gameDataAsJSON.length;i++) {
-                var locationData = gameDataAsJSON[i]
-                var builtLocation = self.buildLocation(gameDataAsJSON[i]);
-                self.addLocation(builtLocation);
-                var newLocation = _map.getLocation(locationData.name);
+                if (gameDataAsJSON[i].object == "location") {
+                    var locationData = gameDataAsJSON[i]
+                    var builtLocation = self.buildLocation(gameDataAsJSON[i]);
+                    self.addLocation(builtLocation);
+                    var newLocation = _map.getLocation(locationData.name);
 
-                for (var j=0; j<locationData.exits.length;j++) {
-                    var exitData = locationData.exits[j];
-                    //manually add exits from each location (linking not needed)
-                    newLocation.addExit(exitData.direction,locationData.name,exitData.destination,exitData.hidden);
+                    for (var j=0; j<locationData.exits.length;j++) {
+                        var exitData = locationData.exits[j];
+                        //manually add exits from each location (linking not needed)
+                        newLocation.addExit(exitData.direction,locationData.name,exitData.destination,exitData.hidden);
+                    };
                 }; 
             };
 
             
             //once all locations are built, add objects, creatures and missions.
             for (var i=0; i<gameDataAsJSON.length;i++) {
-                var locationData = gameDataAsJSON[i]
-                //get matching location object
-                var location = _map.getLocation(locationData.name);
+                if (gameDataAsJSON[i].object == "location") {
+                    var locationData = gameDataAsJSON[i]
+                    //get matching location object
+                    var location = _map.getLocation(locationData.name);
                 
-                //add objects and creatures to locations (this includes their child, deliver and mission objects!)
-                if (locationData.inventory) {
-                    for (var k=0; k<locationData.inventory.length; k++) {
-                        if (locationData.inventory[k].object == "artefact") {location.addObject(self.buildArtefact(locationData.inventory[k]));}
-                        else if (locationData.inventory[k].object == "creature") {
-                            var creature = self.buildCreature(locationData.inventory[k])
-                            if (locationData.inventory[k].attributes) {
-                                if (locationData.inventory[k].attributes.startLocationName) {
-                                    var startLocation = _map.getLocation(locationData.inventory[k].attributes.startLocationName);
-                                    creature.setStartLocation(startLocation);
+                    //add objects and creatures to locations (this includes their child, deliver and mission objects!)
+                    if (locationData.inventory) {
+                        for (var k=0; k<locationData.inventory.length; k++) {
+                            if (locationData.inventory[k].object == "artefact") {location.addObject(self.buildArtefact(locationData.inventory[k]));}
+                            else if (locationData.inventory[k].object == "creature") {
+                                var creature = self.buildCreature(locationData.inventory[k])
+                                if (locationData.inventory[k].attributes) {
+                                    if (locationData.inventory[k].attributes.startLocationName) {
+                                        var startLocation = _map.getLocation(locationData.inventory[k].attributes.startLocationName);
+                                        creature.setStartLocation(startLocation);
+                                    };
                                 };
-                            };
 
-                            creature.go(null, location);                           
+                                creature.go(null, location);                           
+                            };
                         };
                     };
-                };
 
-                //add missions to locations
-                if (locationData.missions) {
-                    for (var l=0; l<locationData.missions.length; l++) {
-                        location.addMission(self.buildMission(locationData.missions[l]));
-                    };
-                };                        
+                    //add missions to locations
+                    if (locationData.missions) {
+                        for (var l=0; l<locationData.missions.length; l++) {
+                            location.addMission(self.buildMission(locationData.missions[l]));
+                        };
+                    }; 
+                };                       
             };
+
+            //build spawn data
+            for (var i=0; i<gameDataAsJSON.length;i++) {
+                if (gameDataAsJSON[i].object == "spawn") {
+                    null;
+                };
+            };
+
 
         };
 

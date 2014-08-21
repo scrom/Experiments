@@ -4,6 +4,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
     try{
         //module deps
         var inventoryObjectModule = require('./inventory');
+        var contagionObjectModule = require('./contagion.js');
         var _mapBuilder = mapBuilder;
         var _map = map;
 
@@ -267,7 +268,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (playerAttributes.contagion != undefined) {
                 for(var i=0; i<playerAttributes.contagion.length;i++) {
-                    _contagion.push(playerAttributes.contagion[i]);
+                    _contagion.push(new contagionObjectModule.Contagion(playerAttributes.contagion[i].name, playerAttributes.contagion[i].displayName, playerAttributes.contagion[i].attributes));
                 };
             };
 
@@ -376,7 +377,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString+= ',"contagion":[';
                 for(var i=0; i<_contagion.length;i++) {
                     if (i>0) {resultString+= ',';};
-                    resultString+= '"'+_contagion[i]+'"';
+                    resultString+= _contagion[i].toString();
                 };
                 resultString+= ']';
             };
@@ -619,10 +620,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _timeSinceEating;
         };
 
-        self.hasContagion = function(contagion) {
-            if (_contagion.indexOf(contagion) > -1) {
-                return true;
+        self.hasContagion = function(contagionName) {
+            for (var i=0;i<_contagion.length;i++) {
+                if (_contagion[i].getName() == contagion[i].getName()) {
+                    return true;
+                };
             };
+
             return false;
         };
 
@@ -643,24 +647,33 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.setContagion = function(contagion) {
             //if not already carrying and not immune
-            if (_contagion.indexOf(contagion) == -1 && _antibodies.indexOf(contagion) == -1) {
-                _contagion.push(contagion);
+            if (_antibodies.indexOf(contagion.getName()) == -1) {
+                var alreadyInfected = false;
+                for (var i=0;i<_contagion.length;i++) {
+                    if (_contagion[i].getName() == contagion.getName()) {
+                        alreadyInfected = true;
+                    };
+                };
+                if (!(alreadyInfected)) {_contagion.push(contagion);};
             };
         };
 
-        self.setAntibody = function(antibody) {
+        self.setAntibody = function(antibodyName) {
             //if not already carrying
-            if (_antibodies.indexOf(antibody) == -1) {
-                _antibodies.push(antibody);
-                self.removeContagion(antibody);
+            if (_antibodies.indexOf(antibodyName) == -1) {
+                _antibodies.push(antibodyName);
+                self.removeContagion(antibodyName);
             };
         };
 
-        self.removeContagion = function(contagion) {
-            var itemToRemove = -1;
-            while ((itemToRemove = _contagion.indexOf(contagion)) >-1) {
-                _contagion.splice(itemToRemove,1);
+        self.removeContagion = function(contagionName) {
+            var contagionToKeep = [];
+            for (var i=0;i<_contagion.length;i++) {
+                if (!(_contagion[i].getName() == contagionName)) {
+                    contagionToKeep.push(_contagion[i]);
+                };
             };
+            _contagion = contagionToKeep;
         };
 
         self.transmitAntibodies = function() {
@@ -677,8 +690,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.transmitContagion = function() {
             var diseases = [];
             for (var c=0;c<_contagion.length;c++) {
-                var randomInt = Math.floor(Math.random() * 4); 
-                if (randomInt > 0) { //75% chance of success
+                var disease = _contagion[c].transmit();
+                if (disease) {
                     diseases.push(_contagion[c]);
                 };
             };
@@ -694,20 +707,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             for (var a=0;a<antibodies.length;a++) {
                 receiver.setAntibody(antibodies[a]);
+                console.log("antibodies passed to "+receiver.getType());
             };
 
             //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
             return "";
         };
 
-        self.cure = function(contagion) {
-            var itemToRemove = _antibodies.indexOf(contagion);
+        self.cure = function(contagionName) {
+            itemToRemove = _antibodies.indexOf(contagionName);
             if (itemToRemove) {
-                self.removeContagion(contagion);
-                self.setAntibody(contagion);
+                self.removeContagion(contagionName);
+                self.setAntibody(contagionName);
             };
         };
-
         self.reduceHitPoints = function(pointsToRemove) {
             _hitPoints-=pointsToRemove;
             return _hitPoints;
@@ -2656,21 +2669,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //inventory tick
                 resultString+=_inventory.tick();
 
-                //bite?
+                //contagion?
                 if (_contagion.length >0) {
-                    var randomAttack = Math.floor(Math.random() * 4);
-                    if (randomAttack == 0) {
-                        var creatures = _currentLocation.getCreatures();
-
-                        if (creatures.length>0) {
-                            var randomMessage = ["You seem to have been infected with something nasty", "You don't seem fully in control of your actions", "You're really not feeling right", "You twitch and jerk uncontrollably", "You may have eaten something you shouldn't have"];
-                            var randomIndex = Math.floor(Math.random() * randomMessage.length);
-                            resultString += "<br><br>"+randomMessage[randomIndex]+"."
-
-                            //bite a random creature (just one)
-                            randomIndex = Math.floor(Math.random() * creatures.length);
-                            resultString += "<br>"+self.eat("bite", creatures[randomIndex].getName());
-                        };
+                    for (var c=0; c<_contagion.length;c++) {
+                        resultString += _contagion[c].enactSymptoms(self, _currentLocation);
                     };
                 };
 
