@@ -150,25 +150,19 @@ exports.checkIncubationPeriodDeclinesBy1PointWith1Enaction = function (test) {
 exports.checkIncubationPeriodDeclinesBy1PointWith1Enaction.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a contagion with symptoms triggered has a declining incubation period of 1 point per hit." };
 
 
-exports.checkBitingWorksCorrectlyWithJustSelfCreatureInLocation = function (test) {
-//exports.checkBitingWorksCorrectlyWithSelfAnd1CreatureInLocation = function (test) {
-//exports.checkBitingWorksCorrectlyWith2CreaturesInLocation = function (test) {
-//exports.checkBitingWorksCorrectlyWith3CreaturesInLocation = function (test) {
-//exports.checkBitingWorksCorrectlyWith5CreaturesInLocation = function (test) {
-//exports.checkBitingWorksCorrectlyWithPlayerAnd2CreaturesInLocation = function (test) {
-//exports.checkBitingWorksCorrectlyWithInfectedCreatureAndUninfectedPlayerInLocation = function (test) {
-//exports.checkBitingWorksCorrectlyWithJustSelfPlayerInLocation = function (test) {
+exports.checkBitingWorksCorrectlyWithSelfAndOneOtherCreatureInLocation = function (test) {
 
-    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "bite", "frequency": 0.5}],"duration": -1});
-    var cr = new creature.Creature("creature", "creature","creature", {"health":25});
+    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "bite", "frequency": 1}],"duration": -1});
+    var cr = new creature.Creature("creature1", "creature","creature", {"health":25});
+    var cr2 = new creature.Creature("creature2", "creature","creature", {"health":25});
+    var l = new location.Location("location","location");
+    cr.go(null,l);
+    cr2.go(null,l);
 
-    //clear down incubation period and start escalation
-    c.enactSymptoms(cr);
-    c.enactSymptoms(cr);
-    c.enactSymptoms(cr);
+    //carrier, location, player
 
-    var expectedResult = 'biting happens';
-    var actualResult = c.enactSymptoms(cr);
+    var expectedResult = "<br>The creature1 bites the creature2. <br>The creature2 is hurt. It's generally the picture of health.<br>";
+    var actualResult = c.enactSymptoms(cr, l);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -176,8 +170,46 @@ exports.checkBitingWorksCorrectlyWithJustSelfCreatureInLocation = function (test
 
 };
 
-exports.checkBitingWorksCorrectlyWithJustSelfCreatureInLocation.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a transmitted contagion doesn't use 'live' attrbiutes for new instance." };
+exports.checkBitingWorksCorrectlyWithSelfAndOneOtherCreatureInLocation.meta = { traits: ["Contagion Test", "Bite Trait"], description: "Test that bite symptoms occur as expected." };
 
+exports.checkBitingWorksCorrectlyWithSelfAndFourOtherCreaturesInLocation = function (test) {
+
+    var c = new contagion.Contagion("zombie", "zombieism", {"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "bite", "frequency": 1}],"duration": -1});
+    var cr = new creature.Creature("creature1", "creature","creature", {"health":25});
+    var cr2 = new creature.Creature("creature2", "creature","creature", {"health":25});
+    var cr3 = new creature.Creature("creature3", "creature","creature", {"health":25});
+    var cr4 = new creature.Creature("creature4", "creature","creature", {"health":25});
+    var cr5 = new creature.Creature("creature5", "creature","creature", {"health":25});
+    var l = new location.Location("location","location");
+    cr.go(null,l);
+    cr2.go(null,l);
+    cr3.go(null,l);
+    cr4.go(null,l);
+    cr5.go(null,l);
+
+    //carrier, location, player
+
+    var expectedResult = 214; //we expect 2 and only 2 creatures to be bitten but it'll be random which 2 it is
+    var actualResult = c.enactSymptoms(cr, l).length;
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.checkBitingWorksCorrectlyWithSelfAndFourOtherCreaturesInLocation.meta = { traits: ["Contagion Test", "Bite Trait"], description: "Test that bite symptoms occur as expected." };
+
+
+//exports.checkBitingWorksCorrectlyWithPlayerAnd4CreaturesInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWithInfectedCreatureAndUninfectedPlayerInLocation = function (test) {
+//exports.checkBitingWorksCorrectlyWithJustSelfPlayerInLocation = function (test) {
+//exports.checkTransmitWorksCorrectlyWhenReceiverHasAntibodies = function (test) {
+//exports.checkTransmitWorksCorrectlyWhenReceiverHasNoAntibodies = function (test) {
+//exports.checkTransmitWorksCorrectlyWhenReceiverIsAlreadyInfected = function (test) {
+//exports.checkTransmitDoesNotOccurWhenTransmissionMethodDoesNotMatch = function (test) {
+
+//exports.checkTransmissionScenariosForPlayerCreatureAndArtefactEatAndBiteWithAndWithoutContagionAntibodyCombinationsX~15Tests! = function (test) {
 
 exports.testSymptomsStopIfDurationIsSet = function (test) {
 
