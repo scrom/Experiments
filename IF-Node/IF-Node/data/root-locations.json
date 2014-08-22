@@ -3483,12 +3483,12 @@
         "displayName": "there's been a plane crash",
         "attributes": {
           "type": "event",
-
+          "parent": "latte",
           "missionObject": "player"
         },
         "conditionAttributes": {
-
-          "missionsCompletedCount": ">0"
+          "time": 34,
+          "missionsCompletedCount": ">8"
         },
         "reward": {
           "locations": [
