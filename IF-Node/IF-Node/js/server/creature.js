@@ -1511,7 +1511,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //2 way transfer of contagion/antibodies!
             resultString+=self.transmit(recipient, "bite");
-            resultString+=recipient.transmit(self);
+            resultString+=recipient.transmit(self, "bite");
 
             //if biting player, *partially* reduce affinity and increase aggression.
             if (recipient.getType() == "player") {
