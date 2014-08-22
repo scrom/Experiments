@@ -1743,7 +1743,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return self.getDisplayName()+" says 'OK. See you in "+duration+"?'"+returnImage; 
             };
             
-            return "I think "+self.getPrefix().toLowerCase()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
+            return self.getDisplayName()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
         };
 
         self.goTo = function(locationName, playerAggression, map) {
@@ -1794,7 +1794,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };
 
-            return "I think "+self.getPrefix().toLowerCase()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
+            return self.getDisplayName()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
 
         };
 

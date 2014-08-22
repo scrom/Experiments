@@ -1536,14 +1536,40 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
 
-            var giver = getObjectFromLocation(giverName);
-            if (!(giver)) {return "There's no "+giverName+" here.";};
+            var givers = [];
+            if (giverName == "everyone" || giverName == "all") {
+                if (verb != "go" && verb !="wait") {return "You'll have to ask everyone individually to "+verb+" anything.";};
+                givers = _currentLocation.getAllObjectsOfType("creature");
+            } else {;
+                var giver = getObjectFromLocation(giverName);
+                if (!(giver)) {return "There's no "+giverName+" here.";};
+                if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too           
+                givers.push(giver);
+            };
 
-            if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too
-
+            if (verb == "go") {
+                var resultString = "";
+                for (var g=0;g<givers.length;g++) {
+                    resultString += givers[g].goTo(artefactName, _aggression, map); //artefactName will actually be location name
+                    resultString += "<br>";
+                };
+                if (givers.length==1) {
+                    resultString = resultString.replace(givers[0].getDisplayName(),givers[0].getPrefix());
+                };
+                return resultString;
+            }; 
+            if (verb == "wait") {
+                var resultString = "";
+                for (var g=0;g<givers.length;g++) {
+                    resultString += givers[g].wait(_aggression);
+                    resultString += "<br>";
+                };
+                if (givers.length==1) {
+                    resultString = resultString.replace(givers[0].getDisplayName(),givers[0].getPrefix());
+                };
+                return resultString;
+            };
             if (verb == "find") {return giver.find(artefactName, _aggression, map);};
-            if (verb == "go") {return giver.goTo(artefactName, _aggression, map);}; //artefactName will actually be location name
-            if (verb == "wait") {return giver.wait(_aggression);};
 
             if (stringIsEmpty(artefactName)){ return verb+" "+giver.getDisplayName()+" for what?";};
 
