@@ -10,6 +10,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
         var _originalIncubationPeriod = 0;
         var _communicability = 0;
         var _transmission = "bite";
+        var _mutate = false;
         var _symptoms = [];
         var _originalSymptoms = [];
         var _duration = -1;
@@ -24,6 +25,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             if (contagionAttributes.incubationPeriod != undefined) { _incubationPeriod = contagionAttributes.incubationPeriod; };
             if (contagionAttributes.communicability != undefined) { _communicability = contagionAttributes.communicability; };
             if (contagionAttributes.transmission != undefined) { _transmission = contagionAttributes.transmission; };
+            if (contagionAttributes.mutate != undefined) { _mutate = contagionAttributes.mutate; };
             if (contagionAttributes.symptoms != undefined) {
                 for (var i = 0; i < contagionAttributes.symptoms.length; i++) {
                     _symptoms.push(contagionAttributes.symptoms[i]);
@@ -77,6 +79,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             currentAttributes.originalIncubationPeriod = _originalIncubationPeriod;          
             currentAttributes.communicability = _communicability;
             currentAttributes.transmission = _transmission;
+            currentAttributes.mutate = _mutate;
             currentAttributes.symptoms = _symptoms;
             currentAttributes.originalSymptoms = _originalSymptoms;
             currentAttributes.duration = _duration;
@@ -86,11 +89,22 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
 
         self.getCloneAttributes = function () {
             var cloneAttributes = {};
-            cloneAttributes.incubationPeriod = _originalIncubationPeriod;          
-            cloneAttributes.communicability = _communicability;
+            if (_mutate) { 
+                cloneAttributes.incubationPeriod = Math.round((Math.random() * _originalIncubationPeriod)); //something similar to or shorter than original
+                cloneAttributes.communicability = Math.round(Math.random()*100)/100 //somewhere between 0 and 1
+                cloneAttributes.symptoms = _symptoms; //use current symptoms rather than original (means may already be fully escalated                
+                if (_originalDuration > -1) {//if duration is permanent, don't alter it
+                    cloneAttributes.duration = Math.round(Math.random() * (_originalDuration * 2)); //between 0 and 2*original
+                };
+
+            } else {
+                cloneAttributes.incubationPeriod = _originalIncubationPeriod;
+                cloneAttributes.communicability = _communicability;
+                cloneAttributes.symptoms = _originalSymptoms;
+                cloneAttributes.duration = _originalDuration;
+            };
+
             cloneAttributes.transmission = _transmission;
-            cloneAttributes.symptoms = _originalSymptoms;
-            cloneAttributes.duration = _originalDuration;
             return cloneAttributes;
         };
 
@@ -102,6 +116,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             if (contagionAttributes.incubationPeriod != contagionAttributes.originalIncubationPeriod) { saveAttributes.originalIncubationPeriod = contagionAttributes.originalIncubationPeriod; };
             if (contagionAttributes.communicability > 0) { saveAttributes.communicability = contagionAttributes.communicability; };
             if (contagionAttributes.transmission != "bite") { saveAttributes.transmission = contagionAttributes.transmission; };
+            if (contagionAttributes.mutate) { saveAttributes.mutate = contagionAttributes.mutate; };
             if (contagionAttributes.symptoms.length > 0) { saveAttributes.symptoms = contagionAttributes.symptoms; };
             if (contagionAttributes.duration > -1) { saveAttributes.duration = contagionAttributes.duration; };
             if (contagionAttributes.duration != contagionAttributes.originalDuration) { saveAttributes.originalDuration = contagionAttributes.originalDuration; };
@@ -143,10 +158,12 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
         self.transmit = function (carrier, receiver, transmissionMethod) {
             if (_transmission == transmissionMethod) {
                 if ((!(receiver.hasContagion(self.getName()))) && (!(receiver.hasAntibodies(self.getName())))) {
-                    //
-                    var randomInt = Math.random() * (_communicability * 10);
-                    if (randomInt > 0) {
-                        receiver.setContagion(self.clone());
+                    //if active or ~50% through incubation period
+                    if ((_incubationPeriod <= 0) || (_incubationPeriod <= _originalIncubationPeriod / 2)) {
+                        var randomInt = Math.random() * (_communicability * 10);
+                        if (randomInt > 0) {
+                            receiver.setContagion(self.clone());
+                        };
                     };
                 };
                 if (receiver.hasAntibodies(self.getName())) {
@@ -246,6 +263,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                             //console.log("health symptom firing. Rand = "+rand);
                             if (rand == 0) {
                                 resultString += carrier.hurt(hp);
+                                //escalate hp damage
+                                if (parseFloat(_symptoms[i].escalation) > 0) {
+                                    _symptoms[i].health += Math.round(_symptoms[i].health*(_symptoms[i].escalation/2))
+                                };
                             };
                             break;
                         case "violence":

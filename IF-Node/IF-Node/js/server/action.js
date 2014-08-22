@@ -291,6 +291,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         //would like to add "search for x" support here in future.              
                         description = _player.search(_verb, _object0);
                         break;
+                    case 'ex':
+                    case 'x':
                     case 'examine':
                     case 'examin':
                     case 'examien':

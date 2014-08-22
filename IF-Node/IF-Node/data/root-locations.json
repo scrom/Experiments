@@ -3517,6 +3517,7 @@
                     "requiresContainer": true,
                     "isLiquid": true,
                     "canCollect": true,
+					"charges": 3,
                     "affinityModifier": 0,
                     "isEdible": true,
                     "antibodies": [
@@ -3530,7 +3531,8 @@
                     "zombie venom antibodies",
                     "zombie antibodies",
                     "venom",
-                    "sample"
+                    "sample",
+                    "zombie"
                   ]
                 },
                 {
@@ -7650,8 +7652,8 @@
               "exits": [
                 {
                   "object": "exit",
-                  "longname": "South",
-                  "direction": "s",
+                  "longname": "out",
+                  "direction": "o",
                   "source": "party-bus",
                   "destination": "office-front"
                 }
@@ -7661,8 +7663,8 @@
           "exits": [
             {
               "object": "exit",
-              "longname": "North",
-              "direction": "n",
+              "longname": "in",
+              "direction": "i",
               "source": "office-front",
               "destination": "party-bus"
             }

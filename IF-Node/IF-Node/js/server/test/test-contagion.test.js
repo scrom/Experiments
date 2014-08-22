@@ -41,7 +41,7 @@ exports.checkContagionEscalationOccurs = function (test) {
     c.enactSymptoms(cr);
     c.enactSymptoms(cr);
 
-    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":1,"escalation":0.3}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.3}]}}';
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":7,"frequency":1,"escalation":0.3}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.3}]}}';
     var actualResult = c.toString();
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -107,7 +107,29 @@ exports.checkCloneUsesOriginalAttributes = function (test) {
 
 };
 
-exports.checkCloneUsesOriginalAttributes.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a cloned contagion fo rtransmission doesn't use 'live' attrbiutes for new instance." };
+exports.checkCloneUsesOriginalAttributes.meta = { traits: ["Contagion Test", "Clone Trait"], description: "Test that a cloned contagion fo rtransmission doesn't use 'live' attrbiutes for new instance." };
+
+
+exports.checkCloneWithMutationManglesOriginalAttributes = function (test) {
+
+    var c = new contagion.Contagion("zombie", "zombieism", {"mutate":true, "incubationPeriod": 2,"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "hurt", "health":5, "frequency": 0.3, "escalation": 0.1 }],"duration": -1});
+    var cr = new creature.Creature("creature", "creature","creature", {"health":25});
+
+    //clear down incubation period and start escalation
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+    c.enactSymptoms(cr);
+
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"incubationPeriod":2,"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.1}]}}';
+    var actualResult = c.clone();
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.notEqual(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.checkCloneWithMutationManglesOriginalAttributes.meta = { traits: ["Contagion Test", "Clone Trait"], description: "Test that a cloned mutatable contagion for transmission uses 'live' symptoms and scrambled attribnutes for new instance." };
 
 
 exports.checkIncubationPeriodDeclinesTo0OverTime = function (test) {
