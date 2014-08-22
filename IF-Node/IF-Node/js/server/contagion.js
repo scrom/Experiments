@@ -265,7 +265,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                                 resultString += carrier.hurt(hp);
                                 //escalate hp damage
                                 if (parseFloat(_symptoms[i].escalation) > 0) {
-                                    _symptoms[i].health += Math.round(_symptoms[i].health*(_symptoms[i].escalation/2))
+                                    _symptoms[i].health += Math.ceil(_symptoms[i].health*(_symptoms[i].escalation/2))
                                 };
                             };
                             break;
@@ -282,6 +282,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
                         if (_symptoms[i].frequency > 1) { _symptoms[i].frequency = 1; };
                         //console.log("new frequency " + _symptoms[i].frequency);
                     };
+                };
+
+                if (parseFloat(_symptoms[i].escalation) > parseFloat(0.0)) {
+                    _symptoms[i].escalation += (_symptoms[i].escalation * (_symptoms[i].escalation/2));
                 };
 
                 if (_duration > 0) { _duration-- };

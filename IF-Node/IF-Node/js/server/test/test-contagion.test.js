@@ -41,7 +41,7 @@ exports.checkContagionEscalationOccurs = function (test) {
     c.enactSymptoms(cr);
     c.enactSymptoms(cr);
 
-    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":7,"frequency":1,"escalation":0.3}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.3}]}}';
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":9,"frequency":1,"escalation":0.60458498814112}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.3}]}}';
     var actualResult = c.toString();
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -71,12 +71,9 @@ exports.checkSlowContagionEscalationManifestsCorrectly = function (test) {
     c.enactSymptoms(cr);
     c.enactSymptoms(cr);
     c.enactSymptoms(cr);
-    c.enactSymptoms(cr);
-    c.enactSymptoms(cr);
-    c.enactSymptoms(cr);
-    c.enactSymptoms(cr);
 
-    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":0.95,"escalation":0.05}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.05,"escalation":0.05}]}}';
+
+    var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":9,"frequency":0.89,"escalation":0.0757317635324669}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.05,"escalation":0.05}]}}';
     var actualResult = c.toString();
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
