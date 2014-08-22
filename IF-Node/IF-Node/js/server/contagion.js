@@ -128,6 +128,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             return saveAttributes;
         };
 
+        self.clone = function () {
+            return new Contagion(_name, _displayName, self.getCloneAttributes());
+        };
+
         self.getName = function () {
             return _name;
         };
@@ -136,11 +140,20 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             return _displayName;
         };
 
-        self.transmit = function (transmissionMethod) {
+        self.transmit = function (carrier, receiver, transmissionMethod) {
             if (_transmission == transmissionMethod) {
-                var randomInt = Math.floor(Math.random() * (_communicability * 10));
-                if (randomInt > 0) {
-                    return new Contagion(_name, _displayName, self.getCloneAttributes());
+                if ((!(receiver.hasContagion(self.getName()))) && (!(receiver.hasAntibodies(self.getName())))) {
+                    //
+                    var randomInt = Math.random() * (_communicability * 10);
+                    if (randomInt > 0) {
+                        receiver.setContagion(self.clone());
+                    };
+                };
+                if (receiver.hasAntibodies(self.getName())) {
+                    var randomInt = Math.random() * (_communicability * 15); //~50% higher chance of antibody success than original
+                    if (randomInt > 0) {
+                        carrier.setAntibody(self.getName());
+                    };
                 };
             };
         };

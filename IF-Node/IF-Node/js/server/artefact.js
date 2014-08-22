@@ -821,7 +821,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.setContagion = function(contagion) {
             //if not already carrying and not immune
-            if (_antibodies.indexOf(contagion.getName()) == -1) {
+            if (!(self.hasAntibodies(contagion.getName()))) {
                 if (!(self.hasContagion(contagion.getName()))) {
                     _contagion.push(contagion);
                 };
@@ -860,12 +860,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.transmitContagion = function(receiver, transmissionMethod) {
             for (var c=0;c<_contagion.length;c++) {
-                if (!(receiver.hasContagion(_contagion[c].getName()))) {
-                    var disease = _contagion[c].transmit(transmissionMethod);
-                    if (disease) {
-                        receiver.setContagion(disease);
-                    };
-                };
+                _contagion[c].transmit(self, receiver, transmissionMethod);
             };
         };
 

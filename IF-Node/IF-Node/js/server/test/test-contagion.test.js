@@ -88,7 +88,7 @@ exports.checkSlowContagionEscalationManifestsCorrectly = function (test) {
 exports.checkSlowContagionEscalationManifestsCorrectly.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test how contagion escalation works." };
 
 
-exports.checkTransmitUsesOriginalAttributes = function (test) {
+exports.checkCloneUsesOriginalAttributes = function (test) {
 
     var c = new contagion.Contagion("zombie", "zombieism", {"incubationPeriod": 2,"communicability": 0.5,"transmission": "bite","symptoms": [{ "action": "hurt", "health":5, "frequency": 0.3, "escalation": 0.1 }],"duration": -1});
     var cr = new creature.Creature("creature", "creature","creature", {"health":25});
@@ -99,7 +99,7 @@ exports.checkTransmitUsesOriginalAttributes = function (test) {
     c.enactSymptoms(cr);
 
     var expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"incubationPeriod":2,"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.1}]}}';
-    var actualResult = c.transmit();
+    var actualResult = c.clone();
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -107,7 +107,7 @@ exports.checkTransmitUsesOriginalAttributes = function (test) {
 
 };
 
-exports.checkTransmitUsesOriginalAttributes.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a transmitted contagion doesn't use 'live' attrbiutes for new instance." };
+exports.checkCloneUsesOriginalAttributes.meta = { traits: ["Contagion Test", "Escalation Trait"], description: "Test that a cloned contagion fo rtransmission doesn't use 'live' attrbiutes for new instance." };
 
 
 exports.checkIncubationPeriodDeclinesTo0OverTime = function (test) {
