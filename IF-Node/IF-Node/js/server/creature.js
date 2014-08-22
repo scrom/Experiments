@@ -597,7 +597,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.hasContagion = function(contagionName) {
             for (var i=0;i<_contagion.length;i++) {
-                if (_contagion[i].getName() == contagion[i].getName()) {
+                if (_contagion[i].getName() == contagionName) {
                     return true;
                 };
             };
@@ -623,13 +623,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.setContagion = function(contagion) {
             //if not already carrying and not immune
             if (_antibodies.indexOf(contagion.getName()) == -1) {
-                var alreadyInfected = false;
-                for (var i=0;i<_contagion.length;i++) {
-                    if (_contagion[i].getName() == contagion.getName()) {
-                        alreadyInfected = true;
-                    };
+                if (!(self.hasContagion(contagion.getName()))) {
+                    _contagion.push(contagion);
                 };
-                if (!(alreadyInfected)) {_contagion.push(contagion);};
             };
         };
 
@@ -651,41 +647,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _contagion = contagionToKeep;
         };
 
-        self.transmitAntibodies = function() {
-            var antibodies = [];
+        self.transmitAntibodies = function(receiver, transmissionMethod) {
             for (var a=0;a<_antibodies.length;a++) {
-                var randomInt = Math.floor(Math.random() * 4); 
-                if (randomInt > 0) { //75% chance of success
-                    antibodies.push(_antibodies[a]);
+                if (!(receiver.hasAntibodies(_antibodies[a]))) {
+                    var randomInt = Math.floor(Math.random() * 4); 
+                    if (randomInt > 0) { //75% chance of success
+                        receiver.setAntibody(_antibodies[a])
+                        console.log("antibodies passed to "+receiver.getType());
+                    };
                 };
             };
-            return antibodies;
         };
 
-        self.transmitContagion = function() {
-            var diseases = [];
+        self.transmitContagion = function(receiver, transmissionMethod) {
             for (var c=0;c<_contagion.length;c++) {
-                var disease = _contagion[c].transmit();
-                if (disease) {
-                    diseases.push(_contagion[c]);
+                if (!(receiver.hasContagion(_contagion[c].getName()))) {
+                    var disease = _contagion[c].transmit(transmissionMethod);
+                    if (disease) {
+                        receiver.setContagion(disease);
+                    };
                 };
             };
-            return diseases;
         };
 
-        self.transmit = function(receiver) {
-            var diseases = self.transmitContagion();
-            var antibodies = self.transmitAntibodies();
-
-            for (var d=0;d<diseases.length;d++) {
-                receiver.setContagion(diseases[d]);
-            };
-            for (var a=0;a<antibodies.length;a++) {
-                receiver.setAntibody(antibodies[a]);
-                console.log("antibodies passed to "+receiver.getType());
-            };
-
-            //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
+        self.transmit = function(receiver, transmissionMethod) {
+            self.transmitContagion(receiver, transmissionMethod);
+            self.transmitAntibodies(receiver, transmissionMethod);
             return "";
         };
 
@@ -1528,7 +1515,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             resultString+="<br>"+recipient.hurt(Math.floor(_attackStrength/4));
 
             //2 way transfer of contagion/antibodies!
-            resultString+=self.transmit(recipient);
+            resultString+=self.transmit(recipient, "bite");
             resultString+=recipient.transmit(self);
 
             //if biting player, *partially* reduce affinity and increase aggression.
@@ -1559,7 +1546,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     resultString += "<br>"+self.hurt(10); //player injures creature.
                     player.increaseAggression(1); //slowly increase aggression
                 };
-                resultString += self.transmit(player);
+                resultString += self.transmit(player, "bite");
                 return resultString;
             };
 
@@ -1591,7 +1578,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if (self.getSubType() == "friendly") {resultString += "<br>It's a bit of a sick thing to do if you ask me.";};
-            resultString += self.transmit(player);
+            resultString += self.transmit(player, "bite");
             return resultString;
 
          }; 
@@ -2040,12 +2027,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
                     };
 
-                    if (_contagion.length >0) {
-                        var randomAttack = Math.floor(Math.random() * 3);
-                        if (randomAttack == 0) {
-                            resultString += self.bite(player);
-                        };
-                    };
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
                     //re-fetch player location in case we just killed them!
@@ -2189,7 +2170,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //contagion?
                 if (_contagion.length >0) {
                     for (var c=0; c<_contagion.length;c++) {
-                        resultString += _contagion[c].enactSymptoms(self, _currentLocation);
+                        var playerToInfect;
+                        if (playerLocation == _currentLocation.getName()) {
+                            playerToInfect=player;
+                        };
+                        resultString += _contagion[c].enactSymptoms(self, _currentLocation, playerToInfect);
                     };
                 };
 

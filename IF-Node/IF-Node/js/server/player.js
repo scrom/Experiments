@@ -622,7 +622,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.hasContagion = function(contagionName) {
             for (var i=0;i<_contagion.length;i++) {
-                if (_contagion[i].getName() == contagion[i].getName()) {
+                if (_contagion[i].getName() == contagionName) {
                     return true;
                 };
             };
@@ -648,13 +648,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.setContagion = function(contagion) {
             //if not already carrying and not immune
             if (_antibodies.indexOf(contagion.getName()) == -1) {
-                var alreadyInfected = false;
-                for (var i=0;i<_contagion.length;i++) {
-                    if (_contagion[i].getName() == contagion.getName()) {
-                        alreadyInfected = true;
-                    };
+                if (!(self.hasContagion(contagion.getName()))) {
+                    _contagion.push(contagion);
                 };
-                if (!(alreadyInfected)) {_contagion.push(contagion);};
             };
         };
 
@@ -676,41 +672,32 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _contagion = contagionToKeep;
         };
 
-        self.transmitAntibodies = function() {
-            var antibodies = [];
+        self.transmitAntibodies = function(receiver, transmissionMethod) {
             for (var a=0;a<_antibodies.length;a++) {
-                var randomInt = Math.floor(Math.random() * 4); 
-                if (randomInt > 0) { //75% chance of success
-                    antibodies.push(_antibodies[a]);
+                if (!(receiver.hasAntibodies(_antibodies[a]))) {
+                    var randomInt = Math.floor(Math.random() * 4); 
+                    if (randomInt > 0) { //75% chance of success
+                        receiver.setAntibody(_antibodies[a])
+                        console.log("antibodies passed to "+receiver.getType());
+                    };
                 };
             };
-            return antibodies;
         };
 
-        self.transmitContagion = function() {
-            var diseases = [];
+        self.transmitContagion = function(receiver, transmissionMethod) {
             for (var c=0;c<_contagion.length;c++) {
-                var disease = _contagion[c].transmit();
-                if (disease) {
-                    diseases.push(_contagion[c]);
+                if (!(receiver.hasContagion(_contagion[c].getName()))) {
+                    var disease = _contagion[c].transmit(transmissionMethod);
+                    if (disease) {
+                        receiver.setContagion(disease);
+                    };
                 };
             };
-            return diseases;
         };
 
-        self.transmit = function(receiver) {
-            var diseases = self.transmitContagion();
-            var antibodies = self.transmitAntibodies();
-
-            for (var d=0;d<diseases.length;d++) {
-                receiver.setContagion(diseases[d]);
-            };
-            for (var a=0;a<antibodies.length;a++) {
-                receiver.setAntibody(antibodies[a]);
-                console.log("antibodies passed to "+receiver.getType());
-            };
-
-            //return ("contagion: "+diseases.length+", antibodies:"+antibodies.length+".");
+        self.transmit = function(receiver, transmissionMethod) {
+            self.transmitContagion(receiver, transmissionMethod);
+            self.transmitAntibodies(receiver, transmissionMethod);
             return "";
         };
 
@@ -2326,7 +2313,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //can't eat unless hungry if health is nearly full.
                 if ((_timeSinceEating < _maxMovesUntilHungry-15) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
             };
-            self.transmit(artefact);
+            self.transmit(artefact, "bite");
             var resultString = artefact.eat(self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it

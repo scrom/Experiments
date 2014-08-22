@@ -136,10 +136,12 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             return _displayName;
         };
 
-        self.transmit = function () {
-            var randomInt = Math.floor(Math.random() * (_communicability*10));
-            if (randomInt > 0) { 
-                return new Contagion(_name,_displayName, self.getCloneAttributes());
+        self.transmit = function (transmissionMethod) {
+            if (_transmission == transmissionMethod) {
+                var randomInt = Math.floor(Math.random() * (_communicability * 10));
+                if (randomInt > 0) {
+                    return new Contagion(_name, _displayName, self.getCloneAttributes());
+                };
             };
         };
 
@@ -149,6 +151,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             if (_duration == 0) { return resultString; }; //contagion should no longer exist
             if (_incubationPeriod > 0) {
                 _incubationPeriod--; //reduce incubation, do nothing else yet
+                console.log("contagion dormant for " + _incubationPeriod+" more ticks.");
                 return resultString;
             }; 
             for (var i = 0; i < _symptoms.length; i++) {
