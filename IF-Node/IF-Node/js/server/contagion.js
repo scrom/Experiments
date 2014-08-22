@@ -164,7 +164,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
             if (_duration == 0) { return resultString; }; //contagion should no longer exist
             if (_incubationPeriod > 0) {
                 _incubationPeriod--; //reduce incubation, do nothing else yet
-                console.log("contagion dormant for " + _incubationPeriod+" more ticks.");
+                //console.log("contagion dormant for " + _incubationPeriod+" more ticks.");
                 return resultString;
             }; 
             for (var i = 0; i < _symptoms.length; i++) {
