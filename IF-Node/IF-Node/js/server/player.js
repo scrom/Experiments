@@ -1538,7 +1538,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var givers = [];
             if (giverName == "everyone" || giverName == "all") {
-                if (verb != "go" && verb !="wait") {return "You'll have to ask everyone individually to "+verb+" anything.";};
+                if (verb != "go" && verb !="wait") {return "Sorry. You need to ask individuals for most things.";};
                 givers = _currentLocation.getAllObjectsOfType("creature");
             } else {;
                 var giver = getObjectFromLocation(giverName);
