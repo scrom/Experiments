@@ -221,13 +221,27 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //console.log("Processing affinity modifiers from mission reward");
             var affinityModifier = 1;
             if (reward.affinityModifier) { affinityModifier = reward.affinityModifier;};
-            if (reward.increaseAffinityFor) { 
-                var creatureToIncrease = map.getCreature(reward.increaseAffinityFor);
-                if (creatureToIncrease) {creatureToIncrease.increaseAffinity(affinityModifier, true);};
+            if (reward.increaseAffinityFor) {
+                if (reward.increaseAffinityFor == "all" || reward.increaseAffinityFor == "everyone") {
+                    var creatures = map.getAllCreatures();
+                    for (var c=0;c<creatures.length;c++) {
+                        creatures[c].increaseAffinity(affinityModifier, true);
+                    };
+                } else { 
+                    var creatureToIncrease = map.getCreature(reward.increaseAffinityFor);
+                    if (creatureToIncrease) {creatureToIncrease.increaseAffinity(affinityModifier, true);};
+                };
             };
             if (reward.decreaseAffinityFor) { 
-                var creatureToDecrease = map.getCreature(reward.decreaseAffinityFor);
-                if (creatureToDecrease) {creatureToDecrease.decreaseAffinity(affinityModifier, true);};
+                if (reward.decreaseAffinityFor == "all" || reward.decreaseAffinityFor == "everyone") {
+                    var creatures = map.getAllCreatures();
+                    for (var c=0;c<creatures.length;c++) {
+                        creatures[c].decreaseAffinity(affinityModifier, true);
+                    };
+                } else { 
+                    var creatureToDecrease = map.getCreature(reward.decreaseAffinityFor);
+                    if (creatureToDecrease) {creatureToDecrease.decreaseAffinity(affinityModifier, true);};
+                };
             };
         };
 

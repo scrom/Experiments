@@ -2520,12 +2520,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 if (missionReward.exits) {
                     //add exits
-                    for (var e=0; l<missionReward.exits.length;e++) {
+                    for (var e=0; e<missionReward.exits.length;e++) {
                         var exitData = missionReward.exits[e];
                         var locationToModify = map.getLocation(exitData.getSourceName())
                         var hidden = true;
                         if (exitData.isVisible()) {hidden = false;};
-                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestination(),hidden);
+                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(),hidden);
                     };
                 };
                 if (missionReward.score) { _score += missionReward.score;};

@@ -892,15 +892,63 @@
         "missions": [
           {
             "object": "mission",
+            "name": "partytime",
+            "displayName": "get the party started",
+            "description": "Mark wants to organise a celebration",
+            "attributes": {
+              "parent": "saveredgate",
+              "missionObject": "mark wightman",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I think it's time to celebrate. When you're ready, come and talk to me again and we'll get something organised.'",
+				"Right, let's get this party sorted!<br>I've ordered a bus. Give me one last shout when you're ready to round everyone up!"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 2
+            },
+            "reward": {
+			  "affinityModifier": 5,
+              "increaseAffinityFor": "all",
+          "locations": [
+            {
+              "object": "location",
+              "name": "bus",
+              "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
+              "exits": [
+                {
+                  "object": "exit",
+                  "longname": "out",
+                  "direction": "o",
+                  "source": "bus",
+                  "destination": "office-front"
+                }
+              ]
+            }
+          ],
+          "exits": [
+            {
+              "object": "exit",
+              "longname": "in",
+              "direction": "i",
+              "source": "office-front",
+              "destination": "bus"
+            }
+          ]
+			}
+          },
+          {
+            "object": "mission",
             "name": "partybus",
             "displayName": "get everyone on the party bus",
             "description": "You did a great job of saving the company. Let's celebrate. Get everyone a drink and onto the party bus before it leaves!",
             "attributes": {
-              "parent": "saveredgate",
+              "parent": "partytime",
               "missionObject": "party-bus",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'I've ordered a bus to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> everyone to <i>go</i> to the party-bus as soon as they can?'<br>'Once everyone's on board (including yourself), it'll be time to relax.'",
+                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> everyone to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once everyone's on board (including yourself), it'll be time to relax.'",
                 "'Hey $player. How's the party organising going?'"
               ]
             },
@@ -7644,31 +7692,6 @@
           }
         },
         "reward": {
-          "locations": [
-            {
-              "object": "location",
-              "name": "party-bus",
-              "description": "There's a bus parked out here. Looks like someone's setting up for a celebration!",
-              "exits": [
-                {
-                  "object": "exit",
-                  "longname": "out",
-                  "direction": "o",
-                  "source": "party-bus",
-                  "destination": "office-front"
-                }
-              ]
-            }
-          ],
-          "exits": [
-            {
-              "object": "exit",
-              "longname": "in",
-              "direction": "i",
-              "source": "office-front",
-              "destination": "party-bus"
-            }
-          ],
           "score": 200,
           "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been <i>very</i> nasty).",
           "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."

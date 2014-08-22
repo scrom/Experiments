@@ -753,16 +753,22 @@ exports.Action = function Action(aPlayer, aMap) {
             };
 
             //extract image link from response if set
-            var imageIndex = description.indexOf("$image");
-            if (imageIndex>-1) {
-                var endIndex = description.lastIndexOf("/$image"),
-                imageName = description.substring(imageIndex+6, endIndex);
-                //console.log("imageName:"+imageName);
-            };
-            if (imageName) {
-                description = description.substring(0,imageIndex)+description.substring(endIndex+7);
-                //console.log("description:"+description);
-            };           
+            var imageIndex = 0;
+            while (imageIndex>-1) {
+                var imageIndex = description.indexOf("$image");
+                if (imageIndex>-1) {
+                    var endIndex = description.indexOf("/$image"),
+                    imageName = description.substring(imageIndex+6, endIndex);
+                    //console.log("imageName:"+imageName);
+                };
+                if (imageName) {
+                    //description = description.substring(0,imageIndex)+description.substring(endIndex+7);
+                    description = description.replace("$image","");
+                    description = description.replace(imageName,"");
+                    description = description.replace("/$image","");
+                    //console.log("description:"+description);
+                };  
+            };         
 
             //get an image path if not already set
             if (!(imageName)) {
