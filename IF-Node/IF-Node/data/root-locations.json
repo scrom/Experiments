@@ -4663,7 +4663,7 @@
             "object": "mission",
             "name": "workingwithothers",
             "displayName": "read about working with others",
-            "description": "Whilst in the real world working relationships are not transactional, working well with others here is largely about <i>give</i> and <i>take</i>.<br>The more you give, the more help you can ask for.<br>Be aware however that your kind deeds won't be remembered forever.<br>Acts of violence or unwanted attention will not be tolerated.<br>Those in favour can <i>ask</i> a friend <i>where</i> someone else is whilst colleagues with exceptionally strong working relationships may even support you in times of need.<br>",
+            "description": "Whilst in the real world working relationships are not transactional, working well with others here is largely about <i>give</i> and <i>take</i>.<br>The more you give, the more help you can ask for.<br>Be aware however that your kind deeds won't be remembered forever.<br>Acts of violence or unwanted attention will not be tolerated.<br>Those in favour can <i>ask</i> a friend <i>where</i> someone else is. They may also be able to ask individuals or <i>everyone<i> to <i>wait</i> for them or to <i>go</i> to places.<br>Colleagues with exceptionally strong working relationships may even support you in times of danger and need.<br>",
             "attributes": {
               "missionObject": "people folder",
               "static": true
