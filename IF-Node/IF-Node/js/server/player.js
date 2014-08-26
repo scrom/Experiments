@@ -16,6 +16,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _repairSkills = []; //player can learn repair skills.
         var _maxHitPoints = 100;
         var _hitPoints = _maxHitPoints;
+        var _unarmedAttackStrength = 5; //hardcoded and not used in most cases.
         var _aggression = 0;
         var _stealth = 1;
         var _killedCount = 0;
@@ -1509,9 +1510,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(giver)) {return "There's no "+giverName+" here.";};
 
             if (giver.getType() == "creature") {
+                var resultString = "";
                 self.increaseAggression(1); //we're stealing!  
-                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName());                      
-                return giver.theft(artefactName, _inventory, self);
+                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName());   
+                var playerStealth = self.getStealth();
+                if (verb == "mug") {
+                    self.increaseAggression(2); //we're mugging!  - even more aggressive
+                    playerStealth +=5; //major increase in theft chances
+                };                    
+                resultString += giver.theft(verb, artefactName, _inventory, self, playerStealth);
+                return resultString;
             } else {
                 var locationInventory = _currentLocation.getInventoryObject();
                 return giver.relinquish(artefactName, self, locationInventory);
@@ -1992,6 +2000,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             else {console.log('Player is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
+        };
+
+        self.getAttackStrength = function(verb) {
+            var weapon = self.getWeapon(verb);
+            if (weapon) {
+                return weapon.getAttackStrength();
+            };
+            return _unarmedAttackStrength;
         };
 
         self.hurt = function(pointsToRemove) {

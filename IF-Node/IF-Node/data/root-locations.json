@@ -402,7 +402,7 @@
         },
         "reward": {
           "score": 75,
-          "successMessage": "Congratulations. You managed to get your latte, have 75 points!"
+          "successMessage": "Congratulations. You managed to get your latte, have 75 points!<br>If you've not done so already, now might be a good time to <i>save<i/> your achievements so far."
         }
       }
     ]

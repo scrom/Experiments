@@ -1046,17 +1046,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         //when a player steals from them...
-        self.theft = function(anObjectName,playerInventory, player) {
+        self.theft = function(verb, anObjectName,playerInventory, player, playerStealth) {
             var stealingFromSalesInventory = false;
-            var playerStealth = player.getStealth();
+            var resultString = "";
 
             //attempt to steal...
             //will randomly return 0 to 6 by default(<15% chance of success)
             var successDivider = 7; 
-            if (self.getSubType() == 'friendly') {successDivider = 20;}; //only 5% chance of success when stealing from a friend
+            if (self.getSubType() == 'friendly') {successDivider = 14;}; //only ~7% chance of success when stealing from a friend
             if (self.isDead()) {successDivider = 0;}; //guaranteed success if dead.
             var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
             console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
+
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
                 self.decreaseAffinity(1);
@@ -1070,19 +1071,33 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                    if (objectToGive) {stealingFromSalesInventory = true;};                   
                 };
 
+                //mugging
+                if (verb == "mug") {
+                     self.decreaseAffinity(1); //significant affinity hit
+                     resultString += self.hurt((player.getAttackStrength(verb)*0.75),player)+"<br>";
+                     if (self.getSubType() == "friendly" && _friendlyAttackCount <3) {
+                         return resultString;
+                     };
+                };
+
                 if (!(objectToGive)) {
                     //we might be trying to steal money...
                     if (anObjectName == "money" || anObjectName == "cash" || anObjectName == "" || anObjectName == undefined) {
                         var cash = _inventory.getCashBalance();
-                        if (cash <=0) {return _genderPrefix+" doesn't have any "+anObjectName+" to steal.";};
+                        if (cash <=0) {
+                            resultString += _genderPrefix+" doesn't have any "+anObjectName+" to steal.";
+                            return resultString;
+                        };
                         var randomCash = Math.round((cash * Math.random())*100)/100; //round to 2DP.
                         _inventory.reduceCash(randomCash);
                         player.increaseCash(randomCash);
                         player.addStolenCash(randomCash);
-                        return "You steal &pound;"+randomCash.toFixed(2)+" from "+self.getDisplayName()+".";
+                        resultString += "You steal &pound;"+randomCash.toFixed(2)+" from "+self.getDisplayName()+".";
+                        return resultString;
                     };
 
-                    return _genderPrefix+" isn't carrying "+anObjectName+".";
+                    resultString += _genderPrefix+" isn't carrying "+anObjectName+".";
+                    return resultString;
                 };
 
                 if (playerInventory.canCarry(objectToGive)) {
@@ -1091,15 +1106,30 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     else {_inventory.remove(anObjectName);};
 
                     player.addStolenObject(objectToGive.getName());
-                    if (self.isDead()) { return "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+"'s corpse.";};
+                    if (self.isDead()) { 
+                        resultString += "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+"'s corpse.";
+                        return resultString;
+                    };
                     self.decreaseAffinity(objectToGive.getAffinityModifier());
-                    return "You steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";                   
+                    resultString += "You steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";  
+                    return resultString;                 
                 };
 
-                return "Sorry. You can't carry "+anObjectName+" at the moment."
+                resultString += "Sorry. You can't carry "+anObjectName+" at the moment."
+                return resultString;
             } else {
                 self.decreaseAffinity(2); //larger dent to affinity
-                return "Not smart! You were caught.";
+                
+                if (verb == "mug") {
+                    if (self.getSubType() == "friendly" && _friendlyAttackCount <3) {
+                        _friendlyAttackCount ++;
+                    };
+                    resultString += self.getPrefix()+" dodges your attack and hits you instead. "+self.hit(player, 0.5)+"<br>You failed to gain anything but pain for your actions.";
+                } else {
+                   resultString +="Not smart! You were caught."; 
+                };
+                
+                return resultString
             };
         };
 

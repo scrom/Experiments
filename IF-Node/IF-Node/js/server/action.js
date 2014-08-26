@@ -326,6 +326,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         //or fall through to normal "put"
                     case 'hide':
                     case 'combine':
+                    case 'attach':
+                    case 'install':
                     case 'insert':
                     case 'add':
                         description = _player.put(_verb, _object0, _object1);
@@ -405,7 +407,12 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'remove':
                         description = _player.take(_verb, _object0, _object1); 
                         break;
+                    case 'mug':
                     case 'steal':
+                        if ((!(_object1)) || (_object1 == "")) {
+                            _object1 = _object0;
+                            _object0 = "cash";
+                        };
                         description = _player.steal(_verb, _object0, _object1);            
                         break;
                     case 'borrow':
@@ -582,7 +589,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'water':
                     case 'climb':
                     case 'jump':
-                    case 'attach':
                     case 'join':
                     case 'dismantle':
                     case 'delete':
@@ -592,7 +598,6 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
                     case 'feed':
-                    case 'install':
                     default:
                         _ticks = 0; //for now 
 
