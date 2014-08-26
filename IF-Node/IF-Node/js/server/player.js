@@ -1514,8 +1514,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName());   
                 var playerStealth = self.getStealth();
                 if (verb == "mug") {
-                    self.increaseAggression(2); //we're mugging!  - even more aggressive
-                    playerStealth +=4; //major increase in theft chances
+                    self.increaseAggression(1); //we're mugging!  - even more aggressive
+                    playerStealth +=3; //major increase in theft chances
                 };                    
                 resultString += giver.theft(verb, artefactName, _inventory, self, playerStealth);
                 return resultString;
