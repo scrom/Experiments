@@ -232,6 +232,16 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return list;
         };
 
+        self.getRandomObject = function() {
+            var items = self.getAllObjects();
+            var randomIndex = Math.floor(Math.random() * items.length);
+            var randomSuccess = Math.floor(Math.random() * 2);
+            if (randomSuccess == 0) {
+                return self.getObject(items[randomIndex].getName());
+            };
+            return null;
+        };
+
         //recursively gets objects in other objects
         //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
         self.getObject = function(anObjectName, ignoreSynonyms) {

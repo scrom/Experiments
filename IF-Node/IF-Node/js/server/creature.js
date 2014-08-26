@@ -1080,6 +1080,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                      };
                 };
 
+                //steal something random?
+                if (anObjectName == "" || anObjectName == undefined) {
+                    objectToGive = _inventory.getRandomObject();
+                };
+
                 if (!(objectToGive)) {
                     //we might be trying to steal money...
                     if (anObjectName == "money" || anObjectName == "cash" || anObjectName == "" || anObjectName == undefined) {
@@ -1111,7 +1116,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         return resultString;
                     };
                     self.decreaseAffinity(objectToGive.getAffinityModifier());
-                    resultString += "You steal "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+".";  
+                    resultString += "You manage to steal "+objectToGive.descriptionWithCorrectPrefix()+" from "+self.getDisplayName()+".";  
                     return resultString;                 
                 };
 

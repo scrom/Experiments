@@ -411,7 +411,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'steal':
                         if ((!(_object1)) || (_object1 == "")) {
                             _object1 = _object0;
-                            _object0 = "cash";
+                            _object0 = "";
                         };
                         description = _player.steal(_verb, _object0, _object1);            
                         break;

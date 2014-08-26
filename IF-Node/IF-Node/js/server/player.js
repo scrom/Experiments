@@ -1495,7 +1495,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.steal = function(verb, artefactName, giverName){
-            if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var giver;
             if (stringIsEmpty(giverName)){ 
@@ -1521,6 +1520,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += giver.theft(verb, artefactName, _inventory, self, playerStealth);
                 return resultString;
             } else {
+                if (verb == "mug"){ return "If "+giver.getDescriptivePrefix()+" carrying anything of use, you should just be able to take what you need."};
+                if (stringIsEmpty(artefactName) && verb == "steal"){ return verb+" what?";};
                 var locationInventory = _currentLocation.getInventoryObject();
                 return giver.relinquish(artefactName, self, locationInventory);
             };
