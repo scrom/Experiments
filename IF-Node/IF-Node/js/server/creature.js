@@ -748,7 +748,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.willFollow = function(playerAggression) {
-            if (_destinations.length >0 && _affinity <=3) {return false;}; //don't follow player if heading elsewhere! (unless they really like you)
+            if (_waitDelay >0) {return false;}; //don't follow if waiting
+            if (_destinations.length == 1 && _affinity <=6) {return false;}; //don't follow player if heading to a single destination! (unless they *really* like you)
+            if (_destinations.length >1 && _affinity <=3) {return false;}; //don't follow player if heading elsewhere! (unless they like you a lot)
             if (self.isDead()) {return false;};
             if (!(self.canTravel())) { return false;} 
             if (self.isHostile(playerAggression)) {return true;};
@@ -1731,7 +1733,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 returnImage= "$image"+_imageName+"/$image";
             };
 
-            if ((!(_canTravel))||(!(_traveller))) {return self.getDisplayName()+" says 'I'm not planning on going anywhere.'"+returnImage; };
+            if (!(_canTravel)) {return self.getDisplayName()+" says 'I'm not planning on going anywhere.'"+returnImage; };
 
             if (_affinity >=1) {
                 //would be quite neat to set this duration to some factor of affinity and erode down to -1 affinity.

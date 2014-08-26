@@ -553,7 +553,8 @@
           "bike guy",
           "bike ambulance",
           "ric",
-          "him"
+          "him",
+		  "rik"
         ],
         "missions": [
           {
@@ -1358,8 +1359,8 @@
     "inventory": [
       {
         "object": "creature",
-        "name": "jonathan",
-        "displayname": "Jonathan",
+        "name": "jonathan watts",
+        "displayname": "Jonathan Watts",
         "description": "Jonathan Watts",
         "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
         "attributes": {
@@ -1376,7 +1377,7 @@
           "imageName": "jonathanwatts.jpg"
         },
         "synonyms": [
-          "jonathan watts",
+          "jonathan",
           "jon",
           "johnathan",
           "jon w",
@@ -3501,6 +3502,24 @@
         "missions": [
           {
             "object": "mission",
+            "name": "destroycoffeeMachine",
+            "displayName": "destroy the coffee machine",
+            "description": "This place thrives on coffee, don't ruin it.",
+            "attributes": {
+              "missionObject": "coffee machine"
+            },
+            "conditionAttributes": {
+              "isDestroyed": true
+            },
+            "reward": {
+              "score": -25,
+              "affinityModifier": 2,
+              "decreaseAffinityFor": "everyone",
+              "successMessage": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>You lose 25 points (and good luck getting help from anyone now!)"
+            }
+          },
+          {
+            "object": "mission",
             "name": "beans",
             "displayName": "fill the coffee machine with beans",
             "description": "Before you can get any coffee, this machine needs beans.",
@@ -4668,6 +4687,33 @@
           "smithy",
           "smith",
           "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "facilitatethefacilitator",
+            "displayName": "find some post-its for Chris.",
+            "description": "Chris is due to run a workshop but needs some fresh stickies.",
+            "attributes": {
+              "missionObject": "post-it",
+              "destination": "chris smith",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'Can you give me a hand?'<br>'I'm running a workshop later today but I'm running low on post-it notes.'<br>'Could you bring me some from the stationary cupboard when you get a chance?'",
+                "'Hey $player. Did you manage to find any stickies?'"
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "isBroken": false,
+              "isDamaged": false
+            },
+            "reward": {
+              "increaseAffinityFor": "chris smith",
+              "score": 25,
+              "successMessage": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You fcilitated the facilitator! Have 25 points."
+            }
+          }
         ]
       }
     ]
@@ -5092,8 +5138,8 @@
     "inventory": [
       {
         "object": "creature",
-        "name": "vic",
-        "displayname": "Vic",
+        "name": "vic wiseman",
+        "displayname": "Vic Wiseman",
         "description": "Vic the receptionist",
         "detailedDescription": "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.",
         "attributes": {
@@ -5108,6 +5154,9 @@
         "synonyms": [
           "receptionist",
           "vic",
+		  "vw",
+		  "wiseman",
+		  "vic w",
           "heidi",
           "her"
         ],
@@ -5118,7 +5167,7 @@
             "displayName": "get a keyfob",
             "description": "Vic has a key fob for you.",
             "attributes": {
-              "missionObject": "Vic",
+              "missionObject": "Vic Wiseman",
               "static": true,
               "dialogue": [
                 "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
@@ -5157,7 +5206,7 @@
             "description": "Vic has a parcel for you but she'd like something interesting to read first.",
             "attributes": {
               "missionObject": "small book",
-              "destination": "Vic",
+              "destination": "Vic Wiseman",
               "static": true
             },
             "conditionAttributes": {
@@ -5241,7 +5290,7 @@
                 ]
               },
               "score": 35,
-              "increaseAffinityFor": "Vic",
+              "increaseAffinityFor": "Vic Wiseman",
               "successMessage": "Congratulations. Vic likes the book! Have 35 points."
             }
           }
@@ -5516,8 +5565,8 @@
     "inventory": [
       {
         "object": "creature",
-        "name": "alex",
-        "displayname": "Alex",
+        "name": "alex freeman",
+        "displayname": "Alex Freeman",
         "description": "Alex Freeman",
         "detailedDescription": "Can haz mor Accountz.",
         "attributes": {
@@ -5533,7 +5582,7 @@
           "imageName": "alexfreeman.jpg"
         },
         "synonyms": [
-          "alex freeman",
+          "alex",
           "alex f",
           "af",
           "freeman",
@@ -5543,8 +5592,8 @@
       },
       {
         "object": "creature",
-        "name": "will",
-        "displayname": "Will",
+        "name": "will puttock",
+        "displayname": "Will Puttock",
         "description": "Will Puttock",
         "detailedDescription": "Don't ask about the Oompa-loompa costume.",
         "attributes": {
@@ -5560,7 +5609,7 @@
           "imageName": "willputtock.jpg"
         },
         "synonyms": [
-          "will puttock",
+          "will",
           "will p",
           "wp",
           "puttock",
@@ -7506,7 +7555,7 @@
         "inventory": [
           {
             "object": "artefact",
-            "name": "key",
+            "name": "gate key",
             "description": "gate key",
             "detailedDescription": "This looks like the key to the waste area gate.",
             "attributes": {

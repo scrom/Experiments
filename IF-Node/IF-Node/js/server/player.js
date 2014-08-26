@@ -404,7 +404,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString+= ',"killedCreatures":[';
                 for(var i=0; i<_killedCreatures.length;i++) {
                     if (i>0) {resultString+= ',';};
-                    resultString+= _killedCreatures[i].toString();
+                    resultString+= '"'+_killedCreatures[i].toString()+'"';
                 };
                 resultString+= ']';
             };
