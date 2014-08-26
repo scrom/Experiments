@@ -1515,7 +1515,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var playerStealth = self.getStealth();
                 if (verb == "mug") {
                     self.increaseAggression(2); //we're mugging!  - even more aggressive
-                    playerStealth +=5; //major increase in theft chances
+                    playerStealth +=4; //major increase in theft chances
                 };                    
                 resultString += giver.theft(verb, artefactName, _inventory, self, playerStealth);
                 return resultString;
