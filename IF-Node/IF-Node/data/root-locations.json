@@ -117,6 +117,47 @@
       }
     ],
     "missions": [
+		  	{
+            "object": "mission",
+            "name": "vanarrival",
+            "displayName": "steal some valuables",
+			"attributes": {
+			"type": "event",
+			"parent": "stealsketchbook"
+			},
+			"conditionAttributes": {
+			  "time": "25"
+			},
+
+            "reward": {
+          "locations": [
+            {
+              "object": "location",
+              "name": "van",
+              "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
+              "exits": [
+                {
+                  "object": "exit",
+                  "longname": "South",
+                  "direction": "s",
+                  "source": "van",
+                  "destination": "waste-area"
+                }
+              ]
+            }
+          ],
+          "exits": [
+            {
+                  "object": "exit",
+                  "longname": "North",
+                  "direction": "n",
+                  "source": "waste-area",
+                  "destination": "van"
+            }
+          ],
+	"eventMessage": "You've probably kept out of the way long enough to go and chat to the spy again without suspicion if you feel like taking on another 'job'."
+			 }
+          },
       {
         "object": "mission",
         "name": "boring",
@@ -4137,6 +4178,59 @@
               "score": 50,
               "successMessage": "Congratulations. The spy is dead! Have 50 points."
             }
+          },
+          {
+            "object": "mission",
+            "name": "stealsketchbook",
+            "displayName": "steal Simon's sketch book",
+            "description": "Steal Simon Galbraith's A3 sketchbook.",
+            "attributes": {
+              "missionObject": "sketchbook",
+              "destination": "spy",
+              "static": true,
+              "dialogue": [
+                "'Psst!'<br>'I've got some covert jobs if you're interested.'<br>'If you can <i>steal</i> Simon Galbraith's sketchbook and bring it to me (or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+                "'How's that little <i>job</i> going?'"
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+            "failAttributes": {
+              "isDestroyed": true
+            },
+            "reward": {
+              "affinityModifier": 2,
+			  "decreaseAffinityFor": "simon galbraith",
+              "increaseAffinityFor": "spy",
+              "money": 50,
+              "successMessage": "The spy says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
+            }
+          },
+		            {
+            "object": "mission",
+            "name": "stealvaluables",
+            "displayName": "steal some valuables",
+            "description": "Steal &pound;100 worth of valuables from the company.",
+			"attributes": {
+			"missionObject": "van",
+			"parent": "vanarrival",
+            "dialogue": [
+                "'I knew I could rely on you.'<br>'I've Parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'",
+                "'Have you got the van loaded up yet?'"
+              ]
+			},
+			"conditionAttributes": {
+			  "inventoryValue": ">100"
+			},
+
+            "reward": {
+              "affinityModifier": 2,
+			  "decreaseAffinityFor": "everyone",
+              "increaseAffinityFor": "spy",
+              "money": 200,
+              "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash. On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br>It's probably wise for you to make yourself scarce for a while."
+            }
           }
         ]
       }
@@ -7692,6 +7786,7 @@
               "type": "property",
               "isBreakable": true,
               "lockable": true,
+			  "canCollect": true,
               "price": 5,
               "customAction": "ride",
               "defaultResult": "You're meant to be working!<br>You cycle around for a while until you feel guilty for not doing something more useful."

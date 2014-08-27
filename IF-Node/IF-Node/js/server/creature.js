@@ -1209,17 +1209,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(player.canAfford(objectToGive.getPrice()))) { return "You can't afford " + objectToGive.getPrefix().toLowerCase() + "."; };
 
             var playerInventory = player.getInventoryObject();
-            if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry " + objectToGive.getDisplayName() + " at the moment."; };
-
-            //take money from player
-            player.reduceCash(objectToGive.getPrice());
-            self.increaseCash(objectToGive.getPrice());
 
             //consume charge and split or deliver whole item?
             var deliveredItem;
             if (objectToGive.chargesRemaining() >0 && objectToGive.saleUnit() <= objectToGive.chargesRemaining()) {
                 deliveredItem = new artefactObjectModule.Artefact(objectToGive.getName(), objectToGive.getRawDescription(), objectToGive.getInitialDetailedDescription(), objectToGive.getSourceAttributes(), objectToGive.getLinkedExits(), objectToGive.getDeliveryItems()); //return a new instance of deliveryObject
                 deliveredItem.setWeight((objectToGive.saleUnit()/objectToGive.chargesRemaining())*objectToGive.getWeight());
+
+                //now we know the weight of the new item, can the player carry it?
+                if (!(playerInventory.canCarry(deliveredItem))) { return "Sorry. You can't carry " + deliveredItem.getDisplayName() + " at the moment."; };
+
                 deliveredItem.setCharges(objectToGive.saleUnit());
                 objectToGive.setWeight(objectToGive.getWeight()-(objectToGive.saleUnit()/objectToGive.chargesRemaining())*objectToGive.getWeight());
                 deliveredItem.addSyns(objectToGive.getSyns());
@@ -1227,7 +1226,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 objectToGive.consume(objectToGive.saleUnit());
             } else {
                 deliveredItem = objectToGive;
+                //now we know the weight of the new item, can the player carry it?
+                if (!(playerInventory.canCarry(deliveredItem))) { return "Sorry. You can't carry " + deliveredItem.getDisplayName() + " at the moment."; };
             };
+
+            //take money from player
+            player.reduceCash(objectToGive.getPrice());
+            self.increaseCash(objectToGive.getPrice());
 
             //reduce secondhand value
             var priceDecreasePercent = 25;
