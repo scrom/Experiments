@@ -3,9 +3,10 @@
 exports.Creature = function Creature(name, description, detailedDescription, attributes, carrying, sells) {
     try{
         //module deps
-        var inventoryObjectModule = require('./inventory');
+        var inventoryObjectModule = require('./inventory.js');
         var missionObjectModule = require('./mission.js');
         var contagionObjectModule = require('./contagion.js');
+        var artefactObjectModule = require('./artefact.js');
 
 	    var self=this; //closure so we don't lose reference in callbacks
         var _name = name.toLowerCase();
@@ -1214,20 +1215,38 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             player.reduceCash(objectToGive.getPrice());
             self.increaseCash(objectToGive.getPrice());
 
+            //consume charge and split or deliver whole item?
+            var deliveredItem;
+            if (objectToGive.chargesRemaining() >0 && objectToGive.saleUnit() <= objectToGive.chargesRemaining()) {
+                deliveredItem = new artefactObjectModule.Artefact(objectToGive.getName(), objectToGive.getRawDescription(), objectToGive.getInitialDetailedDescription(), objectToGive.getSourceAttributes(), objectToGive.getLinkedExits(), objectToGive.getDeliveryItems()); //return a new instance of deliveryObject
+                deliveredItem.setWeight((objectToGive.saleUnit()/objectToGive.chargesRemaining())*objectToGive.getWeight());
+                deliveredItem.setCharges(objectToGive.saleUnit());
+                objectToGive.setWeight(objectToGive.getWeight()-(objectToGive.saleUnit()/objectToGive.chargesRemaining())*objectToGive.getWeight());
+                deliveredItem.addSyns(objectToGive.getSyns());
+                deliveredItem.show();                
+                objectToGive.consume(objectToGive.saleUnit());
+            } else {
+                deliveredItem = objectToGive;
+            };
+
             //reduce secondhand value
             var priceDecreasePercent = 25;
-            if (objectToGive.getType() == 'treasure') {priceDecreasePercent = 10;}; //not such a decline in the market for treasure
-            if (objectToGive.getType() == 'junk') {priceDecreasePercent = 90;}; //the resale value of junk is rotten - buyer beware.
-            objectToGive.discountPriceByPercent(priceDecreasePercent);
+            if (deliveredItem.getType() == 'treasure') {priceDecreasePercent = 10;}; //not such a decline in the market for treasure
+            if (deliveredItem.getType() == 'junk') {priceDecreasePercent = 90;}; //the resale value of junk is rotten - buyer beware.
+            deliveredItem.discountPriceByPercent(priceDecreasePercent);
 
-            //transfer to player
-            playerInventory.add(objectToGive);
-            _salesInventory.remove(anObjectName);
+            //deliver to player
+            playerInventory.add(deliveredItem);
+
+            //remove from inventory if sold out
+            if (objectToGive.chargesRemaining() == 0 || objectToGive.saleUnit() == -1) {
+                _salesInventory.remove(anObjectName);
+            };
             
             //turn on delay
             _currentDelay = 0;
 
-            return initCap(self.getDisplayName()) + " sells you " + objectToGive.getDescription() + ".";
+            return initCap(self.getDisplayName()) + " sells you " + deliveredItem.getDescription() + ".";
         };
 
 
@@ -1863,6 +1882,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //if there's not what's being asked for nearby
             if (!(_currentLocation.objectExists(keyword)) && (!(_inventory.check(keyword)))) {
+
+                if (_salesInventory.check(keyword)) {
+                    var saleItem = _salesInventory.getObject(keyword);
+                    return initCap(self.getDisplayName())+" says 'You're in luck!' 'I have "+saleItem.getSuffix()+" for sale right here.'"+returnImage;
+                };
+
                 //if high affinity, try to find item for player
                 if (self.getAffinity() >= 2) {
                     return self.find(keyword, playerAggression, map);
@@ -1870,7 +1895,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 var randomReplies = ["Sorry $player, I can't help you there.", "Nope, I've not seen any "+keyword+" around.", "I'm afraid you'll need to hunt that down yourself.", "Nope, sorry."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+                return initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };
 
             return null;

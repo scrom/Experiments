@@ -37,6 +37,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _opens = false;
         var _open = false;
         var _charges =-1; //-1 means unlimited
+        var _saleUnit =-1; //-1 means sell all
         var _burnRate = 0; //doesn't used up charges by default
         var _chargeUnit = "";
         var _chargesDescription = "";
@@ -160,6 +161,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.burnRate != undefined) {_burnRate = parseFloat(artefactAttributes.burnRate);};
             if (artefactAttributes.chargeUnit != undefined) {_chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != undefined) {_chargesDescription = artefactAttributes.chargesDescription;};
+            if (artefactAttributes.saleUnit != undefined) {_saleUnit = artefactAttributes.saleUnit;};
 
             if (artefactAttributes.switched != undefined) {
                 if (artefactAttributes.switched== true || artefactAttributes.switched == "true") { _switched = true;};
@@ -349,6 +351,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.burnRate = _burnRate;            
             currentAttributes.chargeUnit = _chargeUnit;
             currentAttributes.chargesDescription = _chargesDescription;
+            currentAttributes.saleUnit = _saleUnit;            
             currentAttributes.checkComponents = self.checkComponents();
             currentAttributes.switched = _switched;
             currentAttributes.isOn = _on;
@@ -413,6 +416,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.burnRate != 0) {saveAttributes.burnRate = artefactAttributes.burnRate;};
             if (artefactAttributes.chargeUnit != "") {saveAttributes.chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != "") {saveAttributes.chargesDescription = artefactAttributes.chargesDescription;};
+            if (artefactAttributes.saleUnit != -1) {saveAttributes.saleUnit = artefactAttributes.saleUnit;};           
             if (artefactAttributes.plural == true) {saveAttributes.plural = artefactAttributes.plural;};            
             if (artefactAttributes.affinityModifier != 1) {saveAttributes.affinityModifier = artefactAttributes.affinityModifier;};
             if (artefactAttributes.read == true) { saveAttributes.read = true;};
@@ -1115,6 +1119,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);
             //we use -1 to mean unlimited
             return _charges;
+        };
+
+        self.setCharges = function(newValue) {
+            if (self.isDestroyed()) {return 0;};
+            _charges = newValue;
+        };
+
+        self.saleUnit = function() {
+            if (self.isDestroyed()) {return 0;};
+            //we use -1 to mean "all" (default)
+            return _saleUnit;
         };
 
         self.hasPower = function() {
