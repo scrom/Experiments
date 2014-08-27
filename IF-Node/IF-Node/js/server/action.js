@@ -459,7 +459,7 @@ exports.Action = function Action(aPlayer, aMap) {
                                 _object1 = objectPair[1];
                                 _object1 = " "+_object1+" ";
                                 _object1 = _object1.replace(" to ", "");
-                                console.log("O0: "+_object0+"O1:"+_object1);
+                                //console.log("O0: "+_object0+"O1:"+_object1);
                                 description = _player.ask("wait", _object0.trim(), _object1.trim(), _map);
                                 break;
                             };

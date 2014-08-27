@@ -1793,13 +1793,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(_canTravel)) {return self.getDisplayName()+" says 'I'm not planning on going anywhere.'"+returnImage; };
 
             if (_affinity >=1) {
-                //would be quite neat to set this duration to some factor of affinity and erode down to -1 affinity.
-                if (!(duration)) {duration = 10;}; 
+                //set duration to 3* affinity.
+                if (!(duration)) {duration = 5*(Math.round((_affinity*3)/5));}; 
                 _currentDelay = 0; //turn on delay
-                _waitDelay = duration;
+                _waitDelay += duration;
 
                 self.decreaseAffinity(0.5); //erode affinity
-                return self.getDisplayName()+" says 'OK. See you in "+duration+"?'"+returnImage; 
+
+                if (_waitDelay == duration) {
+                    return self.getDisplayName()+" says 'OK. See you in "+duration+"?'"+returnImage;
+                } else {
+                    return self.getDisplayName()+" says 'OK. I'll hang around for an extra "+duration+".'"+returnImage; 
+                };
             };
             
             return self.getDisplayName()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
