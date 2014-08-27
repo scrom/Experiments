@@ -1893,6 +1893,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     return initCap(self.getDisplayName())+" says 'You're in luck!' 'I have "+saleItem.getSuffix()+" for sale right here.'"+returnImage;
                 };
 
+                if (keyword == "help") {
+                    return initCap(self.getDisplayName())+" says 'OK. Here's some things to try...'<br>'You can interact with most objects and characters using common verbs.'<br>'To pick up some basic (but useful) commands, type <i>help</i>.'<br>'If you're stuck, try to <i>'talk to'</i> a person.'<br>'You can gain vital information if you <i>'examine'</i> a person or item.'<br>'There are also potential benefits from <i>read</i>ing some items you may find.'<br>'If you're not popular, you may need to <i>'give'</i> a potentially desirable item <i>to</i> someone before they'll help you.'<br>";
+                };
+
                 //if high affinity, try to find item for player
                 if (self.getAffinity() >= 2) {
                     return self.find(keyword, playerAggression, map);
