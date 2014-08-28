@@ -117,19 +117,18 @@
       }
     ],
     "missions": [
-		  	{
-            "object": "mission",
-            "name": "vanarrival",
-            "displayName": "steal some valuables",
-			"attributes": {
-			"type": "event",
-			"parent": "stealsketchbook"
-			},
-			"conditionAttributes": {
-			  "time": "25"
-			},
-
-            "reward": {
+      {
+        "object": "mission",
+        "name": "vanarrival",
+        "displayName": "steal some valuables",
+        "attributes": {
+          "type": "event",
+          "parent": "stealsketchbook"
+        },
+        "conditionAttributes": {
+          "time": "25"
+        },
+        "reward": {
           "locations": [
             {
               "object": "location",
@@ -148,16 +147,16 @@
           ],
           "exits": [
             {
-                  "object": "exit",
-                  "longname": "North",
-                  "direction": "n",
-                  "source": "waste-area",
-                  "destination": "van"
+              "object": "exit",
+              "longname": "North",
+              "direction": "n",
+              "source": "waste-area",
+              "destination": "van"
             }
           ],
-	"eventMessage": "You've probably kept out of the way long enough to go and chat to the spy again without suspicion if you feel like taking on another 'job'."
-			 }
-          },
+          "eventMessage": "You've probably kept out of the way long enough to go and chat to the spy again without suspicion if you feel like taking on another 'job'."
+        }
+      },
       {
         "object": "mission",
         "name": "boring",
@@ -359,7 +358,7 @@
           "successMessage": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know.<br>You lose 100 points."
         }
       },
-	{
+      {
         "object": "mission",
         "name": "lovedbyall",
         "attributes": {
@@ -609,7 +608,7 @@
           "bike ambulance",
           "ric",
           "him",
-		  "rik"
+          "rik"
         ],
         "missions": [
           {
@@ -957,7 +956,7 @@
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'I think it's time to celebrate. When you're ready, come and talk to me again and we'll get something organised.'",
-				"Right, let's get this party sorted!<br>I've ordered a bus. Give me one last shout when you're ready to round everyone up!"
+                "Right, let's get this party sorted!<br>I've ordered a bus. Give me one last shout when you're ready to round everyone up!"
               ]
             },
             "conditionAttributes": {
@@ -965,34 +964,34 @@
               "conversationState": 2
             },
             "reward": {
-			  "affinityModifier": 5,
-              "increaseAffinityFor": "all",
-          "locations": [
-            {
-              "object": "location",
-              "name": "bus",
-              "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
+              "locations": [
+                {
+                  "object": "location",
+                  "name": "bus",
+                  "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
+                  "exits": [
+                    {
+                      "object": "exit",
+                      "longname": "out",
+                      "direction": "o",
+                      "source": "bus",
+                      "destination": "office-front"
+                    }
+                  ]
+                }
+              ],
               "exits": [
                 {
                   "object": "exit",
-                  "longname": "out",
-                  "direction": "o",
-                  "source": "bus",
-                  "destination": "office-front"
+                  "longname": "in",
+                  "direction": "i",
+                  "source": "office-front",
+                  "destination": "bus"
                 }
-              ]
+              ],
+              "affinityModifier": 5,
+              "increaseAffinityFor": "all"
             }
-          ],
-          "exits": [
-            {
-              "object": "exit",
-              "longname": "in",
-              "direction": "i",
-              "source": "office-front",
-              "destination": "bus"
-            }
-          ]
-			}
           },
           {
             "object": "mission",
@@ -1224,6 +1223,7 @@
               "weight": 1,
               "canCollect": true,
               "isBreakable": true,
+              "plural": true,
               "affinityModifier": 2,
               "price": 5,
               "customAction": "play",
@@ -3557,7 +3557,7 @@
         "missions": [
           {
             "object": "mission",
-            "name": "destroycoffeeMachine",
+            "name": "destroycoffeemachine",
             "displayName": "destroy the coffee machine",
             "description": "This place thrives on coffee, don't ruin it.",
             "attributes": {
@@ -3639,7 +3639,7 @@
                     "requiresContainer": true,
                     "isLiquid": true,
                     "canCollect": true,
-					"charges": 3,
+                    "charges": 3,
                     "affinityModifier": 0,
                     "isEdible": true,
                     "antibodies": [
@@ -4207,40 +4207,40 @@
                 "'How's that little <i>job</i> going?'"
               ]
             },
-            "conditionAttributes": {
-              "isDestroyed": false
-            },
             "failAttributes": {
               "isDestroyed": true
             },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
             "reward": {
               "affinityModifier": 2,
-			  "decreaseAffinityFor": "simon galbraith",
+              "decreaseAffinityFor": "simon galbraith",
               "increaseAffinityFor": "spy",
               "money": 50,
               "successMessage": "The spy says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
             }
           },
-		            {
+          {
             "object": "mission",
             "name": "stealvaluables",
             "displayName": "steal some valuables",
             "description": "Steal &pound;100 worth of valuables from the company.",
-			"attributes": {
-			"missionObject": "van",
-			"parent": "vanarrival",
-            "dialogue": [
+            "attributes": {
+              "parent": "vanarrival",
+              "missionObject": "van",
+              "static": true,
+              "dialogue": [
                 "'I knew I could rely on you.'<br>'I've Parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'",
                 "'Have you got the van loaded up yet?'"
               ]
-			},
-			"conditionAttributes": {
-			  "inventoryValue": ">100"
-			},
-
+            },
+            "conditionAttributes": {
+              "inventoryValue": ">100"
+            },
             "reward": {
               "affinityModifier": 2,
-			  "decreaseAffinityFor": "everyone",
+              "decreaseAffinityFor": "everyone",
               "increaseAffinityFor": "spy",
               "money": 200,
               "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br>It's probably wise for you to make yourself scarce for a while."
@@ -4413,9 +4413,9 @@
               "type": "food",
               "canCollect": true,
               "charges": 15,
-			  "chargeUnit": "99 flake ice cream",
-			  "saleUnit": 1,
+              "chargeUnit": "99 flake ice cream",
               "chargesDescription": "$charges $chargeUnit",
+              "saleUnit": 1,
               "affinityModifier": 5,
               "isEdible": true,
               "nutrition": 15,
@@ -4747,6 +4747,7 @@
           "type": "treasure",
           "canCollect": true,
           "isBreakable": true,
+          "plural": true,
           "price": 30,
           "customAction": "wear",
           "defaultResult": "Nah, they don't really suit you.<br>You take them off again and blink a few times to recover your near-field vision."
@@ -5192,6 +5193,7 @@
           "weight": 2,
           "canCollect": true,
           "isBreakable": true,
+          "plural": true,
           "price": 20,
           "customAction": "wear",
           "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
@@ -5265,9 +5267,9 @@
         "synonyms": [
           "receptionist",
           "vic",
-		  "vw",
-		  "wiseman",
-		  "vic w",
+          "vw",
+          "wiseman",
+          "vic w",
           "heidi",
           "her"
         ],
@@ -5497,8 +5499,8 @@
               "canCollect": true,
               "charges": 1,
               "chargeUnit": "bar",
-			  "saleUnit": 1,
               "chargesDescription": "$charges $chargeUnit",
+              "saleUnit": 1,
               "isEdible": true,
               "nutrition": 25,
               "price": 0.5,
@@ -5525,8 +5527,8 @@
               "canCollect": true,
               "charges": 1,
               "chargeUnit": "packet",
-			  "saleUnit": 1,
               "chargesDescription": "$charges $chargeUnit",
+              "saleUnit": 1,
               "isEdible": true,
               "nutrition": 25,
               "price": 0.5
@@ -7798,9 +7800,9 @@
             "attributes": {
               "weight": 18,
               "type": "property",
+              "canCollect": true,
               "isBreakable": true,
               "lockable": true,
-			  "canCollect": true,
               "price": 5,
               "customAction": "ride",
               "defaultResult": "You're meant to be working!<br>You cycle around for a while until you feel guilty for not doing something more useful."
