@@ -83,8 +83,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //add linked exits
         if (linkedExits) { _linkedExits = linkedExits;};
 
-        self.setPluralGrammar = function(isPlural) {           
+        self.setPluralGrammar = function(isPlural, itemDescription) {           
             _plural = isPlural;
+            if (itemDescription.substring(0,8) == "pair of ") {
+                _plural = true;
+            };
+
 
             //set plural grammar for more sensible responses
             if (_plural) {
@@ -128,7 +132,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = artefactAttributes.defaultAction;};
             if (artefactAttributes.defaultResult != undefined) { _defaultResult = artefactAttributes.defaultResult;};
             if (artefactAttributes.customAction != undefined) { _customAction = artefactAttributes.customAction;};
-            if (artefactAttributes.plural != undefined) {self.setPluralGrammar(artefactAttributes.plural);};
+            if ((artefactAttributes.plural != undefined) || _description.substring(0,8) == "pair of ") {self.setPluralGrammar(artefactAttributes.plural, _description);};
             if (artefactAttributes.extendedInventoryDescription != undefined) {
                 _extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
             } else {
@@ -249,7 +253,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         //return right prefix for item       
         self.descriptionWithCorrectPrefix = function(anItemDescription) {
-            if (_plural) {return "some "+anItemDescription;};
+            if (_plural) {
+                if (anItemDescription.substring(0,8) != "pair of ") {
+                    return "some "+anItemDescription;
+                };
+            };
             switch (anItemDescription.substring(0,1).toLowerCase()) {
                 case "a":
                 case "e":
@@ -1247,7 +1255,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.repair = function(playerRepairSkills, playerInventory) {
             var resultString = "";
 
-            if(_destroyed) {return _itemDescriptivePrefix+" beyond repair."};
+            if(_destroyed) {return initCap(_itemDescriptivePrefix)+" beyond repair."};
             console.log("Checking player repair skills: "+playerRepairSkills);
             var playerHasRequiredSkill = false;
             for (var i=0; i<playerRepairSkills.length;i++) {
@@ -1324,6 +1332,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_breakable) {
                 _broken = true;
                 if (_lockable) {_locked = false;};
+                if (_price > 0) { self.discountPriceByPercent(50); };
                 _description += " (broken)";
                 _detailedDescription = initCap(_itemDescriptivePrefix)+" broken.";
                 return "You broke "+_itemSuffix+"!";
@@ -1339,7 +1348,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_breakable) {
                 _broken = true;
                 _destroyed = true;
-
+                if (_price > 0) { self.discountPriceByPercent(100); };
                 //mark delivery items as destroyed too
                 var deliveryItems = self.getDeliveryItems();
                 for (var i=0;i<deliveryItems;i++) {
@@ -1410,6 +1419,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (!(_damaged)) {
                 _damaged = true;
+                if (_price > 0) { self.discountPriceByPercent(25); };
                 _detailedDescription += " "+_itemPrefix+" "+showsPlural()+" signs of being dropped or abused.";
             };
             return "";
@@ -1562,7 +1572,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.reply = function(someSpeech,playerAggression) {
             if (self.isDestroyed()) {return "The remaining fragments of inanimate spirit from "+self.getDisplayName()+" ignore you.";};
-            return _itemDescriptivePrefix+" quietly aware of the sound of your voice but "+showsPlural()+" no sign of response.";
+            return initCap(_itemDescriptivePrefix)+" quietly aware of the sound of your voice but "+showsPlural()+" no sign of response.";
         };
 
         self.canTravel = function() {
@@ -1891,7 +1901,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.unlock = function(aKey, locationName) {
             if (self.isDestroyed()||_broken) {
                 _locked = false;
-                return _itemDescriptivePrefix+" broken. No need to unlock "+_itemSuffix+".";
+                return initCap(_itemDescriptivePrefix)+" broken. No need to unlock "+_itemSuffix+".";
             };
             if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
             if (_locked) {
