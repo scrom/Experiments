@@ -2623,7 +2623,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             for (var i=0;i<allMissions.length;i++) {
                 if ((processedMissions.indexOf(allMissions[i].getName()) == -1) && _missionsFailed.indexOf(allMissions[i].getName() == -1)) { 
                     //is there a mission object/destination in this location?
-                    if (_currentLocation.objectExists(allMissions[i].getMissionObjectName() || allMissions[i].getDestination())) {
+                    if (_currentLocation.objectExists(allMissions[i].getMissionObjectName()) || 
+                        _currentLocation.objectExists(allMissions[i].getDestination())|| 
+                        _currentLocation.getName() == (allMissions[i].getDestination()) ||
+                        _currentLocation.getName() == (allMissions[i].getMissionObjectName())
+                    ) {
                         processedMissions.push(allMissions[i].getName());
                         resultString+= self.processMissionState(allMissions[i], map, null, newlyCompletedMissions); //note, owner not passed in here.                        
                     };

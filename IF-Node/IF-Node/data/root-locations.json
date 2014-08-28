@@ -249,11 +249,11 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "booksToRead": 1
+          "booksToRead": 3
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>I like your attitude to learning, keep it up<br>Only one more item left to read! Have 50 points."
+          "successMessage": "<br>I like your attitude to learning, keep it up<br>Only three more items left to read! Have 50 points."
         }
       },
       {
@@ -357,6 +357,20 @@
         "reward": {
           "score": -100,
           "successMessage": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know.<br>You lose 100 points."
+        }
+      },
+	{
+        "object": "mission",
+        "name": "lovedbyall",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "popularity": ">99"
+        },
+        "reward": {
+          "score": 100,
+          "successMessage": "<br>Wow. You're winning in the popularity stakes!<br>Have 100 points."
         }
       },
       {
@@ -984,26 +998,26 @@
             "object": "mission",
             "name": "partybus",
             "displayName": "get everyone on the party bus",
-            "description": "You did a great job of saving the company. Let's celebrate. Get everyone a drink and onto the party bus before it leaves!",
+            "description": "You did a great job of saving the company. Let's celebrate. Get everyone onto the party bus before it leaves!",
             "attributes": {
               "parent": "partytime",
-              "missionObject": "party-bus",
+              "missionObject": "bus",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> everyone to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once everyone's on board (including yourself), it'll be time to relax.'",
+                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> everyone to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once the bus is full (including yourself), it'll be time to relax.'",
                 "'Hey $player. How's the party organising going?'"
               ]
             },
             "failAttributes": {
-              "time": 250
+              "time": 350
             },
             "conditionAttributes": {
-              "friendlyCreatureCount": ">31"
+              "friendlyCreatureCount": ">25"
             },
             "reward": {
               "score": 250,
-              "successMessage": "<br>Congratulations. You managed to get the whole team on the bus and ready to party. That's quite a feat!<br>Have 250 points!<br> blah.",
-              "failMessage": "<br>Oh no! The party bus is leaving and you haven't got everyone on board!<br>Well that's your crowning glory failed. What else is left to do?"
+              "successMessage": "<br>Congratulations. You managed to get the bus loaded and ready to party. That's quite a feat!<br>Have 250 points!",
+              "failMessage": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed. What else is left to do?"
             }
           }
         ]
@@ -4229,7 +4243,7 @@
 			  "decreaseAffinityFor": "everyone",
               "increaseAffinityFor": "spy",
               "money": 200,
-              "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash. On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br>It's probably wise for you to make yourself scarce for a while."
+              "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br>It's probably wise for you to make yourself scarce for a while."
             }
           }
         ]

@@ -68,7 +68,7 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             currentAttributes.itemCount = _inventory.size(true);
             currentAttributes.dark = _dark;
             currentAttributes.visits = _visits;
-            currentAttributes.inventoryValue = 0; //add this later on, total the sales value of all items           
+            currentAttributes.inventoryValue = _inventory.getInventoryValue();
 
             return currentAttributes;
         };

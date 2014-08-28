@@ -675,6 +675,24 @@ exports.Action = function Action(aPlayer, aMap) {
             if (_verb == '+missions') {
                 return _map.listAllMissions(_player);
             };
+
+            if (_verb == '+destination') {
+                var creatures = _map.getAllCreatures();
+                var resultString = "";
+                for (var c=0;c<creatures.length;c++) {
+                    creatures[c].clearPath();
+                    resultString+=creatures[c].goTo(_object0, 0, _map)+"<br>";
+                };
+                return resultString;
+            };
+
+            if (_verb == '+affinity') {
+                var creatures = _map.getAllCreatures();
+                for (var c=0;c<creatures.length;c++) {
+                    creatures[c].increaseAffinity(_object0)+"<br>";
+                };
+                return "Global creature affinity increased by "+_object0;
+            };
         };
 
         self.catchPlayerNotUnderstood = function() {

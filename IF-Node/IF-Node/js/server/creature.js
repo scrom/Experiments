@@ -1846,14 +1846,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };
 
-            if (!(_canTravel)) {
-                return "Sorry $player, I need to stick around here at the moment. Maybe later?"+returnImage;
+            if ((!(_canTravel)) && (_affinity <5)) {
+                return self.getDisplayName()+" says 'Sorry $player, I need to stick around here at the moment. Maybe later?'"+returnImage;
+            };
+
+            //can ask a creature with very high affinity to move from their location!
+            if ((!(_canTravel) && (_affinity >=5))) {
+                _canTravel = true;
             };
 
             if (_affinity >1) {
                 var randomReplies;
                 self.decreaseAffinity(1); //erode affinity
-                self.setDestination(locationName);
+                self.setDestination(locationName, true);
                 if (_destinations.length+_clearedDestinations.length >1) {
                     randomReplies = ["I've got a few things to sort out first but I'll be over there in a while.", "Sure. Just let me tie some loose ends up first. I might be a while", "OK. I'll catch you up when I'm done here."];
                 } else {
@@ -2419,12 +2424,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _avoiding;
         };
 
-        self.setDestination = function(destinationName) {
+        self.setDestination = function(destinationName, pushToFrontOfList) {
             if (_avoiding.indexOf(destinationName) > -1) {return null};
             console.log(self.getDisplayName()+" new destination set "+destinationName);
             //add new destination to *front* of array as we pop destinations from the end.
 
-            _destinations.unshift(destinationName); 
+            if (pushToFrontOfList) {
+                _destinations.push(destinationName);
+            } else {
+                _destinations.unshift(destinationName); 
+            };
 
             //if not normally a traveller, set path to return home afterwards...
             if (!(_traveller)) {
