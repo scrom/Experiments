@@ -564,6 +564,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return currentAttributes;
         };
 
+        self.canSaveGame = function() {
+            //prevent saving if not enough moves taken or no achievements (prevents casual saving)
+            if ((_stepsTaken+_waitCount < 25) || (_missionsCompleted.length < 1)) { return false;};
+
+            return true;
+        };
+
         self.isDestroyed = function() {
             return false;
         };

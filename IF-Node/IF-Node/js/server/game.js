@@ -36,6 +36,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         };	
 
         self.save = function() {
+            if (!(_player.canSaveGame())) {return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'You\'ve not achieved enough to be worth saving yet."}'};
             if (_filename == undefined|| _filename == null ||_filename == "") {
                 _filename = _player.getUsername()+"-"+_id; 
                 //want to save this filename as a player attribute so that it's visible in their status file.
@@ -51,7 +52,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                     };
                 };
                 if (newIndex>=50) {
-                    return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'Unable to save game. It looks like we\'ve got too many previous games saved with your name already.<br>Try loading one of your old games instead."}';
+                    return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'Unable to save game. It looks like we\'ve got too many previous games saved with your name already.<br>Try loading one of your old games or playing under a different name instead."}';
                 };
             };
 
@@ -59,7 +60,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             _player.incrementSaveCount();
             _fm.writeFile(fileName, self.fullState(), true);
             console.log("game saved as "+fileName);
-            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"game saved as "+fileName.replace(".json","")+'.<br>Please make a note of your saved game filename for later."}';
+            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+fileName.replace(".json","")+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>"}';
         };
 
         self.state = function() {
