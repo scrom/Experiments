@@ -16,7 +16,11 @@ exports.GameController = function GameController(mapBuilder) {
 
         //// public methods    
          
-        self.addGame = function(aUsername) {
+        self.addGame = function(aUsername, sessionLimit) {
+            //prevent too many active games
+            if (!(sessionLimit)) {sessionLimit = 10;}; //extreme throttling if not set
+            if (_games.length >= sessionLimit) {return -1;};
+
             var newGameId = _games.length;
             var newMap = _mapBuilder.buildMap();
             var startLocation = newMap.getStartLocation();

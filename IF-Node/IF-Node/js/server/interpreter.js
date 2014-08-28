@@ -106,7 +106,7 @@ exports.Interpreter = function Interpreter(aGameController) {
         //public member functions
 
         /*top level interpeter command creation*/
-        self.translate = function(aRequestUrl,someTempConfig) {
+        self.translate = function(aRequestUrl,config) {
             //console.log('translate called: '+aRequestUrl);
             //note - only passing config in here until controlling game object is accessible
 
@@ -127,7 +127,7 @@ exports.Interpreter = function Interpreter(aGameController) {
             switch(command)
             {
                 case 'config':
-                    return('' + JSON.stringify(someTempConfig));
+                    return('' + JSON.stringify(config));
                 case 'image':
                     //console.log("image request:"+actionString);
                     if (fm.imageExists(actionString)) {
@@ -142,7 +142,11 @@ exports.Interpreter = function Interpreter(aGameController) {
                 case 'new':
                     if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
                     //add new user game
-                    var aGameId = _gameController.addGame(username);
+                    var aGameId = _gameController.addGame(username, config.getSessionLimit());
+                    if (aGameId == -1) {
+                        //we have a problem
+                        return assembleResponse(commandJson,'{"description":"We\'re <b>really</b> sorry but we can\'t start a new game game for you at the moment.<br>Chances are there\'s too many active sessions running (which is a surprise to us too!<br>We never thought this would be so popular.<br>We\'d love it if you came back and tried again later though."}');
+                    };
                     return assembleResponse(commandJson,_gameController.getGameState(username, aGameId));
                     break;
                 case 'action':

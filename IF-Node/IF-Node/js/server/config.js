@@ -6,18 +6,21 @@ exports.Config = function Config() {
         //private class vars until I actually use them
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
 	    var objectName = "Config";
-	    var locationLimit = 300; //max locations
-	    var objectLimit = 300; //max objects
-	    var creatureLimit = 250; //max creatures
-	    var inventoryLimit = 10; //max inventory size
-	    var gameLimit = 10; //max active games
-	    var gameUserLimit = 10; //max active players (per game!)
-	    var gameWatcherLimit = 90; //max active watchers per game
+	    var _gameLimit = 100; 
+
 
         //naughty non-encapsulated public class variables
-        this.port = process.env.port || 1337; //port to use
-        this.hostname = 'pm-simonc';
-	    this.sessionLimit = gameLimit*(gameUserLimit+gameWatcherLimit); //max number of sessions games*(players + watchers);
+        self.port = process.env.port || 1337; //port to use
+        self.hostname = 'pm-simonc';
+
+        //allow potential live modification of session limit
+        self.setSessionLimit = function(newLimit) {
+            _gameLimit = newLimit;
+        };
+
+        self.getSessionLimit = function() {
+            return _gameLimit;
+        };
 
         console.log(objectName+' created');
     }
