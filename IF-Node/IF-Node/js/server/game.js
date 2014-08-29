@@ -53,20 +53,20 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
 
         self.save = function() {
             self.setTimeStamp();
-
+            var fileId = Math.floor(parseInt((parseInt(new Date().getTime()).toString()).substring(5))/137);
             if (!(_player.canSaveGame())) {return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'You\'ve not achieved enough to be worth saving yet."}'};
             if (_filename == undefined|| _filename == null ||_filename == "") {
-                _filename = _player.getUsername()+"-"+_id; 
+                _filename = _player.getUsername()+"-"+fileId; 
                 //want to save this filename as a player attribute so that it's visible in their status file.
                 //also want to track how many times they've saved/loaded/
 
                 //this is the first time a player is saving, don't overwrite existing files...
                 if (_fm.fileExists(_filename+".json")) {
                     var newIndex=1;
-                    _filename = _player.getUsername()+"-"+_id+newIndex; 
+                    _filename = _player.getUsername()+"-"+fileId+newIndex; 
                     while (_fm.fileExists(_filename+".json") && newIndex<50) { //this might run away with the filesystem!
                         newIndex++;
-                        _filename = _player.getUsername()+"-"+_id+newIndex; 
+                        _filename = _player.getUsername()+"-"+fileId+newIndex; 
                     };
                 };
                 if (newIndex>=50) {
