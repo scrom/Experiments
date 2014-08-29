@@ -12,6 +12,7 @@ var gameDataJSONPath = '../../data/root-locations.json';
 var mapBuilder = new mapBuilderModule.MapBuilder(gameDataJSONPath);
 
 var gameController = new gameControllerModule.GameController(mapBuilder);
+gameController.monitor(60, 180); //5,60
 var watcher = new watcherObjectModule.Watcher(mapBuilder, gameController);
 var interpreter = new interpreterObjectModule.Interpreter(gameController);
 

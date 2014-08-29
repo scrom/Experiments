@@ -16,6 +16,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         var _log = ''; //log of game script - not currently used
         var _currentLocation; //id of current location
         var _playerActions = null; //player action object (sort of singleton)
+        var _timeStamp = parseInt(new Date().getTime()); //track when last action ocurred
 
 	    var _objectName = "Game";
         
@@ -35,7 +36,24 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             return false;
         };	
 
+        self.getTimeStamp = function() {
+            return _timeStamp;
+        };
+
+        self.setTimeStamp = function(timestamp) {
+            if (!(timestamp)) {
+                timestamp = new Date().getTime();
+            };
+            _timeStamp = parseInt(timestamp);
+        };
+
+        self.getFilename = function() {
+            return _filename;
+        };
+
         self.save = function() {
+            self.setTimeStamp();
+
             if (!(_player.canSaveGame())) {return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'You\'ve not achieved enough to be worth saving yet."}'};
             if (_filename == undefined|| _filename == null ||_filename == "") {
                 _filename = _player.getUsername()+"-"+_id; 
@@ -88,8 +106,14 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                 _playerActions = new actionObjectModule.Action(_player, _map);
             };
             var responseJson = _playerActions.act(actionString);
+            self.setTimeStamp();
             console.log('responseJson: '+responseJson+' responseObject: '+typeof responseObject);
             return responseJson;
+        };
+
+        self.getId = function() {
+            //console.log("retrieving game ID:"+_id);
+            return _id;
         };
 
         self.getNameAndId = function() {

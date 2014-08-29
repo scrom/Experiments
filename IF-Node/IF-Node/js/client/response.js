@@ -4,8 +4,8 @@ function Response(someJsonData, aConsole) {
     try{
 	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Response";
-        var data = jQuery.parseJSON(someJsonData);
         var console = aConsole;
+        var data = jQuery.parseJSON(someJsonData);
         
         //we expect a single data object containing 2 specific other objects: request and response
         var request = data.request;
@@ -15,7 +15,7 @@ function Response(someJsonData, aConsole) {
     //end try
     }
     catch(err) {
-	    alert('Unable to create Response object: '+err);
+	    alert('Unable to create Response object for data "'+someJsonData+'": '+err);
     };	
 
     //public methods
