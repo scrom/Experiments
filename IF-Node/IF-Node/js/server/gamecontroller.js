@@ -44,7 +44,7 @@ exports.GameController = function GameController(mapBuilder) {
                             };
                            _games[g] = g; //set just ID into game slot
                            _inactiveGames.push(g);
-                           console.log(_inactiveGames);
+                           //console.log(_inactiveGames);
                        }; 
                    };
                 }; 
@@ -76,11 +76,9 @@ exports.GameController = function GameController(mapBuilder) {
             //try an old inactive game id first
             if (_inactiveGames.length >1) { //want at least 2 "old" games.
                 gameId = _inactiveGames.unshift(); //take ID from oldest "retired" game.
-                console.log(_games[gameId]);
             } else {
                 _games.push(_games.length); //reserve placeholder!
                 gameId = _games.length-1;
-                console.log(_games[gameId]);
             };
             return gameId;
         };
@@ -114,7 +112,14 @@ exports.GameController = function GameController(mapBuilder) {
             return newGameId;
         };
 
-        self.loadGame = function(originalGameId, file) {           
+        self.loadGame = function(originalGameId, file, username) {
+            if (file == "") {
+                if (_games[originalGameId]) {
+                    if (_games[originalGameId].getUsername() == username) {
+                        file = _games[originalGameId].getFilename();
+                    }
+                };
+            };        
            
             var fileName = file+".json";
             var game;

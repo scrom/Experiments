@@ -84,7 +84,7 @@ function Client(aServerHost, aServerPort, aUi) {
     //load a game
     var loadGame = function(aFileName) {
         var inputString = sanitiseString(aFileName);
-        serverRequest('load/load/'+inputString+'/'+gameId);
+        serverRequest('load/'+aFileName+'/'+username+'/'+gameId);
     };
 
     //save a game
@@ -108,6 +108,10 @@ function Client(aServerHost, aServerPort, aUi) {
         if (inputString.indexOf("load") >-1) {
             var fileName = inputString.replace("load ","");
             loadGame(fileName);
+        } else if
+            (inputString.indexOf("restore") >-1) {
+            var fileName = inputString.replace("restore ","");
+            loadGame(fileName);            
         } else if (inputString.indexOf("save") >-1) {
             saveGame();
         } else if (inputString == "list") {

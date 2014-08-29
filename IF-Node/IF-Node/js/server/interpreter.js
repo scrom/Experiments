@@ -162,7 +162,8 @@ exports.Interpreter = function Interpreter(aGameController) {
                     break;
                 case 'load':
                     var originalGameID = gameId;
-                    var newGameId = _gameController.loadGame(originalGameID, username);
+                    if (actionString == "load" || actionString == "restore") {actionString = "";};
+                    var newGameId = _gameController.loadGame(originalGameID, actionString, username);
                     console.log(newGameId);
                     //did we successfully load?...
                     var savedUsername = _gameController.getUsernameForGameID(newGameId);
@@ -171,7 +172,7 @@ exports.Interpreter = function Interpreter(aGameController) {
                         return assembleResponse(commandJson,_gameController.getGameState(savedUsername, newGameId));      
                     };
                     //file not loaded
-                    return assembleResponse(commandJson,'{"description":"Saved game file \''+username+'\' not found."}');                  
+                    return assembleResponse(commandJson,'{"description":"Saved game file \''+actionString+'\' not found."}');                  
                     break;
                 case 'events':
                     //respond to event requests
