@@ -830,7 +830,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.use = function(verb, artefactName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {return notFoundMessage(artefactName)+"$result";};
 
             //if we define a custom result, return that. Otherwise perform default action.
             var result = artefact.getDefaultResult();
