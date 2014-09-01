@@ -1661,26 +1661,26 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (!(deliveryItem)) {
-                console.log(self.getName() + " doesn't deliver " + anObjectName);
+                //console.log(self.getName() + " doesn't deliver " + anObjectName);
                 return false;
             };
 
             //is the deliverer intact?
             if (self.isBroken() || self.isDestroyed()) {
-                console.log(self.getName() + " is broken");
+                //console.log(self.getName() + " is broken");
                 return false;
             };
 
             //do we have all the components needed to work?
             if (!(self.checkComponents())) {
-                console.log(self.getName() + " doesn't have all the required components to run");
+                //console.log(self.getName() + " doesn't have all the required components to run");
                 return false;
             };
             
             //is the deliverer working?
             if (_switched) {
                 if (!(self.isPoweredOn())) {
-                    console.log(self.getName() + " isn't switched on");
+                    //console.log(self.getName() + " isn't switched on");
                     return false;
                 };
             };
@@ -1688,7 +1688,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //do we have the required components for what we're delivering?
             var deliveryComponents = _inventory.getComponents(anObjectName);
             if (!(deliveryItem.checkComponents(deliveryComponents))) {
-                console.log(self.getName() + " doesn't have all the required components to deliver "+anObjectName);
+                //console.log(self.getName() + " doesn't have all the required components to deliver "+anObjectName);
                 return false;
             };
 
@@ -1877,7 +1877,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };                   
                 };
             };
-            console.log('Matching key not found');
+            //console.log('Matching key not found');
             return null;
         };
 

@@ -164,7 +164,7 @@ exports.Interpreter = function Interpreter(aGameController) {
                     var originalGameID = gameId;
                     if (actionString == "load" || actionString == "restore") {actionString = "";};
                     var newGameId = _gameController.loadGame(originalGameID, actionString, username);
-                    console.log(newGameId);
+                    //console.log(newGameId);
                     //did we successfully load?...
                     var savedUsername = _gameController.getUsernameForGameID(newGameId);
                     if (savedUsername) {

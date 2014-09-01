@@ -105,7 +105,7 @@ exports.GameController = function GameController(mapBuilder) {
             _games[newGameId] = game;
 
 
-            console.log('new game: '+game.toString());  
+            //console.log('new game: '+game.toString());  
             
             console.log('game ID: '+newGameId+' added to controller. Open games: '+(_games.length-_inactiveGames.length));
 
@@ -134,7 +134,7 @@ exports.GameController = function GameController(mapBuilder) {
             var newMap = _mapBuilder.buildMap(gameData);
             console.log ("game file "+fileName+" loaded.");
 
-            console.log("originalGameId:"+originalGameId);
+            //console.log("originalGameId:"+originalGameId);
             //if loading from within an active game, we want to replace the existing game rather than adding another
             if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
                 var newGameId = self.getNextAvailableGame(); //note we don't use the original game Id at the moment (need GUIDS)
@@ -190,7 +190,7 @@ exports.GameController = function GameController(mapBuilder) {
                 if (i>0) {gamelist +=','};
                 var aGame = self.getGame(i).getNameAndId();
                 gamelist += aGame;
-                console.log('game: '+i+' details: '+self.getGame(i).getNameAndId()+' toString: '+self.getGame(i).toString());
+                console.log('game: '+i+' details: '+self.getGame(i).getNameAndId());//+' toString: '+self.getGame(i).toString());
             };
 
             gamelist += ']}';
@@ -199,7 +199,7 @@ exports.GameController = function GameController(mapBuilder) {
         };
 
         self.userAction = function(aUsername, aGameId,anAction) {
-            console.log(_games[aGameId]);
+            //console.log(_games[aGameId]);
             if (_games[aGameId] == undefined) {
                 console.log('invalid gameId:'+aGameId);
                 return '{"username":"","id":-1,"description":"Sorry, it looks like you\'re trying to play a game that we don\'t have.<br>Please reload the page and try either loading an old game or starting from scratch."}';

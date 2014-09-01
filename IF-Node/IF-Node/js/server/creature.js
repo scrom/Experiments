@@ -2309,7 +2309,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return partialResultString; //just the outcome of fleeing.
             } else {
                 return "";
-                console.log(resultString);
+                //console.log(resultString);
             };
         };
 
