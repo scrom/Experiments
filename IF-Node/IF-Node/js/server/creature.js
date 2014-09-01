@@ -2387,8 +2387,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.isPoweredOn = function() {
             return false;
         };
+        
+        self.isSwitched = function() {
+            return false;
+        };
 
-        self.switchOnOrOff = function(onOrOff) {
+        self.turn = function(verb, direction) {
+            return self.switchOnOrOff(verb, direction);
+        };
+
+        self.switchOnOrOff = function(verb, onOrOff) {
             return "That's really not a polite thing to do to "+_genderSuffix+".";
         };
 

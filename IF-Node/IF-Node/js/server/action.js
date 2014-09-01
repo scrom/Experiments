@@ -567,15 +567,20 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'turn': //eventually might want a different kind of turn (e.g. handle)
                     case 'switch': //(this is a special one) - could be switch off light or switch light on.
                         //if player enters "switch on x", we'll have an object 1 (but no object 0).
-                        if (_object1) {description = _player.switchOnOrOff(_verb,_object1,_splitWord);}
-                        else {description = _player.switchOnOrOff(_verb, _object0,_splitWord);};                    
+                        if ((!_object0) && (_object1)) {
+                            description = _player.turn(_verb,_object1,_splitWord);
+                        } else if (_object0 && _object1) {
+                            description = _player.turn(_verb,_object0,_object1);
+                        } else {
+                            description = _player.turn(_verb, _object0,_splitWord);
+                        };                    
                         break;
                     case 'light':
-                        description = _player.switchOnOrOff('light', _object0, 'on');
+                        description = _player.turn('light', _object0, 'on');
                         break;
                     case 'extinguish':
                     case 'unlight':
-                        description = _player.switchOnOrOff('turn', _object0,'out');
+                        description = _player.turn('turn', _object0,'out');
                         break;
                     case 'read':
                     case 'study':

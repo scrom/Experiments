@@ -1162,6 +1162,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
+        self.isSwitched = function() {
+            return _switched;
+        };
+
+        self.turn = function(verb, direction) {
+            if (direction) {direction = " "+direction;};
+            if (_collectable) {
+                return "You attempt to "+verb+" "+self.getDisplayName()+direction+". Nothing of interest happens.";
+            };
+            return self.getDescriptivePrefix()+" fixed in place, there's no obvious way to "+verb+" "+self.getSuffix()+".";
+        };
+
         self.switchOnOrOff = function(verb, onOrOff) {
             if (_broken||self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" broken.";};
             if (!(_switched)) {return "There's no obvious way to "+verb+" "+_itemSuffix+" on or off.";};

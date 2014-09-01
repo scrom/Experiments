@@ -1645,7 +1645,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
         };
 
-        self.switchOnOrOff = function(verb, artefactName, action) {
+        self.turn = function(verb, artefactName, action) {
             //note artefact could be a creature!
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
@@ -1654,10 +1654,31 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (artefactName == "left"||artefactName == "right") {
                     return "If you're exploring, try entering compass directions instead. E.g. <i>'go North'</i>.";
                 };
+
+                if (!(action)) {
+                    var divider = artefactName.lastIndexOf(" ");
+                    if (divider > -1) {
+                        //part of supplied artefact name is probably an action
+                        action = artefactName.substring(divider).trim();
+                        artefactName = artefactName.substring(0,divider).trim();
+                        //console.log("d:"+divider+" a:"+artefactName+" act:"+action);
+                        artefact = getObjectFromPlayerOrLocation(artefactName);
+                    };
+                };
+                
+            };
+
+            if (!(artefact)) {
                 return notFoundMessage(artefactName);
             };
 
-            return artefact.switchOnOrOff(verb, action);           
+
+
+            if (artefact.isSwitched()) { 
+                return artefact.switchOnOrOff(verb, action);  
+            };
+            
+            return artefact.turn(verb, action);         
         };
 
         self.canSee = function() {
