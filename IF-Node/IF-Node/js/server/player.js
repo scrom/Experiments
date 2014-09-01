@@ -833,6 +833,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {
                 var goInOrOut = _currentLocation.getExitInOrOutByDestinationName(artefactName);
                 if (goInOrOut) { return goInOrOut;};
+                if (_currentLocation.getName().indexOf(artefactName) >-1) {
+                    return "I think you're already using the "+artefactName+". Can you be more specific?"+"$result";
+                };
                 return notFoundMessage(artefactName)+"$result";
             };
 
