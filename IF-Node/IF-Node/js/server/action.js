@@ -735,7 +735,7 @@ exports.Action = function Action(aPlayer, aMap) {
         self.catchPlayerNotUnderstood = function() {
             _failCount ++;
             //console.log("fail count: "+_failCount);
-            if (_failCount >=3) {
+            if (_failCount >3) {
                 _verb = "help";
                 return self.performPlayerAction();
             };
