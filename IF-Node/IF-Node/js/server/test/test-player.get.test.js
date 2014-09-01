@@ -152,11 +152,14 @@ exports.cannotGetObjectFromClosedContainerInLocation.meta = { traits: ["Player.G
 
 
 exports.cannotGetNonexistentObject = function (test) {
-    var expectedResult = "There's no nothing available here at the moment.";
     var actualResult = p0.get('get', 'nothing');
+    var objectName = "nothing";
+    var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
+    var expectedResult = false;
+    if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
+    test.equal(true, expectedResult);
     test.done();
 };
 
