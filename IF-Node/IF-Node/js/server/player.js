@@ -830,7 +830,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.use = function(verb, artefactName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName)+"$result";};
+            if (!(artefact)) {
+                var goInOrOut = _currentLocation.getExitInOrOutByDestinationName(artefactName);
+                if (goInOrOut) { return goInOrOut;};
+                return notFoundMessage(artefactName)+"$result";
+            };
 
             //if we define a custom result, return that. Otherwise perform default action.
             var result = artefact.getDefaultResult();
@@ -856,7 +860,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {
                 if (_inventory.check(artefactName)) {
                     var inventoryObject = _inventory.getObject(artefactName);
-                    return "You're carrying "+inventoryObject.getSuffix()+" already.";
+                    return "You're carrying "+artefactName+" already.";
                 };
 
                 //if object doesn't exist, attempt "relinquish" from each non-creature object in location.
@@ -1932,7 +1936,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
             var exit = _currentLocation.getExit(direction);
-            if (!(exit)) {return "There's no exit "+verb;};
+            if (!(exit)) {return "There's no exit "+verb+" from here.";};
             if (!(exit.isVisible())) {return "Your way '"+verb+"' is blocked.";}; //this might be too obvious;
 
             var exitDestination = _currentLocation.getExitDestination(direction);

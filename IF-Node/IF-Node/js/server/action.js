@@ -74,7 +74,7 @@ exports.Action = function Action(aPlayer, aMap) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'is', 'are', 'about', 'around']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'about', 'around']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
@@ -410,6 +410,21 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                         
                     case 'get':
+                        if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to") {
+                            if (!(_object0)) {
+                                return self.processAction("use "+_object1);
+                            };
+                        };
+                        if (_object0 == "in" && (!_object1)) {
+                            _verb = 'in';
+                            break;
+                        };
+                        if ((_splitWord == "out" && (!_object0) && _object1.indexOf("of ") >-1) ||(_object0 == "out" && (!_object1))) {
+                            _verb = 'out';
+                            console.log( _object0.indexOf("of "))
+                            //note, if person types "get out of x"
+                            break;
+                        };
                     case 'grab':
                     case 'collect':
                     case 'take':

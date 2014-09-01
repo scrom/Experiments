@@ -114,6 +114,27 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return self.getName(); //
         };
 
+        self.getExitInOrOutByDestinationName = function(keyword) {
+            var destinationName = "";
+            var exit = self.getExit("i");
+            if (exit) {
+                destinationName = exit.getDestinationName();
+                if (destinationName.indexOf(keyword) >-1) {
+                    return "go in";
+                };
+            };
+
+            exit = self.getExit("o");
+            if (exit) {
+                destinationName = exit.getDestinationName();
+                if (destinationName.indexOf(keyword) >-1) {
+                    return "go out";
+                };
+            };
+
+            return null;
+        };
+
         self.getExit = function(aDirection) {
             for(var i = 0; i < _exits.length; i++) {
                 if(_exits[i].getDirection().toLowerCase() == aDirection.toLowerCase()) {
