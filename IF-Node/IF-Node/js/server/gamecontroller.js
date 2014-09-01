@@ -202,7 +202,7 @@ exports.GameController = function GameController(mapBuilder) {
             //console.log(_games[aGameId]);
             if (_games[aGameId] == undefined) {
                 console.log('invalid gameId:'+aGameId);
-                return '{"username":"","id":-1,"description":"Sorry, it looks like you\'re trying to play a game that doesn\'t exist any more.<br>Please reload this page in your browser and either <i>load</i> an old game (if you have one) or start a new one (if you don\'t)."}';
+                return '{"username":"","id":-1,"description":"Sorry, it looks like you\'re trying to play a game that doesn\'t exist any more.<br>Please refresh this page in your browser and either <i>load</i> an old game (if you have one) or start a new one (if you don\'t)."}';
             };
 
             if (!(typeof _games[aGameId] == "object")) {
@@ -212,7 +212,7 @@ exports.GameController = function GameController(mapBuilder) {
 
             if (!(_games[aGameId].checkUser(aUsername, aGameId))) {
                 console.log('invalid user:'+aUsername);
-                return '{"username":"","id":-1,"description":"Sorry, it looks like you\'re trying to play a game that we don\'t have.<br>Please reload this page in your browser and either <i>load</i> an old game (if you have one) or start a new one (if you don\'t)."}';
+                return '{"username":"","id":-1,"description":"Sorry, it looks like you\'re trying to play a game that we don\'t have.<br>Please refresh this page in your browser and either <i>load</i> an old game (if you have one) or start a new one (if you don\'t)."}';
             };
 
             //if (_games.length >= sessionLimit) {return -1;};
