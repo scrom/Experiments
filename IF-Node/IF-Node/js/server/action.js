@@ -564,7 +564,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'off':
                         return self.processAction("turn "+_actionString);
                         break;
-                    case 'turn': //eventually might want a different kind of turn (e.g. handle)
+                    case 'turn': //turn on/off or rotate
+                    case 'flip':
+                    case 'rotate':
                     case 'switch': //(this is a special one) - could be switch off light or switch light on.
                         //if player enters "switch on x", we'll have an object 1 (but no object 0).
                         if ((!_object0) && (_object1)) {

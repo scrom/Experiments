@@ -1672,10 +1672,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return notFoundMessage(artefactName);
             };
 
-
-
-            if (artefact.isSwitched()) { 
-                return artefact.switchOnOrOff(verb, action);  
+            if (verb != "rotate") {
+                if (artefact.isSwitched()) { 
+                    return artefact.switchOnOrOff(verb, action);  
+                };
             };
             
             return artefact.turn(verb, action);         
