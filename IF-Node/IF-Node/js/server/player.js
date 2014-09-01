@@ -906,7 +906,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
-            if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";};
+            if (!(artefact.isCollectable())) {
+                if (artefact.getType() == "scenery") {
+                    return artefact.getDescriptivePrefix()+" just part of the scenery, not much use to you I'm afraid.";
+                } else {
+                    return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";
+                };
+            };
             if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getSuffix()+".";};
 
             var requiresContainer = artefact.requiresContainer();
@@ -1665,6 +1671,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.search = function (verb, artefactName) {
+            //note. Search wil only find objects hidden in other objects.
+            //an object hidden in a location cannot be searched for (but can be interacted with).
+            //this is deliberate as this is how scenery items are implemented.
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
             

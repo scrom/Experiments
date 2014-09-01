@@ -372,6 +372,8 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'chew':
                     case 'feast':
                     case 'eat':
+                    case 'lick':
+                    case 'taste':
                         if (_object1) {description = _player.eat(_verb+" "+_splitWord,_object1);}
                         else {description = _player.eat(_verb, _object0);};
                         break;
@@ -558,6 +560,10 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'talk':
                         description = "No time for small talk. You'll need to say something specific."
                         break;
+                    case 'on':
+                    case 'off':
+                        return self.processAction("turn "+_actionString);
+                        break;
                     case 'turn': //eventually might want a different kind of turn (e.g. handle)
                     case 'switch': //(this is a special one) - could be switch off light or switch light on.
                         //if player enters "switch on x", we'll have an object 1 (but no object 0).
@@ -616,11 +622,8 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'play':
                     case 'hum':
                     case 'whistle':
-                    case 'mug':
                     case 'wipe':
                     case 'sharpen':
-                    case 'on':
-                    case 'off':
                     case 'empty':
                     case 'fill':
                     case 'water':
@@ -629,12 +632,13 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'make':
                     case 'dismantle':
                     case 'delete':
-                    case 'kick':
                     case 'ride':
                     case 'mount':
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
                     case 'feed':
+                    case 'sniff':
+                    case 'smell':
                     default:
                         _ticks = 0; //for now 
 

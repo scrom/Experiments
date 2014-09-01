@@ -3,7 +3,6 @@
     "object": "location",
     "name": "atrium",
     "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.",
-    "imageName": "imag2695.jpg",
     "start": true,
     "exits": [
       {
@@ -465,7 +464,6 @@
     "object": "location",
     "name": "atrium-seating",
     "description": "You're in the atrium seating area.",
-    "imageName": "imag2702.jpg",
     "exits": [
       {
         "object": "exit",
@@ -529,7 +527,8 @@
           "red chair",
           "leather chair",
           "red leather chair",
-          "morpheus chair"
+          "morpheus chair",
+		  "seat"
         ],
         "inventory": [
           {
@@ -3807,7 +3806,6 @@
     "object": "location",
     "name": "library",
     "description": "You're in the atrium Library.",
-    "imageName": "imag2700.jpg",
     "exits": [
       {
         "object": "exit",
@@ -4020,7 +4018,6 @@
     "object": "location",
     "name": "lift-ground-floor",
     "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
-    "imageName": "imag2698.jpg",
     "exits": [
       {
         "object": "exit",
@@ -5222,8 +5219,7 @@
   {
     "object": "location",
     "name": "reception",
-    "description": "You are stood by the big red reception desk in the Red Gate office atrium.",
-    "imageName": "imag2696.jpg",
+    "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
     "exits": [
       {
         "object": "exit",
@@ -5249,6 +5245,22 @@
       }
     ],
     "inventory": [
+	  { "object": "artefact",
+	    "name": "desk",
+        "description": "a big red desk",
+        "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
+        "attributes": {
+            "weight": 280,
+            "type": "scenery"
+        },
+        "synonyms": [
+            "big desk",
+            "reception",
+            "reception desk",
+            "red desk",
+			"big red desk"
+        ]
+	  },
       {
         "object": "creature",
         "name": "vic wiseman",
@@ -6584,7 +6596,7 @@
   {
     "object": "location",
     "name": "second-floor-seating-area-east",
-    "description": "You're in the East end of the second floor seating area.<br>You could stand here for hours reading the giant wall of post-it notes trying to spot the duplicates.",
+    "description": "You're in the East end of the second floor seating area.<br>You could stand here for hours reading the giant mural of post-it notes trying to spot the duplicates.",
     "exits": [
       {
         "object": "exit",
@@ -6617,6 +6629,23 @@
       }
     ],
     "inventory": [
+	  { "object": "artefact",
+	    "name": "wall",
+        "description": "a wall full of post-it notes",
+        "detailedDescription": "I see it! I can see the duplicate...<br>Oh. Nope, it's not.",
+        "attributes": {
+            "weight": 280,
+            "type": "scenery"
+        },
+        "synonyms": [
+            "mural",
+            "post-its",
+            "post it notes",
+            "notes",
+			"postits",
+			"postit notes"
+        ]
+	  },
       {
         "object": "artefact",
         "name": "door",
@@ -6950,7 +6979,6 @@
     "object": "location",
     "name": "servery-north-west",
     "description": "You're in the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
-    "imageName": "imag2699.jpg",
     "exits": [
       {
         "object": "exit",
@@ -6975,6 +7003,23 @@
       }
     ],
     "inventory": [
+	  { "object": "artefact",
+	    "name": "wall",
+        "description": "a wall full of post cards",
+        "detailedDescription": "Poking through the cards on the wall, they generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.",
+        "attributes": {
+            "weight": 280,
+			"plural": "true",
+            "type": "scenery"
+        },
+        "synonyms": [
+            "cards",
+			"postcards",
+			"post cards",
+			"card wall",
+			"walls"
+        ]
+	  },
       {
         "object": "artefact",
         "name": "first aid kit",

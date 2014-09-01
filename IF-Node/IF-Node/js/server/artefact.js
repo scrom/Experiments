@@ -232,7 +232,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         processAttributes(attributes);
 
         var validateType = function(type, subType) {
-            var validobjectTypes = ['weapon','property','medical', 'cure','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light'];
+            var validobjectTypes = ['weapon','property','medical', 'cure','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light', 'scenery'];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.log(_name+' type validated: '+type);
 
@@ -240,6 +240,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 var validWeaponSubTypes = ['','blunt','sharp','projectile'];
                 if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
+            };
+
+            if (type == "scenery") {
+                _hidden = true; //scenery is not shown in inventory etc.
             };
         };
 
@@ -1145,16 +1149,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_broken||_destroyed) {return false;};
             if (_charges ==0) {return false;}; //we use -1 to mean unlimited
             if (!(self.checkComponents())) {return false;};
-            console.log(self.getDisplayName()+" has power.");
+            //console.log(self.getDisplayName()+" has power.");
             return true;
         };
 
         self.isPoweredOn = function() {
             if (self.hasPower() && _on) {
-                console.log(self.getDisplayName()+" is switched on.");
+                //console.log(self.getDisplayName()+" is switched on.");
                 return true;
             };
-            console.log(self.getDisplayName()+" is switched off.");
+            //console.log(self.getDisplayName()+" is switched off.");
             return false;
         };
 
@@ -1196,7 +1200,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(quantity)) {quantity = 1;};
             if (_charges == 0) {return false;};
             if (_charges > 0) {_charges -=quantity;};
-            console.log("Consumed "+self.getDisplayName()+" charges remaining: ");
+            //console.log("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
             return true; //deliberately works but does nothing if charges are -ve
         };
 
