@@ -1930,6 +1930,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 var randomReplies = ["Hi $player", "Hey $player", "Hello $player", "Hello", "Hi"];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+            } else if (someSpeech.toLowerCase() == "bye" || someSpeech == "goodbye") {
+                var randomReplies = ["Bye $player", "Goodbye $player", "See you round $player", "Seeya", "See you later"];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                var notSpokenString = "";
+                if (!(_spokenToPlayer)) {
+                   notSpokenString = "<br>"+self.getPrefix()+" mutters to "+self.getSuffix()+"self. 'Odd, I'm sure we've not actually spoken to each other properly yet.'";
+                };
+                return initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
             } else {
                 response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";               
             };

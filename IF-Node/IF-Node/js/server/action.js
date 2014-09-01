@@ -74,7 +74,7 @@ exports.Action = function Action(aPlayer, aMap) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'is', 'are']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'is', 'are', 'about', 'around']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
                 if (objectPair != aString) { //split successful
@@ -189,6 +189,13 @@ exports.Action = function Action(aPlayer, aMap) {
                         _ticks = 0;
                         description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
                         break;
+                    case 'i':
+                        //need to ensure navigation still works with this one so only respond if there's words other than "i".
+                        if (_object0 || _object1) {
+                            _ticks = 0;
+                            description = "I can see you're getting frustrated but <b>I</b> know what's best for you.";
+                        };
+                        break;
                     case 'ok':
                         _ticks = 0;
                         description = "OK!";
@@ -226,7 +233,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         _ticks = 0;
                         if (_failCount >=3) {
                             _failCount = 0;
-                            description = "It looks like you're struggling to be understood.<br>";
+                            description = "It looks like you're still struggling to be understood. Here's some help for you...<br>";
                         } else {
                             description = "Stuck already? Ok...";
                         };
@@ -329,6 +336,7 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'attach':
                     case 'install':
                     case 'insert':
+                    case 'join':
                     case 'add':
                         description = _player.put(_verb, _object0, _object1);
                         break;
@@ -402,6 +410,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                         
                     case 'get':
+                    case 'grab':
                     case 'collect':
                     case 'take':
                     case 'remove':
@@ -491,6 +500,12 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'hi':
                         description = _player.say('say', "Hi",_object0);    
                         break;
+                    case 'bye':
+                        description = _player.say('say', "Bye",_object0);    
+                        break;
+                    case 'goodbye':
+                        description = _player.say('say', "Goodbye",_object0);    
+                        break;
                     case 'run':
                     case 'go':
                         //translate to "go north" etc. Overwrite the verb with direction. 
@@ -576,6 +591,13 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'wink':
                         description = "That's a slightly over-friendly thing to do don't you think?<br>It won't actually make you any more popular either.";
                         break;
+                    case 'jump':
+                        if (_object0 || _object1) {
+                            description = "You take a short run up, prepare to leap into the air and then decide it's not such a wise thing to do."
+                        } else {
+                            description = "You jump up and down repeatedly on the spot.<br>Other than making you feel slightly foolish and out of breath, nothing happens.";
+                        };
+                        break;
                     case 'play':
                     case 'hum':
                     case 'whistle':
@@ -587,9 +609,9 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'empty':
                     case 'fill':
                     case 'water':
+                    case 'burn':
                     case 'climb':
-                    case 'jump':
-                    case 'join':
+                    case 'make':
                     case 'dismantle':
                     case 'delete':
                     case 'kick':
@@ -702,8 +724,13 @@ exports.Action = function Action(aPlayer, aMap) {
                 _verb = "help";
                 return self.performPlayerAction();
             };
-            
-            return "Sorry, I didn't understand you. Can you try rephrasing that?";
+            if (_failCount >1) {
+                return "It looks like you're struggling to be understood.<br>If you need some assistance, try typing <i>help</i>.";
+            };
+
+            var randomReplies = ["Sorry, I didn't understand you. Can you try rephrasing that?", "Can you try rephrasing that?", "I'm struggling to understand you. Can you try something else?", "I'm only a simple game. I'm afraid you'll need to try a different verb to get through to me."];
+            var randomIndex = Math.floor(Math.random() * randomReplies.length);
+            return randomReplies[randomIndex];
 
         };
 

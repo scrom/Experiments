@@ -192,7 +192,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         var notFoundMessage = function(objectName) {
-            return "There's no "+objectName+" here and you're not carrying any either.";
+            var randomReplies = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
+            var randomIndex = Math.floor(Math.random() * randomReplies.length);
+            return randomReplies[randomIndex];
         };
 
         var processAttributes = function(playerAttributes, map) {
@@ -893,7 +895,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
 
-                return "There's no "+artefactName+" available here at the moment.";
+                return notFoundMessage(artefactName);
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
