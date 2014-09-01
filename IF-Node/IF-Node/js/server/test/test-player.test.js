@@ -469,7 +469,7 @@ exports.canAskCreatureForObject.meta = { traits: ["Player Test", "Inventory Trai
 
 exports.canStealObjectFromCreature = function (test) {
     p0.setStealth(7); //crank stealth up to guarantee successful steal
-    var expectedResult = "You steal the box from the creature.";
+    var expectedResult = "You manage to steal a box from the creature.";
     var actualResult = p0.steal('steal','box',c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -751,12 +751,15 @@ exports.cantPutObjectInItemWithNoCarryWeight = function (test) {
 exports.cantPutObjectInItemWithNoCarryWeight.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "CarryWeight Trait"], description: "Test that a player cannot put an item from inventory into an item with a 0 carrying weight." };
 
 exports.cantPutObjectInItemThatDoesntExist = function (test) {
+    var objectName = 'missing';
     p0.get('get', food.getName());
-    var expectedResult = "There's no missing here and you're not carrying any either.";
+    var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
     var actualResult = p0.put('put','cake', 'missing');
+    var expectedResult = false;
+    if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
+    test.equal(true, expectedResult);
     test.done();
 };
 

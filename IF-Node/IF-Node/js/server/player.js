@@ -863,7 +863,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {
                 if (_inventory.check(artefactName)) {
                     var inventoryObject = _inventory.getObject(artefactName);
-                    return "You're carrying "+artefactName+" already.";
+                    return "You're carrying "+inventoryObject.getSuffix()+" already.";
                 };
 
                 //if object doesn't exist, attempt "relinquish" from each non-creature object in location.

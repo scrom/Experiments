@@ -1646,7 +1646,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canDeliver = function (anObjectName) {
             //do we deliver anything at all?
             if (!(_delivers)) {
-                //console.log(self.getName + " doesn't deliver anything");
+                //console.log(self.getName() + " doesn't deliver anything");
                 return false;
             };
 

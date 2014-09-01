@@ -101,11 +101,15 @@ exports.cannotGetObjectFromOpenContainerInInventoryAlreadyExists.meta = { traits
 exports.cannotGetObjectFromClosedContainerInInventory = function (test) {
     container.receive(a1);
     p0.get('get', container.getName());
-    var expectedResult = "There's no box available here at the moment.";
+
+    var objectName = "box";
+    var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
+    var expectedResult = false;
     var actualResult = p0.get('get', a1.getName());
+    if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
+    test.equal(true, expectedResult);
     test.done();
 };
 
@@ -133,12 +137,14 @@ exports.cannotGetObjectFromClosedContainerInLocation = function (test) {
     console.log(container.close('close'));
     console.log(container.isOpen());
     var artefactDescription = 'a box';
-    var artefactName = 'box'
-    var expectedResult = "There's no box available here at the moment.";
     var actualResult = p0.get('get', a1.getName());
+    var objectName = "box";
+    var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
+    var expectedResult = false;
+    if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
+    test.equal(true, expectedResult);
     test.done();
 };
 
