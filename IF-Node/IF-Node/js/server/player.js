@@ -30,6 +30,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _additionalMovesUntilStarving = 10;
         var _contagion = [];
         var _antibodies = [];
+        var _lastCreatureSpokenTo;
+        var _lastVerbUsed;
 
         //player stats
         var _destroyedObjects = []; //track all objects player has destroyed
@@ -262,6 +264,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.maxAffinity != undefined) {_maxAffinity = playerAttributes.maxAffinity;};
             if (playerAttributes.injuriesReceived != undefined) {_injuriesReceived = playerAttributes.injuriesReceived;};
             if (playerAttributes.healCount != undefined) {_healCount = playerAttributes.healCount;};
+            if (playerAttributes.lastCreatureSpokenTo != undefined) {_lastCreatureSpokenTo = playerAttributes.lastCreatureSpokenTo;};
+            if (playerAttributes.lastVerbUsed != undefined) {_lastVerbUsed = playerAttributes.lastVerbUsed;};
+            
            
             if (playerAttributes.repairSkills != undefined) {
                 for(var i=0; i<playerAttributes.repairSkills.length;i++) {
@@ -455,7 +460,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString += ',"startLocation":"'+_startLocation.getName()+'"';
 
             if (_returnDirection) {resultString += ',"returnDirection":"'+_returnDirection+'"';};
-
+            if (_lastCreatureSpokenTo) {resultString += ',"lastCreatureSpokenTo":"'+_lastCreatureSpokenTo+'"';};
+            if (_lastVerbUsed) {resultString += ',"lastVerbUsed":"'+_lastVerbUsed+'"';};
+            
             if (_saveCount > 0) {resultString += ',"saveCount":'+_saveCount;};
             if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
             if (_timeSinceEating > 0) {resultString += ',"timeSinceEating":'+_timeSinceEating;};
@@ -512,6 +519,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.bleeding = _bleeding;
             currentAttributes.killedCount = _killedCount;
             currentAttributes.returnDirection = _returnDirection;
+            currentAttributes.lastCreatureSpokenTo = _lastCreatureSpokenTo;
+            currentAttributes.lastVerbUsed = _lastVerbUsed;           
+
             currentAttributes.saveCount = _saveCount;
             currentAttributes.loadCount = _loadCount;
             currentAttributes.timeSinceEating = _timeSinceEating;
@@ -1571,12 +1581,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (giverName == "everyone" || giverName == "all") {
                 if (verb != "go" && verb !="wait") {return "Sorry. You need to ask individuals for most things.";};
                 givers = _currentLocation.getAllObjectsOfType("creature");
+                if (givers.length ==0) {
+                    return "There's nobody here to talk to.";
+                };
             } else {;
                 var giver = getObjectFromLocation(giverName);
                 if (!(giver)) {return "There's no "+giverName+" here.";};
                 if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too           
                 givers.push(giver);
             };
+
+            self.setLastCreatureSpokenTo(giverName);
 
             if (verb == "go") {
                 var resultString = "";
@@ -1642,6 +1657,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var resultString = receiver.reply(speech, _aggression);
                 var hasSpokenAfter = receiver.hasSpoken();
                 if (!(hasSpokenBefore) && hasSpokenAfter) {_creaturesSpokenTo ++;};
+                self.setLastCreatureSpokenTo(receiverName);
                 return resultString;
         };
 
@@ -1938,6 +1954,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             return resultString;
+        };
+
+        self.getLastCreatureSpokenTo = function() {
+            return _lastCreatureSpokenTo;
+        };
+
+        self.setLastCreatureSpokenTo = function(creatureName) {
+            _lastCreatureSpokenTo = creatureName;
+            return _lastCreatureSpokenTo;
+        };
+
+        self.getLastVerbUsed = function() {
+            return _lastVerbUsed;
+        };
+
+        self.setLastVerbUsed = function(verb) {
+            _lastVerbUsed = verb;
+            return _lastVerbUsed;
         };
 
         self.getReturnDirection = function() {
