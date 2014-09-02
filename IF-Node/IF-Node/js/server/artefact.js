@@ -1586,7 +1586,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
-        self.reply = function(someSpeech,playerAggression) {
+        self.reply = function(someSpeech,player, map) {
             if (self.isDestroyed()) {return "The remaining fragments of inanimate spirit from "+self.getDisplayName()+" ignore you.";};
             return initCap(_itemDescriptivePrefix)+" quietly aware of the sound of your voice but "+showsPlural()+" no sign of response.";
         };

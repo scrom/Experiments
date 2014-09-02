@@ -1622,7 +1622,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = (getObjectFromLocation(artefactName)||giver.getObject(artefactName));
             if (!(artefact)) {
                 //does the creature have dialogue instead?
-                var creatureResponse = giver.replyToKeyword(artefactName, _aggression, map);
+                var creatureResponse = giver.replyToKeyword(artefactName, self, map);
                 if (creatureResponse) {return creatureResponse;};
                 return "There's no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying any either.";
             };   
@@ -1642,7 +1642,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return giver.relinquish(artefactName, self, locationInventory);
         };
 
-        self.say = function(verb, speech, receiverName) {
+        self.say = function(verb, speech, receiverName, map) {
                 //if (stringIsEmpty(speech)){ return verb+" what?";};
                 if (verb == "shout") {speech = speech.toUpperCase()+"!";};
 
@@ -1654,7 +1654,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //we'll only get this far if there is a valid receiver
                 var hasSpokenBefore = receiver.hasSpoken();
-                var resultString = receiver.reply(speech, _aggression);
+                var resultString = receiver.reply(speech, self, map);
                 var hasSpokenAfter = receiver.hasSpoken();
                 if (!(hasSpokenBefore) && hasSpokenAfter) {_creaturesSpokenTo ++;};
                 self.setLastCreatureSpokenTo(receiverName);
