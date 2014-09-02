@@ -2020,6 +2020,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.replace(" some ","");
                             artefactName = artefactName.replace(" a ","");
                             artefactName = artefactName.replace(" your ","");
+                            //@todo trap "can you give x to y" here in future.
                             return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map)
                         };
                     case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
