@@ -20,6 +20,7 @@ exports.Action = function Action(aPlayer, aMap) {
         var _ticks = 1; //assume a move passes time. Some won't - for these, ticks will be 0.
         var _failCount = 0; //count the number of consecutive user errors
         var _awaitingPlayerAnswer = false; //initial support for asking the player questions.
+        var _inConversationWith; //who is the player talking to?
 
 	    var objectName = "Action";
 
@@ -180,9 +181,8 @@ exports.Action = function Action(aPlayer, aMap) {
             var description = "";
 
             var lastVerbUsed = _player.getLastVerbUsed();
-            var inConversationWith;
             if (lastVerbUsed == "say"||lastVerbUsed == "ask"||lastVerbUsed == "talk") {
-                inConversationWith = _player.getLastCreatureSpokenTo();
+                _inConversationWith = _player.getLastCreatureSpokenTo();
             } else {
                 _player.setLastCreatureSpokenTo();
             };
@@ -201,8 +201,8 @@ exports.Action = function Action(aPlayer, aMap) {
                     case 'i':
                         //need to ensure navigation still works with this one so only respond if there's words other than "i".
                         if (_object0 || _object1) {
-                            if (inConversationWith) {
-                                description = _player.say('say', _actionString,inConversationWith);
+                            if (_inConversationWith) {
+                                description = _player.say('say', _actionString,_inConversationWith);
                                 _player.setLastVerbUsed('say');
                             } else {
                                 _ticks = 0;
@@ -211,8 +211,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         };
                         break;
                     case 'ok':
-                        if (inConversationWith) {
-                            description = _player.say('say', _actionString,inConversationWith);
+                        if (_inConversationWith) {
+                            description = _player.say('say', _actionString,_inConversationWith);
                             _player.setLastVerbUsed('say');
                         } else {
                             _ticks = 0;
@@ -220,8 +220,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         };
                         break;
                     case 'oh':
-                        if (inConversationWith) {
-                            description = _player.say('say', _actionString,inConversationWith);
+                        if (_inConversationWith) {
+                            description = _player.say('say', _actionString,_inConversationWith);
                             _player.setLastVerbUsed('say');
                         } else {
                             _ticks = 0;
@@ -230,8 +230,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'thankyou':
                     case 'thanks':
-                        if (inConversationWith) {
-                            description = _player.say('say', _actionString,inConversationWith);
+                        if (_inConversationWith) {
+                            description = _player.say('say', _actionString,_inConversationWith);
                             _player.setLastVerbUsed('say');
                         } else {
                             _ticks = 0;
@@ -239,8 +239,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         };
                         break;
                     case 'no':
-                        if (inConversationWith) {
-                            description = _player.say('say', _actionString,inConversationWith);
+                        if (_inConversationWith) {
+                            description = _player.say('say', _actionString,_inConversationWith);
                             _player.setLastVerbUsed('say');
                         } else {
                             _ticks = 0;
@@ -254,8 +254,8 @@ exports.Action = function Action(aPlayer, aMap) {
                         };
                         break;
                     case 'yes':
-                        if (inConversationWith) {
-                            description = _player.say('say', _actionString,inConversationWith);
+                        if (_inConversationWith) {
+                            description = _player.say('say', _actionString,_inConversationWith);
                             _player.setLastVerbUsed('say');
                         } else {
                             _ticks = 0;
@@ -327,9 +327,9 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;  
                     case 'where':                                   
                     case 'find': 
-                        if (inConversationWith) {
+                        if (_inConversationWith) {
                             var objectToFind = _object0+_object1;
-                            return "You ask "+inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+inConversationWith+" to find "+objectToFind);
+                            return "You ask "+_inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+_inConversationWith+" to find "+objectToFind);
                         } else {                                      
                             _ticks = 0;
                             description = "Nice try $player. It was worth a shot...<br>You'll either have to hunt things down yourself or <i>ask</i> someone to <i>find</i> out for you.";                        
@@ -568,28 +568,28 @@ exports.Action = function Action(aPlayer, aMap) {
                         break;
                     case 'greet':
                     case 'hello':
-                        if (inConversationWith && !_object0) {
-                            _object0 = inConversationWith;
+                        if (_inConversationWith && !_object0) {
+                            _object0 = _inConversationWith;
                         };
                         description = _player.say('greet', "Hello",_object0);
                         _player.setLastVerbUsed('say');    
                         break;
                     case 'hi':
-                        if (inConversationWith && !_object0) {
-                            _object0 = inConversationWith;
+                        if (_inConversationWith && !_object0) {
+                            _object0 = _inConversationWith;
                         };
                         description = _player.say('greet', "Hi",_object0); 
                         _player.setLastVerbUsed('say');   
                         break;
                     case 'bye':
-                        if (inConversationWith && !_object0) {
-                            _object0 = inConversationWith;
+                        if (_inConversationWith && !_object0) {
+                            _object0 = _inConversationWith;
                         };
                         description = _player.say('say', "Bye",_object0);   
                         _player.setLastVerbUsed('say'); 
                         break;
                     case 'good':
-                        description = _player.say('say', _actionString,inConversationWith);
+                        description = _player.say('say', _actionString,_inConversationWith);
                         _player.setLastVerbUsed('say');    
                         break;
                     case 'goodbye':
@@ -696,6 +696,21 @@ exports.Action = function Action(aPlayer, aMap) {
                             description = "You jump up and down repeatedly on the spot.<br>Other than making you feel slightly foolish and out of breath, nothing happens.";
                         };
                         break;
+                    case 'good':
+                    case 'who':
+                    case 'what':
+                    case 'when':
+                    case 'why':
+                    case 'how':
+                    case 'pardon':
+                    case 'sorry':
+                        if (_inConversationWith) {
+                            description = _player.say('say', _actionString,_inConversationWith);
+                            _player.setLastVerbUsed('say');
+                        };
+                        break;
+                    case 'repeat':
+                    case 'reply':
                     case 'play':
                     case 'hum':
                     case 'whistle':
@@ -822,6 +837,11 @@ exports.Action = function Action(aPlayer, aMap) {
         };
 
         self.catchPlayerNotUnderstood = function() {
+            if (_inConversationWith) {
+                return _player.say('say', _actionString,_inConversationWith);
+                _player.setLastVerbUsed('say');
+            };
+
             _failCount ++;
             //console.log("fail count: "+_failCount);
             if (_failCount >3) {

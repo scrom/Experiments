@@ -1926,21 +1926,86 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
             var response = "";
-            if (stringIsEmpty(someSpeech)) {
-                var randomReplies = ["Hi $player", "Hey $player", "Hello $player", "Hello", "Hi"];
-                var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
-            } else if (someSpeech.toLowerCase() == "bye" || someSpeech == "goodbye") {
-                var randomReplies = ["Bye $player", "Goodbye $player", "See you round $player", "Seeya", "See you later"];
-                var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                var notSpokenString = "";
-                if (!(_spokenToPlayer)) {
-                   notSpokenString = "<br>"+self.getPrefix()+" mutters to "+self.getSuffix()+"self. 'Odd, I'm sure we've not actually spoken to each other properly yet.'";
-                };
-                return initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
-            } else {
-                response += initCap(self.getDisplayName())+" says '"+someSpeech+"' to you too.";               
+            var randomReplies;
+            var randomIndex;
+            if (!(someSpeech)) {someSpeech = "";}; //handle nulls before attempting toLowerCase
+            switch(someSpeech.toLowerCase()) {
+                case "":
+                case "hi":
+                case "hello":
+                case "good morning":
+                case "good afternoon":
+                case "good evening":
+                    randomReplies = ["Hi $player", "Hey $player", "Hello $player", "Hello", "Hi"];
+                    randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    break;
+                case "bye":
+                case "goodbye":
+                case "goodnight":
+                case "good night":
+                case "good-night":
+                    randomReplies = ["Bye $player", "Goodbye $player", "See you round $player", "Seeya", "See you later"];
+                    randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    var notSpokenString = "";
+                    if (!(_spokenToPlayer)) {
+                       notSpokenString = "<br>"+self.getPrefix()+" mutters to "+self.getSuffix()+"self. 'Odd, I'm sure we've not actually spoken to each other properly yet.'";
+                    };
+
+                    //note - we exit early - shortcircuit before mission dialogue
+                    return initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
+                    break;
+                case "ok":
+                case "y":
+                case "yes":
+                case "yes please":
+                case "yeah":
+                case "yarp":
+                case "affirmative":
+                case "affirmatory":
+                    randomReplies = ["Great", "OK $player", "OK"];
+                    randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    break;
+                case "no":
+                case "n":
+                case "nah":
+                case "nope":
+                case "narp":
+                case "no thanks":
+                case "no ta":
+                case "no thank you":
+                case "no thankyou":
+                case "negative":
+                case "negatory":
+                    randomReplies = ["Maybe another time then", "OK $player", "OK", "Fair enough", "That's fine $player"];
+                    randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    break;
+                case "thanks":
+                case "thankyou":
+                case "thank you":
+                case "cheers":
+                    randomReplies = ["My pleasure", "Happy to help", "Good luck", "No problem $player"];
+                    randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    break;
+                default:
+                    break;
             };
+
+            //if we've not already responded...
+            /*if (response.length == 0) {
+                switch(someSpeech.substring(0, someSpeech.indexOf(" "))) {
+                    case 'who':
+                    case 'what':
+                    case 'when':
+                    case 'why':
+                    case 'how':
+                    case 'pardon':
+                    case 'sorry':
+                };
+            };*/
 
             //if creature has incomplete missions - return dialogue.
             var missionsToRemove = [];
@@ -1950,7 +2015,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         missionsToRemove.push(_missions[i].getName());
                     } else {
                         _missions[i].startTimer();
-                        response += "<br>"+_missions[i].getNextDialogue(someSpeech);
+                        if (response.length >0) {response+= "<br>"}
+                        else {response+= initCap(self.getDisplayName())+" says 'I\'m not sure what you just said but...'<br>"};
+                        response += _missions[i].getNextDialogue(someSpeech);
                     };
                 };
             };
@@ -1958,6 +2025,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //remove any completed missions (cleanup)
             for (i=0; i<missionsToRemove.length;i++) {
                 self.removeMission(missionsToRemove[i]);
+            };
+
+            if (response.length == 0) {
+                randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying."];
+                randomIndex = Math.floor(Math.random() * randomReplies.length);
+                response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
             };
 
             if (!(_spokenToPlayer)) {_spokenToPlayer = true;};
