@@ -2036,7 +2036,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                  */
                     case 'pardon': // [me - apology] / [please repeat last thing] 
                         console.log("*** Unhandled player speech - first Word:'"+firstWord+"', remainder:'"+remainderString+"'");                      
-                        return initCap(self.getDisplayName())+" says 'Cool! You've asked something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
+                        return initCap(self.getDisplayName())+" says 'Cool! You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
                         break;
                 };
             };
