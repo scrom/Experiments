@@ -839,8 +839,8 @@ exports.Action = function Action(aPlayer, aMap) {
 
         self.catchPlayerNotUnderstood = function() {
             if (_inConversationWith) {
-                return _player.say('say', _actionString,_inConversationWith);
                 _player.setLastVerbUsed('say');
+                return _player.say('say', _actionString,_inConversationWith);
             };
 
             _failCount ++;
