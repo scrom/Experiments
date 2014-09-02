@@ -1929,16 +1929,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var randomReplies;
             var randomIndex;
             if (!(someSpeech)) {someSpeech = "";}; //handle nulls before attempting toLowerCase
-            switch(someSpeech.toLowerCase()) {
+            
+            //a bit of input cleanup...
+            someSpeech = " "+someSpeech+" ";
+            someSpeech = someSpeech.replace(" please ","");
+            someSpeech = someSpeech.trim();
+            someSpeech = someSpeech.toLowerCase();
+
+            switch(someSpeech) {
                 case "":
                 case "hi":
                 case "hello":
                 case "good morning":
                 case "good afternoon":
                 case "good evening":
-                    randomReplies = ["Hi $player", "Hey $player", "Hello $player", "Hello", "Hi"];
+                    randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
                     break;
                 case "bye":
                 case "goodbye":
@@ -1958,7 +1965,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "ok":
                 case "y":
                 case "yes":
-                case "yes please":
                 case "yeah":
                 case "yarp":
                 case "affirmative":
@@ -1995,17 +2001,45 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             //if we've not already responded...
-            /*if (response.length == 0) {
-                switch(someSpeech.substring(0, someSpeech.indexOf(" "))) {
-                    case 'who':
-                    case 'what':
-                    case 'when':
-                    case 'why':
-                    case 'how':
-                    case 'pardon':
-                    case 'sorry':
+            if (response.length == 0) {
+                var firstWord = someSpeech.trim().substring(0, someSpeech.indexOf(" "));
+                var remainderString = someSpeech.substring(someSpeech.indexOf(" ")).trim();
+                var stringStartsWith = function(string, startsWith) {
+                    return string.indexOf(startsWith) == 0;
                 };
-            };*/
+                switch(firstWord) {
+                    case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
+                        if (remainderString == "sorry") {
+                            return initCap(self.getDisplayName())+" says 'You should know better. I accept your apology for now but I suggest you back of ffor a while.'";
+                            break;
+                        };
+                    case 'who': //is/are [character]
+                    case 'what': //is/are/can (see can) [object]
+                    case 'when': //is/are/can (see can)/will [event happen][character arrive be at x]
+                    case 'why': //is/are/do
+                    case 'how': //is/are/can/will/many/much
+                    case 'do': //you/i think/know ??
+                    case 'can': //you/i help/give/say/ask/get/fetch/find/have [me] /object
+                 /*       if (stringStartsWith(remainderString, "you help ")) {
+                            //player.ask (find?)
+                        };
+                        if (stringStartsWith(remainderString, "you give ") || stringStartsWith(remainderString, "i have ")) {
+                            //player.ask (for object)
+                        };
+                        if (stringStartsWith(remainderString, "you wait ")) {
+                            //player.ask (wait)
+                        };
+                        if (stringStartsWith(remainderString, "you go ")) {
+                            //player.ask (go)
+                        };
+                        break;
+                 */
+                    case 'pardon': // [me - apology] / [please repeat last thing] 
+                        console.log("*** Unhandled player speech: '"+remainderString+"'");                      
+                        return initCap(self.getDisplayName())+" says 'Cool! You've asked something I don't know how to deal with at the moment yet.'<br>'I'm sure Simon will fix that soon though.'";
+                        break;
+                };
+            };
 
             //if creature has incomplete missions - return dialogue.
             var missionsToRemove = [];
@@ -2028,9 +2062,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (response.length == 0) {
-                randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying."];
+                randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying.", "I don't think I can help you at the moment. Have you tried typing <i>help</i>?"];
                 randomIndex = Math.floor(Math.random() * randomReplies.length);
-                response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
             };
 
             if (!(_spokenToPlayer)) {_spokenToPlayer = true;};

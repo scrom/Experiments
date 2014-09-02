@@ -184,6 +184,7 @@ exports.Action = function Action(aPlayer, aMap) {
             if (lastVerbUsed == "say"||lastVerbUsed == "ask"||lastVerbUsed == "talk") {
                 _inConversationWith = _player.getLastCreatureSpokenTo();
             } else {
+                _inConversationWith = null;
                 _player.setLastCreatureSpokenTo();
             };
             _player.setLastVerbUsed(_verb);
