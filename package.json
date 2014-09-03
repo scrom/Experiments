@@ -1,8 +1,8 @@
 {
   "name": "IF_Node",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "IF-Node",
-  "main": "server.js",
+  "scripts": {"start": "node js/server/main.js"},
   "author": {
     "name": "simon.cromarty",
     "email": ""
