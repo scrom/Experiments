@@ -1,7 +1,7 @@
 "use strict";
 //main bootstrap code for game client
-    var serverHost = 'pm-simonc';
-    var serverPort = 1337;
+    var serverHost = 'shrouded-anchorage-9129.herokuapp.com';
+    var serverPort = 80;
 	var ui;
     var client;
     var debug = false; //enable/disable client console logging
