@@ -22,7 +22,7 @@ exports.Config = function Config() {
             return _gameLimit;
         };
 
-        console.log(objectName+' created');
+        console.log(objectName+' created. Port:'+self.port);
     }
     catch(err) {
 	    console.log('Unable to create Config object: '+err);

@@ -6,7 +6,12 @@ function Client(aServerHost, aServerPort, aUi) {
 	    var objectName = "Client";
         var username = '';
         var gameId;
-        var serverAddress = 'http://'+aServerHost+':'+aServerPort+'/'; 
+        var serverAddress = 'http://'+aServerHost; 
+	if (aServerPort) {
+	    serverAddress += ':'+aServerPort+'/';
+	} else {
+	    serverAddress += '/';
+	};
         var config;
         var ui = aUi;
         var console = aUi.getConsole();
