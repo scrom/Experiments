@@ -18,6 +18,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
         var _ticking = false; //is the timer running?
         var _timeTaken = 0; //track time taken to complete.
+        var _lastResponse;
         var _type = 'mission';
 
 	    var _objectName = "mission";
@@ -37,6 +38,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (missionAttributes.timeTaken != undefined) {_timeTaken = missionAttributes.timeTaken;};
             if (missionAttributes.ticking != undefined) {_ticking = missionAttributes.ticking;};
             if (missionAttributes.conversationState != undefined) {_conversationState = missionAttributes.conversationState;};
+            if (missionAttributes.lastResponse != undefined) {_lastResponse = missionAttributes.lastResponse;};
 
             if (missionAttributes.static != undefined) {
                 if (missionAttributes.static == true || missionAttributes.static == "true") { _isStatic = true;};
@@ -133,6 +135,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_timeTaken > 0) {currentAttributes.timeTaken = _timeTaken;};
             if (_ticking) {currentAttributes.ticking = _ticking;};
             if (_conversationState > 0) {currentAttributes.conversationState = _conversationState;};
+            if (_lastResponse) {currentAttributes.lastResponse = _lastResponse;};
             if (_isStatic) {currentAttributes.static = _isStatic;};
             if (_dialogue.length > 0) {currentAttributes.dialogue = _dialogue;};
             return currentAttributes;
@@ -286,28 +289,68 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
+        //dialogue object (if used) is:
+        //{"state":number,"keywords":[string array],"response":"reply string","nextState":number}
+        //find the next matching dialogue object for given index and keyword.
+        self.getMatchingDialogueObject = function(index, keyword) {
+            for (var i=0;i<_dialogue.length;i++) {
+                if (typeof _dialogue[i] == "object") {
+                    if (_dialogue[i].state == index) {
+                        if (_dialogue[i].keywords) {
+                            if (_dialogue[i].keywords.indexOf(keyword) >-1) {
+                                return _dialogue[i];
+                            };
+                        };
+                    };
+                };
+            };
+        };
+
         self.nextDialogueContainsKeyWord = function(keyword) {
             if (_dialogue.length == 0) {return false;};
             if (_conversationState < _dialogue.length) {
-                if (_dialogue[_conversationState].indexOf(keyword) >-1) {return true;};
+                if (typeof _dialogue[_conversationState] == "object") {
+                    //find objects with matching conversation state index
+                    //check keywords - return true if match
+                    var found = self.getMatchingDialogueObject(_conversationState, keyword);
+                    if (found) {return true;};
+                } else { //typeof(obj) == 'string')
+                    if (_dialogue[_conversationState].indexOf(keyword) >-1) {return true;};
+                };
             } else {
                 return false;
             };
             return false;
         };
 
-        self.getNextDialogue = function(inputSpeech) {
+        self.getNextDialogue = function(inputSpeech, keyword) {
             var response ="";
             //console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
             //move conversation forward
             //if we reach the end of the array, stop there.             
             if (_conversationState < _dialogue.length) {
-                response += _dialogue[_conversationState];
-                _conversationState++;
+                if (typeof _dialogue[_conversationState] == "object") {
+                    //find objects with matching conversation state index
+                    //check keywords 
+                    var nextDialogue = self.getMatchingDialogueObject(_conversationState, keyword);
+                    if (!(nextDialogue)) {
+                        nextDialogue = self.getMatchingDialogueObject(_conversationState, inputSpeech);
+                    };
+                    if (nextDialogue) {
+                        response += nextDialogue.response;
+                        _conversationState = nextDialogue.nextState;
+                    };
+                    //if match, set new conversation state
+                    //return response
+                } else { //typeof(obj) == 'string')
+                    response += _dialogue[_conversationState];
+                    _conversationState++;
+                };
             } else {
-                response += _dialogue[_dialogue.length-1];
+                response += _lastResponse;
             };
 
+            _lastResponse = response;
             return response;
         };
 
@@ -586,7 +629,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //we need to track how many attributes are successful.
             var successCount = 0;
-
+            //and how many failed...
             var failCount = 0;
 
             //before doing any additional processing, have we timed out?
@@ -600,6 +643,16 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     if (self.getTimeTaken() >= _failAttributes["time"]) {
                         return self.timeExpired();
                     };                           
+                };
+            };
+
+            //and have we failed on conversation...
+            if (_failAttributes) {
+                if (_failAttributes["conversationState"]) {    
+                    //have we got to a *specific* state?                   
+                    if (_conversationState == _failAttributes["conversationState"]) {
+                        failCount++;
+                    };                          
                 };
             };
             

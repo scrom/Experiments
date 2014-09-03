@@ -2021,7 +2021,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.replace(" a ","");
                             artefactName = artefactName.replace(" your ","");
                             //@todo trap "can you give x to y" here in future.
-                            return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map)
+                            return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
                         };
                     case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
                         if (remainderString == "sorry") {
@@ -2034,6 +2034,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     case 'why': //is/are/do
                     case 'how': //is/are/can/will/many/much
                     case 'do': //you/i think/know ??
+                        if (stringStartsWith(remainderString, "you have ")) {
+                            var artefactName = remainderString;
+                            artefactName = artefactName.replace("you have","");
+                            artefactName = artefactName.replace(" the ","");
+                            artefactName = artefactName.replace(" some ","");
+                            artefactName = artefactName.replace(" a ","");
+                            artefactName = artefactName.replace(" your ","");
+                            //@todo trap "can you give x to y" here in future.
+                            return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
+                        };
                     case 'will': //you/i /give/find/open/unlock
                  /*       if (stringStartsWith(remainderString, "you help ")) {
                             //player.ask (find?)
@@ -2063,7 +2073,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         _missions[i].startTimer();
                         if (response.length >0) {response+= "<br>"}
                         else if (!(keyword)) {response+= initCap(self.getDisplayName())+" says 'I\'m not sure what you just said but...'<br>"};
-                        response += _missions[i].getNextDialogue(someSpeech);
+                        response += _missions[i].getNextDialogue(someSpeech, keyword);
                     };
                 };
             };

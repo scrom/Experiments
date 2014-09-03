@@ -4431,6 +4431,37 @@
           "man",
           "icecream man",
           "him"
+        ],
+		"missions": [
+          {
+            "object": "mission",
+            "name": "freeIceCream",
+            "displayName": "get a free ice cream",
+            "description": "The Ice cream man wants to give you a free sample.",
+            "attributes": {
+              "missionObject": "ice cream man",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'would you like an ice cream?'",
+                {"state":1,"keywords":["yes"],"response":"Here you go!","nextState":2},
+				{"state":1,"keywords":["no"],"response":"Never mind.","nextState":3}
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 2
+            },
+            "failAttributes": {
+              "conversationState": 3
+            },
+            "reward": {
+              "score": 25,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "ice cream man",
+              "successMessage": "You accept a free ice cream (to be added later) Have 25 points.",
+              "failMessage": "He wanted to give you an ice cream"
+            }
+          }
         ]
       }
     ]

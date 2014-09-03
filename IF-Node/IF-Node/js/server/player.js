@@ -1657,7 +1657,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //we'll only get this far if there is a valid receiver
                 var hasSpokenBefore = receiver.hasSpoken();
-                var resultString = receiver.reply(speech, self, map);
+                var resultString = receiver.reply(speech, self, null, map);
                 var hasSpokenAfter = receiver.hasSpoken();
                 if (!(hasSpokenBefore) && hasSpokenAfter) {_creaturesSpokenTo ++;};
                 self.setLastCreatureSpokenTo(receiverName);
