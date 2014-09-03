@@ -3,7 +3,7 @@ Experiments
 
 Getting back into coding
 
-IF-Node. March 2014:
+IF-Node. March 2014: (Last Updated September 2014)
 
 About:
 ------
@@ -30,14 +30,17 @@ In some way therefore, the commit history on this will be a history lesson in ho
 
 Direction
 ---------
-As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands about 90 verbs but there's a load of work to do. I still have a desire to make this multiplayer which will require some significant work and thinking to decide which way to go (multiple single-user games, one (or more) multi-user games or both and server-side throttling to limit resource usage.
+As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands about 90 verbs but there's a load of work to do. 
 
 Other than *loads* of additional game mechanics, features and sample content, the other major components to work on are:
- - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently a single (large) json file and the set of attributes available for everything isn't documented.  Eventually I'd like players and watchers to choose, extend and reuse maps. Right now, there's just the one.
- - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game.
+ - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently a single (large) json file and the set of attributes available for everything isn't documented.  Eventually I'd like players  to choose, extend and reuse maps. Right now, there's just the one.
+ - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done*
  - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.)
- - implementing server throttling to prevent overloading (see server config, some performance profiling and testing and finding a public host.
+ - implementing server throttling to prevent overloading (see server config, some performance profiling and testing and finding a public host. *done*
+ - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done - only "real" games can be saved*
+ - server-side throttling to limit resource usage. *done*
  - the game really needs a battery of tests but that's after the legacy code "peak" is reached (I'm nearly there I think).
+ - finding somewhere simple that I can get this hosted for free that doesn't require installing Ruby and a pile of junk.
 
 
 Technical stuff:
