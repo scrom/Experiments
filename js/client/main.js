@@ -1,6 +1,6 @@
 "use strict";
 //main bootstrap code for game client
-    var serverHost = 'shrouded-anchorage-9129.herokuapp.com';
+    var serverHost = 'mvta.herokuapp.com';
     var serverPort; // = 80;
 	var ui;
     var client;
