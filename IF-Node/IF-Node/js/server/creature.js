@@ -2034,6 +2034,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     case 'why': //is/are/do
                     case 'how': //is/are/can/will/many/much
                     case 'do': //you/i think/know ??
+                    case 'will': //you/i /give/find/open/unlock
                  /*       if (stringStartsWith(remainderString, "you help ")) {
                             //player.ask (find?)
                         };
