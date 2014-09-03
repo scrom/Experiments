@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>MVTA - Player</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/main.css">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="js/client/main.js"></script>
+        <script type="text/javascript" src="js/client/client.js"></script>
+        <script type="text/javascript" src="js/client/ui.js"></script>
+        <script type="text/javascript" src="js/client/response.js"></script>
+    </head>
+    <body>
+        <header id="page_header">
+        Minimum Viable Text Adventure
+        </header>
+        <div id ="spacer1" class="spacer"></div>
+        <section id ="main">
+            <table>
+                <tr>
+                    <td>
+	                    <div id = "interaction" class="softBorder smallBox verticalScroll"></div>
+                    </td><td>
+                        <div id="inventory" class="inventoryBox"></div>  
+                    </td>
+                </tr>
+            </table>
+            <div id ="spacer2" class="spacer"></div>
+            <table>
+                <tr>
+                    <td>
+	                    <div id="current_state" class="softBorder bigBox verticalScroll"></div>  
+                    </td><td>
+                        <div id="images" class="pictureBox"></div>  
+                    </td>
+                </tr>
+            </table>
+            <div id ="spacer3" class="spacer"></div>
+            <div id="user_input" class="softBorder oneLineBox">
+	            &gt;
+		        <input type="text" id="input" autocomplete="off" />	    	    
+	        </div> 
+        
+            <div id="server_events">
+                <hr>    
+	        </div>  
+	    
+	        <section id = "game_console">
+	    	    <hr>
+	        </section>
+	    </section>	    
+	    <footer id="page_footer">
+	        <hr>
+	    </footer>
+	    
+	    <script type="text/javascript">
+            //initialise game UI - pass doc structures
+	        init($("#current_state"), $("#input"), $("#interaction"), $("#server_events"), $("#game_console"), $("#images"));
+		</script> 
+    </body>
+</html>

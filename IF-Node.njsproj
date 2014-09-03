@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>IF-Node</Name>
+    <RootNamespace>IF-Node</RootNamespace>
+    <LaunchUrl>http://pm-simonc:1337/</LaunchUrl>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>4204f0da-3b95-4fd8-86e4-99ff3a212670</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>js\server\main.js</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <NodejsPort>1337</NodejsPort>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="js\client-watcher\client.js" />
+    <Compile Include="js\client\client.js" />
+    <Compile Include="js\client-watcher\ui.js" />
+    <Compile Include="js\client\response.js" />
+    <Compile Include="js\client\main.js" />
+    <Compile Include="js\client\ui.js" />
+    <Compile Include="js\server\action.js" />
+    <Compile Include="js\server\artefact.js" />
+    <Compile Include="js\server\config.js" />
+    <Compile Include="js\server\contagion.js" />
+    <Compile Include="js\server\jsonfilemanager.js" />
+    <Compile Include="js\server\mapbuilder.js" />
+    <Compile Include="js\server\objectStub.js" />
+    <Compile Include="js\server\inventory.js" />
+    <Compile Include="js\server\mission.js" />
+    <Compile Include="js\server\exit.js" />
+    <Compile Include="js\server\game.js" />
+    <Compile Include="js\server\interpreter.js" />
+    <Compile Include="js\server\gamecontroller.js" />
+    <Compile Include="js\server\location.js" />
+    <Compile Include="js\server\main.js" />
+    <Compile Include="js\server\map.js" />
+    <Compile Include="js\server\creature.js" />
+    <Compile Include="js\server\player.js" />
+    <Compile Include="js\server\server.js" />
+    <Compile Include="js\server\test\stubs\stubFactory.js" />
+    <Compile Include="js\server\test\test-contagion.test.js" />
+    <Compile Include="js\server\test\test-filemanager.test.js" />
+    <Compile Include="js\server\test\test-gamecontroller.test.js" />
+    <Compile Include="js\server\test\test-map.test.js" />
+    <Compile Include="js\server\test\test-artefact.test.js" />
+    <Compile Include="js\server\test\test-location.test.js" />
+    <Compile Include="js\server\test\test-mission.test.js" />
+    <Compile Include="js\server\test\test-inventory.test.js" />
+    <Compile Include="js\server\test\test-exit.test.js" />
+    <Compile Include="js\server\test\test-creature.test.js" />
+    <Compile Include="js\server\test\test-player.get.test.js" />
+    <Compile Include="js\server\test\test-player.test.js" />
+    <Compile Include="js\server\watcher\watcher.js" />
+    <Content Include="css\main.css" />
+    <Content Include="data\images\axe.jpg" />
+    <Content Include="data\images\coffeemachine.jpg" />
+    <Content Include="data\images\guitar.jpg" />
+    <Content Include="data\images\imag2695.jpg" />
+    <Content Include="data\images\imag2696.jpg" />
+    <Content Include="data\images\imag2697.jpg" />
+    <Content Include="data\images\imag2698.jpg" />
+    <Content Include="data\images\imag2699.jpg" />
+    <Content Include="data\images\imag2700.jpg" />
+    <Content Include="data\images\imag2702.jpg" />
+    <Content Include="data\images\librarytable.jpg" />
+    <Content Include="data\images\morpheuschair.jpg" />
+    <Content Include="data\images\mug.jpg" />
+    <Content Include="data\images\sword.jpg" />
+    <Content Include="data\root-locations.json" />
+    <Content Include="editor.html" />
+    <Content Include="index.html" />
+    <Content Include="js\server\test\test-action.test.js" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="css\" />
+    <Folder Include="data\" />
+    <Folder Include="data\images\" />
+    <Folder Include="data\usergames\" />
+    <Folder Include="js\" />
+    <Folder Include="js\client\" />
+    <Folder Include="js\client-watcher\" />
+    <Folder Include="js\server\" />
+    <Folder Include="js\server\test\stubs\" />
+    <Folder Include="js\server\watcher\" />
+    <Folder Include="js\server\test\" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
