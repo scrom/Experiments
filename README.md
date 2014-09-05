@@ -4,6 +4,8 @@ Experiments
 Getting back into coding
 
 IF-Node. March 2014: (Last Updated September 2014)
+*** This game is live and running at: http://mvta.herokuapp.com/ ***
+(note - loading saved games is currently broken on the hosted version of the game though)
 
 About:
 ------
