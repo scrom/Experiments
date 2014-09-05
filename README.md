@@ -49,22 +49,29 @@ Server Configuration
 --------------------
 1: Ensure NodeJS is installed and the relevant module dependencies are installed unsing NPM.
 
-2: Modify /server/js/config.js to set the correct server hostname and chosen listening port:
-- 	this.port = process.env.port || 1337; //port to use
--         this.hostname = 'Your-Server';
+2: Set the following server environment variables to configure the application hostname and port
+- 	HOSTNAME (e.g. mvta.herokuapp.com)
+-  PORT     (e.g. 1337)
+Note, if the game is running on port 80, you don't need to explicitly set port number as an environment variable.
 
-3: (not yet implemented) In order to prevent server overloading and abuse, 
-    you can throttle the number of players, watchers, and games. 
-    This alone won't stop servers consuming infinite resources given the chance. 
-    So in addition, you can also limit the number of object, creatures and locations per game. 
-    Bear in mind these are per-game values so the maximum is the total of these times the number of possible games.
+3: MVTA is written to use either .json files or Redis (as a non-file data store) to save player game data.
+If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be password authenticated).
+Once you have a store available, set the following environment variables for your Redis data store 
+- REDISSERVER (the hostname of your redis server)
+- REDISPWD (the auth password of your redis server)
+*If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
+As of 5th September, the Redis support is still under development.
+
+4: NodeJS will be default limit the number of active http connections to 5.
+In order to support more connections, you'll need to set another environment variable (I think)...
+- NODE_ENV: production
+I've not verified this bit yet though.
 
 
 Running the server
 ------------------
-Whilst there are "better" ways to run the server, 
-the simplest is to write a batch file that sets the working directory to 
-- 	<your drive>\<your installation location>\IF-Node\js\server
+MVTA has a predefined Procfile that should allow easy deployment on Heroku however if you want to run locally on a windows machine (as I have done for the last 6 months), whilst there are "better" ways to run the server the simplest is to write a batch file that sets the working directory to 
+- 	<your drive>\<your installation location>\js\server
 
 Once at the working location, the game runs from the file "main.js". E.g.
 - 	node main.js 
@@ -81,9 +88,12 @@ The express server coded into the server.js file will automatically server stati
 
 The client runs over http and assumes the game is running from the "root" of the node server on the node listening port.
 
+In order to support some of the scripted calls, the client needs to know it's paired with the server...
 1: Modify /js/client/main.js to set the node Server name and port number:
--     var serverHost = 'Your-Server'
--     var serverPort = 1337
+-     var serverHost = 'Your-Server';
+-     var serverPort = 1337;
+The values for these 2 variables should match the corresponding environment variables on your server.
+If the server is running on port 80, leave serverPort undefined (but keep the variable). 
 
 These must match the entries supplied in config.js on the server.
 That's it. You're ready to go!
@@ -132,6 +142,8 @@ At the time of writing this readme, they are...
 For the server:
 -     "path": "^0.4.9",
 -     "express": "^3.4.8",
+-     "jsonfile": "^1.2.0",
+-     "redis": "^0.12.1"
 
 For running NodeUnit:
 -     "nodeunit": "^0.8.6",
