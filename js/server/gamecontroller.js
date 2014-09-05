@@ -111,46 +111,40 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             return newGameId;
         };
 
-        self.loadGame = function(originalGameId, file, username) {
-            if (file == "") {
+        self.loadGame = function(originalGameId, filename, username) {
+            if (filename == "") {
                 if (_games[originalGameId]) {
                     if (_games[originalGameId].getUsername() == username) {
-                        file = _games[originalGameId].getFilename();
+                        filename = _games[originalGameId].getFilename();
                     }
                 };
             };        
            
-            var fileName = file+".json";
             var game;
-
+           
+            var gameData = _fm.readGameData(filename);
             //if game file not found, return null.
-            if (!(_fm.gameDataExists(fileName))) {
-                return null;
-            };
-
-            var gameData = _fm.readGameData(fileName);
             if (!(gameData)) {
-                return -1;
+                return null;
             };
             var playerAttributes = gameData[0];
             var newMap = _mapBuilder.buildMap(gameData);
-            console.log ("game file "+fileName+" loaded.");
+            console.log ("game file "+filename+" loaded.");
 
             //console.log("originalGameId:"+originalGameId);
             //if loading from within an active game, we want to replace the existing game rather than adding another
             if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
                 var newGameId = self.getNextAvailableGame(); //note we don't use the original game Id at the moment (need GUIDS)
-                game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, file, _fm);
+                game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, filename, _fm);
                 _games[newGameId] = game; 
                 console.log('game ID: '+newGameId+' added to controller. Open games: '+_games.length);
                 return newGameId;
             } else {
-                game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, file, _fm);
+                game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, filename, _fm);
                 _games[originalGameId] = game;
                 console.log('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
                 return originalGameId;
-            };
-            
+            };           
             
         };
 

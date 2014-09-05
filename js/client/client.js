@@ -15,7 +15,7 @@ function Client(aServerHost, aServerPort, aUi) {
         var config;
         var ui = aUi;
         var console = aUi.getConsole();
-        console.append(objectName+" Initiated<br>");
+        //console.append(objectName+" Initiated<br>");
     //end try
     }
     catch(err) {

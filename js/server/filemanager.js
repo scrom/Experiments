@@ -4,8 +4,8 @@ module.exports.FileManager = function FileManager() {
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
         var jf = require('jsonfile');
-        var fs = require('fs');
-        var redis = require('redis');
+        var fs = require('fs');   
+        var redis;   //will only load if configured   
         var util = require('util');
         var path = require('path');
 
@@ -19,6 +19,7 @@ module.exports.FileManager = function FileManager() {
         var client = {};
         //if redis is configured...
         if (redisServer) {
+            redis = require('redis');
             client = redis.createClient(11415, redisServer, {'should_buffer': true});
             //redis.debug_mode = true;
             client.on("error", function (err) {
@@ -43,50 +44,47 @@ module.exports.FileManager = function FileManager() {
             return data;
         };
 
-        self.readGameData = function(fileName) { 
+        self.readGameData = function(fileName) {
+            console.log("readGameData Key:"+fileName); 
             if (useFilesForGameData) {
-                return self.readFile(fileName);
+                return self.readFile(fileName+".json");
             };     
 //            if (self.gameDataExists(fileName)) {
             console.log("retrieving game data "+fileName);
 
             var data;// = client.get(fileName);
 
-            var len = client.strlen(fileName, _);
-            console.log("len:"+len);
+            var len = client.strlen(fileName, function(reply, len) {
+               console.log("reply:"+reply+"len:"+len); 
+               client.getrange(fileName, 0, len-1, function(reply, result) {
+                   console.log("reply:"+reply+"result:"+result); 
+                   data = result;                   
+                   return data;
+               });
+            });            
 
-            data = client.getrange(fileName, 0, len-1, _)
-
-            console.log("data:"+data);
-
-            /*client.strlen(fileName, function(reply, len){
-                  client.getrange(fileName, 0, len-1, function(gameData){
-                      if (gameData) {
-                        data = gameData.toString();
-                      };
-                   })
-            });*/
-
-            return data;
 //            } else {
 //                console.log("Game data : "+fileName+" not found in data store.");
 //            };
         };
 
         self.writeGameData = function(fileName, data, overwrite) {
+            console.log("writeGameData Key:"+fileName);
             if (useFilesForGameData) {
                 var JSONGameData = [];
                 for (var i=0;i<data.length;i++) {
                     JSONGameData.push(JSON.parse(data[i]));
                 };
-                return self.writeFile(fileName, JSONGameData, overwrite);
-            };  
+                return self.writeFile(fileName+".json", JSONGameData, overwrite);
+            }; 
+
             client.set(fileName, data);
         };
 
         self.gameDataExists = function(fileName) {
+            console.log("gameDataExists? Key:"+fileName);
             if (useFilesForGameData) {
-                return self.fileExists(fileName);
+                return self.fileExists(fileName+".json");
             };  
             var data
 

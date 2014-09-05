@@ -60,10 +60,10 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                 //also want to track how many times they've saved/loaded/
 
                 //this is the first time a player is saving, don't overwrite existing files...
-                if (_fm.gameDataExists(_filename+".json")) {
+                if (_fm.gameDataExists(_filename)) {
                     var newIndex=1;
                     _filename = _player.getUsername()+"-"+fileId+newIndex; 
-                    while (_fm.gameDataExists(_filename+".json") && newIndex<50) { //this might run away with the filesystem!
+                    while (_fm.gameDataExists(_filename) && newIndex<50) { //this might run away with the filesystem!
                         newIndex++;
                         _filename = _player.getUsername()+"-"+fileId+newIndex; 
                     };
@@ -73,11 +73,10 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                 };
             };
 
-            var fileName = _filename+".json";
             _player.incrementSaveCount();
-            _fm.writeGameData(fileName, self.fullState(), true);
-            console.log("game saved as "+fileName);
-            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+fileName.replace(".json","")+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>"}';
+            _fm.writeGameData(_filename, self.fullState(), true);
+            console.log("game saved as "+_filename);
+            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+_filename+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>"}';
         };
 
         self.state = function() {

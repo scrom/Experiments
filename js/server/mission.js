@@ -183,7 +183,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.startTimer = function() {
             if (!(_ticking)) {_ticking = true;};
-            console.log("Mission timer started for "+self.getName());
+            //console.log("Mission timer started for "+self.getName());
             return _ticking;
         };
 
@@ -201,7 +201,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var returnObject = _reward;
             _reward=null;
             _ticking = false;
-            console.log("reward delivered from "+self.getName()+": "+returnObject);
+            //console.log("reward delivered from "+self.getName()+": "+returnObject);
             return returnObject;
         };
 
