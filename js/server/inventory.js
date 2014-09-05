@@ -153,7 +153,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
 
             if ((anObject.getWeight() + self.getWeight()) > _maxCarryingWeight) {
-                console.log("can't carry total weight of "+parseFloat(anObject.getWeight()+self.getWeight()));
+                //console.log("can't carry total weight of "+parseFloat(anObject.getWeight()+self.getWeight()));
                     return false;
             };
 
@@ -375,7 +375,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     //check canContain
                     //if any one is true, add it, if not fail
                     if(possibleContainers[index].canCarry(anObject)) {
-                        console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" in "+_ownerName+" inventory. Index: "+index);
+                        //console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" in "+_ownerName+" inventory. Index: "+index);
                         suitableContainer = possibleContainers[index];
                         break; //exit loop early if success
                     };

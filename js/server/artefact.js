@@ -868,7 +868,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     var randomInt = Math.floor(Math.random() * 4); 
                     if (randomInt > 0) { //75% chance of success
                         receiver.setAntibody(_antibodies[a])
-                        console.log("antibodies passed to "+receiver.getType());
+                        //console.log("antibodies passed to "+receiver.getType());
                     };
                 };
             };
@@ -1037,7 +1037,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };   
             };            
             
-            console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
+            //console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
 
             //return a new instance of deliveryObject
             var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
@@ -1087,7 +1087,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.contains = function(anObjectName) {
-            console.log("checking inventory for "+anObjectName);
+            //console.log("checking inventory for "+anObjectName);
             return _inventory.check(anObjectName);
         };
 
@@ -1272,7 +1272,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var resultString = "";
 
             if(_destroyed) {return initCap(_itemDescriptivePrefix)+" beyond repair."};
-            console.log("Checking player repair skills: "+playerRepairSkills);
+            //console.log("Checking player repair skills: "+playerRepairSkills);
             var playerHasRequiredSkill = false;
             for (var i=0; i<playerRepairSkills.length;i++) {
                 if (self.syn(playerRepairSkills[i])) {
@@ -1888,7 +1888,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //player must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
                 if ((keys[index].getType() == 'key') && ((!(keys[index].isBreakable()))||verb == "pick")) {
                     if (keys[index].keyTo(self)) {
-                        console.log('Key found for: '+self.getName());
+                        //console.log('Key found for: '+self.getName());
                         return keys[index];
                     };                   
                 };

@@ -1,14 +1,13 @@
 "use strict";
 //main game interpreter
-exports.Interpreter = function Interpreter(aGameController) {
+exports.Interpreter = function Interpreter(aGameController, fileManager) {
     try{
 	    var self = this; //closure so we don't lose this refernce in callbacks
 	    var _objectName = "Interpreter";
 
         //module deps
         var _gameController = aGameController;
-        var JSONFileManagerModule = require("./jsonfilemanager");
-        var fm = new JSONFileManagerModule.JSONFileManager();
+        var _fm = fileManager;
 
         console.log(_objectName+' created');
 
@@ -130,8 +129,8 @@ exports.Interpreter = function Interpreter(aGameController) {
                     return('' + JSON.stringify(config));
                 case 'image':
                     //console.log("image request:"+actionString);
-                    if (fm.imageExists(actionString)) {
-                        return fm.getImagePath(actionString);
+                    if (_fm.imageExists(actionString)) {
+                        return _fm.getImagePath(actionString);
                     };
                     return "image "+actionString+" not found.";
                     break;

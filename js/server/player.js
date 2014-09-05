@@ -145,7 +145,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //exit early if no contents.
             if (contentCount == 0) return "";
 
-            console.log("Removing "+contentCount+" items from wreckage/remains.");
+            //console.log("Removing "+contentCount+" items from wreckage/remains.");
             for (var i=0; i<contents.length;i++) {
                 //console.log("Contents "+contents[i].getName());
             };
@@ -157,20 +157,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (locationArtefact) {
                     objectToRemove = locationArtefact.getObject(contents[i].getName());
                     if (objectToRemove.requiresContainer()) {
-                        console.log(objectToRemove.getName()+" lost.");
+                        //console.log(objectToRemove.getName()+" lost.");
                         lostObjectCount++;
                     } else {
                         _currentLocation.addObject(objectToRemove);
-                        console.log(objectToRemove.getName()+" saved.");
+                        //console.log(objectToRemove.getName()+" saved.");
                     };
                 } else {
                     objectToRemove = artefact.getObject(contents[i].getName());
                     if (objectToRemove.requiresContainer()) {
-                        console.log(objectToRemove.getName()+" lost.");
+                        //console.log(objectToRemove.getName()+" lost.");
                         lostObjectCount++;
                     } else {
                         _inventory.add(objectToRemove);
-                        console.log(objectToRemove.getName()+" saved.");
+                        //console.log(objectToRemove.getName()+" saved.");
                     };
                 };
             };
@@ -698,7 +698,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     var randomInt = Math.floor(Math.random() * 4); 
                     if (randomInt > 0) { //75% chance of success
                         receiver.setAntibody(_antibodies[a])
-                        console.log("antibodies passed to "+receiver.getType());
+                        //console.log("antibodies passed to "+receiver.getType());
                     };
                 };
             };
@@ -734,13 +734,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //limit to max
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
-            console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            //console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
         self.setStealth = function(newStealthValue) {
             //used for stealing
             _stealth = newStealthValue;
-            console.log("Player stealth now set to:"+_stealth);
+            //console.log("Player stealth now set to:"+_stealth);
             return _stealth;
         };
 
@@ -2080,8 +2080,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };    
                 };
             };
-            if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());}
-            else {console.log('Player is not carrying an automatically usable weapon')};
+            //if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());}
+            //else {console.log('Player is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
         };
@@ -2097,7 +2097,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.hurt = function(pointsToRemove) {
             self.reduceHitPoints(pointsToRemove);
 
-            console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+            //console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
             _injuriesReceived ++;
             _totalDamageReceived += pointsToRemove;
@@ -2293,7 +2293,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             self.decreaseAggression(duration);
 
 
-            console.log('player rested. HP remaining: '+_hitPoints);
+            //console.log('player rested. HP remaining: '+_hitPoints);
 
             if  (!((initialKilledCount < _killedCount)|| initialHP >= _hitPoints)) {
                 //if they didn't end up worse off...
@@ -2359,7 +2359,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
 
-            console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            //console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
 
             return resultString;
         };
@@ -2447,7 +2447,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     _consumedObjects.push(artefact);
                 };
                 _timeSinceEating = 0;
-                console.log('player eats some food.');
+                //console.log('player eats some food.');
             };
 
             return resultString;
@@ -2467,7 +2467,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     removeObjectFromPlayerOrLocation(artefactName); 
                     _consumedObjects.push(artefact);
                 };
-                console.log('player drinks.');
+                //console.log('player drinks.');
             };
 
             return result;
@@ -2606,7 +2606,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         if (missionReward.locations[l].inventory) {
                             var newInventory = missionReward.locations[l].inventory;
                             for (var i=0;i<newInventory.length;i++) {
-                                console.log(newInventory[i]);
+                                //console.log(newInventory[i]);
                                 //add item to location inventory
                                 if (newInventory[i].getType() == "creature") {
                                     newInventory[i].go(null, missionReward.locations[l]);  
@@ -2777,7 +2777,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //time passing
             for (var t=0; t < time; t++) {
-                console.log("tick...");
+                //console.log("tick...");
 
                 //inventory tick
                 resultString+=_inventory.tick();

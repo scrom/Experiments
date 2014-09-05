@@ -468,7 +468,7 @@ exports.Action = function Action(aPlayer, aMap) {
                         };
                         if ((_splitWord == "out" && (!_object0) && _object1.indexOf("of ") >-1) ||(_object0 == "out" && (!_object1))) {
                             _verb = 'out';
-                            console.log( _object0.indexOf("of "))
+                            //console.log( _object0.indexOf("of "))
                             //note, if person types "get out of x"
                             break;
                         };
@@ -964,7 +964,7 @@ exports.Action = function Action(aPlayer, aMap) {
         //end public member functions
 
         //finish construction
-        console.log(objectName + ' created');
+        //console.log(objectName + ' created');
     }
     catch(err) {
 	    console.log('Unable to create Action object: '+err);

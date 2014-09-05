@@ -1,14 +1,13 @@
 "use strict";
 //game object
-module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, fileName) {
+module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, fileName, fileManager) {
     try{
         //module deps
         var actionObjectModule = require('./action');
         var playerObjectModule = require('./player');
-        var JSONFileManagerObjectModule = require('./jsonfilemanager');
 
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var _fm = new JSONFileManagerObjectModule.JSONFileManager();
+        var _fm = fileManager;
         var _filename = fileName;
         var _map = aMap; //map of game locations
         var _player = new playerObjectModule.Player(playerAttributes, _map, mapBuilder);
@@ -61,10 +60,10 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                 //also want to track how many times they've saved/loaded/
 
                 //this is the first time a player is saving, don't overwrite existing files...
-                if (_fm.fileExists(_filename+".json")) {
+                if (_fm.gameDataExists(_filename+".json")) {
                     var newIndex=1;
                     _filename = _player.getUsername()+"-"+fileId+newIndex; 
-                    while (_fm.fileExists(_filename+".json") && newIndex<50) { //this might run away with the filesystem!
+                    while (_fm.gameDataExists(_filename+".json") && newIndex<50) { //this might run away with the filesystem!
                         newIndex++;
                         _filename = _player.getUsername()+"-"+fileId+newIndex; 
                     };
@@ -76,7 +75,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
 
             var fileName = _filename+".json";
             _player.incrementSaveCount();
-            _fm.writeFile(fileName, self.fullState(), true);
+            _fm.writeGameData(fileName, self.fullState(), true);
             console.log("game saved as "+fileName);
             return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+fileName.replace(".json","")+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>"}';
         };
@@ -93,10 +92,10 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         self.fullState = function() {
             var stateData = [];
             try {
-                stateData.push(JSON.parse(_player.toString()));
+                stateData.push(_player.toString());
             } catch (e) {console.log("Error parsing JSON for player: error = "+e+": "+_player.toString());};
             
-            stateData = stateData.concat(_map.getLocationsJSON());
+            stateData = stateData.concat(_map.getLocationsAsString());
             return stateData;
         };
 
@@ -107,7 +106,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             };
             var responseJson = _playerActions.act(actionString);
             self.setTimeStamp();
-            console.log('responseJson: '+responseJson+' responseObject: '+typeof responseObject);
+            console.log('responseJson: '+responseJson);
             return responseJson;
         };
 

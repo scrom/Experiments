@@ -18,7 +18,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) { //inputs
 
 
         var _objectName = "Contagion";
-        console.log(_objectName + ' created: ' + _name);
+        //console.log(_objectName + ' created: ' + _name);
 
         var processAttributes = function (contagionAttributes) {
             if (!contagionAttributes) { return null; };

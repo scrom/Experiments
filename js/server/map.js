@@ -138,6 +138,15 @@ exports.Map = function Map() {
             return locationsAsJSON;
         };
 
+        self.getLocationsAsString = function() {
+            var locationsAsString = [];
+            for (var i=0; i<_locations.length;i++) {
+                locationsAsString.push(_locations[i].toString());
+            };
+            locationsAsString.sort(sortByProperty("name"));
+            return locationsAsString;
+        };
+
         self.getLocation = function(aName){
             //we don't have name exposed any more...
             for(var index = 0; index < _locations.length; index++) {
@@ -162,7 +171,7 @@ exports.Map = function Map() {
                     if (exit.getDestinationName() == aDestination) {return exit;}; 
                 };
            };
-           console.log('exit not found from '+aSource+', '+aDirection+' to '+aDestination);
+           //console.log('exit not found from '+aSource+', '+aDirection+' to '+aDestination);
         };
 
         self.getDoorFor = function(aSource, aDestination) {
@@ -338,7 +347,7 @@ exports.Map = function Map() {
             if (deathTollData.friendly >0) {contagionReport+="Friendly death toll:"+deathTollData.friendly+"<br>";};
             if (deathTollData.hostile >0) {contagionReport+="Hostile death toll:"+deathTollData.hostile+"<br>";};
 
-            console.log(contagionReport);
+            //console.log(contagionReport);
             return contagionReport;
         //{"contagion":contagionData, "antibodies":antibodyData, "total":creatures.length}
 

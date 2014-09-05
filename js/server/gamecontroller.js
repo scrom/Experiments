@@ -1,6 +1,6 @@
 ﻿"use strict";
 //game controller object - manages set of games and communication with interpreter
-exports.GameController = function GameController(mapBuilder) {
+exports.GameController = function GameController(mapBuilder, fileManager) {
     try{
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         var _games = [];
@@ -12,8 +12,7 @@ exports.GameController = function GameController(mapBuilder) {
 
         //module deps
         var gameObjectModule = require('./game');
-        var JSONFileManagerObjectModule = require('./jsonfilemanager');
-        var _fm = new JSONFileManagerObjectModule.JSONFileManager();
+        var _fm = fileManager;
 
         console.log(_objectName + ' created');
 
@@ -99,7 +98,7 @@ exports.GameController = function GameController(mapBuilder) {
             var playerAttributes = {"username":aUsername, "startLocation": startLocationName, "currentLocation": startLocationName};
 
             var newGameId = self.getNextAvailableGame();
-            var game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder);           
+            var game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, null, _fm);           
             
             //add new game into appropriate placeholder
             _games[newGameId] = game;
@@ -125,11 +124,14 @@ exports.GameController = function GameController(mapBuilder) {
             var game;
 
             //if game file not found, return null.
-            if (!(_fm.fileExists(fileName))) {
+            if (!(_fm.gameDataExists(fileName))) {
                 return null;
             };
 
-            var gameData = _fm.readFile(fileName);
+            var gameData = _fm.readGameData(fileName);
+            if (!(gameData)) {
+                return -1;
+            };
             var playerAttributes = gameData[0];
             var newMap = _mapBuilder.buildMap(gameData);
             console.log ("game file "+fileName+" loaded.");
@@ -138,12 +140,12 @@ exports.GameController = function GameController(mapBuilder) {
             //if loading from within an active game, we want to replace the existing game rather than adding another
             if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
                 var newGameId = self.getNextAvailableGame(); //note we don't use the original game Id at the moment (need GUIDS)
-                game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, file);
+                game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, file, _fm);
                 _games[newGameId] = game; 
                 console.log('game ID: '+newGameId+' added to controller. Open games: '+_games.length);
                 return newGameId;
             } else {
-                game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, file);
+                game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, file, _fm);
                 _games[originalGameId] = game;
                 console.log('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
                 return originalGameId;

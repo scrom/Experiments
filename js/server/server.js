@@ -112,29 +112,6 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 //response.end();
                 response.send(_watcher.getLocations()); 
             });
-            _webServer.get('/data/directions.json*', function (request, response) {
-                //var sanitisedRequestURL = sanitiseString(request.url);
-                //response.writeHead(200, {'Content-type':'text/plain'});
-                //response.write(_interpreter.getData(0));
-                //response.end();
-                response.send(_watcher.getDirections()); 
-            });
-
-            _webServer.get('/data/objects.json*', function (request, response) {
-                //var sanitisedRequestURL = sanitiseString(request.url);
-                //response.writeHead(200, {'Content-type':'text/plain'});
-                //response.write(_interpreter.getData(0));
-                //response.end();
-                response.send(_watcher.getObjects()); 
-            });
-
-            _webServer.get('/data/missions.json*', function (request, response) {
-                //var sanitisedRequestURL = sanitiseString(request.url);
-                //response.writeHead(200, {'Content-type':'text/plain'});
-                //response.write(_interpreter.getData(0));
-                //response.end();
-                response.send(_watcher.getMissions()); 
-            });
 
             //serve default dynamic
             _webServer.get('*', function (request, response) {

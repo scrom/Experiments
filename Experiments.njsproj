@@ -94,7 +94,7 @@
     <Compile Include="js\server\gamecontroller.js" />
     <Compile Include="js\server\interpreter.js" />
     <Compile Include="js\server\inventory.js" />
-    <Compile Include="js\server\jsonfilemanager.js" />
+    <Compile Include="js\server\filemanager.js" />
     <Compile Include="js\server\location.js" />
     <Compile Include="js\server\main.js" />
     <Compile Include="js\server\map.js" />

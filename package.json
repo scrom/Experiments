@@ -2,7 +2,9 @@
   "name": "IF_Node",
   "version": "0.1.0",
   "description": "IF-Node",
-  "scripts": {"start": "node js/server/main.js"},
+  "scripts": {
+    "start": "node js/server/main.js"
+  },
   "author": {
     "name": "simon.cromarty",
     "email": ""
@@ -14,6 +16,7 @@
     "coffee-script": "^1.7.1",
     "iced-coffee-script": "^1.7.1-a",
     "streamline": "^0.10.8",
-    "jsonfile": "^1.2.0"
+    "jsonfile": "^1.2.0",
+    "redis": "^0.12.1"
   }
 }

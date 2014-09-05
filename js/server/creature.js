@@ -570,7 +570,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 if (isPermanent) {_baseAffinity +=changeBy;};
 
-                console.log("affinity for "+self.getName()+" is now "+_affinity);
+                //console.log("affinity for "+self.getName()+" is now "+_affinity);
             };
         };
 
@@ -578,7 +578,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(self.isDead())) {
                 _affinity-=changeBy;
                 if (isPermanent) {_baseAffinity -=changeBy;};
-                console.log("affinity for "+self.getName()+" is now "+_affinity);
+                //console.log("affinity for "+self.getName()+" is now "+_affinity);
             };
         };
 
@@ -654,7 +654,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     var randomInt = Math.floor(Math.random() * 4); 
                     if (randomInt > 0) { //75% chance of success
                         receiver.setAntibody(_antibodies[a])
-                        console.log("antibodies passed to "+receiver.getType());
+                        //console.log("antibodies passed to "+receiver.getType());
                     };
                 };
             };
@@ -901,7 +901,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.getAttackStrength = function() {
-            console.log('Creature attack strength = '+_attackStrength);
+            //console.log('Creature attack strength = '+_attackStrength);
             if (self.isDead()) {return 0;};
             var weapon = self.getWeapon();
             var weaponStrength = 0;
@@ -1057,7 +1057,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.getSubType() == 'friendly') {successDivider = 14;}; //only ~7% chance of success when stealing from a friend
             if (self.isDead()) {successDivider = 0;}; //guaranteed success if dead.
             var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
-            console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
+            //console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
 
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
@@ -1288,13 +1288,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //for each frightened creature, try to flee (choose first available exit if more than 1 available).
             //otherwise they try to flee but can't get past you
             if(self.willFlee(playerAggression)) {
-                console.log("Flee!");
+                //console.log("Flee!");
                 return "<br>"+self.flee(map, playerAggression, player.getCurrentLocation());
             };
 
             //for each hostile creature, attack the player
             if(self.isHostile(playerAggression)) {
-                console.log("Fight!");
+                //console.log("Fight!");
                 return "<br>"+initCap(self.getDisplayName())+" attacks you. " + self.hit(player, 1);
             };
 
@@ -1343,7 +1343,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 _avoiding.pop(); //stop avoiding player location
             };
-            console.log('Creature flees. Fear = '+fearLevel+'. End location = '+ _currentLocation.getName());
+            //console.log('Creature flees. Fear = '+fearLevel+'. End location = '+ _currentLocation.getName());
 
             //clear delay if fleeing
             _currentDelay = -1;
@@ -1448,7 +1448,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.getSubType() == "friendly") {
                 if (attacker) {
                     if (attacker.getType() == "player")  { 
-                        console.log("player attacks friendly");        
+                        //console.log("player attacks friendly");        
                         _friendlyAttackCount ++;
                     
                         if (_friendlyAttackCount >2) {
@@ -1477,7 +1477,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             resultString += initCap(self.getDisplayName())+" is hurt. "+self.health();
 
-            console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+            //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
             return resultString;
 
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
@@ -1553,7 +1553,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
 
-            console.log('creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            //console.log('creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
 
             return resultString;
         };
@@ -1561,7 +1561,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.feed = function(pointsToAdd) {
             self.increaseAffinity(1);
             self.recover(pointsToAdd);
-            console.log('Creature eats some food.');
+            //console.log('Creature eats some food.');
         };
 
         self.drink = function(aPlayer) {
@@ -1732,7 +1732,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _missions = missionsToKeep;
             };
 
-            console.log('Creature "'+self.getDisplayName()+'" killed');
+            //console.log('Creature "'+self.getDisplayName()+'" killed');
             return resultString;
          };
 
@@ -2135,7 +2135,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     
                 };
             };
-            if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());};
+            //if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());};
             //else {console.log('Creature is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
@@ -2170,7 +2170,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(selectedWeapon)) { return "";};
 
             //we'll only get to this point if they found something better.
-            console.log('Creature collected weapon: '+selectedWeapon.getDisplayName());
+            //console.log('Creature collected weapon: '+selectedWeapon.getDisplayName());
             _inventory.add(selectedWeapon);
             _currentLocation.removeObject(selectedWeapon.getName());
             
@@ -2284,7 +2284,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                     if (_destinations.length>0) {
                         if (_destinations[_destinations.length-1] == _currentLocation.getName()) {
-                            console.log(self.getDisplayName()+" reached destination.");
+                            //console.log(self.getDisplayName()+" reached destination.");
                             self.clearPath();
                             self.clearDestination();
                             //if creature is in home location, stay there a short while.
@@ -2571,7 +2571,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.setDestination = function(destinationName, pushToFrontOfList) {
             if (_avoiding.indexOf(destinationName) > -1) {return null};
-            console.log(self.getDisplayName()+" new destination set "+destinationName);
+            //console.log(self.getDisplayName()+" new destination set "+destinationName);
             //add new destination to *front* of array as we pop destinations from the end.
 
             if (pushToFrontOfList) {

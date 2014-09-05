@@ -10,8 +10,8 @@ exports.Config = function Config() {
 
 
         //naughty non-encapsulated public class variables
-        self.port = process.env.PORT || 1337; //port to use
-        self.hostname = 'mvta.herokuapp.com';
+        self.port = process.env.PORT; //port to use
+        self.hostname = process.env.HOSTNAME;
 
         //allow potential live modification of session limit
         self.setSessionLimit = function(newLimit) {
