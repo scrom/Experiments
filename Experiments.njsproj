@@ -21,6 +21,7 @@
   <ItemGroup>
     <Content Include="editor.html" />
     <Content Include="index.html" />
+    <Content Include="js\server\test\testdata\savegame-0.json" />
     <Content Include="package.json" />
     <Content Include="Procfile" />
     <Content Include="README.md" />
@@ -76,8 +77,6 @@
     <Content Include="data\images\willputtock.jpg" />
     <Content Include="data\images\zarasheldrake.jpg" />
     <Content Include="data\usergames\brian-0.json" />
-    <Content Include="data\usergames\s-237063.json" />
-    <Content Include="data\usergames\s-316852.json" />
     <Compile Include="js\client\client.js" />
     <Compile Include="js\client\main.js" />
     <Compile Include="js\client\response.js" />
@@ -109,7 +108,7 @@
     <Compile Include="js\server\test\test-creature.test.js" />
     <Compile Include="js\server\test\test-exit.test.js" />
     <Compile Include="js\server\test\test-filemanager.test.js" />
-    <Compile Include="js\server\test\test-gamecontroller.test.js" />
+    <Compile Include="js\server\test\test-saveload.test.js" />
     <Compile Include="js\server\test\test-inventory.test.js" />
     <Compile Include="js\server\test\test-location.test.js" />
     <Compile Include="js\server\test\test-map.test.js" />
@@ -130,6 +129,7 @@
     <Folder Include="js\client-watcher" />
     <Folder Include="js\server" />
     <Folder Include="js\server\test" />
+    <Folder Include="js\server\test\testdata\" />
     <Folder Include="js\server\test\stubs" />
     <Folder Include="js\server\watcher" />
   </ItemGroup>

@@ -105,7 +105,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
         //public member functions
 
         /*top level interpeter command creation*/
-        self.translate = function(aRequestUrl,config) {
+        self.translate = function(aRequestUrl,config, callback) {
             //console.log('translate called: '+aRequestUrl);
             //note - only passing config in here until controlling game object is accessible
 
@@ -154,24 +154,39 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                     break;
                 case 'save':
                     console.log("saving game");             
-                    if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);};
+                    if (!(validateUser(username))) {callback(assembleResponse(commandJson,"invalid user: "+username));};
                     var aGame = _gameController.getGame(username, gameId);
-                    if (!(aGame)) {return assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}');};
-                    return assembleResponse(commandJson,aGame.save());
+                    if (!(aGame)) {callback(assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}'));};
+                    
+                    var callbackFunction = function(result) {
+                        var response = assembleResponse(commandJson,result);
+                        callback(response);
+                    };
+
+                    aGame.save(callbackFunction);
                     break;
                 case 'load':
                     var originalGameID = gameId;
                     if (actionString == "load" || actionString == "restore") {actionString = "";};
-                    var newGameId = _gameController.loadGame(originalGameID, actionString, username);
-                    //console.log(newGameId);
-                    //did we successfully load?...
-                    var savedUsername = _gameController.getUsernameForGameID(newGameId);
-                    if (savedUsername) {
-                        //file loaded...                       
-                        return assembleResponse(commandJson,_gameController.getGameState(savedUsername, newGameId));      
+
+                    var callbackLoadFunction = function(newGameId) {
+                        console.log("New game id: "+newGameId);
+                        //did we successfully load?...
+                        var response;
+                        var savedUsername = _gameController.getUsernameForGameID(newGameId);
+                        if (savedUsername) {
+                            //file loaded...                       
+                            response = assembleResponse(commandJson,_gameController.getGameState(savedUsername, newGameId));      
+                        } else {;
+                            //file not loaded
+                            response = assembleResponse(commandJson,'{"description":"Saved game file \''+actionString+'\' not found."}');  
+                        };
+
+                        callback(response);   
                     };
-                    //file not loaded
-                    return assembleResponse(commandJson,'{"description":"Saved game file \''+actionString+'\' not found."}');                  
+
+                    _gameController.loadGame(originalGameID, actionString, username, callbackLoadFunction); 
+                                
                     break;
                 case 'events':
                     //respond to event requests

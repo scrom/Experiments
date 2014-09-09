@@ -1,6 +1,6 @@
 ﻿"use strict";
-var fileManager= require('../jsonfilemanager.js');
-var fm= new fileManager.JSONFileManager();
+var fileManager= require('../filemanager.js');
+var fm= new fileManager.FileManager(true);
 
 exports.setUp = function (callback) {
     callback(); 
@@ -8,7 +8,7 @@ exports.setUp = function (callback) {
 
 exports.tearDown = function (callback) {
     callback();
-};  
+}; 
 
 exports.canFindImagePath = function (test) {
     var path = fm.getImagePath("kitty.jpg");

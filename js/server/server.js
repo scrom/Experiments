@@ -38,7 +38,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 response.writeHead(200, {'Content-type':'text/plain'});
                 response.write(_interpreter.translate(sanitisedRequestURL,_config));
                 response.end();
-            });
+           });
 
            _webServer.get('/new/*', function (request, response) {
                 request.socket.setTimeout(5);
@@ -64,6 +64,29 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 response.end();
             });
 
+            _webServer.get('/save/*', function (request, response) {
+                var sanitisedRequestURL = sanitiseString(request.url);
+
+                var callbackFunction = function(result) {
+                    response.writeHead(200, {'Content-type':'text/plain'});
+                    response.write(result);
+                    response.end();
+                };
+
+                _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
+            });
+
+            _webServer.get('/load/*', function (request, response) {
+                var sanitisedRequestURL = sanitiseString(request.url);
+
+                var callbackFunction = function(result) {
+                    response.writeHead(200, {'Content-type':'text/plain'});
+                    response.write(result);
+                    response.end();
+                };
+                _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
+            });
+
             _webServer.get('/image/*', function (request, response) {
                 request.socket.setTimeout(120);
                 var sanitisedRequestURL = sanitiseString(request.url);
@@ -85,8 +108,6 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 //Add the response object to the array of waiting responses
                 //To be replied to at some point by the sendToWaitingResponses() method
                 _waitingResponses.push(response); 
-
-                //response.send(_interpreter.translate(sanitisedRequestURL,_config));
 
             });
 
@@ -126,8 +147,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
                 var requestJson = JSON.stringify(request.body);
                 //post this response work to the watcher
                 var responseJSON = _watcher.processRequest(request);
-                var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}'; 
-                console.log(reply)   
+                var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}';  
                 response.write(reply);
                 response.end();
 

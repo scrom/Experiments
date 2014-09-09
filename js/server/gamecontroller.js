@@ -30,20 +30,31 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                        //if not active for the last hour, kill the game
                        if (_games[g].getTimeStamp() < now-gameTimeOut) {
                            console.log("Game "+_games[g].getNameAndId()+" timed out - removing from controller.");
-                           var saved = JSON.parse(_games[g].save());
-                           if (saved) {
-                               //console.log("saved");
-                               if (saved.description) {
-                                   //console.log("saved.description");
-                                   if (saved.description.substring(0,10) == "Game saved") {
-                                        _savedGames.push({"username":_games[g].getUsername(),"id":_games[g].getId(), "filename":_games[g].getFilename()});
-                                        console.log("Timed out game saved as id:"+_games[g].getId()+", username:"+_games[g].getUsername()+", filename:"+_games[g].getFilename());
-                                   };
+
+                           var callbackFunction = function(savedResult) {
+                               var saved;
+                               if (savedResult) {
+                                    try {
+                                        saved = JSON.parse(savedResult);
+                                    } catch (e) {console.log("Error parsing JSON for save game result: error = "+e+": "+savedResult);};
+                                   
+                                   //console.log("saved");
+                                   if (saved.description) {
+                                       //console.log("saved.description");
+                                       if (saved.description.substring(0,10) == "Game saved") {
+                                            _savedGames.push({"username":_games[g].getUsername(),"id":_games[g].getId(), "filename":_games[g].getFilename()});
+                                            console.log("Timed out game saved as id:"+_games[g].getId()+", username:"+_games[g].getUsername()+", filename:"+_games[g].getFilename());
+                                       };
+                                    };
                                 };
-                            };
-                           _games[g] = g; //set just ID into game slot
-                           _inactiveGames.push(g);
-                           //console.log(_inactiveGames);
+                               _games[g] = g; //set just ID into game slot
+                               _inactiveGames.push(g);
+                               //console.log(_inactiveGames); 
+                           };
+
+                           _games[g].save(callbackFunction);
+
+                           
                        }; 
                    };
                 }; 
@@ -111,7 +122,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             return newGameId;
         };
 
-        self.loadGame = function(originalGameId, filename, username) {
+        self.loadGame = function(originalGameId, filename, username, callback) {
             if (filename == "") {
                 if (_games[originalGameId]) {
                     if (_games[originalGameId].getUsername() == username) {
@@ -119,32 +130,44 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                     }
                 };
             };        
-           
-            var game;
-           
-            var gameData = _fm.readGameData(filename);
-            //if game file not found, return null.
-            if (!(gameData)) {
-                return null;
-            };
-            var playerAttributes = gameData[0];
-            var newMap = _mapBuilder.buildMap(gameData);
-            console.log ("game file "+filename+" loaded.");
 
-            //console.log("originalGameId:"+originalGameId);
-            //if loading from within an active game, we want to replace the existing game rather than adding another
-            if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
-                var newGameId = self.getNextAvailableGame(); //note we don't use the original game Id at the moment (need GUIDS)
-                game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, filename, _fm);
-                _games[newGameId] = game; 
-                console.log('game ID: '+newGameId+' added to controller. Open games: '+_games.length);
-                return newGameId;
-            } else {
-                game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, filename, _fm);
-                _games[originalGameId] = game;
-                console.log('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
-                return originalGameId;
-            };           
+            var callbackFunction = function (gameData) {
+                //console.log("Game Data: "+gameData);
+                if (gameData) {
+                    console.log("Data length: "+gameData.length); 
+                    //for (var i=0;i<gameData.length;i++) {
+                    //   gameData[i] = JSON.parse(gameData[i]);  
+                    //}; 
+                    //_fm.writeFile(filename, gameData, true);
+                };
+                var game;
+                //if game file not found, return null.
+                if (!(gameData)) {
+                    callback (null);
+                } else {
+                    var playerAttributes = gameData[0];
+                    var newMap = _mapBuilder.buildMap(gameData);
+                    console.log ("game file "+filename+" loaded.");
+
+                    //console.log("originalGameId:"+originalGameId);
+                    //if loading from within an active game, we want to replace the existing game rather than adding another
+                    if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
+                        var newGameId = self.getNextAvailableGame(); //note we don't use the original game Id at the moment (need GUIDS)
+                        game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, filename, _fm);
+                        _games[newGameId] = game; 
+                        console.log('game ID: '+newGameId+' added to controller. Open games: '+_games.length);
+                        callback (newGameId);
+                    } else {
+                        game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, filename, _fm);
+                        _games[originalGameId] = game;
+                        console.log('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
+                        callback (originalGameId);
+                    };  
+                };
+
+            };
+           
+            _fm.readGameData(filename, callbackFunction);                    
             
         };
 

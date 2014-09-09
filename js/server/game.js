@@ -50,33 +50,50 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             return _filename;
         };
 
-        self.save = function() {
+        self.save = function(callback) {
             self.setTimeStamp();
-            var fileId = Math.floor(parseInt((parseInt(new Date().getTime()).toString()).substring(5))/137);
-            if (!(_player.canSaveGame())) {return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'You\'ve not achieved enough to be worth saving yet."}'};
-            if (_filename == undefined|| _filename == null ||_filename == "") {
-                _filename = _player.getUsername()+"-"+fileId; 
-                //want to save this filename as a player attribute so that it's visible in their status file.
-                //also want to track how many times they've saved/loaded/
+            var newIndex = 0;
+            console.log("attempting to save game");
 
-                //this is the first time a player is saving, don't overwrite existing files...
-                if (_fm.gameDataExists(_filename)) {
-                    var newIndex=1;
-                    _filename = _player.getUsername()+"-"+fileId+newIndex; 
-                    while (_fm.gameDataExists(_filename) && newIndex<50) { //this might run away with the filesystem!
-                        newIndex++;
+            var postSaveGameCallback = function() {
+                console.log("game saved as "+_filename);
+                callback('{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+_filename+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>"}');
+                return null;
+            };
+
+            var postDataCheckCallback = function(dataExists) {
+                if (!(dataExists)) {
+                    console.log("writing new game data");
+                    _player.incrementSaveCount();
+                    _fm.writeGameData(_filename, self.fullState(), true, postSaveGameCallback);
+                } else {                    
+                    newIndex++;
+                    if (newIndex>=25) {
+                        callback( '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'Unable to save game. It looks like we\'ve got too many previous games saved with your name already.<br>Try loading one of your old games or playing under a different name instead."}');
+                    } else {
                         _filename = _player.getUsername()+"-"+fileId+newIndex; 
+                        _fm.gameDataExists(_filename, postDataCheckCallback);
                     };
-                };
-                if (newIndex>=50) {
-                    return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'Unable to save game. It looks like we\'ve got too many previous games saved with your name already.<br>Try loading one of your old games or playing under a different name instead."}';
                 };
             };
 
-            _player.incrementSaveCount();
-            _fm.writeGameData(_filename, self.fullState(), true);
-            console.log("game saved as "+_filename);
-            return '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+_filename+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>"}';
+            var fileId = Math.floor(parseInt((parseInt(new Date().getTime()).toString()).substring(5))/137);
+            if (!(_player.canSaveGame())) {
+                callback('{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'You\'ve not achieved enough to be worth saving yet."}');
+            } else {
+                if (_filename == undefined|| _filename == null ||_filename == "") {
+                    _filename = _player.getUsername()+"-"+fileId; 
+                    //want to save this filename as a player attribute so that it's visible in their status file.
+                    //also want to track how many times they've saved/loaded/
+
+                    //this is the first time a player is saving, don't overwrite existing files...
+                    _fm.gameDataExists(_filename, postDataCheckCallback);
+                } else {
+                    _player.incrementSaveCount();
+                    _fm.writeGameData(_filename, self.fullState(), true, postSaveGameCallback);
+                };
+            };
+            
         };
 
         self.state = function() {

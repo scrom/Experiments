@@ -17,6 +17,7 @@
     "iced-coffee-script": "^1.7.1-a",
     "streamline": "^0.10.8",
     "jsonfile": "^1.2.0",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "async": "^0.9.0"
   }
 }
