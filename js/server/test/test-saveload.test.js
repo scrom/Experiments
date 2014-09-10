@@ -113,3 +113,45 @@ exports.canSaveGameToRedis = function (test) {
 };
 
 exports.canSaveGameToRedis.meta = { traits: ["SaveLoad Test", "Save Trait"], description: "Test that a game can be saved to redis data store." };
+
+
+exports.canSaveGameToRedisAndReadBack = function (test) {
+
+    
+    var redisfm = new filemanager.FileManager(false);
+    //var redisgc = new gamecontroller.GameController(mb, redisfm);
+
+    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob"], "stepsTaken": 4,"waitCount": 21};
+    var m0 = mb.buildMap();
+
+    var g0 = new game.Game(playerAttributes,0, m0, mb, null, redisfm);
+
+    var callbackFunction = function(result) {
+        //console.log(result)
+        var filename = result.substr(62, 13);
+        console.log(filename);
+
+        var fileExists = false;
+        //nested callback!
+        redisfm.gameDataExists(filename, function(result) {
+            var readGameCallback = function (gameData) {
+                if (gameData) {
+                    console.log("Test result - Game data:"+gameData);
+                } else {
+                    console.log("Test did not retrieve data.");
+                };
+                //redisfm.deleteFile(filename);
+                test.done();    
+            };
+
+            fileExists = result;
+            if (fileExists) {
+                redisfm.readGameData(filename, readGameCallback);
+            };        
+        });
+    };
+
+    g0.save(callbackFunction);
+};
+
+exports.canSaveGameToRedisAndReadBack.meta = { traits: ["SaveLoad Test", "Save Trait"], description: "Test that a game can be saved to redis data store." };

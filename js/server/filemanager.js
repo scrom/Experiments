@@ -16,20 +16,24 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
         var pwd = process.env.REDISPWD;
         var redisServer = process.env.REDISSERVER;
+        var redisPort = process.env.REDISPORT;
+        //var redisURL = process.env.REDISCLOUD_URL;
 
         var useFilesForGameData = true;
         var client = {};
         var monitor = {};
         //if redis is configured...
-        if (redisServer && (!(useFiles))) {
+        if ((redisServer) && (!(useFiles))) {
             redis = require('redis');
              
-            client = redis.createClient(11415, redisServer, {});
+            client = redis.createClient(redisPort, redisServer, {no_ready_check: true});
             //redis.debug_mode = true;
             client.on("error", function (err) {
                 console.log("REDIS Error: " + err);
             });
-            client.auth(pwd, function (err) { if (err) {console.log("REDIS AUTH Error:"+err);} else {console.log("REDIS connected")}; });
+            client.auth(pwd, function (err) { 
+                if (err) {console.log("REDIS AUTH Error:"+err);} else {console.log("REDIS connected")}; 
+            });
 
             /*
             monitor = redis.createClient(11415, redisServer, {});
@@ -101,13 +105,15 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                                     for (var e=0;e<err.length;e++) {
                                         console.log(e+": "+err[e]);
                                     };
-                                };
-                                for (var i=0;i<replies.length;i++) {
-                                     console.log(replies[i]);
-                                     data.push(replies[i]);
-                                };  
-                                console.log("all game data retrieved - "+data.length);
-                                return null;                                                        
+                                } else {
+                                    for (var i=0;i<replies.length;i++) {
+                                         var chunk = replies[i].toString(encoding); 
+                                         console.log("#"+i+": "+chunk);
+                                         data.push(chunk);
+                                    };  
+                                    console.log("all game data retrieved - "+data.length); 
+                                    callback(data);
+                                };                                                       
                             });
                         };
                     
@@ -150,7 +156,8 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                 for (var i=0;i<data.length;i++) {
                     var bufferSize = Buffer.byteLength(data[i]);
                     var dataBuffer = new Buffer(bufferSize);
-                    dataBuffer.write(data[i]);
+                    dataBuffer.write(data[i], encoding);
+                    //console.log("#"+i+"(write): "+data[i]);
                     multi.rpush(fileName, dataBuffer);
                 };
 
