@@ -71,6 +71,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _locksOpened = 0;
         var _doorsOpened = 0;
 
+        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'b','back'];
+
 	    var _objectName = "player";
 
         //private functions
@@ -1759,7 +1761,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {
+                var directionIndex = _directions.indexOf(artefactName);
+                if (directionIndex > -1) {
+                    if (artefactName.length == 1) {
+                        artefactName = _directions[directionIndex+1];
+                    };
+                    resultString = _currentLocation.getExitDestination(artefactName);
+                    if (resultString == _currentLocation.getName()) {
+                        return "You peer "+artefactName+" but there's nothing else to see there.";
+                    } else {
+                        return initCap(artefactName)+" leads to '"+resultString+"'.";
+                    };
+                };
+                return notFoundMessage(artefactName);
+            };
 
             resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
 

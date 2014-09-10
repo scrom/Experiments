@@ -141,6 +141,9 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
                     //console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
                     return _exits[i];
                 };
+                if(_exits[i].getLongName().toLowerCase() == aDirection.toLowerCase()) {
+                    return _exits[i];
+                };
             };       
             return null;
         };
