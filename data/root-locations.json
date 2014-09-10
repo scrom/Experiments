@@ -4443,8 +4443,8 @@
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'would you like an ice cream?'",
-                {"state":1,"keywords":["yes"],"response":"Here you go!","nextState":2},
-				{"state":1,"keywords":["no"],"response":"Never mind.","nextState":3}
+                {"state":1,"keywords":["yes"],"response":"'Here you go!'","nextState":2},
+				{"state":1,"keywords":["no"],"response":"'Never mind.'","nextState":3}
               ]
             },
             "conditionAttributes": {
@@ -4459,7 +4459,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "ice cream man",
               "successMessage": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy Have 5 points.",
-              "failMessage": "He wanted to give you an ice cream.",
+              "failMessage": "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work.",
               "delivers": {
 				"object": "artefact",
 				"name": "ice cream",
