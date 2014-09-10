@@ -15,7 +15,7 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
 
         var _lastImageURL = ""; //primitive hack to ensure image doesn't reload every move unless it's actually changed.
 
-        state.append('Welcome To MVTA.<br>Please enter your name');
+        state.append('Welcome to MVTA, your "Minimum Viable Text Adventure" experience starts here...<br>Please type in your name and press <i>enter</i> to start.');
         //console.append(objectName+" Initiated<br>");
     //end try
     }

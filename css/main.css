@@ -8,6 +8,16 @@ body
 {
     font-family: 'Courier New', courier, Calibri, Arial, modern, monospace, sans-serif;
     font-size: 80%;
+    color: #00DD00;
+    background-color: black;
+}
+
+.textbox
+{
+    font-family: 'Courier New', courier, Calibri, Arial, modern, monospace, sans-serif;
+    color: #00DD00;
+    border: 0px;
+    background-color: black;
 }
 
 .left
