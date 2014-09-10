@@ -108,8 +108,10 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                                 } else {
                                     for (var i=0;i<replies.length;i++) {
                                          var chunk = replies[i].toString(encoding); 
-                                         console.log("#"+i+": "+chunk);
-                                         data.push(chunk);
+                                         //console.log("#"+i+": "+chunk);
+                                         try {
+                                            data.push(JSON.parse(chunk));
+                                        } catch (e) {console.log("Error parsing JSON for saved game data: error = "+e+": "+chunk.toString());};
                                     };  
                                     console.log("all game data retrieved - "+data.length); 
                                     callback(data);
