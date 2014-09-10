@@ -81,8 +81,9 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             if (!(_player.canSaveGame())) {
                 callback('{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'You\'ve not achieved enough to be worth saving yet."}');
             } else {
-                if (_filename == undefined|| _filename == null ||_filename == "") {
+                if (_filename == undefined|| _filename == null ||_filename == ""||filename == "undefined") {
                     _filename = _player.getUsername()+"-"+fileId; 
+                    console.log("Filename not set. Using "+_filename);
                     //want to save this filename as a player attribute so that it's visible in their status file.
                     //also want to track how many times they've saved/loaded/
 

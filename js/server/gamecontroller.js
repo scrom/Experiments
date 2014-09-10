@@ -129,7 +129,9 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                         filename = _games[originalGameId].getFilename();
                     }
                 };
-            };        
+            };
+            
+            console.log("requested game filename: '"+filename+"'");        
 
             var callbackFunction = function (gameData) {
                 //console.log("Game Data: "+gameData);
