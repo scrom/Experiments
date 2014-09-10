@@ -63,6 +63,7 @@ If you're running in an environment that doesn't offer filesystem support (such 
 Once you have a store available, set the following environment variables for your Redis data store 
 - REDISSERVER (the hostname of your redis server)
 - REDISPWD (the auth password of your redis server)
+- REDISPORT (the port number of your redis host)
 *If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
 As of 5th September, the Redis support is still under development.
 
