@@ -96,7 +96,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                         var getGameChunk = function(length) {
                             var multi = client.multi();
                             for (var i=0;i<length;i++) {
-                                multi.lpop(fileName);
+                                multi.lrange(fileName, i, i);
                             };
 
                             multi.exec(function(err, replies) {
