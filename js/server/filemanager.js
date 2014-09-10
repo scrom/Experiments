@@ -154,16 +154,20 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                     });
                 };
 
-                var multi = client.multi();
-                for (var i=0;i<data.length;i++) {
-                    var bufferSize = Buffer.byteLength(data[i]);
-                    var dataBuffer = new Buffer(bufferSize);
-                    dataBuffer.write(data[i], encoding);
-                    //console.log("#"+i+"(write): "+data[i]);
-                    multi.rpush(fileName, dataBuffer);
+                var writeDataCallback = function() {
+                    var multi = client.multi();
+                    for (var i=0;i<data.length;i++) {
+                        var bufferSize = Buffer.byteLength(data[i]);
+                        var dataBuffer = new Buffer(bufferSize);
+                        dataBuffer.write(data[i], encoding);
+                        //console.log("#"+i+"(write): "+data[i]);
+                        multi.rpush(fileName, dataBuffer);
+                    };
+
+                    multi.exec(callbackFunction());
                 };
 
-                multi.exec(callbackFunction());
+                client.del(fileName, writeDataCallback); 
 
             };
         };
