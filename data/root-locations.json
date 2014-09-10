@@ -4455,11 +4455,38 @@
               "conversationState": 3
             },
             "reward": {
-              "score": 25,
+              "score": 5,
               "affinityModifier": 2,
               "increaseAffinityFor": "ice cream man",
-              "successMessage": "You accept a free ice cream (to be added later) Have 25 points.",
-              "failMessage": "He wanted to give you an ice cream"
+              "successMessage": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy Have 5 points.",
+              "failMessage": "He wanted to give you an ice cream.",
+              "delivers": {
+				"object": "artefact",
+				"name": "ice cream",
+				"description": "99 flake ice cream",
+				"detailedDescription": "Ice cream makes a great gift!",
+				"attributes": {
+				  "defaultAction": "eat",
+				  "weight": 1,
+				  "type": "food",
+				  "canCollect": true,
+				  "charges": 1,
+				  "chargeUnit": "99 flake ice cream",
+				  "chargesDescription": "$charges $chargeUnit",
+				  "saleUnit": 1,
+				  "affinityModifier": 5,
+				  "isEdible": true,
+				  "nutrition": 15,
+				  "price": 3
+				},
+				"synonyms": [
+				  "ice",
+				  "icecream",
+				  "99",
+				  "99 flake",
+				  "99 flake ice cream"
+				]
+			  }
             }
           }
         ]
