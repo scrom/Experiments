@@ -81,11 +81,11 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.readGameData = function(fileName, callback) {
-            console.log("readGameData Key:"+fileName); 
+            //console.log("readGameData Key:"+fileName); 
             
             var callbackReadDataFunction = function(dataExists) {
                 if (dataExists) {
-                    console.log("Data found for "+fileName+" retrieving game data.");
+                    //console.log("Data found for "+fileName+" retrieving game data.");
 
                     if (useFilesForGameData) {
                         callback(self.readFile(fileName+".json"));
@@ -113,20 +113,20 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                                             data.push(JSON.parse(chunk));
                                         } catch (e) {console.log("Error parsing JSON for saved game data: error = "+e+": "+chunk.toString());};
                                     };  
-                                    console.log("all game data retrieved - "+data.length); 
+                                    //console.log("all game data retrieved - "+data.length); 
                                     callback(data);
                                 };                                                       
                             });
                         };
                     
                         client.llen(fileName, function(reply, len) {
-                           console.log("Checking game data - saved data reported length = "+len); 
+                           //console.log("Checking game data - saved data reported length = "+len); 
                            getGameChunk(len);
                         });
                     };
 
                 } else {
-                    console.log("Data not found for "+fileName+" at readGameData.");
+                    //console.log("Data not found for "+fileName+" at readGameData.");
                     callback();
                 };    
 
@@ -136,7 +136,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.writeGameData = function(fileName, data, overwrite, callback) {
-            console.log("writeGameData Key:"+fileName);
+            //console.log("writeGameData Key:"+fileName);
             if (useFilesForGameData) {
                 var JSONGameData = [];
                 for (var i=0;i<data.length;i++) {
@@ -146,10 +146,10 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             } else { 
                 var callbackFunction = function() {
                     //callback when done
-                    console.log("save game callback");
+                    //console.log("save game callback");
 
                     client.llen(fileName, function(reply, len) {
-                        console.log("Original data length: "+data.length+". Saved data reported length:"+len); 
+                        //console.log("Original data length: "+data.length+". Saved data reported length:"+len); 
                         callback();
                     });
                 };
@@ -173,17 +173,17 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.gameDataExists = function(fileName, callback) {
-            console.log("gameDataExists? Key:"+fileName);
+            //console.log("gameDataExists? Key:"+fileName);
             if (useFilesForGameData) {
                 callback (self.fileExists(fileName+".json"));
             } else {  
                 client.exists(fileName, function (err, rexists) { 
                     if (err) {console.log("REDIS Error: "+err);};
                     if (rexists) {
-                        console.log("game data found for "+fileName);
+                        //console.log("game data found for "+fileName);
                         callback(true);
                     } else {
-                        console.log("game data not found for "+fileName);
+                        //console.log("game data not found for "+fileName);
                         callback(false);
                     };
                 });

@@ -53,7 +53,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         self.save = function(callback) {
             self.setTimeStamp();
             var newIndex = 0;
-            console.log("attempting to save game");
+            //console.log("attempting to save game");
 
             var postSaveGameCallback = function() {
                 console.log("game saved as "+_filename);
@@ -63,7 +63,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
 
             var postDataCheckCallback = function(dataExists) {
                 if (!(dataExists)) {
-                    console.log("writing new game data");
+                    //console.log("writing new game data");
                     _player.incrementSaveCount();
                     _fm.writeGameData(_filename, self.fullState(), true, postSaveGameCallback);
                 } else {                    
@@ -83,7 +83,6 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             } else {
                 if (_filename == undefined|| _filename == null ||_filename == ""||_filename == "undefined") {
                     _filename = _player.getUsername()+"-"+fileId; 
-                    console.log("Filename not set. Using "+_filename);
                     //want to save this filename as a player attribute so that it's visible in their status file.
                     //also want to track how many times they've saved/loaded/
 

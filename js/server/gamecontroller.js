@@ -131,17 +131,10 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 };
             };
             
-            console.log("requested game filename: '"+filename+"'");        
+            //console.log("requested game filename: '"+filename+"'");        
 
             var callbackFunction = function (gameData) {
                 //console.log("Game Data: "+gameData);
-                if (gameData) {
-                    console.log("Data length: "+gameData.length); 
-                    //for (var i=0;i<gameData.length;i++) {
-                    //   gameData[i] = JSON.parse(gameData[i]);  
-                    //}; 
-                    //_fm.writeFile(filename, gameData, true);
-                };
                 var game;
                 //if game file not found, return null.
                 if (!(gameData)) {
@@ -149,7 +142,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 } else {
                     var playerAttributes = gameData[0];
                     var newMap = _mapBuilder.buildMap(gameData);
-                    console.log ("game file "+filename+" loaded.");
+                    //console.log ("game file "+filename+" loaded.");
 
                     //console.log("originalGameId:"+originalGameId);
                     //if loading from within an active game, we want to replace the existing game rather than adding another
