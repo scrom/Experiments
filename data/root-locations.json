@@ -133,17 +133,31 @@
           "locations": [
             {
               "object": "location",
-              "name": "van",
+              "name": "east-car-park-corner",
               "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
               "exits": [
                 {
                   "object": "exit",
                   "longname": "South",
                   "direction": "s",
-                  "source": "van",
+                  "source": "east-car-park-corner",
                   "destination": "waste-area"
                 }
-              ]
+              ],
+				"inventory": [
+					  { "object": "artefact",
+						"name": "van",
+						"description": "white van",
+						"detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
+						"attributes": {
+							"weight": 3000,
+							"type": "property",
+							"carryWeight": 500
+						},
+						"synonyms": [
+							"white van"
+						]
+					  }]
             }
           ],
           "exits": [
@@ -152,7 +166,7 @@
               "longname": "North",
               "direction": "n",
               "source": "waste-area",
-              "destination": "van"
+              "destination": "east-car-park-corner"
             }
           ],
           "eventMessage": "You've probably kept out of the way long enough to go and chat to the spy again without suspicion if you feel like taking on another 'job'."
@@ -1793,6 +1807,13 @@
       },
       {
         "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-bike-racks",
+        "destination": "waste-area"
+      },
+      {
+        "object": "exit",
         "longname": "West",
         "direction": "w",
         "source": "east-bike-racks",
@@ -1802,7 +1823,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "bike rack",
+        "name": "bike racks",
         "description": "bike racks",
         "detailedDescription": "There's dozens of bikes here. Are you looking for any in particular?",
         "attributes": {
@@ -1817,7 +1838,7 @@
           "racks",
           "cycle rack",
           "cycle racks",
-          "bike racks"
+          "bike rack"
         ],
         "inventory": [
           {
@@ -1857,13 +1878,6 @@
         "direction": "w",
         "source": "east-car-park",
         "destination": "office-front"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "east-car-park",
-        "destination": "waste-area"
       },
       {
         "object": "exit",
@@ -7753,7 +7767,7 @@
         "longname": "West",
         "direction": "w",
         "source": "waste-area",
-        "destination": "east-car-park"
+        "destination": "east-bike-racks"
       },
       {
         "object": "exit",

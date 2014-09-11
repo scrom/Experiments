@@ -864,7 +864,7 @@ exports.Action = function Action(player, map, fileManager) {
             if (_verb == '+affinity') {
                 var creatures = _map.getAllCreatures();
                 for (var c=0;c<creatures.length;c++) {
-                    creatures[c].increaseAffinity(_object0)+"<br>";
+                    creatures[c].increaseAffinity(parseInt(_object0))+"<br>";
                 };
                 return "Global creature affinity increased by "+_object0;
             };
