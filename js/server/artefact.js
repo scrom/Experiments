@@ -1572,6 +1572,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (verb == 'unlock') { return "You "+verb+" "+self.getDisplayName()+"."};
 
+            if (_broken) {return self.getDescriptivePrefix()+" broken.";};
             return "You try to "+verb+" "+self.getDisplayName()+".<br>After a few minutes of yanking and shoving you conceed defeat.";
         };
 

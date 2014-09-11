@@ -4042,6 +4042,18 @@
       }
     ],
     "inventory": [
+	  { "object": "artefact",
+	    "name": "alarm button",
+        "description": "an alarm button",
+        "detailedDescription": "It doesn't look like it's been used in quite some time.",
+        "attributes": {
+            "type": "scenery",
+			"isBroken": true
+        },
+        "synonyms": [
+            "alarm"
+        ]
+	  },
       {
         "object": "artefact",
         "name": "exit button",
