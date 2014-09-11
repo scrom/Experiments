@@ -950,17 +950,19 @@
             "displayName": "get the party started",
             "description": "Mark wants to organise a celebration",
             "attributes": {
-              "parent": "saveredgate",
+			  "parent": "saveredgate",
               "missionObject": "mark wightman",
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'I think it's time to celebrate. When you're ready, come and talk to me again and we'll get something organised.'",
-                "Right, let's get this party sorted!<br>I've ordered a bus. Give me one last shout when you're ready to round everyone up!"
+				"Are you ready to go?",
+                {"state":2,"keywords":["yes", "ok", "im ready", "yup", "y"],"response":"'Right, let's get this party sorted!'<br>'I've ordered a bus. Give me one last shout when you're ready to round everyone up!'","nextState":3},
+				{"state":2,"keywords":["no", "not", "not yet"],"response":"'OK. Give me a shout when you <i>are</i>.'","nextState":1}
               ]
             },
             "conditionAttributes": {
               "alive": true,
-              "conversationState": 2
+              "conversationState": 3
             },
             "reward": {
               "locations": [
@@ -4387,7 +4389,7 @@
         "object": "creature",
         "name": "ice cream man",
         "displayname": "the ice cream man",
-        "description": "The ice cream man",
+        "description": "the ice cream man",
         "detailedDescription": "A random guy who occasionally has ice cream for sale.",
         "attributes": {
           "weight": 140,
@@ -4442,7 +4444,7 @@
               "missionObject": "ice cream man",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'would you like an ice cream?'",
+                "'Hi $player.'<br>'Would you like an ice cream?'",
                 {"state":1,"keywords":["yes"],"response":"'Here you go!'","nextState":2},
 				{"state":1,"keywords":["no"],"response":"'Never mind.'","nextState":3}
               ]
