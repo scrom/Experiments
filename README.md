@@ -146,7 +146,9 @@ At the time of writing this readme, they are...
 
 For the server:
 -     "path": "^0.4.9",
--     "express": "^3.4.8",
+-     "express": "^4.9.0",
+-     "body-parser": "^1.8.1",
+-     "morgan": "^1.3.0"
 -     "jsonfile": "^1.2.0",
 -     "redis": "^0.12.1"
 
