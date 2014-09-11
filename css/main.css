@@ -20,6 +20,11 @@ body
     background-color: black;
 }
 
+.textbox:focus
+{
+    outline:none;
+}
+
 .left
 {
     float: left;
