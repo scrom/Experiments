@@ -2,6 +2,9 @@
   "name": "IF_Node",
   "version": "0.1.0",
   "description": "IF-Node",
+  "engines": {
+    "node": "0.10.x"
+  },
   "scripts": {
     "start": "node js/server/main.js"
   },
