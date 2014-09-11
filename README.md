@@ -141,22 +141,23 @@ Please use one test file per class and please keep these passing and growing.
 
 Module Dependencies
 -------------------
+The game is designed to run on Node version 0.10.31 (this is the latest version that is also available on Windows)
 Node Module dependencies are defined in \IF-Node\package.json
-At the time of writing this readme, they are...
+As of 11th September 2014 they are...
 
 For the server:
 -     "path": "^0.4.9",
 -     "express": "^4.9.0",
 -     "body-parser": "^1.8.1",
 -     "morgan": "^1.3.0"
--     "jsonfile": "^1.2.0",
+-     "jsonfile": "^2.0.0",
 -     "redis": "^0.12.1"
 
 For running NodeUnit:
--     "nodeunit": "^0.8.6",
--     "coffee-script": "^1.7.1",
--     "iced-coffee-script": "^1.7.1-a",
--     "streamline": "^0.10.8"
+-     "nodeunit": "^0.9.0",
+-     "coffee-script": "^1.8.0",
+-     "iced-coffee-script": "^1.7.1-f",
+-     "streamline": "^0.10.9"
 
 
 End. Thanks for reading! ;)
