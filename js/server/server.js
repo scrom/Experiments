@@ -9,7 +9,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
         //module deps
         var _root = __dirname+'/';
         var express = require('express');
-        var _webServer = express();
+        var app = express();
 
         var configObjectModule = require('./config');
         var _config = new configObjectModule.Config();
@@ -22,138 +22,133 @@ exports.Server = function Server(anInterpreter, aWatcher) {
         var _waitingResponses=[];
 
         //log requests
-        _webServer.use(express.logger('dev'));
-        _webServer.use(express.urlencoded());
-        _webServer.use(express.json());
+        app.use(express.logger('dev'));
+        app.use(express.urlencoded());
+        app.use(express.json());
 
+        //serve static files from project root
+        app.use(express.static(_root + '../../'));
 
-        _webServer.configure(function () {
-
-            //serve static files from project root
-            _webServer.use(express.static(_root + '../../'));
-
-            _webServer.get('/config', function (request, response) {
-                request.socket.setTimeout(120);
-                var sanitisedRequestURL = sanitiseString(request.url);
-                response.writeHead(200, {'Content-type':'text/plain'});
-                response.write(_interpreter.translate(sanitisedRequestURL,_config));
-                response.end();
-           });
-
-           _webServer.get('/new/*', function (request, response) {
-                request.socket.setTimeout(5);
-                var sanitisedRequestURL = sanitiseString(request.url);
-                response.writeHead(200, {'Content-type':'text/plain'});
-                response.write(_interpreter.translate(sanitisedRequestURL,_config));
-                response.end();
-            });
-
-           _webServer.get('/list*', function (request, response) {
-                request.socket.setTimeout(120);
-                var sanitisedRequestURL = sanitiseString(request.url);
-                response.writeHead(200, {'Content-type':'text/plain'});
-                response.write(_interpreter.translate(sanitisedRequestURL,_config));
-                response.end();
-            });
-
-            _webServer.get('/action/*', function (request, response) {
-                request.socket.setTimeout(5);
-                var sanitisedRequestURL = sanitiseString(request.url);
-                response.writeHead(200, {'Content-type':'text/plain'});
-                response.write(_interpreter.translate(sanitisedRequestURL,_config));
-                response.end();
-            });
-
-            _webServer.get('/save/*', function (request, response) {
-                var sanitisedRequestURL = sanitiseString(request.url);
-
-                var callbackFunction = function(result) {
-                    response.writeHead(200, {'Content-type':'text/plain'});
-                    response.write(result);
-                    response.end();
-                };
-
-                _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
-            });
-
-            _webServer.get('/load/*', function (request, response) {
-                var sanitisedRequestURL = sanitiseString(request.url);
-
-                var callbackFunction = function(result) {
-                    response.writeHead(200, {'Content-type':'text/plain'});
-                    response.write(result);
-                    response.end();
-                };
-                _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
-            });
-
-            _webServer.get('/image/*', function (request, response) {
-                request.socket.setTimeout(120);
-                var sanitisedRequestURL = sanitiseString(request.url);
-                var fileURL = _interpreter.translate(sanitisedRequestURL,_config);
-                if (fileURL) {
-                    response.sendfile(fileURL);
-                } else {
-                    res.end('err');
-                };
-            });
-
-            //event source handler(!ooh) 
-            _webServer.get('/events*', function (request, response) {
-                request.socket.setTimeout(0);
-                var sanitisedRequestURL = sanitiseString(request.url);
-
-                //var messagecount = 0;
-                
-                //Add the response object to the array of waiting responses
-                //To be replied to at some point by the sendToWaitingResponses() method
-                _waitingResponses.push(response); 
-
-            });
-
-            //fire an event
-            _webServer.get('/fire*', function (request, response) {
-                var sanitisedRequestURL = sanitiseString(request.url);
-                response.writeHead(200, {'Content-type':'text/plain'});
-                response.write('firing '+_waitingResponses.length+' messages...');  
-                              
-                self.sendToWaitingResponses();
-                //#'hack = this never seems to work on the first fire
-                self.sendToWaitingResponses();
-
-                response.write(' ...fired');
-                response.end();
-            });
-
-            //serve data
-            _webServer.get('/data/locations.json*', function (request, response) {
-                //var sanitisedRequestURL = sanitiseString(request.url);
-                //response.writeHead(200, {'Content-type':'text/plain'});
-                //response.write(_interpreter.getData(0));
-                //response.end();
-                response.send(_watcher.getLocations()); 
-            });
-
-            //serve default dynamic
-            _webServer.get('*', function (request, response) {
-                var sanitisedRequestURL = sanitiseString(request.url);
-                response.send(_interpreter.translate(sanitisedRequestURL,_config));
-            });
-
-            //post handling
-            _webServer.post('/post/', function (request, response) {
-                console.log('Post received: '+request.body.name);    
-                response.writeHead(200, {'Content-type':'text/plain'});
-                var requestJson = JSON.stringify(request.body);
-                //post this response work to the watcher
-                var responseJSON = _watcher.processRequest(request);
-                var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}';  
-                response.write(reply);
-                response.end();
-
-            });
+        app.get('/config', function (request, response) {
+            request.socket.setTimeout(120);
+            var sanitisedRequestURL = sanitiseString(request.url);
+            response.writeHead(200, {'Content-type':'text/plain'});
+            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.end();
         });
 
+        app.get('/new/*', function (request, response) {
+            request.socket.setTimeout(5);
+            var sanitisedRequestURL = sanitiseString(request.url);
+            response.writeHead(200, {'Content-type':'text/plain'});
+            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.end();
+        });
+
+        app.get('/list*', function (request, response) {
+            request.socket.setTimeout(120);
+            var sanitisedRequestURL = sanitiseString(request.url);
+            response.writeHead(200, {'Content-type':'text/plain'});
+            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.end();
+        });
+
+        app.get('/action/*', function (request, response) {
+            request.socket.setTimeout(5);
+            var sanitisedRequestURL = sanitiseString(request.url);
+            response.writeHead(200, {'Content-type':'text/plain'});
+            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.end();
+        });
+
+        app.get('/save/*', function (request, response) {
+            var sanitisedRequestURL = sanitiseString(request.url);
+
+            var callbackFunction = function(result) {
+                response.writeHead(200, {'Content-type':'text/plain'});
+                response.write(result);
+                response.end();
+            };
+
+            _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
+        });
+
+        app.get('/load/*', function (request, response) {
+            var sanitisedRequestURL = sanitiseString(request.url);
+
+            var callbackFunction = function(result) {
+                response.writeHead(200, {'Content-type':'text/plain'});
+                response.write(result);
+                response.end();
+            };
+            _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
+        });
+
+        app.get('/image/*', function (request, response) {
+            request.socket.setTimeout(120);
+            var sanitisedRequestURL = sanitiseString(request.url);
+            var fileURL = _interpreter.translate(sanitisedRequestURL,_config);
+            if (fileURL) {
+                response.sendfile(fileURL);
+            } else {
+                res.end('err');
+            };
+        });
+
+        //event source handler(!ooh) 
+        app.get('/events*', function (request, response) {
+            request.socket.setTimeout(0);
+            var sanitisedRequestURL = sanitiseString(request.url);
+
+            //var messagecount = 0;
+                
+            //Add the response object to the array of waiting responses
+            //To be replied to at some point by the sendToWaitingResponses() method
+            _waitingResponses.push(response); 
+
+        });
+
+        //fire an event
+        app.get('/fire*', function (request, response) {
+            var sanitisedRequestURL = sanitiseString(request.url);
+            response.writeHead(200, {'Content-type':'text/plain'});
+            response.write('firing '+_waitingResponses.length+' messages...');  
+                              
+            self.sendToWaitingResponses();
+            //#'hack = this never seems to work on the first fire
+            self.sendToWaitingResponses();
+
+            response.write(' ...fired');
+            response.end();
+        });
+
+        //serve data
+        app.get('/data/locations.json*', function (request, response) {
+            //var sanitisedRequestURL = sanitiseString(request.url);
+            //response.writeHead(200, {'Content-type':'text/plain'});
+            //response.write(_interpreter.getData(0));
+            //response.end();
+            response.send(_watcher.getLocations()); 
+        });
+
+        //serve default dynamic
+        app.get('*', function (request, response) {
+            var sanitisedRequestURL = sanitiseString(request.url);
+            response.send(_interpreter.translate(sanitisedRequestURL,_config));
+        });
+
+        //post handling
+        app.post('/post/', function (request, response) {
+            console.log('Post received: '+request.body.name);    
+            response.writeHead(200, {'Content-type':'text/plain'});
+            var requestJson = JSON.stringify(request.body);
+            //post this response work to the watcher
+            var responseJSON = _watcher.processRequest(request);
+            var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}';  
+            response.write(reply);
+            response.end();
+
+        });
         //public member functions
 
         //Function that will send a message to each waiting response - used for eventsourcing
@@ -181,7 +176,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
        //initiate listening with port from config
        self.listen = function () {
             self = this;
-            _webServer.listen(_config.port)
+            app.listen(_config.port)
             console.log(_objectName + ' '+_config.hostname+' listening on port ' + _config.port);
         };
 
