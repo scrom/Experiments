@@ -1025,7 +1025,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
 
         self.repair = function(artefactName, player) {
-            if (self.isDead()) {return self.getDescriptivePrefix()+" dead. I don't think "+self.getSuffix()+" can help you here.";};
+            var playerAggression = player.getAggression();
+            var initialReply = self.initialReplyString(playerAggression);
+            if (initialReply) {return initialReply;};
             var resultString = "";
 
             if (stringIsEmpty(artefactName)){ return verb+" what?"};
