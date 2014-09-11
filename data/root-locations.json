@@ -479,7 +479,7 @@
   {
     "object": "location",
     "name": "atrium-seating",
-    "description": "You're in the atrium seating area.",
+    "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work.<br>It's quite a pleasant space dominated by a very large potted tree.",
     "exits": [
       {
         "object": "exit",
@@ -498,6 +498,38 @@
       }
     ],
     "inventory": [
+	{
+        "object": "artefact",
+        "name": "tree",
+        "description": "large tree",
+        "detailedDescription": "It's an ornamental evergreen variety.<br>The twisted trunks spiral up about 25 feet into a carefully manicured crown of green.",
+        "attributes": {
+          "weight": 300,
+          "type": "scenery"
+        },
+        "synonyms": [
+          "large tree",
+          "potted tree",
+          "large potted tree"
+        ]},
+	{
+        "object": "artefact",
+        "name": "chess",
+        "description": "chess board",
+        "detailedDescription": "It's a cheapish generic wooden chess set.",
+        "attributes": {
+          "weight": 2,
+		  "breakable": true,
+		  "canCollect": true,
+		  "price": 5,
+          "type": "treasure"
+        },
+        "synonyms": [
+          "board",
+          "set",
+          "chess board",
+		  "chess set"
+        ]},
       {
         "object": "artefact",
         "name": "lawyer door",
@@ -593,7 +625,7 @@
   {
     "object": "location",
     "name": "bike-ambulance",
-    "description": "You're standing in the west car park by the bike ambulance.",
+    "description": "You're standing in the west car park by the bike ambulance.<br>This is definitely the place to bring your broken bikes when they need some loving.",
     "exits": [
       {
         "object": "exit",
@@ -604,6 +636,18 @@
       }
     ],
     "inventory": [
+		{
+        "object": "artefact",
+        "name": "bike ambulance",
+        "description": "bike ambulance",
+        "detailedDescription": "It's an old converted NHS ambulance complete with blue flashing lights.",
+        "attributes": {
+          "weight": 3500,
+          "type": "scenery"
+        },
+        "synonyms": [
+          "ambulance"
+        ]},
       {
         "object": "creature",
         "name": "rick",
@@ -621,7 +665,6 @@
         },
         "synonyms": [
           "bike guy",
-          "bike ambulance",
           "ric",
           "him",
           "rik"
