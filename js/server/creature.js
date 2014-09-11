@@ -2071,9 +2071,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         missionsToRemove.push(_missions[i].getName());
                     } else {
                         _missions[i].startTimer();
-                        if (response.length >0) {response+= "<br>"}
-                        else if (!(keyword)) {response+= initCap(self.getDisplayName())+" says 'I\'m not sure what you just said but...'<br>"};
-                        response += _missions[i].getNextDialogue(someSpeech, keyword);
+                        //if (response.length >0) {response+= "<br>"};                        
+                        var dialogueResponse = _missions[i].getNextDialogue(someSpeech, keyword);
+                        if (dialogueResponse) {
+                            //note, we override any responses from the earlier section here if we have a better one from the mission!
+                            response = dialogueResponse; 
+                        };
                     };
                 };
             };

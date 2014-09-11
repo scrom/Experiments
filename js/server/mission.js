@@ -292,18 +292,39 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         //dialogue object (if used) is:
         //{"state":number,"keywords":[string array],"response":"reply string","nextState":number}
         //find the next matching dialogue object for given index and keyword.
-        self.getMatchingDialogueObject = function(index, keyword) {
+        self.getMatchingDialogueObject = function(index, inputString, keyword) {
+            var keywords = "";
+            var defaultDialogue;
+            if (inputString) {
+                var keywords = inputString.split(" ");
+            };
             for (var i=0;i<_dialogue.length;i++) {
                 if (typeof _dialogue[i] == "object") {
                     if (_dialogue[i].state == index) {
                         if (_dialogue[i].keywords) {
+                            //check whole input string match
                             if (_dialogue[i].keywords.indexOf(keyword) >-1) {
                                 return _dialogue[i];
+                            };
+                            //check single word match
+                            for (var k=0;k<keywords.length;k++) {
+                                if (_dialogue[i].keywords.indexOf(keywords[k]) >-1) {
+                                    return _dialogue[i];
+                                };
+                            };
+                        } else {
+                            //this dialogue has no keywords. It's a default path.
+                            //preserve this in case we don't return but only in the case where this is parsing an input string
+                            //as that's our second-chance response.
+                            if (inputString != null && inputString != undefined) {
+                                defaultDialogue = _dialogue[i];
                             };
                         };
                     };
                 };
             };
+            //we'll only get here if we don't have another match.
+            if (defaultDialogue) {return defaultDialogue;};
         };
 
         self.nextDialogueContainsKeyWord = function(keyword) {
@@ -312,7 +333,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if (typeof _dialogue[_conversationState] == "object") {
                     //find objects with matching conversation state index
                     //check keywords - return true if match
-                    var found = self.getMatchingDialogueObject(_conversationState, keyword);
+                    var found = self.getMatchingDialogueObject(_conversationState, null, keyword);
                     if (found) {return true;};
                 } else { //typeof(obj) == 'string')
                     if (_dialogue[_conversationState].indexOf(keyword) >-1) {return true;};
@@ -332,9 +353,9 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if (typeof _dialogue[_conversationState] == "object") {
                     //find objects with matching conversation state index
                     //check keywords 
-                    var nextDialogue = self.getMatchingDialogueObject(_conversationState, keyword);
+                    var nextDialogue = self.getMatchingDialogueObject(_conversationState, null, keyword);
                     if (!(nextDialogue)) {
-                        nextDialogue = self.getMatchingDialogueObject(_conversationState, inputSpeech);
+                        nextDialogue = self.getMatchingDialogueObject(_conversationState, inputSpeech, null);
                     };
                     if (nextDialogue) {
                         response += nextDialogue.response;

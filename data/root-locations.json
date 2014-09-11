@@ -4445,16 +4445,18 @@
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'Would you like an ice cream?'",
-                {"state":1,"keywords":["yes"],"response":"'Here you go!'","nextState":2},
-				{"state":1,"keywords":["no"],"response":"'Never mind.'","nextState":3}
+                {"state":1,"keywords":["yes", "ok"],"response":"'Here you go!'","nextState":3},
+				{"state":1,"keywords":["no"],"response":"'Never mind.'","nextState":4},
+				{"state":1,"response":"'Maybe later then?'","nextState":2},
+				{"state":2,"response":"'How about that ice cream now?'","nextState":1}
               ]
             },
             "conditionAttributes": {
               "alive": true,
-              "conversationState": 2
+              "conversationState": 3
             },
             "failAttributes": {
-              "conversationState": 3
+              "conversationState": 4
             },
             "reward": {
               "score": 5,
