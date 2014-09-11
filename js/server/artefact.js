@@ -986,6 +986,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _broken;
         };
 
+        self.isDamaged = function() {
+            return _damaged;
+        };
+
         self.combinesWith = function(anObject, crossCheck) {
             if (self.isDestroyed()) {return false;};
             var combinesWithResult = self.getCombinesWith();
@@ -1268,33 +1272,42 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return deliveredItem;
         };
 
-        self.repair = function(playerRepairSkills, playerInventory) {
+        self.repair = function(repairSkills, repairer) {
+            var repairerInventory = repairer.getInventoryObject();
+            var repairerType = repairer.getType();
             var resultString = "";
 
             if(_destroyed) {return initCap(_itemDescriptivePrefix)+" beyond repair."};
-            //console.log("Checking player repair skills: "+playerRepairSkills);
-            var playerHasRequiredSkill = false;
-            for (var i=0; i<playerRepairSkills.length;i++) {
-                if (self.syn(playerRepairSkills[i])) {
-                    playerHasRequiredSkill = true;
+            //console.log("Checking repair skills: "+repairSkills);
+            var hasRequiredSkill = false;
+            for (var i=0; i<repairSkills.length;i++) {
+                if (self.syn(repairSkills[i])) {
+                    hasRequiredSkill = true;
                     break;
                 };
             };
-            if (!(playerHasRequiredSkill)) {return "Unfortunately you don't have the skills needed to fully repair "+_itemSuffix+"."; };
+            if (!(hasRequiredSkill)) {
+                if (repairerType == "player") {
+                    return "Unfortunately you don't have the skills needed to fully repair "+_itemSuffix+"."; 
+                } else {
+                    return "Unfortunately "+repairer.getPrefix().toLowerCase()+" doesn't have the skills needed to fully repair "+_itemSuffix+"."; 
+                };
+            };
 
             _description = _initialDescription;
             _detailedDescription = _initialDetailedDescription;
             _broken = false;
             _damaged = false;
             _chewed = false;
+            if (_price > 0) { self.increasePriceByPercent(90); }; //almost double value now not broken
 
-            resultString += "You fixed "+self.getDisplayName();
+            resultString += repairer.getPrefix()+" fixed "+self.getDisplayName();
 
             if (self.checkComponents()) { return resultString+".";};
         
             //if there's still components missing...
-            //attempt to add components from player inventory
-            var components = playerInventory.getComponents(self.getName());
+            //attempt to add components from repairer inventory
+            var components = repairerInventory.getComponents(self.getName());
             if (components.length == 0) {return resultString +" but "+ _itemDescriptivePrefix.toLowerCase()+" still missing something.";};
        
             var addedComponentCount = 0;
@@ -1307,7 +1320,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (addedComponentCount>0 && addedComponentCount<components.length-1) {addedComponentString +=", ";};                     
                     addedComponentString += components[i].getDisplayName();
                     _inventory.add(components[i]);
-                    playerInventory.remove(components[i].getName());
+                    repairerInventory.remove(components[i].getName());
                     addedComponentCount++;
                 } else {
                     notAddedComponentCount++;
@@ -1315,7 +1328,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
                 
             if (addedComponentCount>0) {
-                resultString+= addedComponentString+" you were carrying into "+_itemSuffix+".<br>";
+                if (repairerType == "player") {
+                    resultString+= addedComponentString+" you were carrying into "+_itemSuffix+".<br>";
+                } else {
+                    resultString+= addedComponentString+" "+repairer.getSuffix()+" was carrying into "+_itemSuffix+".<br>";
+                };
             }
             else {
                 resultString+="."
@@ -1324,13 +1341,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //check we have everything we need
             if (!(self.checkComponents())) {
-                resultString += "<br>You make a valiant attempt at getting "+_itemSuffix+" fully working but ";
+                if (repairerType == "player") {
+                    resultString += "<br>You make a valiant attempt at getting "+_itemSuffix+" fully working but ";
+                } else {
+                    resultString += "<br>"+repairer.getPrefix()+" makes a valiant attempt at getting "+_itemSuffix+" fully working but ";
+                };
 
                 if (notAddedComponentCount>0) {
                     if (_locked) {
                         resultString += _itemDescriptivePrefix.toLowerCase()+" locked.";
                     } else {
-                        resultString += "you can't get all the right parts to fit.";
+                        resultString += "can't get all the right parts to fit.";
                     };
                     
                 } else {

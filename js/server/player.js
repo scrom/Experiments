@@ -597,6 +597,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _username;
         };
 
+        self.getPrefix = function() {
+            return "You";
+        };
+
+        self.getDescriptivePrefix = function() {
+            return "You're";
+        };
+
+        self.getSuffix = function() {
+            return "you";
+        };
+
+        self.getPossessiveSuffix = function() {
+            return "your";
+        };
+
         self.getDisplayName = function() {
             return "you";
         };
@@ -1378,7 +1394,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += "<br>That's all the missing ingredients in place.";
                         //would like to attempt an auto-repair here
                         if (receiver.isBroken()) {     
-                            resultString += "<br>"+receiver.repair(_repairSkills, _inventory);                 
+                            resultString += "<br>"+receiver.repair(_repairSkills, self);                 
                         };
                     };
                 } else if (verb == "hide") { //can only hide if not a component
@@ -1617,16 +1633,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 return resultString;
             };
-            if (verb == "find") {return giver.find(artefactName, _aggression, map);};
+            if (verb == "find") {return givers[0].find(artefactName, _aggression, map);};
+            if (verb == "repair") {return givers[0].repair(artefactName, self);};
 
-            if (stringIsEmpty(artefactName)){ return verb+" "+giver.getDisplayName()+" for what?";};
+            if (stringIsEmpty(artefactName)){ return verb+" "+givers[0].getDisplayName()+" for what?";};
 
-            var artefact = (getObjectFromLocation(artefactName)||giver.getObject(artefactName));
+            var artefact = (getObjectFromLocation(artefactName)||givers[0].getObject(artefactName));
             if (!(artefact)) {
                 //does the creature have dialogue instead?
-                var creatureResponse = giver.replyToKeyword(artefactName, self, map);
+                var creatureResponse = givers[0].replyToKeyword(artefactName, self, map);
                 if (creatureResponse) {return creatureResponse;};
-                return "There's no "+artefactName+" here and "+giver.getDisplayName()+" isn't carrying any either.";
+                return "There's no "+artefactName+" here and "+givers[0].getDisplayName()+" isn't carrying any either.";
             };  
             
             //@todo if verb == open/unlock 
@@ -1638,13 +1655,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //we know player *can* carry it...
             if (getObjectFromLocation(artefactName)) {
                 //console.log('locationartefact');
-                if (!(artefact.isCollectable())) {return  "Sorry, "+giver.getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
-                if (!(giver.canCarry(artefact))) { return  "Sorry, "+giver.getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
+                if (!(artefact.isCollectable())) {return  "Sorry, "+givers[0].getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
+                if (!(givers[0].canCarry(artefact))) { return  "Sorry, "+givers[0].getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
                 return self.get('get',artefactName);
             };
             
             var locationInventory = _currentLocation.getInventoryObject();
-            return giver.relinquish(artefactName, self, locationInventory);
+            return givers[0].relinquish(artefactName, self, locationInventory);
         };
 
         self.say = function(verb, speech, receiverName, map) {
@@ -1815,9 +1832,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            if (!(artefact.isBroken())) {return artefact.getDescriptivePrefix()+" not broken.";}; //this will catch creatures
+            if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return artefact.getDescriptivePrefix()+" not broken or damaged.";}; //this will catch creatures
             
-            return artefact.repair(_repairSkills, _inventory);
+            return artefact.repair(_repairSkills, self);
 
         };
 

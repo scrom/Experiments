@@ -61,6 +61,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _imageName;
         var _contagion = [];
         var _antibodies = [];
+        var _repairSkills = [];
 
         //tracking of player attacks
         var _originalType = "creature";
@@ -162,6 +163,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };                
             if (creatureAttributes.antibodies != undefined) {_antibodies = creatureAttributes.antibodies;};    
+            if (creatureAttributes.repairSkills != undefined) {
+                for(var i=0; i<creatureAttributes.repairSkills.length;i++) {
+                    _repairSkills.push(creatureAttributes.repairSkills[i]);
+                };
+            };
     
             if (creatureAttributes.originalType) {
                 _originalType = creatureAttributes.originalType;
@@ -279,6 +285,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
           };
 
           return array;
+        };
+
+        var notFoundMessage = function(objectName) {
+            var randomReplies = ["There's no "+objectName+" here and neither of you are carrying any either.", self.getDisplayName()+" can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
+            var randomIndex = Math.floor(Math.random() * randomReplies.length);
+            return randomReplies[randomIndex];
+        };
+
+        var getObjectFromPlayer = function(objectName, player){
+            var playerInventory = player.getInventoryObject();
+            return playerInventory.getObject(objectName);
+        };
+        var getObjectFromLocation = function(objectName){
+            return _currentLocation.getObject(objectName);
+        };
+        var getObjectFromPlayerOrLocation = function(objectName){
+            var locationArtefact = getObjectFromLocation(objectName);
+            if (locationArtefact) {return locationArtefact;} 
+            else {return getObjectFromPlayer(objectName);};
+        };
+        var getObjectFromSelfPlayerOrLocation = function(objectName, player) {
+            var locationArtefact = getObjectFromLocation(objectName);
+            if (locationArtefact) {return locationArtefact;};
+            var playerArtefact = getObjectFromPlayer(objectName, player);
+            if (playerArtefact) {return playerArtefact;};
+            return _inventory.getObject(objectName);
         };
 
 
@@ -410,6 +442,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.imageName = _imageName;     
             currentAttributes.contagion = _contagion;                     
             currentAttributes.antibodies = _antibodies;  
+            currentAttributes.repairSkills = _repairSkills;  
                 
             currentAttributes.originalType = _originalType;
             currentAttributes.originalBaseAffinity = _originalBaseAffinity;
@@ -466,6 +499,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };                
             };                
             if (creatureAttributes.antibodies.length>0) {saveAttributes.antibodies = creatureAttributes.antibodies;};     
+            if (creatureAttributes.repairSkills.length>0) {saveAttributes.repairSkills = creatureAttributes.repairSkills;};   
     
             if (creatureAttributes.originalType != creatureAttributes.type) {saveAttributes.originalType = creatureAttributes.originalType;};     
             if (creatureAttributes.originalBaseAffinity != creatureAttributes.baseAffinity) {saveAttributes.originalBaseAffinity = creatureAttributes.originalBaseAffinity;};     
@@ -848,8 +882,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_contagion.length>0) {resultString+= "<br>"+_genderPrefix + " really doesn't look very well."};
             if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
             if (self.isDead()) {
-                if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; }
+                if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; };
                 return resultString;
+            };
+
+            if (_repairSkills.length>0) {
+                resultString += "<br>" + _genderPrefix + " can repair ";
+                for (var r=0;r<_repairSkills.length;r++) {
+                    if (r > 0 && r < _repairSkills.length - 1) { resultString += ', '; };
+                    if (r > 0 && r == _repairSkills.length - 1) { resultString += ' and '; };
+                    resultString += _repairSkills[r]+"s"; //plural
+                };
+                resultString += " if you <i>ask</i> "+_genderSuffix+" nicely.<br>"; 
             };
 
             if (_salesInventory.size() == 1) { resultString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
@@ -977,6 +1021,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (offenceLevel >0) {
                 self.decreaseAffinity(offenceLevel);
             };            
+        };
+
+
+        self.repair = function(artefactName, player) {
+            if (self.isDead()) {return self.getDescriptivePrefix()+" dead. I don't think "+self.getSuffix()+" can help you here.";};
+            var resultString = "";
+
+            if (stringIsEmpty(artefactName)){ return verb+" what?"};
+
+            var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return artefact.getDescriptivePrefix()+" not broken or damaged.";}; //this will catch creatures
+            
+            return artefact.repair(_repairSkills, self);
+
         };
 
         self.receive = function(anObject) {

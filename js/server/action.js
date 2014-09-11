@@ -498,10 +498,12 @@ exports.Action = function Action(aPlayer, aMap) {
                         if (_splitWord == "is"||_splitWord == "to") {
                             //check for "ask x to find y" or "ask x where y is" or "ask x where is y";
                             if (_actionString.indexOf(" find ") >-1) {
+                                _object1 = _object1.replace("find ","")
+                                _object1 = _object1.replace(" a ", " ");
                                 _object1 = _object1.replace(" the ", " ");
                                 _object1 = _object1.replace(" some ", " ");
                                 _object1 = _object1.trim();
-                                description = _player.ask("find", _object0, _object1.replace("find ",""), _map); 
+                                description = _player.ask("find", _object0, _object1.trim(), _map); 
                                 break;   
                             };
                             if (_actionString.indexOf(" where ") >-1) {
@@ -511,11 +513,24 @@ exports.Action = function Action(aPlayer, aMap) {
                                 _object1 = objectPair[1];
                                 _object1 = " "+_object1+" ";
                                 _object1 = _object1.replace(" is ", "");
+                                _object1 = _object1.replace(" a ", " ");
                                 _object1 = _object1.replace(" the ", " ");
                                 _object1 = _object1.replace(" some ", " ");
                                 _object1 = _object1.trim();
                                 //console.log("O0: "+_object0+"O1:"+_object1);
                                 description = _player.ask("find", _object0.trim(), _object1.trim(), _map);
+                                break;
+                            };
+                            if (_actionString.indexOf(" repair ") >-1 || _actionString.indexOf(" fix ") >-1) {
+                                _object1 = _object1.replace("repair ","");
+                                _object1 = _object1.replace("fix ","");
+                                _object1 = _object1.replace(" a ", " ");
+                                _object1 = _object1.replace(" the ", " ");
+                                _object1 = _object1.replace(" some ", " ");
+                                _object1 = _object1.trim();
+                                _object1 = _object1.trim();
+                                //console.log("O0: "+_object0+"O1:"+_object1);
+                                description = _player.ask("repair", _object0.trim(), _object1.trim(), _map);
                                 break;
                             };
                             //check for "ask x to go y" or "ask x to go to y"

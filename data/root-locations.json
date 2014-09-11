@@ -600,7 +600,8 @@
           "gender": "male",
           "type": "friendly",
           "carryWeight": 18,
-          "health": 215
+          "health": 215,
+		  "repairSkills":["bike"] 
         },
         "synonyms": [
           "bike guy",
@@ -3030,6 +3031,7 @@
           "health": 215,
           "canTravel": true,
           "traveller": true,
+		  "repairSkills":["projector", "hard disk"], 
           "imageName": "amandamansfield.jpg"
         },
         "synonyms": [
@@ -5216,6 +5218,9 @@
               "isDestroyed": false,
               "isBroken": false,
               "isDamaged": false
+            },
+            "failAttributes": {
+              "isDestroyed": true
             },
             "reward": {
               "affinityModifier": 2,
