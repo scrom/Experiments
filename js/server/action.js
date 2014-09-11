@@ -1,14 +1,15 @@
 ﻿"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
-exports.Action = function Action(aPlayer, aMap) {
+exports.Action = function Action(player, map, fileManager) {
     try{
         var locationObjectModule = require('./location');
         var artefactObjectModule = require('./artefact');
 	    var self = this; //closure so wec don't lose this reference in callbacks
         var _resultString = '';
         var _resultJson = '';
-        var _player = aPlayer; //sometimes actions impact the player
-        var _map = aMap;
+        var _player = player; //sometimes actions impact the player
+        var _map = map;
+        var _fm = fileManager;
 
         //action string components
         var _actionString = '';
@@ -47,7 +48,10 @@ exports.Action = function Action(aPlayer, aMap) {
                               '","object1":"'+_object1+
                               '","description":"'+resultDescription+'"';
             if (imageName) {
-                _resultJson += ',"image":"'+imageName+'"';
+                //check image exists and only add to response if it does
+                if (_fm.imageExists(imageName)) {
+                    _resultJson += ',"image":"'+imageName+'"';
+                };
             };
             _resultJson += '}';
         };

@@ -118,7 +118,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         self.userAction = function(actionString) {
             //create single instance of player actions is not previously set
             if (!(_playerActions)) {
-                _playerActions = new actionObjectModule.Action(_player, _map);
+                _playerActions = new actionObjectModule.Action(_player, _map, _fm);
             };
             var responseJson = _playerActions.act(actionString);
             self.setTimeStamp();
