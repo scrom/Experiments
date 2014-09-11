@@ -754,9 +754,25 @@ exports.Action = function Action(player, map, fileManager) {
 
                         //check for a custom verb and response here.
                         description = _player.customAction(_verb, _object0);
-                        if (description) { 
-                            _ticks = 1;
-                            description = description.replace("$result", ""); 
+                        if (description) {
+                            //if customAction redirects to another action...
+                            if (description.indexOf("$action") > -1) {
+                                var newVerb = description.replace("$action","").trim();
+                                //replace verb but keep original object
+                                self.setActionString(_actionString.replace(_verb,newVerb));
+
+                                //if default action is more than just a single word verb, overwrite the entire original action.
+                                if (newVerb.indexOf(' ') > 0) {
+                                    self.setActionString(newVerb);  
+                                };                     
+                        
+                                return self.processAction(_actionString);
+                                description = null;
+
+                            } else { 
+                                _ticks = 1;
+                                description = description.replace("$result", ""); 
+                            };
                         };
                         //console.log("Custom result:"+description);
                         //console.log('verb: '+_verb+' default response');
@@ -941,7 +957,11 @@ exports.Action = function Action(player, map, fileManager) {
 
             //replace any player substitution variables
             while (description.indexOf("$player") > -1) {
-                description = description.replace("$player",initCap(_player.getUsername())).replace("%20"," ");
+                var username = initCap(_player.getUsername());
+                while (username.indexOf("%20") > -1) {
+                     username = username.replace("%20"," ");
+                };
+                description = description.replace("$player",username);
             };
 
             //extract image link from response if set

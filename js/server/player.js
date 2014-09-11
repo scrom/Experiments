@@ -850,7 +850,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return null;}; //treat this as not understood too
             if (artefact.checkCustomAction(verb)) {
-                return artefact.getDefaultResult()+"$result";
+                var resultString = artefact.getDefaultResult();
+
+                if (!(resultString.indexOf("$action") >-1)) {
+                    //if we're *not* redirecting to an alternate verb
+                    resultString += "$result";
+                };
+                return resultString;
             };
 
             return null;              

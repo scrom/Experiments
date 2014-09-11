@@ -52,7 +52,9 @@
           "defaultAction": "press",
           "weight": 200,
           "type": "door",
-          "canOpen": true
+          "canOpen": true,
+          "customAction": "call",
+          "defaultResult": "$action press"
         },
         "linkedexits": [
           {
