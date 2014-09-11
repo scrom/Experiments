@@ -146,7 +146,6 @@ Node Module dependencies are defined in \IF-Node\package.json
 As of 11th September 2014 they are...
 
 For the server:
--     "path": "^0.4.9",
 -     "express": "^4.9.0",
 -     "body-parser": "^1.8.1",
 -     "morgan": "^1.3.0"
