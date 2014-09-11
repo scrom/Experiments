@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "path": "^0.4.9",
-    "express": "^3.4.8",
     "nodeunit": "^0.8.6",
     "coffee-script": "^1.7.1",
     "iced-coffee-script": "^1.7.1-a",
     "streamline": "^0.10.8",
     "jsonfile": "^1.2.0",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "express": "^4.9.0",
+    "body-parser": "^1.8.1",
+    "morgan": "^1.3.0"
   }
 }

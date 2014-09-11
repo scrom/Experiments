@@ -9,6 +9,8 @@ exports.Server = function Server(anInterpreter, aWatcher) {
         //module deps
         var _root = __dirname+'/';
         var express = require('express');
+        var bodyParser = require('body-parser');
+        var logger = require('morgan');
         var app = express();
 
         var configObjectModule = require('./config');
@@ -22,9 +24,9 @@ exports.Server = function Server(anInterpreter, aWatcher) {
         var _waitingResponses=[];
 
         //log requests
-        app.use(express.logger('dev'));
-        app.use(express.urlencoded());
-        app.use(express.json());
+        app.use(logger('dev')); //could also use 'common' or 'combined' for alternatives
+        app.use(bodyParser.urlencoded({extended:true}));
+        app.use(bodyParser.json());
 
         //serve static files from project root
         app.use(express.static(_root + '../../'));
@@ -89,7 +91,7 @@ exports.Server = function Server(anInterpreter, aWatcher) {
             var sanitisedRequestURL = sanitiseString(request.url);
             var fileURL = _interpreter.translate(sanitisedRequestURL,_config);
             if (fileURL) {
-                response.sendfile(fileURL);
+                response.sendFile(fileURL);
             } else {
                 res.end('err');
             };
