@@ -170,8 +170,8 @@ exports.Map = function Map() {
             //Get object (by name only, not synonym)
             //return location name when found
             for (var i=0;i<_locations.length;i++) {
-                if (_locations[i].objectExists(objectName, true)) {
-                    _locations[i].removeObject(objectName);
+                if (_locations[i].objectExists(objectName, true, true)) {
+                    _locations[i].removeObject(objectName, true);
                 };
             };
         };

@@ -169,7 +169,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return "success: "+anObject.getDescription()+".";
         };
     
-        self.remove = function(anObjectName) {
+        self.remove = function(anObjectName, searchCreatures) {
                 var localInventory = self.getAllObjects(true);
                 for(var index = 0; index < localInventory.length; index++) {
                     if (localInventory[index].syn(anObjectName)) {
@@ -179,7 +179,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         returnObject.show();
                         return returnObject;
                     };
-                    if(localInventory[index].getType() != 'creature' && (!(localInventory[index].isLocked()))) {
+                    if(((localInventory[index].getType() != 'creature') || searchCreatures) && (!(localInventory[index].isLocked()))) {
                         if (localInventory[index].isOpen()) {
                             //only remove from open, unlocked containers - this way we know the player has discovered them
                             var containerInventory = localInventory[index].getInventoryObject()
@@ -188,16 +188,25 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         if (object) {
                             object.show();
                             return object;
-                        }; 
+                        };
+                            
+                        if (localInventory[index].getType() == 'creature') {
+                            var salesInventory = localInventory[index].getSalesInventoryObject();
+                            object = salesInventory.remove(anObjectName);
+                            if (object) {
+                                object.show();
+                                return object
+                            };
+                        };
                     };
                 };
                 //console.log(_ownerName+" is not carrying "+anObjectName);
                 return null;
         };
     
-        self.check = function(anObjectName, ignoreSynonyms) {
+        self.check = function(anObjectName, ignoreSynonyms, searchCreatures) {
             //check if passed in object name is in inventory
-            if (self.getObject(anObjectName, ignoreSynonyms)){return true;};
+            if (self.getObject(anObjectName, ignoreSynonyms, searchCreatures)){return true;};
             return false;
         };
 
@@ -244,7 +253,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //recursively gets objects in other objects
         //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
-        self.getObject = function(anObjectName, ignoreSynonyms) {
+        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures) {
             for(var index = 0; index < _items.length; index++) {
                 if (ignoreSynonyms) {
                     if( _items[index].getName() == anObjectName ) {
@@ -259,7 +268,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         return _items[index];
                     };
                 };
-                if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
+                if(((_items[index].getType() != 'creature') || searchCreatures) && (!(_items[index].isLocked()))) {
                     if (_items[index].isOpen()) {
                     //    console.log(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
                     //only confirm item from open, unlocked containers - this way we know the player has discovered them
@@ -267,7 +276,15 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         if (object) {
                             //object.show();
                             return object
-                        }; 
+                        };
+                        
+                        if (_items[index].getType() == 'creature') {
+                            object = _items[index].getSalesInventoryObject().getObject(anObjectName);
+                            if (object) {
+                                //object.show();
+                                return object
+                            };
+                        };
                     };
                 };
            };

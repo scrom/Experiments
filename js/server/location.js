@@ -264,18 +264,18 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return "location now contains "+anObject.getDescription()+".";
         };
 
-        self.removeObject = function(anObjectName) {
+        self.removeObject = function(anObjectName, searchCreatures) {
             //console.log('removing '+anObjectName+' from '+self.getName());
-            return _inventory.remove(anObjectName);
+            return _inventory.remove(anObjectName, searchCreatures);
         };
 
-        self.objectExists = function(anObjectName, ignoreSynonyms) {
+        self.objectExists = function(anObjectName, ignoreSynonyms, searchCreatures) {
             //check if passed in object is in location
-            return _inventory.check(anObjectName, ignoreSynonyms);
+            return _inventory.check(anObjectName, ignoreSynonyms, searchCreatures);
         };
 
-        self.getObject = function(anObjectName, ignoreSynonyms) {
-            return _inventory.getObject(anObjectName, ignoreSynonyms);
+        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures) {
+            return _inventory.getObject(anObjectName, ignoreSynonyms, searchCreatures);
         };
 
         self.getObjectByType = function(anObjectType) {

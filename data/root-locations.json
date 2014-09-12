@@ -649,7 +649,8 @@
               "score": 50,
               "affinityModifier": 2,
               "increaseAffinityFor": "chris moore",
-              "successMessage": "Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
+			  "removeObject": "bike",
+              "successMessage": "You hand the bike over to Rick.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
             }
           }
         ]
@@ -4161,7 +4162,7 @@
         "inventory": [
           {
             "object": "artefact",
-            "name": "disk",
+            "name": "hard disk",
             "description": "hard disk",
             "detailedDescription": "Pretty sure it belongs to Red Gate.",
             "attributes": {
@@ -4175,7 +4176,7 @@
               "disc",
               "drive",
               "hard drive",
-              "hard disk",
+              "disk",
               "hard disc",
               "disc drive",
               "disk drive"
@@ -5297,7 +5298,7 @@
             "displayName": "retrieve the stolen hard disk",
             "description": "Retrieve a stolen hard drive.",
             "attributes": {
-              "missionObject": "disk",
+              "missionObject": "hard disk",
               "destination": "simon galbraith",
               "static": true,
               "dialogue": [
@@ -5324,6 +5325,7 @@
               "increaseAffinityFor": "simon galbraith",
               "score": 50,
               "money": 25,
+			  "removeObject": "hard disk",
               "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus.",
 			  "failMessage": "That was foolish. The hard disk was worth a lot in the right hands.<br>Well. Best you move on and see if you can redeem yourself elsewhere."
             }
@@ -5983,6 +5985,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "justin heron",
               "decreaseAffinityFor": "james dening",
+			  "removeObject": "wig",
               "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Justin will have appreciated it.<br>Have 50 points."
             }
           }
@@ -8004,7 +8007,7 @@
         "inventory": [
           {
             "object": "artefact",
-            "name": "your bike",
+            "name": "old bike",
             "description": "tatty old bike",
             "detailedDescription": "It's yours. Yay :D",
             "attributes": {
@@ -8012,8 +8015,10 @@
               "type": "property",
               "canCollect": true,
               "isBreakable": true,
+			  "isBreakable": true,
+			  "isDamaged": true,
               "lockable": true,
-              "price": 5,
+              "price": 8,
               "customAction": "ride",
               "defaultResult": "You're meant to be working!<br>You cycle around for a while until you feel guilty for not doing something more useful."
             },
