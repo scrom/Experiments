@@ -5282,7 +5282,13 @@
               "static": true,
               "dialogue": [
                 "'Hi $player, welcome to Red Gate'<br>'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
-                "'Have you found my missing data yet?'"
+                {"state":1,"keywords":["yes", "ok", "yup", "y"],"response":"'Thanks $player. I think there's a spy somewhere in the building.'<br>'Track them down and investivate the situation.'","nextState":3},
+				{"state":1,"keywords":["no", "not", "not yet"],"response":"Refusing a polite but important request from your CEO probably isn't wise.<br>'Well, when you're ready to do something useful, you know where I am.'","nextState":2},
+				{"state":1,"response":"'Keep an eye out for suspicious activity and if you track down anything, I'm sure we can make it worth your while.'","nextState":3},
+				{"state":2,"response":"'About that missing data...'","nextState":3},
+				{"state":3,"response":"'Have you found my missing data yet?'","nextState":4},
+				{"state":4,"keywords":["yes", "ok", "yup", "y"], "response":"'Excellent, hand it over please.'"},
+				{"state":4,"response":"'Fine. I won't ask you again but the request still stands.'"}                                
               ]
             },
             "conditionAttributes": {
@@ -5298,7 +5304,8 @@
               "increaseAffinityFor": "simon galbraith",
               "score": 50,
               "money": 25,
-              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus."
+              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus.",
+			  "failMessage": "That was foolish. The hard disk was worth a lot in the right hands.<br>Well. Best you move on and see if you can redeem yourself elsewhere."
             }
           }
         ]

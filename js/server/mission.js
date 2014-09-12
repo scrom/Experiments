@@ -359,7 +359,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     };
                     if (nextDialogue) {
                         response += nextDialogue.response;
-                        _conversationState = nextDialogue.nextState;
+                        if (nextDialogue.nextState) {
+                            _conversationState = nextDialogue.nextState;
+                        } else {
+                            _conversationState++;
+                        };
                     };
                     //if match, set new conversation state
                     //return response
