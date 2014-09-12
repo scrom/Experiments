@@ -441,7 +441,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.price != 0) { saveAttributes.price = artefactAttributes.price; };
             if (artefactAttributes.switched == true) {saveAttributes.switched = true;};
             if (artefactAttributes.isOn == true) {saveAttributes.isOn = true;};
-            if (artefactAttributes.isHidden == true) {saveAttributes.isHidden = artefactAttributes.isHidden;};
+            if (artefactAttributes.isHidden == true && artefactAttributes.type != "scenery") {saveAttributes.isHidden = artefactAttributes.isHidden;};
             if (artefactAttributes.unlocks != "") {saveAttributes.unlocks = artefactAttributes.unlocks;};
             if (artefactAttributes.componentOf.length > 0) { saveAttributes.componentOf = artefactAttributes.componentOf; };
             if (artefactAttributes.combinesWith != "") { saveAttributes.combinesWith = artefactAttributes.combinesWith; };            

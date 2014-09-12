@@ -473,10 +473,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.charges !=0) {saveAttributes.charges = creatureAttributes.charges;};
             if (creatureAttributes.isEdible == true) {saveAttributes.isEdible = creatureAttributes.isEdible;};
             if (creatureAttributes.baseAffinity != creatureAttributes.affinity) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
-            if (creatureAttributes.attackStrength != undefined) {saveAttributes.attackStrength = creatureAttributes.attackStrength;};
-            if (creatureAttributes.gender != undefined) {saveAttributes.gender = creatureAttributes.gender;};
+            if (creatureAttributes.attackStrength >0) {saveAttributes.attackStrength = creatureAttributes.attackStrength;};
+            if (creatureAttributes.gender != "unknown") {saveAttributes.gender = creatureAttributes.gender;};
             if (creatureAttributes.type != undefined) {saveAttributes.type = creatureAttributes.type;};
-            if (creatureAttributes.carryWeight != undefined) {saveAttributes.carryWeight = creatureAttributes.carryWeight;};
+            if (creatureAttributes.carryWeight >0) {saveAttributes.carryWeight = creatureAttributes.carryWeight;};
             if (creatureAttributes.health != 0) {saveAttributes.health = creatureAttributes.health;};
             if (creatureAttributes.maxHealth != creatureAttributes.health) {saveAttributes.maxHealth = creatureAttributes.maxHealth};
             if (creatureAttributes.bleedingHealthThreshold != 50) {saveAttributes.bleedingHealthThreshold = creatureAttributes.bleedingHealthThreshold};
