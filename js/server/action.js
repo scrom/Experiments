@@ -304,6 +304,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'stats':
                     case 'statistics':
                     case 'score':
+                    case 'points':
                         _ticks = 0;
                         description = _player.stats(_map);
                         break;
@@ -352,6 +353,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examine':
                     case 'examin':
                     case 'examien':
+                    case 'browse'
                         description = _player.examine(_verb, _object0);
                         break;  
                     case 'rest':
@@ -579,6 +581,8 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'shout':
                     //case 'howl':
                     case 'talk':
+                    case 'tak':
+                    case 'takl':
                         //if (stringIsEmpty(_object0) && (!(stringIsEmpty(_object1)))) {
                         //    _object0 = _object1;
                         //    _object1 = null;

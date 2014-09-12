@@ -3913,7 +3913,7 @@
     {
         "object": "location",
         "name": "library",
-        "description": "You're in the atrium Library.",
+        "description": "You're in the atrium library. This is a comfortable area to browse our bookshelves full of the wonders of working with software.",
         "exits": [
             {
                 "object": "exit",
