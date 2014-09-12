@@ -670,7 +670,7 @@
     {
         "object": "location",
         "name": "buenosaires",
-        "description": "You're in the Buenos Aires interview room.",
+        "description": "You're in the Buenos Aires interview room.<br>Despite containing all the things you'd expect of an interview room, it still manages to feel empty and clinical.",
         "exits": [
             {
                 "object": "exit",
@@ -695,6 +695,19 @@
             }
         ],
         "inventory": [
+{
+                "object": "artefact",
+                "name": "table",
+                "description": "large boardroom style table",
+                "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
+                "attributes": {
+                    "weight": 160,
+                    "type": "scenery"
+                },
+                "synonyms": [
+                    "desk"
+                ]
+				},
             {
                 "object": "artefact",
                 "name": "notes",
@@ -3913,7 +3926,7 @@
     {
         "object": "location",
         "name": "library",
-        "description": "You're in the atrium library. This is a comfortable area to browse our bookshelves full of the wonders of working with software.",
+        "description": "You're in the atrium library.<br>This is a comfortable area to browse our bookshelves full of the wonders of working with software.",
         "exits": [
             {
                 "object": "exit",
@@ -6852,7 +6865,8 @@
                     "stationary",
                     "stationery",
                     "stationary cupboard",
-                    "stationery cupboard"
+                    "stationery cupboard",
+					"cupbaord"
                 ],
                 "inventory": [
                     {
@@ -6886,9 +6900,13 @@
                         "description": "sharpie permanent marker",
                         "detailedDescription": "Invaluable tool of the agilist.",
                         "attributes": {
+							"type": "writing",
                             "weight": 0.1,
                             "canCollect": true,
-                            "price": 2
+                            "price": 2,
+                            "charges": 50,
+                            "chargeUnit": "use",
+                            "chargesDescription": "It's good for about $charges more $chargeUnit"
                         },
                         "synonyms": [
                             "pen",

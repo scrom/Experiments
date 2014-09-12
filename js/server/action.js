@@ -353,7 +353,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examine':
                     case 'examin':
                     case 'examien':
-                    case 'browse'
+                    case 'browse':
                         description = _player.examine(_verb, _object0);
                         break;  
                     case 'rest':
@@ -730,6 +730,15 @@ exports.Action = function Action(player, map, fileManager) {
                             description = _player.say('say', _actionString,_inConversationWith, _map);
                             _player.setLastVerbUsed('say');
                         };
+                        break;
+                    case 'draw':
+                    case 'write':
+                        description = _player.writeOrDraw(_verb, _object0, _object1);
+                        break;
+                    case 'clear':
+                    case 'wipe':
+                    case 'clean':
+                        description = _player.clean(_verb, _object0);
                         break;
                     case 'repeat':
                     case 'reply':

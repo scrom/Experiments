@@ -65,6 +65,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _imageName;
         var _contagion = [];
         var _antibodies = [];
+        var _drawings = [];
+        var _writings = [];
 
         //grammar support...
         var _itemPrefix = "It";
@@ -225,14 +227,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     _contagion.push(new contagionObjectModule.Contagion(artefactAttributes.contagion[i].name, artefactAttributes.contagion[i].displayName, artefactAttributes.contagion[i].attributes));
                 };
             };                                        
-            if (artefactAttributes.antibodies != undefined) {_antibodies = artefactAttributes.antibodies;};                            
+            if (artefactAttributes.antibodies != undefined) {_antibodies = artefactAttributes.antibodies;};    
+            if (artefactAttributes.drawings != undefined) {_drawings = artefactAttributes.drawings;};    
+            if (artefactAttributes.writings != undefined) {_writings = artefactAttributes.writings;};                                       
 
         };
 
         processAttributes(attributes);
 
         var validateType = function(type, subType) {
-            var validobjectTypes = ['weapon','property','medical', 'cure','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light', 'scenery'];
+            var validobjectTypes = ['weapon','property','medical', 'cure','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light', 'scenery', 'writing'];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.log(_name+' type validated: '+type);
 
@@ -393,6 +397,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.imageName = _imageName;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;
+            currentAttributes.drawings = _drawings;
+            currentAttributes.writings = _writings;
+            
             currentAttributes.inventoryValue = _inventory.getInventoryValue();  
 
             return currentAttributes;
@@ -456,7 +463,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     saveAttributes.contagion.push(JSON.parse(artefactAttributes.contagion[c].toString()));
                 };                
             };                        
-            if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;};                
+            if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;};   
+            if (artefactAttributes.writings.length>0) {saveAttributes.writings = artefactAttributes.writings;};   
+            if (artefactAttributes.drawings.length>0) {saveAttributes.drawings = artefactAttributes.drawings;};             
             return saveAttributes;
         };
 
@@ -648,6 +657,33 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var resultString = _detailedDescription; //original description
             if (_destroyed) { return resultString; }; //don't go any further.
 
+            if (_drawings.length>0) {
+                resultString += "<br>Someone has drawn ";
+                for (var a=0;a<_drawings.length;a++) {
+                    if (a > 0 && a < _drawings.length - 1) { resultString += ', '; };
+                    if (a > 0 && a == _drawings.length - 1) { resultString += ' and '; };
+                    resultString += _drawings[a];
+                };
+                resultString+= " on "+self.getSuffix()+".<br>";
+            };
+
+            if (_writings.length>0) {
+                if (_drawings.length>0) {
+                    resultString += "They've also written ";
+                } else {
+                    resultString += "<br>Someone has written ";
+                };
+                for (var a=0;a<_writings.length;a++) {
+                    if (a > 0 && a < _writings.length - 1) { resultString += ', '; };
+                    if (a > 0 && a == _writings.length - 1) { resultString += ' and '; };
+                    resultString += _writings[a];
+                };
+                if (_drawings.length==0) {
+                    resultString+= " on "+self.getSuffix();
+                };
+                resultString+= ".<br>";                
+            };
+
             if (self.getPrice() > 0) {
                 resultString += "<br>" + initCap(_itemDescriptivePrefix) + " worth about £" + self.getPrice().toFixed(2) + ".";
             };
@@ -833,6 +869,42 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getAntibodies = function() {
             return _antibodies;
+        };
+
+        self.getDrawings = function() {
+            return _drawings;
+        };
+
+        self.getWritings = function() {
+            return _writings;
+        };
+
+        self.addDrawing = function(drawing) {
+            _drawings.push(drawing);
+        };
+
+        self.addWriting = function(writing) {
+            _writings.push(writing);
+        };
+
+        self.removeDrawing = function(drawing) {
+            _drawings.splice(_drawings.indexOf(drawing),1);
+        };
+
+        self.removeWriting = function(writing) {
+            _writings.splice(_writings.indexOf(writing),1);
+        };
+
+        self.clearDrawings = function() {
+            var count = _drawings.length;
+            _drawings = [];
+            return count;
+        };
+
+        self.clearWritings = function() {
+            var count = _writings.length;
+            _writings = [];
+            return count;
         };
 
         self.setContagion = function(contagion) {

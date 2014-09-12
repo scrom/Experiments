@@ -1300,6 +1300,84 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString+" to produce "+newObject.getName()+".";                
         };
 
+        self.writeOrDraw = function(verb, artwork, receiverName) {
+            if (!(self.canSee())) {return "It's too dark to "+verb+" anything here.";};
+
+            if (stringIsEmpty(artwork)){ return verb+" what?";};
+            if (stringIsEmpty(receiverName)){ return verb+" "+artwork+" where?";};
+
+            //get receiver if it exists
+            var receiver = getObjectFromPlayerOrLocation(receiverName);
+            if (!(receiver)) {
+                return notFoundMessage(receiverName);
+            };
+
+            var writingTools = _inventory.getAllObjectsOfType("writing");
+
+            if (writingTools.length == 0) {
+                writingTools = _currentLocation.getAllObjectsOfType("writing");
+            };
+
+            var writingTool;
+            for (var t=0;t<writingTools.length;t++) {
+                if (!(writingTools[t].isBroken()) && (!(writingTools[t].isDestroyed())) && writingTools[t].chargesRemaining() !=0) {
+                    writingTool = writingTools[t];
+                    break;
+                };
+            };
+
+            if (!(writingTool)) {return "You don't have anything to "+verb+" with.";};
+
+            if (receiver.isDestroyed()) {return "There's not enough of "+receiver.getDisplayName()+" left to work with.";};
+
+            if (receiver.getType() == "creature") {return "I think it'll ruin your "+writingTool.getName();};
+
+            if (receiver.getWritings().length+receiver.getDrawings().length >=10) {
+                return "I think it's time you moved onto something else now.";
+            };
+
+            writingTool.consume();
+
+            if (verb == "write") {
+                artwork = "'"+artwork+"'"
+                receiver.addWriting(artwork);
+            } else {
+                receiver.addDrawing(artwork);
+            };
+
+            var resultString;
+            resultString = "You "+verb+" "+artwork+" on "+receiver.getDisplayName()+".<br>";
+            var randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that'll sell for a fortune.", "You step back and admire your handiwork."];
+            var randomIndex = Math.floor(Math.random() * randomReplies.length);
+
+            if (writingTool.chargesRemaining() == 0) {
+                writingTool.discountPriceByPercent(100); //worthless
+                resultString+="You used up your "+writingTool.getName()+".<br>";
+            };
+
+            return resultString+randomReplies[randomIndex];
+        };
+
+        self.clean = function(verb, receiverName) {
+            if (stringIsEmpty(receiverName)){ return verb+" what?";};
+
+            //get receiver if it exists
+            var receiver = getObjectFromPlayerOrLocation(receiverName);
+            if (!(receiver)) {
+                return notFoundMessage(receiverName);
+            };
+            var cleanCount = 0;
+            if (receiver.getType() != "creature") {
+                cleanCount += receiver.clearDrawings();
+                cleanCount += receiver.clearWritings();
+            };
+            if (cleanCount >0) {
+                return "You clear all the previously added 'artwork' from "+receiver.getDisplayName()+".";
+            } else {
+                return "You attempt to give "+receiver.getDisplayName()+" a bit of polish and shine.<br>After a while you get bored and give up.";
+            };
+        };
+
         /*Allow player to put something in an object */
         self.put = function(verb, artefactName, receiverName, requiredContainer){
                 var resultString = "";
