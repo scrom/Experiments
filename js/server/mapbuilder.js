@@ -197,6 +197,32 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     returnObject.locations.push(rewardLocation);
                 }; 
             };
+
+            if (reward.modifyLocation) {
+                returnObject.modifyLocation = {};
+                if (reward.modifyLocation.name) {returnObject.modifyLocation.name = reward.modifyLocation.name};
+                if (reward.modifyLocation.description) {returnObject.modifyLocation.description = reward.modifyLocation.description};
+
+                if (reward.modifyLocation.inventory && reward.modifyLocation.name) {
+                    returnObject.modifyLocation.inventory = [];
+                    for (var i=0; i<reward.modifyLocation.inventory.length;i++) {
+                        var inventoryData = reward.modifyLocation.inventory[i];
+                        if (inventoryData.object == "artefact") {
+                            returnObject.modifyLocation.inventory.push(self.buildArtefact(inventoryData));
+                        } else if (inventoryData.object == "creature") {
+                            var creature = self.buildCreature(inventoryData)
+                            if (inventoryData.attributes) {
+                                if (inventoryData.attributes.startLocationName) {
+                                    var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
+                                    creature.setStartLocation(startLocation);
+                                };
+                            };
+                            returnObject.modifyLocation.inventory.push(creature);                   
+                        };                        
+                    }; 
+                };
+            };
+
             if (reward.exits) {
                returnObject.exits = []; 
                for (var e=0; e<reward.exits.length;e++) {

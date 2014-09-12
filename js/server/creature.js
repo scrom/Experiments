@@ -252,7 +252,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         //set display name (support for proper nouns)
         var initial = _displayName.substring(0,1);
-        if (initial != initial.toUpperCase()) {_displayName = "the "+_displayName;};
+        if (initial != initial.toUpperCase()) {
+            if (_type == "animal") {
+                _displayName = "the "+_displayName; //this needs work
+            } else {
+                _displayName = "the "+_displayName;
+            };
+        };
 
         //captialise first letter of string.
         var initCap = function(aString){
@@ -1840,6 +1846,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
             if (_affinity <-1) {return _genderPrefix+" doesn't want to talk to you."};
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
+            if (_type == "animal") {return "You can't seem to make each other understood.<br>Talking to animals isn't in your repertoire.";};
+
 
             
             //turn on delay

@@ -126,6 +126,7 @@ exports.Map = function Map() {
         self.modifyLocation = function(modification){
             var locationName;
             var newDescription;
+            var inventory = [];
             if (modification) {
                 if (modification.name) {
                     locationName = modification.name;
@@ -133,11 +134,23 @@ exports.Map = function Map() {
                 if (modification.description) {
                     newDescription = modification.description;
                 };
+                if (modification.inventory) {
+                    for (var i=0;i<modification.inventory.length;i++) {
+                        inventory.push(modification.inventory[i]);
+                    };
+                };
             };
-            if (newDescription.length >0 && locationName.length >0) {
+            if (locationName.length >0) {
                 for (var i=0; i<_locations.length;i++) {
                     if (_locations[i].getName() == locationName) {
-                        _locations[i].setDescription(newDescription);
+                        if (newDescription.length >0) { _locations[i].setDescription(newDescription);};
+                        for (var v=0;v<inventory.length;v++) {
+                            if (inventory[v].getType() == "creature") {
+                                inventory[v].go(null, _locations[i]); 
+                            } else {
+                                _locations[i].addObject(inventory[v]);  
+                            };  
+                        };
                         break;
                     };
                 };
@@ -152,14 +165,34 @@ exports.Map = function Map() {
                 if (_locations[i].getName() == locationName) {
                     //console.log("location removed");
                     locationToRemove = _locations[i];
-                    _locations.splice(i,1);
+                    //I considered rather than removing the location entirely, leave it in but remove entrances to it
+                    //decided to remove it but evacuate creatures first.
+                    _locations.splice(i,1); 
                     break;
                 };
             };
 
             if (locationToRemove) {
+                var locationName = locationToRemove.getName();
+                var creatures = locationToRemove.getCreatures();
+                //all creatures take the first available exit...
+                for (var c=0;c<creatures.length;c++) {
+                    var exit = locationToRemove.getRandomExit(true);
+                    if (!(exit)) {
+                        var exits = locationToRemove.getAvailableExits(true);
+                        if (exits.length>0) {
+                            exit = exits[0];
+                        };
+                    };
+                    if (exit) {
+                        //if there's truly no exit, the creature is lost!
+                        creatures[c].go(exit.getDirection(), self.getLocation(exit.getDestinationName()));
+                    };
+                };
+
+                //remove exits linking to this location
                 for (var l=0; l<_locations.length;l++) {
-                    _locations[l].removeExit(locationToRemove.getName());
+                    _locations[l].removeExit(locationName);
                     //console.log("exit removed from "+_locations[l].getName());
                 };
             };

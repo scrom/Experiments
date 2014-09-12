@@ -4321,7 +4321,7 @@
               "missionObject": "spy",
               "static": true,
               "dialogue": [
-                "'I knew I could rely on you.'<br>'I've Parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
+                "'I knew I could rely on you.'<br>'I've parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
               ]
             },
             "conditionAttributes": {
@@ -4388,7 +4388,44 @@
 			  "removeObject": "van",
 			  "modifyLocation": { 
 				"name": "east-car-park-corner",
-				"description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you."
+				"description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you.",
+				"inventory": [
+				  { "object": "artefact",
+					"name": "tyre tracks",
+					"description": "tyre tracks",
+					"detailedDescription": "They're too scuffed to see any clear tread marks but they're wide enough to be consistent with a medium-sized goods vehicle.",
+					"attributes": {
+						"weight": 0,
+						"type": "scenery",
+						"plural": true
+					},
+					"synonyms": [
+						"tyre",
+						"tyres",
+						"track",
+						"tracks"
+					]
+				  },
+				  { "object": "creature",
+					"name": "mouse",
+					"displayname": "mouse",
+					"description": "a small grey mouse",
+					"detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
+					"attributes": {
+					  "weight": 1,
+					  "type": "animal",
+					  "carryWeight": 0,
+					  "health": 10,
+					  "affinity": -1,
+					  "canTravel": true,
+					  "traveller": true
+					},
+					"synonyms": [
+					  "it",
+					  "animal"
+					]
+				  }
+				  ]
 			  },
 			  "removeLocation": "east-car-park-corner",
               "money": 200,

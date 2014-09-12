@@ -150,10 +150,10 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return null;
         };
 
-        self.removeExit = function(aDestination) {
+        self.removeExit = function(destinationName) {
             for(var i = 0; i < _exits.length; i++) {
                 if (typeof _exits[i] == "object") {
-                    if(_exits[i].getDestinationName().toLowerCase() == aDestination.toLowerCase()) {
+                    if(_exits[i].getDestinationName().toLowerCase() == destinationName.toLowerCase()) {
                         _exits.splice(i, 1);
                         break;
                     };
