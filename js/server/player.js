@@ -2628,8 +2628,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
                 if (missionReward.removeObject) { map.removeObject(missionReward.removeObject);};
+                if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);}; //important! modify before remove
                 if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
-                if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);};
                 if (missionReward.score) { _score += missionReward.score;};
                 if (missionReward.money) { self.increaseCash(missionReward.money);};
                 if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
@@ -2671,8 +2671,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
                 if (missionReward.removeObject) { map.removeObject(missionReward.removeObject);};
+                if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);}; //important! modify before remove
                 if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
-                if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);};
                 if (missionReward.score) { _score += missionReward.score;};
                 if (missionReward.money) { self.increaseCash(missionReward.money);};
                 if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        

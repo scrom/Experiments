@@ -120,7 +120,7 @@
     "missions": [
       {
         "object": "mission",
-        "name": "vanarrival",
+        "name": "awaitvanarrival",
         "displayName": "steal some valuables",
         "attributes": {
           "type": "event",
@@ -130,45 +130,6 @@
           "time": "25"
         },
         "reward": {
-          "locations": [
-            {
-              "object": "location",
-              "name": "east-car-park-corner",
-              "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
-              "exits": [
-                {
-                  "object": "exit",
-                  "longname": "South",
-                  "direction": "s",
-                  "source": "east-car-park-corner",
-                  "destination": "waste-area"
-                }
-              ],
-				"inventory": [
-					  { "object": "artefact",
-						"name": "van",
-						"description": "white van",
-						"detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
-						"attributes": {
-							"weight": 3000,
-							"type": "property",
-							"carryWeight": 500
-						},
-						"synonyms": [
-							"white van"
-						]
-					  }]
-            }
-          ],
-          "exits": [
-            {
-              "object": "exit",
-              "longname": "North",
-              "direction": "n",
-              "source": "waste-area",
-              "destination": "east-car-park-corner"
-            }
-          ],
           "eventMessage": "You've probably kept out of the way long enough to go and chat to the spy again without suspicion if you feel like taking on another 'job'."
         }
       },
@@ -4293,6 +4254,64 @@
               "successMessage": "The spy says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
             }
           },
+			{
+            "object": "mission",
+            "name": "vanarrival",
+            "displayName": "fill the van",
+            "description": "Steal &pound;100 worth of valuables from the company.",
+            "attributes": {
+              "parent": "awaitvanarrival",
+              "missionObject": "spy",
+              "static": true,
+              "dialogue": [
+                "'I knew I could rely on you.'<br>'I've Parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true
+            },
+            "reward": {
+			   "locations": [
+				{
+				  "object": "location",
+				  "name": "east-car-park-corner",
+				  "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
+				  "exits": [
+					{
+					  "object": "exit",
+					  "longname": "South",
+					  "direction": "s",
+					  "source": "east-car-park-corner",
+					  "destination": "waste-area"
+					}
+				  ],
+					"inventory": [
+						  { "object": "artefact",
+							"name": "van",
+							"description": "white van",
+							"detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
+							"attributes": {
+								"weight": 3000,
+								"type": "property",
+								"carryWeight": 500
+							},
+							"synonyms": [
+								"white van"
+							]
+						  }]
+				}
+			  ],
+			  "exits": [
+				{
+				  "object": "exit",
+				  "longname": "North",
+				  "direction": "n",
+				  "source": "waste-area",
+				  "destination": "east-car-park-corner"
+				}
+			  ]
+             }
+          },
           {
             "object": "mission",
             "name": "stealvaluables",
@@ -4300,12 +4319,7 @@
             "description": "Steal &pound;100 worth of valuables from the company.",
             "attributes": {
               "parent": "vanarrival",
-              "missionObject": "van",
-              "static": true,
-              "dialogue": [
-                "'I knew I could rely on you.'<br>'I've Parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'",
-                "'Have you got the van loaded up yet?'"
-              ]
+              "missionObject": "van"
             },
             "conditionAttributes": {
               "inventoryValue": ">100"
