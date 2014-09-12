@@ -137,15 +137,28 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
 
         self.getExit = function(aDirection) {
             for(var i = 0; i < _exits.length; i++) {
-                if(_exits[i].getDirection().toLowerCase() == aDirection.toLowerCase()) {
-                    //console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
-                    return _exits[i];
-                };
-                if(_exits[i].getLongName().toLowerCase() == aDirection.toLowerCase()) {
-                    return _exits[i];
+                if (typeof _exits[i] == "object") {
+                    if(_exits[i].getDirection().toLowerCase() == aDirection.toLowerCase()) {
+                        //console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
+                        return _exits[i];
+                    };
+                    if(_exits[i].getLongName().toLowerCase() == aDirection.toLowerCase()) {
+                        return _exits[i];
+                    };
                 };
             };       
             return null;
+        };
+
+        self.removeExit = function(aDestination) {
+            for(var i = 0; i < _exits.length; i++) {
+                if (typeof _exits[i] == "object") {
+                    if(_exits[i].getDestinationName().toLowerCase() == aDestination.toLowerCase()) {
+                        _exits.splice(i, 1);
+                        break;
+                    };
+                };
+            };  
         };
 
         self.getDoorForExit = function(direction) {
@@ -169,21 +182,23 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
         self.getAvailableExits = function(includeUnlockedDoors) {
             var exitArray = [];
             for(var i = 0; i < _exits.length; i++) {
-                if (_exits[i].isVisible()){exitArray.push(_exits[i]);}
-                else {
-                    if (includeUnlockedDoors) {
-                        var doors = self.getAllObjectsOfType("door");
-                        for (var d=0;d<doors.length;d++) {
-                            if (!(doors[d].isLocked())) {
-                                //console.log(doors[d].getName());
-                                var linkedExits = doors[d].getLinkedExits();
-                                if (linkedExits.length == 0) {continue;};
-                                for (var l=0;l<linkedExits.length;l++) {
-                                    //console.log(linkedExits[l].toString());
-                                    if (linkedExits[l].getSourceName()==self.getName()) {
-                                        if (linkedExits[l].getDirection() == _exits[i].getDirection()) {
-                                            //we have a matching exit with a door
-                                            exitArray.push(_exits[i]);
+                if (typeof _exits[i] == "object") {
+                    if (_exits[i].isVisible()){exitArray.push(_exits[i]);}
+                    else {
+                        if (includeUnlockedDoors) {
+                            var doors = self.getAllObjectsOfType("door");
+                            for (var d=0;d<doors.length;d++) {
+                                if (!(doors[d].isLocked())) {
+                                    //console.log(doors[d].getName());
+                                    var linkedExits = doors[d].getLinkedExits();
+                                    if (linkedExits.length == 0) {continue;};
+                                    for (var l=0;l<linkedExits.length;l++) {
+                                        //console.log(linkedExits[l].toString());
+                                        if (linkedExits[l].getSourceName()==self.getName()) {
+                                            if (linkedExits[l].getDirection() == _exits[i].getDirection()) {
+                                                //we have a matching exit with a door
+                                                exitArray.push(_exits[i]);
+                                            };
                                         };
                                     };
                                 };
@@ -254,13 +269,13 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return _inventory.remove(anObjectName);
         };
 
-        self.objectExists = function(anObjectName) {
+        self.objectExists = function(anObjectName, ignoreSynonyms) {
             //check if passed in object is in location
-            return _inventory.check(anObjectName);
+            return _inventory.check(anObjectName, ignoreSynonyms);
         };
 
-        self.getObject = function(anObjectName) {
-            return _inventory.getObject(anObjectName);
+        self.getObject = function(anObjectName, ignoreSynonyms) {
+            return _inventory.getObject(anObjectName, ignoreSynonyms);
         };
 
         self.getObjectByType = function(anObjectType) {

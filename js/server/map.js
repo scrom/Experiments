@@ -123,6 +123,59 @@ exports.Map = function Map() {
             return newIndex;
         };
 
+        self.modifyLocation = function(modification){
+            var locationName;
+            var newDescription;
+            if (modification) {
+                if (modification.name) {
+                    locationName = modification.name;
+                };
+                if (modification.description) {
+                    newDescription = modification.description;
+                };
+            };
+            if (newDescription.length >0 && locationName.length >0) {
+                for (var i=0; i<_locations.length;i++) {
+                    if (_locations[i].getName() == locationName) {
+                        _locations[i].setDescription(newDescription);
+                        break;
+                    };
+                };
+            };
+        };
+
+        self.removeLocation = function(locationName){
+            //console.log("removing location: "+locationName);
+            var locationToRemove;
+            var locationToRemoveIndex;
+            for (var i=0; i<_locations.length;i++) {
+                if (_locations[i].getName() == locationName) {
+                    //console.log("location removed");
+                    locationToRemove = _locations[i];
+                    _locations.splice(i,1);
+                    break;
+                };
+            };
+
+            if (locationToRemove) {
+                for (var l=0; l<_locations.length;l++) {
+                    _locations[l].removeExit(locationToRemove.getName());
+                    //console.log("exit removed from "+_locations[l].getName());
+                };
+            };
+        };
+
+        self.removeObject = function(objectName) {
+            //loop through each location and location inventory. 
+            //Get object (by name only, not synonym)
+            //return location name when found
+            for (var i=0;i<_locations.length;i++) {
+                if (_locations[i].objectExists(objectName, true)) {
+                    _locations[i].removeObject(objectName);
+                };
+            };
+        };
+
         self.getLocations = function(){
             return _locations;
         };

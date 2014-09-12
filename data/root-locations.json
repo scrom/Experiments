@@ -2,7 +2,7 @@
   {
     "object": "location",
     "name": "atrium",
-    "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.",
+    "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the atrium area extends to the East and West with a reception area, seating, a lbrary and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
     "start": true,
     "exits": [
       {
@@ -47,7 +47,7 @@
         "object": "artefact",
         "name": "button",
         "description": "lift call button",
-        "detailedDescription": "If you push the button, perhaps a lift will come.",
+        "detailedDescription": "If you <i>push</i> the button, perhaps a lift may come.",
         "attributes": {
           "defaultAction": "press",
           "weight": 200,
@@ -4314,8 +4314,14 @@
               "affinityModifier": 2,
               "decreaseAffinityFor": "everyone",
               "increaseAffinityFor": "spy",
+			  "removeObject": "van",
+			  "modifyLocation": { 
+				"name": "east-car-park-corner",
+				"description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you."
+			  },
+			  "removeLocation": "east-car-park-corner",
               "money": 200,
-              "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br>It's probably wise for you to make yourself scarce for a while."
+              "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
             }
           }
         ]
