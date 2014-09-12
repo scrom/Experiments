@@ -19,6 +19,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="data\images\screen.jpg" />
+    <Content Include="data\images\sticky-finger.jpg" />
     <Content Include="editor.html" />
     <Content Include="index.html" />
     <Content Include="js\server\test\testdata\savegame-0.json" />

@@ -82,7 +82,7 @@
         "attributes": {
           "weight": 51,
           "isBreakable": true,
-          "imageName": "imag2697.jpg"
+          "imageName": "screen.jpg"
         },
         "synonyms": [
           "display",
@@ -111,7 +111,7 @@
             "reward": {
               "score": -25,
               "successMessage": "Bad you! Sometimes you just have to resist your violent urges. You lose 25 points.",
-              "failMessage": "Never mind, it's probably better that way."
+              "failMessage": "Never mind, it's probably better left alone."
             }
           }
         ]
@@ -200,7 +200,7 @@
         },
         "reward": {
           "score": -15,
-          "successMessage": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe?. You lose 15 points."
+          "successMessage": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe? You lose 15 points."
         }
       },
       {
@@ -214,7 +214,7 @@
         },
         "reward": {
           "score": -35,
-          "successMessage": "<br>I know stealing may be one way of achieving your goals but it really doesn't fit in with our values. You lose 35 points."
+          "successMessage": "<br>Stealing may be one way of achieving your goals but it really doesn't fit in with our values. You lose 35 points."
         }
       },
       {
@@ -243,7 +243,7 @@
         },
         "reward": {
           "score": 25,
-          "successMessage": "<br>Nice one. You read 'all the things'.<br>Have another 25 points."
+          "successMessage": "<br>You read 'all the things'!<br>Have another 25 points."
         }
       },
       {
@@ -254,7 +254,7 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "creaturesToSpeakTo": 5
+          "creaturesToSpeakTo": 15
         },
         "reward": {
           "score": 25,
@@ -316,7 +316,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You've really gone out of your way to do plenty of healing<br>Have 50 points."
+          "successMessage": "<br>You've really 'got it' with the healing activities.<br>(Although where that level of repeated injury in an office environment came from is somewhat worrying.)<br>Have 50 points."
         }
       },
       {
@@ -359,7 +359,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>You're treading a fine line here. I know you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br>I'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good though.<br>Have 5 points."
+          "successMessage": "<br>You're treading a fine line here. Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good.<br>Have 5 points."
         }
       },
       {
@@ -373,7 +373,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>Hey big spender.<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?<br>Have 5 points."
+          "successMessage": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?<br>Have 5 points."
         }
       },
       {
@@ -387,7 +387,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You've made quite a bit of money there, great job!<br>I hope you didn't come about it through foul means though.<br>Have 50 points."
+          "successMessage": "<br>You've made quite a bit of money there, great job!<br>We hope you didn't come about it through foul means though.<br>Have 50 points."
         }
       },
       {
@@ -415,7 +415,7 @@
         },
         "reward": {
           "score": -150,
-          "successMessage": "<br>Yeah... About that all money you made.<br>That level of dishonesty will get you fired pretty much immediately.<br>You lose 150 points."
+          "successMessage": "<br>Yeah...<br>...about all that money you've made.<br>That level of dishonesty will get you fired pretty much immediately.<br>You lose 150 points."
         }
       },
       {
@@ -440,7 +440,7 @@
   {
     "object": "location",
     "name": "atrium-seating",
-    "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work.<br>It's quite a pleasant space dominated by a very large potted tree.",
+    "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a very large potted tree.",
     "exits": [
       {
         "object": "exit",
@@ -495,7 +495,7 @@
         "object": "artefact",
         "name": "lawyer door",
         "description": "door heading south",
-        "detailedDescription": "Peering through the window you see people in suits looking busy and important.",
+        "detailedDescription": "Peering through the window you see serious people in suits looking busy and important.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -564,20 +564,25 @@
       {
         "object": "artefact",
         "name": "cake",
-        "description": "slice of chocolate cake",
-        "detailedDescription": "Mmmm tasty <i>and</i> healthy. If only there were more.",
+        "description": "slice of victoria sponge cake",
+        "detailedDescription": "Mmmm tasty <i>and</i> healthy. It really <i>is</i> cake - no lie!<br>If only there were more.",
         "attributes": {
           "defaultAction": "eat",
           "weight": 1,
           "type": "food",
           "canCollect": true,
+	  	  "affinityModifier": 2,
           "charges": 1,
           "isEdible": true,
           "nutrition": 25
         },
         "synonyms": [
           "slice",
-          "chocolate cake",
+          "sponge cake",
+		  "sponge",
+		  "victoria cake",
+		  "victoria sponge",
+		  "victoria sponge cake",
           "food"
         ]
       }
@@ -586,7 +591,7 @@
   {
     "object": "location",
     "name": "bike-ambulance",
-    "description": "You're standing in the west car park by the bike ambulance.<br>This is definitely the place to bring your broken bikes when they need some loving.",
+    "description": "You're standing in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
     "exits": [
       {
         "object": "exit",
@@ -601,7 +606,7 @@
         "object": "artefact",
         "name": "bike ambulance",
         "description": "bike ambulance",
-        "detailedDescription": "It's an old converted NHS ambulance complete with blue flashing lights.",
+        "detailedDescription": "It's an old converted NHS ambulance -pretty beaten-up but looks functional.",
         "attributes": {
           "weight": 3500,
           "type": "scenery"
@@ -614,7 +619,7 @@
         "name": "rick",
         "displayname": "Rick",
         "description": "Rick the bike ambulance guy",
-        "detailedDescription": "Bikes is his thing.",
+        "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.<br>Seriously, he <i>really</i> knows his bikes!",
         "attributes": {
           "weight": 140,
           "attackStrength": 25,
@@ -650,7 +655,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "chris moore",
 			  "removeObject": "bike",
-              "successMessage": "You hand the bike over to Rick.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
+              "successMessage": "You hand Chris' bike over to Rick.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
             }
           }
         ]
@@ -674,7 +679,7 @@
   {
     "object": "location",
     "name": "camelids-a",
-    "description": "You're in Camelids-A. The UX team have filled the walls with post-its.<br>The table feels slightly too large for the room and it's a bit cramped in here.",
+    "description": "You're in Camelids-A. The UX team have filled the walls with post-it notes.<br>The table feels slightly too large for the room and it's a bit cramped in here.",
     "exits": [
       {
         "object": "exit",
@@ -683,7 +688,58 @@
         "source": "camelids-a",
         "destination": "second-floor-north-west-corridor-central"
       }
-    ]
+    ],
+	"inventory": [
+          {
+            "object": "artefact",
+            "name": "notes",
+            "description": "post-its",
+            "detailedDescription": "You skim the dozens of post-its on the walls. Most contain phrases that are meaningless to you such as 'user journey', 'top of funnel analysis' etc.",
+            "attributes": {
+              "type": "scenery",
+			  "plural": true,
+			  "carryWeight": 0.1,
+			  "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular <i>affinity</i> for."
+            },
+            "synonyms": [
+              "stickies",
+              "sticky notes",
+              "post its",
+              "postits",
+              "post it notes",
+              "post-it notes",
+              "postit notes",
+              "post-its",
+			  "wall",
+			  "walls"
+            ], 
+			"inventory": [
+				  {
+					"object": "artefact",
+					"name": "post-it",
+					"description": "single post-it note",
+					"detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
+					"attributes": {
+					  "type": "junk",
+					  "canCollect": true,
+					  "affinityModifier": 2,
+					  "weight": 0.1,
+					  "imageName": "sticky-finger.jpg"
+					},
+					"synonyms": [
+					  "sticky",
+					  "sticky note",
+					  "post it",
+					  "postit",
+					  "post it note",
+					  "post-it note",
+					  "postit note",
+					  "note"
+					] 
+				  }
+				  ]
+          }
+		  ]
   },
   {
     "object": "location",
