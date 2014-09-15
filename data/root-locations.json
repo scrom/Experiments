@@ -5001,8 +5001,18 @@
                             "static": true,
                             "dialogue": [
                                 "'Hi $player.'<br>'I don't suppose you've seen Dave or Roger around anywhere have you?'<br>'They're supposed to be flying back from a comic book convention today.'",
-                                "'Hey $player. Any sign of Dave or Roger yet?'",
-                                "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'"
+                                {"state": 1,"keywords": ["yes","ok","y"],
+                                 "response": "'I hope they're ok. They sounded a bit rough last time I spoke to them.'",
+                                 "nextState": 4
+                                },
+                                {"state": 1,
+                                 "response": "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'",
+                                 "nextState": 2
+                                },
+                                {"state": 2,
+                                 "response": "'Hey $player. Any sign of Dave or Roger yet?'",
+                                 "nextState": 1
+                                }                                
                             ]
                         },
                         "conditionAttributes": {
@@ -5124,7 +5134,33 @@
                             "static": true,
                             "dialogue": [
                                 "'Hi $player.'<br>'Can you give me a hand?'<br>'I'm running a workshop later today but I'm running low on post-it notes.'<br>'Could you bring me some from the stationary cupboard when you get a chance?'",
-                                "'Hey $player. Did you manage to find any stickies?'"
+                                {"state": 1,"keywords": ["yes","ok","y"],
+                                 "response": "'Great! I'll be somewhere around the office. Come and find me when you've got them.'",
+                                 "nextState": 2
+                                },
+                                {"state": 1,"keywords": ["no","not","not yet"],
+                                 "response": "'Well if you manage to find any, track me down.'",
+                                 "nextState": 2
+                                },
+                                {"state": 1,
+                                 "response": "'If you manage to find any, track me down. I'd really appreciate it.'",
+                                 "nextState": 2
+                                },
+                                {"state": 2,
+                                 "response": "'Hey $player. Did you manage to find any stickies?'",
+                                 "nextState": 3
+                                },
+                                {"state": 3,"keywords": ["yes","ok","y"],
+                                 "response": "'Awesome. <i>Give</i> me them when you can.'"
+                                },
+                                {"state": 3,"keywords": ["no","not","not yet"],
+                                 "response": "'Well if you manage to find any, track me down.'",
+                                 "nextState": 2
+                                },        
+								{"state": 3,
+                                 "response": "'It really would be a big help if you could find them.'",
+                                 "nextState": 2
+                                }                            
                             ]
                         },
                         "conditionAttributes": {
@@ -5135,7 +5171,7 @@
                         "reward": {
                             "increaseAffinityFor": "chris smith",
                             "score": 25,
-                            "successMessage": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You fcilitated the facilitator! Have 25 points."
+                            "successMessage": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You facilitated the facilitator! Have 25 points."
                         }
                     }
                 ]
