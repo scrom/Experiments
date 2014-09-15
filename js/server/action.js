@@ -399,6 +399,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'hide':
                     case 'combine':
                     case 'attach':
+                    case 'stick':
                     case 'install':
                     case 'insert':
                     case 'join':

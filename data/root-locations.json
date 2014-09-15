@@ -824,7 +824,6 @@
                 "detailedDescription": "You skim the dozens of post-its on the walls. Most contain phrases that are meaningless to you such as 'user journey', 'top of funnel analysis' etc.",
                 "attributes": {
                     "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular <i>affinity</i> for.",
-                    "carryWeight": 0.1,
                     "type": "scenery",
                     "plural": true,
                     "canDrawOn": true
@@ -848,7 +847,6 @@
                         "description": "single post-it note",
                         "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
                         "attributes": {
-                            "weight": 0.1,
                             "canCollect": true,
                             "affinityModifier": 2,
                             "imageName": "sticky-finger.jpg",
@@ -7711,7 +7709,6 @@
                 "description": "thankyou postcard",
                 "detailedDescription": "It says thanks for being great! (there are loads of others with similar thank-yous)",
                 "attributes": {
-                    "weight": 0.5,
                     "type": "book",
                     "canCollect": true,
                     "affinityModifier": 3,

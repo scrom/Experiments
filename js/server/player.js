@@ -1442,6 +1442,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         newReceiver = receiver.getObject(combinesWithResult);
                     };
                     return self.combine(artefact, newReceiver)                   
+                } else {
+                    if (verb == "combine") {return "Combining "+artefact.getName()+" and "+receiver.getName()+" doesn't make anything new.";};
                 };
                 
                 //check receiver can carry item (container or not)
@@ -1478,9 +1480,25 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
                 //put the x in the y
-                var displayNameString = receiver.getDisplayName();
-                if (_inventory.check(receiver.getName())) {displayNameString = "your "+receiver.getName();};
-                resultString = "You "+verb+" "+collectedArtefact.getDisplayName()+" in "+displayNameString+".<br>";
+                var receiverDisplayNameString = receiver.getDisplayName();
+                if (_inventory.check(receiver.getName())) {receiverDisplayNameString = "your "+receiver.getName();};
+
+                var artefactDisplayNameString = collectedArtefact.getDisplayName();
+                if (_inventory.check(collectedArtefact.getName())) {artefactDisplayNameString = "your "+collectedArtefact.getName();};
+
+                resultString = "You "+verb+" "+artefactDisplayNameString;
+                if (verb == "attach" || verb == "stick" || verb == "join" || verb == "add") {
+                    if (receiver.getCarryWeight() == 0 || verb == "add") {
+                        resultString += " to "; 
+                    } else {
+                        resultString += " in "; 
+                    };
+                } else if (verb == "install" || verb == "insert"){
+                    resultString += " into "; 
+                } else {
+                    resultString += " in ";    
+                };               
+                resultString += receiverDisplayNameString+".<br>";
 
                 var receiveResult = receiver.receive(collectedArtefact);
                 //if receiving failed...
