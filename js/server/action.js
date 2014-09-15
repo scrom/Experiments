@@ -174,10 +174,24 @@ exports.Action = function Action(player, map, fileManager) {
             _objects = splitRemainderString(remainder);
 
             //only overwrite object0 if it's an object. If it's "it", we use the last object string instead.
-            if (_objects[0] != 'it') {
-                _object0 = _objects[0]; 
+            if (_objects[0] != 'it' && _objects[0] != 'them') {
+                _object0 = " "+_objects[0]; 
             }
-            _object1 = _objects[1]; 
+            _object1 = " "+_objects[1]; 
+
+            //remove some junk words
+            var stopWords = ["the", "some", "a", "an"];
+            for (var i=0; i<stopWords.length; i++) {
+                if (_object0) {
+                _object0 = _object0.replace(" "+stopWords[i]+" ", " ");
+                };
+                if (_object1) {
+                    _object1 = _object1.replace(" "+stopWords[i]+" ", " ");
+                };
+            };
+
+            _object0 = _object0.trim();
+            _object1 = _object1.trim();
 
         };
 

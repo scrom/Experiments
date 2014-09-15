@@ -684,7 +684,110 @@
                 "source": "buenosaires",
                 "destination": "east-corridor-ground-floor-north-east"
             }
-        ]
+        ],
+		"inventory": [
+            {
+                "object": "artefact",
+                "name": "wall",
+                "description": "walls",
+                "detailedDescription": "Sparse, clinical and white.",
+                "attributes": {
+                    "weight": 280,
+                    "type": "scenery",
+                    "canDrawOn": true
+                },
+                "synonyms": [
+					"walls"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "whiteboard",
+                "description": "large whiteboard",
+                "detailedDescription": "Despite regular cleaning, there's stil faint marks from long-disused whiteboard coding exercises and architecture diagrams.",
+                "attributes": {
+                    "weight": 30,
+                    "type": "junk",
+                    "canDrawOn": true
+                },
+                "synonyms": [
+					"board",
+					"white board",
+					"whitebaord",
+					"diagram",
+					"code"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "flipchart",
+                "description": "flipchart",
+                "detailedDescription": "It's just a regular flipchart.",
+                "attributes": {
+                    "weight": 25,
+                    "type": "junk",
+					"canCollect": true,
+                    "canDrawOn": true
+                },
+                "synonyms": [
+					"chart",
+					"flip",
+					"flip chart",
+					"paper"
+                ]
+            },
+			{
+                "object": "artefact",
+                "name": "pen",
+                "description": "whiteboard pen",
+                "detailedDescription": "Not great quality but it's a blue pen.",
+                "attributes": {
+                    "weight": 0.2,
+                    "type": "writing",
+					"canCollect": true,
+                    "charges": 10,
+                    "chargeUnit": "use",
+                    "chargesDescription": "It's good for about $charges more $chargeUnit"
+
+                },
+                "synonyms": [
+					"board pen",
+					"whiteboard pen"
+                ]
+            },
+			{
+                "object": "artefact",
+                "name": "table",
+                "description": "plain rectangular table",
+                "detailedDescription": "It's a standard wood-effect office desk/table.",
+                "attributes": {
+                    "weight": 120,
+					"canDrawOn": true,
+                    "type": "junk",
+					"isBreakable": true
+                },
+                "synonyms": [
+					"desk"
+                ]
+            },
+			{
+                "object": "artefact",
+                "name": "chairs",
+                "description": "pair of office chairs",
+                "detailedDescription": "They're just standard office meeting room chairs.",
+                "attributes": {
+				    "defaultAction": "rest",
+                    "weight": 30,
+                    "type": "bed",
+					"isBreakable": true,
+					"plural": true
+                },
+                "synonyms": [
+					"chair"
+                ]
+            }
+
+		]
     },
     {
         "object": "location",
@@ -7178,7 +7281,8 @@
                     "post it notes",
                     "notes",
                     "postits",
-                    "postit notes"
+                    "postit notes",
+					"walls"
                 ]
             },
             {
