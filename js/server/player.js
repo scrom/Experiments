@@ -1330,24 +1330,41 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiver.isDestroyed()) {return "There's not enough of "+receiver.getDisplayName()+" left to work with.";};
 
-            if (receiver.getType() == "creature") {return "I think it'll ruin your "+writingTool.getName();};
+            if (receiver.getType() == "creature") {return "It'll ruin your "+writingTool.getName()+" so you decide against it.";};
+            if (receiver.getType() == "food") {return "You decide not to waste your "+receiver.getName()+" by defacing it.";};
 
-            if (receiver.getWritings().length+receiver.getDrawings().length >=10) {
+            var maxWritings = 10;
+            if (receiver.getType() == "book") {maxWritings = 50;};
+            if (receiver.getWritings().length+receiver.getDrawings().length >=maxWritings) {
+                if (receiver.getType() == "book") {return "You've run out of space to "+verb+" any more."}; 
                 return "I think it's time you moved onto something else now.";
             };
 
             writingTool.consume();
 
+            var success = false;
+
             if (verb == "write") {
                 artwork = "'"+artwork+"'"
-                receiver.addWriting(artwork);
+                success = receiver.addWriting(artwork);
             } else {
-                receiver.addDrawing(artwork);
+                success = receiver.addDrawing(artwork);
             };
 
-            var resultString;
-            resultString = "You "+verb+" "+artwork+" on "+receiver.getDisplayName()+".<br>";
-            var randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that'll sell for a fortune.", "You step back and admire your handiwork."];
+            if (receiver.getPrice() >0) {
+                //diminish value
+                receiver.discountPriceByPercent(5);
+            }; 
+
+            var resultString = "";
+            var randomReplies;
+            if (success) {
+                resultString = "You "+verb+" "+artwork+" on "+receiver.getDisplayName()+".<br>";
+                randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that might sell for a fortune. Although for now, it just diminishes the value of "+receiver.getDisplayName(), "You step back and admire your handiwork."];
+            } else {
+                randomReplies = ["You attempt to "+verb+" "+artwork+" on "+receiver.getDisplayName()+" but it smears and rubs off before you can finish.<br>"];
+            };
+
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
 
             if (writingTool.chargesRemaining() == 0) {
@@ -1881,7 +1898,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
 
             if (artefact.getType() == "book") {
-                resultString += "<br>"+artefact.getPrefix()+" might be worth a read.";
+                resultString += "<br>"+artefact.getPrefix()+" might be worth a <i>read</i>.";
                 return resultString;
             };
 
@@ -1931,37 +1948,49 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            if (artefact.getType() != "book") {return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";};
+            var writings = artefact.getWritings();
+            var drawings = artefact.getDrawings();
+            var noteCount = writings.length+drawings.length;
 
-            if (artefact.isRead()) {
+            if (artefact.getType() != "book" && noteCount == 0) {
+                return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";
+            };
+
+            if (artefact.isRead() && noteCount == 0) {
                 return "You've read it before, you're not going to gain anything new from reading it again.";
+            } else if (artefact.isRead() && noteCount > 0) {
+                resultString += "You've read it before but you decide to check the additional notes and drawings.<br>";
             } else {
                 _booksRead ++;
             };
 
-
-            var newMissions = artefact.getMissions();
-            //remove any with dialogue from this list.
-            for (var j=0; j< newMissions.length;j++) {
-                if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
-            };
-
-            resultString += artefact.read(verb);
-
-            if (newMissions.length==0) {
-                resultString += "<br>"+artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
-                return resultString;
-            };
-
-            if (newMissions.length>0) {resultString+= "<br>";};
-            for (var i=0; i< newMissions.length;i++) {
-                newMissions[i].startTimer();
-                if (!(newMissions[i].isStatic())) {
-                    self.addMission(newMissions[i]);
-                    artefact.removeMission(newMissions[i].getName());
+            if (artefact.getType() == "book") {
+                var newMissions = artefact.getMissions();
+                //remove any with dialogue from this list.
+                for (var j=0; j< newMissions.length;j++) {
+                    if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
                 };
-                resultString+= newMissions[i].getDescription()+"<br>";
+
+                resultString += artefact.read(verb);
+
+                if (newMissions.length==0 && noteCount == 0) {
+                    resultString += "<br>"+artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
+                    return resultString;
+                };
+
+                if (newMissions.length>0) {resultString+= "<br>";};
+                for (var i=0; i< newMissions.length;i++) {
+                    newMissions[i].startTimer();
+                    if (!(newMissions[i].isStatic())) {
+                        self.addMission(newMissions[i]);
+                        artefact.removeMission(newMissions[i].getName());
+                    };
+                    resultString+= newMissions[i].getDescription()+"<br>";
+                };
             };
+
+            //if we've got this far, we have notes to read...
+            resultString += artefact.describeNotes();
 
             return resultString;
 

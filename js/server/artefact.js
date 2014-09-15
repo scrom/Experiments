@@ -65,6 +65,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _imageName;
         var _contagion = [];
         var _antibodies = [];
+        var _canDrawOn = false;
         var _drawings = [];
         var _writings = [];
 
@@ -227,7 +228,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     _contagion.push(new contagionObjectModule.Contagion(artefactAttributes.contagion[i].name, artefactAttributes.contagion[i].displayName, artefactAttributes.contagion[i].attributes));
                 };
             };                                        
-            if (artefactAttributes.antibodies != undefined) {_antibodies = artefactAttributes.antibodies;};    
+            if (artefactAttributes.antibodies != undefined) {_antibodies = artefactAttributes.antibodies;}; 
+            if (artefactAttributes.canDrawOn != undefined) {_canDrawOn = artefactAttributes.canDrawOn;};     
             if (artefactAttributes.drawings != undefined) {_drawings = artefactAttributes.drawings;};    
             if (artefactAttributes.writings != undefined) {_writings = artefactAttributes.writings;};                                       
 
@@ -397,6 +399,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.imageName = _imageName;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;
+            currentAttributes.canDrawOn = _canDrawOn;
             currentAttributes.drawings = _drawings;
             currentAttributes.writings = _writings;
             
@@ -463,7 +466,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     saveAttributes.contagion.push(JSON.parse(artefactAttributes.contagion[c].toString()));
                 };                
             };                        
-            if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;};   
+            if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;}; 
+            if (artefactAttributes.canDrawOn) {saveAttributes.canDrawOn = artefactAttributes.canDrawOn;};          
             if (artefactAttributes.writings.length>0) {saveAttributes.writings = artefactAttributes.writings;};   
             if (artefactAttributes.drawings.length>0) {saveAttributes.drawings = artefactAttributes.drawings;};             
             return saveAttributes;
@@ -652,11 +656,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _initialDetailedDescription;
         };
 
-        self.getDetailedDescription = function(playerAggression) {
-            //note we can change description based on player aggression - better for creatures but supported here too.
-            var resultString = _detailedDescription; //original description
-            if (_destroyed) { return resultString; }; //don't go any further.
-
+        self.describeNotes = function() {
+            var resultString = "";
             if (_drawings.length>0) {
                 resultString += "<br>Someone has drawn ";
                 for (var a=0;a<_drawings.length;a++) {
@@ -682,6 +683,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     resultString+= " on "+self.getSuffix();
                 };
                 resultString+= ".<br>";                
+            };
+
+            return resultString;
+        };
+
+        self.getDetailedDescription = function(playerAggression) {
+            //note we can change description based on player aggression - better for creatures but supported here too.
+            var resultString = _detailedDescription; //original description
+            if (_destroyed) { return resultString; }; //don't go any further.
+
+            if (self.getType() != "book") {
+                resultString += self.describeNotes();
             };
 
             if (self.getPrice() > 0) {
@@ -879,12 +892,24 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _writings;
         };
 
+        self.canDrawOn = function() {
+            return _canDrawOn;
+        };
+
         self.addDrawing = function(drawing) {
-            _drawings.push(drawing);
+            if (self.canDrawOn()) {
+                _drawings.push(drawing);
+                return true;
+            };
+            return false;
         };
 
         self.addWriting = function(writing) {
-            _writings.push(writing);
+            if (self.canDrawOn()) {
+                _writings.push(writing);
+                return true;
+            };
+            return false;
         };
 
         self.removeDrawing = function(drawing) {

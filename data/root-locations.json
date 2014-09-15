@@ -81,6 +81,7 @@
                 "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
                 "attributes": {
                     "weight": 51,
+					"canDrawOn": true,
                     "isBreakable": true,
                     "imageName": "screen.jpg"
                 },
@@ -484,6 +485,7 @@
                     "type": "treasure",
                     "canCollect": true,
                     "isBreakable": true,
+					"canDrawOn": true,
                     "price": 5
                 },
                 "synonyms": [
@@ -504,6 +506,7 @@
                     "type": "door",
                     "canOpen": true,
                     "lockable": true,
+					"canDrawOn": true,
                     "locked": true
                 },
                 "linkedexits": [
@@ -532,6 +535,7 @@
                     "carryWeight": 0.1,
                     "type": "bed",
                     "isBreakable": true,
+					"canDrawOn": true,
                     "imageName": "morpheuschair.jpg"
                 },
                 "synonyms": [
@@ -611,6 +615,7 @@
                 "detailedDescription": "It's an old converted NHS ambulance -pretty beaten-up but looks functional.",
                 "attributes": {
                     "weight": 3500,
+					"canDrawOn": true,
                     "type": "scenery"
                 },
                 "synonyms": [
@@ -702,6 +707,7 @@
                 "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
                 "attributes": {
                     "weight": 160,
+					"canDrawOn": true,
                     "type": "scenery"
                 },
                 "synonyms": [
@@ -717,6 +723,7 @@
                     "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular <i>affinity</i> for.",
                     "carryWeight": 0.1,
                     "type": "scenery",
+					"canDrawOn": true,
                     "plural": true
                 },
                 "synonyms": [
@@ -741,6 +748,7 @@
                             "weight": 0.1,
                             "canCollect": true,
                             "affinityModifier": 2,
+							"canDrawOn": true,
                             "imageName": "sticky-finger.jpg"
                         },
                         "synonyms": [
@@ -822,6 +830,7 @@
                             "weight": 1,
                             "type": "medical",
                             "canCollect": true,
+							"canDrawOn": true,
                             "isBreakable": true,
                             "charges": 5
                         },
@@ -1341,6 +1350,7 @@
                             "isBreakable": true,
                             "plural": true,
                             "affinityModifier": 2,
+							"canDrawOn": true,
                             "price": 5,
                             "customAction": "play",
                             "defaultResult": "They're <i>really</i> annoying. Please don't do that again."
@@ -1606,6 +1616,7 @@
                             "weight": 1,
                             "type": "medical",
                             "canCollect": true,
+							"canDrawOn": true,
                             "isBreakable": true,
                             "charges": 5
                         },
@@ -1628,6 +1639,7 @@
                             "type": "food",
                             "canCollect": true,
                             "charges": 10,
+							"canDrawOn": true,
                             "isEdible": true,
                             "nutrition": 25
                         },
@@ -1651,6 +1663,7 @@
                             "defaultAction": "read",
                             "weight": 1,
                             "type": "book",
+							"canDrawOn": true,
                             "canCollect": true
                         },
                         "synonyms": [
@@ -2114,6 +2127,7 @@
                 "attributes": {
                     "defaultAction": "open",
                     "weight": 200,
+					"canDrawOn": true,
                     "type": "door",
                     "canOpen": true
                 },
@@ -2251,6 +2265,7 @@
                     "defaultAction": "read",
                     "weight": 2,
                     "attackStrength": 5,
+					"canDrawOn": true,
                     "type": "book",
                     "canCollect": true,
                     "affinityModifier": -1
@@ -2366,6 +2381,7 @@
                 "attributes": {
                     "defaultAction": "rest",
                     "weight": 30,
+					"canDrawOn": true,
                     "type": "bed",
                     "canCollect": true,
                     "isBreakable": true
@@ -2403,6 +2419,7 @@
                     "defaultAction": "open",
                     "weight": 200,
                     "type": "door",
+					"canDrawOn": true,
                     "canOpen": true,
                     "lockable": true,
                     "hasLinkedDoor": true
@@ -2448,6 +2465,7 @@
                     "defaultAction": "read",
                     "weight": 3,
                     "attackStrength": 5,
+					"canDrawOn": true,
                     "type": "book",
                     "canCollect": true
                 },
@@ -2572,6 +2590,7 @@
                     "weight": 200,
                     "type": "door",
                     "canOpen": true,
+					"canDrawOn": true,
                     "lockable": true,
                     "locked": true
                 },
@@ -2652,6 +2671,7 @@
                     "weight": 200,
                     "type": "door",
                     "canOpen": true,
+					"canDrawOn": true,
                     "lockable": true,
                     "hasLinkedDoor": true
                 },
@@ -2897,6 +2917,7 @@
                     "type": "door",
                     "canOpen": true,
                     "lockable": true,
+					"canDrawOn": true,
                     "hasLinkedDoor": true
                 },
                 "linkedexits": [
@@ -2925,6 +2946,7 @@
                     "defaultAction": "read",
                     "weight": 3,
                     "attackStrength": 5,
+					"canDrawOn": true,
                     "type": "book",
                     "canCollect": true
                 },
@@ -3051,6 +3073,7 @@
                     "defaultAction": "open",
                     "weight": 200,
                     "type": "door",
+					"canDrawOn": true,
                     "canOpen": true,
                     "lockable": true,
                     "hasLinkedDoor": true
@@ -3332,6 +3355,7 @@
                     "holdsLiquid": true,
                     "canCollect": true,
                     "isBreakable": true,
+					"canDrawOn": true,
                     "imageName": "mug.jpg"
                 },
                 "synonyms": [
@@ -3477,6 +3501,7 @@
                     "canOpen": true,
                     "lockable": true,
                     "locked": true,
+					"canDrawOn": true,
                     "requiredComponentCount": 1,
                     "imageName": "coffeemachine.jpg"
                 },
@@ -3787,6 +3812,7 @@
                                         "weight": 1,
                                         "canCollect": true,
                                         "affinityModifier": 0,
+										"canDrawOn": true,
                                         "price": 15
                                     },
                                     "synonyms": [
@@ -3962,6 +3988,7 @@
                     "weight": 80,
                     "carryWeight": 50,
                     "type": "container",
+					"canDrawOn": true,
                     "isBreakable": true
                 },
                 "synonyms": [
@@ -3989,6 +4016,7 @@
                             "defaultAction": "read",
                             "weight": 3,
                             "attackStrength": 5,
+							"canDrawOn": true,
                             "type": "book",
                             "canCollect": true
                         },
@@ -4010,6 +4038,7 @@
                             "attackStrength": 5,
                             "type": "book",
                             "canCollect": true,
+							"canDrawOn": true,
                             "affinityModifier": 0
                         },
                         "synonyms": [
@@ -4056,6 +4085,7 @@
                             "weight": 1,
                             "attackStrength": 2,
                             "type": "book",
+							"canDrawOn": true,
                             "canCollect": true
                         },
                         "synonyms": [
@@ -4290,6 +4320,7 @@
                             "type": "medical",
                             "canCollect": true,
                             "isBreakable": true,
+							"canDrawOn": true,
                             "charges": 1
                         },
                         "synonyms": [
@@ -4392,6 +4423,7 @@
                                             "attributes": {
                                                 "weight": 3000,
                                                 "carryWeight": 500,
+												"canDrawOn": true,
                                                 "type": "property"
                                             },
                                             "synonyms": [
@@ -5202,6 +5234,7 @@
                     "weight": 1,
                     "type": "book",
                     "canCollect": true,
+					"canDrawOn": true,
                     "affinityModifier": 0
                 },
                 "synonyms": [
@@ -5466,6 +5499,7 @@
                             "attackStrength": 5,
                             "type": "treasure",
                             "canCollect": true,
+							"canDrawOn": true,
                             "isBreakable": true,
                             "affinityModifier": 5
                         },
@@ -5657,6 +5691,7 @@
                 "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
                 "attributes": {
                     "weight": 280,
+					"canDrawOn": true,
                     "type": "scenery"
                 },
                 "synonyms": [
@@ -5759,6 +5794,7 @@
                                     "canCollect": true,
                                     "isBreakable": true,
                                     "affinityModifier": 0,
+									"canDrawOn": true,
                                     "canOpen": true
                                 },
                                 "synonyms": [
@@ -5838,6 +5874,7 @@
                     "type": "door",
                     "canOpen": true,
                     "lockable": true,
+					"canDrawOn": true,
                     "locked": true
                 },
                 "linkedexits": [
@@ -5897,6 +5934,7 @@
                 "attributes": {
                     "weight": 151,
                     "carryWeight": 25,
+					"canDrawOn": true,
                     "isBreakable": true
                 },
                 "synonyms": [
@@ -6002,6 +6040,7 @@
                     "subType": "blunt",
                     "canCollect": true,
                     "isBreakable": true,
+					"canDrawOn": true,
                     "affinityModifier": 0
                 }
             }
@@ -6030,6 +6069,7 @@
                     "weight": 400,
                     "carryWeight": 120,
                     "customAction": "climb",
+					"canDrawOn": true,
                     "defaultResult": "You clamber around in the skip.<br>After putting your hand in something slimy and nearly impaling yourself on a broken chair you decide to climb back out."
                 },
                 "synonyms": [
@@ -6428,6 +6468,7 @@
                     "type": "door",
                     "canOpen": true,
                     "lockable": true,
+					"canDrawOn": true,
                     "hasLinkedDoor": true
                 },
                 "linkedexits": [
@@ -6456,6 +6497,7 @@
                     "defaultAction": "read",
                     "weight": 1,
                     "attackStrength": 2,
+					"canDrawOn": true,
                     "type": "book",
                     "canCollect": true
                 },
@@ -6473,6 +6515,7 @@
                     "defaultAction": "read",
                     "weight": 3,
                     "attackStrength": 5,
+					"canDrawOn": true,
                     "type": "book",
                     "canCollect": true
                 },
@@ -6589,6 +6632,7 @@
                     "weight": 1,
                     "type": "medical",
                     "canCollect": true,
+					"canDrawOn": true,
                     "isBreakable": true,
                     "charges": 5
                 },
@@ -6661,6 +6705,7 @@
                     "defaultAction": "open",
                     "weight": 200,
                     "type": "door",
+					"canDrawOn": true,
                     "canOpen": true,
                     "lockable": true,
                     "locked": true
@@ -6893,6 +6938,7 @@
                 "attributes": {
                     "extendedInventoryDescription": "Amongst the mountains of redundant folders, staplers and pen holders you find $inventory that might be useful to you.",
                     "weight": 180,
+					"canDrawOn": true,
                     "carryWeight": 50,
                     "type": "container",
                     "canOpen": true
@@ -6913,6 +6959,7 @@
                         "attributes": {
                             "weight": 0.5,
                             "canCollect": true,
+							"canDrawOn": true,
                             "price": 2
                         },
                         "synonyms": [
@@ -6928,6 +6975,45 @@
                             "pack of post-its",
                             "pack of post its",
                             "pack of postits"
+                        ]
+                    },
+					{
+                        "object": "artefact",
+                        "name": "notebook",
+                        "description": "black and red notebook",
+                        "detailedDescription": "An A4 'Black and Red' brand notebook.<br> These are really useful for keeping track of tasks.<br>In case you accidentally leave it somewhere, I strongly suggest you <i>write</i> your name in it though.",
+                        "attributes": {
+                            "weight": 0.5,
+                            "canCollect": true,
+							"canDrawOn": true,
+                            "price": 3
+                        },
+                        "synonyms": [
+                            "book",
+                            "notebook",
+                            "note book",
+                            "note",
+                            "black and red",
+                            "blackandred"
+                        ]
+                    },
+                    {
+                        "object": "artefact",
+                        "name": "biro",
+                        "description": "black biro",
+                        "detailedDescription": "Not quite a sharpie but useful for taking notes.",
+                        "attributes": {
+							"type": "writing",
+                            "weight": 0.1,
+                            "canCollect": true,
+                            "price": 0.5,
+                            "charges": 250,
+                            "chargeUnit": "use",
+                            "chargesDescription": "It's good for about $charges more $chargeUnit"
+                        },
+                        "synonyms": [
+                            "pen",
+                            "bic"
                         ]
                     },
                     {
@@ -7048,6 +7134,7 @@
                 "detailedDescription": "I see it! I can see the duplicate...<br>Oh. Nope, it's not.",
                 "attributes": {
                     "weight": 280,
+					"canDrawOn": true,
                     "type": "scenery"
                 },
                 "synonyms": [
@@ -7068,6 +7155,7 @@
                     "defaultAction": "open",
                     "weight": 200,
                     "type": "door",
+					"canDrawOn": true,
                     "canOpen": true
                 },
                 "linkedexits": [
@@ -7179,6 +7267,7 @@
                     "canOpen": true,
                     "lockable": true,
                     "locked": true,
+					"canDrawOn": true,
                     "hasLinkedDoor": true
                 },
                 "linkedexits": [
@@ -7359,6 +7448,7 @@
                     "defaultAction": "open",
                     "weight": 200,
                     "type": "door",
+					"canDrawOn": true,
                     "canOpen": true
                 },
                 "linkedexits": [
@@ -7423,6 +7513,7 @@
                 "detailedDescription": "Poking through the cards on the wall, they generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.",
                 "attributes": {
                     "weight": 280,
+					"canDrawOn": true,
                     "type": "scenery"
                 },
                 "synonyms": [
@@ -7444,6 +7535,7 @@
                     "type": "medical",
                     "canCollect": true,
                     "isBreakable": true,
+					"canDrawOn": true,
                     "charges": 5
                 },
                 "synonyms": [
@@ -7483,6 +7575,7 @@
                     "weight": 0.5,
                     "type": "book",
                     "canCollect": true,
+					"canDrawOn": true,
                     "affinityModifier": 3
                 },
                 "synonyms": [
@@ -7643,6 +7736,7 @@
                     "defaultAction": "rest",
                     "weight": 80,
                     "carryWeight": 0.1,
+					"canDrawOn": true,
                     "type": "bed",
                     "isBreakable": true
                 },
@@ -7783,6 +7877,7 @@
                     "weight": 200,
                     "type": "door",
                     "canOpen": true,
+					"canDrawOn": true,
                     "lockable": true,
                     "locked": true
                 },
@@ -7856,6 +7951,7 @@
                     "weight": 200,
                     "type": "door",
                     "canOpen": true,
+					"canDrawOn": true,
                     "lockable": true,
                     "locked": true
                 },
@@ -7915,6 +8011,7 @@
                     "weight": 200,
                     "type": "door",
                     "canOpen": true,
+					"canDrawOn": true,
                     "lockable": true,
                     "locked": true
                 },
