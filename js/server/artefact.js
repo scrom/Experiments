@@ -1174,6 +1174,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.canContain(anObject, self.getName());
         };
 
+        self.getCarryWeight = function() {
+            return _inventory.getCarryWeight();
+        };
+
         self.canCarry = function(anObject) {
             //broken containers can't contain anything
             if (self.isDestroyed()) {return false};

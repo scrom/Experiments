@@ -999,6 +999,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _inventory.increaseCash(amount);
         };
 
+        self.getCarryWeight = function() {
+            if (self.isDead()) {return -1;};
+            return _inventory.getCarryWeight();
+        };
+
         self.canCarry = function(anObject) {
             if (self.isDead()) {return false;};
             return _inventory.canCarry(anObject);
