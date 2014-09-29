@@ -3,7 +3,7 @@
         "object": "location",
         "name": "atrium",
         "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the atrium area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
-        "start": true,
+        "attributes": {"start": true},
         "exits": [
             {
                 "object": "exit",
@@ -598,6 +598,7 @@
         "object": "location",
         "name": "bike-ambulance",
         "description": "You're standing in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -1195,6 +1196,7 @@
                                     "object": "location",
                                     "name": "bus",
                                     "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
+									"attributes": {"outdoor": true},
                                     "exits": [
                                         {
                                             "object": "exit",
@@ -2009,6 +2011,7 @@
         "object": "location",
         "name": "east-bike-racks",
         "description": "You're standing at the South-East corner of the the office building.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -2083,6 +2086,7 @@
         "object": "location",
         "name": "east-car-park",
         "description": "You're standing in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -2606,6 +2610,7 @@
         "object": "location",
         "name": "first-floor-fire-escape",
         "description": "You're standing on the first floor of the rear fire escape. You probably shouldn't be here without a good reason.<br>The wind howls across the steel deck. Peering cautiously down over the railings you can see the smoking area and bike racks.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -2857,7 +2862,7 @@
         "object": "location",
         "name": "graffiti-a",
         "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
-        "dark": true,
+		"attributes": {"dark": true},
         "exits": [
             {
                 "object": "exit",
@@ -2952,7 +2957,7 @@
         "object": "location",
         "name": "ground-floor-back-stairs-west",
         "description": "You're in the bottom of the west fire escape stairs.",
-        "dark": true,
+		"attributes": {"dark": true},
         "exits": [
             {
                 "object": "exit",
@@ -3087,6 +3092,7 @@
         "object": "location",
         "name": "ground-floor-fire-escape",
         "description": "You're at the bottom of the rear fire escape staircase.<br>You're surrounded by large gas and water pipes leading in and out of the building.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -3864,6 +3870,7 @@
                             "object": "location",
                             "name": "crash-site",
                             "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
+							"attributes": {"outdoor": true},
                             "exits": [
                                 {
                                     "object": "exit",
@@ -4506,6 +4513,7 @@
                                     "object": "location",
                                     "name": "east-car-park-corner",
                                     "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
+									"attributes": {"outdoor": true},
                                     "exits": [
                                         {
                                             "object": "exit",
@@ -4724,6 +4732,7 @@
         "object": "location",
         "name": "office-front",
         "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -6140,6 +6149,7 @@
         "object": "location",
         "name": "roof",
         "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -6186,6 +6196,7 @@
         "object": "location",
         "name": "rubbish-bins",
         "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -6581,7 +6592,7 @@
         "object": "location",
         "name": "second-floor-cubicle",
         "description": "You're in a toilet cubicle. You feel even more disoriented. <br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
-        "dark": true,
+        "attributes": {"dark": true},
         "exits": [
             {
                 "object": "exit",
@@ -6719,6 +6730,7 @@
         "object": "location",
         "name": "second-floor-fire-escape",
         "description": "You're on the second floor of the rear fire escape. It's windy up here.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -7830,6 +7842,7 @@
         "object": "location",
         "name": "smoking-area",
         "description": "You're outside the back of the office under the fire escape.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -8263,6 +8276,7 @@
         "object": "location",
         "name": "top-fire-escape",
         "description": "You're at the top of the rear fire escape. From here you have clear access to the roof.<br>It's a long way down!",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -8312,6 +8326,7 @@
         "object": "location",
         "name": "waste-area",
         "description": "You're by a locked gate. On the far side are a series of waste containers full of carboard boxes, broken furniture and kitchen leftovers.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -8438,6 +8453,7 @@
         "object": "location",
         "name": "west-bike-racks",
         "description": "You're standing at the South-West corner of the the office building.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",
@@ -8514,6 +8530,7 @@
         "object": "location",
         "name": "west-car-park",
         "description": "You're standing in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+		"attributes": {"outdoor": true},
         "exits": [
             {
                 "object": "exit",

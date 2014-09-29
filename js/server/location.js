@@ -1,6 +1,7 @@
 ﻿"use strict";
 //location object - manage location details
-exports.Location = function Location(aName, aDescription, isDark, isStart, visits, imageName) { 
+exports.Location = function Location(name, description, attributes) { 
+    //name, description, detailedDescription, attributes,
     try{
         //module deps
         var artefactObjectModule = require('./artefact');
@@ -10,16 +11,19 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
               
 	    var self = this; //closure so we don't lose this reference in callbacks
         //self.location = {}; //JSON representation of location {description, objects, exits, creatures}
-        var _name = aName.toLowerCase();
+        var _name = name.toLowerCase();
         var _visits = 0;
-        if (visits) {_visits = visits;}; //if passed in.
-        var _dark = isDark;
-        var _start = isStart;
-        var _description = aDescription;
+        var _dark = false;
+        var _outdoor = false;
+        var _start = false;
+        var _description = description;
         var _inventory =  new inventoryObjectModule.Inventory(99999, 0.00, _name);//unlimited //[]; //and creatures
         var _exits = [];
         var _missions = [];
-        var _imageName = imageName;
+        var _imageName;
+
+        var _defaultIndoorScenery = ["floor", "ground", "wall", "ceiling"];
+        var _defaultOutdoorScenery = ["floor", "ground", "sky", "air"];
 
 	    var _objectName = "location";
 
@@ -30,14 +34,25 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return 0;
         };
 
+        var processAttributes = function(locationAttributes) {
+            if (!locationAttributes) {return null;}; //leave defaults preset
+            if (locationAttributes.dark) {_dark = locationAttributes.dark;};
+            if (locationAttributes.outdoor) {_outdoor = locationAttributes.outdoor;};
+            if (locationAttributes.start) {_start = locationAttributes.start;};
+            if (locationAttributes.visits >0) {_visits = locationAttributes.visits;};
+            if (locationAttributes.imageName != undefined) {_imageName = locationAttributes.imageName;};                
+        };
+
+        processAttributes(attributes);
+
         //public member functions
         self.toString = function() {
             //var _missions = [];
             var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
-            if (_imageName) { resultString += ',"imageName":"'+_imageName+'"'; };
-            if (_dark) { resultString += ',"dark":'+_dark; };
-            if (_start) { resultString += ',"start":'+_start; };
-            if (_visits) { resultString += ',"visits":'+_visits; };
+            var attributes = JSON.stringify(self.getAttributesToSave());
+            if (attributes != "{}") {
+                resultString += ',"attributes":'+attributes;
+            };
             resultString += ',"exits":[';
 
             for(var i=0; i<_exits.length;i++) {
@@ -67,10 +82,26 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             currentAttributes.animalCount = self.countCreatures("animal");
             currentAttributes.itemCount = _inventory.size(true);
             currentAttributes.dark = _dark;
+            currentAttributes.outdoor = _outdoor;
             currentAttributes.visits = _visits;
+            currentAttributes.start = _start;
+            currentAttributes.imageName = _imageName;  
             currentAttributes.inventoryValue = _inventory.getInventoryValue();
 
             return currentAttributes;
+        };
+
+        self.getAttributesToSave = function() {
+            var saveAttributes = {};
+            var locationAttributes = self.getCurrentAttributes();
+         
+            if (locationAttributes.dark) {saveAttributes.dark = locationAttributes.dark;};
+            if (locationAttributes.outdoor) {saveAttributes.outdoor = locationAttributes.outdoor;};
+            if (locationAttributes.visits >0) {saveAttributes.visits = locationAttributes.visits;};
+            if (locationAttributes.start) {saveAttributes.start = locationAttributes.start;};
+            if (locationAttributes.imageName != undefined) {saveAttributes.imageName = locationAttributes.imageName;};
+
+            return saveAttributes;
         };
 
         self.isDestroyed = function() {
@@ -94,8 +125,8 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             return _name;
         };
 
-        self.setDescription = function(aDescription) {
-            _description=aDescription;
+        self.setDescription = function(description) {
+            _description=description;
         };
 
         self.addExit = function(anExitDirection, aSource, aDestination,isHidden) {
@@ -275,7 +306,25 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
         };
 
         self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures) {
-            return _inventory.getObject(anObjectName, ignoreSynonyms, searchCreatures);
+            var returnObject = _inventory.getObject(anObjectName, ignoreSynonyms, searchCreatures);
+            if (returnObject) { return returnObject;};
+
+            if (anObjectName.substr(-1) == "s") {
+                anObjectName = anObjectName.substr(0,anObjectName.length-1);
+            };
+
+            //autogenerate missing default scenery
+            if (((!(_outdoor)) && _defaultIndoorScenery.indexOf(anObjectName) >-1) || ((_outdoor) && _defaultOutdoorScenery.indexOf(anObjectName) >-1)) {
+                var canDrawOn = false;
+                if (_defaultIndoorScenery.indexOf(anObjectName) >-1) {
+                    //it's a physical thing.
+                    canDrawOn = true;
+                };
+                var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", {"type": "scenery", "canDrawOn": canDrawOn}, null, null);
+                sceneryObject.addSyns([anObjectName+"s", anObjectName+"es"])
+                _inventory.add(sceneryObject);
+                return sceneryObject;
+            };
         };
 
         self.getObjectByType = function(anObjectType) {
@@ -381,6 +430,11 @@ exports.Location = function Location(aName, aDescription, isDark, isStart, visit
             //console.log("location is dark? "+_dark);
             if (_dark) {return true;};
             return false;
+        };
+
+        self.setDark = function (isDark) {
+            _dark = isDark;
+            return _dark;
         };
 
         self.isStart = function () {

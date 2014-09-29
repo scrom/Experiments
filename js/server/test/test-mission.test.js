@@ -84,12 +84,11 @@ exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
     var mission = new simon.getMissions()[0];
     mission.startTimer();
     mission.getNextDialogue();
-    mission.getNextDialogue();
-    simon.receive(disk);
+    console.log(simon.receive(disk));
     
     //var result = mission.checkState(inv, simon.getLocation(), m0);
     var result = mission.checkState(p0, m0);
-
+    console.log("result:"+result);
     var expectedResult = true;
     var actualResult = false
     if (result) {actualResult = true;};

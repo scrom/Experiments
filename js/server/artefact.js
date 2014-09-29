@@ -130,6 +130,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         var processAttributes = function(artefactAttributes) {
+            if (_initialDetailedDescription == "") {
+                _initialDetailedDescription ="Nothing of interest here.";
+                _detailedDescription = _initialDetailedDescription;
+            };
             if (!artefactAttributes) {return null;};
             if (artefactAttributes.synonyms != undefined) { _synonyms = artefactAttributes.synonyms;};
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = artefactAttributes.defaultAction;};
@@ -847,6 +851,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_imageName) {
                 resultString += "$image"+_imageName+"/$image";
             };
+
+            if (_initialDetailedDescription == "Nothing of interest here." && resultString.length > _initialDetailedDescription.length) {
+                resultString = resultString.replace(_initialDetailedDescription+"<br>","");
+                resultString = resultString.replace(_initialDetailedDescription+" ","");
+            };
+
             return resultString;
         };
 

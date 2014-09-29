@@ -1898,6 +1898,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {
+                if (artefactName == "around") {return _currentLocation.describe();};
                 var directionIndex = _directions.indexOf(artefactName);
                 if (directionIndex > -1) {
                     if (artefactName.length == 1) {

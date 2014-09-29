@@ -268,11 +268,13 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
         self.buildLocation = function(locationData) {
             if (_map.getLocation(locationData.name)) {console.log("Usability warning: duplicate location name '"+locationData.name+"'.");};
-            if (locationData.dark == "true" || locationData.dark == true) {locationData.dark = true;}
-            else {locationData.dark=false;};
-            if (locationData.start == "true" || locationData.start == true) {locationData.start = true;}
-            else {locationData.start=false;};
-            var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.dark,locationData.start, locationData.visits, locationData.imageName);
+            if (locationData.attributes) {
+                if (locationData.attributes.dark == "true" || locationData.attributes.dark == true) {locationData.attributes.dark = true;}
+                else {locationData.attributes.dark=false;};
+                if (locationData.attributes.start == "true" || locationData.attributes.start == true) {locationData.attributes.start = true;}
+                else {locationData.attributes.start=false;};
+            };
+            var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.attributes);
             return newLocation;
         };
         

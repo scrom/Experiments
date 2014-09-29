@@ -42,7 +42,7 @@ exports.tearDown = function (callback) {
 exports.canCreateCreature = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
-    var expectedResult = '{"object":"creature","name":"creature","displayname":"the creature","description":"a beastie","detailedDescription":"a big beastie with teeth","attributes":{"weight":120,"attackStrength":50,"gender":"unknown","type":"creature","carryWeight":50,"health":150}}';
+    var expectedResult = '{"object":"creature","name":"creature","displayname":"the creature","description":"a beastie","detailedDescription":"a big beastie with teeth","attributes":{"weight":120,"attackStrength":50,"type":"creature","carryWeight":50,"health":150}}';
     var actualResult = c0.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
