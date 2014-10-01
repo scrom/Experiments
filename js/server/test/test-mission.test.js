@@ -79,7 +79,7 @@ exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
     var simon = m0.getCreature('simon galbraith');
 
     //var m = new simon.getMissions()[0];
-    var disk = new artefact.Artefact("disk", "hard disk", "mission object", {weight: 3, price: 100, canCollect: true}, null, null);
+    var disk = new artefact.Artefact("hard disk", "hard disk", "mission object", {weight: 3, price: 100, canCollect: true}, null, null);
 
     var mission = new simon.getMissions()[0];
     mission.startTimer();
