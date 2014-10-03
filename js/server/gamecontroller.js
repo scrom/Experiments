@@ -6,59 +6,96 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
         var _games = [];
         var _inactiveGames = [];
         var _savedGames = [];
+        var _savedGamesDataKey = "mvta.savedGames";
         var _mapBuilder = mapBuilder; //
 	    var _objectName = "GameController";
-        var maxArraySize = 4294967294; //ew may need this at some point to "compact" games and inactive games.
 
         //module deps
         var gameObjectModule = require('./game');
         var _fm = fileManager;
 
+        var readSavedGames = function() {
+            var callbackFunction = function(data) {
+                if (data) {
+                    for (var i=0;i<data.length;i++) {
+                        _savedGames.push(data[i]);
+                        //console.log(data[i]);
+                    };
+                console.log("Expired game data retrieved on startup - "+_savedGames.length+" references.");
+                };
+            };
+
+            _fm.readGameData(_savedGamesDataKey, callbackFunction);
+        };
+
+        var writeSavedGames = function() {
+            var callbackFunction = function() {
+                console.log("expired game data saved - "+_savedGames.length+" references.");
+                return null;
+            };
+            //'{"username":"'+savedGame.getUsername()+'","id":'+savedGame.getId()+', "filename":"'+savedGame.getFilename()+'"}'
+            var saveDataStringArray = [];
+
+            //if we've built up too many expired games, just salvage the last 500.
+            if (_savedGames.length > 1000) {
+                _savedGames = _savedGames.slice(-500);
+            };
+            for (var i=0;i<_savedGames.length;i++) {
+                saveDataStringArray.push('{"username":"'+_savedGames[i].username+'", "id":'+_savedGames[i].id+',"filename":"'+_savedGames[i].filename+'"}');
+            };
+            _fm.writeGameData(_savedGamesDataKey, saveDataStringArray, true, callbackFunction); //fileName, data, overwrite, callback
+        };
+
+        //retrieve stored data
+        readSavedGames();
+
+
         console.log(_objectName + ' created');
 
         //// public methods   
+        self.checkForExpiredGames = function(gameTimeOut) {
+            console.log("Checking for expired games...");
+            for (var g=0;g<_games.length;g++) {
+                var now = parseInt(new Date().getTime());
+                if (typeof _games[g] == "object") {
+                    //if not active for the last hour, kill the game
+                    if (_games[g].getTimeStamp() < now-gameTimeOut) {
+                        console.log("Game "+_games[g].getNameAndId()+" timed out - removing from controller.");
+
+                        var callbackFunction = function(savedResult, savedGame) {
+                            var saved;
+                            if (savedResult) {
+                                try {
+                                    saved = JSON.parse(savedResult);
+                                } catch (e) {console.log("Error parsing JSON for save game result: error = "+e+": "+savedResult);};
+                                   
+                                //console.log("saved");
+                                if (saved.description) {
+                                    //console.log("saved.description");
+                                    if (saved.description.substring(0,10) == "Game saved") {
+                                        _savedGames.push({"username":savedGame.getUsername(),"id":savedGame.getId(), "filename":savedGame.getFilename()});
+                                        writeSavedGames();
+                                        console.log("Timed out game saved as id:"+savedGame.getId()+", username:"+savedGame.getUsername()+", filename:"+savedGame.getFilename());
+                                    };
+                                };
+                            };
+                            _games[g] = g; //set just ID into game slot
+                            _inactiveGames.push(g);
+                            //console.log(_inactiveGames); 
+                        };
+
+                        _games[g].save(callbackFunction);
+                          
+                    }; 
+                };
+            }; 
+        };
         
         self.monitor = function(pollFrequencyMinutes, gameTimeOutMinutes) {
             //convert inputs to millis
             var pollFrequency = pollFrequencyMinutes*60000; 
             var gameTimeOut = gameTimeOutMinutes*60000; 
-            setInterval(function(){ 
-                console.log("Checking for expired games...");
-                for (var g=0;g<_games.length;g++) {
-                   var now = parseInt(new Date().getTime());
-                   if (typeof _games[g] == "object") {
-                       //if not active for the last hour, kill the game
-                       if (_games[g].getTimeStamp() < now-gameTimeOut) {
-                           console.log("Game "+_games[g].getNameAndId()+" timed out - removing from controller.");
-
-                           var callbackFunction = function(savedResult, savedGame) {
-                               var saved;
-                               if (savedResult) {
-                                    try {
-                                        saved = JSON.parse(savedResult);
-                                    } catch (e) {console.log("Error parsing JSON for save game result: error = "+e+": "+savedResult);};
-                                   
-                                   //console.log("saved");
-                                   if (saved.description) {
-                                       //console.log("saved.description");
-                                       if (saved.description.substring(0,10) == "Game saved") {
-                                            _savedGames.push({"username":savedGame.getUsername(),"id":savedGame.getId(), "filename":savedGame.getFilename()});
-                                            console.log("Timed out game saved as id:"+savedGame.getId()+", username:"+savedGame.getUsername()+", filename:"+savedGame.getFilename());
-                                       };
-                                    };
-                                };
-                               _games[g] = g; //set just ID into game slot
-                               _inactiveGames.push(g);
-                               //console.log(_inactiveGames); 
-                           };
-
-                           _games[g].save(callbackFunction);
-
-                           
-                       }; 
-                   };
-                }; 
-            }, pollFrequency);
+            setInterval(function(){self.checkForExpiredGames(gameTimeOut);}, pollFrequency);
         }; 
 
         self.findSavedGame = function(username, gameId) {
@@ -140,6 +177,14 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 if (!(gameData)) {
                     callback (null);
                 } else {
+                    //remove from pool of expired games we're tracking
+                    var expiredGamesToKeep = [];
+                    for (var s=0;s<_savedGames.length;s++) {
+                        if (_savedGames[s].filename != filename) {expiredGamesToKeep.push(_savedGames[s]);};
+                    };
+                    _savedGames = expiredGamesToKeep;
+                    writeSavedGames();
+
                     var playerAttributes = gameData[0];
                     var newMap = _mapBuilder.buildMap(gameData);
                     //console.log ("game file "+filename+" loaded.");
@@ -216,7 +261,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             //console.log(_games[aGameId]);
             if (_games[aGameId] == undefined) {
                 console.log('invalid gameId:'+aGameId);
-                return '{"username":"","id":-1,"description":"Sorry, it looks like you\'re trying to play a game that doesn\'t exist any more.<br>Please refresh this page in your browser and either <i>load</i> an old game (if you have one) or start a new one (if you don\'t)."}';
+                return self.findSavedGame(aUsername, aGameId);
             };
 
             if (!(typeof _games[aGameId] == "object")) {
