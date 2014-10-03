@@ -36,102 +36,110 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         
         //public member functions
         self.buildArtefact = function(artefactData) {
-            console.log('Building: '+artefactData.name);
-            if (_map.checkExists(artefactData.name)) {console.log("Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};
-            var artefact;
-            var inventory;
-            var linkedExits = [];
-            var delivers = [];
-            var missions; //not implemented yet
+            //console.log('Building: '+artefactData.name);
+            try {
+                if (_map.checkExists(artefactData.name)) {console.log("--Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};
+                var artefact;
+                var inventory;
+                var linkedExits = [];
+                var delivers = [];
+                var missions; //not implemented yet
 
-            if (artefactData.linkedexits) {
-                for (var j=0; j<artefactData.linkedexits.length; j++) {
-                   linkedExits.push(_map.getExit(artefactData.linkedexits[j].source, artefactData.linkedexits[j].direction, artefactData.linkedexits[j].destination));
+                if (artefactData.linkedexits) {
+                    for (var j=0; j<artefactData.linkedexits.length; j++) {
+                       linkedExits.push(_map.getExit(artefactData.linkedexits[j].source, artefactData.linkedexits[j].direction, artefactData.linkedexits[j].destination));
+                    };
                 };
-            };
 
-            if (artefactData.delivers) {
-                for (var i = 0; i < artefactData.delivers.length; i++) {
-                    delivers.push(self.buildArtefact(artefactData.delivers[i]));
+                if (artefactData.delivers) {
+                    for (var i = 0; i < artefactData.delivers.length; i++) {
+                        delivers.push(self.buildArtefact(artefactData.delivers[i]));
+                    };
                 };
-            };
 
-            artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);
-            if (artefactData.synonyms) {artefact.addSyns(artefactData.synonyms);};
-            if (artefactData.inventory) {
-                //add items directly to inventory
-                inventory = artefact.getInventoryObject();
-                for (var i=0; i<artefactData.inventory.length; i++) {
-                    if (artefactData.inventory[i].object == "artefact") {inventory.add(self.buildArtefact(artefactData.inventory[i]));};
-                    //else if (artefactData.inventory[i].object == "creature") {inventory.add(self.buildCreature(artefactData.inventory[i]));};  //won't work - creatures need to "go" to a locaion at the moment
+                artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);
+                if (artefactData.synonyms) {artefact.addSyns(artefactData.synonyms);};
+                if (artefactData.inventory) {
+                    //add items directly to inventory
+                    inventory = artefact.getInventoryObject();
+                    for (var i=0; i<artefactData.inventory.length; i++) {
+                        if (artefactData.inventory[i].object == "artefact") {inventory.add(self.buildArtefact(artefactData.inventory[i]));};
+                        //else if (artefactData.inventory[i].object == "creature") {inventory.add(self.buildCreature(artefactData.inventory[i]));};  //won't work - creatures need to "go" to a locaion at the moment
+                    };
                 };
-            };
 
-            if (artefactData.missions) {
-                for (var j=0; j<artefactData.missions.length; j++) {
-                    artefact.addMission(self.buildMission(artefactData.missions[j]));
+                if (artefactData.missions) {
+                    for (var j=0; j<artefactData.missions.length; j++) {
+                        artefact.addMission(self.buildMission(artefactData.missions[j]));
+                    };
                 };
-            };
 
-            if (artefact.getType() == "book") {
-                _map.incrementBookCount();
-            };
+                if (artefact.getType() == "book") {
+                    _map.incrementBookCount();
+                };
 
-            //check artefact has syns
-            if (artefact.getSyns().length ==0) {console.log("Usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
-            return artefact;
+                //check artefact has syns
+                if (artefact.getSyns().length ==0) {console.log("--Usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
+                return artefact;
+            } catch(err) {
+	            console.log("Failed to build artefact: "+artefactData.name+": "+err.stack);
+            };
         };
 
         self.buildCreature = function(creatureData) {
             //name, description, detailedDescription, attributes, carrying
-            console.log('Building Creature: '+creatureData.name);
-            if (_map.checkExists(creatureData.name)) {console.log("Usability warning: duplicate creature name/synonym '"+creatureData.name+"'.");};
-            var creature;
-            var inventory;
-            var salesInventory;
-            var missions;
+            //console.log('Building Creature: '+creatureData.name);
+            try {
+                if (_map.checkExists(creatureData.name)) {console.log("--Usability warning: duplicate creature name/synonym '"+creatureData.name+"'.");};
+                var creature;
+                var inventory;
+                var salesInventory;
+                var missions;
 
-            //determine name (proper noun or just noun)
-            var creatureName = creatureData.name;
-            var initial = creatureData.displayname.substring(0,1);
+                //determine name (proper noun or just noun)
+                var creatureName = creatureData.name;
+                var initial = creatureData.displayname.substring(0,1);
 
-            //is their name a proper noun?
-            if (initial == initial.toUpperCase()) {
-                if (creatureName.toLowerCase() != creatureData.displayname.toLowerCase()) {
-                    console.log("Usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
+                //is their name a proper noun?
+                if (initial == initial.toUpperCase()) {
+                    if (creatureName.toLowerCase() != creatureData.displayname.toLowerCase()) {
+                        console.log("--Usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
+                    };
+                    creatureName = creatureData.displayname;
+                }; //creature name is a proper noun
+
+                creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
+                if (creatureData.synonyms) {creature.addSyns(creatureData.synonyms);};
+                if (creatureData.dislikes) {creature.addDislikes(creatureData.dislikes);};
+                if (creatureData.inventory) {
+                    //add items directly to inventory
+                    inventory = creature.getInventoryObject();
+                    for (var i=0; i<creatureData.inventory.length; i++) {
+                        if (creatureData.inventory[i].object == "artefact") {inventory.add(self.buildArtefact(creatureData.inventory[i]));};
+                        //else if (creatureData.inventory[i].object == "creature") {inventory.add(self.buildCreature(creatureData.inventory[i]));}; //won't work - creatures need to "go" to a locaion at the moment
+                    };
                 };
-                creatureName = creatureData.displayname;
-            }; //creature name is a proper noun
-
-            creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
-            if (creatureData.synonyms) {creature.addSyns(creatureData.synonyms);};
-            if (creatureData.dislikes) {creature.addDislikes(creatureData.dislikes);};
-            if (creatureData.inventory) {
-                //add items directly to inventory
-                inventory = creature.getInventoryObject();
-                for (var i=0; i<creatureData.inventory.length; i++) {
-                    if (creatureData.inventory[i].object == "artefact") {inventory.add(self.buildArtefact(creatureData.inventory[i]));};
-                    //else if (creatureData.inventory[i].object == "creature") {inventory.add(self.buildCreature(creatureData.inventory[i]));}; //won't work - creatures need to "go" to a locaion at the moment
+                if (creatureData.sells) {
+                    //add items directly to inventory
+                    salesInventory = creature.getSalesInventoryObject();
+                    for (var i = 0; i < creatureData.sells.length; i++) {
+                        if (creatureData.sells[i].object == "artefact") { salesInventory.add(self.buildArtefact(creatureData.sells[i])); };
+                        //else if (creatureData.sells[i].object == "creature") {salesInventory.add(self.buildCreature(creatureData.sells[i]));}; //won't work - creatures need to "go" to a locaion at the moment
+                    };
                 };
+                if (creatureData.missions) {
+                    for (var j=0; j<creatureData.missions.length; j++) {
+                        creature.addMission(self.buildMission(creatureData.missions[j]));
+                    };
+                };
+
+                _map.incrementCreatureCount();
+
+                if (creature.getSyns().length ==0) {console.log("--Usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
+                return creature;
+            } catch(err) {
+	            console.log("Failed to build creature: "+creatureData.name+": "+err.stack);
             };
-            if (creatureData.sells) {
-                //add items directly to inventory
-                salesInventory = creature.getSalesInventoryObject();
-                for (var i = 0; i < creatureData.sells.length; i++) {
-                    if (creatureData.sells[i].object == "artefact") { salesInventory.add(self.buildArtefact(creatureData.sells[i])); };
-                    //else if (creatureData.sells[i].object == "creature") {salesInventory.add(self.buildCreature(creatureData.sells[i]));}; //won't work - creatures need to "go" to a locaion at the moment
-                };
-            };
-            if (creatureData.missions) {
-                for (var j=0; j<creatureData.missions.length; j++) {
-                    creature.addMission(self.buildMission(creatureData.missions[j]));
-                };
-            };
-
-            _map.incrementCreatureCount();
-
-            if (creature.getSyns().length ==0) {console.log("Usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
-            return creature;
         };
 
         self.unpackConditionAttributes = function(attributes) {
@@ -245,37 +253,47 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         };
 
         self.buildMission = function(missionData) {
-            console.log("Building mission: "+missionData.name);
+            //console.log("Building mission: "+missionData.name);
             //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward
-            var conditionAttr;
-            var initialAttr;
-            var failAttr;
-            if (missionData.conditionAttributes) {
-                conditionAttr = self.unpackConditionAttributes(missionData.conditionAttributes);
-            };
-            if (missionData.initialAttributes) {
-                initialAttr = self.unpackConditionAttributes(missionData.initialAttributes);
-            };
-            if (missionData.failAttributes) {
-                failAttr = self.unpackConditionAttributes(missionData.failAttributes);
-            };
+            try {
+                var conditionAttr;
+                var initialAttr;
+                var failAttr;
+                if (missionData.conditionAttributes) {
+                    conditionAttr = self.unpackConditionAttributes(missionData.conditionAttributes);
+                };
+                if (missionData.initialAttributes) {
+                    initialAttr = self.unpackConditionAttributes(missionData.initialAttributes);
+                };
+                if (missionData.failAttributes) {
+                    failAttr = self.unpackConditionAttributes(missionData.failAttributes);
+                };
 
-            var rewardData = self.unpackReward(missionData.reward);
+                var rewardData = self.unpackReward(missionData.reward);
 
-            _map.incrementMissionCount();
-            return new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData);
+                _map.incrementMissionCount();
+
+                var newMission = new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData);
+                return newMission;
+            } catch(err) {
+	            console.log("Failed to build mission: "+missionData.name+": "+err.stack);
+            };
         };
 
         self.buildLocation = function(locationData) {
-            if (_map.getLocation(locationData.name)) {console.log("Usability warning: duplicate location name '"+locationData.name+"'.");};
-            if (locationData.attributes) {
-                if (locationData.attributes.dark == "true" || locationData.attributes.dark == true) {locationData.attributes.dark = true;}
-                else {locationData.attributes.dark=false;};
-                if (locationData.attributes.start == "true" || locationData.attributes.start == true) {locationData.attributes.start = true;}
-                else {locationData.attributes.start=false;};
+            try {
+                if (_map.getLocation(locationData.name)) {console.log("--Usability warning: duplicate location name '"+locationData.name+"'.");};
+                if (locationData.attributes) {
+                    if (locationData.attributes.dark == "true" || locationData.attributes.dark == true) {locationData.attributes.dark = true;}
+                    else {locationData.attributes.dark=false;};
+                    if (locationData.attributes.start == "true" || locationData.attributes.start == true) {locationData.attributes.start = true;}
+                    else {locationData.attributes.start=false;};
+                };
+                var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.attributes);
+                return newLocation;
+            }  catch(err) {
+	            console.log("Failed to build location: "+locationData.name+": "+err.stack);
             };
-            var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.attributes);
-            return newLocation;
         };
         
         self.addLocation = function(location){
@@ -285,6 +303,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         self.buildGameObjects = function(gameDataAsJSON) {
 
             //locations and links
+            console.log("Building locations...");
             for (var i=0; i<gameDataAsJSON.length;i++) {
                 if (gameDataAsJSON[i].object == "location") {
                     var locationData = gameDataAsJSON[i]
@@ -299,8 +318,9 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     };
                 }; 
             };
-
+            console.log("Locations built.");
             
+            console.log("Building objects, creatures and missions...");
             //once all locations are built, add objects, creatures and missions.
             for (var i=0; i<gameDataAsJSON.length;i++) {
                 if (gameDataAsJSON[i].object == "location") {
@@ -334,6 +354,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     }; 
                 };                       
             };
+            console.log("Objects, creatures and missions built.");
 
             //build spawn data
             for (var i=0; i<gameDataAsJSON.length;i++) {
@@ -342,6 +363,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 };
             };
 
+            console.log("Finished building game data.");
 
         };
 

@@ -478,7 +478,7 @@ exports.Location = function Location(name, description, attributes) {
 
         //end public member functions
 
-        console.log(_objectName +' created: '+self.getName());
+        //console.log(_objectName +' created: '+self.getName());
 
     }
     catch(err) {
