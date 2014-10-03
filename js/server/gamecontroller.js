@@ -79,12 +79,13 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                                     };
                                 };
                             };
-                            _games[g] = g; //set just ID into game slot
-                            _inactiveGames.push(g);
                             //console.log(_inactiveGames); 
                         };
 
                         _games[g].save(callbackFunction);
+
+                        _games[g] = g; //set just ID into game slot
+                        _inactiveGames.push(g);
                           
                     }; 
                 };
