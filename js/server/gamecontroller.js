@@ -31,7 +31,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                        if (_games[g].getTimeStamp() < now-gameTimeOut) {
                            console.log("Game "+_games[g].getNameAndId()+" timed out - removing from controller.");
 
-                           var callbackFunction = function(savedResult) {
+                           var callbackFunction = function(savedResult, savedGame) {
                                var saved;
                                if (savedResult) {
                                     try {
@@ -42,8 +42,8 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                                    if (saved.description) {
                                        //console.log("saved.description");
                                        if (saved.description.substring(0,10) == "Game saved") {
-                                            _savedGames.push({"username":_games[g].getUsername(),"id":_games[g].getId(), "filename":_games[g].getFilename()});
-                                            console.log("Timed out game saved as id:"+_games[g].getId()+", username:"+_games[g].getUsername()+", filename:"+_games[g].getFilename());
+                                            _savedGames.push({"username":savedGame.getUsername(),"id":savedGame.getId(), "filename":savedGame.getFilename()});
+                                            console.log("Timed out game saved as id:"+savedGame.getId()+", username:"+savedGame.getUsername()+", filename:"+savedGame.getFilename());
                                        };
                                     };
                                 };

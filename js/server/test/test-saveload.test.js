@@ -54,7 +54,7 @@ exports.canSaveGameToFile = function (test) {
 
     var g0 = new game.Game(playerAttributes,0, m0, mb, null, fm);
 
-    var callbackFunction = function(result) {
+    var callbackFunction = function(result, savedGame) {
         //console.log(result)
         var expectedResult = 45;
         var actualResult = result.indexOf("Game saved as <b>player-");
@@ -87,7 +87,7 @@ exports.canSaveGameToRedis = function (test) {
 
     var g0 = new game.Game(playerAttributes,0, m0, mb, null, redisfm);
 
-    var callbackFunction = function(result) {
+    var callbackFunction = function(result, savedGame) {
         //console.log(result)
         var expectedResult = 45;
         var actualResult = result.indexOf("Game saved as <b>player-");
@@ -126,8 +126,9 @@ exports.canSaveGameToRedisAndReadBack = function (test) {
 
     var g0 = new game.Game(playerAttributes,0, m0, mb, null, redisfm);
 
-    var callbackFunction = function(result) {
+    var callbackFunction = function(result, savedGame) {
         //console.log(result)
+        console.log("Validating saved game is returned: "+savedGame.getUsername());
         var filename = result.substr(62, 13);
         console.log(filename);
 

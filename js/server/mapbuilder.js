@@ -38,7 +38,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         self.buildArtefact = function(artefactData) {
             //console.log('Building: '+artefactData.name);
             try {
-                if (_map.checkExists(artefactData.name)) {console.log("--Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};
+                if (_map.checkExists(artefactData.name)) {console.log("Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};
                 var artefact;
                 var inventory;
                 var linkedExits = [];
@@ -79,7 +79,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 };
 
                 //check artefact has syns
-                if (artefact.getSyns().length ==0) {console.log("--Usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
+                if (artefact.getSyns().length ==0) {console.log("Usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
                 return artefact;
             } catch(err) {
 	            console.log("Failed to build artefact: "+artefactData.name+": "+err.stack);
@@ -90,7 +90,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
             //name, description, detailedDescription, attributes, carrying
             //console.log('Building Creature: '+creatureData.name);
             try {
-                if (_map.checkExists(creatureData.name)) {console.log("--Usability warning: duplicate creature name/synonym '"+creatureData.name+"'.");};
+                if (_map.checkExists(creatureData.name)) {console.log("Usability warning: duplicate creature name/synonym '"+creatureData.name+"'.");};
                 var creature;
                 var inventory;
                 var salesInventory;
@@ -103,7 +103,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 //is their name a proper noun?
                 if (initial == initial.toUpperCase()) {
                     if (creatureName.toLowerCase() != creatureData.displayname.toLowerCase()) {
-                        console.log("--Usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
+                        console.log("Usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
                     };
                     creatureName = creatureData.displayname;
                 }; //creature name is a proper noun
@@ -135,7 +135,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
                 _map.incrementCreatureCount();
 
-                if (creature.getSyns().length ==0) {console.log("--Usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
+                if (creature.getSyns().length ==0) {console.log("Usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
                 return creature;
             } catch(err) {
 	            console.log("Failed to build creature: "+creatureData.name+": "+err.stack);
@@ -282,7 +282,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
         self.buildLocation = function(locationData) {
             try {
-                if (_map.getLocation(locationData.name)) {console.log("--Usability warning: duplicate location name '"+locationData.name+"'.");};
+                if (_map.getLocation(locationData.name)) {console.log("Usability warning: duplicate location name '"+locationData.name+"'.");};
                 if (locationData.attributes) {
                     if (locationData.attributes.dark == "true" || locationData.attributes.dark == true) {locationData.attributes.dark = true;}
                     else {locationData.attributes.dark=false;};

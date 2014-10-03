@@ -158,7 +158,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                     var aGame = _gameController.getGame(username, gameId);
                     if (!(aGame)) {callback(assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}'));};
                     
-                    var callbackFunction = function(result) {
+                    var callbackFunction = function(result, savedGame) {
                         var response = assembleResponse(commandJson,result);
                         callback(response);
                     };
