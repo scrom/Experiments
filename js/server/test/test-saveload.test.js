@@ -30,7 +30,7 @@ exports.canLoadFileBasedGame.meta = { traits: ["SaveLoad Test", "Load Trait"], d
 
 exports.canCreateSaveablePlayer = function (test) {
 
-    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob"], "stepsTaken": 4,"waitCount": 21};
+    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob", "stuff", "more stuff"], "stepsTaken": 4,"waitCount": 21};
     var m0 = mb.buildMap();
     var p0 = new player.Player(playerAttributes, m0, mb);
     var l0 = new location.Location('home','a home location');
@@ -49,7 +49,7 @@ exports.canCreateSaveablePlayer.meta = { traits: ["SaveLoad Test", "CanSave Trai
 
 exports.canSaveGameToFile = function (test) {
 
-    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob"], "stepsTaken": 4,"waitCount": 21};
+    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob", "stuff", "more stuff"], "stepsTaken": 4,"waitCount": 21};
     var m0 = mb.buildMap();
 
     var g0 = new game.Game(playerAttributes,0, m0, mb, null, fm);
@@ -82,7 +82,7 @@ exports.canSaveGameToRedis = function (test) {
     var redisfm = new filemanager.FileManager(false);
     //var redisgc = new gamecontroller.GameController(mb, redisfm);
 
-    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob"], "stepsTaken": 4,"waitCount": 21};
+    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob", "stuff", "more stuff"], "stepsTaken": 4,"waitCount": 21};
     var m0 = mb.buildMap();
 
     var g0 = new game.Game(playerAttributes,0, m0, mb, null, redisfm);
@@ -121,7 +121,7 @@ exports.canSaveGameToRedisAndReadBack = function (test) {
     var redisfm = new filemanager.FileManager(false);
     //var redisgc = new gamecontroller.GameController(mb, redisfm);
 
-    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob"], "stepsTaken": 4,"waitCount": 21};
+    var playerAttributes = {"username":"player","missionsCompleted": ["keyfob", "stuff", "more stuff"], "stepsTaken": 4,"waitCount": 21};
     var m0 = mb.buildMap();
 
     var g0 = new game.Game(playerAttributes,0, m0, mb, null, redisfm);
