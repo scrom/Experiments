@@ -639,7 +639,16 @@ exports.Action = function Action(player, map, fileManager) {
                         //this will fall through to navigation later.
                         //if player enters "go to x", we'll have an object 1 (but no object 0).
                         _verb = _object0;
-                        if (_object1) {_verb = _object1;};
+                        if (_object1) {
+                            if (_directions.indexOf(_object1) > -1) {
+                                _verb = _object1;
+                            } else {
+                                description = "You'll need to explore and find your way there yourself I'm afraid.";
+                            };
+                        };
+                        break;
+                    case 'explore':
+                        description = "Which direction do you want to go?"
                         break;
                     case 'exit':
                     case 'leave':
