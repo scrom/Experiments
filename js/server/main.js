@@ -14,7 +14,7 @@ var mapBuilder = new mapBuilderModule.MapBuilder(gameDataJSONPath);
 
 var fileManager = new fileManagerModule.FileManager();
 var gameController = new gameControllerModule.GameController(mapBuilder, fileManager);
-gameController.monitor(0.15, 0.1); //5,60
+gameController.monitor(7, 55); //5,60
 var watcher = new watcherObjectModule.Watcher(mapBuilder, gameController);
 var interpreter = new interpreterObjectModule.Interpreter(gameController, fileManager);
 
