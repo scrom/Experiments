@@ -3,7 +3,7 @@ Experiments
 
 Getting back into coding
 
-IF-Node. March 2014: (Readme last Updated October 2014)
+IF-Node. March 2014: (Readme last updated October 2014)
 
 *** This game is live and running at: http://mvta.herokuapp.com/ ***
 
