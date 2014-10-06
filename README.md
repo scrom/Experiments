@@ -3,7 +3,7 @@ Experiments
 
 Getting back into coding
 
-IF-Node. March 2014: (Last Updated September 2014)
+IF-Node. March 2014: (Readme last updated October 2014)
 
 *** This game is live and running at: http://mvta.herokuapp.com/ ***
 
@@ -38,7 +38,7 @@ As the game currently stands it's on course to becoming quite an advanced text a
 
 Other than *loads* of additional game mechanics, features and sample content, the other major components to work on are:
  - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently a single (large) json file and the set of attributes available for everything isn't documented.  Eventually I'd like players  to choose, extend and reuse maps. Right now, there's just the one.
- - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done*
+ - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done - if the player has achieved enough to save their game*
  - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.)
  - implementing server throttling to prevent overloading (see server config, some performance profiling and testing and finding a public host. *done*
  - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done - only "real" games can be saved*
@@ -58,16 +58,19 @@ Server Configuration
 -  PORT     (e.g. 1337)
 Note, if the game is running on port 80, you don't need to explicitly set port number as an environment variable.
 
-3: MVTA is written to use either .json files or Redis (as a non-file data store) to save player game data.
+3: MVTA is written to use either .json files or Redis (as a non-file data store) to save player game data and timed-out games.
+
 If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be password authenticated).
 Once you have a store available, set the following environment variables for your Redis data store 
 - REDISSERVER (the hostname of your redis server)
 - REDISPWD (the auth password of your redis server)
 - REDISPORT (the port number of your redis host)
-*If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
-As of 5th September, the Redis support is still under development.
 
-4: NodeJS will be default limit the number of active http connections to 5.
+*If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
+As of October 2014, Redis support is fully functional. 
+Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully.
+
+4: NodeJS may still have a default limit on the number of active http connections to 5.
 In order to support more connections, you'll need to set another environment variable (I think)...
 - NODE_ENV: production
 I've not verified this bit yet though.
