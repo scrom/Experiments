@@ -2503,7 +2503,7 @@
     {
         "object": "location",
         "name": "first-floor-cubicle",
-        "description": "You're in a first floor toilet cubicle.",
+        "description": "You're in a first floor toilet cubicle.<br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
         "exits": [
             {
                 "object": "exit",
@@ -2540,10 +2540,28 @@
                     }
                 ],
                 "synonyms": [
-                    "toilet",
                     "cubicle",
                     "toilet door",
                     "door"
+                ]
+            },
+{
+                "object": "artefact",
+                "name": "toilet",
+                "description": "toilet",
+                "detailedDescription": "Pretty much your standard office porcelain.",
+                "attributes": {
+                    "weight": 100,
+                    "type": "scenery",
+                    "canDrawOn": true,
+                    "customAction": "flush",
+                    "defaultResult": "You try to flush the toilet but it just seems to be constantly refilling and not enough water for a proper flush."
+                },
+                "synonyms": [
+                    "pan",
+					"chain",
+					"loo",
+                    "crapper"
                 ]
             },
             {
@@ -3000,7 +3018,7 @@
     {
         "object": "location",
         "name": "ground-floor-cubicle",
-        "description": "You're standing in a nice clean cubicle. Fortunately the previous occupant remembered to flush.",
+        "description": "You're standing in a nice clean toilet cubicle. Fortunately the previous occupant remembered to flush.",
         "exits": [
             {
                 "object": "exit",
@@ -3037,10 +3055,28 @@
                     }
                 ],
                 "synonyms": [
-                    "toilet",
                     "cubicle",
                     "toilet door",
                     "door"
+                ]
+            },
+{
+                "object": "artefact",
+                "name": "toilet",
+                "description": "toilet",
+                "detailedDescription": "It looks like it's in lovely clean, working order!",
+                "attributes": {
+                    "weight": 100,
+                    "type": "scenery",
+                    "canDrawOn": true,
+                    "customAction": "flush",
+                    "defaultResult": "You give the toilet a rather satisfying flush and gaze as the water gently gushes into the u-bend.<br>Then you remember you have stuff to do.<br>Time to get going $player!"
+                },
+                "synonyms": [
+                    "pan",
+					"chain",
+					"loo",
+                    "crapper"
                 ]
             },
             {
@@ -6591,7 +6627,7 @@
     {
         "object": "location",
         "name": "second-floor-cubicle",
-        "description": "You're in a toilet cubicle. You feel even more disoriented. <br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
+        "description": "You're in a toilet cubicle. The toilet is making some unhealthy gugling noises and the smell in here is terrible.<br> I think there's a good reason this one was out of order.",
         "attributes": {"dark": true},
         "exits": [
             {
@@ -6629,10 +6665,29 @@
                     }
                 ],
                 "synonyms": [
-                    "toilet",
                     "cubicle",
                     "toilet door",
                     "door"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "toilet",
+                "description": "toilet",
+                "detailedDescription": "It looks like the maintenance team have been working on this one.",
+                "attributes": {
+                    "weight": 100,
+                    "type": "scenery",
+					"imageName": "brokentoilet.jpg",
+                    "canDrawOn": true,
+                    "customAction": "flush",
+                    "defaultResult": "You flush the toilet.<br>Uh oh! Looks like it's blocked.<br> The water slowly fills up to the brim of the bowl before subsiding again.<br>That was close!"
+                },
+                "synonyms": [
+                    "pan",
+					"chain",
+					"loo",
+                    "crapper"
                 ]
             },
             {
@@ -7533,6 +7588,66 @@
                     "jar",
                     "marmite jar",
                     "food"
+                ]
+            },
+            {
+                "object": "creature",
+                "name": "margaret sexton",
+                "displayname": "Margaret Sexton",
+                "description": "Margaret Sexton",
+                "detailedDescription": "A true ray of sunshine every lunchtime serving you food on a daily basis.<br>Seriously - she's lovely and looks out for all of us.",
+                "attributes": {
+                    "weight": 110,
+                    "money": 10,
+                    "attackStrength": 25,
+                    "gender": "female",
+                    "type": "friendly",
+                    "carryWeight": 5,
+                    "health": 90,
+                    "canTravel": true,
+                    "imageName": "margaretsexton.jpg"
+                },
+                "synonyms": [
+                    "margaret",
+                    "madge",
+                    "ms",
+                    "sexton",
+                    "margaret s"
+                ]
+            },
+		{
+                "object": "creature",
+                "name": "wayne stanford",
+                "displayname": "Wayne Stanford",
+                "description": "Wayne Stanford",
+                "detailedDescription": "Chef Wayne, master of the Red Gate dessert!",
+                "attributes": {
+                    "weight": 130,
+                    "money": 10,
+                    "attackStrength": 25,
+                    "gender": "male",
+                    "type": "friendly",
+                    "carryWeight": 15,
+                    "health": 100,
+                    "canTravel": true,
+                    "traveller": true,
+                    "destinations": [
+                        "servery-kitchen",
+                        "smoking-area"
+                    ],
+                    "avoiding": [
+                        "first-floor-fire-escape"
+                    ],
+                    "loops": -1,
+                    "loopDelay": 5,
+                    "destinationDelay": 1,
+                    "imageName": "waynestanford.jpg"
+                },
+                "synonyms": [
+                    "wayne",
+                    "ws",
+                    "stanford",
+                    "wayne s"
                 ]
             }
         ]
