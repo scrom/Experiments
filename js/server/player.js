@@ -1656,7 +1656,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (giver.isDead()) {
                     return self.steal(verb, artefactName, giverName);
                 };
-                return "You'll need to be a little more specific. Do you want to <i>buy</i> or <i>steal</i> from "+giver.getDisplayName()+"?";
+                return "You'll need to be a little more specific. Do you want to <i>buy</i> or <i>steal</i> from "+giver.getDisplayName()+"?<br>(Or should you simply <i>ask</i> "+giver.getSuffix()+" instead?)";
 
             }  else {
                 return self.remove(verb, artefactName, giverName);
