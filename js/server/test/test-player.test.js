@@ -89,8 +89,10 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreatePlayer = function (test) {
-    var expectedResult = '{"object":"player","username":"player","currentLocation":"home","health":100,"money":5,"carryWeight":20,"startLocation":"home","locationsFound":1}';
-    var actualResult = p0.toString();
+    var playerAttribs = {"username":playerName};
+    var p1 = new player.Player(playerAttribs, m0, mb);
+    var expectedResult = '{"object":"player","username":"player","currentLocation":"atrium","health":100,"money":5,"carryWeight":20,"startLocation":"atrium"}';
+    var actualResult = p1.toString();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);

@@ -2125,6 +2125,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //console.log(_objectName + " created: "+_name+", "+self.destinationName);
     }
     catch(err) {
-	    console.log("Unable to create Artefact object: "+err);
+	    console.log("Unable to create Artefact object '"+name+"': "+err);
     };	
 };
