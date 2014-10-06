@@ -2283,6 +2283,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.hurt = function(pointsToRemove) {
+            if (pointsToRemove == 0) {return "";};
+
             self.reduceHitPoints(pointsToRemove);
 
             //console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
