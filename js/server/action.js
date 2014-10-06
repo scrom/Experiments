@@ -591,17 +591,19 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'rub':
                         description = _player.rub(_verb, _object0, _object1);
                         break;
+                    case 'talk':
+                    case 'tak':
+                    case 'takl':
+                        //we assume "talk to x" - it "to" is missing, handle speech anyway.
+                        if (stringIsEmpty(_object1) && (!(stringIsEmpty(_object0)))) {
+                            _object1 = _object0;
+                            _object0 = null;
+                        };
+                        //fall through to "say"
                     case 'say':
                     case 'sing':
                     case 'shout':
                     //case 'howl':
-                    case 'talk':
-                    case 'tak':
-                    case 'takl':
-                        //if (stringIsEmpty(_object0) && (!(stringIsEmpty(_object1)))) {
-                        //    _object0 = _object1;
-                        //    _object1 = null;
-                        //};
                         description = _player.say(_verb, _object0,_object1, _map);
                         _player.setLastVerbUsed('say');
                         break;
