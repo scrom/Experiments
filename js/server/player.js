@@ -2038,13 +2038,26 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
-        self.openOrClose = function(verb, artefactName) {
+        self.shove = function(verb, artefactName) {
             //note artefact could be a creature!
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
+            //override default "push"
+            if (artefact.checkCustomAction(verb)) {
+                return self.customAction(verb, artefactName);
+            };
+
+            if (artefact.getType() == "creature") {
+                return artefact.shove(verb);
+            };
+
+            return self.openOrClose(verb, artefact);
+        };
+
+        self.openOrClose = function(verb, artefact) {
             var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
             for (var l=0;l<linkedDoors.length;l++) {
                 linkedDoors[l].moveOpenOrClose(verb, _currentLocation.getName());
@@ -2059,8 +2072,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            if (artefact.isLocked()) {
+            if (artefact.getType() == "creature" && verb == "pull") {
+                return artefact.pull(verb, self);
+            };
 
+            if (artefact.isLocked()) {
                 resultString +=self.unlock("open", artefact.getName())+"<br>";
             } else {
 

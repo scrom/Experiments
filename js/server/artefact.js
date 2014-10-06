@@ -343,6 +343,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_customAction == verb) { 
                 return true; 
             };
+            if (_customAction) {
+                if (_customAction.indexOf(verb) >-1) {
+                    return true;
+                };
+            };
             return false;
         };
 

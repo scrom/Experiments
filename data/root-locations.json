@@ -3993,12 +3993,12 @@
                 "object": "artefact",
                 "name": "bottle",
                 "description": "bottle",
-                "detailedDescription": "A large glass bottle",
+                "detailedDescription": "It's a large glass bottle.",
                 "attributes": {
                     "extendedInventoryDescription": "There's $inventory in it.",
                     "weight": 1,
                     "carryWeight": 1,
-                    "attackStrength": 1,
+                    "attackStrength": 10,
                     "type": "container",
                     "holdsLiquid": true,
                     "canCollect": true,
@@ -4488,7 +4488,9 @@
                 "detailedDescription": "It doesn't look like it's been used in quite some time.",
                 "attributes": {
                     "type": "scenery",
-                    "isBroken": true
+                    "isBroken": true,
+					"customAction": ["press","push"], 
+					"defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
                 },
                 "synonyms": [
                     "alarm"

@@ -1809,11 +1809,29 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString;
          };
 
-        self.moveOpenOrClose = function(verb) {
+        self.shove = function(verb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and push at the corpse. "+_genderPrefix+" makes some squishy gurgling sounds and some vile-smelling fluid seeps onto the floor."};
             self.decreaseAffinity(1);
-            if (verb == 'push'||verb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
+            return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around.";
+        };
 
+        self.pull = function(verb, player) {
+            if (self.isDead()) {return initCap(_genderDescriptivePrefix)+"dead. Leave "+_genderSuffix+" alone.";};
+            if (player.getAggression() > 0) {
+                 self.decreaseAffinity(1);
+                return "I think you need to calm down, don't you?";
+            };
+            if (_affinity <3) {
+                 self.decreaseAffinity(1);
+                return "Unwise, $player.<br>You should back off a little and get on with what you're meant to be doing now.";
+            };
+           
+            return _genderPrefix+" says 'I think it's best if we just stick to being friends.'";
+
+        };
+
+        self.getLinkedDoors = function(map, currentLocationName) {
+            return [];
         };
 
         self.moveOrOpen = function(verb) {

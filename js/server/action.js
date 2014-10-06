@@ -424,9 +424,10 @@ exports.Action = function Action(player, map, fileManager) {
                         //    description += _player.hit(_verb,_object1,_object0);
                         //};
                         break;
+                    case 'shove':
                     case 'press':
                     case 'push':                   
-                        description = _player.openOrClose(_verb, _object0);
+                        description = _player.shove(_verb, _object0);
                         break;
                     case 'pull':
                     case 'open': 
@@ -455,6 +456,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'stab':
                     case 'hurt':
                     case 'hit':
+                    case 'slap':
                     case 'punch':
                     case 'kick':
                         description = _player.hit(_verb, _object0, _object1);
@@ -793,30 +795,9 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'sniff':
                     case 'smell':
                     default:
-                        _ticks = 0; //for now 
-
                         //check for a custom verb and response here.
+                        _ticks = 1;
                         description = _player.customAction(_verb, _object0);
-                        if (description) {
-                            //if customAction redirects to another action...
-                            if (description.indexOf("$action") > -1) {
-                                var newVerb = description.replace("$action","").trim();
-                                //replace verb but keep original object
-                                self.setActionString(_actionString.replace(_verb,newVerb));
-
-                                //if default action is more than just a single word verb, overwrite the entire original action.
-                                if (newVerb.indexOf(' ') > 0) {
-                                    self.setActionString(newVerb);  
-                                };                     
-                        
-                                return self.processAction(_actionString);
-                                description = null;
-
-                            } else { 
-                                _ticks = 1;
-                                description = description.replace("$result", ""); 
-                            };
-                        };
                         //console.log("Custom result:"+description);
                         //console.log('verb: '+_verb+' default response');
                         //allow fall-through
@@ -826,6 +807,26 @@ exports.Action = function Action(player, map, fileManager) {
                 description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
 	            console.log('ERROR! userAction: "'+_actionString+'". Error message/stack: '+err.stack);
             };	
+
+            if (description) {
+                //if customAction redirects to another action...
+                if (description.indexOf("$action") > -1) {
+                    var newVerb = description.replace("$action","").trim();
+                    //replace verb but keep original object
+                    self.setActionString(_actionString.replace(_verb,newVerb));
+
+                    //if default action is more than just a single word verb, overwrite the entire original action.
+                    if (newVerb.indexOf(' ') > 0) {
+                        self.setActionString(newVerb);  
+                    };                     
+                        
+                    return self.processAction(_actionString);
+                    description = null;
+
+                } else { 
+                    description = description.replace("$result", ""); 
+                };
+            };
 
             if (description) {
                 if (description.trim().slice(-1) == "?") {
@@ -919,6 +920,7 @@ exports.Action = function Action(player, map, fileManager) {
                 return _player.say('say', _actionString,_inConversationWith, _map);
             };
 
+            _ticks = 0;
             _failCount ++;
             //console.log("fail count: "+_failCount);
             if (_failCount >3) {
