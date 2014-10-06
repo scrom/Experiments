@@ -2593,12 +2593,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //don't protect from inedible things!
             if (artefact.isEdible()) {
-                //can't keep eating to heal in battle - must use medical item
-                if (_timeSinceEating < 5 && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
-                //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
-                if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
-                //can't eat unless hungry if health is nearly full.
-                if ((_timeSinceEating < _maxMovesUntilHungry-15) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+                //allow eating very first item earlier in game.
+                if (_consumedObjects.length > 0) {
+                    //can't keep eating to heal in battle - must use medical item
+                    if (_timeSinceEating < 5 && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
+                    //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
+                    if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
+                    //can't eat unless hungry if health is nearly full.
+                    if ((_timeSinceEating < _maxMovesUntilHungry-15) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+                };
             };
             self.transmit(artefact, "bite");
             var resultString = artefact.eat(self); //trying to eat some things give interesting results.
