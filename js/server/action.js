@@ -404,7 +404,11 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'insert':
                     case 'join':
                     case 'add':
+                    case 'pour':
                         description = _player.put(_verb, _object0, _object1);
+                        break;
+                    case 'fill':
+                        description = _player.put(_verb, _object1, _object0);
                         break;
                     case 'offer':
                     case 'give':

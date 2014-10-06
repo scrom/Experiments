@@ -62,7 +62,7 @@ exports.canSaveGameToFile = function (test) {
         console.log("Actual  : "+actualResult);
         test.equal(actualResult, expectedResult);
         var filename = result.substr(62, 13)+".json";
-        //console.log(filename);
+        console.log(result);
         var fileExists = fm.fileExists(filename);
         console.log("File "+filename+" created? "+fileExists);
         test.equal(fileExists, true);

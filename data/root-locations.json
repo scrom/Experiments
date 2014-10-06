@@ -467,7 +467,12 @@
                 "detailedDescription": "It's an ornamental evergreen variety.<br>The twisted trunks spiral up about 25 feet into a carefully manicured crown of green.",
                 "attributes": {
                     "weight": 300,
-                    "type": "scenery"
+                    "type": "scenery",
+                    "customAction": "water",
+                    "defaultResult": "$action pour water on tree",
+					"combinesWith": [
+						"water"
+                    ]
                 },
                 "synonyms": [
                     "large tree",
@@ -3520,7 +3525,8 @@
                 "synonyms": [
                     "bottle",
                     "milk bottle",
-                    "milkbottle"
+                    "milkbottle",
+					"bottle of milk"
                 ],
                 "inventory": [
                     {
@@ -3979,6 +3985,52 @@
                         "reward": {
                             "score": 50,
                             "successMessage": "Congratulations. You got the coffee machine working, have 50 points!"
+                        }
+                    }
+                ]
+            },
+		    {
+                "object": "artefact",
+                "name": "bottle",
+                "description": "bottle",
+                "detailedDescription": "A large glass bottle",
+                "attributes": {
+                    "extendedInventoryDescription": "There's $inventory in it.",
+                    "weight": 1,
+                    "carryWeight": 1,
+                    "attackStrength": 1,
+                    "type": "container",
+                    "holdsLiquid": true,
+                    "canCollect": true,
+                    "isBreakable": true,
+                    "affinityModifier": 0
+                },
+                "synonyms": [
+                    "bottle",
+                    "water bottle",
+					"bottle of water"
+                ],
+                "inventory": [
+                    {
+                        "object": "artefact",
+                        "name": "water",
+                        "description": "water",
+                        "detailedDescription": "No real nutritional value but great for plants.",
+                        "attributes": {
+                            "defaultAction": "drink",
+                            "weight": 1,
+                            "type": "food",
+                            "requiresContainer": true,
+                            "isLiquid": true,
+                            "canCollect": true,
+                            "charges": 1,
+                            "chargeUnit": "drink",
+                            "chargesDescription": "There's enough here for $charges $chargeUnit",
+                            "plural": true,
+                            "isEdible": true,
+                            "combinesWith": [
+                                "tree"
+                            ]
                         }
                     }
                 ]
@@ -5413,7 +5465,7 @@
                         "displayName": "find some post-its for Chris.",
                         "description": "Chris is due to run a workshop but needs some fresh stickies.",
                         "attributes": {
-                            "missionObject": "post-it",
+                            "missionObject": "post-its",
                             "destination": "chris smith",
                             "static": true,
                             "dialogue": [

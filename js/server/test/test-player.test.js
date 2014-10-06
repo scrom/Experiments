@@ -30,7 +30,7 @@ var breakable; //breakable object
 
 exports.setUp = function (callback) {
     playerName = 'player';
-    playerAttributes = {"username":playerName};
+    playerAttributes = {"username":playerName, "consumedObjects":["food"]};
     m0 = mb.buildMap();
     p0 = new player.Player(playerAttributes, m0, mb);
     l0 = new location.Location('home','a home location');

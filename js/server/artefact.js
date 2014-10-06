@@ -1135,7 +1135,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.combineWith = function(anObject) {
-            if (!(self.combinesWith(anObject,true))) { return null; };
+            if (!(self.combinesWith(anObject,true))) { return null; };   
 
             //get first available delivery item that matches both combine objects.
             var deliveryItemSource;
@@ -1146,13 +1146,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         deliveryItemSource = _delivers[dd];
                     };
                 };   
-            };            
+            };    
             
-            //console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());
-
-            //return a new instance of deliveryObject
-            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
-            deliveredItem.addSyns(deliveryItemSource.getSyns());
+            //console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());                      
 
             //consume charge
             var originalArtefactCharges = anObject.chargesRemaining();
@@ -1161,7 +1157,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             //zero the weights of both source objects. Unfortunately the caller must remove them from wherever they came from 
-            self.setWeight(0);
 
             //set weight.
             if (anObject.chargesRemaining() == 0) {              
@@ -1172,6 +1167,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 newWeight = Math.round((newWeight/originalArtefactCharges)*anObject.chargesRemaining()*10)/10;
             };
 
+            //if we don't have a delivery item...
+            if (!deliveryItemSource) { return null;};    
+
+            //we do have a new item to deliver, continue...
+            self.setWeight(0);  
+
+            //return a new instance of deliveryObject
+            var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
+            deliveredItem.addSyns(deliveryItemSource.getSyns());
 
             return deliveredItem;
         };

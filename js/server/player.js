@@ -1222,6 +1222,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var originalArtefactWeight = artefact.getWeight();
 
             var newObject = receiver.combineWith(artefact);
+
+            if (!(newObject)) {
+                //handle changes to charges and using up.
+                if (artefact.chargesRemaining() == 0) {
+                    removeObjectFromPlayerOrLocation(artefact.getName());
+                };
+                return "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName()+".";
+            };
+
             var requiresContainer = newObject.requiresContainer();
 
             //check where receiver is/was
@@ -1257,7 +1266,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //@todo would prefer to track the container of an artefact directly.
             //as the below would be wrong where multiple objects share the same name or synonym...
-            if (container.contains(receiver.getName())) {
+            if (container && (container.contains(receiver.getName()))) {
                 originalObjectIsInContainer = true; 
             };
 
@@ -1277,8 +1286,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (!(originalObjectIsInContainer)) {
                         return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+".";
                     } else {                        
-                        //assume the player knows what they're doing...  
-                        return resultString +" to produce "+newObject.getName()+".";
+                        //assume the player knows what they're doing... 
+                        if (newObject.getName() != artefact.getName() && newObject.getName() != receiver.getName()) {
+                            resultString += " to produce "+newObject.getName();
+                        };
+
+                        return resultString+".";
                     };
                 } else {
                     return resultString +".<br>Your "+container.getName()+" now contains "+newObject.getName()+".";
@@ -1297,7 +1310,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 _inventory.add(newObject);
             };
 
-            return resultString+" to produce "+newObject.getName()+".";                
+            if (newObject.getName() != artefact.getName() && newObject.getName() != receiver.getName()) {
+                resultString += " to produce "+newObject.getName();
+            };
+
+            return resultString+".";              
         };
 
         self.writeOrDraw = function(verb, artwork, receiverName) {
@@ -1462,7 +1479,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         } else {
                             return artefact.getDescriptivePrefix()+" already in "+receiver.getDisplayName()+".";
                         };
-                    };                    
+                    }; 
+                    
+                    if (artefact.isLiquid()) {
+                        artefact.consume(1);
+                        if (artefact.chargesRemaining() == 0) { removeObjectFromPlayerOrLocation(artefactName);};
+                        return "You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
+                    };                   
                     
                     return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 
                 };
