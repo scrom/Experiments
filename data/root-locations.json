@@ -1508,7 +1508,7 @@
                             "plural": true,
                             "affinityModifier": 2,
                             "price": 5,
-                            "customAction": "play",
+                            "customAction": ["play","shake"],
                             "defaultResult": "They're <i>really</i> annoying. Please don't do that again.",
                             "canDrawOn": true
                         },
@@ -2172,7 +2172,7 @@
                             "locked": true,
                             "price": 25,
                             "isHidden": true,
-                            "customAction": "ride",
+                            "customAction": ["ride", "cycle"],
                             "defaultResult": "You hop on the bike and pedal it around for a while.<br>It's probably best not to get caught on it."
                         },
                         "synonyms": [
@@ -4420,7 +4420,7 @@
                     "canCollect": true,
                     "isBreakable": true,
                     "price": 10,
-                    "customAction": "play",
+                    "customAction": ["play", "strum"],
                     "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte.",
                     "imageName": "guitar.jpg"
                 },
@@ -4489,7 +4489,7 @@
                 "attributes": {
                     "type": "scenery",
                     "isBroken": true,
-					"customAction": ["press","push"], 
+					"customAction": ["press","push", "shove", "hold"], 
 					"defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
                 },
                 "synonyms": [
