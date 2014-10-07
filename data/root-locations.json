@@ -2039,6 +2039,84 @@
                     "philippa",
                     "phillippa",
                     "her"
+                ],
+				                "missions": [
+                    {
+                        "object": "mission",
+                        "name": "waterfilsplants",
+                        "displayName": "water filippa's plants",
+                        "description": "Filippa wants her tomato plants watered.",
+                        "attributes": {
+                            "missionObject": "healthy tomato plants",
+                            "destination": "customer-delight-west",
+                            "static": true,
+                            "dialogue": [
+                                "'Hi $player.'<br>'I'm running UX calls all day today. Would you be able to help me out and water my tomato plants?'",
+                                {
+                                    "state": 1,
+                                    "keywords": [
+                                        "yes",
+                                        "ok",
+                                        "yup",
+                                        "y"
+                                    ],
+                                    "response": "'Thanks $player. Thery're on the window ledge near my desk.'",
+                                    "nextState": 3
+                                },
+                                {
+                                    "state": 1,
+                                    "keywords": [
+                                        "no",
+                                        "not",
+                                        "not yet"
+                                    ],
+                                    "response": "'Thanks for nothing then.'",
+                                    "nextState": 99
+                                },
+                                {
+                                    "state": 1,
+                                    "response": "'I'd really appreciate it if you can.'",
+                                    "nextState": 3
+                                },
+                                {
+                                    "state": 99,
+                                    "response": "'I know who my friends are, don't worry about me.'"
+                                },
+                                {
+                                    "state": 3,
+                                    "response": "'Have you been able to sort out my tomatoes yet?'",
+                                    "nextState": 4
+                                },
+                                {
+                                    "state": 4,
+                                    "keywords": [
+                                        "yes",
+                                        "ok",
+                                        "yup",
+                                        "y"
+                                    ],
+                                    "response": "'Excellent!'"
+                                },
+                                {
+                                    "state": 4,
+                                    "response": "'I won't ask again but I'd appreciate it if you can help.'"
+                                }
+                            ]
+                        },
+                        "failAttributes": {
+                            "conversationState": 99
+                        },
+                        "conditionAttributes": {
+                            "isDestroyed": false
+                        },
+                        "reward": {
+                            "score": 25,
+                            "affinityModifier": 2,
+                            "increaseAffinityFor": "filippa vajda",
+                            "successMessage": "Great job! I'm sure Filippa will be really pleased.<br>There's a chance these might be useful later.<br>Have 25 points.",
+                            "failMessage": "I know you're busy but a little help never hurt anyone you know."
+                        }
+                    }
                 ]
             },
             {
@@ -2936,6 +3014,18 @@
             }
         ],
         "inventory": [
+		             {
+                "object": "artefact",
+                "name": "mirror",
+                "description": "bathroom mirror",
+                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
+                "attributes": {
+		    "type": "scenery"
+                },
+                "synonyms": [
+                    "bathroom mirror"
+                ]
+            },
             {
                 "object": "artefact",
                 "name": "cubicle door",
@@ -2971,12 +3061,14 @@
                 "object": "artefact",
                 "name": "soap",
                 "description": "soap dispenser",
-                "detailedDescription": "After careful inspection, you figure out where to push it and how to get soap out.",
+                "detailedDescription": "After careful inspection, you figure out where to push it to make it work.",
                 "attributes": {
                     "weight": 1,
                     "canCollect": true,
                     "isBreakable": true,
-                    "affinityModifier": -1
+                    "affinityModifier": -1,
+					"customAction": ["press","push"], 
+					"defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands."
                 },
                 "synonyms": [
                     "dispenser",
@@ -3421,6 +3513,18 @@
             }
         ],
         "inventory": [
+             {
+                "object": "artefact",
+                "name": "mirror",
+                "description": "bathroom mirror",
+                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
+                "attributes": {
+		    "type": "scenery"
+                },
+                "synonyms": [
+                    "bathroom mirror"
+                ]
+            },
             {
                 "object": "artefact",
                 "name": "cubicle door",
@@ -7793,6 +7897,18 @@
             }
         ],
         "inventory": [
+		             {
+                "object": "artefact",
+                "name": "mirror",
+                "description": "bathroom mirror",
+                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
+                "attributes": {
+		    "type": "scenery"
+                },
+                "synonyms": [
+                    "bathroom mirror"
+                ]
+            },
             {
                 "object": "artefact",
                 "name": "hand dryer",

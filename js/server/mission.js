@@ -676,7 +676,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if (_failAttributes["conversationState"]) {    
                     //have we got to a *specific* state?                   
                     if (_conversationState == _failAttributes["conversationState"]) {
-                        failCount++;
+                        return self.fail("failAttributes");
                     };                          
                 };
             };
