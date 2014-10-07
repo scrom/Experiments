@@ -1444,7 +1444,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (receiver.isDead()) {
                        return  "You're not really qualified as a taxidermist are you? Please stop interfering with corpses.";  
                     } else {
-                       return  "It's probably better to 'give' "+artefact.getSuffix()+" to "+receiver.getSuffix()+"."; 
+                       return  "It's probably better to 'give' "+artefact.getDisplayName()+" to "+receiver.getSuffix()+"."; 
                     };
                 };
 
@@ -1494,7 +1494,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefact.isLiquid()) {
                         artefact.consume(1);
                         if (artefact.chargesRemaining() == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                        return "You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
+                        return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
                     };                   
                     
                     return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 

@@ -483,8 +483,8 @@
       },
       {
         "object": "artefact",
-        "name": "chess",
-        "description": "chess board",
+        "name": "chess set",
+        "description": "chess set",
         "detailedDescription": "It's a cheapish generic wooden chess set.",
         "attributes": {
           "weight": 2,
@@ -498,7 +498,7 @@
           "board",
           "set",
           "chess board",
-          "chess set"
+          "chess"
         ]
       },
       {
