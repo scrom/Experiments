@@ -413,6 +413,17 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'fill':
                         description = _player.put(_verb, _object1, _object0);
                         break;
+                    case 'water':
+                        //either "water plant" or "water plant with milk"
+                        //in future, "water horse" would translate to feed water to horse"
+                        _verb = "pour";
+                        if (!(_object1)) { _object1 = "water";};
+
+                        var tempObject = _object0;
+                        _object0 = _object1; //water or other fluid
+                        _object1 = tempObject; //actual object to be watered
+                        description = _player.put(_verb, _object0, _object1);
+                        break;
                     case 'offer':
                     case 'give':
                         description = _player.give(_verb, _object0,_object1);
@@ -610,6 +621,7 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         //fall through to "say"
                     case 'say':
+                    case 'reply':
                     case 'sing':
                     case 'shout':
                     //case 'howl':
@@ -776,27 +788,26 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.clean(_verb, _object0);
                         break;
                     case 'repeat':
-                    case 'reply':
-                    case 'play':
+                    case 'play': //generally a custom verb already
                     case 'hum':
                     case 'whistle':
-                    case 'wipe':
                     case 'sharpen':
                     case 'empty':
-                    case 'fill':
-                    case 'water':
                     case 'burn':
                     case 'climb':
                     case 'make':
-                    case 'dismantle':
+                    case 'dismantle': //loop through contents of an item and remove components
                     case 'delete':
+                    case 'drive':
                     case 'ride':
                     case 'mount':
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
-                    case 'feed':
-                    case 'sniff':
+                    case 'feed': //give food or drink to creature (if specific food not specified, use lowest value)
+                    case 'sniff': //see also smell - by default, not much but would want to add smell attributes to creatures and artefacts
                     case 'smell':
+                    case 'start':
+                    case 'stop':
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;

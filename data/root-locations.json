@@ -472,9 +472,7 @@
           "type": "scenery",
           "combinesWith": [
             "water"
-          ],
-          "customAction": "water",
-          "defaultResult": "$action pour water on tree"
+          ]
         },
         "synonyms": [
           "large tree",
@@ -1982,9 +1980,7 @@
           "plural": true,
           "combinesWith": [
             "water"
-          ],
-          "customAction": "water",
-          "defaultResult": "$action pour water on plant"
+          ]
         },
         "synonyms": [
           "tomato plant",
