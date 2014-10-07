@@ -2029,7 +2029,7 @@
                     "take",
                     "remove"
                   ],
-                  "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+                  "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                 },
                 "synonyms": [
                   "tomato",
@@ -3197,7 +3197,7 @@
                         "take",
                         "remove"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                     },
                     "synonyms": [
                       "tomato",
@@ -3720,7 +3720,7 @@
                         "take",
                         "remove"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                     },
                     "synonyms": [
                       "tomato",
@@ -4465,7 +4465,7 @@
                         "take",
                         "remove"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                     },
                     "synonyms": [
                       "tomato",
@@ -8203,7 +8203,7 @@
                         "take",
                         "remove"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                     },
                     "synonyms": [
                       "tomato",
