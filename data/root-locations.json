@@ -1946,7 +1946,7 @@
     {
         "object": "location",
         "name": "customer-delight-west",
-        "description": "You're at the West end of the Customer Delight team area.",
+        "description": "You're at the West end of the Customer Delight team area. Also know as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
         "exits": [
             {
                 "object": "exit",
@@ -1964,6 +1964,54 @@
             }
         ],
         "inventory": [
+             {
+                "object": "artefact",
+                "name": "tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're <b>huge!</b> But they're also rather dry and starting to wilt.",
+                "attributes": {
+                    "weight": 40,
+                    "type": "junk",
+                    "isBreakable": true,
+                    "plural": true,
+					"canCollect":true,
+                    "customAction": "water",
+                    "defaultResult": "$action pour water on plant",
+					"combinesDescription": "They really need <i>water</i>",
+					"combinesWith": [
+						"water"
+                    ]
+                },
+                "delivers": [
+                    {
+                        "object": "artefact",
+                        "name": "tomato plants",
+                        "description": "tomato plants",
+                        "detailedDescription": "They're well watered and fruiting.",
+                        "attributes": {
+  			              "weight": 40,
+                    	  "type": "junk",
+	                      "isBreakable": true,
+						  "plural": true
+                        },
+                        "synonyms": [
+							"healthy tomato plants",
+							"tomato plant",
+							"plant",
+							"plants",
+							"tomato",
+							"tomatoes"
+                        ]
+                    }
+                ],
+                "synonyms": [
+                    "tomato plant",
+                    "plant",
+                    "plants",
+                    "tomato",
+                    "tomatoes"
+                ]
+            },
             {
                 "object": "creature",
                 "name": "filippa vajda",
@@ -3643,10 +3691,13 @@
                     "type": "food",
                     "canCollect": true,
                     "charges": 3,
+                    "chargeUnit": "spoonfull",
+                    "chargesDescription": "There's about $charges $chargeUnit left",
                     "plural": true,
                     "affinityModifier": 0,
                     "isEdible": true,
                     "nutrition": 5,
+					"combinesDescription": "Don't waste it all, you'll need this as a sweetener",
                     "combinesWith": [
                         "coffee",
                         "latte",
@@ -4029,9 +4080,31 @@
                             "plural": true,
                             "isEdible": true,
                             "combinesWith": [
-                                "tree"
+                                "tree", "tomato plants"
                             ]
-                        }
+                        },
+					"delivers": [
+                    {
+                        "object": "artefact",
+                        "name": "tomato plants",
+                        "description": "tomato plants",
+                        "detailedDescription": "They're well watered and fruiting.",
+                        "attributes": {
+  			              "weight": 40,
+                    	  "type": "junk",
+	                      "isBreakable": true,
+                          "plural": true
+                        },
+                        "synonyms": [
+							"healthy tomato plants",
+							"tomato plant",
+							"plant",
+							"plants",
+							"tomato",
+							"tomatoes"
+                        ]
+                    }
+                ]
                     }
                 ]
             }

@@ -56,6 +56,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _combinesWith = ""; //unique name of the object this can combine with.
         var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
         var _delivers = delivers||[]; //what does this deliver when all components are in place? (it uses a charge of each component to do so)--
+        var _combinesDescription = "";
         var _requiresContainer = false;
         var _requiredContainer = null;
         var _liquid = false;
@@ -173,6 +174,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.chargeUnit != undefined) {_chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != undefined) {_chargesDescription = artefactAttributes.chargesDescription;};
             if (artefactAttributes.saleUnit != undefined) {_saleUnit = artefactAttributes.saleUnit;};
+            if (artefactAttributes.combinesDescription != undefined) {_combinesDescription = artefactAttributes.combinesDescription;};
+
 
             if (artefactAttributes.switched != undefined) {
                 if (artefactAttributes.switched== true || artefactAttributes.switched == "true") { _switched = true;};
@@ -378,6 +381,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.burnRate = _burnRate;            
             currentAttributes.chargeUnit = _chargeUnit;
             currentAttributes.chargesDescription = _chargesDescription;
+            currentAttributes.combinesDescription = _combinesDescription;
             currentAttributes.saleUnit = _saleUnit;            
             currentAttributes.checkComponents = self.checkComponents();
             currentAttributes.switched = _switched;
@@ -447,6 +451,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.burnRate != 0) {saveAttributes.burnRate = artefactAttributes.burnRate;};
             if (artefactAttributes.chargeUnit != "") {saveAttributes.chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != "") {saveAttributes.chargesDescription = artefactAttributes.chargesDescription;};
+            if (artefactAttributes.combinesDescription != "") {saveAttributes.combinesDescription = artefactAttributes.combinesDescription;};
             if (artefactAttributes.saleUnit != -1) {saveAttributes.saleUnit = artefactAttributes.saleUnit;};           
             if (artefactAttributes.plural == true) {saveAttributes.plural = artefactAttributes.plural;};            
             if (artefactAttributes.affinityModifier != 1) {saveAttributes.affinityModifier = artefactAttributes.affinityModifier;};
@@ -766,11 +771,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                     //return what can be combined with
                     if (combinesWithList.length > 0) {
-                        resultString += "<br>" + initCap(self.getName()) + " can be used to make ";
-                        for (var i = 0; i < combinesWithList.length; i++) {
-                            if (i > 0 && i < combinesWithList.length - 1) { resultString += ", "; };
-                            if (i > 0 && i == combinesWithList.length - 1) { resultString += " and "; };
-                            resultString += combinesWithList[i].getName();
+                        //if we override the default "delivers" description...
+                        if (_combinesDescription.length > 0) {
+                            resultString += "<br>" + initCap(_combinesDescription);
+                        } else {
+                            resultString += "<br>" + initCap(self.getName()) + " can be used to make ";
+                            for (var i = 0; i < combinesWithList.length; i++) {
+                                if (i > 0 && i < combinesWithList.length - 1) { resultString += ", "; };
+                                if (i > 0 && i == combinesWithList.length - 1) { resultString += " and "; };
+                                resultString += combinesWithList[i].getName();
+                            };
                         };
                         resultString += ".";
                     };
