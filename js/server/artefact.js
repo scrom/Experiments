@@ -1199,11 +1199,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 deliveredItemInventory.add(new Artefact(sourceInventoryItems[s].getName(), sourceInventoryItems[s].getRawDescription(), sourceInventoryItems[s].getInitialDetailedDescription(), sourceInventoryItems[s].getSourceAttributes(), sourceInventoryItems[s].getLinkedExits(), sourceInventoryItems[s].getDeliveryItems()));
             };
 
-            if (deliveryItemSource.getName() == "tomato plants") {
-                    console.log("src:"+deliveryItemSource.getInventoryObject().describe());
-                    console.log("delivered:"+deliveredItem.getInventoryObject().describe());
-            };
-
             return deliveredItem;
         };
 
