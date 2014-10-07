@@ -2019,6 +2019,7 @@
             "attributes": {
               "weight": 5,
               "plural": true,
+			  "canCollect": true,
               "customAction": [
                 "pick",
                 "pick up",
@@ -3187,6 +3188,7 @@
             "attributes": {
               "weight": 5,
               "plural": true,
+			  "canCollect": true,
               "customAction": [
                 "pick",
                 "pick up",
@@ -3709,6 +3711,7 @@
             "attributes": {
               "weight": 5,
               "plural": true,
+			  "canCollect": true,
               "customAction": [
                 "pick",
                 "pick up",
@@ -4453,6 +4456,7 @@
             "attributes": {
               "weight": 5,
               "plural": true,
+			  "canCollect": true,
               "customAction": [
                 "pick",
                 "pick up",
@@ -8190,6 +8194,7 @@
             "attributes": {
               "weight": 5,
               "plural": true,
+			  "canCollect": true,
               "customAction": [
                 "pick",
                 "pick up",

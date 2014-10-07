@@ -1062,7 +1062,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //turn on delay
             _currentDelay = 0;
 
-            return initCap(self.getDisplayName())+" now owns "+anObject.getDescription()+".";
+            return initCap(self.getDisplayName())+" takes "+anObject.getDescription()+".";
             
         };
 
@@ -1268,7 +1268,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //turn on delay
             _currentDelay = 0;
                 
-            return initCap(self.getDisplayName())+" hands you "+objectToGive.getDisplayName()+".";
+            return initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
         };
 
         self.sell = function (anObjectName, player) {

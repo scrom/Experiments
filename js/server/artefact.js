@@ -144,7 +144,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.extendedInventoryDescription != undefined) {
                 _extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
             } else {
-                _extendedInventoryDescription = _itemPrefix+" contains $inventory."
+                if (_itemPrefix == "It") {
+                    _extendedInventoryDescription = _itemPrefix+" contains $inventory."
+                } else {
+                    _extendedInventoryDescription = _itemPrefix+" contain $inventory."
+                };
             };
             if (artefactAttributes.carryWeight != undefined) {_inventory.setCarryWeight(attributes.carryWeight);};
             if (artefactAttributes.lockable != undefined) {

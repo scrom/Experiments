@@ -1807,15 +1807,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying first.";};
 
             //we know player *can* carry it...
+            //if the character can pick it up, they'll take it!
+            var resultString = "";
             if (getObjectFromLocation(artefactName)) {
                 //console.log('locationartefact');
                 if (!(artefact.isCollectable())) {return  "Sorry, "+givers[0].getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
                 if (!(givers[0].canCarry(artefact))) { return  "Sorry, "+givers[0].getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
-                return self.get('get',artefactName);
+                resultString = givers[0].receive(artefact)+"<br>";
             };
             
             var locationInventory = _currentLocation.getInventoryObject();
-            return givers[0].relinquish(artefactName, self, locationInventory);
+            return resultString+givers[0].relinquish(artefactName, self, locationInventory);
         };
 
         self.say = function(verb, speech, receiverName, map) {
