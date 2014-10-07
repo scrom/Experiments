@@ -342,8 +342,11 @@ exports.Action = function Action(player, map, fileManager) {
                         if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
                         
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
-                        if (_object1) {description = _player.examine(_verb+" "+_splitWord,_object1);}
-                        else {description = _player.examine(_verb, _object0);};
+                        if (_object1) {
+                            description = _player.examine(_verb+" "+_splitWord,_object1);
+                        } else {
+                            description = _player.examine(_verb, _object0);
+                        };
                         break;  
                     case 'where':                                   
                     case 'find': 
@@ -797,7 +800,11 @@ exports.Action = function Action(player, map, fileManager) {
                     default:
                         //check for a custom verb and response here.
                         _ticks = 1;
-                        description = _player.customAction(_verb, _object0);
+                        if (_object0) {
+                            description = _player.customAction(_verb, _object0);
+                        } else {
+                            description = _player.customAction(_verb, _object1);
+                        };
                         //console.log("Custom result:"+description);
                         //console.log('verb: '+_verb+' default response');
                         //allow fall-through

@@ -2705,8 +2705,8 @@
                     "weight": 100,
                     "type": "scenery",
                     "canDrawOn": true,
-                    "customAction": "flush",
-                    "defaultResult": "You try to flush the toilet but it just seems to be constantly refilling and not enough water for a proper flush."
+                    "customAction": ["flush", "pee", "urinate", "piss", "shit", "crap"],
+                    "defaultResult": "You try a test-flush on the toilet before use but it just seems to be constantly refilling and not enough water for a proper flush. It's probably best to use another one."
                 },
                 "synonyms": [
                     "pan",
@@ -2982,6 +2982,69 @@
                     "dispenser",
                     "soap dispenser"
                 ]
+            },
+{
+                "object": "artefact",
+                "name": "basin",
+                "description": "wash basin",
+                "detailedDescription": "Clean and with a supply of fresh water.",
+                "attributes": {
+                    "weight": 100,
+                    "type": "scenery",
+                    "canDrawOn": true,
+                    "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed."
+                },
+                "synonyms": [
+                    "wash basin",
+                    "sink",
+                    "tap"
+                ],
+                "delivers": [
+{
+                        "object": "artefact",
+                        "name": "water",
+                        "description": "water",
+                        "detailedDescription": "No real nutritional value but great for plants.",
+                        "attributes": {
+                            "defaultAction": "drink",
+                            "weight": 1,
+                            "type": "food",
+                            "requiresContainer": true,
+                            "isLiquid": true,
+                            "canCollect": true,
+                            "charges": 1,
+                            "chargeUnit": "drink",
+                            "chargesDescription": "There's enough here for $charges $chargeUnit",
+                            "plural": true,
+                            "isEdible": true,
+                            "combinesWith": [
+                                "tree", "tomato plants"
+                            ]
+                        },
+					"delivers": [
+                    {
+                        "object": "artefact",
+                        "name": "tomato plants",
+                        "description": "tomato plants",
+                        "detailedDescription": "They're well watered and fruiting.",
+                        "attributes": {
+  			              "weight": 40,
+                    	  "type": "junk",
+	                      "isBreakable": true,
+                          "plural": true
+                        },
+                        "synonyms": [
+							"healthy tomato plants",
+							"tomato plant",
+							"plant",
+							"plants",
+							"tomato",
+							"tomatoes"
+                        ]
+                    }
+                ]
+                    }
+                ]
             }
         ]
     },
@@ -3220,8 +3283,8 @@
                     "weight": 100,
                     "type": "scenery",
                     "canDrawOn": true,
-                    "customAction": "flush",
-                    "defaultResult": "You give the toilet a rather satisfying flush and gaze as the water gently gushes into the u-bend.<br>Then you remember you have stuff to do.<br>Time to get going $player!"
+                    "customAction": ["flush", "pee", "urinate", "piss", "shit", "crap"],
+                    "defaultResult": "You relieve yourself and give the toilet a rather satisfying flush.<br>You gaze at the water as it gently gushes into the u-bend and drift into a peaceful, calm place...<br><br>...You jolt back to your senses and remember you have work to do. Time to get going $player!"
                 },
                 "synonyms": [
                     "pan",
@@ -3387,6 +3450,72 @@
                     "cubicle",
                     "toilet door",
                     "door"
+                ]
+            },
+{
+                "object": "artefact",
+                "name": "basin",
+                "description": "wash basin",
+                "detailedDescription": "Clean and with a supply of fresh water.",
+                "attributes": {
+                    "weight": 100,
+                    "type": "scenery",
+                    "canDrawOn": true,
+                    "defaultAction": "get water from sink",
+					"customAction": "wash",
+					"defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm."
+                },
+                "synonyms": [
+                    "wash basin",
+                    "sink",
+                    "tap",
+					"hands"
+                ],
+                "delivers": [
+{
+                        "object": "artefact",
+                        "name": "water",
+                        "description": "water",
+                        "detailedDescription": "No real nutritional value but great for plants.",
+                        "attributes": {
+                            "defaultAction": "drink",
+                            "weight": 1,
+                            "type": "food",
+                            "requiresContainer": true,
+                            "isLiquid": true,
+                            "canCollect": true,
+                            "charges": 1,
+                            "chargeUnit": "drink",
+                            "chargesDescription": "There's enough here for $charges $chargeUnit",
+                            "plural": true,
+                            "isEdible": true,
+                            "combinesWith": [
+                                "tree", "tomato plants"
+                            ]
+                        },
+					"delivers": [
+                    {
+                        "object": "artefact",
+                        "name": "tomato plants",
+                        "description": "tomato plants",
+                        "detailedDescription": "They're well watered and fruiting.",
+                        "attributes": {
+  			              "weight": 40,
+                    	  "type": "junk",
+	                      "isBreakable": true,
+                          "plural": true
+                        },
+                        "synonyms": [
+							"healthy tomato plants",
+							"tomato plant",
+							"plant",
+							"plants",
+							"tomato",
+							"tomatoes"
+                        ]
+                    }
+                ]
+                    }
                 ]
             }
         ]
@@ -6905,8 +7034,8 @@
                     "type": "scenery",
 					"imageName": "brokentoilet.jpg",
                     "canDrawOn": true,
-                    "customAction": "flush",
-                    "defaultResult": "You flush the toilet.<br>Uh oh! Looks like it's blocked.<br> The water slowly fills up to the brim of the bowl before subsiding again.<br>That was close!"
+                    "customAction": ["flush", "pee", "urinate", "piss", "shit", "crap"],
+                    "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels."
                 },
                 "synonyms": [
                     "pan",
@@ -7714,6 +7843,69 @@
                     "cubicle",
                     "toilet door",
                     "door"
+                ]
+            },
+			{
+                "object": "artefact",
+                "name": "basin",
+                "description": "wash basin",
+                "detailedDescription": "Clean and with a supply of fresh water.",
+                "attributes": {
+                    "weight": 100,
+                    "type": "scenery",
+                    "canDrawOn": true,
+                    "defaultAction": "get water from sink"
+                },
+                "synonyms": [
+                    "wash basin",
+                    "sink",
+                    "tap"
+                ],
+                "delivers": [
+{
+                        "object": "artefact",
+                        "name": "water",
+                        "description": "water",
+                        "detailedDescription": "No real nutritional value but great for plants.",
+                        "attributes": {
+                            "defaultAction": "drink",
+                            "weight": 1,
+                            "type": "food",
+                            "requiresContainer": true,
+                            "isLiquid": true,
+                            "canCollect": true,
+                            "charges": 1,
+                            "chargeUnit": "drink",
+                            "chargesDescription": "There's enough here for $charges $chargeUnit",
+                            "plural": true,
+                            "isEdible": true,
+                            "combinesWith": [
+                                "tree", "tomato plants"
+                            ]
+                        },
+					"delivers": [
+                    {
+                        "object": "artefact",
+                        "name": "tomato plants",
+                        "description": "tomato plants",
+                        "detailedDescription": "They're well watered and fruiting.",
+                        "attributes": {
+  			              "weight": 40,
+                    	  "type": "junk",
+	                      "isBreakable": true,
+                          "plural": true
+                        },
+                        "synonyms": [
+							"healthy tomato plants",
+							"tomato plant",
+							"plant",
+							"plants",
+							"tomato",
+							"tomatoes"
+                        ]
+                    }
+                ]
+                    }
                 ]
             }
         ]
