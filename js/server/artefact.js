@@ -433,7 +433,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.synonyms != undefined) { saveAttributes.synonyms = artefactAttributes.synonyms;};
             
             if (artefactAttributes.defaultAction != "examine") { saveAttributes.defaultAction = artefactAttributes.defaultAction;};
-            if (artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contains $inventory." && artefactAttributes.extendedInventoryDescription != "") {
+            if (artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contains $inventory." && artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contain $inventory." && artefactAttributes.extendedInventoryDescription != "") {
                 saveAttributes.extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
             };
             if (artefactAttributes.weight != 0) {saveAttributes.weight = parseFloat(artefactAttributes.weight);};
