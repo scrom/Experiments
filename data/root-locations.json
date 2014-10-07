@@ -1999,7 +1999,8 @@
             "description": "tomato plants",
             "detailedDescription": "They're well watered and fruiting.",
             "attributes": {
-              "weight": 40,
+              "weight": 35,
+			  "carryWeight": 5,
               "isBreakable": true,
               "plural": true
             },
@@ -2007,10 +2008,34 @@
               "healthy tomato plants",
               "tomato plant",
               "plant",
-              "plants",
+              "plants"
+            ],
+			"inventory":[
+          {
+            "object": "artefact",
+            "name": "tomatoes",
+            "description": "tomatoes",
+            "detailedDescription": "They're ripe and ready to pick.",
+            "attributes": {
+              "weight": 5,
+              "plural": true,
+              "customAction": [
+                "pick",
+                "pick up",
+				"get",
+                "grab",
+                "collect",
+                "take",
+                "remove"
+              ],
+              "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+            },
+            "synonyms": [
               "tomato",
               "tomatoes"
             ]
+          }
+			]
           }
         ]
       },
@@ -3135,27 +3160,52 @@
                 "tomato plants"
               ]
             },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 40,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "healthy tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants",
-                  "tomato",
-                  "tomatoes"
-                ]
-              }
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "tomato plants",
+            "description": "tomato plants",
+            "detailedDescription": "They're well watered and fruiting.",
+            "attributes": {
+              "weight": 35,
+			  "carryWeight": 5,
+              "isBreakable": true,
+              "plural": true
+            },
+            "synonyms": [
+              "healthy tomato plants",
+              "tomato plant",
+              "plant",
+              "plants"
+            ],
+			"inventory":[
+          {
+            "object": "artefact",
+            "name": "tomatoes",
+            "description": "tomatoes",
+            "detailedDescription": "They're ripe and ready to pick.",
+            "attributes": {
+              "weight": 5,
+              "plural": true,
+              "customAction": [
+                "pick",
+                "pick up",
+				"get",
+                "grab",
+                "collect",
+                "take",
+                "remove"
+              ],
+              "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+            },
+            "synonyms": [
+              "tomato",
+              "tomatoes"
             ]
+          }
+			]
+          }
+        ]
           }
         ]
       }
@@ -3632,27 +3682,52 @@
                 "tomato plants"
               ]
             },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 40,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "healthy tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants",
-                  "tomato",
-                  "tomatoes"
-                ]
-              }
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "tomato plants",
+            "description": "tomato plants",
+            "detailedDescription": "They're well watered and fruiting.",
+            "attributes": {
+              "weight": 35,
+			  "carryWeight": 5,
+              "isBreakable": true,
+              "plural": true
+            },
+            "synonyms": [
+              "healthy tomato plants",
+              "tomato plant",
+              "plant",
+              "plants"
+            ],
+			"inventory":[
+          {
+            "object": "artefact",
+            "name": "tomatoes",
+            "description": "tomatoes",
+            "detailedDescription": "They're ripe and ready to pick.",
+            "attributes": {
+              "weight": 5,
+              "plural": true,
+              "customAction": [
+                "pick",
+                "pick up",
+				"get",
+                "grab",
+                "collect",
+                "take",
+                "remove"
+              ],
+              "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+            },
+            "synonyms": [
+              "tomato",
+              "tomatoes"
             ]
+          }
+			]
+          }
+        ]
           }
         ]
       }
@@ -4351,27 +4426,52 @@
                 "tomato plants"
               ]
             },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 40,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "healthy tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants",
-                  "tomato",
-                  "tomatoes"
-                ]
-              }
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "tomato plants",
+            "description": "tomato plants",
+            "detailedDescription": "They're well watered and fruiting.",
+            "attributes": {
+              "weight": 35,
+			  "carryWeight": 5,
+              "isBreakable": true,
+              "plural": true
+            },
+            "synonyms": [
+              "healthy tomato plants",
+              "tomato plant",
+              "plant",
+              "plants"
+            ],
+			"inventory":[
+          {
+            "object": "artefact",
+            "name": "tomatoes",
+            "description": "tomatoes",
+            "detailedDescription": "They're ripe and ready to pick.",
+            "attributes": {
+              "weight": 5,
+              "plural": true,
+              "customAction": [
+                "pick",
+                "pick up",
+				"get",
+                "grab",
+                "collect",
+                "take",
+                "remove"
+              ],
+              "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+            },
+            "synonyms": [
+              "tomato",
+              "tomatoes"
             ]
+          }
+			]
+          }
+        ]
           }
         ]
       }
@@ -8063,27 +8163,52 @@
                 "tomato plants"
               ]
             },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 40,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "healthy tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants",
-                  "tomato",
-                  "tomatoes"
-                ]
-              }
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "tomato plants",
+            "description": "tomato plants",
+            "detailedDescription": "They're well watered and fruiting.",
+            "attributes": {
+              "weight": 35,
+			  "carryWeight": 5,
+              "isBreakable": true,
+              "plural": true
+            },
+            "synonyms": [
+              "healthy tomato plants",
+              "tomato plant",
+              "plant",
+              "plants"
+            ],
+			"inventory":[
+          {
+            "object": "artefact",
+            "name": "tomatoes",
+            "description": "tomatoes",
+            "detailedDescription": "They're ripe and ready to pick.",
+            "attributes": {
+              "weight": 5,
+              "plural": true,
+              "customAction": [
+                "pick",
+                "pick up",
+				"get",
+                "grab",
+                "collect",
+                "take",
+                "remove"
+              ],
+              "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+            },
+            "synonyms": [
+              "tomato",
+              "tomatoes"
             ]
+          }
+			]
+          }
+        ]
           }
         ]
       }

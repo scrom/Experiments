@@ -940,6 +940,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
+            //override default "get"
+            if (artefact.checkCustomAction(verb)) {
+                return self.customAction(verb, artefactName);
+            };
             if (!(artefact.isCollectable())) {
                 if (artefact.getType() == "scenery") {
                     return artefact.getDescriptivePrefix()+" just part of the scenery, not much use to you I'm afraid.";
@@ -1145,6 +1149,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
+            
+            //override default "unlock/pick"
+            if (artefact.checkCustomAction(verb)) {
+                return self.customAction(verb, artefactName);
+            };
+
             if (!(artefact)) {
                 if (artefactName == "lock") {
                     //find locked doors, then objects in location first, then inventory
@@ -1715,6 +1725,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (verb == "mug"){ return "If "+giver.getDescriptivePrefix()+" carrying anything of use, you should just be able to take what you need."};
                 if (stringIsEmpty(artefactName) && verb == "steal"){ return verb+" what?";};
                 var locationInventory = _currentLocation.getInventoryObject();
+                self.increaseAggression(1); //we're stealing!  
+                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName()); 
                 return giver.relinquish(artefactName, self, locationInventory);
             };
                     

@@ -1192,6 +1192,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var deliveredItem = new Artefact(deliveryItemSource.getName(), deliveryItemSource.getRawDescription(), deliveryItemSource.getInitialDetailedDescription(), deliveryItemSource.getSourceAttributes(), deliveryItemSource.getLinkedExits(), deliveryItemSource.getDeliveryItems());
             deliveredItem.addSyns(deliveryItemSource.getSyns());
 
+            //clone inventory from source too.
+            var sourceInventoryItems = deliveryItemSource.getAllObjects(true);
+            var deliveredItemInventory = deliveredItem.getInventoryObject();
+            for (var s=0;s<sourceInventoryItems.length;s++) {
+                deliveredItemInventory.add(new Artefact(sourceInventoryItems[s].getName(), sourceInventoryItems[s].getRawDescription(), sourceInventoryItems[s].getInitialDetailedDescription(), sourceInventoryItems[s].getSourceAttributes(), sourceInventoryItems[s].getLinkedExits(), sourceInventoryItems[s].getDeliveryItems()));
+            };
+
+            if (deliveryItemSource.getName() == "tomato plants") {
+                    console.log("src:"+deliveryItemSource.getInventoryObject().describe());
+                    console.log("delivered:"+deliveredItem.getInventoryObject().describe());
+            };
+
             return deliveredItem;
         };
 
