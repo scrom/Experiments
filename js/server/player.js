@@ -1526,7 +1526,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     } else {
                         resultString += " in "; 
                     };
-                } else if (verb == "install" || verb == "insert"){
+                } else if (verb == "pour" || verb == "install" || verb == "insert"){
                     resultString += " into "; 
                 } else {
                     resultString += " in ";    
