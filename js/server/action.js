@@ -799,12 +799,14 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'smell':
                     default:
                         //check for a custom verb and response here.
-                        _ticks = 1;
+                        _ticks = 0;
                         if (_object0) {
                             description = _player.customAction(_verb, _object0);
                         } else {
                             description = _player.customAction(_verb, _object1);
                         };
+
+                        if (description) {_ticks = 1;};
                         //console.log("Custom result:"+description);
                         //console.log('verb: '+_verb+' default response');
                         //allow fall-through
