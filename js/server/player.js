@@ -2640,7 +2640,39 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);}; 
+            if (!(artefact)) {
+
+                //if object doesn't exist, check delivery from each non-creature object in location.
+                var allLocationObjects = _currentLocation.getAllObjects();
+                var deliveryItem;
+                for (var i=0;i<allLocationObjects.length;i++) {
+                    if (allLocationObjects[i].getType() != 'creature') {
+                        var deliveryItems = allLocationObjects[i].getDeliveryItems();
+                        for (var d=0;d<deliveryItems.length;d++) {
+                            if (deliveryItems[d].getName() == artefactName) {
+                                deliveryItem = deliveryItems[d];
+                                break;
+                            };
+                        };
+                        if (deliveryItem) {
+                           return "You'll need to get "+artefactName+" from "+allLocationObjects[i].getDisplayName()+" before you can eat "+deliveryItem.getSuffix()+"."
+                        };
+                    };
+                };
+
+                //if still no object, does a creature have it?
+                var creatures = _currentLocation.getCreatures();
+                for (var c=0;c<creatures.length;c++) {
+                    if (creatures[c].sells(artefactName)) {
+                        return "You'll need to <i>buy</i> that from "+creatures[c].getDisplayName()+".";
+                    };
+                    if (creatures[c].check(artefactName)) {
+                        return "I think "+creatures[c].getDisplayName()+" has what you're after.";
+                    };
+                };
+
+                return notFoundMessage(artefactName);
+            }; 
 
             if (artefact.isLiquid()) {
                 return self.drink('drink',artefactName);
@@ -2680,7 +2712,40 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);}; 
+            if (!(artefact)) {
+
+                //if object doesn't exist, check delivery from each non-creature object in location.
+                var allLocationObjects = _currentLocation.getAllObjects();
+                var deliveryItem;
+                for (var i=0;i<allLocationObjects.length;i++) {
+                    if (allLocationObjects[i].getType() != 'creature') {
+                        var deliveryItems = allLocationObjects[i].getDeliveryItems();
+                        for (var d=0;d<deliveryItems.length;d++) {
+                            if (deliveryItems[d].getName() == artefactName) {
+                                deliveryItem = deliveryItems[d];
+                                break;
+                            };
+                        };
+                        if (deliveryItem) {
+                           return "You'll need to get "+artefactName+" from "+allLocationObjects[i].getDisplayName()+" or elsewhere before you can drink any."
+                        };
+                    };
+                };
+
+                //if still no object, does a creature have it?
+                var creatures = _currentLocation.getCreatures();
+                for (var c=0;c<creatures.length;c++) {
+                    if (creatures[c].sells(artefactName)) {
+                        return "You'll need to <i>buy</i> that from "+creatures[c].getDisplayName()+".";
+                    };
+                    if (creatures[c].check(artefactName)) {
+                        return "I think "+creatures[c].getDisplayName()+" has what you're after.";
+                    };
+                };
+
+                return notFoundMessage(artefactName);
+            
+            }; 
 
             var result = artefact.drink(self); //trying to eat some things give interesting results.
             if (artefact.isEdible() && artefact.isLiquid()) {

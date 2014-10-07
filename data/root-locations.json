@@ -479,7 +479,8 @@
         "synonyms": [
           "large tree",
           "potted tree",
-          "large potted tree"
+          "large potted tree",
+		  "plant"
         ]
       },
       {
@@ -6168,6 +6169,95 @@
         "source": "people-team-water-cooler",
         "destination": "second-floor-north-west-corridor-south"
       }
+    ],
+    "inventory": [
+    {
+        "object": "artefact",
+        "name": "water cooler",
+        "description": "water cooler",
+        "detailedDescription": "A supply of fresh, filtered and cooled drinking water.",
+        "attributes": {
+          "defaultAction": "get water from cooler",
+          "weight": 100,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "watercooler",
+          "cooler"
+        ],
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "water",
+            "description": "water",
+            "detailedDescription": "No real nutritional value but great for thirst and plants.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "drink",
+              "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "combinesWith": [
+                "tree",
+                "tomato plants"
+              ]
+            },
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're well watered and fruiting.",
+                "attributes": {
+                  "weight": 35,
+                  "carryWeight": 5,
+                  "isBreakable": true,
+                  "plural": true
+                },
+                "synonyms": [
+                  "healthy tomato plants",
+                  "tomato plant",
+                  "plant",
+                  "plants"
+                ],
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tomatoes",
+                    "description": "tomatoes",
+                    "detailedDescription": "They're ripe and ready to pick.",
+                    "attributes": {
+                      "weight": 5,
+                      "canCollect": true,
+                      "plural": true,
+                      "customAction": [
+                        "pick",
+                        "pick up",
+                        "get",
+                        "grab",
+                        "collect",
+                        "take",
+                        "remove"
+                      ],
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
+                    },
+                    "synonyms": [
+                      "tomato",
+                      "tomatoes"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }  
     ]
   },
   {
