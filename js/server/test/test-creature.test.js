@@ -136,7 +136,7 @@ exports.creatureCanReceiveObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
-    var expected = "The creature now owns an artefact of little consequence.";
+    var expected = "The creature takes an artefact of little consequence.";
     var actual = c0.receive(a0);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
@@ -665,7 +665,7 @@ exports.friendlyCreatureWillFindForPlayer = function (test) {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
-    var expected = "It says 'Simon Galbraith is currently at 'poppy'.'";
+    var expected = "It says 'Simon Galbraith is currently at 'Poppy meeting room'.'";
     var playerAggression = 1; //1 point of aggression should be acceptable
     var actual = c0.find("simon g", playerAggression, m);
     console.log("expected: "+expected);
@@ -829,7 +829,7 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne.meta = { traits: ["C
 
 
 exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect = function (test) {
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room","room","a room", false, true, 0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
