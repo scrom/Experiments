@@ -2,6 +2,7 @@
   {
     "object": "location",
     "name": "atrium",
+    "displayName": "Atrium",
     "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the atrium area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
     "attributes": {
       "start": true
@@ -443,6 +444,7 @@
   {
     "object": "location",
     "name": "atrium-seating",
+    "displayName": "Atrium seating area",
     "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a very large potted tree.",
     "exits": [
       {
@@ -478,7 +480,7 @@
           "large tree",
           "potted tree",
           "large potted tree",
-		  "plant"
+          "plant"
         ]
       },
       {
@@ -603,6 +605,7 @@
   {
     "object": "location",
     "name": "bike-ambulance",
+    "displayName": "Bike ambulance",
     "description": "You're standing in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
     "attributes": {
       "outdoor": true
@@ -684,6 +687,7 @@
   {
     "object": "location",
     "name": "buenosaires",
+    "displayName": "Buenos Aires interview room",
     "description": "You're in the Buenos Aires interview room.<br>Despite containing all the things you'd expect of an interview room, it still manages to feel empty and clinical.",
     "exits": [
       {
@@ -796,6 +800,7 @@
   {
     "object": "location",
     "name": "camelids-a",
+    "displayName": "Camelids-A meeting room",
     "description": "You're in Camelids-A. The UX team have filled the walls with post-it notes.<br>The table feels slightly too large for the room and it's a bit cramped in here.",
     "exits": [
       {
@@ -874,6 +879,7 @@
   {
     "object": "location",
     "name": "camelids-b",
+    "displayName": "Camelids-B meeting room",
     "description": "You're in Camelids-B. When not in use for small meetings, this room doubles as an in-office hairdressers salon.<br>You can still detect faint traces of hair clippings.",
     "exits": [
       {
@@ -888,6 +894,7 @@
   {
     "object": "location",
     "name": "core-area-east",
+    "displayName": "Core area - DevOps corner",
     "description": "You're in the CORE (DevOps) area. Looks like things are running well here at the moment.",
     "exits": [
       {
@@ -1013,6 +1020,7 @@
   {
     "object": "location",
     "name": "core-area-west",
+    "displayName": "Core area - PM territory",
     "description": "You're in the CORE Project Management zone. The team are battling the backlog of business requests and working their way to Cloud glory.",
     "exits": [
       {
@@ -1041,6 +1049,7 @@
   {
     "object": "location",
     "name": "creative-agency-area",
+    "displayName": "Agency",
     "description": "You're in the Agency Den. There's a tang of creativity (or is that printer toner?) in the air and the sound of clicks being converted to cash. ",
     "exits": [
       {
@@ -1069,6 +1078,7 @@
   {
     "object": "location",
     "name": "customer-delight-central",
+    "displayName": "Customer Delight",
     "description": "You're in the middle of the Customer Delight team area.<br>According to the lights, the build status is currently green.<br>You fight the urge to play with the lights.",
     "exits": [
       {
@@ -1198,6 +1208,7 @@
                 {
                   "object": "location",
                   "name": "bus",
+                  "displayName": "Party bus",
                   "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
                   "attributes": {
                     "outdoor": true
@@ -1312,6 +1323,7 @@
   {
     "object": "location",
     "name": "customer-delight-east",
+    "displayName": "Customer Delight",
     "description": "You're at the Eastern end of the Customer Delight team area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
     "exits": [
       {
@@ -1340,6 +1352,7 @@
   {
     "object": "location",
     "name": "customer-delight-management-area",
+    "displayName": "Customer Delight",
     "description": "You're in the dead-zone of Customer Delight between the glass wall and Jellyfish.<br>There's a vacuum where the CEO and PA's used to sit although it's adequately filled by the presence of James Dening when he's around.",
     "exits": [
       {
@@ -1561,6 +1574,7 @@
   {
     "object": "location",
     "name": "customer-delight-north",
+    "displayName": "Customer Delight",
     "description": "You're in the Northern part of the Customer Delight team area.",
     "exits": [
       {
@@ -1596,6 +1610,7 @@
   {
     "object": "location",
     "name": "customer-delight-south",
+    "displayName": "Customer Delight",
     "description": "You're in the Southern part of the Customer Delight team area.",
     "exits": [
       {
@@ -1680,6 +1695,7 @@
   {
     "object": "location",
     "name": "customer-delight-south-west",
+    "displayName": "Customer Delight",
     "description": "You're in the South-West corner of the Customer Delight team area.",
     "exits": [
       {
@@ -1949,6 +1965,7 @@
   {
     "object": "location",
     "name": "customer-delight-west",
+    "displayName": "Customer Delight",
     "description": "You're at the West end of the Customer Delight team area. Also know as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
     "exits": [
       {
@@ -2250,7 +2267,8 @@
   {
     "object": "location",
     "name": "darth-vader",
-    "description": "You're in the Darth-Vader meeting room. Another great space tucked out of the way behind facilities this time.<br>There's a great view up the road out of the business park.",
+    "displayName": "Darth Vader meeting room",
+    "description": "You're in the 'Darth Vader' meeting room. Another great space tucked out of the way behind facilities this time.<br>There's a great view up the road out of the business park.",
     "exits": [
       {
         "object": "exit",
@@ -2264,6 +2282,7 @@
   {
     "object": "location",
     "name": "east-bike-racks",
+    "displayName": "Bike racks (East side)",
     "description": "You're standing at the South-East corner of the the office building.",
     "attributes": {
       "outdoor": true
@@ -2343,6 +2362,7 @@
   {
     "object": "location",
     "name": "east-car-park",
+    "displayName": "Car park",
     "description": "You're standing in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
     "attributes": {
       "outdoor": true
@@ -2367,6 +2387,7 @@
   {
     "object": "location",
     "name": "east-corridor-ground-floor",
+    "displayName": "East corridor ground floor",
     "description": "You're in the East corridor of the ground floor.",
     "exits": [
       {
@@ -2395,6 +2416,7 @@
   {
     "object": "location",
     "name": "east-corridor-ground-floor-north-east",
+    "displayName": "East corridor ground floor",
     "description": "You're in the North end of the ground floor East corridor.",
     "exits": [
       {
@@ -2423,6 +2445,7 @@
   {
     "object": "location",
     "name": "east-corridor-ground-floor-north-west",
+    "displayName": "East corridor ground floor",
     "description": "You're standing in the corridor just outside the post room.",
     "exits": [
       {
@@ -2451,6 +2474,7 @@
   {
     "object": "location",
     "name": "east-end-south-corridor-ground-floor",
+    "displayName": "South corridor ground floor",
     "description": "You're in the East end of the South corridor on the ground floor.",
     "exits": [
       {
@@ -2526,6 +2550,7 @@
   {
     "object": "location",
     "name": "east-south-end-corridor-ground-floor",
+    "displayName": "East corridor ground floor",
     "description": "You're in the South end of the East corridor on the ground floor.",
     "exits": [
       {
@@ -2554,6 +2579,7 @@
   {
     "object": "location",
     "name": "enterprise-meeting-room",
+    "displayName": "Enterpri(z)e meeting room",
     "description": "You're in the Enterprise meeting room. You peer through the window at the people coming and going from the office.",
     "exits": [
       {
@@ -2568,6 +2594,7 @@
   {
     "object": "location",
     "name": "facilities-area",
+    "displayName": "Facilities team area",
     "description": "You're in the Facilities team area. They work tirelessly to keep the building running, clean, safe and maintained. Just don't annoy them, you'll regret it.",
     "exits": [
       {
@@ -2596,6 +2623,7 @@
   {
     "object": "location",
     "name": "finance-area",
+    "displayName": "Finance team area",
     "description": "You're in the Finance team area. You <i>really</i> need to be nice to this lot. They sort out your pay and expenses as well as all the rest of the cash running through this place.",
     "exits": [
       {
@@ -2671,6 +2699,7 @@
   {
     "object": "location",
     "name": "first-floor-back-stairs-east",
+    "displayName": "Back stairs (East) - 1st floor",
     "description": "You're standing on the north-east staircase.",
     "exits": [
       {
@@ -2699,6 +2728,7 @@
   {
     "object": "location",
     "name": "first-floor-back-stairs-west",
+    "displayName": "Back stairs (West) - 1st floor",
     "description": "You're halfway up the west fire escape staircase.",
     "exits": [
       {
@@ -2727,6 +2757,7 @@
   {
     "object": "location",
     "name": "first-floor-cubby-hole",
+    "displayName": "Function heads & support cubby hole",
     "description": "You're in the First floor cubby hole.<br>The area is lined with whiteboards and there are assorted chairs and bean bags scattered around.",
     "exits": [
       {
@@ -2763,6 +2794,7 @@
   {
     "object": "location",
     "name": "first-floor-cubicle",
+    "displayName": "Toilet cubicle",
     "description": "You're in a first floor toilet cubicle.<br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
     "exits": [
       {
@@ -2894,6 +2926,7 @@
   {
     "object": "location",
     "name": "first-floor-fire-escape",
+    "displayName": "Fire escape",
     "description": "You're standing on the first floor of the rear fire escape. You probably shouldn't be here without a good reason.<br>The wind howls across the steel deck. Peering cautiously down over the railings you can see the smoking area and bike racks.",
     "attributes": {
       "outdoor": true
@@ -2926,6 +2959,7 @@
   {
     "object": "location",
     "name": "first-floor-landing-central",
+    "displayName": "First floor landing",
     "description": "You're on the first floor landing.",
     "exits": [
       {
@@ -2954,6 +2988,7 @@
   {
     "object": "location",
     "name": "first-floor-landing-east",
+    "displayName": "First floor landing",
     "description": "You're at the East end of the first floor landing.<br>Through the window to the East you can see some of the sales team relaxing and playing on an XBox.",
     "exits": [
       {
@@ -3007,6 +3042,7 @@
   {
     "object": "location",
     "name": "first-floor-landing-west",
+    "displayName": "First floor landing",
     "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wandering about their business down below.",
     "exits": [
       {
@@ -3035,6 +3071,7 @@
   {
     "object": "location",
     "name": "first-floor-toilet",
+    "displayName": "First floor toilet",
     "description": "You're in the first floor toilet.<br>It's a lot like all the others here although there's a subtle difference in colour.",
     "exits": [
       {
@@ -3212,6 +3249,7 @@
   {
     "object": "location",
     "name": "fishing",
+    "displayName": "'Fishing' meeting room",
     "description": "You're in the Fishing meeting room. Now you <i>really</i> know how a goldfish feels.<br>You feel you're being watched.",
     "exits": [
       {
@@ -3226,6 +3264,7 @@
   {
     "object": "location",
     "name": "flowers-a",
+    "displayName": "Flowers A meeting room",
     "description": "You're in the Flowers A meeting room. It's bright & airy in here.<br>If you want to use the AV equipment, forget it. Use the TV instead.",
     "exits": [
       {
@@ -3240,6 +3279,7 @@
   {
     "object": "location",
     "name": "flowers-b",
+    "displayName": "Flowers B meeting room",
     "description": "You're in the Flowers B meeting room. This is a great medium-sized room that often gets overlooked. Possibly because it's regularly closed off to be used for massages.",
     "exits": [
       {
@@ -3254,6 +3294,7 @@
   {
     "object": "location",
     "name": "graffiti-a",
+    "displayName": "Graffiti A meeting room",
     "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
     "attributes": {
       "dark": true
@@ -3271,6 +3312,7 @@
   {
     "object": "location",
     "name": "graffiti-b",
+    "displayName": "Graffiti B meeting room",
     "description": "You're in the Graffiti-B meeting room. It's all bright and shiny.",
     "exits": [
       {
@@ -3337,6 +3379,7 @@
   {
     "object": "location",
     "name": "ground-floor-back-stair-east",
+    "displayName": "Back stairs (East) - Ground floor",
     "description": "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here. People don't come down here very often unless they're lost.",
     "exits": [
       {
@@ -3351,6 +3394,7 @@
   {
     "object": "location",
     "name": "ground-floor-back-stairs-west",
+    "displayName": "Back stairs (West) - Ground floor",
     "description": "You're in the bottom of the west fire escape stairs.",
     "attributes": {
       "dark": true
@@ -3397,6 +3441,7 @@
   {
     "object": "location",
     "name": "ground-floor-cubicle",
+    "displayName": "Toilet cubicle",
     "description": "You're standing in a nice clean toilet cubicle. Fortunately the previous occupant remembered to flush.",
     "exits": [
       {
@@ -3513,6 +3558,7 @@
   {
     "object": "location",
     "name": "ground-floor-fire-escape",
+    "displayName": "Fire escape",
     "description": "You're at the bottom of the rear fire escape staircase.<br>You're surrounded by large gas and water pipes leading in and out of the building.",
     "attributes": {
       "outdoor": true
@@ -3576,6 +3622,7 @@
   {
     "object": "location",
     "name": "ground-floor-toilet",
+    "displayName": "Ground floor toilet",
     "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
     "exits": [
       {
@@ -3735,6 +3782,7 @@
   {
     "object": "location",
     "name": "incidentals-blinkpipe",
+    "displayName": "Incidentals area",
     "description": "You're in the space between Core and Finance occupied by the Blinkpipe team. Some of them look oddly familiar although you rarely actually come into contact with them.",
     "exits": [
       {
@@ -3763,6 +3811,7 @@
   {
     "object": "location",
     "name": "is-area",
+    "displayName": "IS team area",
     "description": "You're in the IS area. The team here keep this show on the road. Anything you need, they can usually get it or fix it for you.",
     "exits": [
       {
@@ -3870,6 +3919,7 @@
   {
     "object": "location",
     "name": "jellyfish-meeting-room",
+    "displayName": "Jellyfish meeting room",
     "description": "You're in Jellyfish meeting room. The carpet in here is a rather vivid green.<br>Through the window to the north you can see people scurrying up and down the stairs trying not to spill their coffee.",
     "exits": [
       {
@@ -3884,6 +3934,7 @@
   {
     "object": "location",
     "name": "kitchen-ground-floor",
+    "displayName": "Atrium kitchen",
     "description": "You're in the atrium kitchen.",
     "exits": [
       {
@@ -4401,6 +4452,7 @@
             {
               "object": "location",
               "name": "crash-site",
+              "displayName": "Disaster scene",
               "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
               "attributes": {
                 "outdoor": true
@@ -4580,6 +4632,7 @@
   {
     "object": "location",
     "name": "lawyer-lobby",
+    "displayName": "Lawyer's lobby",
     "description": "You're in the lobby of the resident law firm.<br>There's an air of bureaucracy, suits and books to the place.",
     "exits": [
       {
@@ -4594,6 +4647,7 @@
   {
     "object": "location",
     "name": "library",
+    "displayName": "Library",
     "description": "You're in the atrium library.<br>This is a comfortable area to browse our bookshelves full of the wonders of working with software.",
     "exits": [
       {
@@ -4785,6 +4839,7 @@
   {
     "object": "location",
     "name": "lift-first-floor",
+    "displayName": "Lift",
     "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
     "exits": [
       {
@@ -4813,6 +4868,7 @@
   {
     "object": "location",
     "name": "lift-ground-floor",
+    "displayName": "Lift",
     "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
     "exits": [
       {
@@ -4888,6 +4944,7 @@
   {
     "object": "location",
     "name": "lift-second-floor",
+    "displayName": "Lift",
     "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
     "exits": [
       {
@@ -4909,6 +4966,7 @@
   {
     "object": "location",
     "name": "machine-room-east",
+    "displayName": "Machine room",
     "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
     "exits": [
       {
@@ -5056,6 +5114,7 @@
                 {
                   "object": "location",
                   "name": "east-car-park-corner",
+                  "displayName": "Car park (East)",
                   "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
                   "attributes": {
                     "outdoor": true
@@ -5169,6 +5228,7 @@
   {
     "object": "location",
     "name": "machine-room-west",
+    "displayName": "Machine room",
     "description": "You're in the IS storage area.<br>You're not meant to be in here unaccompanied I think. There are cables, wires, tools and spare pieces of hardware arrayed around you.",
     "exits": [
       {
@@ -5214,6 +5274,7 @@
   {
     "object": "location",
     "name": "marketing",
+    "displayName": "Marketing area",
     "description": "You're in the Marketing area.",
     "exits": [
       {
@@ -5228,6 +5289,7 @@
   {
     "object": "location",
     "name": "mercedes",
+    "displayName": "Mercedes meeting room",
     "description": "You're in the Mercedes meeting room. An odd-shaped room that's rarely used by any but the locals.",
     "exits": [
       {
@@ -5242,6 +5304,7 @@
   {
     "object": "location",
     "name": "northwest-corridor-ground-floor",
+    "displayName": "West corridor ground floor",
     "description": "You're in the North-West corridor of the ground floor.",
     "exits": [
       {
@@ -5277,6 +5340,7 @@
   {
     "object": "location",
     "name": "office-front",
+    "displayName": "Office front",
     "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
     "attributes": {
       "outdoor": true
@@ -5443,6 +5507,7 @@
   {
     "object": "location",
     "name": "opportunities-cubbyhole",
+    "displayName": "Opportunities cubbyhole",
     "description": "You're in a dead-end room full of clutter in the opportunities and ventures area.",
     "exits": [
       {
@@ -5498,6 +5563,7 @@
   {
     "object": "location",
     "name": "opportunities-north",
+    "displayName": "Opportunities",
     "description": "You're in north end of the opportunities and ventures area.",
     "exits": [
       {
@@ -5560,6 +5626,7 @@
   {
     "object": "location",
     "name": "opportunities-north-corridor",
+    "displayName": "Opportunities",
     "description": "You're in a corridor at the north end of the opportunities and ventures area.",
     "exits": [
       {
@@ -5588,6 +5655,7 @@
   {
     "object": "location",
     "name": "opportunities-north-east-corridor",
+    "displayName": "Opportunities",
     "description": "You're at the end of a corridor in the northern part of the opportunities and ventures area.",
     "exits": [
       {
@@ -5609,6 +5677,7 @@
   {
     "object": "location",
     "name": "opportunities-south",
+    "displayName": "Opportunities",
     "description": "You're in south end of the opportunities and ventures area.",
     "exits": [
       {
@@ -5784,6 +5853,7 @@
   {
     "object": "location",
     "name": "opportunities-west",
+    "displayName": "Opportunities",
     "description": "You're in West end of the opportunities and ventures area.<br>Peering through the window you see staff wandering past on their way to and from their bikes.",
     "exits": [
       {
@@ -5906,6 +5976,7 @@
   {
     "object": "location",
     "name": "paint-pots",
+    "displayName": "Paint Pots meeting room",
     "description": "You're in the Paint Pots meeting room. The lack of visible light adds to the sense of foreboding.<br>You feel like this is a room specially reserved for difficult HR conversations. You'd be wrong of course!",
     "exits": [
       {
@@ -5964,6 +6035,7 @@
   {
     "object": "location",
     "name": "peacock",
+    "displayName": "Peacock meeting room",
     "description": "You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.",
     "exits": [
       {
@@ -5978,6 +6050,7 @@
   {
     "object": "location",
     "name": "people-team-area",
+    "displayName": "People Team area",
     "description": "You're in the People Team area. For such an overworked group they're always available and happy to help.",
     "exits": [
       {
@@ -5999,6 +6072,7 @@
   {
     "object": "location",
     "name": "people-team-north",
+    "displayName": "People Team area",
     "description": "You're on the Northern edge of the People Team area.",
     "exits": [
       {
@@ -6027,6 +6101,7 @@
   {
     "object": "location",
     "name": "people-team-north-west",
+    "displayName": "People Team area",
     "description": "You're in the North-West corner of the People Team area.",
     "exits": [
       {
@@ -6048,6 +6123,7 @@
   {
     "object": "location",
     "name": "people-team-water-cooler",
+    "displayName": "Water cooler",
     "description": "You're stood by a water cooler on the west wing of the second floor. A corridor leads North and East. There are team areas to the South and meeting rooms to the West.",
     "exits": [
       {
@@ -6073,7 +6149,7 @@
       }
     ],
     "inventory": [
-    {
+      {
         "object": "artefact",
         "name": "water cooler",
         "description": "water cooler",
@@ -6159,12 +6235,13 @@
             ]
           }
         ]
-      }  
+      }
     ]
   },
   {
     "object": "location",
     "name": "pioneer",
+    "displayName": "Pioneer meeting room",
     "description": "You're in the Pioneer meeting room. The acoustics in here seem very strange.",
     "exits": [
       {
@@ -6197,6 +6274,7 @@
   {
     "object": "location",
     "name": "poppy",
+    "displayName": "Poppy meeting room",
     "description": "You're in the Poppy meeting room. The AV equipment in here could use some love.",
     "exits": [
       {
@@ -6391,6 +6469,7 @@
   {
     "object": "location",
     "name": "post-room",
+    "displayName": "Post room",
     "description": "You're in the post room.",
     "exits": [
       {
@@ -6426,6 +6505,7 @@
   {
     "object": "location",
     "name": "punts",
+    "displayName": "Punts meeting room",
     "description": "You're in the Punts meeting room. It's probably the narrowest meeting room in the building. Just room for 2 and a PC.",
     "exits": [
       {
@@ -6440,6 +6520,7 @@
   {
     "object": "location",
     "name": "reception",
+    "displayName": "Reception",
     "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
     "exits": [
       {
@@ -6679,6 +6760,7 @@
   {
     "object": "location",
     "name": "rest-area-ground-floor",
+    "displayName": "Rest area",
     "description": "You're in the ground floor rest area.",
     "exits": [
       {
@@ -6785,6 +6867,7 @@
   {
     "object": "location",
     "name": "roof",
+    "displayName": "Roof",
     "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
     "attributes": {
       "outdoor": true
@@ -6802,6 +6885,7 @@
   {
     "object": "location",
     "name": "room-404",
+    "displayName": "Room 404",
     "description": "You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.",
     "exits": [
       {
@@ -6834,6 +6918,7 @@
   {
     "object": "location",
     "name": "rubbish-bins",
+    "displayName": "Rubbish bins",
     "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
     "attributes": {
       "outdoor": true
@@ -6873,6 +6958,7 @@
   {
     "object": "location",
     "name": "sales-break-out",
+    "displayName": "Sales area",
     "description": "You're stood in a small break out area.",
     "exits": [
       {
@@ -6901,6 +6987,7 @@
   {
     "object": "location",
     "name": "sales-main",
+    "displayName": "Sales area",
     "description": "You're in the main sales and marketing area.<br>There's a low level hum of telephone conversation.",
     "exits": [
       {
@@ -7089,6 +7176,7 @@
   {
     "object": "location",
     "name": "sales-north",
+    "displayName": "Sales area",
     "description": "You're at the North end of the sales and marketing area.<br>To the North is a door. East is the marketing area and West are some recreational spaces.",
     "exits": [
       {
@@ -7124,6 +7212,7 @@
   {
     "object": "location",
     "name": "sales-seating",
+    "displayName": "Sales area",
     "description": "You're in a small seating area. Peering down through the windows to the West you can see the atrium. To the North is a meeting room.",
     "exits": [
       {
@@ -7169,6 +7258,7 @@
   {
     "object": "location",
     "name": "sales-south",
+    "displayName": "Sales area",
     "description": "You're at the south end of the sales and marketing area.",
     "exits": [
       {
@@ -7190,6 +7280,7 @@
   {
     "object": "location",
     "name": "second-floor-back-stairs-east",
+    "displayName": "Back stairs (East) - 2nd floor",
     "description": "You're at the top of the Eastern back staircase. This is very much a path less-travelled.<br>From here you can take a short-cut down to the Sales and Marketing teams or South to Finance and Facilities.",
     "exits": [
       {
@@ -7211,6 +7302,7 @@
   {
     "object": "location",
     "name": "second-floor-back-stairs-west",
+    "displayName": "Back stairs (West) - 2nd floor",
     "description": "You're standing at the top of the west fire escape staircase.",
     "exits": [
       {
@@ -7232,6 +7324,7 @@
   {
     "object": "location",
     "name": "second-floor-cubicle",
+    "displayName": "Toilet cubicle",
     "description": "You're in a toilet cubicle. The toilet is making some unhealthy gugling noises and the smell in here is terrible.<br> I think there's a good reason this one was out of order.",
     "attributes": {
       "dark": true
@@ -7370,6 +7463,7 @@
   {
     "object": "location",
     "name": "second-floor-east-corridor",
+    "displayName": "Second floor East corridor",
     "description": "You're in the East corridor on the second floor. Domain of all things IS.",
     "exits": [
       {
@@ -7398,6 +7492,7 @@
   {
     "object": "location",
     "name": "second-floor-fire-escape",
+    "displayName": "Fire escape",
     "description": "You're on the second floor of the rear fire escape. It's windy up here.",
     "attributes": {
       "outdoor": true
@@ -7430,6 +7525,7 @@
   {
     "object": "location",
     "name": "second-floor-kitchen",
+    "displayName": "Second floor kitchen",
     "description": "You're in the second floor kitchen. There's a space where once a coffee machine sat but not much else here to tempt you to hand around upstairs now.",
     "exits": [
       {
@@ -7468,6 +7564,7 @@
   {
     "object": "location",
     "name": "second-floor-landing-central",
+    "displayName": "Second floor landing",
     "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
     "exits": [
       {
@@ -7496,6 +7593,7 @@
   {
     "object": "location",
     "name": "second-floor-landing-east",
+    "displayName": "Second floor landing",
     "description": "You're at the east end of the second floor landing. Peering through the window to the East, you can just about make out the facilities team on the other side of the glass.",
     "exits": [
       {
@@ -7549,6 +7647,7 @@
   {
     "object": "location",
     "name": "second-floor-landing-west",
+    "displayName": "Second floor landing",
     "description": "You're at the West end of the second floor landing. Peering over the balcony you consider throwing something down. If only there was a slide here.",
     "exits": [
       {
@@ -7577,6 +7676,7 @@
   {
     "object": "location",
     "name": "second-floor-north-west-corridor-central",
+    "displayName": "Second floor West corridor",
     "description": "You're part-way along a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the East and West.",
     "exits": [
       {
@@ -7612,6 +7712,7 @@
   {
     "object": "location",
     "name": "second-floor-north-west-corridor-north-central",
+    "displayName": "Second floor West corridor",
     "description": "You're in a roughly North-South running corridor in the North-West corner of the second floor.",
     "exits": [
       {
@@ -7640,6 +7741,7 @@
   {
     "object": "location",
     "name": "second-floor-north-west-corridor-north-east",
+    "displayName": "Second floor West corridor",
     "description": "You're at a bend in a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the North and East.",
     "exits": [
       {
@@ -7675,6 +7777,7 @@
   {
     "object": "location",
     "name": "second-floor-north-west-corridor-north-end",
+    "displayName": "Second floor West corridor",
     "description": "You're in a North-South corridor at the North-West corner of the second floor. To the North is a staircase leading down.",
     "exits": [
       {
@@ -7696,6 +7799,7 @@
   {
     "object": "location",
     "name": "second-floor-north-west-corridor-south",
+    "displayName": "Second floor West corridor",
     "description": "You're at the South end of a roughly North-South running corridor in the North-West corner of the second floor.<br>There's meeting room to the West. To the east is a curved glass partition behind which are printers and a stationery cupboard.",
     "exits": [
       {
@@ -7731,6 +7835,7 @@
   {
     "object": "location",
     "name": "second-floor-printer-area",
+    "displayName": "Printer area",
     "description": "You're in a small glass-walled corner bounded by corridors.",
     "exits": [
       {
@@ -7885,6 +7990,7 @@
   {
     "object": "location",
     "name": "second-floor-reception",
+    "displayName": "Former reception",
     "description": "You're standing in the former reception area on the second floor. A CCTV camera looms over the desk area.",
     "exits": [
       {
@@ -7913,6 +8019,7 @@
   {
     "object": "location",
     "name": "second-floor-seating-area-east",
+    "displayName": "Rest area",
     "description": "You're in the East end of the second floor seating area.<br>You could stand here for hours reading the giant mural of post-it notes trying to spot the duplicates.",
     "exits": [
       {
@@ -8008,6 +8115,7 @@
   {
     "object": "location",
     "name": "second-floor-seating-area-west",
+    "displayName": "Rest area",
     "description": "You're in the West end of the second floor seating area.",
     "exits": [
       {
@@ -8036,6 +8144,7 @@
   {
     "object": "location",
     "name": "second-floor-toilet",
+    "displayName": "Second floor toilet",
     "description": "You're in a bathroom. You can't quite remember what floor you're on. Do those soap dispensers look different to you?<br>A sign on the cubicle door says 'Temporarily out of order'",
     "exits": [
       {
@@ -8213,6 +8322,7 @@
   {
     "object": "location",
     "name": "second-floor-west-corridor",
+    "displayName": "Second floor South corridor",
     "description": "You're in a short corridor that runs East-West. To the East is the second floor reception area. <br>To the north is a printer area that also houses a stationary cupboard. To the west lies the People team (and more winding corridors).",
     "exits": [
       {
@@ -8241,6 +8351,7 @@
   {
     "object": "location",
     "name": "servery-back-corridor",
+    "displayName": "Servery back corridor",
     "description": "You're in the back corridor of the SQL Servery. There's a slight smell of industrial kitchens here.",
     "exits": [
       {
@@ -8269,6 +8380,7 @@
   {
     "object": "location",
     "name": "servery-kitchen",
+    "displayName": "Servery kitchen",
     "description": "You're in the SQL Servery kitchen.",
     "exits": [
       {
@@ -8331,7 +8443,7 @@
           "sexton",
           "margaret s"
         ],
-"missions": [
+        "missions": [
           {
             "object": "mission",
             "name": "tomatoesformargaret",
@@ -8397,11 +8509,11 @@
             "reward": {
               "score": 125,
               "affinityModifier": 1,
-              "increaseAffinityFor": "everyone",              
+              "increaseAffinityFor": "everyone",
               "successMessage": "Margaret says 'Thankyou so much $player.'<br>'I'm sure everyone will appreciate the effort you've gone to to keep us all fed.'<br> Have 125 points."
             }
           }
-        ]        
+        ]
       },
       {
         "object": "creature",
@@ -8443,6 +8555,7 @@
   {
     "object": "location",
     "name": "servery-main",
+    "displayName": "Servery",
     "description": "You're in SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses.",
     "exits": [
       {
@@ -8533,6 +8646,7 @@
   {
     "object": "location",
     "name": "servery-north-west",
+    "displayName": "Servery",
     "description": "You're in the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
     "exits": [
       {
@@ -8645,6 +8759,7 @@
   {
     "object": "location",
     "name": "servery-salad-bar",
+    "displayName": "Servery",
     "description": "You're standing by the SQL Servery salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
     "exits": [
       {
@@ -8695,6 +8810,7 @@
   {
     "object": "location",
     "name": "servery-south-west",
+    "displayName": "Servery",
     "description": "You're in the South-West end of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.",
     "exits": [
       {
@@ -8716,6 +8832,7 @@
   {
     "object": "location",
     "name": "shower-ground-floor",
+    "displayName": "Shower",
     "description": "You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.",
     "exits": [
       {
@@ -8730,6 +8847,7 @@
   {
     "object": "location",
     "name": "signpost",
+    "displayName": "Signpost meeting room",
     "description": "You're in the SignPost meeting room.",
     "exits": [
       {
@@ -8744,6 +8862,7 @@
   {
     "object": "location",
     "name": "smoking-area",
+    "displayName": "Smoking area",
     "description": "You're outside the back of the office under the fire escape.",
     "attributes": {
       "outdoor": true
@@ -8804,6 +8923,7 @@
   {
     "object": "location",
     "name": "snorting-horses",
+    "displayName": "Snorting Horses meeting room",
     "description": "You're in the Snorting Horses meeting room.<br>There's a great view out of the windows. The table has been rendered to look like straw, one wall is covered in rosettes whilst the other mixes acoustic treatment with some rather alarming horse-head-shaped lighting.<br>Overall there's something deeply unsettling about spending time alone in here.",
     "exits": [
       {
@@ -8818,6 +8938,7 @@
   {
     "object": "location",
     "name": "southeast-corridor-ground-floor",
+    "displayName": "South corridor ground floor",
     "description": "You're in the South-East corridor of the ground floor.",
     "exits": [
       {
@@ -8846,6 +8967,7 @@
   {
     "object": "location",
     "name": "southwest-corridor-ground-floor",
+    "displayName": "South corridor ground floor",
     "description": "You're in the South-West corridor of the ground floor.",
     "exits": [
       {
@@ -8874,6 +8996,7 @@
   {
     "object": "location",
     "name": "spiderman",
+    "displayName": "Spiderman meeting room",
     "description": "You're in the Spiderman meeting room. (Or is that Spider-man?) There are large windows on 2 walls.<br>You feel somewhat exposed here",
     "exits": [
       {
@@ -8888,6 +9011,7 @@
   {
     "object": "location",
     "name": "stairs-first-floor",
+    "displayName": "Stairs - 1st floor",
     "description": "You're halfway up the main office staircase.",
     "exits": [
       {
@@ -8955,6 +9079,7 @@
   {
     "object": "location",
     "name": "stairs-ground-floor",
+    "displayName": "Stairs - Ground floor",
     "description": "You're standing at the foot of the stairs.",
     "exits": [
       {
@@ -9029,6 +9154,7 @@
   {
     "object": "location",
     "name": "stairs-second-floor",
+    "displayName": "Stairs - 2nd floor",
     "description": "You're standing at the top of the main staircase The view's great from up here.",
     "exits": [
       {
@@ -9089,6 +9215,7 @@
   {
     "object": "location",
     "name": "support-east",
+    "displayName": "Support",
     "description": "You're in support area.<br>From here you can make rude gestures and wave through the window at passers-by on the stairs.",
     "exits": [
       {
@@ -9110,6 +9237,7 @@
   {
     "object": "location",
     "name": "support-west",
+    "displayName": "Support",
     "description": "You're in the support area.",
     "exits": [
       {
@@ -9166,6 +9294,7 @@
   {
     "object": "location",
     "name": "thinking-hats",
+    "displayName": "Thinking Hats meeting room",
     "description": "You're in the Thinking Hats meeting room. The seats in here are really tricky to pick up and move and it's oddly chilly. Perhaps it's haunted?",
     "exits": [
       {
@@ -9180,6 +9309,7 @@
   {
     "object": "location",
     "name": "top-fire-escape",
+    "displayName": "Fire escape",
     "description": "You're at the top of the rear fire escape. From here you have clear access to the roof.<br>It's a long way down!",
     "attributes": {
       "outdoor": true
@@ -9204,6 +9334,7 @@
   {
     "object": "location",
     "name": "traffic-jam-meeting-room",
+    "displayName": "Traffic Jam meeting room",
     "description": "You're in the 'Traffic Jam' meeting room.<br>There's quite a good view outside from here although it does feel like a bit of a fishbowl.",
     "exits": [
       {
@@ -9218,7 +9349,8 @@
   {
     "object": "location",
     "name": "war-room",
-    "description": "You're in the War Room. Once upon a time this was a little-used library. It's a long narrow space that's not used for management stand-ups.<br>The walls are filled with long-forgotten organisational restructuring plans.",
+    "displayName": "War Room",
+    "description": "You're in the War room. Once upon a time this was a little-used library. It's a long narrow space that's not used for management stand-ups.<br>The walls are filled with long-forgotten organisational restructuring plans.",
     "exits": [
       {
         "object": "exit",
@@ -9232,6 +9364,7 @@
   {
     "object": "location",
     "name": "waste-area",
+    "displayName": "Waste area",
     "description": "You're by a locked gate. On the far side are a series of waste containers full of carboard boxes, broken furniture and kitchen leftovers.",
     "attributes": {
       "outdoor": true
@@ -9347,6 +9480,7 @@
   {
     "object": "location",
     "name": "web-meeting-room",
+    "displayName": "Web meeting room",
     "description": "You're in the Web meeting room.",
     "exits": [
       {
@@ -9361,6 +9495,7 @@
   {
     "object": "location",
     "name": "west-bike-racks",
+    "displayName": "Bike racks (West)",
     "description": "You're standing at the South-West corner of the the office building.",
     "attributes": {
       "outdoor": true
@@ -9440,6 +9575,7 @@
   {
     "object": "location",
     "name": "west-car-park",
+    "displayName": "Car park (West)",
     "description": "You're standing in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
     "attributes": {
       "outdoor": true
@@ -9491,6 +9627,7 @@
   {
     "object": "location",
     "name": "west-corridor-ground-floor",
+    "displayName": "West corridor ground floor",
     "description": "You're in the West corridor of the ground floor.",
     "exits": [
       {
@@ -9519,6 +9656,7 @@
   {
     "object": "location",
     "name": "west-end-south-corridor-ground-floor",
+    "displayName": "South corridor ground floor",
     "description": "You're in the West end of the South corridor on the ground floor.",
     "exits": [
       {
@@ -9547,6 +9685,7 @@
   {
     "object": "location",
     "name": "windows-meeting-room",
+    "displayName": "Windows meeting room",
     "description": "You're in the 'Windows' meeting room.<br>It's a bit cramped in here and one of the walls is oddly curved wall for no obvious reason.",
     "exits": [
       {
