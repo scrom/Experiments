@@ -2147,7 +2147,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(self.canSee())) {
                 resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";
             } else {
-                resultString+= "Current location: "+_currentLocation.getName()+"<br>"+_currentLocation.describe();
+                resultString+= "Current location: "+_currentLocation.getDisplayName()+"<br>"+_currentLocation.describe();
             };
 
             //retrieve missions from location:

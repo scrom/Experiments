@@ -289,7 +289,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     if (locationData.attributes.start == "true" || locationData.attributes.start == true) {locationData.attributes.start = true;}
                     else {locationData.attributes.start=false;};
                 };
-                var newLocation = new locationObjectModule.Location(locationData.name,locationData.description,locationData.attributes);
+                var newLocation = new locationObjectModule.Location(locationData.name,locationData.displayName,locationData.description,locationData.attributes);
                 return newLocation;
             }  catch(err) {
 	            console.log("Failed to build location: "+locationData.name+": "+err.stack);

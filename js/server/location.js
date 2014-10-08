@@ -1,6 +1,6 @@
 ﻿"use strict";
 //location object - manage location details
-exports.Location = function Location(name, description, attributes) { 
+exports.Location = function Location(name, displayName, description, attributes) { 
     //name, description, detailedDescription, attributes,
     try{
         //module deps
@@ -12,6 +12,7 @@ exports.Location = function Location(name, description, attributes) {
 	    var self = this; //closure so we don't lose this reference in callbacks
         //self.location = {}; //JSON representation of location {description, objects, exits, creatures}
         var _name = name.toLowerCase();
+        var _displayName = displayName || name.replace(/-/g," ");
         var _visits = 0;
         var _dark = false;
         var _outdoor = false;
@@ -26,6 +27,13 @@ exports.Location = function Location(name, description, attributes) {
         var _defaultOutdoorScenery = ["floor", "ground", "sky", "air"];
 
 	    var _objectName = "location";
+
+        //captialise first letter of string.
+        var initCap = function(aString){
+            return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
+        
+        _displayName = initCap(_displayName);
 
         var compassSort = function(a,b) {
             var orderedDirections = ['n','s','e','w','u','d','i','o'];
@@ -48,7 +56,7 @@ exports.Location = function Location(name, description, attributes) {
         //public member functions
         self.toString = function() {
             //var _missions = [];
-            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","description":"'+_description+'"';
+            var resultString = '{"object":"'+_objectName+'","name":"'+_name+'","displayName":"'+_displayName+'","description":"'+_description+'"';
             var attributes = JSON.stringify(self.getAttributesToSave());
             if (attributes != "{}") {
                 resultString += ',"attributes":'+attributes;
@@ -116,13 +124,17 @@ exports.Location = function Location(name, description, attributes) {
             return _name;
         };
 
+        self.getDisplayName = function() {
+            return _displayName;
+        };
+
+        self.setDisplayName = function(displayName) {
+            _displayName = displayName;
+        };
+
         self.getImageName = function() {
             //return _imageName; //if we want to show location images, restore this line and remove "return null".
             return null;
-        };
-
-        self.getDisplayName = function() {
-            return _name;
         };
 
         self.setDescription = function(description) {

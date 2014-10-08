@@ -125,11 +125,15 @@ exports.Map = function Map() {
 
         self.modifyLocation = function(modification){
             var locationName;
+            var newDisplayName;
             var newDescription;
             var inventory = [];
             if (modification) {
                 if (modification.name) {
                     locationName = modification.name;
+                };
+                if (modification.displayName) {
+                    newDisplayName = modification.displayName;
                 };
                 if (modification.description) {
                     newDescription = modification.description;
@@ -143,6 +147,8 @@ exports.Map = function Map() {
             if (locationName.length >0) {
                 for (var i=0; i<_locations.length;i++) {
                     if (_locations[i].getName() == locationName) {
+                        
+                        if (newDisplayName.length >0) { _locations[i].setDisplayName(newDisplayName);};
                         if (newDescription.length >0) { _locations[i].setDescription(newDescription);};
                         for (var v=0;v<inventory.length;v++) {
                             if (inventory[v].getType() == "creature") {
@@ -274,7 +280,7 @@ exports.Map = function Map() {
             return null;
         };
 
-        self.find = function(objectName, includeArtefacts) {
+        self.find = function(objectName, includeArtefacts,returnInternalLocationName) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
 
             //loop through each location and location inventory. 
@@ -282,12 +288,18 @@ exports.Map = function Map() {
             //return location name when found
             for (var i=0;i<_locations.length;i++) {
                 if (_locations[i].objectExists(objectName)) {
+                    var foundLocationName;
+                    if (returnInternalLocationName) {
+                        foundLocationName = _locations[i].getName();
+                    } else {
+                        foundLocationName = _locations[i].getDisplayName();
+                    };
                     var foundObject = _locations[i].getObject(objectName);
                     if (foundObject.getType() == "creature") {
-                        return foundObject.getDisplayName()+" is currently at '"+_locations[i].getDisplayName()+"'.";
+                        return foundObject.getDisplayName()+" is currently at '"+foundLocationName+"'.";
                     };
                     if (includeArtefacts) {
-                        return "I believe you'll find something like that at '"+_locations[i].getDisplayName()+"'.";
+                        return "I believe you'll find something like that at '"+foundLocationName+"'.";
                     };
                 };
             };

@@ -907,8 +907,8 @@ exports.Action = function Action(player, map, fileManager) {
             };
 
             if (_verb == '+find'||_verb == '+where') {
-                if(_object1) { return _map.find(_object1, true);}
-                else { return _map.find(_object0, true); };
+                if(_object1) { return _map.find(_object1, true, true);}
+                else { return _map.find(_object0, true, true); };
             };
 
             if (_verb == '+missions') {
