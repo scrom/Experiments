@@ -5563,7 +5563,7 @@
               "score": 5,
               "affinityModifier": 2,
               "increaseAffinityFor": "ice cream man",
-              "successMessage": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy Have 5 points.",
+              "successMessage": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy.<br>Have 5 points.",
               "failMessage": "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work."
             }
           }
