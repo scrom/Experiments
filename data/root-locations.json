@@ -4612,7 +4612,7 @@
                         "name": "zombie",
                         "displayName": "zombie",
                         "attributes": {
-                          "incubationPeriod": 5,
+                          "incubationPeriod": 6,
                           "communicability": 0.5,
                           "symptoms": [
                             {
@@ -4658,7 +4658,7 @@
                         "name": "zombie",
                         "displayName": "zombie",
                         "attributes": {
-                          "incubationPeriod": 5,
+                          "incubationPeriod": 6,
                           "communicability": 0.5,
                           "symptoms": [
                             {
