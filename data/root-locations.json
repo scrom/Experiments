@@ -4509,7 +4509,7 @@
         },
         "conditionAttributes": {
           "time": 42,
-          "missionsCompletedCount": ">12"
+          "missionsCompletedCount": ">10"
         },
         "reward": {
           "locations": [
@@ -5787,7 +5787,19 @@
           "affinity": -1,
           "canTravel": true,
           "traveller": true,
-          "imageName": "lucyboyes.jpg"
+          "imageName": "lucyboyes.jpg",
+          "destinations": [
+		    "atrium",
+            "customer-delight-south",
+            "kitchen-ground-floor",
+			"atrium",
+            "opportunities-south",
+			"atrium",
+            "finance-area"
+          ],
+          "loops": 10,
+          "loopDelay": 5,
+          "destinationDelay": 2
         },
         "inventory": [
           {
@@ -5824,9 +5836,11 @@
             "description": "Lucy's trying to find Dave and Roger.",
             "attributes": {
               "missionObject": "lucy boyes",
+			  "parent": "latte",
               "static": true,
+			  "initiateConversation": true,
               "dialogue": [
-                "'Hi $player.'<br>'I don't suppose you've seen Dave or Roger around anywhere have you?'<br>'They're supposed to be flying back from a comic book convention today.'",
+                "'Hi $player.'<br>'Dave and Roger are supposed to be flying back from a comic book convention today.'<br>'I don't suppose you've seen them around anywhere have you?'",
                 {
                   "state": 1,
                   "keywords": [
@@ -5839,13 +5853,8 @@
                 },
                 {
                   "state": 1,
-                  "response": "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'",
-                  "nextState": 2
-                },
-                {
-                  "state": 2,
-                  "response": "'Hey $player. Any sign of Dave or Roger yet?'",
-                  "nextState": 1
+                  "response": "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'<br>'Keep an eye out for them if you can.'",
+                  "nextState": 4
                 }
               ]
             },
@@ -6458,6 +6467,7 @@
               "missionObject": "hard disk",
               "destination": "simon galbraith",
               "static": true,
+			  "initiateConversation": true,
               "dialogue": [
                 "'Hi $player, thanks for the amazing job saving us from disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
                 {

@@ -10,6 +10,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _dialogue = []; //an array/collection of dialogue sentences. 
         var _isStatic = false; //if true, mission stays in source location.
         var _conversationState = 0; //track dialogue
+        var _initiateConversation = false; //should character initiate conversation
         var _missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _initialAttributes = initialAttributes; //the attributes to be set against the mission object when the mission starts 
         var _conditionAttributes = conditionAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
@@ -49,6 +50,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             } else {
                 //If a mission has dialogue, it'll override any static settings and be treated as static for now.
                 _dialogue = missionAttributes.dialogue;
+                if (missionAttributes.initiateConversation) {_initiateConversation = missionAttributes.initiateConversation;};
                 _isStatic = true;
             }; //override static setting if mission has dialogue
         };
@@ -135,6 +137,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_timeTaken > 0) {currentAttributes.timeTaken = _timeTaken;};
             if (_ticking) {currentAttributes.ticking = _ticking;};
             if (_conversationState > 0) {currentAttributes.conversationState = _conversationState;};
+            if (_initiateConversation) {currentAttributes.initiateConversation = _initiateConversation;};
             if (_lastResponse) {currentAttributes.lastResponse = _lastResponse;};
             if (_isStatic) {currentAttributes.static = _isStatic;};
             if (_dialogue.length > 0) {currentAttributes.dialogue = _dialogue;};
@@ -286,6 +289,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.hasDialogue = function() {
             if (_dialogue.length > 0) {return true;};
+            return false;
+        };
+
+        self.wantsToTalk = function() {
+            if (!(self.hasDialogue())) {return false;};
+            if (_conversationState == 0 && _initiateConversation)  {
+                return true;
+            };
             return false;
         };
 

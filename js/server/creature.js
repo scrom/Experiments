@@ -2014,6 +2014,26 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
+        self.initiateConversation = function(player) {
+            if (player.getLastVerbUsed() == "examine") {return "";};
+            var wantsToTalk = false;
+            for (var i=0; i< _missions.length;i++) {
+                if (_missions[i].wantsToTalk() && (!(_missions[i].hasParent()))) {
+                    wantsToTalk = true;
+                    break;
+                };
+            };
+            if (wantsToTalk) {
+                var playerAggression = player.getAggression();
+                if (((_affinity <0) && (playerAggression>0))|| (_affinity <-1)) {return "<br>"+self.getDisplayName()+" seems to be behaving strangely around you.";}
+                player.setLastCreatureSpokenTo(self.getName());
+                player.setLastVerbUsed("talk");
+                return "<br>"+self.getDisplayName()+" approaches you.<br>"+self.reply(null,player, null, null);
+            };
+            return "";
+
+        };
+
         self.reply = function(someSpeech,player, keyword, map) {
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
@@ -2105,6 +2125,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
                 switch(firstWord) {
                     case 'can': //you/i help/give/say/ask/get/fetch/find/have [me] /object
+                        if (stringStartsWith(remainderString, "you help ")) {
+                            return self.replyToKeyword("help", player, map);
+                        };
                         if (stringStartsWith(remainderString, "you give ") || stringStartsWith(remainderString, "i have ")) {
                             var artefactName = remainderString;
                             artefactName = artefactName.replace("you give","");
@@ -2151,7 +2174,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                  */
                     case 'pardon': // [me - apology] / [please repeat last thing] 
                         console.log("*** Unhandled player speech - first Word:'"+firstWord+"', remainder:'"+remainderString+"'");                      
-                        return initCap(self.getDisplayName())+" says 'Cool! You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
+                        return initCap(self.getDisplayName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
                         break;
                 };
             };
@@ -2189,7 +2212,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_imageName) {
                 response += "$image"+_imageName+"/$image";
             };
-            return  response;
+            return  response+"<br>";
         };
 
         self.isCollectable = function() {
@@ -2292,6 +2315,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return resultString;};
 
             var playerLocation = player.getCurrentLocation().getName();
+            var playerAggression = player.getAggression();
             var startLocation = _currentLocation.getName();
 
             var damage = 0;
@@ -2317,7 +2341,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
 
                 //if creature is hostile, collect available weapons
-                if (self.isHostile(player.getAggression())) {
+                if (self.isHostile(playerAggression)) {
                     resultString += self.collectBestAvailableWeapon();
                 };
 
@@ -2325,7 +2349,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (playerLocation == _currentLocation.getName()) {
                     if (_waitDelay >0) {
                         _waitDelay--; //wait 
-                    } else if (self.willFollow(player.getAggression())) {
+                    } else if (self.willFollow(playerAggression)) {
                         //switch off delay to follow player instead
                         _currentDelay = -1;
                     } else {
@@ -2372,7 +2396,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 }; 
                 
                 //is a traveller, not delayed, not following player, not already acted...
-                if (((_traveller || (_canTravel && _destinations.length>0)) && (_currentDelay == -1)) && (!self.willFollow(player.getAggression())) && (partialResultString.length ==0)) { 
+                if (((_traveller || (_canTravel && _destinations.length>0)) && (_currentDelay == -1)) && (!self.willFollow(playerAggression)) && (partialResultString.length ==0)) { 
                     var showMoveToPlayer = false;
                     if (playerLocation == _currentLocation.getName()) {showMoveToPlayer = true;};
 
@@ -2537,6 +2561,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //only show what's going on if the player is in the same location
             //note we store playerLocation at the beginning in case the player was killed as a result of the tick.
             if (playerLocation == _currentLocation.getName()) {
+                resultString += self.initiateConversation(player);
                 return resultString;
             } else if (playerLocation == startLocation) {
                 return partialResultString; //just the outcome of fleeing.

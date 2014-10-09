@@ -371,6 +371,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examin':
                     case 'examien':
                     case 'browse':
+                        _player.setLastVerbUsed('examine');
                         description = _player.examine(_verb, _object0);
                         break;  
                     case 'rest':

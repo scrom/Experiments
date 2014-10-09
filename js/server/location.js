@@ -378,7 +378,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                 };
             } else { resultString+= "<br>There are no visible exits.";};
 
-            return resultString;
+            return resultString+"<br>";
         };
 
         self.addVisit = function() {
