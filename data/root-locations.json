@@ -134,12 +134,13 @@
           "time": "25"
         },
         "reward": {
-          "eventMessage": "You've probably kept out of the way long enough to go and chat to the spy again without suspicion if you feel like taking on another 'job'."
+          "eventMessage": "You've probably kept out of the way long enough to go and chat to Jordan again without suspicion if you feel like taking on another 'job'."
         }
       },
       {
         "object": "mission",
         "name": "boring",
+		"displayName": "wait 25 times",
         "attributes": {
           "missionObject": "player"
         },
@@ -154,6 +155,7 @@
       {
         "object": "mission",
         "name": "explorer",
+		"displayName": "find every location",
         "attributes": {
           "missionObject": "player"
         },
@@ -168,6 +170,7 @@
       {
         "object": "mission",
         "name": "adventurer",
+		"displayName": "find 100 locations",
         "attributes": {
           "missionObject": "player"
         },
@@ -182,6 +185,7 @@
       {
         "object": "mission",
         "name": "psycho",
+		"displayName": "build aggression up to 25",
         "attributes": {
           "missionObject": "player"
         },
@@ -196,6 +200,7 @@
       {
         "object": "mission",
         "name": "liability",
+		"displayName": "destroy 15 items",
         "attributes": {
           "missionObject": "player"
         },
@@ -210,6 +215,7 @@
       {
         "object": "mission",
         "name": "thief",
+		"displayName": "steal 5 objects",
         "attributes": {
           "missionObject": "player"
         },
@@ -224,11 +230,12 @@
       {
         "object": "mission",
         "name": "bookworm",
+		"displayName": "read nearly all the things",
         "attributes": {
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "booksToRead": 3
+          "booksToRead": 5
         },
         "reward": {
           "score": 50,
@@ -238,6 +245,7 @@
       {
         "object": "mission",
         "name": "scholar",
+		"displayName": "read all the things",
         "attributes": {
           "parent": "bookworm",
           "missionObject": "player"
@@ -253,6 +261,7 @@
       {
         "object": "mission",
         "name": "chatterbox",
+		"displayName": "talk to 15 people",
         "attributes": {
           "parent": "keyfob",
           "missionObject": "player"
@@ -268,6 +277,7 @@
       {
         "object": "mission",
         "name": "networker",
+		"displayName": "talk to every character possible",
         "attributes": {
           "parent": "chatterbox",
           "missionObject": "player"
@@ -283,6 +293,7 @@
       {
         "object": "mission",
         "name": "bff",
+		"displayName": "gain affinity from one character up to level 15",
         "attributes": {
           "missionObject": "player"
         },
@@ -297,6 +308,7 @@
       {
         "object": "mission",
         "name": "first-aider",
+		"displayName": "heal 5 times",
         "attributes": {
           "missionObject": "player"
         },
@@ -311,6 +323,7 @@
       {
         "object": "mission",
         "name": "doctor",
+		"displayName": "heal more than 10 times",
         "attributes": {
           "parent": "first-aider",
           "missionObject": "player"
@@ -326,6 +339,7 @@
       {
         "object": "mission",
         "name": "asshole",
+		"displayName": "really upset a lot of people",
         "attributes": {
           "parent": "thinice",
           "missionObject": "player"
@@ -341,11 +355,12 @@
       {
         "object": "mission",
         "name": "lovedbyall",
+		"displayName": "make yourself popular with nearly everyone",
         "attributes": {
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "popularity": ">99"
+          "popularity": ">95"
         },
         "reward": {
           "score": 100,
@@ -355,6 +370,7 @@
       {
         "object": "mission",
         "name": "thinice",
+		"displayName": "upset a few people",
         "attributes": {
           "missionObject": "player"
         },
@@ -369,6 +385,7 @@
       {
         "object": "mission",
         "name": "spendthrift",
+		"displayName": "spend more than &pound;100",
         "attributes": {
           "missionObject": "player"
         },
@@ -383,6 +400,7 @@
       {
         "object": "mission",
         "name": "moneymaker",
+		"displayName": "gain more than &pound;100",
         "attributes": {
           "missionObject": "player"
         },
@@ -397,6 +415,7 @@
       {
         "object": "mission",
         "name": "collector",
+		"displayName": "collect and carry more than &pound;100 worth of valuables",
         "attributes": {
           "missionObject": "player"
         },
@@ -411,6 +430,7 @@
       {
         "object": "mission",
         "name": "pickpocket",
+		"displayName": "steal more than &pound;50 worth of valuables",
         "attributes": {
           "missionObject": "player"
         },
@@ -1169,11 +1189,11 @@
             "displayName": "get the party started",
             "description": "Mark wants to organise a celebration",
             "attributes": {
-              "parent": "saveredgate",
+              "parent": "killthespy",
               "missionObject": "mark wightman",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'I think it's time to celebrate. When you're ready, come and talk to me again and we'll get something organised.'",
+                "'Hi $player. That's quite a first day you've had!'<br>'I think it's time to celebrate. When you're ready, come and talk to me again and we'll get something organised.'",
                 "Are you ready to go?",
                 {
                   "state": 2,
@@ -1247,7 +1267,7 @@
               "missionObject": "bus",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> everyone to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once the bus is full (including yourself), it'll be time to relax.'",
+                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or so partygoers (including yourself), it'll be time to relax.'",
                 "'Hey $player. How's the party organising going?'"
               ]
             },
@@ -1255,7 +1275,7 @@
               "time": 350
             },
             "conditionAttributes": {
-              "friendlyCreatureCount": ">25"
+              "friendlyCreatureCount": ">11"
             },
             "reward": {
               "score": 250,
@@ -1753,6 +1773,7 @@
           "weight": 90,
           "money": 30,
           "attackStrength": 25,
+		  "affinity": 1,
           "gender": "female",
           "type": "friendly",
           "carryWeight": 15,
@@ -1839,6 +1860,7 @@
               "defaultAction": "read",
               "weight": 1,
               "type": "book",
+			  "affinityModifier": 0,
               "canCollect": true,
               "canDrawOn": true
             },
@@ -2880,7 +2902,7 @@
       },
       {
         "object": "artefact",
-        "name": "security article",
+        "name": "article on software security",
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'Take security in your STRIDE'.",
         "attributes": {
@@ -2892,6 +2914,7 @@
           "canDrawOn": true
         },
         "synonyms": [
+		  "security article",
           "article",
           "lotl",
           "learn on the loo",
@@ -3512,7 +3535,7 @@
       },
       {
         "object": "artefact",
-        "name": "solid article",
+        "name": "article on solid design principles",
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
         "attributes": {
@@ -3524,6 +3547,7 @@
           "canDrawOn": true
         },
         "synonyms": [
+		  "solid article",
           "article",
           "lotl",
           "learn on the loo",
@@ -3907,7 +3931,7 @@
         ],
         "dislikes": [
           "james moore",
-          "spy"
+          "jordan miller"
         ],
         "missions": [
           {
@@ -4442,10 +4466,10 @@
               "isDestroyed": true
             },
             "reward": {
-              "score": -25,
+              "score": -100,
               "affinityModifier": 2,
               "decreaseAffinityFor": "everyone",
-              "successMessage": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>You lose 25 points (and good luck getting help from anyone now!)"
+              "successMessage": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>You lose 100 points (and good luck getting help from anyone now!)"
             }
           },
           {
@@ -4484,8 +4508,8 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "time": 34,
-          "missionsCompletedCount": ">8"
+          "time": 42,
+          "missionsCompletedCount": ">12"
         },
         "reward": {
           "locations": [
@@ -4576,6 +4600,7 @@
                     "traveller": true,
                     "destinations": [
                       "atrium-seating",
+					  "kitchen-ground-floor",
                       "sales-north"
                     ],
                     "loopDelay": 3,
@@ -4651,7 +4676,256 @@
                     "hart",
                     "him"
                   ]
+                },
+      {
+        "object": "creature",
+        "name": "jordan miller",
+        "displayname": "Jordan Miller",
+        "description": "Jordan Miller",
+        "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
+        "attributes": {
+          "weight": 140,
+          "attackStrength": 12,
+          "gender": "male",
+          "type": "creature",
+          "carryWeight": 15,
+          "health": 225,
+          "affinity": -1,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "spy.jpg"
+        },
+          "synonyms": [
+                    "spy",
+                    "jordan",
+					"miller",
+					"jm",
+                    "him"
+                  ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "hard disk",
+            "description": "hard disk",
+            "detailedDescription": "Pretty sure it belongs to Red Gate.",
+            "attributes": {
+              "weight": 3,
+              "attackStrength": 5,
+              "canCollect": true,
+              "isBreakable": true,
+              "price": 50
+            },
+            "synonyms": [
+              "disc",
+              "drive",
+              "hard drive",
+              "disk",
+              "hard disc",
+              "disc drive",
+              "disk drive"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "emergency first aid kit",
+            "description": "single-use first aid kit",
+            "detailedDescription": "A one-off emergency first-aid kit.",
+            "attributes": {
+              "defaultAction": "heal",
+              "weight": 1,
+              "type": "medical",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 1,
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "first aid",
+              "kit",
+              "emergency",
+              "emergency kit",
+              "firstaid kit",
+              "first-aid kit",
+              "first-aid"
+            ]
+          }
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "killthespy",			
+            "displayName": "kill the spy",
+            "description": "I'm sure he wasn't around before the crash!",
+            "attributes": {
+			  "parent": "saveredgate",
+              "missionObject": "jordan miller"
+            },
+            "conditionAttributes": {
+              "dead": true
+            },
+            "reward": {
+              "score": 50,
+              "successMessage": "Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles. Have 50 points."
+            }
+          },
+          {
+            "object": "mission",
+            "name": "stealsketchbook",
+            "displayName": "steal Simon's sketch book",
+            "description": "Steal Simon Galbraith's A3 sketchbook.",
+            "attributes": {
+              "missionObject": "sketchbook",
+              "destination": "jordan miller",
+              "static": true,
+              "dialogue": [
+                "'Psst!'<br>'I've got some covert jobs if you're interested.'<br>'If you can <i>steal</i> Simon Galbraith's sketchbook and bring it to me (or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+                "'How's that little <i>job</i> going?'"
+              ]
+            },
+            "failAttributes": {
+              "isDestroyed": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+            "reward": {
+              "affinityModifier": 2,
+              "decreaseAffinityFor": "simon galbraith",
+              "increaseAffinityFor": "jordan miller",
+              "money": 50,
+              "successMessage": "Jordan says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
+            }
+          },
+          {
+            "object": "mission",
+            "name": "vanarrival",
+            "displayName": "fill the van",
+            "description": "Steal &pound;100 worth of valuables from the company.",
+            "attributes": {
+              "parent": "awaitvanarrival",
+              "missionObject": "jordan miller",
+              "static": true,
+              "dialogue": [
+                "'I knew I could rely on you.'<br>'I've parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true
+            },
+            "reward": {
+              "locations": [
+                {
+                  "object": "location",
+                  "name": "east-car-park-corner",
+                  "displayName": "Car park (East)",
+                  "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
+                  "attributes": {
+                    "outdoor": true
+                  },
+                  "exits": [
+                    {
+                      "object": "exit",
+                      "longname": "South",
+                      "direction": "s",
+                      "source": "east-car-park-corner",
+                      "destination": "waste-area"
+                    }
+                  ],
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "van",
+                      "description": "white van",
+                      "detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
+                      "attributes": {
+                        "weight": 3000,
+                        "carryWeight": 500,
+                        "type": "property",
+                        "canDrawOn": true
+                      },
+                      "synonyms": [
+                        "white van"
+                      ]
+                    }
+                  ]
                 }
+              ],
+              "exits": [
+                {
+                  "object": "exit",
+                  "longname": "North",
+                  "direction": "n",
+                  "source": "waste-area",
+                  "destination": "east-car-park-corner"
+                }
+              ]
+            }
+          },
+          {
+            "object": "mission",
+            "name": "stealvaluables",
+            "displayName": "steal some valuables",
+            "description": "Steal &pound;100 worth of valuables from the company.",
+            "attributes": {
+              "parent": "vanarrival",
+              "missionObject": "van"
+            },
+            "conditionAttributes": {
+              "inventoryValue": ">100"
+            },
+            "reward": {
+              "modifyLocation": {
+                "name": "east-car-park-corner",
+                "description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you.",
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tyre tracks",
+                    "description": "tyre tracks",
+                    "detailedDescription": "They're too scuffed to see any clear tread marks but they're wide enough to be consistent with a medium-sized goods vehicle.",
+                    "attributes": {
+                      "type": "scenery",
+                      "plural": true
+                    },
+                    "synonyms": [
+                      "tyre",
+                      "tyres",
+                      "track",
+                      "tracks"
+                    ]
+                  },
+                  {
+                    "object": "creature",
+                    "name": "mouse",
+                    "displayname": "the mouse",
+                    "description": "a small grey mouse",
+                    "detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
+                    "attributes": {
+                      "weight": 1,
+                      "type": "animal",
+                      "health": 10,
+                      "affinity": -1,
+                      "canTravel": true,
+                      "traveller": true
+                    },
+                    "synonyms": [
+                      "it",
+                      "animal"
+                    ]
+                  }
+                ]
+              },
+              "affinityModifier": 2,
+              "decreaseAffinityFor": "everyone",
+              "increaseAffinityFor": "jordan miller",
+              "removeObject": "van",
+              "removeLocation": "east-car-park-corner",
+              "money": 200,
+              "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
+            }
+          }
+        ]
+      }
               ]
             }
           ],
@@ -4664,7 +4938,7 @@
               "destination": "crash-site"
             }
           ],
-          "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
+          "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!<br>Now's probably a good time to <i>save</i> your game again if you haven't done so recently."
         }
       }
     ]
@@ -5015,253 +5289,6 @@
         "direction": "w",
         "source": "machine-room-east",
         "destination": "machine-room-west"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "creature",
-        "name": "spy",
-        "displayname": "the spy",
-        "description": "a corporate spy",
-        "detailedDescription": "Very shifty. I'm sure nobody would notice if he disappeared.",
-        "attributes": {
-          "weight": 140,
-          "attackStrength": 12,
-          "gender": "male",
-          "type": "creature",
-          "carryWeight": 15,
-          "health": 225,
-          "affinity": -4,
-          "canTravel": true,
-          "traveller": true,
-          "imageName": "spy.jpg"
-        },
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "hard disk",
-            "description": "hard disk",
-            "detailedDescription": "Pretty sure it belongs to Red Gate.",
-            "attributes": {
-              "weight": 3,
-              "attackStrength": 5,
-              "canCollect": true,
-              "isBreakable": true,
-              "price": 50
-            },
-            "synonyms": [
-              "disc",
-              "drive",
-              "hard drive",
-              "disk",
-              "hard disc",
-              "disc drive",
-              "disk drive"
-            ]
-          },
-          {
-            "object": "artefact",
-            "name": "emergency first aid kit",
-            "description": "single-use first aid kit",
-            "detailedDescription": "A one-off emergency first-aid kit.",
-            "attributes": {
-              "defaultAction": "heal",
-              "weight": 1,
-              "type": "medical",
-              "canCollect": true,
-              "isBreakable": true,
-              "charges": 1,
-              "canDrawOn": true
-            },
-            "synonyms": [
-              "first aid",
-              "kit",
-              "emergency",
-              "emergency kit",
-              "firstaid kit",
-              "first-aid kit",
-              "first-aid"
-            ]
-          }
-        ],
-        "synonyms": [
-          "corporate spy",
-          "him"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "killthespy",
-            "displayName": "kill the spy",
-            "description": "Kill the spy!",
-            "attributes": {
-              "missionObject": "spy"
-            },
-            "conditionAttributes": {
-              "dead": true
-            },
-            "reward": {
-              "score": 50,
-              "successMessage": "Congratulations. The spy is dead! Have 50 points."
-            }
-          },
-          {
-            "object": "mission",
-            "name": "stealsketchbook",
-            "displayName": "steal Simon's sketch book",
-            "description": "Steal Simon Galbraith's A3 sketchbook.",
-            "attributes": {
-              "missionObject": "sketchbook",
-              "destination": "spy",
-              "static": true,
-              "dialogue": [
-                "'Psst!'<br>'I've got some covert jobs if you're interested.'<br>'If you can <i>steal</i> Simon Galbraith's sketchbook and bring it to me (or <i>mug</i> him if it's easier), I'll make it worth your while.'",
-                "'How's that little <i>job</i> going?'"
-              ]
-            },
-            "failAttributes": {
-              "isDestroyed": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": false
-            },
-            "reward": {
-              "affinityModifier": 2,
-              "decreaseAffinityFor": "simon galbraith",
-              "increaseAffinityFor": "spy",
-              "money": 50,
-              "successMessage": "The spy says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
-            }
-          },
-          {
-            "object": "mission",
-            "name": "vanarrival",
-            "displayName": "fill the van",
-            "description": "Steal &pound;100 worth of valuables from the company.",
-            "attributes": {
-              "parent": "awaitvanarrival",
-              "missionObject": "spy",
-              "static": true,
-              "dialogue": [
-                "'I knew I could rely on you.'<br>'I've parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
-              ]
-            },
-            "conditionAttributes": {
-              "alive": true
-            },
-            "reward": {
-              "locations": [
-                {
-                  "object": "location",
-                  "name": "east-car-park-corner",
-                  "displayName": "Car park (East)",
-                  "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
-                  "attributes": {
-                    "outdoor": true
-                  },
-                  "exits": [
-                    {
-                      "object": "exit",
-                      "longname": "South",
-                      "direction": "s",
-                      "source": "east-car-park-corner",
-                      "destination": "waste-area"
-                    }
-                  ],
-                  "inventory": [
-                    {
-                      "object": "artefact",
-                      "name": "van",
-                      "description": "white van",
-                      "detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
-                      "attributes": {
-                        "weight": 3000,
-                        "carryWeight": 500,
-                        "type": "property",
-                        "canDrawOn": true
-                      },
-                      "synonyms": [
-                        "white van"
-                      ]
-                    }
-                  ]
-                }
-              ],
-              "exits": [
-                {
-                  "object": "exit",
-                  "longname": "North",
-                  "direction": "n",
-                  "source": "waste-area",
-                  "destination": "east-car-park-corner"
-                }
-              ]
-            }
-          },
-          {
-            "object": "mission",
-            "name": "stealvaluables",
-            "displayName": "steal some valuables",
-            "description": "Steal &pound;100 worth of valuables from the company.",
-            "attributes": {
-              "parent": "vanarrival",
-              "missionObject": "van"
-            },
-            "conditionAttributes": {
-              "inventoryValue": ">100"
-            },
-            "reward": {
-              "modifyLocation": {
-                "name": "east-car-park-corner",
-                "description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you.",
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tyre tracks",
-                    "description": "tyre tracks",
-                    "detailedDescription": "They're too scuffed to see any clear tread marks but they're wide enough to be consistent with a medium-sized goods vehicle.",
-                    "attributes": {
-                      "type": "scenery",
-                      "plural": true
-                    },
-                    "synonyms": [
-                      "tyre",
-                      "tyres",
-                      "track",
-                      "tracks"
-                    ]
-                  },
-                  {
-                    "object": "creature",
-                    "name": "mouse",
-                    "displayname": "the mouse",
-                    "description": "a small grey mouse",
-                    "detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
-                    "attributes": {
-                      "weight": 1,
-                      "type": "animal",
-                      "health": 10,
-                      "affinity": -1,
-                      "canTravel": true,
-                      "traveller": true
-                    },
-                    "synonyms": [
-                      "it",
-                      "animal"
-                    ]
-                  }
-                ]
-              },
-              "affinityModifier": 2,
-              "decreaseAffinityFor": "everyone",
-              "increaseAffinityFor": "spy",
-              "removeObject": "van",
-              "removeLocation": "east-car-park-corner",
-              "money": 200,
-              "successMessage": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
-            }
-          }
-        ]
       }
     ]
   },
@@ -6427,11 +6454,12 @@
             "displayName": "retrieve the stolen hard disk",
             "description": "Retrieve a stolen hard drive.",
             "attributes": {
+			  "parent": "saveredgate",
               "missionObject": "hard disk",
               "destination": "simon galbraith",
               "static": true,
               "dialogue": [
-                "'Hi $player, welcome to Red Gate'<br>'We have a problem.'<br>'Someone's stealing our data. Can you track it down and bring it back to me?'",
+                "'Hi $player, thanks for the amazing job saving us from disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
                 {
                   "state": 1,
                   "keywords": [
@@ -6498,7 +6526,7 @@
               "score": 50,
               "money": 25,
               "removeObject": "hard disk",
-              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus.",
+              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus.<br>'If you've not done so already, I think you should double-check to ensure our problematic friend gives us no more trouble. (if you get my gist).'",
               "failMessage": "That was foolish. The hard disk was worth a lot in the right hands.<br>Well. Best you move on and see if you can redeem yourself elsewhere."
             }
           }
@@ -7457,7 +7485,7 @@
       },
       {
         "object": "artefact",
-        "name": "boy scout article",
+        "name": "article on the boy scout principle",
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'The Boy Scout Rule'.",
         "attributes": {
@@ -7469,6 +7497,7 @@
           "canDrawOn": true
         },
         "synonyms": [
+		  "boy scout article",
           "article",
           "lotl",
           "learn on the loo",
@@ -9679,7 +9708,9 @@
         },
         "reward": {
           "score": 200,
-          "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been <i>very</i> nasty).",
+		  "affinityModifier": 2,
+          "decreaseAffinityFor": "jordan miller",
+          "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?",
           "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
         }
       }

@@ -1644,7 +1644,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.bite = function(recipient) {
             var resultString = "<br>";
             resultString+=initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
-            resultString+="<br>"+recipient.hurt(Math.floor(_attackStrength/4));
+            resultString+="<br>"+recipient.hurt(Math.floor(_attackStrength/5));
 
             //2 way transfer of contagion/antibodies!
             resultString+=self.transmit(recipient, "bite");
