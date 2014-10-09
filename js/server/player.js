@@ -26,8 +26,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _returnDirection;
         var _currentLocation;
         var _timeSinceEating = 0; 
-        var _maxMovesUntilHungry = 55;
-        var _additionalMovesUntilStarving = 10;
+        var _maxMovesUntilHungry = 65;
+        var _additionalMovesUntilStarving = 15;
         var _contagion = [];
         var _antibodies = [];
         var _lastCreatureSpokenTo;
