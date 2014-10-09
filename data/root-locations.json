@@ -3663,7 +3663,7 @@
           "weight": 15,
           "isBreakable": true,
           "type": "scenery",
-          "customAction": "dry"
+          "customAction": "dry",
           "defaultResult": "You wave your hands under the dryer. After a while it cuts out automatically but at least your hands seem mostly dry.<br>You wonder how someone would be able to dry their face with one of these and reminisce about the days of 'real' paper towels."
         },
         "synonyms": [
