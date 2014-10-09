@@ -93,16 +93,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return (_hitPoints/_maxHitPoints)*100;
         };
 
-        var getObjectFromPlayer = function(objectName){
-            return _inventory.getObject(objectName);
+        var getObjectFromPlayer = function(objectName, verb){
+            return _inventory.getObject(objectName, null, null, verb);
         };
-        var getObjectFromLocation = function(objectName){
-            return _currentLocation.getObject(objectName);
+        var getObjectFromLocation = function(objectName, verb){
+            return _currentLocation.getObject(objectName, null, null, verb);
         };
-        var getObjectFromPlayerOrLocation = function(objectName){
-            var locationArtefact = getObjectFromLocation(objectName);
+        var getObjectFromPlayerOrLocation = function(objectName, verb){
+            var locationArtefact = getObjectFromLocation(objectName, verb);
             if (locationArtefact) {return locationArtefact;} 
-            else {return getObjectFromPlayer(objectName);};
+            else {return getObjectFromPlayer(objectName, verb);};
         };
 
         var removeObjectFromPlayer = function(objectName){
@@ -847,7 +847,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefactName == undefined || artefactName == "" || artefactName == null) {
                 return null; //treat this as not understood
             };
-            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            var artefact = getObjectFromPlayerOrLocation(artefactName, verb);
             if (!(artefact)) {return null;}; //treat this as not understood too
             if (artefact.checkCustomAction(verb)) {
                 var resultString = artefact.getDefaultResult();

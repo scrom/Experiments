@@ -253,19 +253,33 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //recursively gets objects in other objects
         //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
-        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures) {
+        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, customAction) {
             for(var index = 0; index < _items.length; index++) {
                 if (ignoreSynonyms) {
                     if( _items[index].getName() == anObjectName ) {
                         //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
                         //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
-                        return _items[index];
+                        if (!(customAction)) {
+                            return _items[index];
+                        };
+
+                        //we have a name match, do we have an action match?
+                        if (_items[index].checkCustomAction(customAction)) {
+                            return _items[index];
+                        };
                     };
                 } else {
                     if(_items[index].syn(anObjectName) ) {
                         //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
                         //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
-                        return _items[index];
+                        if (!(customAction)) {
+                            return _items[index];
+                        };
+
+                        //we have a name match, do we have an action match?
+                        if (_items[index].checkCustomAction(customAction)) {
+                            return _items[index];
+                        };
                     };
                 };
                 if(((_items[index].getType() != 'creature') || searchCreatures) && (!(_items[index].isLocked()))) {
@@ -275,14 +289,26 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         var object = _items[index].getInventoryObject().getObject(anObjectName);
                         if (object) {
                             //object.show();
-                            return object
+                            if (!(customAction)) {
+                                return object;
+                            };
+                            //we have a name match, do we have an action match?
+                            if (object.checkCustomAction(customAction)) {
+                                    return object;
+                            };
                         };
                         
                         if (_items[index].getType() == 'creature') {
                             object = _items[index].getSalesInventoryObject().getObject(anObjectName);
                             if (object) {
                                 //object.show();
-                                return object
+                                if (!(customAction)) {
+                                    return object;
+                                };
+                                //we have a name match, do we have an action match?
+                                if (object.checkCustomAction(customAction)) {
+                                        return object;
+                                };
                             };
                         };
                     };

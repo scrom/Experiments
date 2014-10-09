@@ -317,8 +317,8 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.check(anObjectName, ignoreSynonyms, searchCreatures);
         };
 
-        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures) {
-            var returnObject = _inventory.getObject(anObjectName, ignoreSynonyms, searchCreatures);
+        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, verb) {
+            var returnObject = _inventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, verb);
             if (returnObject) { return returnObject;};
 
             if (anObjectName.substr(-1) == "s") {
