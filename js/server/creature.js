@@ -2542,6 +2542,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };            
                 };
 
+                //leave a trace
+                _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount()/5));
+
                 //contagion?
                 if (_contagion.length >0) {
                     for (var c=0; c<_contagion.length;c++) {

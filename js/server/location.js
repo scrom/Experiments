@@ -19,6 +19,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _start = false;
         var _blood = 0;
         var _playerTrace = 0;
+        var _creatureTraces = {};
         var _description = description;
         var _inventory =  new inventoryObjectModule.Inventory(99999, 0.00, _name);//unlimited //[]; //and creatures
         var _exits = [];
@@ -49,6 +50,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (locationAttributes.dark) {_dark = locationAttributes.dark;};
             if (locationAttributes.outdoor) {_outdoor = locationAttributes.outdoor;};
             if (locationAttributes.start) {_start = locationAttributes.start;};
+            if (locationAttributes.blood) {_blood = locationAttributes.blood;};
+            if (locationAttributes.playerTrace) {_playerTrace = locationAttributes.playerTrace;};
+            if (locationAttributes.creatureTraces) {_creatureTraces = locationAttributes.creatureTraces;};
+            ////
             if (locationAttributes.visits >0) {_visits = locationAttributes.visits;};
             if (locationAttributes.imageName != undefined) {_imageName = locationAttributes.imageName;};                
         };
@@ -94,6 +99,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             currentAttributes.dark = _dark;
             currentAttributes.blood = _blood;
             currentAttributes.playerTrace = _playerTrace;
+            currentAttributes.creatureTraces = _creatureTraces;
             currentAttributes.outdoor = _outdoor;
             currentAttributes.visits = _visits;
             currentAttributes.start = _start;
@@ -112,6 +118,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (locationAttributes.visits >0) {saveAttributes.visits = locationAttributes.visits;};
             if (locationAttributes.blood >0) {saveAttributes.blood = locationAttributes.blood;};
             if (locationAttributes.playerTrace >0) {saveAttributes.playerTrace = locationAttributes.playerTrace;};
+            if (Object.keys(locationAttributes.creatureTraces).length >0) {saveAttributes.creatureTraces = locationAttributes.creatureTraces;};
             if (locationAttributes.start) {saveAttributes.start = locationAttributes.start;};
             if (locationAttributes.imageName != undefined) {saveAttributes.imageName = locationAttributes.imageName;};
 
@@ -155,8 +162,16 @@ exports.Location = function Location(name, displayName, description, attributes)
             _playerTrace = value;
         };
 
-        self.getPlayerTrace = function(value) {
+        self.getPlayerTrace = function() {
             return _playerTrace;
+        };
+
+        self.setCreatureTrace = function(creatureName, value) {
+            _creatureTraces[creatureName] = value;
+        };
+
+        self.getCreatureTrace = function(creatureName) {
+            return _creatureTraces[creatureName];
         };
 
         self.addExit = function(anExitDirection, aSource, aDestination,isHidden) {
@@ -538,6 +553,15 @@ exports.Location = function Location(name, displayName, description, attributes)
             //note, we don't tell the player about this...
             if (_playerTrace >0) {
                 _playerTrace--;
+            };
+
+            for (var key in _creatureTraces) {
+                if (_creatureTraces[key] > 0) {
+                    _creatureTraces[key] --;
+                };
+                if (_creatureTraces[key] == 0) {
+                    delete _creatureTraces[key];
+                };
             };
 
             if (_blood >0) {
