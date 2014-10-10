@@ -132,7 +132,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         var processAttributes = function(artefactAttributes) {
             if (_initialDetailedDescription == "") {
-                _initialDetailedDescription ="Nothing of interest here.";
+                _initialDetailedDescription ="There's nothing of interest here.";
                 _detailedDescription = _initialDetailedDescription;
             };
             if (!artefactAttributes) {return null;};
@@ -871,7 +871,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString += "$image"+_imageName+"/$image";
             };
 
-            if (_initialDetailedDescription == "Nothing of interest here." && resultString.length > _initialDetailedDescription.length) {
+            if (_initialDetailedDescription == "There's nothing of interest here." && resultString.length > _initialDetailedDescription.length) {
                 resultString = resultString.replace(_initialDetailedDescription+"<br>","");
                 resultString = resultString.replace(_initialDetailedDescription+" ","");
             };
