@@ -527,7 +527,7 @@ exports.canGetObjectFromCreature.meta = { traits: ["Creature Test", "Inventory T
 exports.canRetrieveAffinity = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-5});
-    var expected = "It doesn't like you.";
+    var expected = "It doesn't like you much.";
     var actual = c0.getAffinityDescription();
     console.log("actual:"+actual);
     test.equal(actual, expected);
@@ -852,7 +852,7 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContents
 
     c0.collectBestAvailableWeapon();
 
-    var expected = "a room<br><br>You can see a beastie, a medium weapon, a light weapon and a weak weapon.<br>There are no visible exits.";
+    var expected = "a room<br><br>You can see a beastie, a medium weapon, a light weapon and a weak weapon.<br>There are no visible exits.<br>";
     var actual = l.describe();
     console.log("expected: "+expected);
     console.log("actual: "+actual);

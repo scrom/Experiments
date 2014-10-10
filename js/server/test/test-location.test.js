@@ -16,7 +16,7 @@ exports.canCreateSimpleLocation = function (test) {
 
     var room = new location.Location('room','room','a room',false);
 
-    var expectedResult = 'a room<br>There are no visible exits.';
+    var expectedResult = 'a room<br>There are no visible exits.<br>';
     var actualResult = room.describe();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

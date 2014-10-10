@@ -468,8 +468,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_saveCount > 0) {resultString += ',"saveCount":'+_saveCount;};
             if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
             if (_timeSinceEating > 0) {resultString += ',"timeSinceEating":'+_timeSinceEating;};
-            if (_maxMovesUntilHungry != 55) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
-            if (_additionalMovesUntilStarving != 10) {resultString += ',"additionalMovesUntilStarving":'+_additionalMovesUntilStarving;};
+            if (_maxMovesUntilHungry != 65) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
+            if (_additionalMovesUntilStarving != 15) {resultString += ',"additionalMovesUntilStarving":'+_additionalMovesUntilStarving;};
             if (_stepsTaken > 0) {resultString += ',"stepsTaken":'+_stepsTaken;};
             if (_locationsFound > 0) {resultString += ',"locationsFound":'+_locationsFound;};
             if (_maxAggression > 0) {resultString += ',"maxAggression":'+_maxAggression;};

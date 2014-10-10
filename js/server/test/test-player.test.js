@@ -209,7 +209,7 @@ exports.canEatFoodWhenHungry.meta = { traits: ["Player Test", "Inventory Trait",
 
 exports.canEatFoodWhenHungryTestBoundaryCase = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(40);
+    p0.increaseTimeSinceEating(50);
     var expectedResult = "You eat the cake. ";
     var actualResult = p0.eat('eat','cake').substring(0,18);
     console.log("Expected: "+expectedResult);
@@ -251,7 +251,7 @@ exports.cannotEatFoodWhenNotHungryEvenIfInjured.meta = { traits: ["Player Test",
 
 exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(27);
+    p0.increaseTimeSinceEating(32);
     p0.reduceHitPoints(6); //test boundary
     var expectedResult = "You eat the cake. ";
     var actualResult = p0.eat('eat','cake').substring(0,18);
@@ -369,7 +369,7 @@ exports.canBeKilledAndDropInventory = function (test) {
 exports.canBeKilledAndDropInventory.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Kill Trait"], description: "Test that a killed player drops inventory." };
 
 exports.killPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.";
+    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.<br>";
     var actualResult = p0.kill();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -382,7 +382,7 @@ exports.killPlayerReturnsExpectedStringResult.meta = { traits: ["Player Test", "
 exports.creatureRetaliationCanKillPlayer = function (test) {
     c0.setAttackStrength(104);
     p0.setLocation(l0);
-    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.";
+    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.<br>";
     var actual = p0.hit('hit',c0.getName());
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -396,7 +396,7 @@ exports.creatureAttackCanKillPlayer = function (test) {
     var creatureName = 'creature';
     var c1 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:104, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-15});
     c1.go(null,l0);
-    var expected = "<br>The creature attacks you. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature, An evil unfriendly creature and a beastie.<br>There are no visible exits.";
+    var expected = "<br>The creature attacks you. <br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature, An evil unfriendly creature and a beastie.<br>There are no visible exits.<br>";
     var actual = c1.fightOrFlight(null,p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -407,7 +407,7 @@ exports.creatureAttackCanKillPlayer.meta = { traits: ["Player Test", "Affinity T
 
 
 exports.hitAndKillPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.";
+    var expectedResult = "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.<br>";
     var actualResult = p0.hurt(101);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1034,7 +1034,7 @@ exports.failingToMakeSweetCoffeeDoesnotModifyIngredients = function (test) {
     l0.addObject(sugar);
     p0.put('add','coffee','sugar');
 
-    var expectedResult = "a home location<br><br>You can see some coffee and some sugar.<br>There are no visible exits. Coffee weight: 1, Sugar weight: 0.1";
+    var expectedResult = "a home location<br><br>You can see some coffee and some sugar.<br>There are no visible exits.<br> Coffee weight: 1, Sugar weight: 0.1";
     var actualResult = p0.examine('look')+" Coffee weight: "+coffee.getWeight()+", Sugar weight: "+sugar.getWeight();//
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1107,7 +1107,7 @@ exports.canEatDeadCreatureFromLocation = function (test) {
     deadCreature.go(null,l0); 
     p0.setLocation(l0);
     //p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(32);
     p0.reduceHitPoints(6);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';
@@ -1125,7 +1125,7 @@ exports.canEatDeadCreatureFromInventory = function (test) {
     var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
     deadCreature.go(null,l0); 
     p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(32);
     p0.reduceHitPoints(6);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';
@@ -1145,7 +1145,7 @@ exports.eatingAllOfDeadCreatureCarryingItemsDropsContents = function (test) {
     deadCreature.go(null,l0); 
     p0.setLocation(l0);
     //console.log(p0.examine("examine","dead creature"));
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>His possessions are scattered on the floor.';
@@ -1165,7 +1165,7 @@ exports.eatingAllOfDeadCreatureCarryingItemsReturnsContentsToPlayer = function (
     deadCreature.go(null,l0); 
     p0.setLocation(l0);
     p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>You manage to gather up his possessions.';
@@ -1185,11 +1185,11 @@ exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation = functi
     deadCreature.go(null,homeLoc); 
     p0.setLocation(homeLoc);
     //console.log(p0.examine("examine","dead creature"));
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
     p0.eat('eat','dead creature');
 
-    var expectedResult = 'a home location<br><br>You can see a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.';
+    var expectedResult = 'a home location<br><br>You can see a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.<br>';
     var actualResult = p0.examine("look");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1206,11 +1206,11 @@ exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation = f
     deadCreature.go(null,homeLoc); 
     p0.setLocation(homeLoc);
     //console.log(p0.examine("examine","dead creature"));
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
     p0.eat('eat','dead creature');
 
-    var expectedResult = 'a home location<br><br>You can see the remains of a well-chewed dead creature, a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.';
+    var expectedResult = 'a home location<br><br>You can see the remains of a well-chewed dead creature, a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.<br>';
     var actualResult = p0.examine("look");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1227,7 +1227,7 @@ exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToPlayer = function
     deadCreature.go(null,homeLoc); 
     p0.setLocation(homeLoc);
     p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
     p0.eat('eat','dead creature');
 
@@ -1250,7 +1250,7 @@ exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToPlayer = fun
     deadCreature.go(null,homeLoc); 
     p0.setLocation(homeLoc);
     p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(28);
+    p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
     p0.eat('eat','dead creature');
 
