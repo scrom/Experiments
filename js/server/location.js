@@ -18,6 +18,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _outdoor = false;
         var _start = false;
         var _blood = 0;
+        var _playerTrace = 0;
         var _description = description;
         var _inventory =  new inventoryObjectModule.Inventory(99999, 0.00, _name);//unlimited //[]; //and creatures
         var _exits = [];
@@ -92,6 +93,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             currentAttributes.itemCount = _inventory.size(true);
             currentAttributes.dark = _dark;
             currentAttributes.blood = _blood;
+            currentAttributes.playerTrace = _playerTrace;
             currentAttributes.outdoor = _outdoor;
             currentAttributes.visits = _visits;
             currentAttributes.start = _start;
@@ -109,6 +111,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (locationAttributes.outdoor) {saveAttributes.outdoor = locationAttributes.outdoor;};
             if (locationAttributes.visits >0) {saveAttributes.visits = locationAttributes.visits;};
             if (locationAttributes.blood >0) {saveAttributes.blood = locationAttributes.blood;};
+            if (locationAttributes.playerTrace >0) {saveAttributes.playerTrace = locationAttributes.playerTrace;};
             if (locationAttributes.start) {saveAttributes.start = locationAttributes.start;};
             if (locationAttributes.imageName != undefined) {saveAttributes.imageName = locationAttributes.imageName;};
 
@@ -146,6 +149,14 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.addBlood = function() {
             _blood = 10;
+        };
+
+        self.setPlayerTrace = function(value) {
+            _playerTrace = value;
+        };
+
+        self.getPlayerTrace = function(value) {
+            return _playerTrace;
         };
 
         self.addExit = function(anExitDirection, aSource, aDestination,isHidden) {
@@ -259,6 +270,23 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
             exitArray.sort(compassSort);
             return exitArray;
+        };
+
+        self.getExitWithBestPlayerTrace = function(map) {
+            var exits = self.getAvailableExits(true);
+            var bestTraceStrength = 0;
+            var bestTraceExit;
+            for (var e=0;e<exits.length;e++) {
+                var destinationName = exits[e].getDestinationName();
+                var loc = map.getLocation(destinationName);
+                var newTrace = loc.getPlayerTrace();
+                if (newTrace > bestTraceStrength) {
+                    bestTraceExit = exits[e];
+                    bestTraceStrength = newTrace;
+                };
+            };
+
+            return bestTraceExit;
         };
 
         self.getRandomExit = function(includeUnlockedDoors, avoidLocations) {
@@ -508,6 +536,10 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.tick = function(time, map, player) {
             //note, we don't tell the player about this...
+            if (_playerTrace >0) {
+                _playerTrace--;
+            };
+
             if (_blood >0) {
                 _blood--;
                 if (_blood == 0) {

@@ -11,6 +11,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _isStatic = false; //if true, mission stays in source location.
         var _conversationState = 0; //track dialogue
         var _initiateConversation = false; //should character initiate conversation
+        var _huntPlayer = false; //should character actively hunt down the player
         var _missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
         var _initialAttributes = initialAttributes; //the attributes to be set against the mission object when the mission starts 
         var _conditionAttributes = conditionAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
@@ -44,6 +45,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (missionAttributes.static != undefined) {
                 if (missionAttributes.static == true || missionAttributes.static == "true") { _isStatic = true;};
             };
+
+            if (missionAttributes.huntPlayer) {_huntPlayer = missionAttributes.huntPlayer;};          
 
             if (missionAttributes.dialogue == null || missionAttributes.dialogue == undefined || missionAttributes.dialogue == "") { 
                 _dialogue = []; //ensure there's an array
@@ -138,6 +141,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_ticking) {currentAttributes.ticking = _ticking;};
             if (_conversationState > 0) {currentAttributes.conversationState = _conversationState;};
             if (_initiateConversation) {currentAttributes.initiateConversation = _initiateConversation;};
+            if (_huntPlayer) {currentAttributes.huntPlayer = _huntPlayer;};           
             if (_lastResponse) {currentAttributes.lastResponse = _lastResponse;};
             if (_isStatic) {currentAttributes.static = _isStatic;};
             if (_dialogue.length > 0) {currentAttributes.dialogue = _dialogue;};
@@ -298,6 +302,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 return true;
             };
             return false;
+        };
+
+        self.getHuntPlayer = function(bool) {
+            return _huntPlayer;
+        };
+
+        self.setHuntPlayer = function(bool) {
+            _huntPlayer = bool;
         };
 
         //dialogue object (if used) is:

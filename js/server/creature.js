@@ -45,6 +45,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
         var _returnHomeIn = -1 //set when first not at home and reset when home.
         var _spokenToPlayer = false;
+        var _huntingPlayer = false;
         var _path = [];
         var _destinations = [];
         var _clearedDestinations = [];
@@ -435,6 +436,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.moves = _moves;
             currentAttributes.returnHomeIn = _returnHomeIn;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
+            currentAttributes.huntingPlayer = _huntingPlayer;
             currentAttributes.destinations = _destinations;
             currentAttributes.clearedDestinations = _clearedDestinations;
             currentAttributes.avoiding = _avoiding;
@@ -486,6 +488,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.moves > 0) {saveAttributes.moves = creatureAttributes.moves;};
             if (creatureAttributes.returnHomeIn > 0) {saveAttributes.returnHomeIn = creatureAttributes.returnHomeIn;};           
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
+            if (creatureAttributes.huntingPlayer == true) {saveAttributes.huntingPlayer = creatureAttributes.huntingPlayer;};            
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
             if (creatureAttributes.clearedDestinations.length >0) {saveAttributes.clearedDestinations = creatureAttributes.clearedDestinations;};
             if (creatureAttributes.avoiding.length >0) {saveAttributes.avoiding = creatureAttributes.avoiding;};
@@ -1855,6 +1858,35 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _spokenToPlayer;
         };
 
+        self.isHuntingPlayer = function() {
+            if (_huntingPlayer) {return true;}; //if set outside mission
+            var huntingPlayer = false;
+            for (var i=0; i < _missions.length; i++) {
+                if ((!(_missions[i].hasParent()))) {
+                    if (_missions[i].getHuntPlayer()) {
+                        huntingPlayer = true;
+                        break;
+                    };
+                };
+            };
+            return huntingPlayer;
+        };
+
+        self.setHuntingPlayer = function(bool) {
+            if (bool) {
+                //if set outside mission
+                _huntingPlayer = true;
+            } else {
+                _huntingPlayer = false;
+            }; 
+
+            for (var i=0; i < _missions.length; i++) {
+                if ((!(_missions[i].hasParent()))) {
+                    _missions[i].setHuntPlayer(bool);
+                };
+            };
+        };
+
         self.find = function(artefactName, playerAggression, map) {
             var willFindArtefacts = false;
             if (self.isDead()) {return _genderPrefix+"'s dead. I don't think "+_genderSuffix+" can help you."}; 
@@ -2406,7 +2438,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                     var exit;
 
-                    if (_destinations.length>0) {
+                    //hunt player?
+                    if (self.isHuntingPlayer()) {                        
+                        exit = _currentLocation.getExitWithBestPlayerTrace(map);
+                    } else if (_destinations.length>0) {
                         if (_destinations[_destinations.length-1] == _currentLocation.getName()) {
                             //console.log(self.getDisplayName()+" reached destination.");
                             self.clearPath();
@@ -2432,7 +2467,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 };
                             };
                         }; 
-                    };              
+                    };          
 
                     //no destination or path...
                     //if they have a destination but no path by this point, they'll wander somewhere else and try to build a path again next time.
@@ -2568,6 +2603,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //only show what's going on if the player is in the same location
             //note we store playerLocation at the beginning in case the player was killed as a result of the tick.
             if (playerLocation == _currentLocation.getName()) {
+                self.setHuntingPlayer(false);
                 resultString += self.initiateConversation(player);
                 return resultString;
             } else if (playerLocation == startLocation) {

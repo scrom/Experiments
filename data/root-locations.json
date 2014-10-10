@@ -1693,6 +1693,8 @@
             "attributes": {
               "missionObject": "maracas",
               "static": true,
+			  "huntPlayer": true,
+			  "initiateConversation": true,
               "dialogue": [
                 "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Red Gate day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, James Dening won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'"
               ]
@@ -5838,6 +5840,7 @@
               "missionObject": "lucy boyes",
 			  "parent": "latte",
               "static": true,
+			  "huntPlayer": true,
 			  "initiateConversation": true,
               "dialogue": [
                 "'Hi $player.'<br>'Dave and Roger are supposed to be flying back from a comic book convention today.'<br>'I don't suppose you've seen them around anywhere have you?'",

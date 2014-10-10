@@ -3104,6 +3104,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (healPoints>0 && (_hitPoints < _maxHitPoints)) {self.recover(healPoints);};   //heal before damage - just in case it's enough to not get killed.
             if (damage>0) {resultString+= self.hurt(damage);};        
 
+            _currentLocation.setPlayerTrace(Math.floor(map.getLocationCount()/5));
             return resultString;
         };
 
