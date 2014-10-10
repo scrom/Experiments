@@ -386,6 +386,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.rest(_verb, 10, _map);
                         break;
                     case 'wait':
+                    case 'z':
                         _player.incrementWaitCount();
                         description = "Time passes... ...slowly";
                         break;
