@@ -5041,7 +5041,7 @@
           },
           {
             "object": "artefact",
-            "name": "manual",
+            "name": "coffee machine book",
             "description": "maintenance manual for the coffee machines",
             "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
             "attributes": {
@@ -5054,10 +5054,10 @@
               "canDrawOn": true
             },
             "synonyms": [
+			  "manual",
               "book",
               "repair book",
               "maintenance book",
-              "coffee machine book",
               "repair manual",
               "maintenance manual",
               "machine manual",
@@ -5073,7 +5073,7 @@
                 "displayName": "repair the coffee machine",
                 "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
                 "attributes": {
-                  "missionObject": "manual",
+                  "missionObject": "coffee machine book",
                   "static": true
                 },
                 "conditionAttributes": {
@@ -7032,7 +7032,77 @@
           "junk skip",
           "rubbish bin",
           "rubbish"
+        ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "kitchen knife",
+        "description": "damaged kitchen knife",
+        "detailedDescription": "It's rusty and old but still extremely sharp.<br>Is that dried blood on the hilt?",
+        "attributes": {
+          "weight": 2,
+          "attackStrength": 22,
+          "type": "weapon",
+          "subType": "sharp",
+          "canCollect": true,
+          "imageName": "knife.jpg"
+        },
+        "synonyms": [
+          "knife",
+          "damaged knife",
+          "damaged kitchen knife",
+          "old knife"
         ]
+      },
+      {
+        "object": "artefact",
+        "name": "battered book",
+        "description": "battered leather-bound book",
+        "detailedDescription": "The texture of the leather cover gives you a slightly uncomfortable feeling. The flyleaf simply says 'To Neil'.<br>Further inspection reveals a heavily faded title; 'O  H nt  g Hu  ns'.<br>odd.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 2,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true,
+          "affinityModifier": -1,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "manual",
+          "book",
+          "battered",
+          "hunting book",
+          "human book",
+          "hunting manual",
+          "on hunting humans",
+          "hunting humans",
+          "hunting humans book"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "hunthumans",
+            "displayName": "learn how to hunt humans",
+            "description": "... 'In s&nbsp; king nd tr&nbsp; k ng your qu&nbsp;&nbsp; y, it s &nbsp;mp rt nt to be aw re  &nbsp;f scent.<br>&nbsp;he &nbsp;atura&nbsp; t ail &nbsp;f ph rom nes, decays over time.<br> Where a sc&nbsp; t is suf&nbsp; cien &nbsp;y fr&nbsp; h, on&nbsp; may <i>h nt</i> &nbsp;r <i>f nd</i> the b st dir ctio&nbsp;&nbsp; n wh ch to fo lo '...<br>Wow, this is really badly degraded. I'm sure there's something really useful hiding in here if you can just figure it out.",
+            "attributes": {
+              "missionObject": "battered book",
+              "static": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "read": true
+            },
+            "reward": {
+              "repairSkill": "hunt",
+              "hunt": 2,
+              "successMessage": "Interesting. You feel like you've learned something important but will need to figure out exactly what it is."
+            }
+          }
+        ]
+      }
+    ]
+  
       }
     ]
   },
