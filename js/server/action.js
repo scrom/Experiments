@@ -343,6 +343,7 @@ exports.Action = function Action(player, map, fileManager) {
                         if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
                         
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
+                        //@todo would be good to support "look under", "look behind" and "look in"
                         if (_object1) {
                             description = _player.examine(_verb+" "+_splitWord,_object1);
                         } else {
@@ -451,6 +452,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'open': 
                         description = _player.open(_verb, _object0);
                         break;
+                    case 'shut':
                     case 'close':
                         description = _player.close(_verb, _object0);
                         break;
@@ -792,6 +794,8 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.clean(_verb, _object0);
                         break;
                     case 'repeat':
+                    case 'again':
+                    case 'g':
                     case 'play': //generally a custom verb already
                     case 'hum':
                     case 'whistle':
@@ -799,6 +803,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'empty':
                     case 'burn':
                     case 'climb':
+                    case 'crawl':
                     case 'make':
                     case 'dismantle': //loop through contents of an item and remove components
                     case 'delete':
@@ -812,6 +817,12 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'smell':
                     case 'start':
                     case 'stop':
+                    case 'listen':
+                    case 'knock':
+                    case 'tie':
+                    case 'untie':
+                    case 'undo':
+                    case 'touch':
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;
