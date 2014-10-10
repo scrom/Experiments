@@ -355,7 +355,8 @@ exports.Action = function Action(player, map, fileManager) {
                         if (_inConversationWith) {
                             var objectToFind = _object0+_object1;
                             return "You ask "+_inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+_inConversationWith+" to find "+objectToFind);
-                        } else {                                      
+                        } else { 
+                            if (!(_object0)) {_object0 = _object1};                                     
                             description = _player.hunt(_verb, _object0, map);
                             //"find" is a cheat - disable it for now
                             //if player enters "search for x", we'll have an object 1 (but no object 0).
