@@ -1505,6 +1505,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //add to new location
             _currentLocation.addObject(self);
 
+            if (_bleeding) {
+                _currentLocation.addBlood();
+            };
+
             return initCap(self.getDisplayName())+" follows you.<br>";
         };	
 
@@ -2516,6 +2520,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //bleed?
                 if (_bleeding) {
+                    //bleed
+                    _currentLocation.addBlood();
+
                     //attempt to heal...
 
                     //is there a medicalArtefact available?

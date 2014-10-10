@@ -17,6 +17,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _dark = false;
         var _outdoor = false;
         var _start = false;
+        var _blood = 0;
         var _description = description;
         var _inventory =  new inventoryObjectModule.Inventory(99999, 0.00, _name);//unlimited //[]; //and creatures
         var _exits = [];
@@ -90,6 +91,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             currentAttributes.animalCount = self.countCreatures("animal");
             currentAttributes.itemCount = _inventory.size(true);
             currentAttributes.dark = _dark;
+            currentAttributes.blood = _blood;
             currentAttributes.outdoor = _outdoor;
             currentAttributes.visits = _visits;
             currentAttributes.start = _start;
@@ -106,6 +108,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (locationAttributes.dark) {saveAttributes.dark = locationAttributes.dark;};
             if (locationAttributes.outdoor) {saveAttributes.outdoor = locationAttributes.outdoor;};
             if (locationAttributes.visits >0) {saveAttributes.visits = locationAttributes.visits;};
+            if (locationAttributes.blood >0) {saveAttributes.blood = locationAttributes.blood;};
             if (locationAttributes.start) {saveAttributes.start = locationAttributes.start;};
             if (locationAttributes.imageName != undefined) {saveAttributes.imageName = locationAttributes.imageName;};
 
@@ -139,6 +142,10 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.setDescription = function(description) {
             _description=description;
+        };
+
+        self.addBlood = function() {
+            _blood = 10;
         };
 
         self.addExit = function(anExitDirection, aSource, aDestination,isHidden) {
@@ -337,6 +344,14 @@ exports.Location = function Location(name, displayName, description, attributes)
                 _inventory.add(sceneryObject);
                 return sceneryObject;
             };
+
+            if (anObjectName == "blood") {
+                if (_blood >0) {
+                    var sceneryBlood = new artefactObjectModule.Artefact(anObjectName, anObjectName, "It's hard to tell where or who it came from.<br>", {"type": "scenery"}, null, null);
+                    _inventory.add(sceneryBlood);
+                    return sceneryBlood;
+                };
+            };
         };
 
         self.getObjectByType = function(anObjectType) {
@@ -365,6 +380,16 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.describe = function() {
             var resultString = _description;
+
+            if (_blood >=9) {
+                resultString+= "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently."; 
+            } else if (_blood >5) {
+                resultString+= "<br>You notice splatters of blood in the area. It looks like someone or something's been bleeding here."; 
+            } else if (_blood >1) {
+                resultString+= "<br>There are fading signs of blood or violence here."; 
+            } else if (_blood >0) {
+                resultString+= "<br>You notice a slight metallic tang of blood in the air."; 
+            };
 
             if (_inventory.size() > 0) {
                 //clean up grammar here (there is/there are)
@@ -483,6 +508,13 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.tick = function(time, map, player) {
             //note, we don't tell the player about this...
+            if (_blood >0) {
+                _blood--;
+                if (_blood == 0) {
+                    _inventory.remove("blood");
+                };
+            };
+
             for (var t=0; t < time; t++) {
                 _inventory.tick();
             };
