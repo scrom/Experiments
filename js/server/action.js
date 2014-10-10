@@ -345,9 +345,9 @@ exports.Action = function Action(player, map, fileManager) {
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         //@todo would be good to support "look under", "look behind" and "look in"
                         if (_object1) {
-                            description = _player.examine(_verb+" "+_splitWord,_object1);
+                            description = _player.examine(_verb+" "+_splitWord,_object1, _map);
                         } else {
-                            description = _player.examine(_verb, _object0);
+                            description = _player.examine(_verb, _object0, _map);
                         };
                         break;  
                     case 'where':    
@@ -375,7 +375,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examien':
                     case 'browse':
                         _player.setLastVerbUsed('examine');
-                        description = _player.examine(_verb, _object0);
+                        description = _player.examine(_verb, _object0, _map);
                         break;  
                     case 'rest':
                     case 'sit':

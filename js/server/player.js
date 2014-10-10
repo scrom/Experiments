@@ -1916,7 +1916,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "You "+verb+" "+artefact.getDisplayName()+" and discover "+artefact.showHiddenObjects()+".";
         };
 
-        self.examine = function(verb, artefactName) {
+        self.examine = function(verb, artefactName, map) {
             var resultString = "";
             var newMissions = [];
 
@@ -1959,8 +1959,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefactName.length == 1) {
                         artefactName = _directions[directionIndex+1];
                     };
-                    resultString = _currentLocation.getExitDestination(artefactName);
-                    if (resultString == _currentLocation.getName()) {
+                    var destinationName = _currentLocation.getExitDestination(artefactName);
+                    var destination = map.getLocation(destinationName);
+                    if (destination) {
+                        resultString = destination.getDisplayName();
+                    };
+                    if (resultString == _currentLocation.getDisplayName() || resultString.length == 0) {
                         return "You peer "+artefactName+" but there's nothing else to see there.";
                     } else {
                         return initCap(artefactName)+" leads to '"+resultString+"'.";
