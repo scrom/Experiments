@@ -631,7 +631,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_affinity >5) {return _genderPrefix+" really likes you."};
             if (_affinity >0) {return _genderPrefix+" seems to like you."};
             if (_affinity <-5) {return _genderPrefix+" really doesn't like you."};        
-            if (_affinity <-2) {return _genderPrefix+" doesn't like you."};
+            if (_affinity <-2) {return _genderPrefix+" doesn't like you much."};
             if (_affinity <0) {return _genderPrefix+" seems wary of you."};
             return ""; //neutral
         };

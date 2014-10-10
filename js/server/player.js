@@ -3265,7 +3265,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             else if (self.isHungry()) {status+="You're hungry.<br>";};
 
             if (_contagion.length>0) { status += "You're infected with something nasty.<br>"};
-            if (_antibodies.length>0) { status += "You've developed an immunity to something nasty that might be going around.<br>"};
+            if (_antibodies.length>0) {
+                 status += "You're immune to ";
+                 for (var a=0;a<_antibodies.length;a++) {
+                    if (a > 0 && a < _antibodies.length - 1) { status += ', '; };
+                    if (a > 0 && a == _antibodies.length - 1) { status += ' and '; };
+                    status += "'"+_antibodies[a]+"'";
+                };
+                 status += " infections.<br>";
+            };
             
             if (_bleeding) { status += "You're bleeding and need healing.<br>"};
             status += "Your health is at "+healthPercent()+"%.";//remove this in the final game

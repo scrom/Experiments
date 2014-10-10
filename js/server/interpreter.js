@@ -163,7 +163,13 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                         callback(response);
                     };
 
-                    aGame.save(callbackFunction);
+                    try {
+                        aGame.save(callbackFunction);
+                    } catch (err) {
+                         callback(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to save your game right now.<br>It looks like we have a storage problem.<br>If this problem persists, we\'ll investigate and resolve as soon as we can."}'));  
+	                     console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
+                    };
+                    
                     break;
                 case 'load':
                     var originalGameID = gameId;
@@ -185,7 +191,12 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                         callback(response);   
                     };
 
-                    _gameController.loadGame(originalGameID, actionString, username, callbackLoadFunction); 
+                    try {
+                        _gameController.loadGame(originalGameID, actionString, username, callbackLoadFunction); 
+                    } catch (err) {
+                         callback(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to load saved game \''+actionString+'\'.<br>The stored game data is either corrupted or incompatible with this release of MVTA."}'));  
+	                     console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
+                    };
                                 
                     break;
                 case 'events':
