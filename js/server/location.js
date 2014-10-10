@@ -171,6 +171,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.getCreatureTrace = function(creatureName) {
+            if (creatureName == "player") {return self.getPlayerTrace;};
             return _creatureTraces[creatureName];
         };
 
@@ -287,14 +288,14 @@ exports.Location = function Location(name, displayName, description, attributes)
             return exitArray;
         };
 
-        self.getExitWithBestPlayerTrace = function(map) {
+        self.getExitWithBestTrace = function(creatureName, map) {
             var exits = self.getAvailableExits(true);
             var bestTraceStrength = 0;
             var bestTraceExit;
             for (var e=0;e<exits.length;e++) {
                 var destinationName = exits[e].getDestinationName();
                 var loc = map.getLocation(destinationName);
-                var newTrace = loc.getPlayerTrace();
+                var newTrace = loc.getCreatureTrace(creatureName);
                 if (newTrace > bestTraceStrength) {
                     bestTraceExit = exits[e];
                     bestTraceStrength = newTrace;

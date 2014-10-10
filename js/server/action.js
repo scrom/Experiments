@@ -348,14 +348,14 @@ exports.Action = function Action(player, map, fileManager) {
                             description = _player.examine(_verb, _object0);
                         };
                         break;  
-                    case 'where':                                   
+                    case 'where':    
+                    case 'hunt':                               
                     case 'find': 
                         if (_inConversationWith) {
                             var objectToFind = _object0+_object1;
                             return "You ask "+_inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+_inConversationWith+" to find "+objectToFind);
                         } else {                                      
-                            _ticks = 0;
-                            description = "Nice try $player. It was worth a shot...<br>You'll either have to hunt things down yourself or <i>ask</i> someone to <i>find</i> out for you.";                        
+                            description = _player.hunt(_verb, _object0, map);
                             //"find" is a cheat - disable it for now
                             //if player enters "search for x", we'll have an object 1 (but no object 0).
                         };

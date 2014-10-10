@@ -19,6 +19,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _unarmedAttackStrength = 5; //hardcoded and not used in most cases.
         var _aggression = 0;
         var _stealth = 1;
+        var _hunt = 0;
         var _killedCount = 0;
         var _bleeding = false;
         var _bleedingHealthThreshold = 50; //health needs to be at 50% or lower to be bleeding.
@@ -219,6 +220,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             if (playerAttributes.aggression != undefined) {_aggression = playerAttributes.aggression;};
             if (playerAttributes.stealth != undefined) {_stealth = playerAttributes.stealth;};
+            if (playerAttributes.hunt != undefined) {_hunt = playerAttributes.hunt;};
             if (playerAttributes.money != undefined) {_inventory.setCashBalance(playerAttributes.money);};
             if (playerAttributes.carryWeight != undefined) {_inventory.setCarryWeight(playerAttributes.carryWeight);};
             if (playerAttributes.health != undefined) {
@@ -357,6 +359,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_maxHitPoints != 100) {resultString += ',"maxHealth":'+_maxHitPoints;};
             if (_aggression != 0) {resultString += ',"aggression":'+_aggression;};
             if (_stealth != 1) {resultString += ',"stealth":'+_stealth;};
+            if (_hunt != 0) {resultString += ',"hunt":'+_hunt};
                
             resultString += ',"money":'+_inventory.getCashBalance();
             resultString += ',"carryWeight":'+_inventory.getCarryWeight();
@@ -513,6 +516,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.currentLocation = _currentLocation;
             currentAttributes.aggression = _aggression;
             currentAttributes.stealth = _stealth;
+            currentAttributes.hunt = _hunt;
             currentAttributes.money = _inventory.getCashBalance();
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.health = _hitPoints;
@@ -755,9 +759,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
         };
 
-        self.setStealth = function(newStealthValue) {
+        self.setStealth = function(newValue) {
             //used for stealing
-            _stealth = newStealthValue;
+            _stealth = newValue;
             //console.log("Player stealth now set to:"+_stealth);
             return _stealth;
         };
@@ -766,6 +770,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //used for stealing
             if (_stealth <1) {return 1;}; // safetynet to avoid divide by zero or odd results from caller
             return _stealth;
+        };
+
+
+        self.setHunt = function(newValue) {
+            //used for stealing
+            _hunt = newValue;
+            //console.log("Player hunt now set to:"+_hunt);
+            return _hunt;
+        };
+
+        self.getHunt = function() {
+            //used for stealing
+            if (_hunt <0) {return 0;}; // safetynet to avoid divide by zero or odd results from caller
+            return _hunt;
         };
 
         self.addStolenCash = function(quantity) {
@@ -1980,6 +1998,33 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
+        self.hunt = function(verb, creatureName, map) {
+            if (!(self.canSee())) {return "It's too dark to see anything here.";};
+            if (_hunt <1) {
+                return "Nice try $player. It was worth a shot...<br>You don't have the skills needed to "+verb+" anything that easily.<br>You could <i>ask</i> someone else to <i>find</i> out for you though.";
+            };
+            if (stringIsEmpty(creatureName)){ return verb+" who?"};
+            var creature = map.getObject(creatureName);
+            var found = false;
+            if (creature) {
+                if (creature.getType() == "creature") {
+                    found = true;
+                    creatureName = creature.getName();
+                }; 
+            };
+
+            if (!found) {
+                return "Sorry $player, I can't help you there. You'll need to <i>ask</i> someone to <i>find</i> out for you.";
+            };
+
+            var exit;
+            if (_hunt >= 1) {
+                exit = _currentLocation.getExitWithBestTrace(creatureName,map);
+            };
+            if (!(exit)) {return "There's no sign that "+creature.getDisplayName()+" has been near here recently.";};
+            return "After thorough investigation, you determine your best bet is to try <i>"+exit.getLongName()+"</i> from here.";
+        };
+
         self.repair = function(verb, artefactName) {
             var resultString = "";
 
@@ -2881,7 +2926,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
                 if (missionReward.score) { _score += missionReward.score;};
                 if (missionReward.money) { self.increaseCash(missionReward.money);};
-                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
+                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};
+                if (missionReward.hunt) { self.setHunt(_hunt+missionReward.hunt);};
                 if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                 if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                 mission.processAffinityModifiers(map, missionReward);
@@ -2924,7 +2970,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
                 if (missionReward.score) { _score += missionReward.score;};
                 if (missionReward.money) { self.increaseCash(missionReward.money);};
-                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};                        
+                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
+                if (missionReward.hunt) { self.setHunt(_hunt+missionReward.hunt);};                      
                 if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
                 if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
                 mission.processAffinityModifiers(map, missionReward);

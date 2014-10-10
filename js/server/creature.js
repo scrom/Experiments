@@ -2440,7 +2440,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                     //hunt player?
                     if (self.isHuntingPlayer()) {                        
-                        exit = _currentLocation.getExitWithBestPlayerTrace(map);
+                        exit = _currentLocation.getExitWithBestTrace('player',map);
                     } else if (_destinations.length>0) {
                         if (_destinations[_destinations.length-1] == _currentLocation.getName()) {
                             //console.log(self.getDisplayName()+" reached destination.");
