@@ -338,6 +338,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'show':
                     case 'look':
+                    case 'l':
                         //trap a few junk words - will return "look" with no object. 
                         if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
                         
