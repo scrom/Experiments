@@ -61,8 +61,8 @@ exports.canSaveGameToFile = function (test) {
         console.log("Expected: "+expectedResult);
         console.log("Actual  : "+actualResult);
         test.equal(actualResult, expectedResult);
-        var filename = result.substr(62, 13)+".json";
-        console.log(result);
+        var filename = result.substr(62, result.indexOf("</b>",1)-62)+".json";
+        console.log("Filename:"+filename);
         var fileExists = fm.fileExists(filename);
         console.log("File "+filename+" created? "+fileExists);
         test.equal(fileExists, true);
@@ -94,7 +94,7 @@ exports.canSaveGameToRedis = function (test) {
         console.log("Expected: "+expectedResult);
         console.log("Actual  : "+actualResult);
         test.equal(actualResult, expectedResult);
-        var filename = result.substr(62, 13);
+        var filename = result.substr(62,result.indexOf("</b>",1)-62);
         console.log(filename);
 
         var fileExists = false;
