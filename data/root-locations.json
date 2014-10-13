@@ -48,17 +48,19 @@
     "inventory": [
 	   {
         "object": "artefact",
-        "name": "coffee",
+        "name": "smell of coffee",
         "description": "coffee",
         "detailedDescription": "You'll need to head to the kitchen.",
         "attributes": {
           "type": "scenery",
+		  "subType": "intangible",
 		  "smell": "Yup, smells like coffee here.<br>Good coffee at that.",
           "customAction": ["get", "take", "grab", "collect", "remove"],
           "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!"
         },
         "synonyms": [
-          "latte"
+          "latte",
+		  "coffee"
         ]
       },
 	   {
@@ -68,6 +70,7 @@
         "detailedDescription": "As I said - smart people and coffee.",
         "attributes": {
           "type": "scenery",
+		  "subType": "intangible",
 		  "plural": true,
 		  "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
         },
@@ -4918,6 +4921,7 @@
                     "detailedDescription": "They're too scuffed to see any clear tread marks but they're wide enough to be consistent with a medium-sized goods vehicle.",
                     "attributes": {
                       "type": "scenery",
+					  "subType": "intangible",
                       "plural": true
                     },
                     "synonyms": [
@@ -7089,7 +7093,7 @@
         "object": "artefact",
         "name": "battered book",
         "description": "battered leather-bound book",
-        "detailedDescription": "The texture of the cover gives you a slightly uncomfortable feeling. The flyleaf simply says 'To Neil'.<br>Further inspection reveals a heavily faded title; 'O  H nt  g Hu  ns'.<br>Odd.",
+        "detailedDescription": "The texture of the cover gives you a slightly uncomfortable feeling.<br>The flyleaf simply says 'To Neil'. Further inspection reveals a heavily faded title; 'O&nbsp;  H nt&nbsp; g Hu&nbsp; ns'.<br>Odd.",
         "attributes": {
           "defaultAction": "read",
           "weight": 2,

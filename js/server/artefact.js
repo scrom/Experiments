@@ -263,6 +263,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (type == "scenery") {
                 _hidden = true; //scenery is not shown in inventory etc.
+                var validScenerySubTypes = ['','intangible'];
+                if (validScenerySubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
             };
         };
 
@@ -578,6 +580,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var subType = self.getSubType();
 
             switch(subType) {
+                case "intangible":
+                    return false;
+                    break;
                 case "projectile":
                     if (verb == "smash"||verb == "stab"|| verb == "bash"|| verb == "hit") {return false;};
                     break;

@@ -947,6 +947,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _type;
         };
 
+        self.supportsAction = function(verb) {
+            return false;
+        };
+
         self.getWeight = function() {
              return  _weight+_inventory.getWeight();
         };
