@@ -60,6 +60,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _openedDoor = false;
 	    var _objectName = "creature";
         var _imageName;
+        var _smell;
         var _contagion = [];
         var _antibodies = [];
         var _repairSkills = [];
@@ -158,6 +159,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
+            if (creatureAttributes.smell != undefined) {_smell = creatureAttributes.smell;};                
             if (creatureAttributes.contagion != undefined) {
                 for (var i=0;i<creatureAttributes.contagion.length;i++) {
                     _contagion.push(new contagionObjectModule.Contagion(creatureAttributes.contagion[i].name, creatureAttributes.contagion[i].displayName, creatureAttributes.contagion[i].attributes));
@@ -366,6 +368,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _imageName;
         };
 
+        self.getSmell = function() {
+            return _smell;
+        };
+
+        self.setSmell = function(smell) {
+            _smell = smell;
+        };
+
         self.getCurrentLocation = function() {
             return _currentLocation;
         };
@@ -447,7 +457,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.waitDelay = _waitDelay;
             currentAttributes.currentDelay = _currentDelay;
             currentAttributes.returnDirection = _returnDirection;  
-            currentAttributes.imageName = _imageName;     
+            currentAttributes.imageName = _imageName;  
+            currentAttributes.smell = _smell;  
+               
             currentAttributes.contagion = _contagion;                     
             currentAttributes.antibodies = _antibodies;  
             currentAttributes.repairSkills = _repairSkills;  
@@ -501,6 +513,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
+            if (creatureAttributes.smell != undefined) {saveAttributes.smell = creatureAttributes.smell;};
             if (creatureAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
                 for (var c=0;c<creatureAttributes.contagion.length;c++) {

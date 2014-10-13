@@ -64,6 +64,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _hidden = false; 
         var _hasLinkedDoor = false;
         var _imageName;
+        var _smell;
         var _contagion = [];
         var _antibodies = [];
         var _canDrawOn = false;
@@ -234,6 +235,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.isHidden != undefined) {_hidden = artefactAttributes.isHidden;};
             if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
+            if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
             if (artefactAttributes.contagion != undefined) {
                 for (var i=0;i<artefactAttributes.contagion.length;i++) {
                     _contagion.push(new contagionObjectModule.Contagion(artefactAttributes.contagion[i].name, artefactAttributes.contagion[i].displayName, artefactAttributes.contagion[i].attributes));
@@ -358,6 +360,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
+        self.getSmell = function() {
+            return _smell;
+        };
+
+        self.setSmell = function(smell) {
+            _smell = smell;
+        };
+
         self.getDefaultAction = function() {
             return _defaultAction;
         };
@@ -414,6 +424,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.isHidden = _hidden;
             currentAttributes.hasLinkedDoor = _hasLinkedDoor;
             currentAttributes.imageName = _imageName;
+            currentAttributes.smell = _smell;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;
             currentAttributes.canDrawOn = _canDrawOn;
@@ -477,7 +488,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.customAction != undefined) { saveAttributes.customAction = artefactAttributes.customAction;};
             if (artefactAttributes.defaultResult != undefined) { saveAttributes.defaultResult = artefactAttributes.defaultResult;};
             if (artefactAttributes.hasLinkedDoor == true) { saveAttributes.hasLinkedDoor = artefactAttributes.hasLinkedDoor;};
-            if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};    
+            if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};  
+            if (artefactAttributes.smell != undefined) {saveAttributes.smell = artefactAttributes.smell;};                
             if (artefactAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
                 for (var c=0;c<artefactAttributes.contagion.length;c++) {
@@ -485,7 +497,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };                
             };                        
             if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;}; 
-            if (artefactAttributes.canDrawOn) {saveAttributes.canDrawOn = artefactAttributes.canDrawOn;};          
+            if (artefactAttributes.canDrawOn) {saveAttributes.canDrawOn = artefactAttributes.canDrawOn;};                  
             if (artefactAttributes.writings.length>0) {saveAttributes.writings = artefactAttributes.writings;};   
             if (artefactAttributes.drawings.length>0) {saveAttributes.drawings = artefactAttributes.drawings;};             
             return saveAttributes;

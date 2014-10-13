@@ -511,11 +511,11 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.take(_verb, _object0, _object1); 
                         break;
                     case 'mug':
-                    case 'steal':
                         if ((!(_object1)) || (_object1 == "")) {
                             _object1 = _object0;
                             _object0 = "";
                         };
+                    case 'steal':
                         description = _player.steal(_verb, _object0, _object1);            
                         break;
                     case 'borrow':
@@ -778,6 +778,10 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'clean':
                         description = _player.clean(_verb, _object0);
                         break;
+                    case 'sniff': //see also smell - by default, not much but would want to add smell attributes to creatures and artefacts
+                    case 'smell':
+                        description = _player.smell(_verb, _object0);
+                        break;
                     case 'repeat':
                     case 'again':
                     case 'g':
@@ -798,8 +802,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'dismount':
                     case 'unmount': //don't think this is a real verb but still...
                     case 'feed': //give food or drink to creature (if specific food not specified, use lowest value)
-                    case 'sniff': //see also smell - by default, not much but would want to add smell attributes to creatures and artefacts
-                    case 'smell':
                     case 'start':
                     case 'stop':
                     case 'listen':

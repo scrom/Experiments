@@ -46,6 +46,37 @@
       }
     ],
     "inventory": [
+	   {
+        "object": "artefact",
+        "name": "coffee",
+        "description": "coffee",
+        "detailedDescription": "You'll need to head to the kitchen.",
+        "attributes": {
+          "type": "scenery",
+		  "smell": "Yup, smells like coffee here.<br>Good coffee at that.",
+          "customAction": ["get", "take", "grab", "collect", "remove"],
+          "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!"
+        },
+        "synonyms": [
+          "latte"
+        ]
+      },
+	   {
+        "object": "artefact",
+        "name": "air",
+        "description": "air",
+        "detailedDescription": "As I said - smart people and coffee.",
+        "attributes": {
+          "type": "scenery",
+		  "plural": true,
+		  "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
+        },
+        "synonyms": [
+          "smart",
+		  "smart people",
+		  "people"
+        ]
+      },
       {
         "object": "artefact",
         "name": "button",

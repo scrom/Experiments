@@ -964,7 +964,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             if (!(artefact.isCollectable())) {
                 if (artefact.getType() == "scenery") {
-                    return artefact.getDescriptivePrefix()+" just part of the scenery, not much use to you I'm afraid.";
+                    if (artefact.getName() == "air") {
+                        return "You wave your arms around but don't connect with anything tangible.";
+                    } else {
+                        return initCap(artefact.getDescriptivePrefix())+" just part of the scenery, not much use to you I'm afraid.";
+                    };
                 } else {
                     return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";
                 };
@@ -1916,6 +1920,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "You "+verb+" "+artefact.getDisplayName()+" and discover "+artefact.showHiddenObjects()+".";
         };
 
+        self.smell = function (verb, artefactName) {
+            if (stringIsEmpty(artefactName)){artefactName = "air";};           
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+            var smell = artefact.getSmell();
+            if (stringIsEmpty(smell)) {
+                var randomReplies = ["You don't notice anything out of the ordinary.", "You inhale deeply and ponder your senses...<br>Nope, nothing there.", "You sniff discreetly at "+artefact.getDisplayName()+" but don't notice anything of interest.", "You tentatively sniff around but can't detect anything out of the ordinary."];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return randomReplies[randomIndex];
+            };
+            return smell;
+        };
+
+
         self.examine = function(verb, artefactName, map) {
             var resultString = "";
             var newMissions = [];
@@ -2401,6 +2419,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
             if (!(receiver)) {return notFoundMessage(receiverName);};
+
+            if (receiver.getName() == "air") {return "You lash frantically at the air around you before realising how foolish you look.<br>It's ok, I don't think anyone was watching.";}; 
 
             //just check it's not *already* destroyed...
             if (receiver.isDestroyed()) {
