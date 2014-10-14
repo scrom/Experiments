@@ -2598,12 +2598,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (player.getCurrentLocation().getName() == _currentLocation.getName()) {
                             var movementVerb = "wanders";
                             if (_bleeding) {movementVerb = "stumbles";};
-                            resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" in.";  
+                            resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" in.";  
                         } else {
                             var movementVerb = "heads";
                             if (_bleeding) {movementVerb = "limps";};
                             if (exit.getLongName() == "in") {movementVerb = "goes";};
-                            resultString += "<br>"+initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+"."; 
+                            resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" "+exit.getLongName()+"."; 
                             if (showMoveToPlayer) {
                                 partialResultString += resultString;
                             };
