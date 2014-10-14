@@ -5542,7 +5542,9 @@
                   "state": 1,
                   "keywords": [
                     "yes",
-                    "ok"
+                    "ok",
+					"yup",
+					"y"
                   ],
                   "response": "'Here you go!'",
                   "nextState": 3
@@ -9124,6 +9126,34 @@
       }
     ],
     "inventory": [
+	                   {
+                    "object": "creature",
+                    "name": "cat",
+                    "displayname": "stray cat",
+                    "description": "a small tabby cat",
+                    "detailedDescription": "It looks like a stray. I think it's hungry.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "animal",
+                      "health": 25,
+                      "attackStrength": 12,
+                      "affinity": -1,
+                      "canTravel": true,
+                      "traveller": true
+                    },
+                    "avoiding": [
+                      "atrium",
+                      "first-floor-fire-escape"
+                    ],
+                    "synonyms": [
+                      "it",
+                      "stray",
+                      "stray cat",
+                      "kitty",
+                      "kitteh",
+                      "animal"
+                    ]
+                  },
       {
         "object": "artefact",
         "name": "bench",

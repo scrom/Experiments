@@ -622,6 +622,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return _holdsLiquid;
         };
 
+        self.getNutrition = function() {
+            return _nutrition;
+        };
+
         self.getRequiredContainer = function() {
             if (_requiresContainer) {
                 return _requiredContainer

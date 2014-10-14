@@ -1162,7 +1162,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             resultString+= firstArtefact.rub(secondArtefact);
 
-            resultString += "<br>Your arms get tired and you feel slightly awkward.";   
+            if (firstArtefact.getType() != "creature") {
+                resultString += "<br>Your arms get tired and you feel slightly awkward.";
+            };   
 
             return resultString;
         };
@@ -1619,8 +1621,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
             if (receiver.isDead()) { return  initCap(receiver.getDisplayName())+"'s dead. Gifts won't help now.";};
-            if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+artefact.getDescriptivePrefix()+" too heavy for "+receiver.getSuffix()+" at the moment.";};
-            if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to take gifts from you at the moment.";};
+            if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+artefact.getDescriptivePrefix()+" too heavy for "+receiver.getSuffix()+" at the moment.";};
+            if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to accept gifts from you at the moment.";};
 
             //we know they *can* carry it...
 

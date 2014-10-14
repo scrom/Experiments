@@ -599,6 +599,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'wave':
                         description = _player.wave(_verb, _object0, _object1);
                         break;
+                    case 'stroke':
                     case 'rub':
                         description = _player.rub(_verb, _object0, _object1);
                         break;

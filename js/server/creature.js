@@ -189,7 +189,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         processAttributes(attributes);
         
         var validateType = function() {
-            var validobjectTypes = ['creature','friendly', 'animal'];
+            var validobjectTypes = ["creature", "friendly", "animal"];
             if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid creature type."};
             //console.log(_name+' type validated: '+_type);
         };
@@ -586,6 +586,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _genderPossessiveSuffix;
         };
 
+        self.getNutrition = function() {
+            if (self.isDead()) {
+                return _nutrition;
+            };
+            return 0;
+        };
+
         self.addMission = function(aMission) {
             _missions.push(aMission);
         };
@@ -828,7 +835,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.helpPlayer = function(player) {
             var resultString = "";
-            if (_affinity >= 3) {
+            if (_affinity >= 3 && self.getSubType() != "animal") {
                 if (player.isBleeding()) {
                     //get medikit and heal player
                     //is there a medicalArtefact available?
@@ -940,7 +947,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.getType = function() {
-            return 'creature';
+            return "creature";
         };
 
         self.getSubType = function() {
@@ -1008,6 +1015,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.canAfford = function (price) {
+            if (self.getSubType() == "animal") {return false;};
             return _inventory.canAfford(price);
         };
 
@@ -1036,10 +1044,34 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.rub = function(anObject) {
             if (self.isDead()) {return _genderPrefix+"'s dead. I'm not sure that's an appropriate thing to do to corpses."};
-            self.decreaseAffinity(1);
-            if (_affinity >=-1) {
-                return _genderPrefix+" really doesn't appreciate it. I recommend you stop now.";
-            } else { return "Seriously. Stop that!";};
+            if (self.getSubType() != "animal" || _affinity <0) {
+                if (_affinity >=-1) {
+                    self.decreaseAffinity(1);
+                    return _genderPrefix+" really doesn't appreciate it. I recommend you stop now.";
+                } else { 
+                    self.decreaseAffinity(1);
+                    return "Seriously. Stop that!";
+                };
+            };
+            //only get here if a friendly or neutral animal
+            if (_affinity < 5) {
+                self.increaseAffinity(1);
+                return _genderPrefix+" makes happy purring and snuffling noises at you.<br>"+_genderPrefix+" seems to like that.";
+            };
+            if (_affinity == 5) {
+                self.increaseAffinity(1);
+                return _genderDescriptivePrefix+" getting bored now. It's probably time to stop before you get bitten or scratched.";
+            };
+
+            //if affinity > 5 - don't push it too far.
+            var randomIndex = Math.floor(Math.random() * _affinity);
+            if (randomIndex > Math.floor(_affinity/2)) {
+                return _genderDescriptivePrefix+" getting bored now. It's probably time to stop before you get bitten or scratched.";
+            } else {
+                self.decreaseAffinity(_affinity-1);         
+                return _genderDescriptivePrefix+" growls and lashes out at you. That's the fickle nature of animals, right?";
+            };
+
         };
 
         self.bash = function() {
@@ -1056,6 +1088,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
 
         self.repair = function(artefactName, player) {
+            if (self.getSubType() == "animal") {return +_genderDescriptivePrefix+" an animal, I don't think "+_genderSuffix+" can help you here.";};
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
             if (initialReply) {return initialReply;};
@@ -1074,6 +1107,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.receive = function(anObject) {
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
+            if (self.getSubType() == "animal") {
+                if (anObject.getType() == "food" || anObject.getType() == "creature") {
+                    var nutrition = anObject.getNutrition();
+                    if (nutrition > 0) {
+                        self.increaseAffinity(anObject.getAffinityModifier());
+                        self.feed(anObject.getNutrition());
+                        if (anObject.getWeight() < 5) {
+                            return initCap(self.getDisplayName())+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at it.";
+                        } else {
+                            return initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
+                        };
+                    };
+                    
+                    return initCap(self.getDisplayName())+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away..";
+                };
+            };
             if (!(self.canCarry(anObject))) {return '';};              
             
             self.increaseAffinity(anObject.getAffinityModifier());
@@ -1135,7 +1184,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if ((_affinity <0) && (playerAggression>=2)) {return false;};
-
+            if (self.getSubType() == "animal" && artefact.getType() != "food" && artefact.getType() != "creature") {return false;};
+            if (self.getSubType() == "animal" && artefact.getType() == "creature" && (!artefact.isDead())) {return false;};
             return true;
         };
 
@@ -1253,6 +1303,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.willTrade = function (playerAggression, anObject) {
             if (self.isDead()) { return false; };
+            if (self.getSubType() == "animal") {return false;};
             if (self.isHostile(playerAggression)) { return false; };
             if (anObject.getPrice() <= 0) { return false; };
             return true;
@@ -1922,7 +1973,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
             if (_affinity <-1) {return _genderPrefix+" doesn't want to talk to you."};
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
-            if (_type == "animal") {return "You can't seem to make each other understood.<br>Talking to animals isn't in your repertoire.";};
+            if (self.getSubType() == "animal") {return "You can't seem to make each other understood.<br>Talking to animals isn't in your repertoire.";};
 
 
             
@@ -2316,6 +2367,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.collectBestAvailableWeapon = function() {
            // console.log("attempting to collect weapon");
             //collect the strongest non-breakable weapon.
+            if (self.getSubType() == "animal") {return "";};
             var resultString = "";
             var selectedWeaponStrength = self.getAttackStrength(); //creatures have a base attack strength but if carrying a weapon, use that as a baseline.
             var currentWeapon = self.getWeapon();
@@ -2506,7 +2558,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             var doors = _currentLocation.getAllObjectsOfType("door");
                             var openedDoor;
                             for (var d=0;d<doors.length;d++) {
-                                if (!(doors[d].isLocked())) {
+                                if ((!(doors[d].isLocked())) ||self.getSubType() != "animal" ) {
                                     var linkedExits = doors[d].getLinkedExits();
                                     for (var l=0;l<linkedExits.length;l++) {
                                         if (linkedExits[l].getSourceName()==_currentLocation.getName()) {
