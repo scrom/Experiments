@@ -2869,6 +2869,27 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "floor",
+        "description": "floor",
+        "detailedDescription": "Shiny and clean.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "cubicle door",
         "description": "cubicle door",
         "detailedDescription": "When you're finished...",
@@ -3515,6 +3536,27 @@
       }
     ],
     "inventory": [
+	      {
+        "object": "artefact",
+        "name": "floor",
+        "description": "floor",
+        "detailedDescription": "Shiny and clean.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground"
+        ]
+      },
       {
         "object": "artefact",
         "name": "cubicle door",
@@ -7570,6 +7612,27 @@
           "cubicle",
           "toilet door",
           "door"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "floor",
+        "description": "floor",
+        "detailedDescription": "Shiny and clean.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground"
         ]
       },
       {
