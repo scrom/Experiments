@@ -2145,7 +2145,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
             var response = "";
-            var introduction = "";
             var randomReplies;
             var randomIndex;
             if (!(someSpeech)) {someSpeech = "";}; //handle nulls before attempting toLowerCase
@@ -2163,19 +2162,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "hello":
                 case "good morning":
                 case "good afternoon":
-                case "good evening":                    
-                    if (!(_spokenToPlayer)) {
-                        var forename;
-                        if (self.getDisplayName().toLowerCase() == self.getName()) {
-                            var fullName = self.getDisplayName()+" ";
-                             forename = fullName.substr(0,fullName.indexOf(" ",1));
-                             if (forename != fullName) {
-                                introduction = " I'm "+forename+". ";
-                            };
-                        };
-                        
-                    };
-                    randomReplies = ["Hi $player."+introduction.trim(), "Hey $player."+introduction.trim(), introduction+"Can I help you?", "Hello $player."+introduction.trim(), "Hello."+introduction.trim(), "Hi."+introduction.trim()];
+                case "good evening":
+                    randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
                     break;
@@ -2307,8 +2295,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         var dialogueResponse = _missions[i].getNextDialogue(someSpeech, keyword);
                         if (dialogueResponse) {
                             //note, we override any responses from the earlier section here if we have a better one from the mission!
-                            if (introduction) {introduction = "'Hi, "+introduction.trim()+".'<br>";};
-                            response = introduction+dialogueResponse; 
+                            response = dialogueResponse; 
                         };
                     };
                 };
