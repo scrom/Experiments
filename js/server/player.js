@@ -973,7 +973,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";
                 };
             };
-            if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getSuffix()+".";};
+            if (!(_inventory.canCarry(artefact))) { return initCap(artefact.getDescriptivePrefix())+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getSuffix()+".";};
 
             var requiresContainer = artefact.requiresContainer();
             var suitableContainer = _inventory.getSuitableContainer(artefact);
@@ -1528,7 +1528,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
                 if (receiver.isLocked()) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" locked.";};
                 if (!(receiver.isOpen())) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" closed.";};
-                if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getSuffix()+". "+artefact.getDescriptivePrefix()+" too heavy for "+receiver.getSuffix()+" at the moment.";};
+                if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getSuffix()+". "+initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
                 
                 //we know they *can* carry it...
                 if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
@@ -1621,7 +1621,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
             if (receiver.isDead()) { return  initCap(receiver.getDisplayName())+"'s dead. Gifts won't help now.";};
-            if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+artefact.getDescriptivePrefix()+" too heavy for "+receiver.getSuffix()+" at the moment.";};
+            if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
             if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to accept gifts from you at the moment.";};
 
             //we know they *can* carry it...
@@ -1828,7 +1828,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //@todo if verb == give
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-            if (!(_inventory.canCarry(artefact))) { return artefact.getDescriptivePrefix()+" too heavy. You may need to get rid of some things you're carrying first.";};
+            if (!(_inventory.canCarry(artefact))) { return initCap(artefact.getDescriptivePrefix())+" too heavy. You may need to get rid of some things you're carrying first.";};
 
             //we know player *can* carry it...
             //if the character can pick it up, they'll take it!

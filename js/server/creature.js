@@ -535,19 +535,33 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.syn = function (synonym) {
-            if (synonym == _name) { 
+            //match by name first
+            if (synonym == _name) {
                 return true; 
-            }; //match by name first
+            }; 
+
+            //match by displayName 
             if (synonym == self.getDisplayName()) { 
                 return true; 
-            }; //match by name first
+            }; 
+
+            //ensure we have syns array
             if (!(_synonyms)) {
-                return false;
+                _synonyms = [];
             };
-            if (_synonyms.indexOf(synonym) == -1) { 
-                return false; 
+            if (_synonyms.indexOf(synonym) > -1) { 
+                return true; 
             };
-            return true;
+
+            //description
+            if (synonym == self.getDescription()) { 
+            //var desc = " "+self.getDescription()+" ";
+            //var paddedSyn = " "+synonym+" ";
+            //if (desc.indexOf(paddedSyn) >-1) { 
+                return true; 
+            }; 
+
+            return false;
         };
 
         self.addSyns = function (synonyms) {
@@ -2162,8 +2176,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "hello":
                 case "good morning":
                 case "good afternoon":
-                case "good evening":
-                    randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];
+                case "good evening":  
+                    randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];                  
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
                     break;

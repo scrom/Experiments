@@ -506,19 +506,31 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.syn = function (synonym) {
+            //match by name first
             if (synonym == _name) {
                 return true; 
-            }; //match by name first
+            }; 
+
+            //match by displayName 
             if (synonym == self.getDisplayName()) { 
                 return true; 
-            }; //match by name first
+            }; 
+
+            //ensure we have syns array
             if (!(_synonyms)) {
-                return false;
+                _synonyms = [];
             };
-            if (_synonyms.indexOf(synonym) == -1) { 
-                return false; 
+            if (_synonyms.indexOf(synonym) > -1) { 
+                return true; 
             };
-            return true;
+
+            //description
+            //if (synonym == self.getDescription()) { 
+            if (" "+self.getDescription()+" ".indexOf(" "+synonym+" ") >-1) { 
+                return true; 
+            }; 
+
+            return false;
         };
 
         self.addSyns = function (synonyms) {

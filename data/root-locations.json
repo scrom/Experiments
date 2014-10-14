@@ -66,7 +66,7 @@
 	   {
         "object": "artefact",
         "name": "air",
-        "description": "air",
+        "description": "the smell of smart people and coffee",
         "detailedDescription": "As I said - smart people and coffee.",
         "attributes": {
           "type": "scenery",
@@ -9211,6 +9211,11 @@
                     "synonyms": [
                       "it",
                       "stray",
+					  "tabby",
+					  "small tabby cat",
+					  "small cat",
+					  "small tabby",
+					  "tabby cat",
                       "stray cat",
                       "kitty",
                       "kitteh",
