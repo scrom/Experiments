@@ -678,7 +678,7 @@
         "object": "artefact",
         "name": "bike ambulance",
         "description": "bike ambulance",
-        "detailedDescription": "It's an old converted NHS ambulance -pretty beaten-up but looks functional.",
+        "detailedDescription": "It's an old converted NHS ambulance. It's pretty beaten-up but looks functional.",
         "attributes": {
           "weight": 3500,
           "type": "scenery",
@@ -693,7 +693,7 @@
         "name": "rick",
         "displayname": "Rick",
         "description": "Rick the bike ambulance guy",
-        "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.<br>Seriously, he <i>really</i> knows his bikes!",
+        "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
         "attributes": {
           "weight": 140,
           "attackStrength": 25,
@@ -1521,6 +1521,7 @@
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "brian harris",
+			  "removeObject": "guardian newspaper",
               "successMessage": "Brian says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now.<br> Have 25 points."
             }
           }
@@ -2314,6 +2315,7 @@
             "reward": {
               "score": 25,
               "affinityModifier": 2,
+			  "removeObject": "trainers",
               "increaseAffinityFor": "adam parker",
               "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'<br> Have 25 points."
             }
@@ -4828,6 +4830,7 @@
               "affinityModifier": 2,
               "decreaseAffinityFor": "simon galbraith",
               "increaseAffinityFor": "jordan miller",
+              "removeObject": "sketchbook",
               "money": 50,
               "successMessage": "Jordan says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
             }
@@ -4840,6 +4843,8 @@
             "attributes": {
               "parent": "awaitvanarrival",
               "missionObject": "jordan miller",
+			  "huntPlayer": true,
+			  "initiateConversation": true,
               "static": true,
               "dialogue": [
                 "'I knew I could rely on you.'<br>'I've parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
@@ -6011,7 +6016,7 @@
             "displayName": "find some post-its for Chris.",
             "description": "Chris is due to run a workshop but needs some fresh stickies.",
             "attributes": {
-              "missionObject": "post-its",
+              "missionObject": "post-it pad",
               "destination": "chris smith",
               "static": true,
               "dialogue": [
@@ -6079,6 +6084,7 @@
             },
             "reward": {
               "increaseAffinityFor": "chris smith",
+			  "missionObject": "post-it pad",
               "score": 25,
               "successMessage": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You facilitated the facilitator! Have 25 points."
             }
@@ -6759,6 +6765,7 @@
               "isBroken": false
             },
             "reward": {
+			  "removeObject": "small book",
               "delivers": {
                 "object": "artefact",
                 "name": "parcel",
@@ -8071,7 +8078,7 @@
         "inventory": [
           {
             "object": "artefact",
-            "name": "post-its",
+            "name": "post-it pad",
             "description": "pack of post-its",
             "detailedDescription": "A pack of multicoloured post-it notes.",
             "attributes": {
@@ -8085,6 +8092,7 @@
               "stickies",
               "sticky notes",
               "post its",
+			  "post-its",
               "postits",
               "post it notes",
               "post-it notes",
@@ -8724,6 +8732,7 @@
             "reward": {
               "score": 125,
               "affinityModifier": 1,
+              "removeObject": "tomatoes",
               "increaseAffinityFor": "everyone",
               "successMessage": "Margaret says 'Thankyou so much $player.'<br>'I'm sure everyone will appreciate the effort you've gone to to keep us all fed.'<br> Have 125 points."
             }
