@@ -72,12 +72,15 @@
           "type": "scenery",
 		  "subType": "intangible",
 		  "plural": true,
+		  "customAction": ["get", "take", "grab", "collect", "remove"],
+		  "defaultResult": "The place is full of 'em. Go explore!",
 		  "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
         },
         "synonyms": [
           "smart",
 		  "smart people",
-		  "people"
+		  "people",
+		  "graduates"
         ]
       },
       {
@@ -3663,7 +3666,7 @@
     "object": "location",
     "name": "ground-floor-fire-escape",
     "displayName": "Fire escape",
-    "description": "You're at the bottom of the rear fire escape staircase.<br>You're surrounded by large gas and water pipes leading in and out of the building.",
+    "description": "You're at the bottom of the rear fire escape staircase.<br>You're surrounded by large gas and water pipes leading in and out of the building.<br>This area is occasionally used for storing tools.",
     "attributes": {
       "outdoor": true
     },
@@ -3685,6 +3688,45 @@
       }
     ],
     "inventory": [
+	{
+        "object": "artefact",
+        "name": "whetstone",
+        "description": "whetstone",
+        "detailedDescription": "Every text adventure needs a whetstone right?",
+        "attributes": {
+          "weight": 0.5,
+		  "canCollect":true,
+		  "isBreakable": true,
+		  "charges":10,
+          "chargeUnit": "item",
+          "chargesDescription": "It's pretty worn out. There's enough of it left to sharpen about $charges $chargeUnit",
+          "type": "tool",
+		  "subType": "sharpen"
+        },
+        "synonyms": [
+          "stone",
+		  "whet"
+        ]
+      },
+	{
+        "object": "artefact",
+        "name": "rag",
+        "description": "dirty rag",
+        "detailedDescription": "It's slightly damp but handling it makes your hands feel oddly dry.",
+        "attributes": {
+          "weight": 0.5,
+		  "canCollect":true,
+          "type": "tool",
+		  "subType": "buff",
+		  "smell": "It smells of polish and solvents."
+        },
+        "synonyms": [
+          "cloth",
+		  "wash cloth",
+		  "cleaning cloth",
+		  "duster"
+        ]
+      },
       {
         "object": "artefact",
         "name": "door",

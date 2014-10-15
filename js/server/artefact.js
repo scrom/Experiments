@@ -34,6 +34,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _collectable = false; //if not collectable, it also can't be completely removed from the game. Leave wreckage
         var _missions = [];
         var _read = false;
+        var _sharpened = 0;
+        var _polished = 0;
         var _opens = false;
         var _open = false;
         var _charges =-1; //-1 means unlimited
@@ -192,6 +194,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.isEdible== true || artefactAttributes.isEdible == "true") { _edible = true;};
             };
             if (artefactAttributes.nutrition != undefined) { _nutrition = artefactAttributes.nutrition; };
+            if (artefactAttributes.sharpened != undefined) { _sharpened = artefactAttributes.sharpened; };
+            if (artefactAttributes.polished != undefined) { _polished = artefactAttributes.polished; };
             if (artefactAttributes.price != undefined) { _price = artefactAttributes.price; };
             if (artefactAttributes.chewed != undefined) {
                 if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
@@ -258,6 +262,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (type == "weapon") {
                 var validWeaponSubTypes = ['','blunt','sharp','projectile'];
                 if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
+                //console.log(_name+' subtype validated: '+subType);
+            };
+
+            if (type == "tool") {
+                var validToolSubTypes = ['','buff','sharpen','assemble'];
+                if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
             };
 
@@ -391,6 +401,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.locked = _locked;
             currentAttributes.canCollect = _collectable;
             currentAttributes.read = _read;
+            currentAttributes.sharpened = _sharpened;
+            currentAttributes.polished = _polished;
             currentAttributes.canOpen = _opens;                    
             currentAttributes.isOpen = _open;
             currentAttributes.charges = _charges;
@@ -479,6 +491,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.locked == true) {saveAttributes.locked = artefactAttributes.locked;};
             if (artefactAttributes.isEdible == true) {saveAttributes.isEdible = true;};
             if (artefactAttributes.nutrition != 0) { saveAttributes.nutrition = artefactAttributes.nutrition; };
+            if (artefactAttributes.sharpened != 0) { saveAttributes.sharpened = artefactAttributes.sharpened; };
+            if (artefactAttributes.polished != 0) { saveAttributes.polished = artefactAttributes.polished; };
             if (artefactAttributes.price != 0) { saveAttributes.price = artefactAttributes.price; };
             if (artefactAttributes.switched == true) {saveAttributes.switched = true;};
             if (artefactAttributes.isOn == true) {saveAttributes.isOn = true;};
@@ -1294,10 +1308,32 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.rub = function(anObject) {
             if (self.isDestroyed()) {return "There's nothing left of "+_itemSuffix+".";};
             if (anObject) {
+
                 //we may rub this with another object or creature
-                if (anObject.getType() == 'food') {
-                    if (_attackStrength >=5) {_attackStrength -= 5;}; //yes you can reduce the strenght of an item by repeatedly coating it with food
+                if (anObject.getType() == "food") {
+                    if (_attackStrength >=5) {_attackStrength -= 5;}; //yes you can reduce the strenght of an item by repeatedly coating it with food!
+                    anObject.consume();
                     return "You make a sticky mess that leaves "+self.getDisplayName()+" somewhat slippery but see no obvious benefit.";
+                };
+
+                if (anObject.getSubType() == "buff") {
+                    if (_polished <2) {
+                        _polished++;
+                        self.increasePriceByPercent(5);
+                        anObject.consume();
+                        return "Ooh shiny!"
+                    };
+                    return self.getDescriptivePrefix()+" polished as much as "+self.getPrefix().toLowerCase()+" can be already.";
+                };
+
+                if (self.getSubType() == "sharp" && anObject.getSubType() == "sharpen") {
+                    if (_sharpened <2) {
+                        _sharpened++;
+                        _attackStrength+=3;
+                        anObject.consume();
+                        return "That's a keen edge you've got going there!<br>Nice job."
+                    };
+                    return "I think "+self.getDescriptivePrefix().toLowerCase()+" as sharp as you're going to get "+self.getPrefix().toLowerCase()+".";
                 };
             };
 
@@ -1751,6 +1787,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.close = function(verb, locationName) {
+            if (self.getSubType() == "intangible") {return self.getDescription()+" isn't something you can close.";};
             if (self.isDestroyed()) {return "There's nothing viable left to work with.";};
             if (_opens && _open){
                 _open = false;
@@ -1792,6 +1829,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.drink = function(aPlayer) {
+            if (self.getSubType == "intangible") {return "You gulp around trying to get a mouthful of "+self.getDescription()+" but fail miserably.";}
             if (self.isDestroyed()) {return "There's nothing left to drink.";};
             if(_edible && _liquid)  {
                 var drankAll = " ";
@@ -1820,6 +1858,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.eat = function(aPlayer) {
+            if (self.getSubType == "intangible") {return "You gulp around trying to get a mouthful of "+self.getDescription()+" but fail miserably.";}
             if (self.isDestroyed()) {return "There's nothing left to chew on.";};
             if ((!(_chewed)) || (_edible && self.chargesRemaining() !=0))  {
                 _chewed = true; 
@@ -1908,6 +1947,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.relinquish = function(anObjectName, player, locationInventory) {
+            if (self.getSubType() == "intangible") {return self.getDisplayName()+" can't give you anything.";};
             var playerInventory = player.getInventoryObject();
 
             //are we attempting to retrieve a delivery object?

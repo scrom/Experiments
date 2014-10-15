@@ -601,7 +601,12 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'stroke':
                     case 'rub':
-                        description = _player.rub(_verb, _object0, _object1);
+                    case 'polish':
+                    case 'buff':
+                    case 'sharpen':
+                    case 'sharp':
+                    case 'smear':
+                        description = _player.rub(_verb, _splitWord, _object0, _object1);
                         break;
                     case 'talk':
                     case 'tak':
@@ -789,7 +794,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'play': //generally a custom verb already
                     case 'hum':
                     case 'whistle':
-                    case 'sharpen':
                     case 'empty':
                     case 'burn':
                     case 'climb':

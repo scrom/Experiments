@@ -317,10 +317,21 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
            return null;
         };
 
-        //this one doesn't cascase to contents of other objects.
+        //this one doesn't cascade to contents of other objects.
         self.getObjectByType = function(anObjectType) {
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getType() == anObjectType  && (!(_items[index].isHidden()))) {
+                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    return _items[index];
+                };
+           };
+           return null;
+        };
+
+        //this one doesn't cascade to contents of other objects.
+        self.getObjectBySubType = function(anObjectSubType) {
+           for(var index = 0; index < _items.length; index++) {
+                if(_items[index].getSubType() == anObjectSubType  && (!(_items[index].isHidden()))) {
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
                 };

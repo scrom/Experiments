@@ -1034,6 +1034,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
+            if (artefact.getSubType() == "intangible") {return "Don't be silly.";};
+
             var resultString = "";
             var weapon;
 
@@ -1118,6 +1120,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var firstArtefact = getObjectFromPlayerOrLocation(firstArtefactName);
             if (!(firstArtefact)) {return notFoundMessage(firstArtefactName);};
 
+            if (firstArtefact.getSubType() == "intangible") {
+                resultString = initCap(firstArtefact.getName())+" isn't really something you can "+verb+".";
+                resultString += "<br>You try anyway. After a while, your arms get tired and you feel slightly awkward.";
+            };  
+
             //build return string
             resultString+= " "+firstArtefact.getDisplayName();
 
@@ -1139,7 +1146,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         /*Allow player to wave an object - potentially at another*/
-        self.rub = function(verb, firstArtefactName, secondArtefactName) {
+        self.rub = function(verb, splitWord, firstArtefactName, secondArtefactName) {
+
+            if (secondArtefactName && splitWord != "with" && splitWord != "on") {splitWord = "on"};
+
             //trap when object or creature don't exist
             var resultString = 'You '+verb;
             if (stringIsEmpty(firstArtefactName)){return verb+" what?"};
@@ -1147,24 +1157,68 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var firstArtefact = getObjectFromPlayerOrLocation(firstArtefactName);
             if (!(firstArtefact)) {return notFoundMessage(firstArtefactName);};
 
+            if (firstArtefact.getSubType() == "intangible") {
+                resultString = initCap(firstArtefact.getName())+" isn't really something you can "+verb+".";
+                resultString += "<br>You try anyway.<br>After a while, your arms get tired and you feel slightly awkward.";
+                return resultString;
+            };  
+
             //build return string
             resultString+= " "+firstArtefact.getDisplayName();
 
-            if (!(stringIsEmpty(secondArtefactName))){
-                var secondArtefact = getObjectFromPlayerOrLocation(secondArtefactName);
-                if (!(secondArtefact)) {return notFoundMessage(secondArtefactName);};
+            //auto-retrieve second artefact from player inventory only.
+            var secondArtefact;
+            if (stringIsEmpty(secondArtefactName)) {
+                //attempt to get polish or sharpen object (if verbs match)
+                if (verb == "sharpen") {
+                    secondArtefact = _inventory.getObjectBySubType("sharpen");
+                    splitWord = "with";
+                    //fail if nothing to sharpen with
+                    if (!secondArtefact) {return "You're not carrying anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
+                } else if (verb == "polish") {
+                    secondArtefact = _inventory.getObjectBySubType("buff");
+                    splitWord = "with";
+                    //fail if nothing to polish with
+                    if (!secondArtefact) {return "You not carrying anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
+                };
 
-                //build return string
-                resultString+= " with "+secondArtefact.getDisplayName();
+            };
+
+            if (!(stringIsEmpty(secondArtefactName))){
+                secondArtefact = getObjectFromPlayerOrLocation(secondArtefactName);
+                if (!(secondArtefact)) {return notFoundMessage(secondArtefactName);};
             }; 
+
+            if (secondArtefact) {               
+                //build return string
+                resultString+= " "+splitWord+" "+secondArtefact.getDisplayName();
+            };
 
             resultString+=". ";
 
-            resultString+= firstArtefact.rub(secondArtefact);
+            //swap artefacts?
+            if (firstArtefact.getSubType() == "buff" || firstArtefact.getSubType() == "sharpen") {
+                var tempArtefact = firstArtefact;
+                firstArtefact = secondArtefact;
+                secondArtefact = tempArtefact;
+            };
 
-            if (firstArtefact.getType() != "creature") {
-                resultString += "<br>Your arms get tired and you feel slightly awkward.";
-            };   
+            if (firstArtefact.isLiquid()) {
+                return "I'm sure you're just testing me now. You can't really "+verb+" a liquid.";
+            };
+
+            if (firstArtefact.getSubType() != "sharp" && verb == "sharpen") {
+                return "Try sharpening something more sensible.";
+            };
+
+            resultString+= firstArtefact.rub(secondArtefact); 
+
+            if (secondArtefact) {
+                if (secondArtefact.chargesRemaining() == 0) {
+                    removeObjectFromPlayerOrLocation(secondArtefact.getName());
+                    resultString += "<br>You used up all "+secondArtefact.getDisplayName()+". I hope it was worthwhile."
+                };
+            };
 
             return resultString;
         };
@@ -1383,7 +1437,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiver.getType() == "creature") {return "It'll ruin your "+writingTool.getName()+" so you decide against it.";};
             if (receiver.getType() == "food") {return "You decide not to waste your "+receiver.getName()+" by defacing it.";};
-
+            if (receiver.getSubType() == "intangible") {return "There's nothing there you can "+verb+" on.";};
             var maxWritings = 10;
             if (receiver.getType() == "book") {maxWritings = 50;};
             if (receiver.getWritings().length+receiver.getDrawings().length >=maxWritings) {
@@ -1442,6 +1496,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (cleanCount >0) {
                 return "You clear all the previously added 'artwork' from "+receiver.getDisplayName()+".";
             } else {
+                if (receiver.getSubType() == "intangible") {
+                    return "I'm not sure how you can "+verb+" "+receiver.getDisplayName()+".";
+                };
                 return "You attempt to give "+receiver.getDisplayName()+" a bit of polish and shine.<br>After a while you get bored and give up.";
             };
         };
@@ -1746,6 +1803,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += giver.theft(verb, artefactName, _inventory, self, playerStealth);
                 return resultString;
             } else {
+                if (giver.getSubType() == "intangible") {return "You can't steal from "+giver.getDisplayName()+".";};
                 if (verb == "mug"){ return "If "+giver.getDescriptivePrefix()+" carrying anything of use, you should just be able to take what you need."};
                 if (stringIsEmpty(artefactName) && verb == "steal"){ return verb+" what?";};
                 var locationInventory = _currentLocation.getInventoryObject();
@@ -1889,6 +1947,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {
                 return notFoundMessage(artefactName);
             };
+
+            if (artefact.getSubType() == "intangible") {return "There's nothing to "+verb+" in "+artefact.getDisplayName()+".";};
 
             if (verb != "rotate") {
                 if (artefact.isSwitched()) { 
@@ -2137,6 +2197,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return artefact.shove(verb);
             };
 
+            if (artefact.getSubType() == "intangible") {return "There's nothing to "+verb+" in "+artefact.getDisplayName()+".";};
+
             return self.openOrClose(verb, artefact);
         };
 
@@ -2158,6 +2220,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.getType() == "creature" && verb == "pull") {
                 return artefact.pull(verb, self);
             };
+
+            if (artefact.getSubType() == "intangible") {return "There's nothing to "+verb+" in "+artefact.getDisplayName()+".";};
 
             if (artefact.isLocked()) {
                 resultString +=self.unlock("open", artefact.getName())+"<br>";
@@ -2422,7 +2486,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var receiver = getObjectFromPlayerOrLocation(receiverName);
             if (!(receiver)) {return notFoundMessage(receiverName);};
 
-            if (receiver.getName() == "air") {return "You lash frantically at the air around you before realising how foolish you look.<br>It's ok, I don't think anyone was watching.";}; 
+            if (receiver.getSubType() == "intangible") {return "You lash frantically at the air around you before realising how foolish you look.<br>It's ok, I don't think anyone was watching.";}; 
 
             //just check it's not *already* destroyed...
             if (receiver.isDestroyed()) {
