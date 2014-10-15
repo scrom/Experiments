@@ -1197,18 +1197,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString+=". ";
 
             //swap artefacts?
-            if (firstArtefact.getSubType() == "buff" || firstArtefact.getSubType() == "sharpen") {
+            if (firstArtefact.getSubType() == "buff" || firstArtefact.getSubType() == "sharpen" || firstArtefact.isLiquid()) {
                 var tempArtefact = firstArtefact;
                 firstArtefact = secondArtefact;
                 secondArtefact = tempArtefact;
             };
 
-            if (firstArtefact.isLiquid()) {
-                return "I'm sure you're just testing me now. You can't really "+verb+" a liquid.";
-            };
-
             if (firstArtefact.getSubType() != "sharp" && verb == "sharpen") {
                 return "Try sharpening something more sensible.";
+            };
+
+            if (firstArtefact.isLiquid()) {
+                return "That's not going to do anything useful.";
             };
 
             resultString+= firstArtefact.rub(secondArtefact); 

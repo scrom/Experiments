@@ -1335,6 +1335,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
                     return "I think "+self.getDescriptivePrefix().toLowerCase()+" as sharp as you're going to get "+self.getPrefix().toLowerCase()+".";
                 };
+
+                if (anObject.isLiquid()) {
+                    anObject.consume();
+                    return "You smear "+anObject.getDisplayName()+" over "+self.getDisplayName()+". That was fun!";
+                };
             };
 
             return "Nothing happens.";
