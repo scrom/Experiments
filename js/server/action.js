@@ -216,8 +216,12 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'ok':
                         if (_inConversationWith) {
-                            description = _player.say('say', _actionString,_inConversationWith, _map);
-                            _player.setLastVerbUsed('say');
+                            if (_awaitingPlayerAnswer) {
+                                description = _player.confirmOrDecline(true, _map);
+                            } else {
+                                description = _player.say('say', _actionString,_inConversationWith, _map);
+                                _player.setLastVerbUsed('say');
+                            };
                         } else {
                             _ticks = 0;
                             description = "OK!";
@@ -244,8 +248,12 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'no':
                         if (_inConversationWith) {
-                            description = _player.say('say', _actionString,_inConversationWith, _map);
-                            _player.setLastVerbUsed('say');
+                            if (_awaitingPlayerAnswer) {
+                                description = _player.confirmOrDecline(false, _map);
+                            } else {
+                                description = _player.say('say', _actionString,_inConversationWith, _map);
+                                _player.setLastVerbUsed('say');
+                            };
                         } else {
                             _ticks = 0;
                             if (_awaitingPlayerAnswer == true) {
@@ -257,10 +265,17 @@ exports.Action = function Action(player, map, fileManager) {
                             };
                         };
                         break;
+                    case 'y':
+                        _verb = "yes";
+                        _actionString = _verb+_actionString.substr(1);
                     case 'yes':
                         if (_inConversationWith) {
-                            description = _player.say('say', _actionString,_inConversationWith, _map);
-                            _player.setLastVerbUsed('say');
+                            if (_awaitingPlayerAnswer) {
+                                description = _player.confirmOrDecline(true, _map);
+                            } else {
+                                description = _player.say('say', _actionString,_inConversationWith, _map);
+                                _player.setLastVerbUsed('say');
+                            };
                         } else {
                             _ticks = 0;
                             if (_awaitingPlayerAnswer == true) {
@@ -466,6 +481,9 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'kick':
                         description = _player.hit(_verb, _object0, _object1);
                         break;
+                    case 'pay':
+                        description = _player.pay(_verb, _object0, _object1);
+                        break;
                     case 'buy':
                         description = _player.buy(_verb, _object0, _object1);
                         break;
@@ -609,6 +627,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.rub(_verb, _splitWord, _object0, _object1);
                         break;
                     case 'talk':
+                    case 'tal':
                     case 'tak':
                     case 'takl':
                         //we assume "talk to x" - it "to" is missing, handle speech anyway.
@@ -855,14 +874,6 @@ exports.Action = function Action(player, map, fileManager) {
                 };
             };
 
-            if (description) {
-                if (description.trim().slice(-1) == "?") {
-                    _awaitingPlayerAnswer = true;
-                } else {
-                    _awaitingPlayerAnswer = false;
-                };
-            };
-
             return description;
         };
 
@@ -1052,7 +1063,18 @@ exports.Action = function Action(player, map, fileManager) {
                     description = description.replace("/$image","");
                     //console.log("description:"+description);
                 };  
-            };         
+            };   
+            
+            //after stripping out all substitution variables, does the description end with a question?
+            if (description) {
+                var tempDescription = description.replace(/<br>/g,"");
+                tempDescription = tempDescription.replace(/'/g,""); 
+                if (tempDescription.trim().slice(-1) == "?" ||tempDescription.trim().slice(-2) == "?\"") {
+                    _awaitingPlayerAnswer = true;
+                } else {
+                    _awaitingPlayerAnswer = false;
+                };
+            };      
 
             //get an image path if not already set
             if (!(imageName)) {

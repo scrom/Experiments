@@ -1694,6 +1694,34 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
+        self.pay = function(verb, creatureName, remainderString) {
+            var firstWord = remainderString.substr(0,remainderString.indexOf(" ")).trim();
+            var artefactName = remainderString;
+            switch (firstWord) {
+                case "repair":
+                case "fix":
+                case "mend":
+                    artefactName = remainderString.replace(firstWord+" ", "");
+            };
+            if (artefactName != remainderString) {
+                return self.buyRepair(artefactName, creatureName);
+            };
+
+            return self.buy(verb, artefactName, creatureName);
+        };
+
+        self.buyRepair = function(artefactName, creatureName) {
+            var creature = _currentLocation.getObject(creatureName);
+            if (creature) {
+                if (creature.getType() != "creature") {
+                    return "You can't buy repairs from "+creature.getDisplayName()+".";
+                };
+            } else {
+                return notFoundMessage(creatureName);
+            };
+            return creature.sellRepair(artefactName, self);
+        };
+
         self.buy = function (verb, artefactName, giverName) {
             if (stringIsEmpty(giverName)) {
                 if (!(_currentLocation.creaturesExist())) {
@@ -1812,6 +1840,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return giver.relinquish(artefactName, self, locationInventory);
             };
                     
+        };
+
+        self.confirmOrDecline = function(confirmBool, map) {
+            var replyToCreature = _currentLocation.getObject(_lastCreatureSpokenTo);
+            if (!(replyToCreature)) {return "";};
+            if (replyToCreature.getType() != "creature") { return "";};
+            return replyToCreature.confirmAction(confirmBool);
         };
 
         self.ask = function(verb, giverName, artefactName, map){
@@ -2118,7 +2153,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return artefact.getDescriptivePrefix()+" not broken or damaged.";}; //this will catch creatures
+            if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
             
             return artefact.repair(_repairSkills, self);
 

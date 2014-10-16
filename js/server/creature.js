@@ -64,6 +64,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _contagion = [];
         var _antibodies = [];
         var _repairSkills = [];
+        var _nextAction = {};
+
 
         //tracking of player attacks
         var _originalType = "creature";
@@ -359,6 +361,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             resultString+= '}';
             return resultString;
         };
+
+        self.confirmAction = function(confirmBool) {
+            if (confirmBool) {
+                return self.getNextAction(true);
+            };
+            return self.getNextAction(false);
+        };
+
+        self.getNextAction = function(playerResponse) {
+            var action = _nextAction[playerResponse];
+            _nextAction = {};
+            return action;
+        };
+
+        self.setNextAction = function(response, action) { 
+            _nextAction[response] = action; 
+        }; 
         
         self.getName = function() {
             return _name;
@@ -1100,8 +1119,26 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };            
         };
 
+        self.getRepairCost = function() {
+            return 0;
+        };
 
-        self.repair = function(artefactName, player) {
+        self.sellRepair = function(artefactName, player) {
+            var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
+            if (!artefact) { return notFoundMessage(artefactName);};
+            var repairCost = artefact.getRepairCost();
+            if (!player.canAfford(repairCost)) {return "'Sorry $player, come back when you can afford it.'";};
+            player.reduceCash(repairCost);
+            self.increaseCash(repairCost);
+            var resultString = "";
+            if (repairCost > 0) {
+                resultString = "You pay "+self.getDisplayName()+" &pound;"+repairCost+".<br>";
+            };
+
+            return resultString+self.repair(artefactName, player, true);
+        };
+
+        self.repair = function(artefactName, player, paid) {
             if (self.getSubType() == "animal") {return +_genderDescriptivePrefix+" an animal, I don't think "+_genderSuffix+" can help you here.";};
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
@@ -1113,8 +1150,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return artefact.getDescriptivePrefix()+" not broken or damaged.";}; //this will catch creatures
+            if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
             
+            var repairCost = artefact.getRepairCost();
+            if (repairCost >0 && !paid) {
+                self.setNextAction(false, "Well, you know where to come if you change your mind."); 
+                self.setNextAction(true, "$action pay "+self.getName()+" to repair "+artefactName); 
+                return "That'll cost you &pound;"+repairCost+" are you sure?"
+            };
+
             return artefact.repair(_repairSkills, self);
 
         };
@@ -2347,6 +2391,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.isBroken = function() {
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
+        };
+
+        self.isDamaged = function() {
             return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
         };
 

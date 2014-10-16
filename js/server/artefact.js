@@ -1097,6 +1097,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _price;
         };
 
+        self.getRepairCost = function () {
+            var repairFactor = 0;
+            if (_broken) {
+                repairFactor = 40;
+            } else if (_damaged) {
+                repairFactor = 20;
+            } else if (_chewed) {
+                repairFactor = 8;
+            };
+            return ((Math.round(_price * (1 + (repairFactor / 100)) * 100) / 100)-_price).toFixed(2);
+        };
+
         self.increasePriceByPercent = function (percent) {
             _price = Math.round(_price * (1 + (percent / 100)) * 100) / 100;
             return _price;
@@ -1511,10 +1523,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             _description = _initialDescription;
             _detailedDescription = _initialDetailedDescription;
+
+            //restore price
+            if (_price > 0) { 
+                if (_broken) {
+                    self.increasePriceByPercent(50); 
+                } else if (_damaged) {
+                    self.increasePriceByPercent(25); 
+                } else if (_chewed) {
+                    self.increasePriceByPercent(10); 
+                };
+            }; 
+
             _broken = false;
             _damaged = false;
             _chewed = false;
-            if (_price > 0) { self.increasePriceByPercent(90); }; //almost double value now not broken
 
             resultString += repairer.getPrefix()+" fixed "+self.getDisplayName();
 
@@ -1890,6 +1913,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return resultString;
 
                 } else {
+                    if (_price > 0) { self.discountPriceByPercent(10); };
                     _detailedDescription += ".<br>"+_itemPrefix+" looks like "+_itemDescriptivePrefix.toLowerCase()+" been chewed by something.";
                     aPlayer.hurt(5);
                     return "You try and try but just can't seem to keep "+_itemSuffix+" in your mouth without doing yourself harm."
