@@ -1247,6 +1247,7 @@
                 {
                   "state": 2,
                   "keywords": [
+				    "n",
                     "no",
                     "not",
                     "not yet"
@@ -1479,6 +1480,7 @@
                 {
                   "state": 1,
                   "keywords": [
+                    "n",
                     "no",
                     "not",
                     "not yet"
@@ -2170,6 +2172,7 @@
                 {
                   "state": 1,
                   "keywords": [
+                    "n",
                     "no",
                     "not",
                     "not yet"
@@ -2274,6 +2277,7 @@
                 {
                   "state": 1,
                   "keywords": [
+                    "n",
                     "no",
                     "not",
                     "not yet"
@@ -5636,6 +5640,7 @@
                 {
                   "state": 1,
                   "keywords": [
+                    "n",
                     "no"
                   ],
                   "response": "'Never mind.'",
@@ -6120,6 +6125,7 @@
                 {
                   "state": 1,
                   "keywords": [
+                    "n",
                     "no",
                     "not",
                     "not yet"
@@ -6149,6 +6155,7 @@
                 {
                   "state": 3,
                   "keywords": [
+                    "n",
                     "no",
                     "not",
                     "not yet"
@@ -6614,6 +6621,7 @@
                 {
                   "state": 1,
                   "keywords": [
+                    "n",
                     "no",
                     "not",
                     "not yet"
@@ -8800,6 +8808,7 @@
                 {
                   "state": 1,
                   "keywords": [
+                    "n",
                     "no",
                     "not",
                     "not yet"
