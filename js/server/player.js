@@ -1627,7 +1627,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += "<br>That's all the missing ingredients in place.";
                         //would like to attempt an auto-repair here
                         if (receiver.isBroken()) {     
-                            resultString += "<br>"+receiver.repair(_repairSkills, self);                 
+                            resultString += "<br>"+receiver.repair(self);                 
                         };
                     };
                 } else if (verb == "hide") { //can only hide if not a component
@@ -1690,7 +1690,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //treat this as a kind act (if successful)
             self.decreaseAggression(1);
-            return receiver.receive(collectedArtefact);
+            return receiver.receive(collectedArtefact, self);
 
         };
 
@@ -1885,7 +1885,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "go") {
                 var resultString = "";
                 for (var g=0;g<givers.length;g++) {
-                    resultString += givers[g].goTo(artefactName, _aggression, map); //artefactName will actually be location name
+                    resultString += givers[g].goTo(artefactName, self, map); //artefactName will actually be location name
                     resultString += "<br>";
                 };
                 if (givers.length==1) {
@@ -1896,7 +1896,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "wait") {
                 var resultString = "";
                 for (var g=0;g<givers.length;g++) {
-                    resultString += givers[g].wait(_aggression);
+                    resultString += givers[g].wait(self);
                     resultString += "<br>";
                 };
                 if (givers.length==1) {
@@ -1948,11 +1948,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(receiver)) {return notFoundMessage(receiverName);};
 
                 //we'll only get this far if there is a valid receiver
+                self.setLastCreatureSpokenTo(receiverName);
                 var hasSpokenBefore = receiver.hasSpoken();
                 var resultString = receiver.reply(speech, self, null, map);
                 var hasSpokenAfter = receiver.hasSpoken();
                 if (!(hasSpokenBefore) && hasSpokenAfter) {_creaturesSpokenTo ++;};
-                self.setLastCreatureSpokenTo(receiverName);
                 return resultString;
         };
 
@@ -2144,6 +2144,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "After thorough investigation, you determine your best bet is to try <i>"+exit.getLongName()+"</i> from here.";
         };
 
+        self.canRepair = function(anArtefact) {
+            for (var i=0; i<_repairSkills.length;i++) {
+                if (anArtefact.syn(_repairSkills[i])) {
+                    return true;
+                };
+            };
+            return false;
+        };
+
         self.repair = function(verb, artefactName) {
             var resultString = "";
 
@@ -2155,7 +2164,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
             
-            return artefact.repair(_repairSkills, self);
+            return artefact.repair(self);
 
         };
 

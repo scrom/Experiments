@@ -372,7 +372,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getNextAction = function(playerResponse) {
             var action = _nextAction[playerResponse];
             _nextAction = {};
-            return action;
+            if (action) {return action;
+            } else {return "";};
         };
 
         self.setNextAction = function(response, action) { 
@@ -1138,11 +1139,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString+self.repair(artefactName, player, true);
         };
 
+        self.canRepair = function(anArtefact) {
+            for (var i=0; i<_repairSkills.length;i++) {
+                if (anArtefact.syn(_repairSkills[i])) {
+                    return true;
+                };
+            };
+            return false;
+        };
+
         self.repair = function(artefactName, player, paid) {
             if (self.getSubType() == "animal") {return +_genderDescriptivePrefix+" an animal, I don't think "+_genderSuffix+" can help you here.";};
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
-            if (initialReply) {return initialReply;};
+            if (initialReply) {
+                player.setLastCreatureSpokenTo();
+                return initialReply;
+            };
             var resultString = "";
 
             if (stringIsEmpty(artefactName)){ return verb+" what?"};
@@ -1150,7 +1163,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            if (!(artefact.isBroken()) && !(artefact.isDamaged())) {return initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
+            if (!(artefact.isBroken()) && !(artefact.isDamaged()) && !(artefact.isChewed())) {return initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
+
+            if (!(self.canRepair(artefact))) {return "'Sorry, that's not something I can fix for you I'm afraid.'";};
             
             var repairCost = artefact.getRepairCost();
             if (repairCost >0 && !paid) {
@@ -1159,11 +1174,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return "That'll cost you &pound;"+repairCost+" are you sure?"
             };
 
-            return artefact.repair(_repairSkills, self);
+            return artefact.repair(self);
 
         };
 
-        self.receive = function(anObject) {
+        self.receive = function(anObject, player) {
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if (self.getSubType() == "animal") {
                 if (anObject.getType() == "food" || anObject.getType() == "creature") {
@@ -1189,7 +1204,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //turn on delay
             _currentDelay = 0;
 
-            return initCap(self.getDisplayName())+" takes "+anObject.getDescription()+".";
+            var resultString = initCap(self.getDisplayName())+" takes "+anObject.getDescription()+".";
+
+            if (!anObject.isIntact() && self.canRepair(anObject) && player && !anObject.isDestroyed()) {
+                var brokenString = "broken";
+                if (!anObject.isBroken()) {
+                    brokenString = "pretty tatty"; //damaged or chewed
+                };
+                resultString +="<br>"+self.getPrefix()+" says '"+anObject.getPrefix()+" looks "+brokenString+", would you like me to fix it up for you?'";
+                self.setNextAction(false, "That's fine, feel free to <i>ask</i> me later if you change your mind."); 
+                self.setNextAction(true, "$action ask "+self.getName()+" to repair "+anObject.getName()); 
+                player.setLastCreatureSpokenTo(self.getName());
+                player.setLastVerbUsed("talk");
+            };
+
+            return resultString;
             
         };
 
@@ -1377,7 +1406,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
             var affinityModifier = objectToGive.getAffinityModifier();
-            if (!(self.willShare(playerAggression, affinityModifier))) {  return _genderPrefix+" doesn't want to share "+objectToGive.getDisplayName()+" with you.";};
+            if (!(self.willShare(playerAggression, affinityModifier))) {  
+                player.setLastCreatureSpokenTo("");
+                return _genderPrefix+" doesn't want to share "+objectToGive.getDisplayName()+" with you.";
+            };
  
 
             if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry "+anObjectName+" at the moment.";};
@@ -2040,10 +2072,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
-        self.wait = function(playerAggression, duration) {            
+        self.wait = function(player, duration) {            
 
+            var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
-            if (initialReply) {return initialReply;};
+            if (initialReply) {
+                player.setLastCreatureSpokenTo();
+                return initialReply;
+            };
 
             var returnImage = "";
             if (_imageName) {
@@ -2070,13 +2106,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return self.getDisplayName()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
         };
 
-        self.goTo = function(locationName, playerAggression, map) {
+        self.goTo = function(locationName, player, map) {
+            var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
+
+            if (initialReply) {
+                player.setLastCreatureSpokenTo();
+                return initialReply;
+            };
+            
             var returnImage = "";
-
-            var randomReplies;
-            if (initialReply) {return initialReply;};
-
             if (_imageName) {
                 returnImage= "$image"+_imageName+"/$image";
             };
@@ -2096,7 +2135,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var location = map.getLocation(locationName);
             if (!(location)) {
-                randomReplies = ["Sorry $player, I don't know where that is.", "I don't think there's a "+locationName+" anywhere around here.", "I think you might have the wrong place.", "Where's that? Are you sure you've got the name right"];
+                var randomReplies = ["Sorry $player, I don't know where that is.", "I don't think there's a "+locationName+" anywhere around here.", "I think you might have the wrong place.", "Where's that? Are you sure you've got the name right"];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };
@@ -2130,7 +2169,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.replyToKeyword = function(keyword,player, map) {
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
-            if (initialReply) {return initialReply;};
+            if (initialReply) {
+                player.setLastCreatureSpokenTo();
+                return initialReply;
+            };
 
             var returnImage = "";
             if (_imageName) {
@@ -2199,7 +2241,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.reply = function(someSpeech,player, keyword, map) {
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
-            if (initialReply) {return initialReply;};
+            if (initialReply) {
+                player.setLastCreatureSpokenTo();
+                return initialReply;
+            };
 
             //_affinity--; (would be good to respond based on positive or hostile words here)
             var response = "";
@@ -2382,6 +2427,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _collectable;
         };
 
+        self.isIntact = function() {
+            return true; //needed for sensible repair handling
+        };
+
         self.isBreakable = function() {
             return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
         };
@@ -2396,6 +2445,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.isDamaged = function() {
             return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
+        };
+
+        self.isChewed = function() {
+            return false; //needed for sensible repair handling
         };
 
         self.canTravel = function() {

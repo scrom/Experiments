@@ -1175,6 +1175,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _damaged;
         };
 
+        self.isChewed = function() {
+            return _chewed;
+        };
+
         self.combinesWith = function(anObject, crossCheck) {
             if (self.isDestroyed()) {return false;};
             var combinesWithResult = self.getCombinesWith();
@@ -1499,21 +1503,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return deliveredItem;
         };
 
-        self.repair = function(repairSkills, repairer) {
+        self.repair = function(repairer) {
             var repairerInventory = repairer.getInventoryObject();
             var repairerType = repairer.getType();
             var resultString = "";
 
             if(_destroyed) {return initCap(_itemDescriptivePrefix)+" beyond repair."};
-            //console.log("Checking repair skills: "+repairSkills);
-            var hasRequiredSkill = false;
-            for (var i=0; i<repairSkills.length;i++) {
-                if (self.syn(repairSkills[i])) {
-                    hasRequiredSkill = true;
-                    break;
-                };
-            };
-            if (!(hasRequiredSkill)) {
+
+            if (!(repairer.canRepair(self))) {
                 if (repairerType == "player") {
                     return "Unfortunately you don't have the skills needed to fully repair "+_itemSuffix+"."; 
                 } else {

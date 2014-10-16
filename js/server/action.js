@@ -246,6 +246,16 @@ exports.Action = function Action(player, map, fileManager) {
                             description = "My pleasure :)";
                         };
                         break;
+                    case 'n':
+                            if (_inConversationWith && _awaitingPlayerAnswer) {
+                                description = _player.confirmOrDecline(false, _map);
+                                if (description == ""||description==null||description==undefined) {
+                                    description = _player.say('say', _actionString,_inConversationWith, _map);
+                                    _player.setLastVerbUsed('say');
+                                };
+                            };
+                            //if not in conversation and expecting a reply, they're navigating.
+                        break;
                     case 'no':
                         if (_inConversationWith) {
                             if (_awaitingPlayerAnswer) {
