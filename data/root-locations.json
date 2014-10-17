@@ -4635,8 +4635,8 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "time": 42,
-          "missionsCompletedCount": ">10"
+          "time": 52,
+          "missionsCompletedCount": ">9"
         },
         "reward": {
           "locations": [
@@ -4658,6 +4658,24 @@
                 }
               ],
               "inventory": [
+				   {
+					"object": "artefact",
+					"name": "wreckage",
+					"description": "wreckage",
+					"detailedDescription": "A tangle of twisted, smouldering metal, plastic, brokenglass and bodies.",
+					"attributes": {
+					  "type": "scenery",
+					  "smell": "It's going to linger in your nose and memories for quite some time."
+					},
+					"synonyms": [
+					  "plastic",
+					  "burning",
+					  "burning plastic",
+					  "debris",
+					  "plane",
+					  "bodies"
+					]
+				  },
                 {
                   "object": "artefact",
                   "name": "pool",
@@ -4820,7 +4838,11 @@
           "affinity": -1,
           "canTravel": true,
           "traveller": true,
-          "imageName": "spy.jpg"
+          "imageName": "spy.jpg",
+		  "destinations": [
+            "machine-room-east"			
+          ],
+		  "destinationDelay": 15
         },
           "synonyms": [
                     "spy",
@@ -4830,28 +4852,6 @@
                     "him"
                   ],
         "inventory": [
-          {
-            "object": "artefact",
-            "name": "hard disk",
-            "description": "hard disk",
-            "detailedDescription": "Pretty sure it belongs to Red Gate.",
-            "attributes": {
-              "weight": 3,
-              "attackStrength": 5,
-              "canCollect": true,
-              "isBreakable": true,
-              "price": 50
-            },
-            "synonyms": [
-              "disc",
-              "drive",
-              "hard drive",
-              "disk",
-              "hard disc",
-              "disc drive",
-              "disk drive"
-            ]
-          },
           {
             "object": "artefact",
             "name": "emergency first aid kit",
@@ -7704,6 +7704,7 @@
           ],
           "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels.",
           "imageName": "brokentoilet.jpg",
+		  "smell": "I'll leave it up to your imagination.",
           "canDrawOn": true
         },
         "synonyms": [
@@ -9994,6 +9995,32 @@
           "score": 200,
 		  "affinityModifier": 2,
           "decreaseAffinityFor": "jordan miller",
+              "modifyObject": {
+                "name": "jordan miller",
+                "inventory": [
+          {
+            "object": "artefact",
+            "name": "hard disk",
+            "description": "hard disk",
+            "detailedDescription": "Pretty sure it belongs to Red Gate.",
+            "attributes": {
+              "weight": 3,
+              "attackStrength": 5,
+              "canCollect": true,
+              "isBreakable": true,
+              "price": 50
+            },
+            "synonyms": [
+              "disc",
+              "drive",
+              "hard drive",
+              "disk",
+              "hard disc",
+              "disc drive",
+              "disk drive"
+            ]
+          }
+		]},
           "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?",
           "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
         }

@@ -160,9 +160,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return true;
         };
     
-        self.add = function(anObject) {
+        self.add = function(anObject, canBreachCarryLimit) {
             if (anObject == undefined) {return "Can't pick it up.";};
-            if (!(self.canCarry(anObject))) {return initCap(anObject.getDescriptivePrefix())+" too heavy.";};
+            if (!(self.canCarry(anObject)) && !(canBreachCarryLimit)) {return initCap(anObject.getDescriptivePrefix())+" too heavy.";};
 
             _items.push(anObject);
             //console.log(anObject.getName()+" added to "+_ownerName+" inventory");

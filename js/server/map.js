@@ -124,7 +124,7 @@ exports.Map = function Map() {
         };
 
         self.modifyLocation = function(modification){
-            var locationName;
+            var locationName = "";
             var newDisplayName;
             var newDescription;
             var inventory = [];
@@ -145,6 +145,7 @@ exports.Map = function Map() {
                 };
             };
             if (locationName.length >0) {
+                //@todo - should this be "getLocation" instead?
                 for (var i=0; i<_locations.length;i++) {
                     if (_locations[i].getName() == locationName) {
                         
@@ -200,6 +201,40 @@ exports.Map = function Map() {
                 for (var l=0; l<_locations.length;l++) {
                     _locations[l].removeExit(locationName);
                     //console.log("exit removed from "+_locations[l].getName());
+                };
+            };
+        };
+
+
+        self.modifyObject = function(modification, player){
+            var objectName = "";
+            var newDisplayName;
+            //var newDescription;
+            var inventory = [];
+            if (modification) {
+                if (modification.name) {
+                    objectName = modification.name;
+                };
+                //if (modification.description) {
+                //    newDescription = modification.description;
+                //};
+                if (modification.inventory) {
+                    for (var i=0;i<modification.inventory.length;i++) {
+                        inventory.push(modification.inventory[i]);
+                    };
+                };
+            };
+            if (objectName.length >0) {
+                var objectToModify = player.getObject(objectName);
+                if (!(objectToModify)) {
+                    objectToModify = self.getObject(objectName);
+                };
+
+                var objectInventory = objectToModify.getInventoryObject();
+
+                //if (newDescription.length >0) { objectToModify.setDescription(newDescription);};
+                for (var v=0;v<inventory.length;v++) {
+                    objectInventory.add(inventory[v], true);  
                 };
             };
         };

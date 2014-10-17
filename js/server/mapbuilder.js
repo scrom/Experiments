@@ -239,6 +239,31 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 }; 
             };
 
+            if (reward.modifyObject) {
+                returnObject.modifyObject = {};
+                if (reward.modifyObject.name) {returnObject.modifyObject.name = reward.modifyObject.name};
+                if (reward.modifyObject.description) {returnObject.modifyObject.description = reward.modifyObject.description};
+
+                if (reward.modifyObject.inventory && reward.modifyObject.name) {
+                    returnObject.modifyObject.inventory = [];
+                    for (var i=0; i<reward.modifyObject.inventory.length;i++) {
+                        var inventoryData = reward.modifyObject.inventory[i];
+                        if (inventoryData.object == "artefact") {
+                            returnObject.modifyObject.inventory.push(self.buildArtefact(inventoryData));
+                        } else if (inventoryData.object == "creature") {
+                            var creature = self.buildCreature(inventoryData)
+                            if (inventoryData.attributes) {
+                                if (inventoryData.attributes.startLocationName) {
+                                    var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
+                                    creature.setStartLocation(startLocation);
+                                };
+                            };
+                            returnObject.modifyObject.inventory.push(creature);                   
+                        };                        
+                    }; 
+                };
+            };
+
             //add other attributes back in
             for (var attr in reward) {
                 if (reward.hasOwnProperty(attr)) {
