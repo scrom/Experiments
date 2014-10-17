@@ -204,10 +204,30 @@ exports.Map = function Map() {
             };
         };
 
-        self.removeObject = function(objectName) {
+        self.removeObject = function(objectName, sourceName, player) {
+            var sourceObject;
+            if (sourceName) {
+                if (sourceName == "player") {
+                    sourceObject = player;
+                } else {
+                    sourceObject = self.getObject(sourceName);
+                };
+            };
+            if (!(sourceObject)) {
+                sourceObject = self.getLocation(sourceName);
+            };
+
+            var inv = sourceObject.getInventoryObject();
+            var removedObject = inv.remove(objectName, true);
+
+            //success?
+            if (removedObject) {return true;};
+
+            //if we didn't have a specific destination and owner passed in.
+            //remove all objects matching given name!
             //loop through each location and location inventory. 
             //Get object (by name only, not synonym)
-            //return location name when found
+            //remove object.
             for (var i=0;i<_locations.length;i++) {
                 if (_locations[i].objectExists(objectName, true, true)) {
                     _locations[i].removeObject(objectName, true);

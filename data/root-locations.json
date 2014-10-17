@@ -1064,6 +1064,7 @@
             },
             "reward": {
               "score": 25,
+			  "removeObject": "chocolate",
               "affinityModifier": 2,
               "increaseAffinityFor": "dene boulton",
               "successMessage": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated.'<br> Have 25 points.",

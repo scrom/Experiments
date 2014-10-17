@@ -101,9 +101,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _currentLocation.getObject(objectName, null, null, verb);
         };
         var getObjectFromPlayerOrLocation = function(objectName, verb){
-            var locationArtefact = getObjectFromLocation(objectName, verb);
-            if (locationArtefact) {return locationArtefact;} 
-            else {return getObjectFromPlayer(objectName, verb);};
+            var playerArtefact = getObjectFromPlayer(objectName, verb);
+            if (playerArtefact) {return playerArtefact;}
+            else {return getObjectFromLocation(objectName, verb);};
         };
 
         var removeObjectFromPlayer = function(objectName){
@@ -122,9 +122,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         var removeObjectFromPlayerOrLocation = function(objectName){
-            var locationArtefact = removeObjectFromLocation(objectName);
-            if (locationArtefact) {return locationArtefact;} 
-            else { return removeObjectFromPlayer(objectName);};
+            var playerArtefact = removeObjectFromPlayer(objectName);
+            if (playerArtefact) {return playerArtefact;}
+            else { return removeObjectFromLocation(objectName);};
         };
 
         //empty the contents of a container into player or location inventory.
@@ -3055,7 +3055,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //console.log("Exit added: "+exitDestination);
                     };
                 };
-                if (missionReward.removeObject) { map.removeObject(missionReward.removeObject);};
+                if (missionReward.removeObject) { map.removeObject(missionReward.removeObject, mission.getDestination(), self);};
                 if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);}; //important! modify before remove
                 if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
                 if (missionReward.score) { _score += missionReward.score;};
@@ -3067,6 +3067,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 mission.processAffinityModifiers(map, missionReward);
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
             } else {
+                //normal mission success
                 if (missionReward.successMessage) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                 };
@@ -3099,7 +3100,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(),hidden);
                     };
                 };
-                if (missionReward.removeObject) { map.removeObject(missionReward.removeObject);};
+                if (missionReward.removeObject) { map.removeObject(missionReward.removeObject, mission.getDestination(), self);};
                 if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);}; //important! modify before remove
                 if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
                 if (missionReward.score) { _score += missionReward.score;};
