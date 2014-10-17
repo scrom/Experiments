@@ -311,17 +311,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var getObjectFromLocation = function(objectName){
             return _currentLocation.getObject(objectName);
         };
-        var getObjectFromPlayerOrLocation = function(objectName){
-            var locationArtefact = getObjectFromLocation(objectName);
-            if (locationArtefact) {return locationArtefact;} 
-            else {return getObjectFromPlayer(objectName);};
-        };
+
         var getObjectFromSelfPlayerOrLocation = function(objectName, player) {
-            var locationArtefact = getObjectFromLocation(objectName);
-            if (locationArtefact) {return locationArtefact;};
+            var artefact = _inventory.getObject(objectName);
+            if (artefact) {return artefact;};
+
             var playerArtefact = getObjectFromPlayer(objectName, player);
             if (playerArtefact) {return playerArtefact;};
-            return _inventory.getObject(objectName);
+
+            var locationArtefact = getObjectFromLocation(objectName);
+            return locationArtefact;
         };
 
 

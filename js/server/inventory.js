@@ -170,8 +170,8 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
     
         self.remove = function(anObjectName, searchCreatures) {
-                var localInventory = self.getAllObjects(true);
-                for(var index = 0; index < localInventory.length; index++) {
+                var localInventory = self.getAllObjects(true);               
+                for(var index = localInventory.length-1; index >= 0; index--) {
                     if (localInventory[index].syn(anObjectName)) {
                         var returnObject = _items[index];
                         localInventory.splice(index,1);
@@ -254,7 +254,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         //recursively gets objects in other objects
         //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
         self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, customAction) {
-            for(var index = 0; index < _items.length; index++) {
+            for(var index = _items.length-1; index >= 0; index--) {
                 if (ignoreSynonyms) {
                     if( _items[index].getName() == anObjectName ) {
                         //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
@@ -319,7 +319,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //this one doesn't cascade to contents of other objects.
         self.getObjectByType = function(anObjectType) {
-           for(var index = 0; index < _items.length; index++) {
+           for(var index = _items.length-1; index >= 0; index--) {
                 if(_items[index].getType() == anObjectType  && (!(_items[index].isHidden()))) {
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
@@ -330,7 +330,8 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //this one doesn't cascade to contents of other objects.
         self.getObjectBySubType = function(anObjectSubType) {
-           for(var index = 0; index < _items.length; index++) {
+            
+           for(var index = _items.length-1; index >= 0; index--) {
                 if(_items[index].getSubType() == anObjectSubType  && (!(_items[index].isHidden()))) {
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
