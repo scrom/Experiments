@@ -140,8 +140,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //if (artefact.getType() != 'container') {return ""};
 
-            //@todo - fix bug here when dropping an object and causing it to be destroyed.
-            //artefact is null because it's neither in the player nor location inventory.
+            //@warning - potential bug here when dropping an object and causing it to be destroyed.
+            //artefact may null because it's neither in the player nor location inventory.
+            if (!(artefact)) return "";
+
             var contents = artefact.getAllObjects(true); 
             var contentCount = contents.length;
 
@@ -2087,7 +2089,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 return notFoundMessage(artefactName);
             };
-
+ 
             resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
 
             if (artefact.getType() == "book") {
