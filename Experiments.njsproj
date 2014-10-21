@@ -49,8 +49,6 @@
     <Compile Include="js\client\main.js" />
     <Compile Include="js\client\response.js" />
     <Compile Include="js\client\ui.js" />
-    <Compile Include="js\client-watcher\client.js" />
-    <Compile Include="js\client-watcher\ui.js" />
     <Compile Include="js\server\action.js" />
     <Compile Include="js\server\artefact.js" />
     <Compile Include="js\server\config.js" />
@@ -95,7 +93,6 @@
     <Folder Include="data\usergames" />
     <Folder Include="js\" />
     <Folder Include="js\client" />
-    <Folder Include="js\client-watcher" />
     <Folder Include="js\server" />
     <Folder Include="js\server\test" />
     <Folder Include="js\server\test\testdata\" />
