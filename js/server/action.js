@@ -25,7 +25,7 @@ exports.Action = function Action(player, map, fileManager) {
 
 	    var objectName = "Action";
 
-        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'b','back'];
+        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'l','left', 'r','right', 'c','continue', 'b','back'];
 
         //private functions
 
@@ -532,11 +532,18 @@ exports.Action = function Action(player, map, fileManager) {
                             //note, if person types "get out of x"
                             break;
                         };
+                    case 'take':
+                        if (_object0.substr(0,6) == "apart ") {
+                            description = _player.dismantle(_verb+" apart",_object0.replace("apart ",""));
+                            break;
+                        };
                     case 'grab':
                     case 'collect':
-                    case 'take':
                     case 'remove':
                         description = _player.take(_verb, _object0, _object1); 
+                        break;
+                    case 'dismantle':
+                        description = _player.dismantle(_verb, _object0);
                         break;
                     case 'mug':
                         if ((!(_object1)) || (_object1 == "")) {
@@ -828,7 +835,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'climb':
                     case 'crawl':
                     case 'make':
-                    case 'dismantle': //loop through contents of an item and remove components
                     case 'delete':
                     case 'drive':
                     case 'ride':

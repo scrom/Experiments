@@ -1,6 +1,6 @@
 ﻿"use strict";
 //inventory object - used for player, creature and eventually object inventories
-module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBalance, ownerName) { //inputs for constructor TBC
+module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBalance, ownerName) {
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
 
@@ -346,7 +346,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].isComponentOf(anObjectName)) {
                     if((_items[index].chargesRemaining() > 0 || _items[index].chargesRemaining() < 0 ) && (!(_items[index].isBroken()) && !(_items[index].isDestroyed()))) {
-                        //console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                        console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                         returnObjects.push(_items[index]);
                     };// else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);};                     
                 };
@@ -355,7 +355,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     if (_items[index].isOpen()) {
                         //only confirm item from open, unlocked containers - this way we know the player has discovered them
                         var containerObjects = _items[index].getComponents(anObjectName);
-                        returnObjects = returnObjects.concat(containerObjects);
+                        if (containerObjects.length > 0) {
+                            returnObjects = returnObjects.concat(containerObjects);
+                        };
                     };
                 };
             };

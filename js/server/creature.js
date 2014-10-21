@@ -76,21 +76,38 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             switch(direction)
             {
                 case 'n':
-                    return 's'; 
+                    return 's';
+                    break; 
                 case 's':
                     return 'n';
+                    break;
                 case 'e':
                     return 'w';
+                    break;
                 case 'w':
                     return 'e';
+                    break;
                 case 'u':
                     return 'd';
+                    break;
                 case 'd':
                     return 'u';
+                    break;
                 case 'i':
                     return 'o';
+                    break;
                 case 'o':
-                    return 'i';   
+                    return 'i';
+                    break;
+                case 'l':
+                    return 'r';
+                    break;
+                case 'r':
+                    return 'l';
+                    break;
+                case 'c':
+                    return 'c'; 
+                    break;  
             }; 
             return null;       
         };
@@ -190,13 +207,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         processAttributes(attributes);
         
-        var validateType = function() {
+        var validateType = function(type) {
             var validobjectTypes = ["creature", "friendly", "animal"];
-            if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid creature type."};
-            //console.log(_name+' type validated: '+_type);
+            if (validobjectTypes.indexOf(type) == -1) { throw _type+" is not a valid creature type."};
+            //console.log(_name+' type validated: '+type);
         };
 
-        validateType();
+        validateType(_type);
 
         var processGender = function() {
             //set gender for more sensible responses
@@ -1608,7 +1625,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             _moves++;
 
-            self.setReturnDirection(oppositeOf(direction));
+                self.setReturnDirection(oppositeOf(direction));
 
             //slowly erode friendly attack count
             if (_friendlyAttackCount >0) {

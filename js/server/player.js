@@ -72,7 +72,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _locksOpened = 0;
         var _doorsOpened = 0;
 
-        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'b','back'];
+        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'b','back', 'l','left','r','right','c','continue'];
 
 	    var _objectName = "player";
 
@@ -1230,7 +1230,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             
-            //override default "unlock/pick"
+            //override default "unlock/pick/dismantle"
             if (artefact.checkCustomAction(verb)) {
                 return self.customAction(verb, artefactName);
             };
@@ -1639,6 +1639,78 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
 
             };
+
+
+        self.dismantle = function(verb, artefactName) {
+            //loop through contents of an item and remove components
+            var resultString;
+
+            if (stringIsEmpty(artefactName)){ return verb+" what?";};
+            var sourceObject = getObjectFromPlayerOrLocation(artefactName);
+            if (!(sourceObject)) {return notFoundMessage(artefactName);};
+
+            //check source is an artefact
+            if (sourceObject.getType() == 'creature') {
+                return  "It's probably better to 'ask' "+sourceObject.getSuffix()+" for what you want."; 
+            };
+
+
+            var tempString;
+            if (!(sourceObject.isOpen())) {
+                if (sourceObject.isLocked()) {
+                    tempString = self.unlock("dismantle", artefactName);
+                };
+                //still locked? - fail.
+                if (sourceObject.isLocked()) {
+                    tempString = tempString.replace("unlock", "open it up");
+                    return tempString;
+                };
+
+                self.open("open", artefactName);
+            };
+
+            //object is open.
+            var sourceInventory = sourceObject.getInventoryObject();
+            var components = sourceInventory.getComponents(sourceObject.getName());
+            var componentCount = components.length;
+            if (components.length == 0) { return "There's nothing to gain from dismantling "+sourceObject.getDisplayName()+".";};
+            var locationInventory = _currentLocation.getInventoryObject();
+            var collectedItemNames = [];
+            for (var c=0;c<components.length;c++) {
+                sourceObject.relinquish(components[c].getName(), self, locationInventory);
+                if (_inventory.check(components[c].getName(), true, false)) {
+                    collectedItemNames.push(components[c].getDescription());
+                };
+            };
+            if (collectedItemNames.length == 0) {return "You weren't able to remove any components from "+sourceObject.getDisplayName()+".";};
+            if (collectedItemNames.length < componentCount) {
+                resultString = "You didn't manage to remove all the components from "+sourceObject.getDisplayName()+" however you did retrieve ";
+            } else {
+                resultString = "You "+verb+" "+sourceObject.getDisplayName()+" and retrieve "; 
+            };
+
+            for (var i=0;i<collectedItemNames.length;i++) {
+                if (i > 0 && i < collectedItemNames.length - 1) { resultString += ', '; };
+                if (i > 0 && i == collectedItemNames.length - 1) { resultString += ' and '; };
+                resultString += collectedItemNames[i];
+            };
+
+            resultString += ".";
+
+            //50% chance of damaging...
+            var randomInt = Math.floor(Math.random() * 2);            
+            if (randomInt == 0) {
+                sourceObject.break(verb, false);
+                if (sourceObject.isBroken()) {
+                    resultString += "<br>Unfortunately you were a little ham-fisted with your dismantling skills and broke "+sourceObject.getDisplayName()+" as you were working.";
+                };
+            };
+
+            return resultString;
+
+            return "You don't seem to be able to dismantle "+sourceObject.getDisplayName()+".";
+
+        };
 
         /*Allow player to remove something from an object */
         self.remove = function(verb, artefactName, receiverName){

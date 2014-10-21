@@ -255,27 +255,34 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         processAttributes(attributes);
 
         var validateType = function(type, subType) {
-            var validobjectTypes = ['weapon','property','medical', 'cure','book','junk','treasure','food','tool','door','container', 'key', 'bed', 'light', 'scenery', 'writing'];
+            var validobjectTypes = ["weapon","property","medical", "cure","book","junk","treasure","food","tool","door","container", "key", "bed", "light", "scenery", "writing", "vehicle"];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.log(_name+' type validated: '+type);
 
             if (type == "weapon") {
-                var validWeaponSubTypes = ['','blunt','sharp','projectile'];
+                var validWeaponSubTypes = ["","blunt","sharp","projectile"];
                 if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
             };
 
             if (type == "tool") {
-                var validToolSubTypes = ['','buff','sharpen','assemble'];
+                var validToolSubTypes = ["","buff","sharpen","assemble"];
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
             };
 
             if (type == "scenery") {
                 _hidden = true; //scenery is not shown in inventory etc.
-                var validScenerySubTypes = ['','intangible'];
+                var validScenerySubTypes = ["","intangible"];
                 if (validScenerySubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
             };
+
+            if (type == "vehicle") {
+                var validVehicleSubTypes = ["", "car", "bike", "horse", "aeroplane", "train"];
+                if (validVehicleSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
+            };
+
+            
         };
 
         validateType(_type, _subType);
@@ -2144,11 +2151,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getMatchingKey = function(verb, inventoryObject) {
-            //find the strongest non-breakable key the player is carrying.
+            //find the strongest non-breakable key or tool the player is carrying.
             var keys = inventoryObject.getAllObjectsOfType('key');
+            keys = keys.concat(inventoryObject.getAllObjectsOfType('tool'));
             for(var index = 0; index < keys.length; index++) {
                 //player must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
-                if ((keys[index].getType() == 'key') && ((!(keys[index].isBreakable()))||verb == "pick")) {
+                if (((!(keys[index].isBreakable()))||verb == "pick"||verb == "dismantle")) {
                     if (keys[index].keyTo(self)) {
                         //console.log('Key found for: '+self.getName());
                         return keys[index];

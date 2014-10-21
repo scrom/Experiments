@@ -1,12 +1,12 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, isHidden) { //inputs for constructor TBC
+module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, isHidden) {
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aDirection;
         var _direction = aDirection;
         //var _description = aDescription;
-        var _directions = ['n','North','s','South','e','East','w','West','i','in','o','out','u','up','d','down'];
+        var _directions = ['n','North','s','South','e','East','w','West', 'l','left','r','right','i','in','o','out','u','up','d','down','c','continue'];
         
         //long names are in an array with short names, just 1 index later - pretty crappy but does the job
         var _longName = _directions[_directions.indexOf(_name)+1];
@@ -61,14 +61,14 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, i
         self.hide = function() {
             _hidden = true;
             var directionString = ": '"+_longName+"'";
-            if (_directions.indexOf(_name) < 8){directionString = " to the "+_longName;};
+            if (_directions.indexOf(_name) < 12){directionString = " to the "+_longName;};
             return "You close the exit"+directionString+"." 
         };
 
         self.show = function() {
             _hidden = false;
             var directionString = ": '"+_longName+"'";
-            if (_directions.indexOf(_name) < 8){directionString = " to the "+_longName;};
+            if (_directions.indexOf(_name) < 12){directionString = " to the "+_longName;};
             return "You reveal a new exit"+directionString+".";
         };
 

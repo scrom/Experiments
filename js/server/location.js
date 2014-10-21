@@ -15,7 +15,8 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _displayName = displayName || name.replace(/-/g," ");
         var _visits = 0;
         var _dark = false;
-        var _outdoor = false;
+        var _type = "indoor";
+        var _subType;
         var _start = false;
         var _blood = 0;
         var _playerTrace = 0;
@@ -39,7 +40,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         _displayName = initCap(_displayName);
 
         var compassSort = function(a,b) {
-            var orderedDirections = ['n','s','e','w','u','d','i','o'];
+            var orderedDirections = ['n','s','e','w','u','d','i','o','l','r','c'];
             if (orderedDirections.indexOf(a.getDirection()) < orderedDirections.indexOf(b.getDirection())) {return -1;};
             if (orderedDirections.indexOf(a.getDirection()) > orderedDirections.indexOf(b.getDirection())) {return 1;};
             return 0;
@@ -48,7 +49,8 @@ exports.Location = function Location(name, displayName, description, attributes)
         var processAttributes = function(locationAttributes) {
             if (!locationAttributes) {return null;}; //leave defaults preset
             if (locationAttributes.dark) {_dark = locationAttributes.dark;};
-            if (locationAttributes.outdoor) {_outdoor = locationAttributes.outdoor;};
+            if (locationAttributes.type) {_type = locationAttributes.type;};
+            if (locationAttributes.subType) {_subType = locationAttributes.subType;};
             if (locationAttributes.start) {_start = locationAttributes.start;};
             if (locationAttributes.blood) {_blood = locationAttributes.blood;};
             if (locationAttributes.playerTrace) {_playerTrace = locationAttributes.playerTrace;};
@@ -59,6 +61,14 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         processAttributes(attributes);
+        
+        var validateType = function(type, subType) {
+            var validobjectTypes = ["indoor", "outdoor"];
+            if (validobjectTypes.indexOf(type) == -1) { throw type+" is not a valid location type."};
+            //console.log(_name+' type validated: '+type);
+        };
+
+        validateType(_type, _subType);
 
         //public member functions
         self.toString = function() {
@@ -100,7 +110,8 @@ exports.Location = function Location(name, displayName, description, attributes)
             currentAttributes.blood = _blood;
             currentAttributes.playerTrace = _playerTrace;
             currentAttributes.creatureTraces = _creatureTraces;
-            currentAttributes.outdoor = _outdoor;
+            currentAttributes.type = _type;
+            currentAttributes.subType = _subType;
             currentAttributes.visits = _visits;
             currentAttributes.start = _start;
             currentAttributes.imageName = _imageName;  
@@ -114,7 +125,8 @@ exports.Location = function Location(name, displayName, description, attributes)
             var locationAttributes = self.getCurrentAttributes();
          
             if (locationAttributes.dark) {saveAttributes.dark = locationAttributes.dark;};
-            if (locationAttributes.outdoor) {saveAttributes.outdoor = locationAttributes.outdoor;};
+            if (locationAttributes.type != "indoor") {saveAttributes.type = locationAttributes.type;};
+            if (locationAttributes.subType) {saveAttributes.subType = locationAttributes.subType;};
             if (locationAttributes.visits >0) {saveAttributes.visits = locationAttributes.visits;};
             if (locationAttributes.blood >0) {saveAttributes.blood = locationAttributes.blood;};
             if (locationAttributes.playerTrace >0) {saveAttributes.playerTrace = locationAttributes.playerTrace;};
@@ -368,6 +380,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.check(anObjectName, ignoreSynonyms, searchCreatures);
         };
 
+        self.getType = function() {
+            return _type;
+        };
+
         self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, verb) {
             var returnObject = _inventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, verb);
             if (returnObject) { return returnObject;};
@@ -377,7 +393,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
 
             //autogenerate missing default scenery
-            if (((!(_outdoor)) && _defaultIndoorScenery.indexOf(anObjectName) >-1) || ((_outdoor) && _defaultOutdoorScenery.indexOf(anObjectName) >-1)) {
+            if (((self.getType() == "indoor") && _defaultIndoorScenery.indexOf(anObjectName) >-1) || ((self.getType() == "indoor") && _defaultOutdoorScenery.indexOf(anObjectName) >-1)) {
                 var canDrawOn = false;
                 if (_defaultIndoorScenery.indexOf(anObjectName) >-1) {
                     //it's a physical thing.

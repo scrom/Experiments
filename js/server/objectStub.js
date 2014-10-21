@@ -1,6 +1,6 @@
 ﻿"use strict";
 //object stub - copy this for new objects
-module.exports.ObjectStub = function ObjectStub() { //inputs for constructor TBC
+module.exports.ObjectStub = function ObjectStub() {
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
 

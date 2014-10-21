@@ -83,6 +83,7 @@
     <Compile Include="js\server\test\test-mission.test.js" />
     <Compile Include="js\server\test\test-player.get.test.js" />
     <Compile Include="js\server\test\test-player.test.js" />
+    <Compile Include="js\server\vehicle.js" />
     <Compile Include="js\server\watcher\watcher.js" />
     <Compile Include="js\server\test\stubs\stubFactory.js" />
   </ItemGroup>

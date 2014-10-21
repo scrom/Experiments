@@ -1,6 +1,6 @@
 "use strict";
 //contagion object
-exports.Contagion = function Contagion(name, displayName, attributes) { //inputs for constructor TBC
+exports.Contagion = function Contagion(name, displayName, attributes) {
     try {
         var self = this; //closure so we don't lose this reference in callbacks
 
