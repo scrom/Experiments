@@ -5,6 +5,7 @@ function Client(aServerHost, aServerPort, aUi) {
 	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Client";
         var username = '';
+        var _attributes = {};
         var gameId;
         var serverAddress = 'http://'+aServerHost; 
 	if (aServerPort) {
@@ -42,6 +43,25 @@ function Client(aServerHost, aServerPort, aUi) {
             username = response.getUsername();
             gameId = response.getGameId();
         };
+
+        var attributes = response.getAttributes();
+        if (attributes != "" && attributes != undefined){
+
+            if (attributes.bleeding) {
+                ui.bleed(true);
+            } else {
+                ui.bleed(false);
+            };
+
+            if (attributes.injuriesReceived > _attributes.injuriesReceived) {
+                var hitCount = attributes.injuriesReceived - _attributes.injuriesReceived;
+                ui.hit(hitCount, attributes.bleeding);
+            };
+
+            //copy to old attributes after processing
+            _attributes = attributes;
+        };
+
         if (response.getImage() != "" && response.getImage() != undefined){
             requestImage(response.getImage());
         } else {

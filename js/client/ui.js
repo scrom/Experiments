@@ -1,14 +1,16 @@
 "use strict";
 //main user interface interactions
-function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleArea, anImageArea) {
+function Ui(aBody, aStateArea, anInputField, anInputArea, aninteractionArea, anEventArea, aConsoleArea, anImageArea) {
     try{
 	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Ui";
+        var body = aBody;
         var console = aConsoleArea;
         var state = aStateArea;
         var events = anEventArea;
         var image = anImageArea;
         var input = anInputField;
+        var inputArea = anInputArea;
         var inputHistory = [];
         var inputHistoryIndex = 0;
         var interaction = aninteractionArea;
@@ -95,5 +97,45 @@ function Ui(aStateArea, anInputField, aninteractionArea, anEventArea, aConsoleAr
         _lastImageURL = ""; 
         image.removeClass("softBorder");   
         image.html("");
+    };
+
+    Ui.prototype.bleed = function(bleedBool) {
+        if (bleedBool) {
+            //state.style.backgroundColor = "#990000"; 
+            state.css('background-color','#220000');
+            interaction.css('background-color','#220000');
+            input.css('background-color','#220000');
+            inputArea.css('background-color','#220000');
+        } else {
+            //state.style.backgroundColor = "black"; 
+            state.css('background-color','black');
+            interaction.css('background-color','black');
+            input.css('background-color','black');
+            inputArea.css('background-color','black');
+        };
+    };
+
+    Ui.prototype.hit = function(hitCount, bleedBool) {
+        var flashColour = '#550000';
+        var originalColour = 'black';
+        if (bleedBool) {
+            flashColour = '#CC0000'
+            originalColour = '#220000';
+        };
+        for (var i=0;i<hitCount;i++) {
+            //flash ui elements
+            state.css('background-color',flashColour);
+            interaction.css('background-color',flashColour);
+            input.css('background-color',flashColour);
+            inputArea.css('background-color',flashColour);
+            body.css('color','white');
+            setTimeout(function(){               
+                state.css('background-color',originalColour);
+                interaction.css('background-color',originalColour);
+                input.css('background-color',originalColour);
+                inputArea.css('background-color',originalColour);
+                body.css('color','#00DD00');
+            }, 75);
+        };
     };
 };

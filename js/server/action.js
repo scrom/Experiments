@@ -46,7 +46,8 @@ exports.Action = function Action(player, map, fileManager) {
             _resultJson = '{"verb":"'+_verb+
                               '","object0":"'+_object0+
                               '","object1":"'+_object1+
-                              '","description":"'+resultDescription+'"';
+                              '","description":"'+resultDescription+
+                              '","attributes":'+_player.getClientAttributesString();
             if (imageName) {
                 //check image exists and only add to response if it does
                 if (_fm.imageExists(imageName)) {

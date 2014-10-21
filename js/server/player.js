@@ -511,6 +511,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString;
         };
 
+        self.getClientAttributesString = function() {
+            var resultString = '{"username":"'+_username+'"';
+            //resultString += ',"currentLocation":"'+_currentLocation.getDisplayName()+'"';
+            //resultString += ',"health":'+_hitPoints;
+            //resultString += ',"money":'+_inventory.getCashBalance();
+            //resultString += ',"score":'+_score;
+            resultString += ',"injuriesReceived":'+_injuriesReceived;
+            resultString += ',"bleeding":'+_bleeding;
+            resultString +='}';
+            return resultString;
+
+        };
+
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
 

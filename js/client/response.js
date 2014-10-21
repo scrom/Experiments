@@ -49,4 +49,8 @@ function Response(someJsonData, aConsole) {
                 return ''; //send empty string if we can't obtain username
             }
     };
+
+    Response.prototype.getAttributes = function() {
+        return response.attributes;
+    };
 };
