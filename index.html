@@ -16,10 +16,10 @@
     </head>
     <body>
         <header id="page_header">
+            <div id ="spacer1" class="spacer"></div>
         </header>
-        <div id ="spacer1" class="spacer"></div>
         <section id ="main">
-            <table>
+            <table class="noBorder">
                 <tr>
                     <td>
 	                    <div id = "interaction" class="softBorder smallBox verticalScroll"></div>
@@ -29,7 +29,7 @@
                 </tr>
             </table>
             <div id ="spacer2" class="spacer"></div>
-            <table>
+            <table class="noBorder">
                 <tr>
                     <td>
 	                    <div id="current_state" class="softBorder bigBox verticalScroll"></div>  
@@ -39,10 +39,15 @@
                 </tr>
             </table>
             <div id ="spacer3" class="spacer"></div>
-            <div id="user_input" class="softBorder oneLineBox">
-	            &gt;<input type="text" maxlength="254", size="80" class="textbox" id="input" autocomplete="off" />	    	    
-	        </div> 
-        
+            <table class="noBorder">
+                <tr>
+                    <td>
+                        <div id="user_input" class="softBorder oneLineBox">
+	                        &gt;<input type="text" maxlength="254", size="80" class="textbox" id="input" autocomplete="off" />	    	    
+	                    </div> 
+                    </td>
+                </tr>
+            </table>        
             <div id="server_events"> 
 	        </div>  
 	    

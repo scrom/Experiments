@@ -3,7 +3,7 @@
     "object": "location",
     "name": "atrium",
     "displayName": "Atrium",
-    "description": "You are standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the atrium area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
+    "description": "You're standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
     "attributes": {
       "start": true
     },

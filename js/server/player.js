@@ -2666,7 +2666,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     receiver.decreaseAffinity(1);
 
                     if (receiver.getSubType() == "friendly") {
-                        return resultString+receiver.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again. ";
+                        return receiver.hurt(0, self);
                     } else {
                         resultString += "You do no visible damage and end up coming worse-off. ";
                         resultString += receiver.hit(self);
@@ -3053,8 +3053,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _bleeding = false;
             self.recover(_maxHitPoints);
 
-            resultString += "<br><br>Well, that was pretty stupid. You really should look after yourself better.<br>"+
-                   "Fortunately, here at MVTA we have a special on infinite reincarnation - at least until Simon figures out how to kill you properly.<br>"+
+            resultString += "<br><br>Well that was foolish. You really should look after yourself better. "+
+                   "Fortunately, we currently have a special on infinite reincarnation. "+
                    "It'll cost you "+minusPoints+" points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" 
 
             var newLocationDescription = self.setLocation(_startLocation);

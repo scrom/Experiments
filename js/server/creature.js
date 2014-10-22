@@ -1723,15 +1723,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
 
-            _hitPoints -= pointsToRemove;
-            //should really bash weapon here in case it's breakable too.
-            if (self.isDead()) {return self.kill();};
+            if (pointsToRemove != 0) {
+                _hitPoints -= pointsToRemove;
+                //should really bash weapon here in case it's breakable too.
+                if (self.isDead()) {return self.kill();};
 
-            if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
+                if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
 
-            resultString += initCap(self.getDisplayName())+" is hurt. "+self.health();
+                resultString += initCap(self.getDisplayName())+" is hurt. "+self.health();
 
-            //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+                //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+            } else {
+               resultString += "You do no visible damage."; 
+            };
             return resultString;
 
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)

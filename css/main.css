@@ -47,6 +47,14 @@ a:link {
     padding:3px;
 }
 
+.noBorder
+{
+    border:0px;
+    padding:1px;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
 .verticalScroll
 {
    overflow-y:auto; 
@@ -55,13 +63,13 @@ a:link {
 
 .spacer
 {
-    height:3px;
+    height:1px;
     width:800px
 }
 
 .smallBox
 {
-    height:30vh;
+    height:35vh;
     width:800px
 }
 
