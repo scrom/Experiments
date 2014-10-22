@@ -1734,7 +1734,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
             } else {
-               resultString += "You do no visible damage."; 
+                if (!(attacker)) {
+                    resultString += "There's no sign of any physical harm done.";  
+                } else if (attacker.getType() == "player")  { 
+                   resultString += "You do no visible damage."; 
+                } else {
+                   resultString += "There's no sign of any physical harm done.";  
+                };
             };
             return resultString;
 
