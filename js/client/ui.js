@@ -150,13 +150,32 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
             interaction.css('background-color','#220000');
             input.css('background-color','#220000');
             inputArea.css('background-color','#220000');
+            statusBar.css('background-color','#220000');
         } else {
             //state.style.backgroundColor = "black"; 
             state.css('background-color','black');
             interaction.css('background-color','black');
             input.css('background-color','black');
             inputArea.css('background-color','black');
+            statusBar.css('background-color','black');
         };
+    };
+
+    Ui.prototype.flashStats = function(bleedBool) {
+        var flashColour = '#000088';
+        var originalColour = 'black';
+        if (bleedBool) {
+            originalColour = '#220000';
+        };
+
+        //flash ui elements
+        statusBar.css('background-color',flashColour);
+        statusBar.css('color','white');
+        setTimeout(function(){               
+            statusBar.css('background-color',originalColour);
+            statusBar.css('color','#00DD00');
+        }, 500);
+
     };
 
     Ui.prototype.hit = function(hitCount, bleedBool) {
@@ -167,19 +186,25 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
             originalColour = '#220000';
         };
         for (var i=0;i<hitCount;i++) {
+            self.cssFlash(flashColour,originalColour);
+        };
+    };
+
+    Ui.prototype.cssFlash = function(flashColour, originalColour) {
             //flash ui elements
             state.css('background-color',flashColour);
             interaction.css('background-color',flashColour);
             input.css('background-color',flashColour);
             inputArea.css('background-color',flashColour);
+            statusBar.css('background-color',flashColour);
             body.css('color','white');
             setTimeout(function(){               
                 state.css('background-color',originalColour);
                 interaction.css('background-color',originalColour);
                 input.css('background-color',originalColour);
                 inputArea.css('background-color',originalColour);
+                statusBar.css('background-color',originalColour);
                 body.css('color','#00DD00');
             }, 75);
-        };
     };
 };

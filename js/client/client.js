@@ -54,6 +54,10 @@ function Client(aServerHost, aServerPort, aUi) {
                 ui.hit(hitCount, attributes.bleeding);
             };
 
+            if (attributes.score != _attributes.score || attributes.money != _attributes.money) {
+                ui.flashStats(attributes.bleeding);
+            };
+
             //copy to old attributes after processing
             _attributes = attributes;
         };
