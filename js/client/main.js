@@ -6,9 +6,9 @@
     var client;
     var debug = false; //enable/disable client console logging
 	
-function init(body, statusBar, specialReport, state, input, inputArea, attributesArea, interaction, events, console, image) {
+function init(body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image) {
     //create UI
-	ui = new Ui(body, statusBar, specialReport, state, input, inputArea, attributesArea, interaction, events, console, image);
+	ui = new Ui(body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image);
     
     //create client
     client = new Client(serverHost, serverPort, ui);
