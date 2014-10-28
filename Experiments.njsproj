@@ -94,6 +94,7 @@
     <Folder Include="js\" />
     <Folder Include="js\client" />
     <Folder Include="js\server" />
+    <Folder Include="js\server\thirdparty\" />
     <Folder Include="js\server\test" />
     <Folder Include="js\server\test\testdata\" />
     <Folder Include="js\server\test\stubs" />
