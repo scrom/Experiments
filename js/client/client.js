@@ -48,14 +48,15 @@ function Client(aServerHost, aServerPort, aUi) {
         ui.setStatus(attributes);
 
         if (attributes != "" && attributes != undefined){
+            if (navigator.userAgent.indexOf("Chrome") >-1) {
+                if (attributes.injuriesReceived > _attributes.injuriesReceived) {
+                    var hitCount = attributes.injuriesReceived - _attributes.injuriesReceived;
+                    ui.hit(hitCount, attributes.bleeding);
+                };
 
-            if (attributes.injuriesReceived > _attributes.injuriesReceived) {
-                var hitCount = attributes.injuriesReceived - _attributes.injuriesReceived;
-                ui.hit(hitCount, attributes.bleeding);
-            };
-
-            if (attributes.score != _attributes.score || attributes.money != _attributes.money) {
-                ui.flashStats(attributes.bleeding);
+                if (attributes.score != _attributes.score || attributes.money != _attributes.money) {
+                    ui.flashStats(attributes.bleeding);
+                };
             };
 
             //copy to old attributes after processing
