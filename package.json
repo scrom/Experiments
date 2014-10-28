@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "IF-Node",
   "engines": {
-    "node": "0.10.x"
+    "node": "0.10.32"
   },
   "scripts": {
     "start": "node js/server/main.js"
