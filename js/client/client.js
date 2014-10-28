@@ -163,12 +163,15 @@ function Client(aServerHost, aServerPort, aUi) {
 
     //start Event Listening
     Client.prototype.listenForEvents = function() {
-        var esurl = serverAddress+"events";
-        //console.append('esurl='+esurl+'<br>');
-        var source = new EventSource(esurl);
-        source.addEventListener('message', function(e) { //listen for message type events
-                //console.append(e.data + ' (message id: ' + e.lastEventId+')');
-                ui.setEvent(e.data);
-        }, false);
+        //doesn't work on IE - so enable only for chrome for now.
+        if (navigator.userAgent.indexOf("Chrome") >-1) {
+            var esurl = serverAddress+"events";
+            //console.append('esurl='+esurl+'<br>');
+            var source = new EventSource(esurl);
+            source.addEventListener('message', function(e) { //listen for message type events
+                    //console.append(e.data + ' (message id: ' + e.lastEventId+')');
+                    ui.setEvent(e.data);
+            }, false);
+        };
     };
 };
