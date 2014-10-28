@@ -45,13 +45,9 @@ function Client(aServerHost, aServerPort, aUi) {
         };
 
         var attributes = response.getAttributes();
-        if (attributes != "" && attributes != undefined){
+        ui.setStatus(attributes);
 
-            if (attributes.bleeding) {
-                ui.bleed(true);
-            } else {
-                ui.bleed(false);
-            };
+        if (attributes != "" && attributes != undefined){
 
             if (attributes.injuriesReceived > _attributes.injuriesReceived) {
                 var hitCount = attributes.injuriesReceived - _attributes.injuriesReceived;

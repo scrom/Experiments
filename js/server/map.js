@@ -19,6 +19,11 @@ exports.Map = function Map() {
         //but might make all kinds of other work easier.
 
 	    var _objectName = "Map";
+
+        //captialise first letter of string.
+        var initCap = function(aString){
+            return aString.charAt(0).toUpperCase() + aString.slice(1);
+        };
         
         //custom sort
         var sortByProperty = function(property) {
@@ -491,14 +496,14 @@ exports.Map = function Map() {
             var contagionReport = "";
 
             for (var attr in contagionData) {
-                contagionReport+= attr+ " infection level: "+Math.round((contagionData[attr]/creatures.length)*100)+"%<br>";
+                contagionReport+= initCap(attr)+ " infection level: "+Math.round((contagionData[attr]/creatures.length)*100)+"%<br>";
             };
             for (var attr in antibodyData) {
-                contagionReport+= attr+ " immunity level: "+Math.round((antibodyData[attr]/creatures.length)*100)+"%<br>";
+                contagionReport+= initCap(attr)+ " immunity level: "+Math.round((antibodyData[attr]/creatures.length)*100)+"%<br>";
             };
 
-            if (deathTollData.friendly >0) {contagionReport+="Friendly death toll:"+deathTollData.friendly+"<br>";};
-            if (deathTollData.hostile >0) {contagionReport+="Hostile death toll:"+deathTollData.hostile+"<br>";};
+            if (deathTollData.friendly >0) {contagionReport+="Friendly death toll: "+deathTollData.friendly+"<br>";};
+            if (deathTollData.hostile >0) {contagionReport+="Hostile death toll: "+deathTollData.hostile+"<br>";};
 
             //console.log(contagionReport);
             return contagionReport;

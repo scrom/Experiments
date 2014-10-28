@@ -40,6 +40,11 @@ a:link {
     position: relative;
 }
 
+.textRight
+{
+    text-align: right;
+}
+
 .softBorder
 {
     border:2px solid;
@@ -64,43 +69,43 @@ a:link {
 .spacer
 {
     height:1px;
-    width:800px
+    width:800px;
 }
 
 .smallBox
 {
     height:35vh;
-    width:800px
+    width:800px;
 }
 
 .oneLineBox
 {
     height:25px;
-    width:800px
+    width:800px;
+}
+
+.halfLineBox
+{
+    height:15px;
+    width:800px;
 }
 
 .bigBox
 {
     height:45vh;
-    width:800px
-}
-
-.narrowBox
-{
-    height:45vh;
-    width:200px
+    width:800px;
 }
 
 .pictureBox
 {
     height:30vh;
-    width:30vh
+    width:30vh;
     
 }
 .inventoryBox
 {
     height:30vh;
-    width:30vh
+    width:220px;
 }
 
 td {
@@ -114,6 +119,7 @@ img{
 
 .softBorder.smallBox{}
 .softBorder.oneLineBox{}
+.softBorder.halfLineBox{}
 .softBorder.bigBox.verticalScroll{}
 .softBorder.smallBox.verticalScroll{}
 .softBorder.narrowBox.verticalScroll{}

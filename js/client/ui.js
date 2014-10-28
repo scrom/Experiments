@@ -1,11 +1,13 @@
 "use strict";
 //main user interface interactions
-function Ui(aBody, aStateArea, anInputField, anInputArea, aninteractionArea, anEventArea, aConsoleArea, anImageArea) {
+function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anInputArea, aninteractionArea, anEventArea, aConsoleArea, anImageArea) {
     try{
 	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Ui";
         var body = aBody;
         var console = aConsoleArea;
+        var statusBar = aStatusBar;
+        var specialReport = aSpecialReportArea;
         var state = aStateArea;
         var events = anEventArea;
         var image = anImageArea;
@@ -42,6 +44,48 @@ function Ui(aBody, aStateArea, anInputField, anInputArea, aninteractionArea, anE
         //we check this state on the keyboard input listener to prevent repeated keypresses if server response is slow
         input.disabled = false;
         input.focus();
+    };
+
+    Ui.prototype.setStatus = function(attributes) {
+        var money = 0;
+        var score = 0;
+        var contagion = "";
+        if (attributes) {
+            if (attributes.money) {
+                money = attributes.money;
+            };
+
+            if (attributes.score) {
+                score = attributes.score;
+            };
+            if (!score) {score = 0;};
+
+            /*
+            if (attributes.contagion) {
+            contagion = attributes.contagion;
+                //if there's active contagion...
+                if (contagion) {
+                    contagion = " <i><b>Contagion Report:</b></i><br>"+contagion;
+                    specialReport.addClass("softBorder");  
+                    specialReport.html(contagion);
+                } else { 
+                    specialReport.html("");
+                    specialReport.removeClass("softBorder");  
+                };
+            } else { 
+                specialReport.html("");
+                specialReport.removeClass("softBorder");  
+            };*/
+
+            if (attributes.bleeding) {
+                self.bleed(true);
+            } else {
+                self.bleed(false);
+            };
+        };
+        
+        money = money.toFixed(2);
+        statusBar.html("Score: "+score+" Cash: &pound;"+money);
     };
 
     Ui.prototype.setEvent = function(eventData) {

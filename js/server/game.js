@@ -98,6 +98,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
 
         self.state = function() {
             var resultString = '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+locationDescription+'"';
+            resultString += ',"attributes":'+_player.getClientAttributesString();
             if (locationImage) {
                 resultString += ',"image":"'+locationImage+'"';
             };
