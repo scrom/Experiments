@@ -88,6 +88,10 @@ a:link {
 {
     height:15px;
     width:800px;
+    transition:color 0.5s;
+    -webkit-transition:color 0.5s;
+    -moz-transition:color 0.5s;
+    -o-transition:color 0.5s;
 }
 
 .bigBox
