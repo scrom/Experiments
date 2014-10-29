@@ -1607,6 +1607,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.break = function(verb, deliberateAction) {
             if (_broken && deliberateAction) {return self.destroy(deliberateAction);};
+            var wasAlreadyDamaged = _damaged;
             _damaged = true;
             if (_breakable) {
                 _broken = true;
@@ -1616,13 +1617,19 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _detailedDescription = initCap(_itemDescriptivePrefix)+" broken.";
                 return "You broke "+_itemSuffix+"!";
             };
-            _detailedDescription += " "+_itemPrefix+" "+showsPlural()+" signs of abuse.";
-            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to break "+_itemSuffix+".";};
+
+            if (!wasAlreadyDamaged) {
+                _detailedDescription += "<br>"+_itemPrefix+" "+showsPlural()+" signs of abuse.";
+                if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
+            } else {
+                if (deliberateAction) {return "Try as you might, you can't seem to do any more harm to "+_itemSuffix+".";};
+            };
             return "";
         };
 
         self.destroy = function(deliberateAction) {
             if (_destroyed && deliberateAction) { return "There's not enough of "+_itemSuffix+" left to do any more damage to.";};
+            var wasAlreadyDamaged = _damaged;
             _damaged = true;
             if (_breakable) {
                 _broken = true;
@@ -1671,8 +1678,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 return resultString;
             };
-            _detailedDescription += _itemPrefix+" "+showsPlural()+" signs of abuse.";
-            if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
+            if (!wasAlreadyDamaged) {
+                _detailedDescription += "<br>"+_itemPrefix+" "+showsPlural()+" signs of abuse.";
+                if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
+            } else {
+                if (deliberateAction) {return "Try as you might, you can't seem to do any more harm to "+_itemSuffix+".";};
+            };
             return "";
         };
 

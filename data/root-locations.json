@@ -958,13 +958,48 @@
         "source": "camelids-b",
         "destination": "second-floor-north-west-corridor-north-east"
       }
-    ]
+    ],
+	"inventory": [
+          {
+            "object": "artefact",
+            "name": "hair",
+            "description": "hair clippings",
+            "detailedDescription": "Fine hair trimmings of assorted colours and thickness. None look long enough to do anything useful with.",
+            "attributes": {
+			  "type": "scenery",
+			  "plural": true,
+              "customAction": [
+                    "pick",
+                    "pick up",
+                    "get",
+                    "grab",
+                    "collect",
+                    "take",
+                    "remove"
+                  ],
+              "defaultResult": "They're too fine and embedded into the carpet to collect."
+            },
+            "synonyms": [
+              "hair clippings",
+              "clippings"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "carpet",
+            "description": "office carpet",
+            "detailedDescription": "Just a plain office carpet",
+            "attributes": {
+			  "type": "scenery"
+            }
+          }
+        ]
   },
   {
     "object": "location",
     "name": "core-area-east",
     "displayName": "Core area - DevOps corner",
-    "description": "You're in the CORE (DevOps) area. Looks like things are running well here at the moment.",
+    "description": "You're in the CORE (DevOps) area. From a quick scan of the walls and monitors it looks like things are running well here at the moment.",
     "exits": [
       {
         "object": "exit",
@@ -982,6 +1017,42 @@
       }
     ],
     "inventory": [
+{
+        "object": "artefact",
+        "name": "walls",
+        "description": "a wall full of assorted project and team status information",
+        "detailedDescription": "There's a bunch of graphs that go up and to the right. Everything must be great.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+		  "plural": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "wall",
+		  "graphs",
+		  "stats"
+        ]
+      },
+	{
+        "object": "artefact",
+        "name": "monitor",
+        "description": "flat-panel screen",
+        "detailedDescription": "It's cycling through web site statistics and error logs.",
+        "attributes": {
+		  "type": "scenery",
+          "weight": 51
+        },
+        "synonyms": [
+		  "screen",
+          "display",
+          "flat-panel",
+          "panel",
+          "flat panel",
+          "flat-panel screen",
+          "flat panel screen"
+        ]
+		},
       {
         "object": "creature",
         "name": "zara sheldrake",
@@ -1091,7 +1162,7 @@
     "object": "location",
     "name": "core-area-west",
     "displayName": "Core area - PM territory",
-    "description": "You're in the CORE Project Management zone. The team are battling the backlog of business requests and working their way to Cloud glory.",
+    "description": "You're in the CORE Project Management zone. The team have been battling the backlog of business requests and working their way to Cloud glory.",
     "exits": [
       {
         "object": "exit",
@@ -1114,7 +1185,39 @@
         "source": "core-area-west",
         "destination": "core-area-east"
       }
-    ]
+    ],
+	"inventory": [
+	{
+        "object": "artefact",
+        "name": "backlog",
+        "description": "a scattering of analysis documentation but nothing interesting",
+        "detailedDescription": "You pick through the few pieces of paperwork you can see lying around but there's nothing that particularly interests you.",
+        "attributes": {
+          "type": "scenery",
+		  "plural": true,
+		  "customAction": [
+                    "pick",
+                    "pick up",
+                    "get",
+                    "grab",
+                    "collect",
+                    "take",
+                    "remove"
+          ],
+          "defaultResult": "I think Brian, Ben and Zara need those, sorry."
+        },
+        "synonyms": [
+		  "paperwork",
+		  "analysis",
+		  "documentation",
+		  "cloud",
+          "requests",
+		  "business",
+		  "business requests",
+		  "request backlog"
+        ]
+      }
+	  ]
   },
   {
     "object": "location",
@@ -5145,6 +5248,7 @@
           "canDrawOn": true
         },
         "synonyms": [
+		  "library",
           "bookcase",
           "bookshelf",
           "bookcases",
