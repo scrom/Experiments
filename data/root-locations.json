@@ -1303,7 +1303,7 @@
     "object": "location",
     "name": "customer-delight-central",
     "displayName": "Customer Delight",
-    "description": "You're in the middle of the Customer Delight team area.<br>According to the lights, the build status is currently green.<br>You fight the urge to play with the lights.",
+    "description": "You're in the Customer Delight team area.<br>Dominating the middle of the area is a glass wall decorated with LED lights.",
     "exits": [
       {
         "object": "exit",
@@ -1335,6 +1335,29 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "lights",
+        "description": "a glass wall full of LED lights",
+        "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+		  "switched": true,
+		  "isOn": true,
+		  "plural": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "led lights",
+          "led",
+          "leds",
+          "glass",
+          "glass wall",
+          "walls",
+		  "wall"
+        ]
+      },
       {
         "object": "creature",
         "name": "chris george",
@@ -3584,7 +3607,7 @@
         "object": "artefact",
         "name": "torch",
         "description": "emergency torch",
-        "detailedDescription": "Great for when it's dark.",
+        "detailedDescription": "'10,000 candle power' apparently.<br>How do they calculate these things?<br>What sort of candle are they comparing it to?<br>Anyway, it's certainly bright enough to to find your way around here.",
         "attributes": {
           "defaultAction": "turn on",
           "weight": 1,
@@ -3594,7 +3617,6 @@
           "canCollect": true,
           "isBreakable": true,
           "burnRate": 0.2,
-          "canOpen": true,
           "switched": true,
           "requiredComponentCount": 1
         },
@@ -4537,7 +4559,7 @@
         "object": "artefact",
         "name": "coffee machine",
         "description": "coffee vending machine",
-        "detailedDescription": "Given the right ingedients it makes a variety of coffees.",
+        "detailedDescription": "Given the right ingredients it makes a variety of coffees.",
         "attributes": {
           "defaultAction": "get coffee from machine",
           "extendedInventoryDescription": "It's fully loaded with ",
@@ -6674,7 +6696,7 @@
         "object": "artefact",
         "name": "projector",
         "description": "projector",
-        "detailedDescription": "When these things work they're great.",
+        "detailedDescription": "It makes that happy, warm humming sound that only an old projector can give you.",
         "attributes": {
           "defaultAction": "turn on",
           "weight": 6,
@@ -7871,7 +7893,7 @@
             "shit",
             "crap"
           ],
-          "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels.",
+          "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels.<br>When you get a chance, you might want to drop an anonymous maintenance request to the Facilities Team to sort your mess out.",
           "imageName": "brokentoilet.jpg",
           "smell": "I'll leave it up to your imagination.",
           "canDrawOn": true

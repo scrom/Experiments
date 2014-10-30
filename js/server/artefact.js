@@ -809,15 +809,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString = resultString.replace("$inventory",_inventory.describe());
             };
 
-            if (_switched) {
+            //remove original description if it's not working.
+            if (!(self.checkComponents())) { 
+                resultString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
+                resultString = resultString.replace(_detailedDescription, "");
+            }  else if (_switched) {
                 if (!(self.hasPower())) {
                     resultString += "<br>"+initCap(_itemDescriptivePrefix)+" not working.";
+                    resultString = resultString.replace(_detailedDescription, "");
                 } else {
-                    resultString += "<br>"+initCap(_itemDescriptivePrefix)+" switched ";
-                    if(self.isPoweredOn()) {resultString += "on.";} else {resultString += "off.";};
+                    if(!(self.isPoweredOn())) {
+                        resultString += "<br>"+initCap(_itemDescriptivePrefix)+" switched off.";
+                        resultString = resultString.replace(_detailedDescription, "");
+                    };
                 };
-            } else if (!(self.checkComponents())) { 
-                resultString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
             } else {
                 if (_delivers.length > 0) {
                     //split delivers items into what can currently be delivered and what can't
@@ -942,6 +947,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString = resultString.replace(_initialDetailedDescription+" ","");
             };
 
+            if (resultString.substr(0,4) == "<br>") {resultString = resultString.substr(4)}; //trim opening line break if needed.
             return resultString;
         };
 
