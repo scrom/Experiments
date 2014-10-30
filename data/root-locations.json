@@ -959,41 +959,41 @@
         "destination": "second-floor-north-west-corridor-north-east"
       }
     ],
-	"inventory": [
-          {
-            "object": "artefact",
-            "name": "hair",
-            "description": "hair clippings",
-            "detailedDescription": "Fine hair trimmings of assorted colours and thickness. None look long enough to do anything useful with.",
-            "attributes": {
-			  "type": "scenery",
-			  "plural": true,
-              "customAction": [
-                    "pick",
-                    "pick up",
-                    "get",
-                    "grab",
-                    "collect",
-                    "take",
-                    "remove"
-                  ],
-              "defaultResult": "They're too fine and embedded into the carpet to collect."
-            },
-            "synonyms": [
-              "hair clippings",
-              "clippings"
-            ]
-          },
-          {
-            "object": "artefact",
-            "name": "carpet",
-            "description": "office carpet",
-            "detailedDescription": "Just a plain office carpet",
-            "attributes": {
-			  "type": "scenery"
-            }
-          }
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "hair",
+        "description": "hair clippings",
+        "detailedDescription": "Fine hair trimmings of assorted colours and thickness. None look long enough to do anything useful with.",
+        "attributes": {
+          "type": "scenery",
+          "plural": true,
+          "customAction": [
+            "pick",
+            "pick up",
+            "get",
+            "grab",
+            "collect",
+            "take",
+            "remove"
+          ],
+          "defaultResult": "They're too fine and embedded into the carpet to collect."
+        },
+        "synonyms": [
+          "hair clippings",
+          "clippings"
         ]
+      },
+      {
+        "object": "artefact",
+        "name": "carpet",
+        "description": "office carpet",
+        "detailedDescription": "Just a plain office carpet",
+        "attributes": {
+          "type": "scenery"
+        }
+      }
+    ]
   },
   {
     "object": "location",
@@ -1017,7 +1017,7 @@
       }
     ],
     "inventory": [
-{
+      {
         "object": "artefact",
         "name": "walls",
         "description": "a wall full of assorted project and team status information",
@@ -1025,26 +1025,26 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
-		  "plural": true,
+          "plural": true,
           "canDrawOn": true
         },
         "synonyms": [
           "wall",
-		  "graphs",
-		  "stats"
+          "graphs",
+          "stats"
         ]
       },
-	{
+      {
         "object": "artefact",
         "name": "monitor",
         "description": "flat-panel screen",
         "detailedDescription": "It's cycling through web site statistics and error logs.",
         "attributes": {
-		  "type": "scenery",
-          "weight": 51
+          "weight": 51,
+          "type": "scenery"
         },
         "synonyms": [
-		  "screen",
+          "screen",
           "display",
           "flat-panel",
           "panel",
@@ -1052,7 +1052,7 @@
           "flat-panel screen",
           "flat panel screen"
         ]
-		},
+      },
       {
         "object": "creature",
         "name": "zara sheldrake",
@@ -1186,38 +1186,38 @@
         "destination": "core-area-east"
       }
     ],
-	"inventory": [
-	{
+    "inventory": [
+      {
         "object": "artefact",
         "name": "backlog",
         "description": "a scattering of analysis documentation but nothing interesting",
         "detailedDescription": "You pick through the few pieces of paperwork you can see lying around but there's nothing that particularly interests you.",
         "attributes": {
           "type": "scenery",
-		  "plural": true,
-		  "customAction": [
-                    "pick",
-                    "pick up",
-                    "get",
-                    "grab",
-                    "collect",
-                    "take",
-                    "remove"
+          "plural": true,
+          "customAction": [
+            "pick",
+            "pick up",
+            "get",
+            "grab",
+            "collect",
+            "take",
+            "remove"
           ],
           "defaultResult": "I think Brian, Ben and Zara need those, sorry."
         },
         "synonyms": [
-		  "paperwork",
-		  "analysis",
-		  "documentation",
-		  "cloud",
+          "paperwork",
+          "analysis",
+          "documentation",
+          "cloud",
           "requests",
-		  "business",
-		  "business requests",
-		  "request backlog"
+          "business",
+          "business requests",
+          "request backlog"
         ]
       }
-	  ]
+    ]
   },
   {
     "object": "location",
@@ -1247,8 +1247,8 @@
         "destination": "second-floor-seating-area-west"
       }
     ],
-	"inventory": [
-	{
+    "inventory": [
+      {
         "object": "artefact",
         "name": "air",
         "description": "the tang of creativity",
@@ -1265,15 +1265,15 @@
           ],
           "defaultResult": "It's just a smell, not something you can keep - except in your memory and imagination.",
           "smell": "Sharpies. You can smell sharpies.<br>Sharpies smell of ideas!",
-		  "sound": "Clickety click, click, kerching!"
+          "sound": "Clickety click, click, kerching!"
         },
         "synonyms": [
-            "toner",
-            "creativitiy",
-            "tang"
+          "toner",
+          "creativitiy",
+          "tang"
         ]
       },
-	{
+      {
         "object": "artefact",
         "name": "clicks",
         "description": "the hum of busy marketers",
@@ -1281,7 +1281,7 @@
         "attributes": {
           "type": "scenery",
           "subType": "intangible",
-		  "plural": true,
+          "plural": true,
           "customAction": [
             "get",
             "take",
@@ -1293,11 +1293,11 @@
           "sound": "Clickety click, click, kerching!"
         },
         "synonyms": [
-            "click",
-            "cash"
+          "click",
+          "cash"
         ]
       }
-	]
+    ]
   },
   {
     "object": "location",
@@ -1436,7 +1436,7 @@
                   "displayName": "Party bus",
                   "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
                   "attributes": {
-					"type": "outdoor"
+                    "type": "outdoor"
                   },
                   "exits": [
                     {
@@ -5299,7 +5299,7 @@
           "canDrawOn": true
         },
         "synonyms": [
-		  "library",
+          "library",
           "bookcase",
           "bookshelf",
           "bookcases",
@@ -6624,7 +6624,7 @@
     "name": "pioneer",
     "displayName": "Pioneer meeting room",
     "description": "You're in the Pioneer meeting room. The acoustics in here seem very strange.",
-	"attributes": {
+    "attributes": {
       "echo": true
     },
     "exits": [
@@ -9425,12 +9425,12 @@
           "affinity": -1,
           "canTravel": true,
           "traveller": true,
-          "smell": "As you bend down and sniff the cat, it lashes out at you.",
-		  "sound": "Meow.",
           "avoiding": [
-          "atrium",
-          "first-floor-fire-escape"
-          ]
+            "atrium",
+            "first-floor-fire-escape"
+          ],
+          "smell": "As you bend down and sniff the cat, it lashes out at you.",
+          "sound": "Meow."
         },
         "synonyms": [
           "it",
