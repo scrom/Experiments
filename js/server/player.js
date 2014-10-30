@@ -2127,6 +2127,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return smell;
         };
 
+        self.listen = function (verb, artefactName) {
+            if (stringIsEmpty(artefactName)){artefactName = "air";};           
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+            var sound = artefact.getSound();
+            if (stringIsEmpty(sound)) {
+                var randomReplies = ["You don't hear anything out of the ordinary.", "You pause and listen carefully...<br>Nope, nothing there.", "You listen attentively to "+artefact.getDisplayName()+" but don't hear anything of note.", "You cup your ears (and hope nobody's watching) but can't hear anything out of the ordinary."];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return randomReplies[randomIndex];
+            };
+            return sound;
+        };
+
 
         self.examine = function(verb, artefactName, map) {
             var resultString = "";

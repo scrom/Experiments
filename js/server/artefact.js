@@ -67,6 +67,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _hasLinkedDoor = false;
         var _imageName;
         var _smell;
+        var _sound;
         var _contagion = [];
         var _antibodies = [];
         var _canDrawOn = false;
@@ -240,6 +241,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
             if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
+            if (artefactAttributes.sound != undefined) {_sound = artefactAttributes.sound;};     
             if (artefactAttributes.contagion != undefined) {
                 for (var i=0;i<artefactAttributes.contagion.length;i++) {
                     _contagion.push(new contagionObjectModule.Contagion(artefactAttributes.contagion[i].name, artefactAttributes.contagion[i].displayName, artefactAttributes.contagion[i].attributes));
@@ -387,6 +389,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             _smell = smell;
         };
 
+        self.getSound = function() {
+            return _sound;
+        };
+
+        self.setSound = function(sound) {
+            _sound = sound;
+        };
+
         self.getDefaultAction = function() {
             return _defaultAction;
         };
@@ -446,6 +456,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.hasLinkedDoor = _hasLinkedDoor;
             currentAttributes.imageName = _imageName;
             currentAttributes.smell = _smell;
+            currentAttributes.sound = _sound;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;
             currentAttributes.canDrawOn = _canDrawOn;
@@ -513,6 +524,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.hasLinkedDoor == true) { saveAttributes.hasLinkedDoor = artefactAttributes.hasLinkedDoor;};
             if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};  
             if (artefactAttributes.smell != undefined) {saveAttributes.smell = artefactAttributes.smell;};                
+            if (artefactAttributes.sound != undefined) {saveAttributes.sound = artefactAttributes.sound;};                
             if (artefactAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
                 for (var c=0;c<artefactAttributes.contagion.length;c++) {

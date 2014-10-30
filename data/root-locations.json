@@ -1246,7 +1246,58 @@
         "source": "creative-agency-area",
         "destination": "second-floor-seating-area-west"
       }
-    ]
+    ],
+	"inventory": [
+	{
+        "object": "artefact",
+        "name": "air",
+        "description": "the tang of creativity",
+        "detailedDescription": "There's something uplifting about it.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get",
+            "take",
+            "grab",
+            "collect",
+            "remove"
+          ],
+          "defaultResult": "It's just a smell, not something you can keep - except in your memory and imagination.",
+          "smell": "Sharpies. You can smell sharpies.<br>Sharpies smell of ideas!",
+		  "sound": "Clickety click, click, kerching!"
+        },
+        "synonyms": [
+            "toner",
+            "creativitiy",
+            "tang"
+        ]
+      },
+	{
+        "object": "artefact",
+        "name": "clicks",
+        "description": "the hum of busy marketers",
+        "detailedDescription": "Even when there's nobody here the clicks keep coming.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+		  "plural": true,
+          "customAction": [
+            "get",
+            "take",
+            "grab",
+            "collect",
+            "remove"
+          ],
+          "defaultResult": "If you <i>listen</i>, you might just get it.",
+          "sound": "Clickety click, click, kerching!"
+        },
+        "synonyms": [
+            "click",
+            "cash"
+        ]
+      }
+	]
   },
   {
     "object": "location",
@@ -9368,12 +9419,14 @@
         "detailedDescription": "It looks like a stray. I think it's hungry.",
         "attributes": {
           "weight": 3,
-          "attackStrength": 12,
+          "attackStrength": 6,
           "type": "animal",
           "health": 25,
           "affinity": -1,
           "canTravel": true,
           "traveller": true,
+          "smell": "As you bend down and sniff the cat, it lashes out at you.",
+		  "sound": "Meow.",
           "avoiding": [
           "atrium",
           "first-floor-fire-escape"

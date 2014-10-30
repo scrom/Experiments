@@ -61,6 +61,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 	    var _objectName = "creature";
         var _imageName;
         var _smell;
+        var _sound;
         var _contagion = [];
         var _antibodies = [];
         var _repairSkills = [];
@@ -179,6 +180,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
             if (creatureAttributes.smell != undefined) {_smell = creatureAttributes.smell;};                
+            if (creatureAttributes.sound != undefined) {_sound = creatureAttributes.sound;};                
             if (creatureAttributes.contagion != undefined) {
                 for (var i=0;i<creatureAttributes.contagion.length;i++) {
                     _contagion.push(new contagionObjectModule.Contagion(creatureAttributes.contagion[i].name, creatureAttributes.contagion[i].displayName, creatureAttributes.contagion[i].attributes));
@@ -405,11 +407,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.getSmell = function() {
+            var resultString;
+
+            if (!self.isDead()) {
+                self.decreaseAffinity(1, false);
+                resultString = "I don't think "+self.getPrefix().toLowerCase()+" appreciated being sniffed.<br>I'd not do that too often if I were you.";
+            };
+
+            if (resultString) {
+                if (_smell) {resultString = _smell+"<br>"+resultString;};
+                return resultString; //may be undefined
+            };
+
             return _smell;
+            
         };
 
         self.setSmell = function(smell) {
             _smell = smell;
+        };
+
+        self.getSound = function() {
+            return _sound;
+        };
+
+        self.setSound = function(sound) {
+            _sound = sound;
         };
 
         self.getCurrentLocation = function() {
@@ -495,6 +518,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.returnDirection = _returnDirection;  
             currentAttributes.imageName = _imageName;  
             currentAttributes.smell = _smell;  
+            currentAttributes.sound = _sound;  
                
             currentAttributes.contagion = _contagion;                     
             currentAttributes.antibodies = _antibodies;  
@@ -550,6 +574,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
             if (creatureAttributes.smell != undefined) {saveAttributes.smell = creatureAttributes.smell;};
+            if (creatureAttributes.sound != undefined) {saveAttributes.sound = creatureAttributes.sound;};
             if (creatureAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
                 for (var c=0;c<creatureAttributes.contagion.length;c++) {
@@ -1954,6 +1979,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _charges = Math.ceil(self.getWeight()/25);
             };
             _bleeding = false;
+            _smell = _genderPrefix+"'s not smelling so great. A bit like a cross between rotting meat and festival toilets.";
+            _sound = "There's nothing quite like the silence of the dead.";
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'a dead '+self.getDisplayName().replace("the ","");

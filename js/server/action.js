@@ -825,6 +825,10 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'smell':
                         description = _player.smell(_verb, _object0);
                         break;
+                    case 'listen':
+                        if (!_object0) {_object0 = _object1};
+                        description = _player.listen(_verb, _object0);
+                        break;
                     case 'repeat':
                     case 'again':
                     case 'g':
@@ -845,7 +849,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'feed': //give food or drink to creature (if specific food not specified, use lowest value)
                     case 'start':
                     case 'stop':
-                    case 'listen':
                     case 'knock':
                     case 'tie':
                     case 'untie':
