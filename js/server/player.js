@@ -2027,9 +2027,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.say = function(verb, speech, receiverName, map) {
                 //if (stringIsEmpty(speech)){ return verb+" what?";};
-                if (verb == "shout") {speech = speech.toUpperCase()+"!";};
+                if (verb == "shout") {
+                    if (_currentLocation.hasEcho()) {
+                        speech = speech.toUpperCase()+"!...  ..."+initCap(speech)+"... ..."+speech+"... ..."+speech.substr(1)+"... ..."+speech.substr(Math.ceil(speech.length/2))+"... ...."+speech.substr(speech.length-1)+".";
+                    } else {
+                        speech = speech.toUpperCase()+"!";
+                    };
+                    
+                };
 
-                if (stringIsEmpty(receiverName)){ return "'"+speech+"'";};
+                if (stringIsEmpty(receiverName)){ 
+                    return "'"+speech+"'";               
+                };
 
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);

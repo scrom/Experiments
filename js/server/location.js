@@ -15,6 +15,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _displayName = displayName || name.replace(/-/g," ");
         var _visits = 0;
         var _dark = false;
+        var _echo = false;
         var _type = "indoor";
         var _subType;
         var _start = false;
@@ -49,6 +50,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var processAttributes = function(locationAttributes) {
             if (!locationAttributes) {return null;}; //leave defaults preset
             if (locationAttributes.dark) {_dark = locationAttributes.dark;};
+            if (locationAttributes.echo) {_echo = locationAttributes.echo;};
             if (locationAttributes.type) {_type = locationAttributes.type;};
             if (locationAttributes.subType) {_subType = locationAttributes.subType;};
             if (locationAttributes.start) {_start = locationAttributes.start;};
@@ -107,6 +109,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             currentAttributes.animalCount = self.countCreatures("animal");
             currentAttributes.itemCount = _inventory.size(true);
             currentAttributes.dark = _dark;
+            currentAttributes.echo = _echo;
             currentAttributes.blood = _blood;
             currentAttributes.playerTrace = _playerTrace;
             currentAttributes.creatureTraces = _creatureTraces;
@@ -125,6 +128,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             var locationAttributes = self.getCurrentAttributes();
          
             if (locationAttributes.dark) {saveAttributes.dark = locationAttributes.dark;};
+            if (locationAttributes.echo) {saveAttributes.echo = locationAttributes.echo;};
             if (locationAttributes.type != "indoor") {saveAttributes.type = locationAttributes.type;};
             if (locationAttributes.subType) {saveAttributes.subType = locationAttributes.subType;};
             if (locationAttributes.visits >0) {saveAttributes.visits = locationAttributes.visits;};
@@ -532,6 +536,11 @@ exports.Location = function Location(name, displayName, description, attributes)
         self.setDark = function (isDark) {
             _dark = isDark;
             return _dark;
+        };
+
+        self.hasEcho = function () {
+            if (_echo) {return true;};
+            return false;
         };
 
         self.isStart = function () {

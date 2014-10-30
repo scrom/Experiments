@@ -2600,7 +2600,7 @@
     "object": "location",
     "name": "east-corridor-ground-floor-north-east",
     "displayName": "East corridor ground floor",
-    "description": "You're in the North end of the ground floor East corridor.",
+    "description": "You're at the North end of the ground floor East corridor.",
     "exits": [
       {
         "object": "exit",
@@ -2629,7 +2629,7 @@
     "object": "location",
     "name": "east-corridor-ground-floor-north-west",
     "displayName": "East corridor ground floor",
-    "description": "You're standing in the corridor just outside the post room.",
+    "description": "You're standing in a short corridor just outside the post room.",
     "exits": [
       {
         "object": "exit",
@@ -2658,7 +2658,7 @@
     "object": "location",
     "name": "east-end-south-corridor-ground-floor",
     "displayName": "South corridor ground floor",
-    "description": "You're in the East end of the South corridor on the ground floor.",
+    "description": "You're near the East end of the South corridor on the ground floor.",
     "exits": [
       {
         "object": "exit",
@@ -2734,7 +2734,7 @@
     "object": "location",
     "name": "east-south-end-corridor-ground-floor",
     "displayName": "East corridor ground floor",
-    "description": "You're in the South end of the East corridor on the ground floor.",
+    "description": "You're near the South end of the East corridor on the ground floor.",
     "exits": [
       {
         "object": "exit",
@@ -5619,7 +5619,7 @@
     "object": "location",
     "name": "northwest-corridor-ground-floor",
     "displayName": "West corridor ground floor",
-    "description": "You're in the North-West corridor of the ground floor.",
+    "description": "You're in the West corridor of the ground floor.",
     "exits": [
       {
         "object": "exit",
@@ -6573,6 +6573,9 @@
     "name": "pioneer",
     "displayName": "Pioneer meeting room",
     "description": "You're in the Pioneer meeting room. The acoustics in here seem very strange.",
+	"attributes": {
+      "echo": true
+    },
     "exits": [
       {
         "object": "exit",
@@ -9429,7 +9432,7 @@
     "object": "location",
     "name": "southeast-corridor-ground-floor",
     "displayName": "South corridor ground floor",
-    "description": "You're in the South-East corridor of the ground floor.",
+    "description": "You're at the South-East intersection of two corridors on the ground floor.",
     "exits": [
       {
         "object": "exit",
@@ -9458,7 +9461,7 @@
     "object": "location",
     "name": "southwest-corridor-ground-floor",
     "displayName": "South corridor ground floor",
-    "description": "You're in the South-West corridor of the ground floor.",
+    "description": "You're in the South-West corner intersection of two corridors of the ground floor. There is a meeting room to the West.",
     "exits": [
       {
         "object": "exit",
@@ -10147,7 +10150,7 @@
     "object": "location",
     "name": "west-corridor-ground-floor",
     "displayName": "West corridor ground floor",
-    "description": "You're in the West corridor of the ground floor.",
+    "description": "You're near the South end of the West corridor of the ground floor.",
     "exits": [
       {
         "object": "exit",
@@ -10176,7 +10179,7 @@
     "object": "location",
     "name": "west-end-south-corridor-ground-floor",
     "displayName": "South corridor ground floor",
-    "description": "You're in the West end of the South corridor on the ground floor.",
+    "description": "You're near the West end of the South corridor on the ground floor.",
     "exits": [
       {
         "object": "exit",
@@ -10205,7 +10208,7 @@
     "object": "location",
     "name": "windows-meeting-room",
     "displayName": "Windows meeting room",
-    "description": "You're in the 'Windows' meeting room.<br>It's a bit cramped in here and one of the walls is oddly curved wall for no obvious reason.",
+    "description": "You're in the 'Windows' meeting room.<br>It's a bit of a misnomer really as the meeting room next door has more windows. Perhaps it's just irony.<br>The room's slightly cramped with a small board, table and chairs but you can just about fit four people in here for a short meeting.<br>One of the walls is oddly curved for no obvious reason.",
     "exits": [
       {
         "object": "exit",
