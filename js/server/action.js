@@ -80,9 +80,9 @@ exports.Action = function Action(player, map, fileManager) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['with', 'into', 'in to', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'through', 'about', 'around', 'under', 'behind']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'into', 'in to', 'onto', 'on to', 'on top of', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'through', 'about', 'around', 'under', 'behind', 'above']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
-                var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid subsctring oddities
+                var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid substring oddities
                 if (objectPair != aString) { //split successful
                     //console.log('split using "'+splitWordArray[i]+'".');
                     _splitWord = splitWordArray[i];                  
@@ -455,7 +455,7 @@ exports.Action = function Action(player, map, fileManager) {
                         //};
                         break;
                     case 'move':
-                        //"move" may be either navigatio nor moving an item...
+                        //"move" may be either navigation or moving an item...
 
                         //translate to "move north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
