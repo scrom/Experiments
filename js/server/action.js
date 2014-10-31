@@ -454,9 +454,31 @@ exports.Action = function Action(player, map, fileManager) {
                         //    description += _player.hit(_verb,_object1,_object0);
                         //};
                         break;
+                    case 'move':
+                        //"move" may be either navigatio nor moving an item...
+
+                        //translate to "move north" etc. Overwrite the verb with direction. 
+                        //this will fall through to navigation later.
+                        if (_directions.indexOf(_object0) > -1) {
+                            _verb = _object0;
+                            break;
+                        };
+
+                        //if player enters "move to x", we'll have an object 1 (but no object 0).
+                        if (!_object0) {
+                            if (_object1) {
+                                if (_directions.indexOf(_object1) > -1) {
+                                    _verb = _object1;
+                                    break;
+                                };
+                            };
+                        };
+
+                        //if we've got to here the player isn't navigating somewhere
+                        //fall through to "shove"
                     case 'shove':
                     case 'press':
-                    case 'push':                   
+                    case 'push':                  
                         description = _player.shove(_verb, _object0);
                         break;
                     case 'pull':
