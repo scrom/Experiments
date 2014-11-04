@@ -1011,6 +1011,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             resultString = resultString.replace("placed on top", "placed on top of "+self.getSuffix());
             if (self.isDead()) {
                 if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; };
+
+                if ((_inventory.size() != _inventory.size(true))) {
+                    if (_inventory.getPositionedObjects(true).length > 0) {
+                        //something is hidden here
+                        //50% chance of spotting something amiss
+                        var randomInt = Math.floor(Math.random() * 2);
+                        if (randomInt > 0) {
+                            resultString += "<br>You notice something odd about "+self.getSuffix()+". "+self.getPrefix()+" might bear even closer inspection.";
+                        };  
+                    };
+                };
+
                 return resultString;
             };
 
