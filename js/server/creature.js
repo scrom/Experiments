@@ -1714,10 +1714,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.go = function(direction, aLocation) {
-            //@todo this if statement looks wrong.
+            //note, if direction is *not* set, we're placing a dead creature somewhere so process as normal.
+            //if direction *is* set, something called here when it shouldn't so we return early.
             if (direction && self.isDead()) {return ""}; 
-            //note, if direction is *not* set, we're placing a dead creature somewhere.
-            //if it *is* set, something called then when it shouldn't.
 
             _moves++;
 
@@ -2488,7 +2487,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.replace(" some ","");
                             artefactName = artefactName.replace(" a ","");
                             artefactName = artefactName.replace(" your ","");
-                            //@todo trap "can you give x to y" here in future.
                             return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
                         };
                     case 'will': //you/i /give/find/open/unlock
@@ -2500,6 +2498,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
                         if (stringStartsWith(remainderString, "you go ")) {
                             //player.ask (go)
+                        };
+                        if (stringStartsWith(remainderString, "you give ")) {
+                            //player.ask (give)
                         };
                         break;
                  */

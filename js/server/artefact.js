@@ -843,7 +843,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     var cannotDeliverList = [];
                     var combinesWithList = [];
                     for (var i = 0; i < _delivers.length; i++) {
-                        //@todo - this logic looks very wrong for "combinesWith" - can't tell what it's doing.
+                        //@todo - this logic looks very odd for "combinesWith" - can't tell what it's doing.
                         if (self.getCombinesWith().length>0) {combinesWithList.push(_delivers[i]); }
                         else if (self.canDeliver(_delivers[i].getName())) { 
                             if (_delivers[i].getPrice() > 0) {

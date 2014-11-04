@@ -1011,7 +1011,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return self.put("put", artefactName, suitableContainer.getName(), requiredContainer);
             };
         
-            //@todo - return positioned items to location - possibly do this in removeObjectFromLocation
             var collectedArtefact = removeObjectFromLocation(artefactName);
             if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";}; //just in case it fails for any other reason.
         
@@ -1032,7 +1031,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //update collectable artefacts count
                 if (!(artefact.isCollectable())) {collectibleArtefactCount --;};
 
-                                //bug workaround. get all won't auto-support required containers --V
+                //bug workaround. get all won't auto-support required containers --V
                 if ((artefact.isCollectable()) && (_inventory.canCarry(artefact)) && (!(artefact.requiresContainer()))) {
                     var artefactToCollect = getObjectFromLocation(artefact.getName());
                     _inventory.add(artefactToCollect);
@@ -1755,7 +1754,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //we know they *can* carry it...
                 if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
-                //@todo - ensure positioned items are returned to player inventory or location - probably in removeObjectFromPlayerOrLocation
                 var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
                 if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
@@ -1923,7 +1921,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
-            //@todo - ensure positioned objects are removed
             var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
             if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
@@ -2169,7 +2166,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //console.log('locationartefact');
                 if (!(artefact.isCollectable())) {return  "Sorry, "+givers[0].getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
                 if (!(givers[0].canCarry(artefact))) { return  "Sorry, "+givers[0].getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
-                //@todo - ensure positioned itesm are returned to location.
                 removeObjectFromLocation(artefactName);
                 resultString = givers[0].receive(artefact)+"<br>";
             };
@@ -2320,7 +2316,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };          
 
             return resultString;
-            //@todo - at this point, we should either return the item to the player and remove from wherever it is or at least promote it to its parent.
         };
 
         self.smell = function (verb, artefactName) {

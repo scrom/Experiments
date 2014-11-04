@@ -150,7 +150,6 @@ exports.Map = function Map() {
                 };
             };
             if (locationName.length >0) {
-                //@todo - should this be "getLocation" instead?
                 for (var i=0; i<_locations.length;i++) {
                     if (_locations[i].getName() == locationName) {
                         

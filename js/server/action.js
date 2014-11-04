@@ -582,6 +582,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'grab':
                     case 'collect':
                     case 'remove':
+                    case 'make':
                         description = _player.take(_verb, _object0, _object1); 
                         break;
                     case 'dismantle':
@@ -882,24 +883,25 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'play': //generally a custom verb already
                     case 'hum':
                     case 'whistle':
-                    case 'burn':
-                    case 'climb':
-                    case 'crawl':
-                    case 'make':
-                    case 'delete':
-                    case 'drive':
-                    case 'ride':
-                    case 'mount':
-                    case 'dismount':
+                    case 'burn': //relies on having either an ignition source or something else already burning.
+                    case 'climb': //see issue #295
+                    case 'crawl': //see issue #296
+                    case 'delete': //similar to "clean" or "clear" but specifically tech/data related.
+                    case 'drive': //cattle, cat etc out/to a location or car/bus but not so much bike. Tricky.
+                    case 'ride': //bike, horse but not car - some types vehicle or animal - animal should be larger than player.
+                    case 'mount': //disk drive or animal?
+                    case 'dismount': //disk drive or animal?
                     case 'unmount': //don't think this is a real verb but still...
                     case 'feed': //give food or drink to creature (if specific food not specified, use lowest value)
                     case 'start':
                     case 'stop':
                     case 'knock':
+                    case 'call':
+                    case 'phone':
                     case 'tie':
                     case 'untie':
-                    case 'undo':
-                    case 'touch':
+                    case 'undo': 
+                    case 'touch': //either activate something (like press) - or return a texture description
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;
@@ -1079,7 +1081,7 @@ exports.Action = function Action(player, map, fileManager) {
 
             //final fall-through
             if ((description == undefined)||(description == "")){
-                description = self.catchPlayerNotUnderstood(); //@todo: this might not work as it references "act"
+                description = self.catchPlayerNotUnderstood(); //@bug: this might not work as it references "act"
             } else {
                 //reset consecutive user errors
                 _failCount = 0; 

@@ -357,7 +357,6 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (ignoreSynonyms) {
                     if( _items[index].getName() == anObjectName ) {
                         //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
-                        //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
                         if (!(customAction)) {
                             return _items[index];
                         };
@@ -370,7 +369,6 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 } else {
                     if(_items[index].syn(anObjectName) ) {
                         //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
-                        //_items[index].show(); //@todo this might not work or cause off problems with hidden objects
                         if (!(customAction)) {
                             return _items[index];
                         };
