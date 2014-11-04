@@ -1581,7 +1581,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var artefact = getObjectFromPlayerOrLocation(artefactName);
                 if (!(artefact)) {return notFoundMessage(artefactName);};
 
-                if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
+                if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";};
 
                 if (on && verb == "hide") {
                     return "You're welcome to <i>put</i> "+artefact.getSuffix()+" "+position+" there but I'm afraid "+artefact.getSuffix()+"'ll still be in plain sight.";
@@ -1631,7 +1631,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(receiver.canCarry(artefact, positionName))) { return  "Sorry, "+receiver.getDisplayName()+" doesn't have room for "+artefact.getSuffix()+" at the moment.";};
 
                 var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
-                if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
+                if (!(collectedArtefact)) { return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";};
 
                 //put the x in the y
                 var receiverDisplayNameString = receiver.getDisplayName();
