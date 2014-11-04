@@ -13,6 +13,7 @@ exports.Action = function Action(player, map, fileManager) {
 
         //action string components
         var _actionString = '';
+        var _lastActionString = '';
         var _verb = '';
         var _splitWord = '';
         var _objects = []; //objects and creatures
@@ -869,6 +870,12 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'repeat':
                     case 'again':
                     case 'g':
+                        if (_lastActionString != "" && _lastActionString != "g" && _lastActionString != "again" && _lastActionString != "repeat") {
+                            description = "Last action: <i>'"+_lastActionString+"'</i><br>"+self.processAction(_lastActionString);
+                        } else {
+                            description = "Sorry, try something else.";
+                        };
+                        break;
                     case 'play': //generally a custom verb already
                     case 'hum':
                     case 'whistle':
@@ -1142,6 +1149,9 @@ exports.Action = function Action(player, map, fileManager) {
                 } catch (err) {console.log(err.stack);};
             };
 
+
+            //store this action as "last" action
+            _lastActionString = _actionString;
 
             //we're done processing, build the results...
             return returnResultAsJson(description, imageName);
