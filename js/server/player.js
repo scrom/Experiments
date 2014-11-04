@@ -159,47 +159,36 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //artefact may null because it's neither in the player nor location inventory.
             if (!(artefact)) return "";
 
-            var contents = artefact.getAllObjects(true); 
+            //note, we clone the array we get back as we're removing objects referenced in the original later.
+            var contents = artefact.getAllObjects(true).slice(); 
             var contentCount = contents.length;
 
             //exit early if no contents.
             if (contentCount == 0) return "";
 
-            //console.log("Removing "+contentCount+" items from wreckage/remains.");
-            for (var i=0; i<contents.length;i++) {
-                //console.log("Contents "+contents[i].getName());
-            };
-
             var objectToRemove;
             for (var i=0; i<contents.length;i++) {
                 //console.log("i="+i);
                 //console.log("Removing "+contents[i].getName()+" from wreckage.");
-                if (locationArtefact) {
-                    objectToRemove = locationArtefact.getObject(contents[i].getName());
-                    if (objectToRemove.requiresContainer()) {
-                        //console.log(objectToRemove.getName()+" lost.");
-                        lostObjectCount++;
-                    } else {
-                        _currentLocation.addObject(objectToRemove);
-                        //console.log(objectToRemove.getName()+" saved.");
-                    };
+                
+                objectToRemove = artefact.getObject(contents[i].getName());
+                if (objectToRemove.requiresContainer()) {
+                    //console.log(objectToRemove.getName()+" lost.");
+                    lostObjectCount++;
                 } else {
-                    objectToRemove = artefact.getObject(contents[i].getName());
-                    if (objectToRemove.requiresContainer()) {
-                        //console.log(objectToRemove.getName()+" lost.");
-                        lostObjectCount++;
+                    if (locationArtefact) {
+                        _currentLocation.addObject(objectToRemove);
                     } else {
                         _inventory.add(objectToRemove);
-                        //console.log(objectToRemove.getName()+" saved.");
                     };
+                    //console.log(objectToRemove.getName()+" saved.");
                 };
             };
 
             //once the objects are in their new homes, we can remove them from the old.
             //this resolves array index splicing issues (splicing an array being iterated over causes odd results)
             for (var i=0; i<contents.length;i++) {
-                if (locationArtefact) { locationArtefact.removeObject(contents[i].getName()); }
-                else { artefact.removeObject(contents[i].getName()); };
+                artefact.removeObject(contents[i].getName());
             };
 
             var contents = "contents";
@@ -1103,6 +1092,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 removeObjectFromPlayerOrLocation(artefact.getName());
             };
             return resultString;
+        };
+
+        self.empty = function(verb, artefactName) {
+            if (stringIsEmpty(artefactName)){ return verb+" what?";};
+
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            var resultString = emptyContentsOfContainer(artefactName);
+
+            if (resultString == "") {return "It doesn't look like there was anything to "+verb+" out there.";};
+
+            return "You "+verb+" "+artefact.getDisplayName()+"."+resultString;
         };
 
         /*allow player to drop an object*/
@@ -3317,7 +3319,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _contagion = [];
 
             //drop all objects and return to start
-            var inventoryContents = _inventory.getAllObjects(true);
+            //note, we clone the array we get back as we're removing objects referenced in the original.
+            var inventoryContents = _inventory.getAllObjects(true).slice();
             for(var i = 0; i < inventoryContents.length; i++) {
                 _currentLocation.addObject(removeObjectFromPlayer(inventoryContents[i].getName()));
             }; 

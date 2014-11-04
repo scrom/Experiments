@@ -445,6 +445,9 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'fill':
                         description = _player.put(_verb, _object1, _object0);
                         break;
+                    case 'empty':
+                        description = _player.empty(_verb, _object0);
+                        break;
                     case 'water':
                         //either "water plant" or "water plant with milk"
                         //in future, "water horse" would translate to feed water to horse"
@@ -879,7 +882,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'play': //generally a custom verb already
                     case 'hum':
                     case 'whistle':
-                    case 'empty':
                     case 'burn':
                     case 'climb':
                     case 'crawl':

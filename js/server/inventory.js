@@ -214,7 +214,8 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.remove = function(anObjectName, searchCreatures) {
                 var localInventory = self.getAllObjects(true);               
                 for(var index = localInventory.length-1; index >= 0; index--) {
-                    if (localInventory[index].syn(anObjectName)) {
+                    //find by name first
+                    if (localInventory[index].getName() == anObjectName) {
                         var returnObject = _items[index];
                         localInventory.splice(index,1);
                         //console.log(anObjectName+" removed from "+_ownerName+" inventory");
@@ -249,6 +250,18 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         };
                     };
                 };
+
+                //find by synonym if not already returned.
+                for(var index = localInventory.length-1; index >= 0; index--) {
+                    if (localInventory[index].syn(anObjectName)) {
+                        var returnObject = _items[index];
+                        localInventory.splice(index,1);
+                        //console.log(anObjectName+" removed from "+_ownerName+" inventory");
+                        returnObject.show();
+                        return returnObject;
+                    };
+                };
+
                 //console.log(_ownerName+" is not carrying "+anObjectName);
                 return null;
         };
