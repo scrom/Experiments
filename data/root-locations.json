@@ -634,7 +634,7 @@
               "type": "key",
               "canCollect": true,
               "affinityModifier": -1,
-              "isHidden": true,
+              "hidden": true,
               "unlocks": "lawyer door"
             },
             "synonyms": [
@@ -2599,7 +2599,7 @@
               "lockable": true,
               "locked": true,
               "price": 25,
-              "isHidden": true,
+              "hidden": true,
               "customAction": [
                 "ride",
                 "cycle"
@@ -5912,7 +5912,7 @@
       {
         "object": "artefact",
         "name": "nerf gun",
-        "description": "a nerf gun",
+        "description": "nerf gun",
         "detailedDescription": "It's loaded! :D An unlucky shot with this could take someone's eye out.",
         "attributes": {
           "weight": 2,
@@ -7618,7 +7618,7 @@
               ]
             },
             "conditionAttributes": {
-              "isHidden": true
+              "hidden": true
             },
             "reward": {
               "score": 50,

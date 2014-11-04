@@ -552,8 +552,13 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.listObjects();
         };
 
-        self.creaturesExist = function() {
-            if (self.getCreatures().length > 0) {return true;};
+        self.liveCreaturesExist = function() {
+            var creatures = self.getCreatures();
+            if (creatures.length > 0) {
+                for (var i=0;i<creatures.length;i++) {
+                    if (!(creatures[i].isDead())) { return true;};
+                };
+            };
             return false;
         };
 

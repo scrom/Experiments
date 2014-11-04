@@ -239,7 +239,7 @@ exports.Map = function Map() {
 
                 //if (newDescription.length >0) { objectToModify.setDescription(newDescription);};
                 for (var v=0;v<inventory.length;v++) {
-                    objectInventory.add(inventory[v], true);  
+                    objectInventory.forceAdd(inventory[v]);  
                 };
             };
         };

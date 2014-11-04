@@ -26,7 +26,7 @@ exports.Action = function Action(player, map, fileManager) {
 	    var objectName = "Action";
 
         var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'l','left', 'r','right', 'c','continue', 'b','back'];
-
+        var _positions =  ['onto', 'on to', 'on top of', 'on', 'above', 'under', 'underneath', 'below', 'beneath', 'behind']; //split words that are also "put" positions.
         //private functions
 
         //captialise first letter of string.
@@ -80,7 +80,7 @@ exports.Action = function Action(player, map, fileManager) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['with', 'into', 'in to', 'onto', 'on to', 'on top of', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'through', 'about', 'around', 'under', 'behind', 'above']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'into', 'in to', 'onto', 'on to', 'on top of', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'through', 'about', 'around', 'under', 'below', 'behind', 'above']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid substring oddities
                 if (objectPair != aString) { //split successful
@@ -354,9 +354,13 @@ exports.Action = function Action(player, map, fileManager) {
                         if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
                         
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
-                        //@todo would be good to support "look under", "look behind" and "look in"
                         if (_object1) {
-                            description = _player.examine(_verb+" "+_splitWord,_object1, _map);
+                            if (_positions.indexOf(_splitWord) > -1) {
+                                //support "look under", "look behind" and "look in" etc.
+                                description = _player.search(_verb, _object1, _splitWord, _positions);
+                            } else {
+                                description = _player.examine(_verb+" "+_splitWord,_object1, _map);
+                            };
                         } else {
                             description = _player.examine(_verb, _object0, _map);
                         };
@@ -376,8 +380,12 @@ exports.Action = function Action(player, map, fileManager) {
                         break;  
                     case 'inspect': 
                     case 'search':    
-                        //would like to add "search for x" support here in future.              
-                        description = _player.search(_verb, _object0);
+                        //would like to add "search for x" support here in future.  
+                        if (!_object0) {
+                            description = _player.search(_verb, _object1, _splitWord, _positions);
+                        } else {            
+                            description = _player.search(_verb, _object0);
+                        };
                         break;
                     case 'ex':
                     case 'x':
@@ -416,9 +424,16 @@ exports.Action = function Action(player, map, fileManager) {
 
                         //or fall through to normal "put"
                     case 'hide':
-                    case 'combine':
+                    case 'balance':
+                        if (_positions.indexOf(_splitWord) > -1) {
+                            //put or hide an item on/under/behind x
+                            description = _player.position(_verb, _object0, _object1, _splitWord, _positions);
+                            break;
+                        };
                     case 'attach':
                     case 'stick':
+                        //I'd like to do something smarter with sticking items to others - they're on the surface, not in them.
+                    case 'combine':
                     case 'install':
                     case 'insert':
                     case 'join':

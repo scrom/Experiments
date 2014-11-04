@@ -64,6 +64,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _liquid = false;
         var _holdsLiquid = false;
         var _hidden = false; 
+        var _position; 
         var _hasLinkedDoor = false;
         var _imageName;
         var _smell;
@@ -237,7 +238,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (artefactAttributes.holdsLiquid != undefined) {_holdsLiquid = artefactAttributes.holdsLiquid;};
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
-            if (artefactAttributes.isHidden != undefined) {_hidden = artefactAttributes.isHidden;};
+            if (artefactAttributes.hidden != undefined) {_hidden = artefactAttributes.hidden;};
+            if (artefactAttributes.position != undefined) { _position = artefactAttributes.position; };
             if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
             if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
@@ -452,7 +454,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.requiredContainer = _requiredContainer;
             currentAttributes.isLiquid = _liquid;
             currentAttributes.holdsLiquid = _holdsLiquid;
-            currentAttributes.isHidden = _hidden;
+            currentAttributes.hidden = _hidden;
+            currentAttributes.position = _position;
             currentAttributes.hasLinkedDoor = _hasLinkedDoor;
             currentAttributes.imageName = _imageName;
             currentAttributes.smell = _smell;
@@ -514,7 +517,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.price != 0) { saveAttributes.price = artefactAttributes.price; };
             if (artefactAttributes.switched == true) {saveAttributes.switched = true;};
             if (artefactAttributes.isOn == true) {saveAttributes.isOn = true;};
-            if (artefactAttributes.isHidden == true && artefactAttributes.type != "scenery") {saveAttributes.isHidden = artefactAttributes.isHidden;};
+            if (artefactAttributes.hidden == true && artefactAttributes.type != "scenery") {saveAttributes.hidden = artefactAttributes.hidden;};
+            if (artefactAttributes.position != "") { saveAttributes.position = artefactAttributes.position; };            
             if (artefactAttributes.unlocks != "") {saveAttributes.unlocks = artefactAttributes.unlocks;};
             if (artefactAttributes.componentOf.length > 0) { saveAttributes.componentOf = artefactAttributes.componentOf; };
             if (artefactAttributes.combinesWith != "") { saveAttributes.combinesWith = artefactAttributes.combinesWith; };            
@@ -807,7 +811,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString += _extendedInventoryDescription;
 
                 resultString = resultString.replace("$inventory",_inventory.describe());
+                
+            } else if ((_inventory.size() > 0)) {
+                var positionedItems =  _inventory.describePositionedItems();
+                if (positionedItems.length >0) {
+                    resultString += positionedItems+"."; 
+                };              
             };
+
+            resultString = resultString.replace("placed on top", "placed on top of "+self.getSuffix());
 
             //remove original description if it's not working.
             if (!(self.checkComponents())) { 
@@ -929,13 +941,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             
-            if ((_inventory.size() != _inventory.size(true)) && inventoryIsVisible) {
-                //something is hidden here
-                //50% chance of spotting something amiss
-                var randomInt = Math.floor(Math.random() * 2);
-                if (randomInt > 0) {
-                    resultString += "<br>You notice something odd about "+self.getDisplayName()+". "+self.getPrefix()+" might bear even closer inspection.";
-                };  
+            if ((_inventory.size() != _inventory.size(true))) {
+                if ( inventoryIsVisible || (_inventory.getPositionedObjects(true).length > 0)) {
+                    //something is hidden here
+                    //50% chance of spotting something amiss
+                    var randomInt = Math.floor(Math.random() * 2);
+                    if (randomInt > 0) {
+                        resultString += "<br>You notice something odd about "+self.getDisplayName()+". "+self.getPrefix()+" might bear even closer inspection.";
+                    };  
+                };
             };
 
             if (_imageName) {
@@ -1103,7 +1117,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.show = function() {
             _hidden = false;
+            _position = null;
             return _hidden;
+        };
+
+        self.getPosition = function() {
+            return _position;
+        };
+
+        self.setPosition = function(position) {
+            _position = position;
+            return _position;
         };
 
         self.isDead = function() {
@@ -1306,13 +1330,29 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.getCarryWeight();
         };
 
-        self.canCarry = function(anObject) {
+        self.canCarry = function(anObject, position) {
             //broken containers can't contain anything
             if (self.isDestroyed()) {return false};
-            if (self.getType() == "container" && self.isBroken()) {return false;};
             if (anObject.isLiquid() && (!(self.holdsLiquid()))) {return false;};
+            if (position) {
+                //can't carry something bigger than self
+                if (anObject.getWeight() > self.getWeight()) {
+                    return false;
+                };
+
+                //is the space already taken?
+                if (_inventory.getObjectByPosition(position, true)) {
+                    return false; 
+                };
+
+                return true;
+            };   
+
+            if (self.getType() == "container" && self.isBroken()) {return false;};
             if (self.isLocked()) {return false;};
+
             return _inventory.canCarry(anObject);
+
         };
 
         self.getObject = function(anObjectName) {
@@ -1324,8 +1364,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.check(anObjectName);
         };
 
-        self.showHiddenObjects = function() {
-            return _inventory.showHiddenObjects();
+        self.listHiddenObjects = function(position, location) {
+            return _inventory.listHiddenObjects(position, location);
+        };
+
+        self.showHiddenObjects = function(position, location) {
+            return _inventory.showHiddenObjects(position, location);
+        };
+
+        self.getHiddenObjects = function(position, location) {
+            return _inventory.getHiddenObjects(position, location);
         };
 
         self.getAllObjects = function(includeHiddenObjects) {
@@ -2112,6 +2160,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             return "You're now carrying "+objectToGive.getDescription()+".";
+        };
+
+        self.position = function(anObject, position) {
+            if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" concealing anything.";};
+
+            var objectAlreadyInPlace = _inventory.getObjectByPosition(position);
+            if (objectAlreadyInPlace) {
+                if (objectAlreadyInPlace.getName() == anObject.getName()) {return initCap(_itemDescriptivePrefix)+" already there.";};
+                return "There's already something "+position+" there."
+            };
+            _inventory.position(anObject, position);            
+            return self.getDisplayName()+" now has "+anObject.getDescription()+" "+position+" "+self.getSuffix()+".";
         };
 
         self.receive = function(anObject) {

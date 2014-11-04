@@ -35,6 +35,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _salesInventory = new inventoryObjectModule.Inventory(250, 0.00, _name); //carry weight gets updated by attributes
         var _missions = [];
         var _collectable = false; //can't carry a living creature
+        var _hidden = false;
+        var _position;
         var _bleeding = false;
         var _edible = false; //can't eat a living creature
         var _charges = 0;
@@ -141,6 +143,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if (creatureAttributes.canCollect  != undefined) { _collectable= creatureAttributes.canCollect;};
+            if (creatureAttributes.hidden != undefined) { _hidden = creatureAttributes.hidden; };
+            if (creatureAttributes.position != undefined) { _position = creatureAttributes.position; };
             if (creatureAttributes.isEdible  != undefined) { _edible = creatureAttributes.isEdible;};
             if (creatureAttributes.charges != undefined) {_charges = creatureAttributes.charges};
             //allow explicit setting of maxHealth
@@ -495,6 +499,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.money = _inventory.getCashBalance();
             currentAttributes.canCollect = _collectable;
+            currentAttributes.hidden = _hidden;
+            currentAttributes.position = _position;
             currentAttributes.isEdible = _edible;
             currentAttributes.charges = _charges;
             currentAttributes.nutrition = _nutrition;
@@ -544,6 +550,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.weight != 0) {saveAttributes.weight = creatureAttributes.weight;};
             if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};      
             if (creatureAttributes.canCollect == true) {saveAttributes.canCollect = creatureAttributes.canCollect;};
+            if (creatureAttributes.hidden == true) {saveAttributes.hidden = creatureAttributes.hidden;};
+            if (creatureAttributes.position != "") {saveAttributes.position = creatureAttributes.position;};
+
             if (creatureAttributes.charges !=0) {saveAttributes.charges = creatureAttributes.charges;};
             if (creatureAttributes.isEdible == true) {saveAttributes.isEdible = creatureAttributes.isEdible;};
             if (creatureAttributes.baseAffinity != creatureAttributes.affinity) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
@@ -823,15 +832,29 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.isHidden = function() {
-            return false;
+            return _hidden;
         };
 
-        self.hide = function() {
-            return false;
+        self.hide = function(hidingSelf) {
+            if (self.isDead()||hidingSelf) {
+                _hidden = true;
+            };
+            return _hidden;
         };
 
         self.show = function() {
-            return false;
+            _hidden = false;
+            _position = null;
+            return _hidden;
+        };
+
+        self.getPosition = function() {
+            return _position;
+        };
+
+        self.setPosition = function(position) {
+            _position = position;
+            return _position;
         };
 
         self.isDead = function() {
@@ -985,6 +1008,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString = _detailedDescription+"<br>"+self.getAffinityDescription();
             if (_contagion.length>0) {resultString+= "<br>"+_genderPrefix + " really doesn't look very well."};
             if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
+            resultString = resultString.replace("placed on top", "placed on top of "+self.getSuffix());
             if (self.isDead()) {
                 if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; };
                 return resultString;
@@ -1107,8 +1131,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _inventory.getCarryWeight();
         };
 
-        self.canCarry = function(anObject) {
-            if (self.isDead()) {return false;};
+        self.canCarry = function(anObject, position) {
+            if (self.isDead()) {
+                if (position) {
+                    //can't carry something bigger than self
+                    if (anObject.getWeight() > self.getWeight()) {
+                        return false;
+                    };
+
+                    //is the space already taken?
+                    if (_inventory.getObjectByPosition(position, true)) {
+                        return false; 
+                    };
+
+                    return true;
+                };
+                return false;
+            };
+            if (position) {return false;};
             return _inventory.canCarry(anObject);
         };
 
@@ -1217,6 +1257,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             return artefact.repair(self);
 
+        };
+
+
+        self.position = function(anObject, position) {
+            var objectAlreadyInPlace = _inventory.getObjectByPosition(position);
+            if (objectAlreadyInPlace) {
+                if (objectAlreadyInPlace.getName() == anObject.getName()) {return initCap(_itemDescriptivePrefix)+" already there.";};
+                return "There's already something "+position+" there."
+            };
+            _inventory.position(anObject, position);            
+            return self.getDisplayName()+" now has "+anObject.getDescription()+" "+position+" "+self.getSuffix()+".";
         };
 
         self.receive = function(anObject, player) {
@@ -1538,8 +1589,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _inventory.remove(anObjectName);
         };
 
-        self.showHiddenObjects = function() {
-            return _inventory.showHiddenObjects();
+        self.listHiddenObjects = function(position, location) {
+            return _inventory.listHiddenObjects(position, location);
+        };
+
+        self.showHiddenObjects = function(position, location) {
+            return _inventory.showHiddenObjects(position, location);
+        };
+
+        self.getHiddenObjects = function(position, location) {
+            return _inventory.getHiddenObjects(position, location);
         };
 
         self.getAllObjects = function(includeHiddenObjects) {

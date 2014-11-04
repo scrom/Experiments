@@ -124,15 +124,42 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
             };
 
+            if (additionalAttribute != "price") {
+                description += self.describePositionedItems();
+            };
+
+
             return description;
 
         };	
+
+        self.describePositionedItems = function() {
+            var positionedItems = self.getPositionedObjects(false);
+            var description = "";
+            if (positionedItems.length >0) {
+                var isAre = " are";
+                if (positionedItems.length == 1) {isAre = "'s";};
+                description += "<br>There"+isAre+" ";
+
+                for(var i = 0; i < positionedItems.length; i++) {
+                    if (i > 0 && i < positionedItems.length - 1) { description += ', '; };
+                    if (i > 0 && i == positionedItems.length - 1) { description += ' and '; };
+                    description += positionedItems[i].getDescription();
+                };
+
+                description += " placed on top";
+            };
+
+            return description;
+        };
 
         self.getWeight = function() {
             if (_items.length==0){return 0};
             var weight = 0
             for(var i = 0; i < _items.length; i++) {
-                    weight+=parseFloat(_items[i].getWeight());
+                    if (!(_items[i].getPosition())) {
+                        weight+=parseFloat(_items[i].getWeight());
+                    };
             };
             return weight;
         };
@@ -154,19 +181,34 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
             if ((anObject.getWeight() + self.getWeight()) > _maxCarryingWeight) {
                 //console.log("can't carry total weight of "+parseFloat(anObject.getWeight()+self.getWeight()));
-                    return false;
+                return false;
             };
 
             return true;
         };
     
-        self.add = function(anObject, canBreachCarryLimit) {
+        self.add = function(anObject) {
             if (anObject == undefined) {return "Can't pick it up.";};
             if (!(self.canCarry(anObject)) && !(canBreachCarryLimit)) {return initCap(anObject.getDescriptivePrefix())+" too heavy.";};
+            return self.forceAdd(anObject); 
+        };
+
+        self.forceAdd = function(anObject) {
+            if (anObject == undefined) {return "Can't pick it up.";};
 
             _items.push(anObject);
-            //console.log(anObject.getName()+" added to "+_ownerName+" inventory");
             return "success: "+anObject.getDescription()+".";
+        };
+
+        self.position = function(anObject, position) {
+            if (!position) {return self.add(anObject);};
+
+            self.forceAdd(anObject);
+
+            if (self.check(anObject.getName(), true, true)) {
+                anObject.setPosition(position);
+            };
+
         };
     
         self.remove = function(anObjectName, searchCreatures) {
@@ -198,6 +240,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                                 return object
                             };
                         };
+                    } else if (localInventory[index].isLocked()) {
+                        var objects = localInventory[index].getInventoryObject().getPositionedObjects(false);
+                        for (var o=0;o<objects.length;o++) {
+                            if (objects[o].getName() == anObjectName) {
+                                return objects[o];
+                            };
+                        };
                     };
                 };
                 //console.log(_ownerName+" is not carrying "+anObjectName);
@@ -210,12 +259,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return false;
         };
 
-        self.showHiddenObjects = function() {
+        self.listHiddenObjects = function(position, location) {
             var foundItems = [];
             for(var i = 0; i < _items.length; i++) {
                 if (_items[i].isHidden()) {
-                    _items[i].show();
-                    foundItems.push(_items[i]);
+                    if (!position || (_items[i].getPosition() == position)) {
+                        foundItems.push(_items[i]);
+                    };
                 };
             };
 
@@ -228,6 +278,42 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     list+=foundItems[i].getDescription();
             };
             return list;
+        };
+
+        self.showHiddenObjects = function(position, location) {
+            var foundItems = [];
+            for(var i = 0; i < _items.length; i++) {
+                if (_items[i].isHidden()) {
+                    if (!position || (_items[i].getPosition() == position)) {
+                        _items[i].show();
+                        foundItems.push(_items[i]);
+                    };
+                };
+            };
+
+            //return foundItems;
+            if (foundItems.length==0) {return "nothing new";};
+            var list = "";
+            for(var i = 0; i < foundItems.length; i++) {
+                    if ((i>0)&&(i<foundItems.length-1)){list+=', ';};
+                    if ((i==foundItems.length-1)&&(i>0)){list+=' and ';};
+                    list+=foundItems[i].getDescription();
+            };
+            return list;
+        };
+
+        self.getHiddenObjects = function(position, location) {
+            var foundItems = [];
+            for(var i = 0; i < _items.length; i++) {
+                if (_items[i].isHidden()) {
+                    if (!position || (_items[i].getPosition() == position)) {
+                        _items[i].show();
+                        foundItems.push(_items[i]);
+                    };
+                };
+            };
+
+            return foundItems;
         };
 
         self.listObjects = function() {
@@ -286,9 +372,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     if (_items[index].isOpen()) {
                     //    console.log(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
                     //only confirm item from open, unlocked containers - this way we know the player has discovered them
-                        var object = _items[index].getInventoryObject().getObject(anObjectName);
+                        var object = _items[index].getInventoryObject().getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction);
                         if (object) {
-                            //object.show();
+                            //object.show();.
                             if (!(customAction)) {
                                 return object;
                             };
@@ -299,7 +385,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         };
                         
                         if (_items[index].getType() == 'creature') {
-                            object = _items[index].getSalesInventoryObject().getObject(anObjectName);
+                            object = _items[index].getSalesInventoryObject().getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction);
                             if (object) {
                                 //object.show();
                                 if (!(customAction)) {
@@ -309,6 +395,19 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                                 if (object.checkCustomAction(customAction)) {
                                         return object;
                                 };
+                            };
+                        };
+                    };
+                } else if (_items[index].isLocked()) {
+                    var objects = _items[index].getInventoryObject().getPositionedObjects(false);
+                    for (var o=0;o<objects.length;o++) {
+                        if (ignoreSynonyms) {
+                            if (objects[o].getName() == anObjectName) {
+                                return objects[o];
+                            };
+                        } else {
+                            if (objects[o].syn(anObjectName)) {
+                                return objects[o];
                             };
                         };
                     };
@@ -334,6 +433,16 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
            for(var index = _items.length-1; index >= 0; index--) {
                 if(_items[index].getSubType() == anObjectSubType  && (!(_items[index].isHidden()))) {
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    return _items[index];
+                };
+           };
+           return null;
+        };
+
+        //this one doesn't cascade to contents of other objects.
+        self.getObjectByPosition = function(aPosition, showHiddenItems) {
+           for(var index = _items.length-1; index >= 0; index--) {
+                if(_items[index].getPosition() == aPosition  && ((!(_items[index].isHidden()))||showHiddenItems)) {
                     return _items[index];
                 };
            };
@@ -368,7 +477,15 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             if (includeHiddenObjects) { return _items;};
             var itemsToReturn = [];
             for (var i=0;i<_items.length;i++) {
-                if (!(_items[i].isHidden())) {itemsToReturn.push(_items[i])};
+                if (!(_items[i].isHidden()) && !(_items[i].getPosition())) {itemsToReturn.push(_items[i])};
+            };
+            return itemsToReturn;
+        };
+
+        self.getPositionedObjects = function(showHiddenObjects) {
+            var itemsToReturn = [];
+            for (var i=0;i<_items.length;i++) {
+                if (((!_items[i].isHidden())||showHiddenObjects) && (_items[i].getPosition())) {itemsToReturn.push(_items[i])};
             };
             return itemsToReturn;
         };
