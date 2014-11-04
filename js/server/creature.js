@@ -45,6 +45,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _startLocation;
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
+        var _timeSinceEating = 0;
         var _returnHomeIn = -1 //set when first not at home and reset when home.
         var _spokenToPlayer = false;
         var _huntingPlayer = false;
@@ -509,6 +510,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.attackStrength = _attackStrength;
             currentAttributes.type = _type;
             currentAttributes.moves = _moves;
+            currentAttributes.timeSinceEating = _timeSinceEating;            
             currentAttributes.returnHomeIn = _returnHomeIn;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
             currentAttributes.huntingPlayer = _huntingPlayer;
@@ -567,6 +569,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.canTravel == true) {saveAttributes.canTravel = creatureAttributes.canTravel};
             if (creatureAttributes.traveller == true) {saveAttributes.traveller = creatureAttributes.traveller};            
             if (creatureAttributes.moves > 0) {saveAttributes.moves = creatureAttributes.moves;};
+            if (creatureAttributes.timeSinceEating > 0) {saveAttributes.timeSinceEating = creatureAttributes.timeSinceEating;};
             if (creatureAttributes.returnHomeIn > 0) {saveAttributes.returnHomeIn = creatureAttributes.returnHomeIn;};           
             if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
             if (creatureAttributes.huntingPlayer == true) {saveAttributes.huntingPlayer = creatureAttributes.huntingPlayer;};            
@@ -872,6 +875,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log("edible = "+_edible);
             return _edible;
         };
+
+        self.isHungry = function() {
+            if (self.isDead()) {return false;};
+            if (_timeSinceEating < 5) {return false;};
+            if (healthPercent() <50) {return false;};
+
+            return true;
+
+        };
+        
 
         self.isFriendly = function(playerAggression) {
             if (self.isDead()) {return false;};
@@ -1287,7 +1300,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.getSubType() == "animal") {
                 if (anObject.getType() == "food" || anObject.getType() == "creature") {
                     var nutrition = anObject.getNutrition();
-                    if (nutrition > 0) {
+                    if (nutrition > 0 && self.isHungry()) {
                         self.increaseAffinity(anObject.getAffinityModifier());
                         self.feed(anObject.getNutrition());
                         if (anObject.getWeight() < 5) {
@@ -1296,9 +1309,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             return initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
                         };
                     };
-                    
-                    return initCap(self.getDisplayName())+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away..";
                 };
+                                    
+                _currentLocation.addObject(anObject);
+                return initCap(self.getDisplayName())+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getSuffix()+" comes back later.";
             };
             if (!(self.canCarry(anObject))) {return '';};              
             
@@ -1920,6 +1934,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.feed = function(pointsToAdd) {
             self.increaseAffinity(1);
             self.recover(pointsToAdd);
+            _timeSinceEating = 0;
             //console.log('Creature eats some food.');
         };
 
@@ -2899,6 +2914,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else {
                     //slowly recover health
                     healPoints++;
+                    _timeSinceEating++;
                 };
             };     
 

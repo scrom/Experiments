@@ -380,7 +380,8 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;  
                     case 'inspect': 
-                    case 'search':    
+                    case 'search':  
+                        _ticks = 3; //random searching takes a while! - look under/behind x is faster
                         //would like to add "search for x" support here in future.  
                         if (!_object0) {
                             description = _player.search(_verb, _object1, _splitWord, _positions);
@@ -399,17 +400,18 @@ exports.Action = function Action(player, map, fileManager) {
                         break;  
                     case 'rest':
                     case 'sit':
+                    case 'zz':
                         _ticks = 0;
                         description = _player.rest(_verb, 5, _map);
                         break;
                     case 'sleep':
+                    case 'zzz':
                         _ticks = 0;
                         description = _player.rest(_verb, 10, _map);
                         break;
                     case 'wait':
                     case 'z':
-                        _player.incrementWaitCount();
-                        description = "Time passes... ...slowly";
+                        description = _player.wait(1, map);
                         break;
                     case 'put':
                         //special case for "put down"
@@ -461,7 +463,12 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'offer':
                     case 'give':
-                        description = _player.give(_verb, _object0,_object1);
+                    case 'feed': //give food or drink to creature (if specific food not specified, use lowest value)
+                        if (_splitWord == "with" && _verb == "feed") {
+                            description = _player.give(_verb, _object1, _object0);
+                        } else {
+                            description = _player.give(_verb, _object0, _object1);
+                        };
                         break;
                     case 'throw':
                     case 'drpo': //common user typo
@@ -892,7 +899,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'mount': //disk drive or animal?
                     case 'dismount': //disk drive or animal?
                     case 'unmount': //don't think this is a real verb but still...
-                    case 'feed': //give food or drink to creature (if specific food not specified, use lowest value)
                     case 'start':
                     case 'stop':
                     case 'knock':

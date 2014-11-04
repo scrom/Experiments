@@ -673,6 +673,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _waitCount+=incrementBy;
         };
 
+        self.wait = function(duration, map) {
+            self.incrementWaitCount(duration);
+            return "Time passes... ...slowly.<br>"+self.tick(duration, map);
+        };
+
         self.incrementHealCount = function() {
             _healCount++;
         };
@@ -1280,7 +1285,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
 
-            if (!(artefact.opens() && verb == "pick")) {
+            if ((!(artefact.opens()) && verb == "pick")) {
                 //they're likely to be picking fruit instead!
                 return self.get(verb, artefactName);
             };
@@ -1912,10 +1917,28 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         /*Allow player to give an object to a recipient*/
         self.give = function(verb, artefactName, receiverName){
-            if (stringIsEmpty(artefactName)){ return verb+" what?";};
-            if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" to what?";};
 
-            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (stringIsEmpty(artefactName)){ return verb+" what?";};
+
+            var artefact;
+            if (stringIsEmpty(receiverName)){ 
+                if (verb == "feed") {
+                    receiverName = artefactName;
+                    artefact = _inventory.getObjectByType("food");
+                    if (!artefact) {
+                        artefact = _currentLocation.getObjectByType("food");
+                    };
+                    if (!artefact) { return "You don't have any food to give.";};
+                    artefactName = artefact.getName();
+                } else {
+                    return verb+" "+artefactName+" to what or whom?";
+                };
+            };
+
+            if (!artefact) {
+                artefact = getObjectFromPlayerOrLocation(artefactName);
+            };
+
             if (!(artefact)) {
                 if (artefactName == "money"||artefactName == "cash") {return "Sorry, we don't accept bribes here.";};
                 return notFoundMessage(artefactName);
@@ -1925,15 +1948,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var receiver = getObjectFromPlayerOrLocation(receiverName);
             if (!(receiver)) {return notFoundMessage(receiverName);};
 
-            if (receiver.getType() != 'creature') {
-                return  "Whilst "+receiver.getDisplayName()+", deep in "+receiver.getPossessiveSuffix()+" inanimate psyche would love to receive your kind gift. It feels inappropriate to do so. Try 'put' or 'add'."; 
+            if (receiver.getType() != "creature") {
+                return  "Whilst "+receiver.getDisplayName()+", deep in "+receiver.getPossessiveSuffix()+" inanimate psyche would love to receive your kind gift. It feels inappropriate to do so. Try <i>'put'</i> or <i>'add'</i> instead."; 
             };
 
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
+            if (verb == "feed" && artefact.getType() != "food" && artefact.getType() != "creature") {return "I don't think that's a reasonable thing to do.";};
             if (receiver.isDead()) { return  initCap(receiver.getDisplayName())+"'s dead. Gifts won't help now.";};
             if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
             if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to accept gifts from you at the moment.";};
+            if (verb == "feed" && receiver.getSubType() != "animal") {return "You should probably just <i>give</i> "+artefact.getDisplayName()+" to "+receiver.getSuffix()+".";};
 
             //we know they *can* carry it...
 
