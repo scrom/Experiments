@@ -2309,7 +2309,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (foundItems.length == 1) {
                     remainder = foundItems[0].getSuffix();
                 };
-                resultString += "<br>You're not able to pick "+remainder+" up at the moment.";
+                resultString += "<br>You're not able to pick "+remainder+" up.";
             };          
 
             return resultString;
