@@ -981,9 +981,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
-            //override default "get"
-            if (artefact.checkCustomAction(verb)) {
-                return self.customAction(verb, artefactName);
+
+            //override default "get" and its variants?
+            var customVerb = verb;
+            switch (verb) {           
+                case "pick":
+                case "pick up":
+                case "get":
+                case "take":
+                case "grab":
+                case "collect":
+                case "remove":
+                case "make":
+                    customVerb = "get";
+            };
+            if (artefact.checkCustomAction(customVerb)) {
+                return self.customAction(customVerb, artefactName);
             };
             if (!(artefact.isCollectable())) {
                 if (artefact.getType() == "scenery") {
@@ -1266,6 +1279,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
+
+            if (!(artefact.opens() && verb == "pick")) {
+                //they're likely to be picking fruit instead!
+                return self.get(verb, artefactName);
+            };
             
             //override default "unlock/pick/dismantle"
             if (artefact.checkCustomAction(verb)) {

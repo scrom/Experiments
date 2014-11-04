@@ -55,11 +55,7 @@
           "type": "scenery",
           "subType": "intangible",
           "customAction": [
-            "get",
-            "take",
-            "grab",
-            "collect",
-            "remove"
+            "get"
           ],
           "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
           "smell": "Yup, smells like coffee here.<br>Good coffee at that."
@@ -79,11 +75,7 @@
           "subType": "intangible",
           "plural": true,
           "customAction": [
-            "get",
-            "take",
-            "grab",
-            "collect",
-            "remove"
+            "get"
           ],
           "defaultResult": "The place is full of 'em. Go explore!",
           "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
@@ -969,13 +961,7 @@
           "type": "scenery",
           "plural": true,
           "customAction": [
-            "pick",
-            "pick up",
-            "get",
-            "grab",
-            "collect",
-            "take",
-            "remove"
+            "get"
           ],
           "defaultResult": "They're too fine and embedded into the carpet to collect."
         },
@@ -1196,13 +1182,7 @@
           "type": "scenery",
           "plural": true,
           "customAction": [
-            "pick",
-            "pick up",
-            "get",
-            "grab",
-            "collect",
-            "take",
-            "remove"
+            "get"
           ],
           "defaultResult": "I think Brian, Ben and Zara need those, sorry."
         },
@@ -1257,11 +1237,7 @@
           "type": "scenery",
           "subType": "intangible",
           "customAction": [
-            "get",
-            "take",
-            "grab",
-            "collect",
-            "remove"
+            "get"
           ],
           "defaultResult": "It's just a smell, not something you can keep - except in your memory and imagination.",
           "smell": "Sharpies. You can smell sharpies.<br>Sharpies smell of ideas!",
@@ -1283,11 +1259,7 @@
           "subType": "intangible",
           "plural": true,
           "customAction": [
-            "get",
-            "take",
-            "grab",
-            "collect",
-            "remove"
+            "get"
           ],
           "defaultResult": "If you <i>listen</i>, you might just get it.",
           "sound": "Clickety click, click, kerching!"
@@ -2289,13 +2261,7 @@
                   "canCollect": true,
                   "plural": true,
                   "customAction": [
-                    "pick",
-                    "pick up",
-                    "get",
-                    "grab",
-                    "collect",
-                    "take",
-                    "remove"
+                    "get"
                   ],
                   "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                 },
@@ -2356,7 +2322,7 @@
                     "yup",
                     "y"
                   ],
-                  "response": "'Thanks $player. Thery're on the window ledge near my desk.'",
+                  "response": "'Thanks $player. They're on the window ledge near my desk.'",
                   "nextState": 3
                 },
                 {
@@ -3502,13 +3468,7 @@
                       "canCollect": true,
                       "plural": true,
                       "customAction": [
-                        "pick",
-                        "pick up",
-                        "get",
-                        "grab",
-                        "collect",
-                        "take",
-                        "remove"
+                        "get"
                       ],
                       "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                     },
@@ -4135,13 +4095,7 @@
                       "canCollect": true,
                       "plural": true,
                       "customAction": [
-                        "pick",
-                        "pick up",
-                        "get",
-                        "grab",
-                        "collect",
-                        "take",
-                        "remove"
+                        "get"
                       ],
                       "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                     },
@@ -6618,13 +6572,7 @@
                       "canCollect": true,
                       "plural": true,
                       "customAction": [
-                        "pick",
-                        "pick up",
-                        "get",
-                        "grab",
-                        "collect",
-                        "take",
-                        "remove"
+                        "get"
                       ],
                       "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
                     },
@@ -8827,13 +8775,7 @@
                       "canCollect": true,
                       "plural": true,
                       "customAction": [
-                        "pick",
-                        "pick up",
-                        "get",
-                        "grab",
-                        "collect",
-                        "take",
-                        "remove"
+                        "get"
                       ],
                       "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
                     },
