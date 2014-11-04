@@ -2306,10 +2306,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (collectedItemCount < foundItems.length) {
                 var remainder = "the remainder"
+                var themIt = "them";
                 if (foundItems.length == 1) {
                     remainder = foundItems[0].getSuffix();
+                    themIt = foundItems[0].getSuffix();
                 };
-                resultString += "<br>You're not able to pick "+remainder+" up.";
+                resultString += "<br>You're not able to pick "+remainder+" up right now but you might still find a use for "+themIt+".";
             };          
 
             return resultString;
