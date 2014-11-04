@@ -3205,10 +3205,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return "You'll need to <i>buy</i> that from "+creatures[c].getDisplayName()+".";
                     };
                     if (creatures[c].check(artefactName)) {
-                        if (!(creatures[c].isDead())) {
-                            return "I think "+creatures[c].getDisplayName()+" has what you're after.";
-                        };
-                        return creatures[c].relinquish(artefactName,self,_currentLocation.getInventoryObject())
+                        return "I think "+creatures[c].getDisplayName()+" has what you're after.";
                     };
                 };
 
@@ -3280,10 +3277,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return "You'll need to <i>buy</i> that from "+creatures[c].getDisplayName()+".";
                     };
                     if (creatures[c].check(artefactName)) {
-                        if (!(creatures[c].isDead())) {
-                            return "I think "+creatures[c].getDisplayName()+" has what you're after.";
-                        };
-                        return creatures[c].relinquish(artefactName,self,_currentLocation.getInventoryObject())
+                        return "I think "+creatures[c].getDisplayName()+" has what you're after.";
                     };
                 };
 
