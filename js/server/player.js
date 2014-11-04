@@ -2219,17 +2219,37 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.say = function(verb, speech, receiverName, map) {
                 //if (stringIsEmpty(speech)){ return verb+" what?";};
+                var resultString = "";
                 if (verb == "shout") {
+                    self.increaseAggression(1); //we don't like shouty!
                     if (_currentLocation.hasEcho()) {
                         speech = speech.toUpperCase()+"!...  ..."+initCap(speech)+"... ..."+speech+"... ..."+speech.substr(1)+"... ..."+speech.substr(Math.ceil(speech.length/2))+"... ...."+speech.substr(speech.length-1)+".";
                     } else {
                         speech = speech.toUpperCase()+"!";
                     };
-                    
+
+                    //scare any nearby animals...
+                    var creatures = _currentLocation.getCreatures();
+                    var shoutedAtAnimal = false;
+                    for (var c=0;c<creatures.length;c++) {
+                        if (creatures[c].getSubType() == "animal") {
+                            if (creatures[c].syn(receiverName)) {
+                                resultString += "You shout at "+creatures[c].getDisplayName()+". ";
+                                shoutedAtAnimal = true;
+                                resultString += creatures[c].flee(map, _aggression, _currentLocation).replace(initCap(creatures[c].getDisplayName()), initCap(creatures[c].getPrefix()));
+                            } else {;
+                                resultString += creatures[c].flee(map, _aggression, _currentLocation);
+                            };
+                        };
+                    };                    
                 };
 
                 if (stringIsEmpty(receiverName)){ 
-                    return "'"+speech+"'";               
+                    return "'"+speech+"'"+"<br>"+resultString;               
+                };
+
+                if (shoutedAtAnimal) {
+                    return resultString;
                 };
 
                 //get receiver if it exists
@@ -2239,7 +2259,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //we'll only get this far if there is a valid receiver
                 self.setLastCreatureSpokenTo(receiverName);
                 var hasSpokenBefore = receiver.hasSpoken();
-                var resultString = receiver.reply(speech, self, null, map);
+                resultString += receiver.reply(speech, self, null, map);
                 var hasSpokenAfter = receiver.hasSpoken();
                 if (!(hasSpokenBefore) && hasSpokenAfter) {_creaturesSpokenTo ++;};
                 return resultString;

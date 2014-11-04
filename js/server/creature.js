@@ -1662,6 +1662,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.flee = function(map, playerAggression, playerLocation) {
+            if (self.isDead()) {return "";};
             //run away the number of moves of player aggression vs (-ve)affinity difference
             var fearLevel;
             var fled = false;
@@ -1691,7 +1692,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (_destinations.length>0) {self.clearPath();};
                             fled = true;
                         };
-                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()))+"<br>";
+                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
 
                         //try not to end up in player location - flee an extra move...
                         if ((_currentLocation.getName() == playerLocation.getName()) && (i==fearLevel-1) && (retryCount <3)) {
