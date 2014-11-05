@@ -1879,7 +1879,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
 
-            resultString += self.exposePositionedItems();
             return resultString;
 
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
