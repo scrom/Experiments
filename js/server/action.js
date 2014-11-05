@@ -906,7 +906,8 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'phone':
                     case 'tie':
                     case 'untie':
-                    case 'undo': 
+                    case 'undo':
+                    case 'tighten': //may also need to support "do up"? 
                     case 'touch': //either activate something (like press) - or return a texture description
                     default:
                         //check for a custom verb and response here.

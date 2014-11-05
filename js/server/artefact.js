@@ -270,7 +270,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (type == "tool") {
-                var validToolSubTypes = ["","buff","sharpen","assemble"];
+                var validToolSubTypes = ["","buff","sharpen","assemble","sharp"];
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
             };

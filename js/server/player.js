@@ -1233,14 +1233,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //attempt to get polish or sharpen object (if verbs match)
                 if (verb == "sharpen") {
                     secondArtefact = _inventory.getObjectBySubType("sharpen");
+                    if (!secondArtefact) {
+                        secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("sharpen");
+                    };
                     splitWord = "with";
                     //fail if nothing to sharpen with
-                    if (!secondArtefact) {return "You're not carrying anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
+                    if (!secondArtefact) {return "You can't find anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
                 } else if (verb == "polish") {
                     secondArtefact = _inventory.getObjectBySubType("buff");
+                    if (!secondArtefact) {
+                        secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("buff");
+                    };
                     splitWord = "with";
                     //fail if nothing to polish with
-                    if (!secondArtefact) {return "You not carrying anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
+                    if (!secondArtefact) {return "You can't find anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
                 };
 
             };
@@ -1272,7 +1278,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "That's not going to do anything useful.";
             };
 
-            resultString+= firstArtefact.rub(secondArtefact); 
+            resultString+= "<br>"+firstArtefact.rub(secondArtefact); 
 
             if (secondArtefact) {
                 if (secondArtefact.chargesRemaining() == 0) {

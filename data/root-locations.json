@@ -5597,7 +5597,7 @@
           "defaultAction": "open",
           "weight": 0.1,
           "attackStrength": 15,
-          "type": "key",
+          "type": "tool",
           "subType": "sharp",
           "canCollect": true,
           "affinityModifier": 2,
