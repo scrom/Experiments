@@ -861,6 +861,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _position;
         };
 
+        self.exposePositionedItems = function() {
+            if (!_currentLocation) {return "";};
+            if (!_inventory.hasPositionedObjects()) {return "";};
+            var positionedItems = _inventory.getPositionedObjects(true);
+            for (var i=0;i<positionedItems.length;i++) {
+                self.removeObject(positionedItems[i].getName());
+                _currentLocation.addObject(positionedItems[i]);
+            };
+
+            return "<br>It looks like "+self.getDisplayName()+" was hiding something.<br>It's worth taking another look around here.";
+        };
+
         self.isDead = function() {
             if (_hitPoints <= 0) {return true;};
             //console.log("hp = "+_hitPoints);
@@ -1168,7 +1180,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.canCarry = function(anObject, position) {
-            if (self.isDead()) {
+            if (self.isDead() || self.getSubType() == "animal") {
                 if (position) {
                     //can't carry something bigger than self
                     if (anObject.getWeight() > self.getWeight()) {
@@ -1678,6 +1690,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //run away the number of moves of player aggression vs (-ve)affinity difference
             var fearLevel;
             var fled = false;
+
             if (_affinity <=0) {fearLevel = Math.floor(_affinity+playerAggression);}
             else {fearLevel = playerAggression;};
 
@@ -1686,7 +1699,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 fearLevel = Math.max(fearLevel, Math.floor(_hitPoints/2));
             };
 
-            if (fearLevel == 0) {fearLevel = 1;}; //in case they're fleeing for a reason other than aggression.
+            if (fearLevel <= 0) {fearLevel = 1;}; //in case they're fleeing for a reason other than aggression.
 
             var resultString = "";
             //if creature is mobile
@@ -1699,7 +1712,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (!(fled)) {
                             var movementVerb = "flees";
                             if (_bleeding) {movementVerb = "staggers";};
-                            resultString = initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+".<br>";
+                            resultString += initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+".<br>";
+                            resultString += self.exposePositionedItems();
                             //if creature was heading somewhere, we'll need to regenerate their path later.
                             if (_destinations.length>0) {self.clearPath();};
                             fled = true;
@@ -1747,7 +1761,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             _moves++;
 
-                self.setReturnDirection(oppositeOf(direction));
+            self.setReturnDirection(oppositeOf(direction));
 
             //slowly erode friendly attack count
             if (_friendlyAttackCount >0) {
@@ -1864,6 +1878,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                    resultString += "There's no sign of any physical harm done.";  
                 };
             };
+
+            resultString += self.exposePositionedItems();
             return resultString;
 
             //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
@@ -2090,6 +2106,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             self.addSyns(["corpse","body"]);
 
             var resultString = "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+            resultString += self.exposePositionedItems();
 
             //remove inactive missions - active ones will be handled elsewhere
             var missionsToKeep = [];
@@ -2862,7 +2879,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             _openedDoor = true;
                         };
 
+                        var exposedItems = "";
                         if (exit) {
+                            exposedItems = self.exposePositionedItems();
                             self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
                         };
                         //should really close the door behind us here.
@@ -2878,7 +2897,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (exit.getLongName() == "in") {movementVerb = "goes";};
                             resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" "+exit.getLongName()+"."; 
                             if (showMoveToPlayer) {
-                                partialResultString += resultString;
+                                partialResultString += resultString+exposedItems;
                             };
                         };  
                     };            

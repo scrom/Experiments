@@ -44,16 +44,18 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return objectCount;
         };
 
-        self.creatureCount = function(subType) {
+        self.creatureCount = function(subType, includeDeadCreatures) {
             var objectCount = 0;
             for (var i=0;i<_items.length;i++){
                 if (_items[i].getType() == "creature") {
-                    if (subType) {
-                        if (_items[i].getSubType() == subType) {
+                    if (!_items[i].isDead()||includeDeadCreatures) {
+                        if (subType) {
+                            if (_items[i].getSubType() == subType) {
+                                objectCount++;
+                            };
+                        } else {
                             objectCount++;
                         };
-                    } else {
-                        objectCount++;
                     };
                 };
             };
@@ -491,6 +493,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (!(_items[i].isHidden()) && !(_items[i].getPosition())) {itemsToReturn.push(_items[i])};
             };
             return itemsToReturn;
+        };
+
+        self.hasPositionedObjects = function() {
+            for (var index = _items.length-1; index >= 0; index--) {
+                if (_items[index].getPosition()) {return true;};
+            };
+            return false;
         };
 
         self.getPositionedObjects = function(showHiddenObjects) {

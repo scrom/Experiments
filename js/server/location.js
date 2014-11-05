@@ -434,8 +434,8 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.getAllObjectsOfType(anObjectType);
         };
 
-        self.countCreatures = function(subType) {
-            return _inventory.creatureCount(subType);
+        self.countCreatures = function(subType, includeDeadCreatures) {
+            return _inventory.creatureCount(subType, includeDeadCreatures);
         };
 
         self.getDescription = function() {

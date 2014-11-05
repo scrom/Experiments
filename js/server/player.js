@@ -110,10 +110,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var objectToRemove = _inventory.remove(objectName);
 
             if (objectToRemove) {
-                var positionedItems = objectToRemove.getInventoryObject().getPositionedObjects(true);
-                for (var i=0;i<positionedItems.length;i++) {
-                    objectToRemove.removeObject(positionedItems[i].getName());
-                    _inventory.add(positionedItems[i]);
+                if (objectToRemove.getInventoryObject().hasPositionedObjects()) {
+                    var positionedItems = objectToRemove.getInventoryObject().getPositionedObjects(true);
+                    for (var i=0;i<positionedItems.length;i++) {
+                        objectToRemove.removeObject(positionedItems[i].getName());
+                        _inventory.add(positionedItems[i]);
+                    };
                 };
             };
 
@@ -125,10 +127,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var objectToRemove = _currentLocation.getObject(objectName);
             if (objectToRemove) {
                 if (objectToRemove.isCollectable()) {
-                    var positionedItems = objectToRemove.getInventoryObject().getPositionedObjects(true);
-                    for (var i=0;i<positionedItems.length;i++) {
-                        objectToRemove.removeObject(positionedItems[i].getName());
-                        _currentLocation.addObject(positionedItems[i]);
+                    if (objectToRemove.getInventoryObject().hasPositionedObjects()) {
+                        var positionedItems = objectToRemove.getInventoryObject().getPositionedObjects(true);
+                        for (var i=0;i<positionedItems.length;i++) {
+                            objectToRemove.removeObject(positionedItems[i].getName());
+                            _currentLocation.addObject(positionedItems[i]);
+                        };
                     };
                     return _currentLocation.removeObject(objectToRemove.getName());
                 };
@@ -1348,13 +1352,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (!(artefact.isLocked()) && artefactIsLockedBefore && artefact.getType() == "door") {
                 //we unlocked it
-                var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
-                if (positionedItems.length >0) {
-                    resultString += "<br>It looks like "+artefact.getDisplayName()+" was hiding something. It's worth taking another look around here."
-                };
-                for (var i=0;i<positionedItems.length;i++) {
-                    artefact.removeObject(positionedItems[i].getName());
-                    _currentLocation.addObject(positionedItems[i]);
+                if (artefact.getInventoryObject().hasPositionedObjects()) {
+                    var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
+                    if (positionedItems.length >0) {
+                        resultString += "<br>It looks like "+artefact.getDisplayName()+" was hiding something. It's worth taking another look around here."
+                    };
+                    for (var i=0;i<positionedItems.length;i++) {
+                        artefact.removeObject(positionedItems[i].getName());
+                        _currentLocation.addObject(positionedItems[i]);
+                    };
                 };
             };
 
@@ -1620,10 +1626,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return notFoundMessage(receiverName);
                 };
 
-                if (receiver.getType() == 'creature') {
+                if (receiver.getType() == "creature") {
                     if (!(receiver.isDead())) {
                         //@todo if animal, attempt without disturbing them, if unfriendly - hostile response, if friendly - decrease affinity
-                       return  "I don't think "+receiver.getDescriptivePrefix().toLowerCase()+" going to appreciate that."; 
+                        if (receiver.getSubType() == "animal") {
+                            receiver.decreaseAffinity(1,false);
+                            if (receiver.isHostile() || receiver.willFlee()) {
+                                return receiver.fightOrFlight();
+                            };
+                        } else {
+                            return  "I don't think "+receiver.getDescriptivePrefix().toLowerCase()+" going to appreciate that."; 
+                        };
                     };
                 };
 
@@ -1633,7 +1646,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return "It seems a bit wasteful but it's your call...<br>You pour "+artefact.getName()+" "+position+" "+receiver.getDisplayName()+".";
                 };   
 
-                if ((verb == "hide"||verb == "balance") && _currentLocation.liveCreaturesExist()) { return "You're being watched. Try again when it's a bit quieter around here.";};
+                if ((verb == "hide"||verb == "balance") && _currentLocation.liveCreaturesExist()) { 
+                    if (receiver.getSubType() != "animal" || _currentLocation.countCreatures() > 1) {
+                        return "You're being watched. Try again when it's a bit quieter around here.";
+                    };
+                };
                 
                 //check receiver can position item (container or not)
                 if (receiver.isLiquid()) {return "Nope, I don't think that'll work, sorry.";};
@@ -2235,10 +2252,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         if (creatures[c].getSubType() == "animal") {
                             if (creatures[c].syn(receiverName)) {
                                 resultString += "You shout at "+creatures[c].getDisplayName()+". ";
+                                self.increaseAggression(1); //again! - you're really not being nice.
+                                creatures[c].decreaseAffinity(2, false);
                                 shoutedAtAnimal = true;
-                                resultString += creatures[c].flee(map, _aggression, _currentLocation).replace(initCap(creatures[c].getDisplayName()), initCap(creatures[c].getPrefix()));
+                                if (!(creatures[c].isHostile())) { 
+                                    //flee if shouted at directly and not directly hostile.
+                                    resultString += creatures[c].flee(map, _aggression, _currentLocation).replace(initCap(creatures[c].getDisplayName()), initCap(creatures[c].getPrefix()));
+                                };
                             } else {;
-                                resultString += creatures[c].flee(map, _aggression, _currentLocation);
+                                creatures[c].decreaseAffinity(1, false);
+                                resultString += creatures[c].fightOrFlight(map, self);
                             };
                         };
                     };                    
@@ -2632,22 +2655,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = artefact.moveOpenOrClose(verb, _currentLocation.getName());
 
             if (artefact.getType() != "door" || (artefact.getType() == "door" && (!artefact.isLocked()))) {
-                var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
-                var fallenItems = 0;
-                for (var i=0;i<positionedItems.length;i++) {
+                if (artefact.getInventoryObject().hasPositionedObjects()) {
+                    var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
+                    var fallenItems = 0;
+                    for (var i=0;i<positionedItems.length;i++) {
 
-                    if (positionedItems[i].getPosition() == "on") {
-                        positionedItems[i].bash();
-                        fallenItems++;
-                        resultString += "<br>"+initCap(positionedItems[i].getDescription())+" fell off the top!"
+                        if (positionedItems[i].getPosition() == "on") {
+                            positionedItems[i].bash();
+                            fallenItems++;
+                            resultString += "<br>"+initCap(positionedItems[i].getDescription())+" fell off the top!"
+                        };
+
+                        artefact.removeObject(positionedItems[i].getName());
+                        _currentLocation.addObject(positionedItems[i]);
                     };
 
-                    artefact.removeObject(positionedItems[i].getName());
-                    _currentLocation.addObject(positionedItems[i]);
-                };
-
-                if (positionedItems.length > fallenItems) {
-                    resultString += "<br>It looks like "+artefact.getDisplayName()+" was hiding something. It's worth taking another look around here."
+                    if (positionedItems.length > fallenItems) {
+                        resultString += "<br>It looks like "+artefact.getDisplayName()+" was hiding something. It's worth taking another look around here."
+                    };
                 };
             };
 
@@ -2678,20 +2703,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += artefact.moveOrOpen(verb, _currentLocation.getName());
 
                 if (artefact.getType() == "door") {
-                    var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
-                    var fallenItems = 0;
-                    for (var i=0;i<positionedItems.length;i++) {
-                        if (positionedItems[i].getPosition() == "on") {
-                            positionedItems[i].bash();
-                            fallenItems++;
-                            resultString += "<br>"+initCap(positionedItems[i].getDescription())+" fell off the top!"
+                    if (artefact.getInventoryObject().hasPositionedObjects()) {
+                        var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
+                        var fallenItems = 0;
+                        for (var i=0;i<positionedItems.length;i++) {
+                            if (positionedItems[i].getPosition() == "on") {
+                                positionedItems[i].bash();
+                                fallenItems++;
+                                resultString += "<br>"+initCap(positionedItems[i].getDescription())+" fell off the top!"
+                            };
+                            artefact.removeObject(positionedItems[i].getName());
+                            _currentLocation.addObject(positionedItems[i]);
                         };
-                        artefact.removeObject(positionedItems[i].getName());
-                        _currentLocation.addObject(positionedItems[i]);
-                    };
 
-                    if (positionedItems.length > fallenItems) {
-                        resultString += "<br>It looks like "+artefact.getDisplayName()+" was hiding something. It's worth taking another look around here."
+                        if (positionedItems.length > fallenItems) {
+                            resultString += "<br>It looks like "+artefact.getDisplayName()+" was hiding something. It's worth taking another look around here."
+                        };
                     };
                 };
 
