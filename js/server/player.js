@@ -3037,8 +3037,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
             };
 
+            //get initial damage level
             var pointsToRemove = weapon.getAttackStrength();
-            var resultString = receiver.hurt(pointsToRemove, self);
+
+            //alter strength/damage if bleeding or nearly dying.
+            if (healthPercent() <=5) {
+                //double damage for dying blow if they can get one in!!
+                pointsToRemove = pointsToRemove*2
+            } else if (healthPercent() <=10) {
+                //50% strength
+                pointsToRemove = pointsToRemove*0.5
+            } else if (_bleeding) {
+                //80% strength
+                pointsToRemove = pointsToRemove*0.8
+            };
+
+            var resultString = receiver.hurt(Math.floor(pointsToRemove), self);
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
                 resultString +=  "Ding! You repeatedly attack "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent sort of way."

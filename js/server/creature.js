@@ -511,6 +511,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.type = _type;
             currentAttributes.moves = _moves;
             currentAttributes.timeSinceEating = _timeSinceEating;            
+            currentAttributes.isHungry = self.isHungry();            
             currentAttributes.returnHomeIn = _returnHomeIn;
             currentAttributes.spokenToPlayer = _spokenToPlayer;
             currentAttributes.huntingPlayer = _huntingPlayer;
@@ -879,10 +880,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.isHungry = function() {
             if (self.isDead()) {return false;};
             if (_timeSinceEating < 5) {return false;};
-            if (healthPercent() <50) {return false;};
-
             return true;
-
         };
         
 
@@ -1109,7 +1107,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (weapon) {weaponStrength = weapon.getAttackStrength();};
             var currentAttackStrength =_attackStrength;
             if (weaponStrength > currentAttackStrength) { currentAttackStrength = weaponStrength; };
-            return currentAttackStrength;
+
+            //alter strength if bleeding or nearly dying.
+            if (healthPercent() <=5) {
+                //double damage for dying blow if they can get one in!!
+                currentAttackStrength = currentAttackStrength*2
+            } else if (healthPercent() <=10) {
+                //50% strength
+                currentAttackStrength = currentAttackStrength*0.5
+            } else if (_bleeding) {
+                //80% strength
+                currentAttackStrength = currentAttackStrength*0.8
+           };
+
+            return Math.floor(currentAttackStrength);
         };
 
         self.getAffinityModifier = function() {
@@ -1635,7 +1646,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (isNaN(damageModifier)) {
                 damageModifier = 1;      
             };
-            //do something here around aggression or dislike/affinity for the thing they're hitting
+
+            //@todo do something here around aggression or dislike/affinity for the thing they're hitting
 
             //hurt thing
             return receiver.hurt(Math.floor(self.getAttackStrength()*damageModifier));
@@ -1934,6 +1946,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.feed = function(pointsToAdd) {
             self.increaseAffinity(1);
+            if (healthPercent()<=_bleedingHealthThreshold) {
+                var pointsNeeded = Math.floor(_maxHitPoints/(1/(_bleedingHealthThreshold/100)))-_hitPoints;
+                if (pointsNeeded <0) {pointsNeeded = 0;}; //unlikely but just in case.
+                if (pointsToAdd > pointsNeeded) {pointsToAdd = pointsNeeded;};
+            };
             self.recover(pointsToAdd);
             _timeSinceEating = 0;
             //console.log('Creature eats some food.');

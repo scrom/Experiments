@@ -49,7 +49,7 @@ exports.setUp = function (callback) {
     container = new artefact.Artefact('container', 'container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'box', 'just a box',breakableJunkAttributes, null);
     breakable = new artefact.Artefact('glass', 'drinking glass', 'a somewhat fragile drinking vessel',breakableJunkAttributes, null);
-    c0 = new creature.Creature('creature', 'A creature', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:5, canTravel:true},[a1]);
+    c0 = new creature.Creature('creature', 'A creature', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:100, affinity:5, canTravel:true},[a1]);
     c0.go(null,l0); 
     c1 = new creature.Creature('evil', 'An evil unfriendly creature', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:-5, canTravel:true},[a1]);
     c1.go(null,l0); 
@@ -483,7 +483,7 @@ exports.canStealObjectFromCreature.meta = { traits: ["Player Test", "Inventory T
 
 exports.canHitCreatureWithInventoryWeapon = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "The creature is hurt. He's not happy.";
+    var expectedResult = "The creature is hurt. He's taken a fair beating.";
     var actualResult = p0.hit('hit',c0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -492,6 +492,67 @@ exports.canHitCreatureWithInventoryWeapon = function (test) {
 };
 
 exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+
+
+exports.hittingCreatureWhenPlayerIsHealthyDoesFullDamage = function (test) {
+    p0.get('get', weapon.getName());
+    p0.hurt(49);
+    p0.hit('hit',c0.getName());
+    p0.hit('hit',c0.getName());
+    var expectedResult = "He's really not in good shape.";
+    var actualResult = c0.health();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingCreatureWhenPlayerIsHealthyDoesFullDamage.meta = { traits: ["Player Test", "Hit Trait"], description: "Test that a healthy player does full damage to a creature." };
+
+exports.hittingCreatureWhenBleedingDoesLessDamage = function (test) {
+    p0.get('get', weapon.getName());
+    p0.hurt(51);
+    p0.hit('hit',c0.getName());
+    var expectedResult = "He's taken a fair beating.";
+    var actualResult = c0.health();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingCreatureWhenBleedingDoesLessDamage.meta = { traits: ["Player Test", "Bleed Trait", "Hit Trait"], description: "Test that a bleeding player does less damage to a creature than normal." };
+
+exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage = function (test) {
+    p0.get('get', weapon.getName());
+    p0.hurt(91);
+    p0.hit('hit',c0.getName());
+    var expectedResult = "He's not happy.";
+    var actualResult = c0.health();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage.meta = { traits: ["Player Test", "Bleed Trait", "Hit Trait"], description: "Test that a bleeding player does less damage to a creature than normal." };
+
+
+exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage = function (test) {
+    p0.get('get', weapon.getName());
+    p0.hurt(96);
+    p0.hit('hit',c0.getName());
+    p0.hit('hit',c0.getName());
+    var expectedResult = "He's dead.";
+    var actualResult = c0.health();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage.meta = { traits: ["Player Test", "Bleed Trait", "Hit Trait"], description: "Test that a nearly dead player does double damage to a creature!" };
+
 
 
 exports.canTurnFriendlyCreatureToFightableByHitting3Times = function (test) {

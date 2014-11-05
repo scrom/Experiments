@@ -1197,6 +1197,100 @@ exports.cannotAddDuplicateAvoidLocations = function (test) {
 };
 exports.cannotAddDuplicateAvoidLocations.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a duplicate avoid location is not added to 'avoiding' array." };
 
+exports.feedingBleedingCreatureDoesNotIncreaseHealthBeyond50Percent = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'male', type:'creature', carryWeight:50, health:75, maxHealth:150});
+    c0.feed(50);
+    var expected = "He's really not in good shape.";
+    var actual = c0.health();
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.feedingBleedingCreatureDoesNotIncreaseHealthBeyond50Percent.meta = { traits: ["Creature Test", "Feed Trait", "Bleed Trait"], description: "Test that a creature whose health is below the bleed threshold cannot be healed above it." };
+
+
+exports.feedingNearlyDeadCreatureMarginallyIncreasesHealth = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'male', type:'creature', carryWeight:50, health:5, maxHealth:150});
+    c0.feed(500);
+    var expected = "He's really not in good shape.";
+    var actual = c0.health();
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.feedingNearlyDeadCreatureMarginallyIncreasesHealth.meta = { traits: ["Creature Test", "Feed Trait", "Bleed Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+
+
+
+
+exports.feedingInjuredCreatureIncreaseHealth = function (test) {
+
+    var c0 = new creature.Creature('creature','a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'male', type:'creature', carryWeight:50, health:77, maxHealth:150});
+    c0.feed(100);
+    var expected = "He's generally the picture of health.";
+    var actual = c0.health();
+    console.log("expected:"+expected);
+    console.log("actual:"+actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.feedingInjuredCreatureIncreaseHealth.meta = { traits: ["Creature Test", "Feed Trait"], description: "Test that a creature whose health is above the bleed threshold can be healed with food." };
+
+exports.healthyCreatureDoesFullDamageWhenHittingOthers = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 78, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+
+    console.log(c0.hit(p0, 1));
+
+    var expected = "You're really not in good shape. It looks like you're bleeding. You might want to get that seen to.";
+    var actual = p0.health();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.healthyCreatureDoesFullDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a healthy (injured but not bleeding) creature creature does full 'hit' damage." };
+
+exports.bleedingCreatureDoesReducedDamageWhenHittingOthers = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 73, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+
+    console.log(c0.hit(p0, 1));
+
+    var expected = "You've taken a fair beating.";
+    var actual = p0.health();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.bleedingCreatureDoesReducedDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Bleed Trait", "Hit Trait"], description: "Test that a bleeding creature creature doesn't do full 'hit' damage." };
+
+
+exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers = function (test) {
+
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+
+    console.log(c0.hit(p0, 1));
+
+    var expected = "You're almost dead. It looks like you're bleeding. You might want to get that seen to.";
+    var actual = p0.health();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a nearly dead creature creature does DOUBLE 'hit' damage!" };
 
 
 /*
