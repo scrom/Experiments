@@ -28,7 +28,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _missions = [];
         var _imageName;
 
-        var _defaultIndoorScenery = ["floor", "ground", "wall", "ceiling"];
+        var _defaultIndoorScenery = ["floor", "ground", "wall", "ceiling", "air"];
         var _defaultOutdoorScenery = ["floor", "ground", "sky", "air"];
 
 	    var _objectName = "location";
@@ -397,13 +397,17 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
 
             //autogenerate missing default scenery
-            if (((self.getType() == "indoor") && _defaultIndoorScenery.indexOf(anObjectName) >-1) || ((self.getType() == "indoor") && _defaultOutdoorScenery.indexOf(anObjectName) >-1)) {
+            if (((self.getType() == "indoor") && _defaultIndoorScenery.indexOf(anObjectName) >-1) || ((self.getType() != "indoor") && _defaultOutdoorScenery.indexOf(anObjectName) >-1)) {
                 var canDrawOn = false;
-                if (_defaultIndoorScenery.indexOf(anObjectName) >-1) {
+                var subType = "";
+                if (anObjectName == "air" || anObjectName == "sky") {
+                    //it's not a physical thing
+                    subType = "intangible";
+                } else if (_defaultIndoorScenery.indexOf(anObjectName) >-1) {
                     //it's a physical thing.
                     canDrawOn = true;
                 };
-                var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", {"type": "scenery", "canDrawOn": canDrawOn}, null, null);
+                var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", {"type": "scenery", "subType": subType, "canDrawOn": canDrawOn}, null, null);
                 sceneryObject.addSyns([anObjectName+"s", anObjectName+"es"])
                 _inventory.add(sceneryObject);
                 return sceneryObject;

@@ -68,12 +68,11 @@
       {
         "object": "artefact",
         "name": "air",
-        "description": "the smell of smart people and coffee",
+        "description": "smell of smart people and coffee",
         "detailedDescription": "As I said - smart people and coffee.",
         "attributes": {
           "type": "scenery",
           "subType": "intangible",
-          "plural": true,
           "customAction": [
             "get"
           ],
@@ -1230,8 +1229,76 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "desk",
+        "description": "Dave's desk",
+        "detailedDescription": "On first glimpse, it's a standard wood-effect office desk but you feel an overwhelming urge to do a double-take.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "daves desk",
+		  "dave's desk",
+		  "dave desk"
+        ],
+		"inventory": [
+		  {
+			"object": "artefact",
+			"name": "tears",
+			"description": "tear stains",
+			"detailedDescription": "<br>Looking closer you can see evidence of the tears of frustration from years of dealing with email marketing campaigns.<br>Nobody should have to deal with email marketing for that long and be expected to stay entirely sane.",
+			"attributes": {
+			  "weight": 0,
+			  "type": "scenery",
+			  "plural": true,
+			  "subType": "intangible",
+			  "customAction": ["get"],
+			  "defaultResult": "Trust me, you <i>don't</i> want them.",
+			  "smell": "You vaguely sense a tang of salt and blood around them.",
+			  "sound": "Wow, that's disturbing. It takes quite a spiritual imprint to leave the <i>sound</i> of tears."
+			},
+			"synonyms": [
+			  "frustration",
+			  "stains",
+			  "tearstains",
+			  "tear stains",
+			  "daves tears",
+			  "dave's tears",
+			  "dave tears"
+			]
+		 },
+		  {
+			"object": "artefact",
+			"name": "spam",
+			"description": "tin of Spam",
+			"detailedDescription": "It's a leftover from a training course a few years ago. It says 'best before end: November 2015.<br>I thought this stuff lasted forever!",
+			"attributes": {
+			  "weight": 1,
+			  "type": "food",
+			  "canCollect": true,
+			  "nutrition": -15,
+			  "charges": 3,
+              "chargeUnit": "portion",
+              "chargesDescription": "There's about $charges $chargeUnit left",
+			  "canOpen": true,
+			  "position": "on",
+			  "hidden": "true",
+			  "smell": "You wonder to yourself if cats like Spam."
+			},
+			"synonyms": [
+			  "tin",
+			  "tin of spam",
+			  "tin spam",
+			  "spam tin"
+			]
+		 }
+		]
+      },
+      {
+        "object": "artefact",
         "name": "air",
-        "description": "the tang of creativity",
+        "description": "tang of creativity",
         "detailedDescription": "There's something uplifting about it.",
         "attributes": {
           "type": "scenery",
@@ -1252,7 +1319,7 @@
       {
         "object": "artefact",
         "name": "clicks",
-        "description": "the hum of busy marketers",
+        "description": "hum of busy marketers",
         "detailedDescription": "Even when there's nobody here the clicks keep coming.",
         "attributes": {
           "type": "scenery",
@@ -4888,10 +4955,10 @@
                     "destinations": [
                       "atrium-seating",
                       "kitchen-ground-floor",
-                      "sales-north"
+                      "creative-agency-area"
                     ],
                     "loopDelay": 3,
-                    "destinationDelay": 2,
+                    "destinationDelay": 3,
                     "imageName": "daveconvery.jpg",
                     "contagion": [
                       {
@@ -4899,7 +4966,7 @@
                         "name": "zombie",
                         "displayName": "zombie",
                         "attributes": {
-                          "incubationPeriod": 6,
+                          "incubationPeriod": 10,
                           "communicability": 0.5,
                           "symptoms": [
                             {
@@ -5714,7 +5781,7 @@
         "object": "creature",
         "name": "ice cream man",
         "displayname": "the ice cream man",
-        "description": "the ice cream man",
+        "description": "ice cream man",
         "detailedDescription": "A random guy who occasionally has ice cream for sale.",
         "attributes": {
           "weight": 140,

@@ -286,6 +286,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (validVehicleSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
             };
 
+            if (type == "food") {
+                //all food is marked as edible. Nutrition could be negative though.
+                _edible = true;
+            };
+
             
         };
 
@@ -299,6 +304,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         //return right prefix for item       
         self.descriptionWithCorrectPrefix = function(anItemDescription) {
+            if (anItemDescription.substr(0,1) == anItemDescription.substr(0,1).toUpperCase()) {
+                //Description starts with a proper noun.
+                return anItemDescription;
+            };
+
             if (_plural) {
                 if (anItemDescription.substring(0,8) != "pair of ") {
                     return "some "+anItemDescription;
@@ -1198,6 +1208,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isEdible = function() {
             if (self.isDestroyed()) {return false;};
+            if ((!self.isOpen()) && self.opens()) {return false;};
             return _edible;
         };
 
@@ -1938,7 +1949,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.drink = function(aPlayer) {
-            if (self.getSubType == "intangible") {return "You gulp around trying to get a mouthful of "+self.getDescription()+" but fail miserably.";}
+            if (self.getSubType() == "intangible") {return "You gulp around trying to get a mouthful of "+self.getName()+".<br>After leaping around like a guppy out of water for a while, you decide to give up.";}
+            if ((!self.isOpen()) && self.opens()) {return "You'll need to open "+self.getSuffix()+" up first.";};
             if (self.isDestroyed()) {return "There's nothing left to drink.";};
             if(_edible && _liquid)  {
                 var drankAll = " ";
@@ -1967,11 +1979,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.eat = function(aPlayer) {
-            if (self.getSubType == "intangible") {return "You gulp around trying to get a mouthful of "+self.getDescription()+" but fail miserably.";}
+            if (self.getSubType() == "intangible") {return "Nope, that's not going to work for you.";}
+            if ((!self.isOpen()) && self.opens()) {return "You'll need to open "+self.getSuffix()+" up first";};
             if (self.isDestroyed()) {return "There's nothing left to chew on.";};
             if ((!(_chewed)) || (_edible && self.chargesRemaining() !=0))  {
                 _chewed = true; 
-                if (_edible){
+                if (self.isEdible()){
                     var eatenAll = " ";
                     if (self.chargesRemaining() >0) {
                         _charges--;

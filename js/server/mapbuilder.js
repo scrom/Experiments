@@ -63,7 +63,17 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     //add items directly to inventory
                     inventory = artefact.getInventoryObject();
                     for (var i=0; i<artefactData.inventory.length; i++) {
-                        if (artefactData.inventory[i].object == "artefact") {inventory.add(self.buildArtefact(artefactData.inventory[i]));};
+                        if (artefactData.inventory[i].object == "artefact") {
+                            var position;
+                            if (artefactData.inventory[i].attributes) {
+                                position = artefactData.inventory[i].attributes.position;
+                            }
+                            if (position) {
+                                inventory.position(self.buildArtefact(artefactData.inventory[i]), position); 
+                            } else {
+                                inventory.add(self.buildArtefact(artefactData.inventory[i]));
+                            };
+                        };
                         //else if (artefactData.inventory[i].object == "creature") {inventory.add(self.buildCreature(artefactData.inventory[i]));};  //won't work - creatures need to "go" to a locaion at the moment
                     };
                 };
@@ -115,7 +125,18 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     //add items directly to inventory
                     inventory = creature.getInventoryObject();
                     for (var i=0; i<creatureData.inventory.length; i++) {
-                        if (creatureData.inventory[i].object == "artefact") {inventory.add(self.buildArtefact(creatureData.inventory[i]));};
+                        if (creatureData.inventory[i].object == "artefact") {
+                            var position;
+                            if (creatureData.inventory[i].attributes) {
+                                position = creatureData.inventory[i].attributes.position;
+                            }
+                            if (position) {
+                                inventory.position(self.buildArtefact(creatureData.inventory[i]), position); 
+                            } else {
+                                inventory.add(self.buildArtefact(creatureData.inventory[i]));
+                            };
+
+                        };
                         //else if (creatureData.inventory[i].object == "creature") {inventory.add(self.buildCreature(creatureData.inventory[i]));}; //won't work - creatures need to "go" to a locaion at the moment
                     };
                 };

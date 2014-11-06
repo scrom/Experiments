@@ -2354,6 +2354,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
+            if (artefact.getSubType() == "intangible") {return self.examine(verb, artefactName);};
+
             var positionName;
             //first 5 positions are all "on"
             if (position) {

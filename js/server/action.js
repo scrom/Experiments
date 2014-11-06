@@ -16,6 +16,7 @@ exports.Action = function Action(player, map, fileManager) {
         var _lastActionString = '';
         var _verb = '';
         var _splitWord = '';
+        var _adverb = '';
         var _objects = []; //objects and creatures
         var _object0 = '';
         var _object1 = '';
@@ -28,6 +29,7 @@ exports.Action = function Action(player, map, fileManager) {
 
         var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'l','left', 'r','right', 'c','continue', 'b','back'];
         var _positions =  ['onto', 'on to', 'on top of', 'on', 'above', 'under', 'underneath', 'below', 'beneath', 'behind']; //split words that are also "put" positions.
+        var _adverbs =  ['closely', 'carefully', 'cautiously', 'slowly', 'quickly', 'softly', 'loudly','noisily', 'gently', 'quietly','silently', 'tightly','losely']; //not split words but we need to trim these out and occasionally handle them.
         //private functions
 
         //captialise first letter of string.
@@ -71,6 +73,21 @@ exports.Action = function Action(player, map, fileManager) {
             if (badWords.indexOf(checkWord)>-1) { 
                  return aWord+" to you too. That's not very nice now, is it. Save that language for the office.";
             } else {return null;};
+        };
+
+        /*
+        for a passed in string, gather the first adverb used if possible.
+        there are a few cases where we need to use them but for the most part we just want to strip them out
+        */
+        var extractAdverb = function(aString) {
+            var stringAsWords = aString.split(" ");
+            for (var i=0;i<stringAsWords.length;i++) {
+                var index = _adverbs.indexOf(stringAsWords[i]);
+                if (index > -1) {
+                    _adverb = _adverbs[index];
+                    break;
+                };
+            };
         };
 
         /*
@@ -156,6 +173,11 @@ exports.Action = function Action(player, map, fileManager) {
 
             //replace first instance of verb with '' then trim spaces
             var remainder = aString.replace(_verb,'').trim().toLowerCase();  
+
+            //extract any adverbs and clean up afterward.
+            extractAdverb(remainder);
+            remainder = remainder.replace(_adverb, ""); 
+            remainder = remainder.replace("  ", " ");
 
             //figure out split word we're looking for - with, to, from, for, at, on
             _objects = splitRemainderString(remainder);
@@ -356,8 +378,11 @@ exports.Action = function Action(player, map, fileManager) {
                         
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         if (_object1) {
-                            if (_positions.indexOf(_splitWord) > -1) {
+                            var positionIndex = _positions.indexOf(_splitWord);
+                            if ((positionIndex > -1) ||(_adverb == "closely" || _adverb == "carefully")) {
                                 //support "look under", "look behind" and "look in" etc.
+                                if (_adverb) {_verb = _verb+" "+_adverb;};
+                                if (positionIndex == -1) {_ticks = 3;};
                                 description = _player.search(_verb, _object1, _splitWord, _positions);
                             } else {
                                 description = _player.examine(_verb+" "+_splitWord,_object1, _map);
@@ -396,7 +421,15 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examien':
                     case 'browse':
                         _player.setLastVerbUsed('examine');
-                        description = _player.examine(_verb, _object0, _map);
+                        if ((_positions.indexOf(_splitWord) > -1)) {
+                            //support "examine under", "examine behind" and "examine in" etc.
+                            description = _player.search(_verb, _object1, _splitWord, _positions);
+                        } else if (_adverb == "closely" || _adverb == "carefully") {
+                            _ticks = 3;
+                            description = _player.search(_verb, _object0, _splitWord, _positions);
+                        } else {
+                            description = _player.examine(_verb, _object0, _map);
+                        };
                         break;  
                     case 'rest':
                     case 'sit':
