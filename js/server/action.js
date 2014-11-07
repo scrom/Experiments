@@ -444,7 +444,6 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'wait':
                     case 'z':
-                        _ticks = 0; //ticks are handled within wait routine instead
                         description = _player.wait(1, map);
                         break;
                     case 'put':

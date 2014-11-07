@@ -679,7 +679,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.wait = function(duration, map) {
             self.incrementWaitCount(duration);
-            return "Time passes... ...slowly.<br>"+self.tick(duration, map);
+            return "Time passes... ...slowly.<br>";
         };
 
         self.incrementHealCount = function() {
