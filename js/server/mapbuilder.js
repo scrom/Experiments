@@ -214,9 +214,9 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                             } else if (inventoryData.object == "creature") {
                                 var creature = self.buildCreature(inventoryData)
                                 if (inventoryData.attributes) {
-                                    if (inventoryData.attributes.startLocationName) {
-                                        var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
-                                        creature.setStartLocation(startLocation);
+                                    if (inventoryData.attributes.homeLocationName) {
+                                        var homeLocation = _map.getLocation(inventoryData.attributes.homeLocationName);
+                                        creature.setHomeLocation(homeLocation);
                                     };
                                 };
                                 creature.go(null, rewardLocation);                           
@@ -241,9 +241,9 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                         } else if (inventoryData.object == "creature") {
                             var creature = self.buildCreature(inventoryData)
                             if (inventoryData.attributes) {
-                                if (inventoryData.attributes.startLocationName) {
-                                    var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
-                                    creature.setStartLocation(startLocation);
+                                if (inventoryData.attributes.homeLocationName) {
+                                    var homeLocation = _map.getLocation(inventoryData.attributes.homeLocationName);
+                                    creature.setHomeLocation(homeLocation);
                                 };
                             };
                             returnObject.modifyLocation.inventory.push(creature);                   
@@ -274,9 +274,9 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                         } else if (inventoryData.object == "creature") {
                             var creature = self.buildCreature(inventoryData)
                             if (inventoryData.attributes) {
-                                if (inventoryData.attributes.startLocationName) {
-                                    var startLocation = _map.getLocation(inventoryData.attributes.startLocationName);
-                                    creature.setStartLocation(startLocation);
+                                if (inventoryData.attributes.homeLocationName) {
+                                    var homeLocation = _map.getLocation(inventoryData.attributes.homeLocationName);
+                                    creature.setHomeLocation(homeLocation);
                                 };
                             };
                             returnObject.modifyObject.inventory.push(creature);                   
@@ -381,9 +381,9 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                             else if (locationData.inventory[k].object == "creature") {
                                 var creature = self.buildCreature(locationData.inventory[k])
                                 if (locationData.inventory[k].attributes) {
-                                    if (locationData.inventory[k].attributes.startLocationName) {
-                                        var startLocation = _map.getLocation(locationData.inventory[k].attributes.startLocationName);
-                                        creature.setStartLocation(startLocation);
+                                    if (locationData.inventory[k].attributes.homeLocationName) {
+                                        var homeLocation = _map.getLocation(locationData.inventory[k].attributes.homeLocationName);
+                                        creature.setHomeLocation(homeLocation);
                                     };
                                 };
 

@@ -42,7 +42,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _charges = 0;
         var _nutrition = 20; //default
         var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
-        var _startLocation;
+        var _homeLocation;
         var _currentLocation;
         var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
         var _timeSinceEating = 0;
@@ -601,8 +601,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.originalBaseAffinity != creatureAttributes.baseAffinity) {saveAttributes.originalBaseAffinity = creatureAttributes.originalBaseAffinity;};     
             if (creatureAttributes.friendlyAttackCount >0) {saveAttributes.friendlyAttackCount = creatureAttributes.friendlyAttackCount;};
 
-            if (_startLocation) {
-                if (_startLocation.getName() != _currentLocation.getName()) {saveAttributes.startLocationName = _startLocation.getName();};
+            if (_homeLocation) {
+                if (_homeLocation.getName() != _currentLocation.getName()) {saveAttributes.homeLocationName = _homeLocation.getName();};
             };
 
             return saveAttributes;
@@ -1749,8 +1749,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "";
         };
 
-        self.setStartLocation = function(location) {
-            _startLocation = location;
+        self.setHomeLocation = function(location) {
+            _homeLocation = location;
             //console.log("start location set for "+self.getName());
         };
 
@@ -1796,18 +1796,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //change current location
             _currentLocation = aLocation;
 
-            if (_startLocation == undefined) {
-                _startLocation = _currentLocation;
+            if (_homeLocation == undefined) {
+                _homeLocation = _currentLocation;
             } else {;
 
                 //return home every n moves if we don't have another destination
                 if (_destinations.length == 0 && _canTravel) {
-                    if (_startLocation != _currentLocation) { 
-                        if (_returnHomeIn <0) {
-                            _returnHomeIn = 25+Math.floor(Math.random() * 35);
-                        } else if (_returnHomeIn == 0) {
-                            _returnHomeIn = 25+Math.floor(Math.random() * 35);
-                            self.setDestination(_startLocation.getName());
+                    if (_homeLocation != _currentLocation) {
+                        if (_returnHomeIn == 0) {self.setDestination(_homeLocation.getName());}; 
+
+                        if (_returnHomeIn <=0) {
+                            _returnHomeIn = 20+Math.floor(Math.random() * 40);
                         } else {
                             _returnHomeIn--;   
                         };        
@@ -2710,7 +2709,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var playerLocation = player.getCurrentLocation().getName();
             var playerAggression = player.getAggression();
-            var startLocation = _currentLocation.getName();
+            var homeLocation = _currentLocation.getName();
 
             var damage = 0;
             var healPoints = 0;
@@ -2805,8 +2804,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             self.clearPath();
                             self.clearDestination();
                             //if creature is in home location, stay there a short while.
-                            if (_currentLocation.getName() == _startLocation.getName()) {
-                                var randomWait = Math.floor(Math.random() * 5);
+                            if (_currentLocation.getName() == _homeLocation.getName()) {
+                                var randomWait = Math.floor(Math.random() * 7);
                                 _waitDelay = 3+randomWait;
                                 _currentDelay = 0;
                             };                            
@@ -2970,7 +2969,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 self.setHuntingPlayer(false);
                 resultString += self.initiateConversation(player);
                 return resultString;
-            } else if (playerLocation == startLocation) {
+            } else if (playerLocation == homeLocation) {
                 return partialResultString; //just the outcome of fleeing.
             } else {
                 return "";
@@ -3110,8 +3109,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //if not normally a traveller, set path to return home afterwards...
             if (!(_traveller)) {
-                if (_startLocation) {
-                    _destinations.unshift(_startLocation.getName());
+                if (_homeLocation) {
+                    _destinations.unshift(_homeLocation.getName());
                 } else {
                     _destinations.unshift(_currentLocation.getName());
                 };
@@ -3181,8 +3180,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return path;
         };
 
-        self.findPath = function(randomiseSearch, destinationName, map, startLocation, currentLocation, lastDirection, visitedLocations) {
-            if (!(currentLocation)) {currentLocation = startLocation;};
+        self.findPath = function(randomiseSearch, destinationName, map, homeLocation, currentLocation, lastDirection, visitedLocations) {
+            if (!(currentLocation)) {currentLocation = homeLocation;};
 
             if (!(visitedLocations)) {visitedLocations = [currentLocation.getName()];}
             else {visitedLocations.push(currentLocation.getName())};
@@ -3195,7 +3194,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
              };       
 
             var exits = currentLocation.getAvailableExits(true);
-            if (exits.length == 1 && currentLocation.getName() != startLocation.getName()) {return null;};
+            if (exits.length == 1 && currentLocation.getName() != homeLocation.getName()) {return null;};
 
             if (randomiseSearch) {
                 exits = shuffle(exits);
@@ -3207,7 +3206,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     continue;
                 };
 
-                if (exits[e].getDestinationName() == startLocation.getName()) {
+                if (exits[e].getDestinationName() == homeLocation.getName()) {
                     continue;
                 };
 
@@ -3219,7 +3218,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     continue;
                 };
 
-                var newPath = self.findPath(randomiseSearch, destinationName, map, startLocation, map.getLocation(exits[e].getDestinationName()), direction, visitedLocations);
+                var newPath = self.findPath(randomiseSearch, destinationName, map, homeLocation, map.getLocation(exits[e].getDestinationName()), direction, visitedLocations);
 
                 if (newPath) {
                     newPath.push(exits[e].getDirection());

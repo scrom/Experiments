@@ -1239,62 +1239,63 @@
         },
         "synonyms": [
           "daves desk",
-		  "dave's desk",
-		  "dave desk"
+          "dave's desk",
+          "dave desk"
         ],
-		"inventory": [
-		  {
-			"object": "artefact",
-			"name": "tears",
-			"description": "tear stains",
-			"detailedDescription": "<br>They're the residue of tears of frustration - probably from years of dealing with email marketing campaigns.<br>Nobody should have to work with email marketing for that long and be expected to stay entirely sane.",
-			"attributes": {
-			  "weight": 0,
-			  "type": "scenery",
-			  "plural": true,
-			  "position": "on",
-			  "subType": "intangible",
-			  "customAction": ["get"],
-			  "defaultResult": "Trust me, you <i>don't</i> want them.",
-			  "smell": "You vaguely sense a tang of salt and blood around them.",
-			  "sound": "Wow, that's disturbing. It takes quite a spiritual imprint to leave the <i>sound</i> of tears."
-			},
-			"synonyms": [
-			  "frustration",
-			  "stains",
-			  "tearstains",
-			  "tear stains",
-			  "daves tears",
-			  "dave's tears",
-			  "dave tears"
-			]
-		 },
-		  {
-			"object": "artefact",
-			"name": "spam",
-			"description": "tin of Spam",
-			"detailedDescription": "It's a leftover from a training course a few years ago. It says 'best before end: November 2015.<br>I thought this stuff lasted forever!",
-			"attributes": {
-			  "weight": 1,
-			  "type": "food",
-			  "canCollect": true,
-			  "nutrition": -15,
-			  "charges": 3,
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "tears",
+            "description": "tear stains",
+            "detailedDescription": "<br>They're the residue of tears of frustration - probably from years of dealing with email marketing campaigns.<br>Nobody should have to work with email marketing for that long and be expected to stay entirely sane.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "plural": true,
+              "position": "on",
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "Trust me, you <i>don't</i> want them.",
+              "smell": "You vaguely sense a tang of salt and blood around them.",
+              "sound": "Wow, that's disturbing. It takes quite a spiritual imprint to leave the <i>sound</i> of tears."
+            },
+            "synonyms": [
+              "frustration",
+              "stains",
+              "tearstains",
+              "tear stains",
+              "daves tears",
+              "dave's tears",
+              "dave tears"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "spam",
+            "description": "tin of Spam",
+            "detailedDescription": "It's a leftover from a training course a few years ago. It says 'best before end: November 2015.<br>I thought this stuff lasted forever!",
+            "attributes": {
+              "weight": 1,
+              "type": "food",
+              "canCollect": true,
+              "charges": 3,
               "chargeUnit": "portion",
               "chargesDescription": "There's about $charges $chargeUnit left",
-			  "canOpen": true,
-			  "position": "on",
-			  "hidden": "true",
-			  "smell": "You wonder to yourself if cats like Spam."
-			},
-			"synonyms": [
-			  "tin",
-			  "tin of spam",
-			  "tin spam",
-			  "spam tin"
-			]
-		 }
-		]
+              "canOpen": true,
+              "isEdible": true,
+              "nutrition": -15,
+              "position": "on",
+              "smell": "You wonder to yourself if cats like Spam."
+            },
+            "synonyms": [
+              "tin",
+              "tin of spam",
+              "tin spam",
+              "spam tin"
+            ]
+          }
+        ]
       },
       {
         "object": "artefact",
@@ -1343,7 +1344,7 @@
     "object": "location",
     "name": "customer-delight-central",
     "displayName": "Customer Delight",
-    "description": "You're in the Customer Delight team area.<br>Dominating the middle of the area is a glass wall decorated with LED lights.",
+    "description": "You're in the Customer Delight team area.<br>Dominating the middle of this wing of the building is a glass wall decorated with LED lights.",
     "exits": [
       {
         "object": "exit",
@@ -1378,14 +1379,14 @@
       {
         "object": "artefact",
         "name": "lights",
-        "description": "a glass wall full of LED lights",
+        "description": "glass wall full of LED lights",
         "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
         "attributes": {
           "weight": 280,
           "type": "scenery",
-		  "switched": true,
-		  "isOn": true,
-		  "plural": true,
+          "plural": true,
+          "switched": true,
+          "isOn": true,
           "canDrawOn": true
         },
         "synonyms": [
@@ -1395,7 +1396,7 @@
           "glass",
           "glass wall",
           "walls",
-		  "wall"
+          "wall"
         ]
       },
       {
@@ -4978,7 +4979,8 @@
                           ]
                         }
                       }
-                    ]
+                    ],
+                    "homeLocationName": "creative-agency-area"
                   },
                   "synonyms": [
                     "dave",
@@ -5024,7 +5026,8 @@
                           ]
                         }
                       }
-                    ]
+                    ],
+                    "homeLocationName": "marketing"
                   },
                   "synonyms": [
                     "roger",

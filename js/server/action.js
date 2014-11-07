@@ -434,16 +434,17 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'rest':
                     case 'sit':
                     case 'zz':
-                        _ticks = 0;
+                        _ticks = 0; //ticks are handled within rest routine instead
                         description = _player.rest(_verb, 5, _map);
                         break;
                     case 'sleep':
                     case 'zzz':
-                        _ticks = 0;
+                        _ticks = 0; //ticks are handled within rest routine instead
                         description = _player.rest(_verb, 10, _map);
                         break;
                     case 'wait':
                     case 'z':
+                        _ticks = 0; //ticks are handled within wait routine instead
                         description = _player.wait(1, map);
                         break;
                     case 'put':
