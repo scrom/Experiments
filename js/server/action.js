@@ -382,7 +382,7 @@ exports.Action = function Action(player, map, fileManager) {
                             if ((positionIndex > -1) ||(_adverb == "closely" || _adverb == "carefully")) {
                                 //support "look under", "look behind" and "look in" etc.
                                 if (_adverb) {_verb = _verb+" "+_adverb;};
-                                if (positionIndex == -1) {_ticks = 3;};
+                                if (positionIndex == -1) {_ticks = 3;}; //full search takes longer
                                 description = _player.search(_verb, _object1, _splitWord, _positions);
                             } else {
                                 description = _player.examine(_verb+" "+_splitWord,_object1, _map);
@@ -425,7 +425,7 @@ exports.Action = function Action(player, map, fileManager) {
                             //support "examine under", "examine behind" and "examine in" etc.
                             description = _player.search(_verb, _object1, _splitWord, _positions);
                         } else if (_adverb == "closely" || _adverb == "carefully") {
-                            _ticks = 3;
+                            _ticks = 3; //full search takes longer
                             description = _player.search(_verb, _object0, _splitWord, _positions);
                         } else {
                             description = _player.examine(_verb, _object0, _map);
@@ -434,13 +434,13 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'rest':
                     case 'sit':
                     case 'zz':
-                        _ticks = 0; //ticks are handled within rest routine instead
-                        description = _player.rest(_verb, 5, _map);
+                        _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
+                        description = _player.rest(_verb, 4, _map);
                         break;
                     case 'sleep':
                     case 'zzz':
-                        _ticks = 0; //ticks are handled within rest routine instead
-                        description = _player.rest(_verb, 10, _map);
+                        _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
+                        description = _player.rest(_verb, 9, _map);
                         break;
                     case 'wait':
                     case 'z':
