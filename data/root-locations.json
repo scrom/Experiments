@@ -1247,11 +1247,12 @@
 			"object": "artefact",
 			"name": "tears",
 			"description": "tear stains",
-			"detailedDescription": "<br>Looking closer you can see evidence of the tears of frustration from years of dealing with email marketing campaigns.<br>Nobody should have to deal with email marketing for that long and be expected to stay entirely sane.",
+			"detailedDescription": "<br>They're the residue of tears of frustration - probably from years of dealing with email marketing campaigns.<br>Nobody should have to work with email marketing for that long and be expected to stay entirely sane.",
 			"attributes": {
 			  "weight": 0,
 			  "type": "scenery",
 			  "plural": true,
+			  "position": "on",
 			  "subType": "intangible",
 			  "customAction": ["get"],
 			  "defaultResult": "Trust me, you <i>don't</i> want them.",

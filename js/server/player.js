@@ -2375,6 +2375,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var foundItems = artefact.getHiddenObjects(positionName, _currentLocation);
 
             var collectedItemCount = 0;
+            var collectableItemCount = foundItems.length;
+            var intangibleCount = 0;
+            var sceneryCount = 0;
+            var immovableCount = 0;
             for (var f=0;f<foundItems.length;f++) {
                 //either collect item or move it to location.
                 if (foundItems[f].isCollectable() && _inventory.canCarry(foundItems[f])) {
@@ -2385,6 +2389,23 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += "<br>You collect "+foundItems[f].getDisplayName();
                     } else if (collectedItemCount > 1)  {
                         resultString += ", "+foundItems[f].getDescription();
+                    };
+                } else if (!foundItems[f].isCollectable()) {
+                    collectableItemCount --;
+                    var position;
+                    if (foundItems[f].getPosition() == "on") {
+                        position = "on";
+                    };
+
+                    foundItems[f].show();                    
+                    foundItems[f].setPosition(position);
+
+                    if (foundItems[f].getSubType() == "intangible") { 
+                        intangibleCount++;
+                    } else if (foundItems[f].getType() == "scenery") { 
+                        sceneryCount++;
+                    } else {
+                        immovableCount++;
                     };
                 } else {
                     artefact.removeObject(foundItems[f].getName());
@@ -2399,14 +2420,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += "." 
             };
 
-            if (collectedItemCount < foundItems.length) {
-                var remainder = "the remainder"
-                var themIt = "them";
+            if (collectedItemCount < collectableItemCount) {
+                //weren't able to collect something that should have been collectable
+                var remainder = "the rest";
+                var themIt = "some of these";
+                if (collectedItemCount == 0) {
+                    remainder = "any more";
+                };
                 if (foundItems.length == 1) {
                     remainder = foundItems[0].getSuffix();
                     themIt = foundItems[0].getSuffix();
                 };
-                resultString += "<br>You're not able to pick "+remainder+" up right now but you might still find a use for "+themIt+".";
+                resultString += "<br>Unfortunately you can't carry "+remainder+" right now.<br>You might want to come back for "+themIt+" later or <i>drop</i> something else you're carrying.";
+            } else if (collectedItemCount < foundItems.length) {
+                var remainder = "the remainder";
+                var themIt = "they";
+                if (collectedItemCount == 0) {
+                    remainder = "anything";
+                    themIt = "something";
+                };
+                if (foundItems.length == 1) {
+                    remainder = foundItems[0].getSuffix();
+                    themIt = foundItems[0].getSuffix();
+                };
+                resultString += "<br>You can't pick "+remainder+" up but "+themIt+" might still have a use here.";
             };          
 
             return resultString;
