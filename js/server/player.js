@@ -2426,13 +2426,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var themIt = "some of these";
                 if (collectedItemCount == 0) {
                     remainder = "any more";
+                    if (collectableItemCount == 1) {
+                        //this will get overridden later if there's only 1 found item :)
+                        themIt = "something here";
+                    };
                 };
                 if (foundItems.length == 1) {
                     remainder = foundItems[0].getSuffix();
                     themIt = foundItems[0].getSuffix();
+                } else if ((collectedItemCount > 0) && (collectableItemCount-collectedItemCount == 1)) {
+                    remainder = "everything";
+                    themIt = "one more";
                 };
                 resultString += "<br>Unfortunately you can't carry "+remainder+" right now.<br>You might want to come back for "+themIt+" later or <i>drop</i> something else you're carrying.";
             } else if (collectedItemCount < foundItems.length) {
+                //we colected everything possible but there's still things left behind.
                 var remainder = "the remainder";
                 var themIt = "they";
                 if (collectedItemCount == 0) {
@@ -2442,8 +2450,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (foundItems.length == 1) {
                     remainder = foundItems[0].getSuffix();
                     themIt = foundItems[0].getSuffix();
+                }else if ((collectedItemCount > 0) && (foundItems.length-collectedItemCount == 1)) {
+                    remainder = "everything";
+                    themIt = "whatever's left";
                 };
-                resultString += "<br>You can't pick "+remainder+" up but "+themIt+" might still have a use here.";
+                resultString += "<br><br>You can't pick "+remainder+" up but "+themIt+" might still have a use here.";
             };          
 
             return resultString;
