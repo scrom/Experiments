@@ -2373,6 +2373,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString =  "You "+verb+" "+artefact.getDisplayName()+" and discover "+artefact.listHiddenObjects(positionName, _currentLocation)+".";
 
             var foundItems = artefact.getHiddenObjects(positionName, _currentLocation);
+            if (foundItems.length == 0) {return resultString;}; //exit early if nothing found.
+
             var remainingItems = [];
 
             var collectedItemCount = 0;
@@ -2380,6 +2382,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var intangibleCount = 0;
             var sceneryCount = 0;
             var immovableCount = 0;
+            var collectedItemsString = "";
             for (var f=0;f<foundItems.length;f++) {
                 //either collect item or move it to location.
                 if (foundItems[f].isCollectable() && _inventory.canCarry(foundItems[f])) {
@@ -2387,9 +2390,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     _inventory.add(foundItems[f]);
                     collectedItemCount++;
                     if (collectedItemCount == 1) {
-                        resultString += "<br>You collect "+foundItems[f].getDisplayName();
+                        collectedItemsString += "<br>You collect "+foundItems[f].getDisplayName();
                     } else if (collectedItemCount > 1)  {
-                        resultString += ", "+foundItems[f].getDescription();
+                        collectedItemsString += ", "+foundItems[f].getDescription();
                     };
                 } else if (!foundItems[f].isCollectable()) {
                     collectableItemCount --;
@@ -2415,10 +2418,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     remainingItems.push(foundItems[f]);
                 }; 
             };
+
+            if (collectedItemCount == foundItems.length && collectedItemCount > 1) {
+                resultString += "<br>You collect up all your discoveries."
+                return resultString;
+            } else {
+                resultString += collectedItemsString;
+            };
+
+            //we'll only get this far is something was left behind...
             
             if (collectedItemCount > 1) {
-              resultString = resultString.replace(/_([^,]*)$/," and "+'$1');  //replace last comma with " and ".
+              resultString = resultString.replace(/,(?=[^,]*$)/, " and");  //replace last comma with " and ".
+              
             }; 
+
             if (collectedItemCount > 0) {
                 resultString += "." 
             };
@@ -2447,29 +2461,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     }; 
                 };
                 resultString += "<br>Unfortunately you can't carry "+remainder+" right now.<br>You might want to come back for "+themIt+" later or <i>drop</i> something else you're carrying.";
-            } else if (collectedItemCount < foundItems.length) {
-                //we collected everything possible but there's still things left behind.
-                var remainder = "the remainder";
-                var themIt = "they";
-                if (collectedItemCount == 0) {
-                    remainder = "anything";
-                    themIt = "something";
-                };
-
-                if (remainingItems.length == 1) {
-                    remainder = remainingItems[0].getSuffix();
-                    themIt = remainingItems[0].getPrefix().toLowerCase();
-
-                    if (remainingItems[0].checkCustomAction("get")) {
-                        return resultString +"<br><br>"+ self.customAction("get", remainingItems[0].getName());
-                    };
-
-                } else if ((collectedItemCount > 0) && (foundItems.length-collectedItemCount == 1)) {
-                    remainder = "everything";
-                    themIt = "whatever's left";
-                };
-
-                resultString += "<br><br>You can't pick "+remainder+" up.";
             };          
 
             return resultString;
