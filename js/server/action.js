@@ -474,6 +474,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'insert':
                     case 'join':
                     case 'add':
+                    case 'mix':
                     case 'pour':
                         description = _player.put(_verb, _object0, _object1);
                         break;
@@ -942,6 +943,9 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'undo':
                     case 'tighten': //may also need to support "do up"? 
                     case 'touch': //either activate something (like press) - or return a texture description
+                    case 'feel': //either activate something (like press) - or return a texture description
+                    case 'cast':
+                    case 'summon':
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;

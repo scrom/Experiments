@@ -940,7 +940,7 @@
     "object": "location",
     "name": "camelids-b",
     "displayName": "Camelids-B meeting room",
-    "description": "You're in Camelids-B. When not in use for small meetings, this room doubles as an in-office hairdressers salon.<br>You can still detect faint traces of hair clippings.",
+    "description": "When not in use for small meetings, this room doubles as an in-office hairdressing salon.<br>The carpet in here feels strange underfoot.",
     "exits": [
       {
         "object": "exit",
@@ -953,30 +953,37 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "hair",
-        "description": "hair clippings",
-        "detailedDescription": "Fine hair trimmings of assorted colours and thickness. None look long enough to do anything useful with.",
-        "attributes": {
-          "type": "scenery",
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "They're too fine and embedded into the carpet to collect."
-        },
-        "synonyms": [
-          "hair clippings",
-          "clippings"
-        ]
-      },
-      {
-        "object": "artefact",
         "name": "carpet",
         "description": "office carpet",
-        "detailedDescription": "Just a plain office carpet",
+        "detailedDescription": "On the surface it's just a plain office carpet but it's a bit prickly.",
         "attributes": {
           "type": "scenery"
-        }
+        },
+		"synonyms": [
+          "floor",
+		  "ground"
+        ],
+		"inventory": [
+		   {
+			"object": "artefact",
+			"name": "hair",
+			"description": "hair clippings",
+			"detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
+			"attributes": {
+			  "type": "junk",
+			  "hidden": "true",
+			  "plural": true,
+			  "customAction": [
+				"get"
+			  ],
+			  "defaultResult": "They're too fine and embedded into the carpet to collect."
+			},
+			"synonyms": [
+			  "hair clippings",
+			  "clippings"
+			]
+		  }
+		]
       }
     ]
   },
@@ -1344,7 +1351,7 @@
     "object": "location",
     "name": "customer-delight-central",
     "displayName": "Customer Delight",
-    "description": "You're in the Customer Delight team area.<br>Dominating the middle of this wing of the building is a glass wall decorated with LED lights.",
+    "description": "You're in the Customer Delight team area - a large, open-plan office space.<br>From where you're standing, the most dominant feature in the room is a floor-to-ceiling glass wall decorated with LED lights.",
     "exits": [
       {
         "object": "exit",
@@ -1378,7 +1385,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "lights",
+        "name": "wall",
         "description": "glass wall full of LED lights",
         "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
         "attributes": {
@@ -1396,7 +1403,7 @@
           "glass",
           "glass wall",
           "walls",
-          "wall"
+          "lights"
         ]
       },
       {

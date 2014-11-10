@@ -829,7 +829,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };              
             };
 
-            resultString = resultString.replace("placed on top", "placed on top of "+self.getSuffix());
+            resultString = resultString.replace("placed on top", "on "+self.getSuffix());
 
             //remove original description if it's not working.
             if (!(self.checkComponents())) { 

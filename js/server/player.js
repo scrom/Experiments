@@ -2373,6 +2373,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString =  "You "+verb+" "+artefact.getDisplayName()+" and discover "+artefact.listHiddenObjects(positionName, _currentLocation)+".";
 
             var foundItems = artefact.getHiddenObjects(positionName, _currentLocation);
+            var remainingItems = [];
 
             var collectedItemCount = 0;
             var collectableItemCount = foundItems.length;
@@ -2399,6 +2400,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                     foundItems[f].show();                    
                     foundItems[f].setPosition(position);
+                    remainingItems.push(foundItems[f]);
 
                     if (foundItems[f].getSubType() == "intangible") { 
                         intangibleCount++;
@@ -2410,6 +2412,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 } else {
                     artefact.removeObject(foundItems[f].getName());
                     _currentLocation.addObject(foundItems[f]);
+                    remainingItems.push(foundItems[f]);
                 }; 
             };
             
@@ -2424,6 +2427,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //weren't able to collect something that should have been collectable
                 var remainder = "the rest";
                 var themIt = "some of these";
+
                 if (collectedItemCount == 0) {
                     remainder = "any more";
                     if (collectableItemCount == 1) {
@@ -2431,30 +2435,41 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         themIt = "something here";
                     };
                 };
+
                 if (foundItems.length == 1) {
                     remainder = foundItems[0].getSuffix();
-                    themIt = foundItems[0].getSuffix();
+                    themIt = foundItems[0].getPrefix().toLowerCase();
                 } else if ((collectedItemCount > 0) && (collectableItemCount-collectedItemCount == 1)) {
                     remainder = "everything";
                     themIt = "one more";
+                    if (remainingItems.length == 1) {
+                        themIt = remainingItems[0].getDisplayName();
+                    }; 
                 };
                 resultString += "<br>Unfortunately you can't carry "+remainder+" right now.<br>You might want to come back for "+themIt+" later or <i>drop</i> something else you're carrying.";
             } else if (collectedItemCount < foundItems.length) {
-                //we colected everything possible but there's still things left behind.
+                //we collected everything possible but there's still things left behind.
                 var remainder = "the remainder";
                 var themIt = "they";
                 if (collectedItemCount == 0) {
                     remainder = "anything";
                     themIt = "something";
                 };
-                if (foundItems.length == 1) {
-                    remainder = foundItems[0].getSuffix();
-                    themIt = foundItems[0].getSuffix();
-                }else if ((collectedItemCount > 0) && (foundItems.length-collectedItemCount == 1)) {
+
+                if (remainingItems.length == 1) {
+                    remainder = remainingItems[0].getSuffix();
+                    themIt = remainingItems[0].getPrefix().toLowerCase();
+
+                    if (remainingItems[0].checkCustomAction("get")) {
+                        return resultString +"<br><br>"+ self.customAction("get", remainingItems[0].getName());
+                    };
+
+                } else if ((collectedItemCount > 0) && (foundItems.length-collectedItemCount == 1)) {
                     remainder = "everything";
                     themIt = "whatever's left";
                 };
-                resultString += "<br><br>You can't pick "+remainder+" up but "+themIt+" might still have a use here.";
+
+                resultString += "<br><br>You can't pick "+remainder+" up.";
             };          
 
             return resultString;
