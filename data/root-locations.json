@@ -1642,7 +1642,7 @@
     "object": "location",
     "name": "customer-delight-east",
     "displayName": "Customer Delight",
-    "description": "You're at the Eastern end of the Customer Delight team area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
+    "description": "You're at the Eastern entrance of the Customer Delight team area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
     "exits": [
       {
         "object": "exit",
@@ -1664,6 +1664,35 @@
         "direction": "n",
         "source": "customer-delight-east",
         "destination": "customer-delight-management-area"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "customer-delight-east",
+        "destination": "customer-delight-south-east"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "customer-delight-south-east",
+    "displayName": "Customer Delight",
+    "description": "You're in the South-Eastern corner of the Customer Delight team area.<br>This is the home of the SQL Source Control development team.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "customer-delight-south-east",
+        "destination": "customer-delight-south"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "customer-delight-south-east",
+        "destination": "customer-delight-east"
       }
     ]
   },
@@ -1939,6 +1968,13 @@
         "direction": "n",
         "source": "customer-delight-south",
         "destination": "customer-delight-central"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "customer-delight-south",
+        "destination": "customer-delight-south-east"
       },
       {
         "object": "exit",
