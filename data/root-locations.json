@@ -959,31 +959,30 @@
         "attributes": {
           "type": "scenery"
         },
-		"synonyms": [
+        "synonyms": [
           "floor",
-		  "ground"
+          "ground"
         ],
-		"inventory": [
-		   {
-			"object": "artefact",
-			"name": "hair",
-			"description": "hair clippings",
-			"detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
-			"attributes": {
-			  "type": "junk",
-			  "hidden": "true",
-			  "plural": true,
-			  "customAction": [
-				"get"
-			  ],
-			  "defaultResult": "They're too fine and embedded into the carpet to collect."
-			},
-			"synonyms": [
-			  "hair clippings",
-			  "clippings"
-			]
-		  }
-		]
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "hair",
+            "description": "hair clippings",
+            "detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
+            "attributes": {
+			  "hidden": true,
+              "plural": true,
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "They're too fine and embedded into the carpet to collect."
+            },
+            "synonyms": [
+              "hair clippings",
+              "clippings"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -1232,15 +1231,15 @@
         "source": "creative-agency-area",
         "destination": "second-floor-seating-area-west"
       },
-	  {
-		"object": "exit",
-        "longname": "Down",
+      {
+        "object": "exit",
+        "longname": "down",
         "direction": "d",
         "source": "creative-agency-area",
         "destination": "ground-floor-fire-escape",
-		"description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+        "description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
         "hidden": true,
-		"requiredAction": "crawl"
+        "requiredAction": "crawl"
       }
     ],
     "inventory": [
@@ -1254,23 +1253,23 @@
           "isBreakable": true,
           "canDrawOn": true
         },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "down",
+            "direction": "d",
+            "source": "creative-agency-area",
+            "destination": "ground-floor-fire-escape",
+            "description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+            "hidden": true,
+            "requiredAction": "crawl"
+          }
+        ],
         "synonyms": [
           "daves desk",
           "dave's desk",
           "dave desk"
         ],
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "Down",
-            "direction": "d",
-            "source": "creative-agency-area",
-            "destination": "ground-floor-fire-escape",
-			"description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
-            "hidden": true,
-			"requiredAction": "crawl"
-          }
-		  ],
         "inventory": [
           {
             "object": "artefact",
@@ -1676,28 +1675,6 @@
   },
   {
     "object": "location",
-    "name": "customer-delight-south-east",
-    "displayName": "Customer Delight",
-    "description": "You're in the South-Eastern corner of the Customer Delight team area.<br>This is the home of the SQL Source Control development team.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "customer-delight-south-east",
-        "destination": "customer-delight-south"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "customer-delight-south-east",
-        "destination": "customer-delight-east"
-      }
-    ]
-  },
-  {
-    "object": "location",
     "name": "customer-delight-management-area",
     "displayName": "Customer Delight",
     "description": "You're in the dead-zone of Customer Delight between the glass wall and Jellyfish.<br>There's a vacuum where the CEO and PA's used to sit although it's adequately filled by the presence of James Dening when he's around.",
@@ -2047,6 +2024,28 @@
             }
           }
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "customer-delight-south-east",
+    "displayName": "Customer Delight",
+    "description": "You're in the South-Eastern corner of the Customer Delight team area.<br>This is the home of the SQL Source Control development team.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "customer-delight-south-east",
+        "destination": "customer-delight-south"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "customer-delight-south-east",
+        "destination": "customer-delight-east"
       }
     ]
   },
@@ -3975,7 +3974,7 @@
       }
     ],
     "inventory": [
-	{
+      {
         "object": "artefact",
         "name": "pipe",
         "description": "big pipes",
@@ -3983,17 +3982,17 @@
         "attributes": {
           "weight": 180,
           "type": "scenery",
-		  "plural": true,
+          "plural": true,
           "canDrawOn": true
         },
         "synonyms": [
           "gas",
           "water",
-		  "gas pipe",
+          "gas pipe",
           "water pipe",
-		  "gas pipes",
+          "gas pipes",
           "water pipes",
-		  "pipes"
+          "pipes"
         ]
       },
       {
@@ -4548,8 +4547,8 @@
           "weight": 1,
           "type": "food",
           "canCollect": true,
+          "isBreakable": true,
           "charges": 1,
-		  "isBreakable": true,
           "isEdible": true,
           "nutrition": 20
         },
@@ -7003,7 +7002,7 @@
         "detailedDescription": "Big, small, round, heavy, light. Parcels galore but none of them are yours.",
         "attributes": {
           "weight": 25,
-		  "canCollect": true,
+          "canCollect": true,
           "isBreakable": true,
           "plural": true,
           "customAction": "get",
@@ -7013,21 +7012,21 @@
           "parcel"
         ]
       },
-		{
+      {
         "object": "artefact",
         "name": "post",
         "description": "set of post pigeon holes",
         "detailedDescription": "It's the traditional array of pigeon holes you see in any post room.<br>Funny how these have survived into the 21st century paperless office.",
         "attributes": {
-		  "extendedInventoryDescription": "Thumbing through the piles of uncollected letters, you find $inventory.",
-		  "carryWeight":3,
+          "extendedInventoryDescription": "Thumbing through the piles of uncollected letters, you find $inventory.",
+          "carryWeight": 3,
           "plural": true
         },
         "synonyms": [
           "post pigeon holes",
-		  "pigeon holes",
-		  "pigeon",
-		  "holes"
+          "pigeon holes",
+          "pigeon",
+          "holes"
         ]
       }
     ]
@@ -10006,7 +10005,7 @@
         "direction": "u",
         "source": "top-fire-escape",
         "destination": "roof",
-		"requiredAction": "climb"
+        "requiredAction": "climb"
       }
     ]
   },
