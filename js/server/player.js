@@ -3074,8 +3074,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var selectedWeapon = null;
             var weapons = _inventory.getAllObjectsOfType('weapon');
             for(var index = 0; index < weapons.length; index++) {
-                //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones.
-                if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
+                //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones. (except projectiles - which must be in working order)
+                if ((weapons[index].getType() == 'weapon') && ((!(weapons[index].isBreakable())) || (weapons[index].getSubType() == "projectile" && (!weapons[index].isBroken())))) {
                     if (weapons[index].supportsAction(verb) && weapons[index].chargesRemaining() != 0) {    
                         var weaponStrength = weapons[index].getAttackStrength();
                         //console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
@@ -3218,7 +3218,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
             };
 
-            //need to validate that artefact will do some damage
+            //need to validate that weapon will do some damage
             if (weapon.getAttackStrength()<1) {
                 resultString = "You attack "+receiver.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon.<br>";
                 resultString += weapon.bash();
@@ -3227,6 +3227,23 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     resultString += receiver.hit(self,0.2); //return 20% damage
                 };
                 return resultString;
+            };
+
+            if (weapon.getSubType() == "projectile") {
+                var randomInt = Math.floor(Math.random() * 7); 
+                if (randomInt == 0) { //1 in 7 chance of failure
+                    weapon.consume();
+                    resultString = "You try to "+verb+" "+receiver.getDisplayName()+". Unfortunately your "+weapon.getName()+" jammed.";
+                    var newRandomInt = Math.floor(Math.random() * 10);
+                    if (newRandomInt == 0 && weapon.isBreakable()) { //further 10% chance of worse!
+                        resultString +="<br>In attempting to clear the jam, it looks like you've damaged the firing mechanism.<br>You'll need to get it fixed if you want to use it again.";
+                        weapon.break();
+                    } else {
+                        resultString +="<br>You manage to clear the jam but lost valuable time in doing so.";
+                    };
+                
+                    return resultString;
+                };
             };
 
             //get initial damage level
@@ -3273,7 +3290,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //did you use something fragile/consumable as a weapon?
             if (weapon) {
                 weapon.consume(); //(we may have already used some earlier)
-                if (weapon.isBreakable()) {
+                if (weapon.isBreakable() && weapon.getSubType() != "projectile") {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
                         resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+". "+weapon.getDescriptivePrefix()+" not the most durable of weapons.";

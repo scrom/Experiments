@@ -6030,6 +6030,7 @@
           "attackStrength": 5,
           "type": "weapon",
           "subType": "projectile",
+		  "isBreakable": true,
           "charges": 10,
           "chargeUnit": "round",
           "chargesDescription": "There's $charges $chargeUnit left",
