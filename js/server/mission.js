@@ -297,6 +297,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.wantsToTalk = function() {
+            if (self.hasParent()) {return false;};
+            if (!(self.hasDialogue())) {return false;};
+            if (_conversationState == 0) {return true;};
+            return false;
+        };
+
+        self.willInitiateConversation = function() {
+            if (self.hasParent()) {return false;};
             if (!(self.hasDialogue())) {return false;};
             if (_conversationState == 0 && _initiateConversation)  {
                 return true;

@@ -1066,14 +1066,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_salesInventory.size() == 1) { resultString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
             else if (_salesInventory.size() > 1) { resultString += "<br>" + initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
             
-            var hasDialogue = false;
+            var wantsToTalk = false;
             for (var i=0; i< _missions.length;i++) {
-                if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
-                    hasDialogue = true;
+                if (_missions[i].wantsToTalk()) {
+                    wantsToTalk = true;
                     break;
                 };
             };
-            if (hasDialogue) {
+            if (wantsToTalk) {
                 if (((_affinity <0) && (playerAggression>0))|| (_affinity <-1)) {resultString +="<br>"+_genderPrefix+" appears to have something on "+_genderPossessiveSuffix+" mind but doesn't trust you enough to talk about it right now.";}
                 else { resultString +="<br>"+_genderPrefix+" wants to talk to you about something.";};
             };
@@ -2395,14 +2395,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.initiateConversation = function(player) {
             if (player.getLastVerbUsed() == "examine") {return "";};
-            var wantsToTalk = false;
+            var willInitiateConversation = false;
             for (var i=0; i< _missions.length;i++) {
-                if (_missions[i].wantsToTalk() && (!(_missions[i].hasParent()))) {
-                    wantsToTalk = true;
+                if (_missions[i].willInitiateConversation()) {
+                    willInitiateConversation = true;
                     break;
                 };
             };
-            if (wantsToTalk) {
+            if (willInitiateConversation) {
                 var playerAggression = player.getAggression();
                 if (((_affinity <0) && (playerAggression>0))|| (_affinity <-1)) {return "<br>"+self.getDisplayName()+" seems to be behaving strangely around you.";}
                 player.setLastCreatureSpokenTo(self.getName());
