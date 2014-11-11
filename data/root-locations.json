@@ -6948,7 +6948,7 @@
     "object": "location",
     "name": "post-room",
     "displayName": "Post room",
-    "description": "You're in the post room.",
+    "description": "You're in the post room.<br>Dotted around the shelves and floor are parcels of all sizes.<br>One of the great things about this place is that the reception staff are willing to take deliveries for all staff.<br>It means most stuff in the post room is from Amazon or similar and Christmas is a bit crazy but it beats waiting at home for a delivery.",
     "exits": [
       {
         "object": "exit",
@@ -6961,21 +6961,36 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "trainers",
-        "description": "pair of trainers",
-        "detailedDescription": "These look pretty large. You're probably looking for a relatively tall owner for these.",
+        "name": "parcels",
+        "description": "parcels of assorted sizes",
+        "detailedDescription": "Big, small, round, heavy, light. Parcels galore but none of them are yours.",
         "attributes": {
-          "weight": 2,
-          "canCollect": true,
+          "weight": 25,
+		  "canCollect": true,
           "isBreakable": true,
           "plural": true,
-          "price": 20,
-          "customAction": "wear",
-          "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
+          "customAction": "get",
+          "defaultResult": "They're not yours!"
         },
         "synonyms": [
-          "pair of trainers",
-          "adams trainers"
+          "parcel"
+        ]
+      },
+		{
+        "object": "artefact",
+        "name": "post",
+        "description": "set of post pigeon holes",
+        "detailedDescription": "It's the traditional array of pigeon holes you see in any post room.<br>Funny how these have survived into the 21st century paperless office.",
+        "attributes": {
+		  "extendedInventoryDescription": "Thumbing through the piles of uncollected letters, you find $inventory.",
+		  "carryWeight":3,
+          "plural": true
+        },
+        "synonyms": [
+          "post pigeon holes",
+		  "pigeon holes",
+		  "pigeon",
+		  "holes"
         ]
       }
     ]
@@ -9437,6 +9452,27 @@
         "direction": "w",
         "source": "shower-ground-floor",
         "destination": "northwest-corridor-ground-floor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "trainers",
+        "description": "pair of trainers",
+        "detailedDescription": "These look pretty large. You're probably looking for a relatively tall owner for these.",
+        "attributes": {
+          "weight": 2,
+          "canCollect": true,
+          "isBreakable": true,
+          "plural": true,
+          "price": 20,
+          "customAction": "wear",
+          "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
+        },
+        "synonyms": [
+          "pair of trainers",
+          "adams trainers"
+        ]
       }
     ]
   },

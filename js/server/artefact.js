@@ -310,7 +310,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (_plural) {
-                if (anItemDescription.substring(0,8) != "pair of ") {
+                //special cases
+                //@todo rewrite as ->If the second description word is "of" 
+                //and first word matches an array of possible first words then ignore.
+                //we can't just assume "of" denotes plural - e.g. "essence of roses"
+                if (!(anItemDescription.substring(0,8) == "pair of " 
+                    || anItemDescription.substring(0,8) != "pack of " 
+                    || anItemDescription.substring(0,8) != "bowl of " 
+                    || anItemDescription.substring(0,7) != "set of " 
+                    || anItemDescription.substring(0,7) != "box of " 
+                    || anItemDescription.substring(0,7) != "tin of " 
+                    || anItemDescription.substring(0,7) != "jar of " 
+                    || anItemDescription.substring(0,10) != "packet of " 
+                    || anItemDescription.substring(0,10) != "bottle of "
+                    || anItemDescription.substring(0,11) != "cluster of " 
+                    || anItemDescription.substring(0,14) != "collection of " 
+                   ))
+                {
                     return "some "+anItemDescription;
                 };
             };
