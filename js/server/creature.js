@@ -2882,26 +2882,38 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
 
                         var exposedItems = "";
+                        var exitAction;
+                        var originalLocationName = _currentLocation.getName();
+                        var newLocationName = originalLocationName;
                         if (exit) {
-                            exposedItems = self.exposePositionedItems();
-                            self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                            exitAction = exit.getRequiredAction();
+                            if (!(_bleeding && (exitAction == "run"||exitAction=="climb"))) {
+                                //can only run/climb if not bleeding.
+                                exposedItems = self.exposePositionedItems();
+                                self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                            };
+                            newLocationName = _currentLocation.getName();
                         };
                         //should really close the door behind us here.
 
-                        //if creature ends up in player location (rather than starting there...
-                        if (player.getCurrentLocation().getName() == _currentLocation.getName()) {
-                            var movementVerb = "wanders";
-                            if (_bleeding) {movementVerb = "stumbles";};
-                            resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" in.";  
-                        } else {
-                            var movementVerb = "heads";
-                            if (_bleeding) {movementVerb = "limps";};
-                            if (exit.getLongName() == "in") {movementVerb = "goes";};
-                            resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" "+exit.getLongName()+"."; 
-                            if (showMoveToPlayer) {
-                                partialResultString += resultString+exposedItems;
-                            };
-                        };  
+                        if (newLocationName != originalLocationName) { //move was successful
+                            //if creature ends up in player location (rather than starting there)...
+                            if (player.getCurrentLocation().getName() == _currentLocation.getName()) {
+                                var movementVerb = "wanders";
+                                if (_bleeding) {movementVerb = "stumbles";};
+                                if (exitAction) {movementVerb = exitAction+"s";};
+                                resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" in.";  
+                            } else {
+                                var movementVerb = "heads";
+                                if (_bleeding) {movementVerb = "limps";};
+                                if (exit.getLongName() == "in") {movementVerb = "goes";};
+                                if (exitAction) {movementVerb = exitAction+"s";};
+                                resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" "+exit.getLongName()+"."; 
+                                if (showMoveToPlayer) {
+                                    partialResultString += resultString+exposedItems;
+                                };
+                            };  
+                        };
                     };            
                 };
 

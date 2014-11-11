@@ -786,6 +786,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
             //console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            return _hitPoints;
         };
 
         self.setStealth = function(newValue) {
