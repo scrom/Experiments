@@ -239,7 +239,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //allow explicit setting of maxHealth
             if (playerAttributes.maxHealth != undefined) {_maxHitPoints = playerAttributes.maxHealth;};
             if (playerAttributes.bleedingHealthThreshold != undefined) {_bleedingHealthThreshold = playerAttributes.bleedingHealthThreshold;};
-            if (playerAttributes.bleeding != undefined) {_bleeding = playerAttributes.bleeding;};
+            if (playerAttributes.bleeding != undefined) {
+                if (playerAttributes.bleeding== true || playerAttributes.bleeding == "true") { _bleeding = true;}
+            };
 
             if (playerAttributes.killedCount != undefined) {_killedCount = playerAttributes.killedCount;};
             if (playerAttributes.returnDirection != undefined) {_returnDirection = playerAttributes.returnDirection;};
@@ -804,14 +806,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
 
         self.setHunt = function(newValue) {
-            //used for stealing
+            //skill used for hunting
             _hunt = newValue;
             //console.log("Player hunt now set to:"+_hunt);
             return _hunt;
         };
 
         self.getHunt = function() {
-            //used for stealing
+            //skill used for hunting
             if (_hunt <0) {return 0;}; // safetynet to avoid divide by zero or odd results from caller
             return _hunt;
         };

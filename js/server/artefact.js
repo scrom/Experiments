@@ -196,8 +196,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.isEdible== true || artefactAttributes.isEdible == "true") { _edible = true;};
             };
             if (artefactAttributes.nutrition != undefined) { _nutrition = artefactAttributes.nutrition; };
-            if (artefactAttributes.sharpened != undefined) { _sharpened = artefactAttributes.sharpened; };
-            if (artefactAttributes.polished != undefined) { _polished = artefactAttributes.polished; };
+            if (artefactAttributes.sharpened != undefined) { 
+                if (artefactAttributes.sharpened== true || artefactAttributes.sharpened == "true") { _sharpened = true;};
+            };
+            if (artefactAttributes.polished != undefined) { 
+                if (artefactAttributes.polished== true || artefactAttributes.polished == "true") { _polished = true;};
+            };
             if (artefactAttributes.price != undefined) { _price = artefactAttributes.price; };
             if (artefactAttributes.chewed != undefined) {
                 if (artefactAttributes.chewed== true || artefactAttributes.chewed == "true") { _chewed = true;};
@@ -233,14 +237,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.requiresContainer== true || artefactAttributes.requiresContainer == "true") { _requiresContainer = true;};
             };
             if (artefactAttributes.isLiquid != undefined) {
-                _liquid = artefactAttributes.isLiquid;
-                _requiresContainer = true; //override requires container if liquid.
+                if (artefactAttributes.isLiquid== true || artefactAttributes.isLiquid == "true") { 
+                    _liquid = true;
+                    _requiresContainer = true; //override requires container if liquid.
+                };              
             };
-            if (artefactAttributes.holdsLiquid != undefined) {_holdsLiquid = artefactAttributes.holdsLiquid;};
+            if (artefactAttributes.holdsLiquid != undefined) {
+                if (artefactAttributes.holdsLiquid== true || artefactAttributes.holdsLiquid == "true") { _holdsLiquid = true;};
+            };
             if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
-            if (artefactAttributes.hidden != undefined) {_hidden = artefactAttributes.hidden;};
+            if (artefactAttributes.hidden != undefined) {
+                if (artefactAttributes.hidden== true || artefactAttributes.hidden == "true") { _hidden = true;};
+            };
             if (artefactAttributes.position != undefined) { _position = artefactAttributes.position; };
-            if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
+            if (artefactAttributes.hasLinkedDoor != undefined) {
+                if (artefactAttributes.hasLinkedDoor == true || artefactAttributes.hasLinkedDoor == "true") {_hasLinkedDoor = true;};
+            };
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
             if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
             if (artefactAttributes.sound != undefined) {_sound = artefactAttributes.sound;};     
@@ -250,7 +262,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };                                        
             if (artefactAttributes.antibodies != undefined) {_antibodies = artefactAttributes.antibodies;}; 
-            if (artefactAttributes.canDrawOn != undefined) {_canDrawOn = artefactAttributes.canDrawOn;};     
+            if (artefactAttributes.canDrawOn != undefined) {
+                if (artefactAttributes.canDrawOn== true || artefactAttributes.canDrawOn == "true") { _canDrawOn = true;};
+            };     
             if (artefactAttributes.drawings != undefined) {_drawings = artefactAttributes.drawings;};    
             if (artefactAttributes.writings != undefined) {_writings = artefactAttributes.writings;};                                       
 
@@ -507,37 +521,37 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.attackStrength != 0) {saveAttributes.attackStrength = artefactAttributes.attackStrength;};
             if (artefactAttributes.type != "junk") {saveAttributes.type = artefactAttributes.type;};
             if (artefactAttributes.subType != "") {saveAttributes.subType = artefactAttributes.subType;};           
-            if (artefactAttributes.requiresContainer == true) {saveAttributes.requiresContainer = true;};
-            if (artefactAttributes.isLiquid == true) {saveAttributes.isLiquid = artefactAttributes.isLiquid;};
-            if (artefactAttributes.holdsLiquid == true) {saveAttributes.holdsLiquid = artefactAttributes.holdsLiquid;};
+            if (artefactAttributes.requiresContainer) {saveAttributes.requiresContainer = true;};
+            if (artefactAttributes.isLiquid) {saveAttributes.isLiquid = true;};
+            if (artefactAttributes.holdsLiquid) {saveAttributes.holdsLiquid = true;};
             if (artefactAttributes.requiredContainer != undefined) {saveAttributes.requiredContainer = artefactAttributes.requiredContainer;};
-            if (artefactAttributes.canCollect == true) { saveAttributes.canCollect = true;};
-            if (artefactAttributes.chewed == true) {saveAttributes.chewed = true;};
-            if (artefactAttributes.isBreakable == true) {saveAttributes.isBreakable = true;};
-            if (artefactAttributes.isBroken == true) {saveAttributes.isBroken = true;};
-            if (artefactAttributes.isDamaged == true) {saveAttributes.isDamaged = true;};
-            if (artefactAttributes.isDestroyed == true) {saveAttributes.isDestroyed = true;};
+            if (artefactAttributes.canCollect) { saveAttributes.canCollect = true;};
+            if (artefactAttributes.chewed) {saveAttributes.chewed = true;};
+            if (artefactAttributes.isBreakable) {saveAttributes.isBreakable = true;};
+            if (artefactAttributes.isBroken) {saveAttributes.isBroken = true;};
+            if (artefactAttributes.isDamaged) {saveAttributes.isDamaged = true;};
+            if (artefactAttributes.isDestroyed) {saveAttributes.isDestroyed = true;};
             if (artefactAttributes.charges != -1) {saveAttributes.charges = artefactAttributes.charges;};
             if (artefactAttributes.burnRate != 0) {saveAttributes.burnRate = artefactAttributes.burnRate;};
             if (artefactAttributes.chargeUnit != "") {saveAttributes.chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != "") {saveAttributes.chargesDescription = artefactAttributes.chargesDescription;};
             if (artefactAttributes.combinesDescription != "") {saveAttributes.combinesDescription = artefactAttributes.combinesDescription;};
             if (artefactAttributes.saleUnit != -1) {saveAttributes.saleUnit = artefactAttributes.saleUnit;};           
-            if (artefactAttributes.plural == true) {saveAttributes.plural = artefactAttributes.plural;};            
+            if (artefactAttributes.plural) {saveAttributes.plural = true;};            
             if (artefactAttributes.affinityModifier != 1) {saveAttributes.affinityModifier = artefactAttributes.affinityModifier;};
-            if (artefactAttributes.read == true) { saveAttributes.read = true;};
-            if (artefactAttributes.canOpen == true) { saveAttributes.canOpen = true;};                    
-            if (artefactAttributes.isOpen == true) { saveAttributes.isOpen = true;};
-            if (artefactAttributes.lockable == true) { saveAttributes.lockable = artefactAttributes.lockable;};
-            if (artefactAttributes.locked == true) {saveAttributes.locked = artefactAttributes.locked;};
-            if (artefactAttributes.isEdible == true) {saveAttributes.isEdible = true;};
+            if (artefactAttributes.read) { saveAttributes.read = true;};
+            if (artefactAttributes.canOpen) { saveAttributes.canOpen = true;};                    
+            if (artefactAttributes.isOpen) { saveAttributes.isOpen = true;};
+            if (artefactAttributes.lockable) { saveAttributes.lockable = true;};
+            if (artefactAttributes.locked) {saveAttributes.locked = true;};
+            if (artefactAttributes.isEdible) {saveAttributes.isEdible = true;};
             if (artefactAttributes.nutrition != 0) { saveAttributes.nutrition = artefactAttributes.nutrition; };
             if (artefactAttributes.sharpened != 0) { saveAttributes.sharpened = artefactAttributes.sharpened; };
             if (artefactAttributes.polished != 0) { saveAttributes.polished = artefactAttributes.polished; };
             if (artefactAttributes.price != 0) { saveAttributes.price = artefactAttributes.price; };
-            if (artefactAttributes.switched == true) {saveAttributes.switched = true;};
-            if (artefactAttributes.isOn == true) {saveAttributes.isOn = true;};
-            if (artefactAttributes.hidden == true && artefactAttributes.type != "scenery") {saveAttributes.hidden = artefactAttributes.hidden;};
+            if (artefactAttributes.switched) {saveAttributes.switched = true;};
+            if (artefactAttributes.isOn) {saveAttributes.isOn = true;};
+            if (artefactAttributes.hidden && artefactAttributes.type != "scenery") {saveAttributes.hidden = true;};
             if (artefactAttributes.position != "") { saveAttributes.position = artefactAttributes.position; };            
             if (artefactAttributes.unlocks != "") {saveAttributes.unlocks = artefactAttributes.unlocks;};
             if (artefactAttributes.componentOf.length > 0) { saveAttributes.componentOf = artefactAttributes.componentOf; };
@@ -545,7 +559,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.requiredComponentCount != 0) {saveAttributes.requiredComponentCount = artefactAttributes.requiredComponentCount;};
             if (artefactAttributes.customAction != undefined) { saveAttributes.customAction = artefactAttributes.customAction;};
             if (artefactAttributes.defaultResult != undefined) { saveAttributes.defaultResult = artefactAttributes.defaultResult;};
-            if (artefactAttributes.hasLinkedDoor == true) { saveAttributes.hasLinkedDoor = artefactAttributes.hasLinkedDoor;};
+            if (artefactAttributes.hasLinkedDoor) { saveAttributes.hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};  
             if (artefactAttributes.smell != undefined) {saveAttributes.smell = artefactAttributes.smell;};                
             if (artefactAttributes.sound != undefined) {saveAttributes.sound = artefactAttributes.sound;};                

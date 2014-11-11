@@ -143,10 +143,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     _edible = true;
                 };
             };
-            if (creatureAttributes.canCollect  != undefined) { _collectable= creatureAttributes.canCollect;};
-            if (creatureAttributes.hidden != undefined) { _hidden = creatureAttributes.hidden; };
+            if (creatureAttributes.canCollect != undefined) { 
+                if (creatureAttributes.canCollect== true || creatureAttributes.canCollect == "true") { _collectable = true;}
+            };
+            if (creatureAttributes.hidden != undefined) { 
+                if (creatureAttributes.hidden== true || creatureAttributes.hidden == "true") { _hidden = true;}
+            };
             if (creatureAttributes.position != undefined) { _position = creatureAttributes.position; };
-            if (creatureAttributes.isEdible  != undefined) { _edible = creatureAttributes.isEdible;};
+            if (creatureAttributes.isEdible  != undefined) {
+                 if (creatureAttributes.isEdible== true || creatureAttributes.isEdible == "true") { _edible = true;}
+            };
             if (creatureAttributes.charges != undefined) {_charges = creatureAttributes.charges};
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
@@ -552,12 +558,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.price != 0) { saveAttributes.price = creatureAttributes.price;};
             if (creatureAttributes.weight != 0) {saveAttributes.weight = creatureAttributes.weight;};
             if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};      
-            if (creatureAttributes.canCollect == true) {saveAttributes.canCollect = creatureAttributes.canCollect;};
-            if (creatureAttributes.hidden == true) {saveAttributes.hidden = creatureAttributes.hidden;};
+            if (creatureAttributes.canCollect) {saveAttributes.canCollect = true;};
+            if (creatureAttributes.hidden) {saveAttributes.hidden = true;};
             if (creatureAttributes.position != "") {saveAttributes.position = creatureAttributes.position;};
 
             if (creatureAttributes.charges !=0) {saveAttributes.charges = creatureAttributes.charges;};
-            if (creatureAttributes.isEdible == true) {saveAttributes.isEdible = creatureAttributes.isEdible;};
+            if (creatureAttributes.isEdible) {saveAttributes.isEdible = true;};
             if (creatureAttributes.baseAffinity != creatureAttributes.affinity) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
             if (creatureAttributes.attackStrength >0) {saveAttributes.attackStrength = creatureAttributes.attackStrength;};
             if (creatureAttributes.gender != "unknown") {saveAttributes.gender = creatureAttributes.gender;};
@@ -567,13 +573,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.maxHealth != creatureAttributes.health) {saveAttributes.maxHealth = creatureAttributes.maxHealth};
             if (creatureAttributes.bleedingHealthThreshold != 50) {saveAttributes.bleedingHealthThreshold = creatureAttributes.bleedingHealthThreshold};
             if (creatureAttributes.affinity != 0) {saveAttributes.affinity = creatureAttributes.affinity;};
-            if (creatureAttributes.canTravel == true) {saveAttributes.canTravel = creatureAttributes.canTravel};
-            if (creatureAttributes.traveller == true) {saveAttributes.traveller = creatureAttributes.traveller};            
+            if (creatureAttributes.canTravel) {saveAttributes.canTravel = true;};
+            if (creatureAttributes.traveller) {saveAttributes.traveller = true;};            
             if (creatureAttributes.moves > 0) {saveAttributes.moves = creatureAttributes.moves;};
             if (creatureAttributes.timeSinceEating > 0) {saveAttributes.timeSinceEating = creatureAttributes.timeSinceEating;};
             if (creatureAttributes.returnHomeIn > 0) {saveAttributes.returnHomeIn = creatureAttributes.returnHomeIn;};           
-            if (creatureAttributes.spokenToPlayer == true) {saveAttributes.spokenToPlayer = creatureAttributes.spokenToPlayer;};
-            if (creatureAttributes.huntingPlayer == true) {saveAttributes.huntingPlayer = creatureAttributes.huntingPlayer;};            
+            if (creatureAttributes.spokenToPlayer) {saveAttributes.spokenToPlayer = true;};
+            if (creatureAttributes.huntingPlayer) {saveAttributes.huntingPlayer = true;};            
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
             if (creatureAttributes.clearedDestinations.length >0) {saveAttributes.clearedDestinations = creatureAttributes.clearedDestinations;};
             if (creatureAttributes.avoiding.length >0) {saveAttributes.avoiding = creatureAttributes.avoiding;};
