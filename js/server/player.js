@@ -1614,7 +1614,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 var resultString = "";
 
-                if (stringIsEmpty(artefactName)){ return verb+" what?";};
+                if (stringIsEmpty(artefactName)){ 
+                    //player is attempting to hide self
+                    return "I don't think hiding yourself away will accomplish anything, sorry.";
+                };
                 if (stringIsEmpty(receiverName)){ return verb+" "+artefactName+" where?";};
 
                 var artefact = getObjectFromPlayerOrLocation(artefactName);
