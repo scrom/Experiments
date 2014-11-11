@@ -970,8 +970,8 @@
             "description": "hair clippings",
             "detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
             "attributes": {
-			  "hidden": true,
               "plural": true,
+              "hidden": true,
               "customAction": [
                 "get"
               ],
