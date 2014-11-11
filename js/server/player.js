@@ -1129,10 +1129,53 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "You "+verb+" "+artefact.getDisplayName()+"."+resultString;
         };
 
+        self.dropAll = function(verb) {
+            if (verb == "throw"||verb=="put down") {return "You'll need to "+verb+" things one at a time, sorry.";};
+
+            var inventoryContents = _inventory.getAllObjects(true).slice(); //clone array so we don't delete from the same thing we're processing
+            if (inventoryContents.length == 0) {return "You're not carrying anything.";};
+            if (inventoryContents.length == 1) {
+                return self.drop(verb, inventoryContents[0].getName());
+            };
+
+            var droppedItemCount = 0;
+            var brokenItemCount = 0;
+            var destroyedItemCount = 0;
+            for (var i=0;i<inventoryContents.length;i++) {
+
+                var droppedObject = removeObjectFromPlayer(inventoryContents[i].getName());
+                var broken = droppedObject.isBroken();
+                var destroyed = droppedObject.isDestroyed();
+                droppedObject.bash();
+                _currentLocation.addObject(droppedObject); 
+                droppedItemCount++;
+
+                if (!destroyed && droppedObject.isDestroyed()) { 
+                    destroyedItemCount++;
+                    _destroyedObjects.push(droppedObject);                    
+
+                    emptyContentsOfContainer(droppedObject.getName()); 
+                    //remove item from location after contents are emptied.                
+                    removeObjectFromLocation(droppedObject.getName());
+                } else if (!broken && droppedObject.isBroken()) {
+                    brokenItemCount++;
+                }; 
+
+            };
+
+            var resultString = "You dropped "+droppedItemCount+" items. ";
+            if (destroyedItemCount+brokenItemCount >= 1) {resultString += "Unfortunately you managed to break some of your property.<br>You'll need to figure out what was damaged or lost from the mess around you."};
+
+            return resultString;
+        };
+
         /*allow player to drop an object*/
         self.drop = function(verb, artefactName) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
+            if (artefactName == "all" || artefactName == "everything") {
+                return self.dropAll(verb);
+            };
             var artefact = getObjectFromPlayer(artefactName);
             if (!(artefact)) {return "You're not carrying any "+artefactName+".";};
 

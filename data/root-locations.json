@@ -4513,6 +4513,7 @@
           "type": "food",
           "canCollect": true,
           "charges": 1,
+		  "isBreakable": true,
           "isEdible": true,
           "nutrition": 20
         },
@@ -7607,32 +7608,6 @@
           "af",
           "freeman",
           "al",
-          "him"
-        ]
-      },
-      {
-        "object": "creature",
-        "name": "will puttock",
-        "displayname": "Will Puttock",
-        "description": "Will Puttock",
-        "detailedDescription": "Don't ask about the Oompa-loompa costume.",
-        "attributes": {
-          "weight": 120,
-          "money": 30,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 110,
-          "canTravel": true,
-          "traveller": true,
-          "imageName": "willputtock.jpg"
-        },
-        "synonyms": [
-          "will",
-          "will p",
-          "wp",
-          "puttock",
           "him"
         ]
       },

@@ -311,22 +311,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (_plural) {
                 //special cases
-                //@todo rewrite as ->If the second description word is "of" 
-                //and first word matches an array of possible first words then ignore.
-                //we can't just assume "of" denotes plural - e.g. "essence of roses"
-                if (!(anItemDescription.substring(0,8) == "pair of " 
-                    || anItemDescription.substring(0,8) != "pack of " 
-                    || anItemDescription.substring(0,8) != "bowl of " 
-                    || anItemDescription.substring(0,7) != "set of " 
-                    || anItemDescription.substring(0,7) != "box of " 
-                    || anItemDescription.substring(0,7) != "tin of " 
-                    || anItemDescription.substring(0,7) != "jar of " 
-                    || anItemDescription.substring(0,10) != "packet of " 
-                    || anItemDescription.substring(0,10) != "bottle of "
-                    || anItemDescription.substring(0,11) != "cluster of " 
-                    || anItemDescription.substring(0,14) != "collection of " 
-                   ))
-                {
+                var collectionPlurals = ["pair", "pack", "bowl", "set", "box", "tin", "jar", "packet", "bottle", "cluster", "collection"];
+                var descriptionAsWords = anItemDescription.split(" "); 
+                if (descriptionAsWords.length>2) {
+                    //"x of y" ?
+                    if (!(collectionPlurals.indexOf(descriptionAsWords[0]) > -1 && descriptionAsWords[1] == "of")) {
+                        //not a special case
+                        return "some "+anItemDescription;
+                    };
+                } else {
+                    //normal plural case
                     return "some "+anItemDescription;
                 };
             };
