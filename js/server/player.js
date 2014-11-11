@@ -2371,6 +2371,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };     
 
             var resultString =  "You "+verb+" "+artefact.getDisplayName()+" and discover "+artefact.listHiddenObjects(positionName, _currentLocation)+".";
+            if (position != "on") {
+                resultString += artefact.revealHiddenExits(_currentLocation.getName());
+            };
 
             var foundItems = artefact.getHiddenObjects(positionName, _currentLocation);
             if (foundItems.length == 0) {return resultString;}; //exit early if nothing found.
@@ -2812,7 +2815,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         //mainly used for setting initial location but could also be used for warping even if no exit/direction
         //param is a location object, not a name.
-        self.setLocation = function(location) { 
+        self.setLocation = function(location, hideLocationName) { 
             //fire "leave" trigger for current location (if location is set and player not dead)
             var resultString = "";
 
@@ -2832,7 +2835,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(self.canSee())) {
                 resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";
             } else {
-                resultString+= "Current location: "+_currentLocation.getDisplayName()+"<br>"+_currentLocation.describe();
+                if (!hideLocationName) {
+                    resultString += "Current location: " + _currentLocation.getDisplayName() + "<br>";
+                };
+
+                resultString += _currentLocation.describe();
             };
 
             //retrieve missions from location:
@@ -2889,10 +2896,32 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _returnDirection;
         };
 
-        self.go = function(verb, map) {//(aDirection, aLocation) {
-        
-            //trim verb down to first letter...
-            var direction = verb.substring(0, 1);
+        self.goObject = function(verb, splitWord, artefactName, map) {
+            if (stringIsEmpty(artefactName)){ return verb+" where?";};
+
+            var artefact = getObjectFromLocation(artefactName);
+            if (!(artefact)) {
+                return "You'll need to explore and find your way there yourself I'm afraid.";
+            };
+
+            var linkedExits = artefact.getLinkedExits();
+
+            for (var i=0;i<linkedExits.length;i++) {
+                if (linkedExits[i].getSourceName() == _currentLocation.getName()) {
+                    if (linkedExits[i].isVisible()) {                            
+                        return self.go(verb, linkedExits[i].getLongName(), map);
+                    };
+                }
+            };
+
+            return "You can't see any way to "+verb+" "+splitWord+" there."
+
+        };
+
+        self.go = function(verb, direct, map) {//(aDirection, aLocation) {
+            if (stringIsEmpty(verb) || verb == direct || verb == direct.substring(0, 1)) {verb = "go";};
+            //trim direct down to first letter...
+            var direction = direct.substring(0, 1);
             if (direction == 'b') {
                 //player wants to go "back"
                 direction = self.getReturnDirection();
@@ -2909,27 +2938,48 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
             var exit = _currentLocation.getExit(direction);
-            if (!(exit)) {return "There's no exit "+verb+" from here.";};
-            if (!(exit.isVisible())) {return "Your way '"+verb+"' is blocked.";}; //this might be too obvious;
+            if (!(exit)) {return "There's no exit "+direct+" from here.";};
+            if (!(exit.isVisible())) {return "Your way '"+direct+"' is blocked.";}; //this might be too obvious;
+
+            var requiredAction = exit.getRequiredAction();
+            if (_bleeding && requiredAction) {
+                if (requiredAction == "climb") {
+                    return "You're too weak to make the climb. You need to get your injuries seen to first.";
+                } else if (requiredAction == "run") {
+                    return "You're too weak to make it through quickly enough. You need to get your injuries seen to first.";
+                };
+            };
+
+            if (!(exit.requiredAction(verb))) {               
+                if (requiredAction == "crawl") {
+                    return "It looks like you're too big to fit!";
+                } else if (requiredAction == "climb") {
+                    return "You'll need to <i>climb</i> "+direct+" from here.";
+                } else if (requiredAction == "run") {
+                    return "You'll need to <i>run</i> "+direct+" from here.";
+                } else {
+                    return "You'll need to try another means of travelling '"+direct+"'.";
+                };
+            }; 
 
             var exitDestination = _currentLocation.getExitDestination(direction);
             var newLocation = map.getLocation(exitDestination);
-            if (newLocation) {
-                //console.log('found location: '+exitDestination);
-            } else {
+            if (!(newLocation)) {
                 //console.log('location: '+exitDestination+' not found');
                 return "That exit doesn't seem to go anywhere at the moment. Try again later.";                  
             };
 
             //build up return message:
-            var returnMessage ='';
+            var resultString ="";
 
             //implement creature following here (note, the creature goes first so that it comes first in the output.)
             //rewrite this so that creature does this automagically
-            var creatures = _currentLocation.getCreatures();
-            for(var i = 0; i < creatures.length; i++) {
-                if (creatures[i].willFollow(_aggression)) {
-                    returnMessage += creatures[i].followPlayer(direction,newLocation);
+            if (!requiredAction) { //creatures will only follow under normal conditions
+                var creatures = _currentLocation.getCreatures();
+                for (var i = 0; i < creatures.length; i++) {
+                    if (creatures[i].willFollow(_aggression)) {
+                        resultString += creatures[i].followPlayer(direction, newLocation);
+                    };
                 };
             };
 
@@ -2940,16 +2990,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_stepsTaken%2 == 0) {self.decreaseAggression(1);};
 
             //set player's current location
-            var newLocationDescription = self.setLocation(newLocation);
-            if (!(self.canSee())) {returnMessage += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
-            else {returnMessage +=newLocationDescription;};
-
-            if (_locationsFound == map.getLocationCount()) {
-                returnMessage+= "Wow, You're quite an explorer! Well done. You've visited every possible location."
+            var exitDescription = exit.getDescription();
+            var hideNewLocationName = false;
+            if (exitDescription) {
+                resultString += exitDescription + "<br><br>";
+                hideNewLocationName = true;
+            } else if (verb == "crawl" || verb == "climb" || verb == "run") {
+                resultString += "You " + verb + " " + direct + "...<br><br>";
             };
+            var newLocationDescription = self.setLocation(newLocation, hideNewLocationName);
+            if (!(self.canSee())) {resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
+            else {resultString += newLocationDescription;};
 
-            //console.log('GO: '+returnMessage);
-            return returnMessage;
+            //console.log('GO: '+resultString);
+            return resultString;
         };	
 
         self.getVisits = function() {
@@ -3571,9 +3625,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     for (var e=0; e<missionReward.exits.length;e++) {
                         var exitData = missionReward.exits[e];
                         var locationToModify = map.getLocation(exitData.getSourceName())
+                        locationToModify.removeExit(exitData.getDestinationName()); //remove if already exists (allows modification)
                         var hidden = true;
                         if (exitData.isVisible()) {hidden = false;};
-                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(),hidden);
+                        locationToModify.addExit(exitData.getDirection(), exitData.getSourceName(), exitData.getDestinationName(), exitData.getDescription(), hidden, exitData.getRequiredAction());
                         var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
                         //console.log("Exit added: "+exitDestination);
                     };
@@ -3617,10 +3672,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //add exits
                     for (var e=0; e<missionReward.exits.length;e++) {
                         var exitData = missionReward.exits[e];
-                        var locationToModify = map.getLocation(exitData.getSourceName())
+                        var locationToModify = map.getLocation(exitData.getSourceName());
+                        locationToModify.removeExit(exitData.getDestinationName()); //remove if already exists (allows modification)
                         var hidden = true;
                         if (exitData.isVisible()) {hidden = false;};
-                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(),hidden);
+                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(), exitData.getDescription(), hidden, exitData.getRequiredAction());
                     };
                 };
                 if (missionReward.removeObject) { map.removeObject(missionReward.removeObject, mission.getDestination(), self);};

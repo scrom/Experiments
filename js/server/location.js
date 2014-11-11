@@ -191,10 +191,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _creatureTraces[creatureName];
         };
 
-        self.addExit = function(anExitDirection, aSource, aDestination,isHidden) {
+        self.addExit = function(anExitDirection, aSource, aDestination, aDescription, isHidden, requiredAction) {
             self = this;
             if (self.getExit(anExitDirection)) {console.log("Usability warning: duplicate exit direction '"+anExitDirection+"' from "+aSource+".");};
-            var newExit = new exitObjectModule.Exit(anExitDirection,aSource, aDestination,isHidden);
+            var newExit = new exitObjectModule.Exit(anExitDirection, aSource, aDestination, aDescription, isHidden, requiredAction);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   
             //console.log('Exit from '+self.getName()+', '+storedExit.getDirection()+' to '+storedExit.getDestinationName()+' added.');   

@@ -319,7 +319,7 @@ exports.cannotGetTwoHiddenFixedObjectsBySearching = function (test) {
     container.receive(a3);
     a3.hide();
 
-    var expectedResult = "You search the container and discover a box and a box three.<br>You collect the box.";
+    var expectedResult = "You search the container and discover a box two and a box three.";
     var actualResult = p0.search('search', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

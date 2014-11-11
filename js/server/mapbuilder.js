@@ -203,7 +203,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     for (var j=0; j<reward.locations[l].exits.length;j++) {
                         var exitData = reward.locations[l].exits[j];
                         //manually add exits from each location (linking not needed)
-                        rewardLocation.addExit(exitData.direction,exitData.source,exitData.destination,exitData.hidden);
+                        rewardLocation.addExit(exitData.direction, exitData.source, exitData.destination, exitData.description, exitData.hidden, exitData.requiredAction);
                     }; 
                     if (reward.locations[l].inventory) {
                         for (var i=0; i<reward.locations[l].inventory.length;i++) {
@@ -256,7 +256,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                returnObject.exits = []; 
                for (var e=0; e<reward.exits.length;e++) {
                     var exitData = reward.exits[e];
-                    returnObject.exits.push(new exitObjectModule.Exit (exitData.direction,exitData.source,exitData.destination,exitData.hidden));
+                    returnObject.exits.push(new exitObjectModule.Exit (exitData.direction, exitData.source, exitData.destination, exitData.description, exitData.hidden, exitData.requiredAction));
                 }; 
             };
 
@@ -360,7 +360,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     for (var j=0; j<locationData.exits.length;j++) {
                         var exitData = locationData.exits[j];
                         //manually add exits from each location (linking not needed)
-                        newLocation.addExit(exitData.direction,locationData.name,exitData.destination,exitData.hidden);
+                        newLocation.addExit(exitData.direction, locationData.name, exitData.destination, exitData.description, exitData.hidden, exitData.requiredAction);
                     };
                 }; 
             };
@@ -414,13 +414,13 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
         };
 
         //note, "fromDirection" should be the lowercase short version (e.g. "u" or "n")
-        self.link = function(fromDirection, fromLocationName, toLocationName, toIsHidden, fromIsHidden) {
+        self.link = function(fromDirection, fromLocationName, toLocationName, fromDescription, toDescription, toIsHidden, fromIsHidden, toRequiredAction, fromRequiredAction) {
              var toDirection = _map.oppositeOf(fromDirection);
              //console.log('from:'+fromDirection+' to:'+toDirection);
              var fromLocation = _map.getLocation(fromLocationName);
              var toLocation = _map.getLocation(toLocationName);
-             var temp = fromLocation.addExit(fromDirection,fromLocation.getName(),toLocation.getName(), toIsHidden);
-             var temp2 = toLocation.addExit(toDirection,toLocation.getName(),fromLocation.getName(), fromIsHidden);
+             var temp = fromLocation.addExit(fromDirection,fromLocation.getName(),toLocation.getName(), toDescription, toIsHidden, toRequiredAction);
+             var temp2 = toLocation.addExit(toDirection,toLocation.getName(),fromLocation.getName(), fromDescription, fromIsHidden, fromRequiredAction);
              //console.log('locations linked');
              //console.log ("Exit 1:"+temp.toString());
              //console.log ("Exit 2:"+temp2.toString());

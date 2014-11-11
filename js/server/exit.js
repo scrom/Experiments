@@ -1,6 +1,6 @@
 ﻿"use strict";
 //exit object - manage exists from locations
-module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, isHidden) {
+module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, aDescription, isHidden, requiredAction) {
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = aDirection;
@@ -14,8 +14,11 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, i
         var _hidden = false;
         if (isHidden == true || isHidden == "true") { _hidden = true;};
 
+        var _requiredAction = requiredAction; //"run", "climb", "jump", "crawl"
+
         var _destinationName = aDestinationName;
-        var _sourceName = aSourceName
+        var _sourceName = aSourceName;
+        var _description = aDescription;
 
 	    var _objectName = "exit";
         //console.log(_objectName + ' created: '+_name+', '+_destinationName+' visible? '+(!(_hidden)));
@@ -24,14 +27,20 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, i
         self.toString = function() {
             var resultString = '{"object":"'+_objectName+//'","name":"'+_name+
             '","longname":"'+_longName+'","direction":"'+_direction+'","source":"'+_sourceName+'","destination":"'+_destinationName+'"';
+            if (_description) { resultString += ', "description":"'+_description+'"'; };
             if (_hidden) { resultString += ', "hidden":'+_hidden; };
+            if (_requiredAction) { resultString += ', "requiredAction":"'+_requiredAction+'"'; };
             resultString += '}';
             return resultString;
         };
 
-        //self.getName = function() {
-        //    return _name;
-        //};
+        self.getDescription = function() {
+            return _description;
+        };
+
+        self.setDescription = function(description) {
+            _description = description;
+        };
 
         self.getDirection = function() {
             return _direction;
@@ -58,6 +67,19 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, i
             return (!(_hidden));
         };
 
+        self.getRequiredAction = function() {
+            return _requiredAction;
+        };
+
+        self.requiredAction = function(verb) {
+            if (!(_requiredAction)) { return true;};
+            if (verb == _requiredAction) {
+                return true;
+            };
+
+            return false;
+        };
+
         self.hide = function() {
             _hidden = true;
             var directionString = ": '"+_longName+"'";
@@ -67,7 +89,7 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, i
 
         self.show = function() {
             _hidden = false;
-            var directionString = ": '"+_longName+"'";
+            var directionString = " '"+_longName+"'";
             if (_directions.indexOf(_name) < 12){directionString = " to the "+_longName;};
             return "You reveal a new exit"+directionString+".";
         };

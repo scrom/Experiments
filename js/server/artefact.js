@@ -1843,6 +1843,37 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return linkedDoors;        
         };
 
+        self.revealHiddenExits = function(locationName) {
+            if (_opens || _linkedExits.length==0){ return "";};
+
+            var localExit;
+            var resultString = "";
+            for (var i=0;i<_linkedExits.length;i++) {
+                if (_linkedExits[i].getSourceName() == locationName) {
+                    localExit = _linkedExits[i];
+                    //toggle exit visibility
+                    if (!(_linkedExits[i].isVisible())) {                            
+                        resultString = _linkedExits[i].show();
+                    };
+                } else {
+                    //toggle exit visibility
+                    if (!(_linkedExits[i].isVisible())) {
+                        _linkedExits[i].show();
+                    };
+                };
+            };
+
+            if (!(localExit)) {
+                //we had no *local* exit but we know there's at least one somewhere
+                resultString = "A secret door opens somewhere.";
+            };
+
+            resultString = resultString.replace(" new ", " hidden ")
+            if (resultString.length > 0) {resultString = "<br>"+resultString;};
+
+            return resultString;
+        };
+
         self.moveOrOpen = function(verb, locationName) {
             if (self.isDestroyed()) {return "There's nothing viable left to work with.";};
             if (_locked) {return initCap(_itemDescriptivePrefix)+" locked."};
@@ -1897,8 +1928,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             if (verb == 'open') {
-                if (_opens && (_open)){return initCap(_itemDescriptivePrefix)+" already open";};               
-                return _itemPrefix+" "+doesPlural()+" open";
+                if (_opens && (_open)){return initCap(_itemDescriptivePrefix)+" already open.";};               
+                return _itemPrefix+" "+doesPlural()+" open.";
             };
             if (verb == 'unlock') { return "You "+verb+" "+self.getDisplayName()+"."};
 

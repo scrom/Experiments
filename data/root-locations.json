@@ -1231,6 +1231,16 @@
         "direction": "e",
         "source": "creative-agency-area",
         "destination": "second-floor-seating-area-west"
+      },
+	  {
+		"object": "exit",
+        "longname": "Down",
+        "direction": "d",
+        "source": "creative-agency-area",
+        "destination": "ground-floor-fire-escape",
+		"description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+        "hidden": true,
+		"requiredAction": "crawl"
       }
     ],
     "inventory": [
@@ -1249,6 +1259,18 @@
           "dave's desk",
           "dave desk"
         ],
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "Down",
+            "direction": "d",
+            "source": "creative-agency-area",
+            "destination": "ground-floor-fire-escape",
+			"description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+            "hidden": true,
+			"requiredAction": "crawl"
+          }
+		  ],
         "inventory": [
           {
             "object": "artefact",
@@ -3895,7 +3917,7 @@
     "object": "location",
     "name": "ground-floor-fire-escape",
     "displayName": "Fire escape",
-    "description": "You're at the bottom of the rear fire escape staircase.<br>You're surrounded by large gas and water pipes leading in and out of the building.<br>This area is occasionally used for storing tools.",
+    "description": "You're at the bottom of the rear fire escape staircase.<br>All around you are large gas and water pipes leading in and out of the building.<br>This area is occasionally used for storing tools.",
     "attributes": {
       "type": "outdoor"
     },
@@ -3917,6 +3939,27 @@
       }
     ],
     "inventory": [
+	{
+        "object": "artefact",
+        "name": "pipe",
+        "description": "big pipes",
+        "detailedDescription": "They're painted bright yellow and blue.<br>They look pretty much indestructible (which I'm sure you'll agree is a good thing).",
+        "attributes": {
+          "weight": 180,
+          "type": "scenery",
+		  "plural": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "gas",
+          "water",
+		  "gas pipe",
+          "water pipe",
+		  "gas pipes",
+          "water pipes",
+		  "pipes"
+        ]
+      },
       {
         "object": "artefact",
         "name": "whetstone",
@@ -7311,8 +7354,8 @@
     "exits": [
       {
         "object": "exit",
-        "longname": "South",
-        "direction": "s",
+        "longname": "down",
+        "direction": "d",
         "source": "roof",
         "destination": "top-fire-escape"
       }
@@ -9898,7 +9941,7 @@
     "object": "location",
     "name": "top-fire-escape",
     "displayName": "Fire escape",
-    "description": "You're at the top of the rear fire escape. From here you have clear access to the roof.<br>It's a long way down!",
+    "description": "You're at the top of the rear fire escape. From here you have a short <i>climb up</i> to the roof.<br>It's a long way down!",
     "attributes": {
       "type": "outdoor"
     },
@@ -9912,10 +9955,11 @@
       },
       {
         "object": "exit",
-        "longname": "North",
-        "direction": "n",
+        "longname": "up",
+        "direction": "u",
         "source": "top-fire-escape",
-        "destination": "roof"
+        "destination": "roof",
+		"requiredAction": "climb"
       }
     ]
   },

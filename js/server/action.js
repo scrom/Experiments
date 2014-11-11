@@ -15,6 +15,7 @@ exports.Action = function Action(player, map, fileManager) {
         var _actionString = '';
         var _lastActionString = '';
         var _verb = '';
+        var _direction = '';
         var _splitWord = '';
         var _adverb = '';
         var _objects = []; //objects and creatures
@@ -520,7 +521,7 @@ exports.Action = function Action(player, map, fileManager) {
                         //translate to "move north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
                         if (_directions.indexOf(_object0) > -1) {
-                            _verb = _object0;
+                            _direction = _object0;
                             break;
                         };
 
@@ -528,7 +529,7 @@ exports.Action = function Action(player, map, fileManager) {
                         if (!_object0) {
                             if (_object1) {
                                 if (_directions.indexOf(_object1) > -1) {
-                                    _verb = _object1;
+                                    _direction = _object1;
                                     break;
                                 };
                             };
@@ -606,11 +607,11 @@ exports.Action = function Action(player, map, fileManager) {
                             };
                         };
                         if (_object0 == "in" && (!_object1)) {
-                            _verb = 'in';
+                            _direction = 'in';
                             break;
                         };
                         if ((_splitWord == "out" && (!_object0) && _object1.indexOf("of ") >-1) ||(_object0 == "out" && (!_object1))) {
-                            _verb = 'out';
+                            _direction = 'out';
                             //console.log( _object0.indexOf("of "))
                             //note, if person types "get out of x"
                             break;
@@ -774,18 +775,26 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.say('say', "Goodbye",_object0, _map);   
                         break;
                     case 'run':
+                    case 'crawl':
+                    case 'climb':
                     case 'go':
                         //translate to "go north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
                         //if player enters "go to x", we'll have an object 1 (but no object 0).
-                        _verb = _object0;
                         if (_object1) {
                             if (_directions.indexOf(_object1) > -1) {
-                                _verb = _object1;
+                                _direction = _object1;
                             } else {
-                                description = "You'll need to explore and find your way there yourself I'm afraid.";
+                                description = _player.goObject(_verb, _splitWord, _object1, _map);
+                            };
+                        } else if (_object0) {
+                            if (_directions.indexOf(_object0) > -1) {
+                                _direction = _object0;
+                            } else {
+                                description = _player.goObject(_verb, _splitWord, _object0, _map);
                             };
                         };
+
                         break;
                     case 'explore':
                         description = "Which direction do you want to go?"
@@ -794,12 +803,12 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'leave':
                         //overwrite the verb with direction. 
                         //this will fall through to navigation later.                                        
-                        _verb = 'out';
+                        _direction = 'out';
                         break;
                     case 'enter':
                         //overwrite the verb with direction. 
                         //this will fall through to navigation later.                                        
-                        _verb = 'in';
+                        _direction = 'in';
                         break;
                     case 'unlock':
                         description = _player.unlock(_verb, _object0);
@@ -925,8 +934,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'hum':
                     case 'whistle':
                     case 'burn': //relies on having either an ignition source or something else already burning.
-                    case 'climb': //see issue #295
-                    case 'crawl': //see issue #296
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.
                     case 'drive': //cattle, cat etc out/to a location or car/bus but not so much bike. Tricky.
                     case 'ride': //bike, horse but not car - some types vehicle or animal - animal should be larger than player.
@@ -989,13 +996,36 @@ exports.Action = function Action(player, map, fileManager) {
             return description;
         };
 
-        self.performPlayerNavigation = function() {
-            if (_directions.indexOf(_verb)>-1) {
-                if (!(_verb == 'i' && _object0.length>1)){ // trap sentences starting with "i" e.g. i need help
-                    _ticks = 1;
-                    return _player.go(_verb, _map);
-                };
+        self.performPlayerNavigation = function () {
+
+            //if direction not yet set...
+            var index = _directions.indexOf(_verb);
+            if ((!_direction || _direction == "") && _directions.indexOf(_verb)>-1) {
+                _direction = _verb;
+                _verb = "go";
+            }; 
+            
+            //if still no direction, player s doing something else.
+            if (!_direction) {
+              return "";  
             };
+
+            if (!(_direction == 'i' && _object0.length>1)){// trap sentences starting with "i" e.g. i need help
+
+                //use whole word direction.
+                if (_direction.length == 1) {
+                    var index = _directions.indexOf(_direction);
+                    if (index > -1) {
+                        _direction = _directions[index+1]; 
+                    };
+                };
+
+                _ticks = 1;
+                if (_verb == "crawl" || _verb == "climb") {_ticks = 2};
+                return _player.go(_verb, _direction, _map);
+            };
+
+            //catch-all
             return "";
         };
 
@@ -1089,6 +1119,7 @@ exports.Action = function Action(player, map, fileManager) {
 
         self.processAction = function(anActionString) {
             _ticks = 1; //reset ticks.
+            _direction = ""; //reset direction
             var description = "";
 
             self.setActionString(anActionString); //preserve the original string - we'll likely need it for special cases.

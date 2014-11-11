@@ -873,6 +873,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "<br>It looks like "+self.getDisplayName()+" was hiding something.<br>It's worth taking another look around here.";
         };
 
+        self.revealHiddenExits = function(locationName) {
+            return "";
+        };
+
         self.isDead = function() {
             if (_hitPoints <= 0) {return true;};
             //console.log("hp = "+_hitPoints);
