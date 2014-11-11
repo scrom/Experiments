@@ -1476,6 +1476,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _charges;
         };
 
+        self.getChargeUnit = function() {
+            if (_chargeUnit) {return _chargeUnit;};
+            return "charges";
+        };
+
         self.setCharges = function(newValue) {
             if (self.isDestroyed()) {return 0;};
             _charges = newValue;
@@ -1554,7 +1559,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.consume = function(quantity) {
             if (!(quantity)) {quantity = 1;};
             if (_charges == 0) {return false;};
-            if (_charges > 0) {_charges -=quantity;};
+            if (_charges > 0) {
+                if (_charges-quantity >0) {
+                    _charges -=quantity;
+                } else {
+                    _charges = 0;
+                };
+            };
             //console.log("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
             return true; //deliberately works but does nothing if charges are -ve
         };

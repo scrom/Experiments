@@ -6024,12 +6024,15 @@
         "object": "artefact",
         "name": "nerf gun",
         "description": "nerf gun",
-        "detailedDescription": "It's loaded! :D An unlucky shot with this could take someone's eye out.",
+        "detailedDescription": "An unlucky shot with this could take someone's eye out.",
         "attributes": {
           "weight": 2,
           "attackStrength": 5,
           "type": "weapon",
           "subType": "projectile",
+          "charges": 10,
+          "chargeUnit": "round",
+          "chargesDescription": "There's $charges $chargeUnit left",
           "canCollect": true,
           "affinityModifier": 2
         },

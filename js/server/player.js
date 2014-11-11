@@ -3076,7 +3076,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             for(var index = 0; index < weapons.length; index++) {
                 //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones.
                 if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
-                    if (weapons[index].supportsAction(verb)) {    
+                    if (weapons[index].supportsAction(verb) && weapons[index].chargesRemaining() != 0) {    
                         var weaponStrength = weapons[index].getAttackStrength();
                         //console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                         if (weaponStrength > selectedWeaponStrength) {
@@ -3247,7 +3247,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = receiver.hurt(Math.floor(pointsToRemove), self);
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
-                resultString +=  "Ding! You repeatedly attack "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent sort of way."
+                weapon.consume(2); //use up multiple charges!
+                resultString +=  "Ding! You repeatedly "+verb+" "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way."
             }; 
 
             if (receiver.isDestroyed()) { 
@@ -3269,8 +3270,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 _killedCreatures.push(receiver.getName());          
             };
 
-            //did you use something fragile as a weapon?
+            //did you use something fragile/consumable as a weapon?
             if (weapon) {
+                weapon.consume(); //(we may have already used some earlier)
                 if (weapon.isBreakable()) {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
@@ -3283,6 +3285,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString +="<br>You damaged "+weapon.getDisplayName()+"."
                     };
                 };
+                if (!weapon.isDestroyed()) {
+                    var chargesRemaining = weapon.chargesRemaining();
+                    if (chargesRemaining == 0) {
+                        resultString +="<br>You used up all the "+weapon.getChargeUnit()+"s in "+weapon.getDisplayName()+".";
+                    };
+                };                
+                
+
             };
 
             return resultString;
