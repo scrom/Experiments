@@ -2521,6 +2521,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.replace("you give","");
                             artefactName = artefactName.replace("i have","");
                             artefactName = artefactName.replace(" the ","");
+                            artefactName = artefactName.replace(" them ","");
+                            artefactName = artefactName.replace(" those ","");
                             artefactName = artefactName.replace(" some ","");
                             artefactName = artefactName.replace(" a ","");
                             artefactName = artefactName.replace(" your ","");
@@ -2529,19 +2531,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
                     case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
                         if (remainderString == "sorry") {
-                            return initCap(self.getDisplayName())+" says 'You should know better. I accept your apology for now but I suggest you back of ffor a while.'";
+                            return initCap(self.getDisplayName())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
                             break;
                         };
                     case 'who': //is/are [character]
                     case 'what': //is/are/can (see can) [object]
                     case 'when': //is/are/can (see can)/will [event happen][character arrive be at x]
                     case 'why': //is/are/do
-                    case 'how': //is/are/can/will/many/much
+                    case 'how': //is/are/can/will/many/much/about
                     case 'do': //you/i think/know ??
                         if (stringStartsWith(remainderString, "you have ")) {
                             var artefactName = remainderString;
                             artefactName = artefactName.replace("you have","");
                             artefactName = artefactName.replace(" the ","");
+                            artefactName = artefactName.replace(" them ","");
+                            artefactName = artefactName.replace(" those ","");
                             artefactName = artefactName.replace(" some ","");
                             artefactName = artefactName.replace(" a ","");
                             artefactName = artefactName.replace(" your ","");

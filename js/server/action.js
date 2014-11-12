@@ -713,7 +713,35 @@ exports.Action = function Action(player, map, fileManager) {
                                 break;
                             };
 
+                        } else if (_splitWord == "" && _actionString.indexOf(" where ") >-1) {
+                            var objectPair = _actionString.split(" where ");
+                            _object0 = objectPair[0].replace("ask ","");
+                            _object0 = _object0.trim();
+                            _object1 = objectPair[1];
+                            _object1 = " "+_object1+" ";
+                            _object1 = _object1.replace(" the ", " ");
+                            _object1 = _object1.replace(" some ", " ");
+                            _object1 = _object1.replace(" can i find ", " ");
+                            _object1 = _object1.replace(" find ", " ");
+                            _object1 = _object1.replace(" can i put ", " ");
+                            _object1 = _object1.replace(" put ", " ");
+                            _object1 = _object1.replace(" can i get ", " ");
+                            _object1 = _object1.replace(" get ", " ");
+                            _object1 = _object1.replace(" can i ", " ");
+                            _object1 = _object1.replace(" does ", " ");
+                            _object1 = _object1.replace(" should i ", " ");
+                            _object1 = _object1.replace(" should ", " ");
+                            _object1 = _object1.replace(" sit ", " ");
+                            _object1 = _object1.replace(" live ", " ");
+                            _object1 = _object1.replace(" lives ", " ");
+                            _object1 = _object1.replace(" belong ", " ");
+                            _object1 = _object1.replace(" reside ", " ");
+                            _object1 = _object1.replace(" i ", " ");
+                            _object1 = _object1.trim();
+                            description = _player.ask("find", _object0.trim(), _object1.trim(), _map);
+                            break;
                         };
+
                         description = _player.ask(_verb, _object0, _object1, _map);            
                         break;
                     case 'wave':
@@ -1249,3 +1277,4 @@ exports.Action = function Action(player, map, fileManager) {
 	    console.log('Unable to create Action object: '+err);
     };	    
 };
+
