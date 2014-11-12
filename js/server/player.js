@@ -3947,7 +3947,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (self.isStarving()) {resultString+="<br>You're starving. ";}
-            else if (self.isHungry()) {resultString+="<br>You're hungry.";};
+            else if (self.isHungry()) {resultString+="<br>You're hungry.";}
+            else if (_timeSinceEating == _maxMovesUntilHungry-(Math.floor(Math.random() * 5))) {resultString+="<br>Your stomach just growled.";};
 
             if (_bleeding) {resultString+="<br>You're bleeding. ";};           
 
