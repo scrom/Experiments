@@ -121,14 +121,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "doesn't";
         };
 
-        var hasPlural = function() {
+        self.hasPlural = function() {
             if (_plural) {
                 return "have";
              };
             return "has";
         };
 
-        var showsPlural = function() {
+        self.showsPlural = function() {
             if (_plural) {
                 return "show";
              };
@@ -1318,8 +1318,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //consume charge
             var originalArtefactCharges = anObject.chargesRemaining();
+            var anObjectChargesRemaining = -1;
             if (originalArtefactCharges > 0) {
-                anObject.consume();
+                anObjectChargesRemaining = anObject.consume(1);
             };
 
             //zero the weights of both source objects. Unfortunately the caller must remove them from wherever they came from 
@@ -1327,10 +1328,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //set weight.
             if (anObject.chargesRemaining() == 0) {              
                 anObject.setWeight(0);
-            } else if (anObject.chargesRemaining() > 0) {
+            } else if (anObjectChargesRemaining > 0) {
                 var newWeight = anObject.getWeight();
                 //new weight rounded to 1 decimal place
-                newWeight = Math.round((newWeight/originalArtefactCharges)*anObject.chargesRemaining()*10)/10;
+                newWeight = Math.round((newWeight/originalArtefactCharges)*anObjectChargesRemaining*10)/10;
             };
 
             //if we don't have a delivery item...
@@ -1436,7 +1437,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //we may rub this with another object or creature
                 if (anObject.getType() == "food") {
                     if (_attackStrength >=5) {_attackStrength -= 5;}; //yes you can reduce the strenght of an item by repeatedly coating it with food!
-                    anObject.consume();
+                    anObject.consume(1);
                     return "You make a sticky mess that leaves "+self.getDisplayName()+" somewhat slippery but see no obvious benefit.";
                 };
 
@@ -1444,7 +1445,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (_polished <2) {
                         _polished++;
                         self.increasePriceByPercent(5);
-                        anObject.consume();
+                        anObject.consume(1);
                         return "Ooh shiny!"
                     };
                     return self.getDescriptivePrefix()+" polished as much as "+self.getPrefix().toLowerCase()+" can be already.";
@@ -1454,14 +1455,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (_sharpened <2) {
                         _sharpened++;
                         _attackStrength+=3;
-                        anObject.consume();
+                        anObject.consume(1);
                         return "That's a keen edge you've got going there!<br>Nice job."
                     };
                     return "I think "+self.getDescriptivePrefix().toLowerCase()+" as sharp as you're going to get "+self.getPrefix().toLowerCase()+".";
                 };
 
                 if (anObject.isLiquid()) {
-                    anObject.consume();
+                    anObject.consume(1);
                     return "You smear "+anObject.getDisplayName()+" over "+self.getDisplayName()+". That was fun!";
                 };
             };
@@ -1473,12 +1474,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) {return 0;};
             //console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);
             //we use -1 to mean unlimited
-            return _charges;
+            return Math.round(_charges*100)/100;
         };
 
         self.getChargeUnit = function() {
             if (_chargeUnit) {return _chargeUnit;};
-            return "charges";
+            return "charge";
         };
 
         self.setCharges = function(newValue) {
@@ -1558,7 +1559,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.consume = function(quantity) {
             if (!(quantity)) {quantity = 1;};
-            if (_charges == 0) {return false;};
+            if (_charges == 0) {return _charges;};
             if (_charges > 0) {
                 if (_charges-quantity >0) {
                     _charges -=quantity;
@@ -1567,12 +1568,40 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             //console.log("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
-            return true; //deliberately works but does nothing if charges are -ve
+            return Math.round(_charges*100)/100; //deliberately works but does nothing if charges are -ve
         };
 
         self.consumeItem = function(anObject) {
-            anObject.consume();  //we ignore any return value
-            if (anObject.chargesRemaining() == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
+            var anObjectChargesRemaining = anObject.consume(); 
+            if (anObjectChargesRemaining == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
+        };
+
+        self.consumeComponents = function(quantity) {
+            //comsume a charge from each component and return the lowest remaining charge.
+            var components = _inventory.getComponents(self.getName(),true);
+            var minChargesRemaining = -1;
+            for (var i=0;i<components.length;i++) {
+                var chargesRemaining = components[i].consume(quantity);
+                if (chargesRemaining >-1 ) {
+                    if (minChargesRemaining == -1 || minChargesRemaining > chargesRemaining) {
+                        minChargesRemaining = chargesRemaining;
+                    };
+                };
+            };
+
+            return minChargesRemaining;
+        };
+
+        self.getConsumedComponents = function() {
+            var components = _inventory.getComponents(self.getName(), true);
+            var consumedItems = []
+            for (var i=0;i<components.length;i++) {
+                if (components[i].chargesRemaining() == 0) {
+                    consumedItems.push(components[i]);
+                };
+            };
+
+            return consumedItems;
         };
 
         self.checkComponents = function(someComponents) {
@@ -1600,9 +1629,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             components = components.concat(_inventory.getComponents(anObjectName));
 
             //iterate thru each component and remove charge.
-            for (var i=0; i<components.length; i++) {
-                self.consumeItem(components[i]);
-            };
+            self.consumeComponents(1);
 
             //get the source we're using...
             var deliveryItemSource;
@@ -1731,7 +1758,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (!wasAlreadyDamaged) {
-                _detailedDescription += "<br>"+_itemPrefix+" "+showsPlural()+" signs of abuse.";
+                _detailedDescription += "<br>"+_itemPrefix+" "+self.showsPlural()+" signs of abuse.";
                 if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
             } else {
                 if (deliberateAction) {return "Try as you might, you can't seem to do any more harm to "+_itemSuffix+".";};
@@ -1791,7 +1818,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return resultString;
             };
             if (!wasAlreadyDamaged) {
-                _detailedDescription += "<br>"+_itemPrefix+" "+showsPlural()+" signs of abuse.";
+                _detailedDescription += "<br>"+_itemPrefix+" "+self.showsPlural()+" signs of abuse.";
                 if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
             } else {
                 if (deliberateAction) {return "Try as you might, you can't seem to do any more harm to "+_itemSuffix+".";};
@@ -1822,7 +1849,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!(_damaged)) {
                 _damaged = true;
                 if (_price > 0) { self.discountPriceByPercent(25); };
-                _detailedDescription += " "+_itemPrefix+" "+showsPlural()+" signs of being dropped or abused.";
+                _detailedDescription += " "+_itemPrefix+" "+self.showsPlural()+" signs of being dropped or abused.";
             };
             return "";
         };
@@ -1849,7 +1876,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (!(_damaged)) {
                 _damaged = true;
-                _detailedDescription += " "+_itemPrefix+" "+showsPlural()+" signs of damage beyond normal expected wear and tear.";
+                _detailedDescription += " "+_itemPrefix+" "+self.showsPlural()+" signs of damage beyond normal expected wear and tear.";
             };
 
             return "";
@@ -2007,7 +2034,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.reply = function(someSpeech, player, keyword, map) {
             if (self.isDestroyed()) {return "The remaining fragments of inanimate spirit from "+self.getDisplayName()+" ignore you.";};
-            return initCap(_itemDescriptivePrefix)+" quietly aware of the sound of your voice but "+showsPlural()+" no sign of response.";
+            return initCap(_itemDescriptivePrefix)+" quietly aware of the sound of your voice but "+self.showsPlural()+" no sign of response.";
         };
 
         self.canTravel = function() {
@@ -2398,15 +2425,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var usedItem; 
             if (_on) {
                 if (_burnRate >0) {
-                    self.consume(_burnRate)
-                    if (self.chargesRemaining() == 0) {usedItem = self.getName();};
+                    var remainingcharge = self.consume(_burnRate)
+                    var remainingComponentCharge = self.consumeComponents(_burnRate);
+                    if (remainingcharge == 0) {usedItem = self;};
+
                     if (!(usedItem)) {
-                        var components = _inventory.getComponents(self.getName());
-                        for (var i=0;i<components.length;i++) {
-                            components[i].consume();
-                            if (components[i].chargesRemaining() == 0) {
-                                usedItem = components[i].getName();
-                                break;
+                        if (remainingComponentCharge == 0) {
+                            //figure out what was consumed...
+                            var consumedItems = self.getConsumedComponents();
+                            if (consumedItems.length > 0) {
+                                usedItem = consumedItems[0];
                             };
                         };
                     };
@@ -2414,8 +2442,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 if (usedItem) {
                     _on = false;
-                    if (usedItem != self.getName()) {usedItem = self.getName()+" "+usedItem;};
-                    return "Your "+usedItem+" "+hasPlural()+" run out."
+                    var usedItemString = usedItem.getName();
+                    if (usedItemString != self.getName()) {usedItemString = self.getName()+" "+usedItem.getName();};
+                    return "Your "+usedItemString+" "+usedItem.hasPlural()+" run out."
                 };
             };
             return "";

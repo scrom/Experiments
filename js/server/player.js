@@ -1579,8 +1579,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "I think it's time you moved onto something else now.";
             };
 
-            writingTool.consume();
-
             var success = false;
 
             if (verb == "write") {
@@ -1606,7 +1604,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
 
-            if (writingTool.chargesRemaining() == 0) {
+            var writingToolChargesRemaining = writingTool.consume(1);
+            if (writingToolChargesRemaining == 0) {
                 writingTool.discountPriceByPercent(100); //worthless
                 resultString+="You used up your "+writingTool.getName()+".<br>";
             };
@@ -1696,8 +1695,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 if (artefact.isLiquid()) {
-                    artefact.consume(1);
-                    if (artefact.chargesRemaining() == 0) { removeObjectFromPlayerOrLocation(artefactName);};
+                    var artefactChargesRemaining = artefact.consume(1);
+                    if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
                     return "It seems a bit wasteful but it's your call...<br>You pour "+artefact.getName()+" "+position+" "+receiver.getDisplayName()+".";
                 };   
 
@@ -1831,8 +1830,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     }; 
                     
                     if (artefact.isLiquid()) {
-                        artefact.consume(1);
-                        if (artefact.chargesRemaining() == 0) { removeObjectFromPlayerOrLocation(artefactName);};
+                        var artefactChargesRemaining = artefact.consume(1);
+                        if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
                         return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
                     };                   
                     
@@ -3076,7 +3075,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             for(var index = 0; index < weapons.length; index++) {
                 //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones. (except projectiles - which must be in working order)
                 if ((weapons[index].getType() == 'weapon') && ((!(weapons[index].isBreakable())) || (weapons[index].getSubType() == "projectile" && (!weapons[index].isBroken())))) {
-                    if (weapons[index].supportsAction(verb) && weapons[index].chargesRemaining() != 0) {    
+                    if (weapons[index].supportsAction(verb) && weapons[index].chargesRemaining() != 0 && weapons[index].checkComponents()) {    
                         var weaponStrength = weapons[index].getAttackStrength();
                         //console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                         if (weaponStrength > selectedWeaponStrength) {
@@ -3232,7 +3231,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (weapon.getSubType() == "projectile") {
                 var randomInt = Math.floor(Math.random() * 7); 
                 if (randomInt == 0) { //1 in 7 chance of failure
-                    weapon.consume();
+                    weapon.consume(1);
+                    weapon.consumeComponents(1);
                     resultString = "You try to "+verb+" "+receiver.getDisplayName()+". Unfortunately your "+weapon.getName()+" jammed.";
                     var newRandomInt = Math.floor(Math.random() * 10);
                     if (newRandomInt == 0 && weapon.isBreakable()) { //further 10% chance of worse!
@@ -3265,6 +3265,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
                 weapon.consume(2); //use up multiple charges!
+                weapon.consumeComponents(2);
                 resultString +=  "Ding! You repeatedly "+verb+" "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way."
             }; 
 
@@ -3288,8 +3289,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //did you use something fragile/consumable as a weapon?
+            var chargesRemaining = -1
+            var componentChargesRemaining = -1
             if (weapon) {
-                weapon.consume(); //(we may have already used some earlier)
+
+                chargesRemaining = weapon.consume(1); //(we may have already used some earlier)
+                componentChargesRemaining = weapon.consumeComponents(1);
                 if (weapon.isBreakable() && weapon.getSubType() != "projectile") {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
@@ -3303,9 +3308,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
                 if (!weapon.isDestroyed()) {
-                    var chargesRemaining = weapon.chargesRemaining();
                     if (chargesRemaining == 0) {
                         resultString +="<br>You used up all the "+weapon.getChargeUnit()+"s in "+weapon.getDisplayName()+".";
+                    };
+                    if (componentChargesRemaining == 0) {
+                        var consumedItems = weapon.getConsumedComponents();
+                        if (consumedItems.length > 0) {
+                            var usedItem = consumedItems[0];
+                            resultString +="<br>You used up all the "+usedItem.getName()+" "+usedItem.getChargeUnit()+"s in "+weapon.getDisplayName()+".";
+                        };
+                        //remove consumed items.
+                        for (var c=0;c<consumedItems.length;c++) {_inventory.remove(consumedItems[c].getName());};
                     };
                 };                
                 
@@ -3376,12 +3389,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //we do have something to heal with so...
             //use up one charge and consume if all used up...
-            medicalArtefact.consume();
+            var medicalChargesRemaining = medicalArtefact.consume(1);
 
             if (healer) {
                 if (healer.getType() == "player") { //only show these messages is player is doing the healing. 
                     self.incrementHealCount();                    
-                    if (medicalArtefact.chargesRemaining() == 0) {
+                    if (medicalChargesRemaining == 0) {
                         resultString += "You used up the last of your "+medicalArtefact.getName()+".<br>";
                     } else {
                         resultString += "You use "+medicalArtefact.getDescription()+" to heal yourself.<br>";

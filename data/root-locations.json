@@ -3730,7 +3730,7 @@
               "weight": 1,
               "canCollect": true,
               "charges": 8,
-              "chargeUnit": "minutes",
+              "chargeUnit": "minute",
               "chargesDescription": "There's enough for about $charges $chargeUnit of power",
               "plural": true,
               "affinityModifier": 0,
@@ -6028,18 +6028,41 @@
         "attributes": {
           "weight": 2,
           "attackStrength": 5,
+		  "carryWeight": 0.5,
           "type": "weapon",
           "subType": "projectile",
 		  "isBreakable": true,
-          "charges": 10,
-          "chargeUnit": "round",
-          "chargesDescription": "There's $charges $chargeUnit left",
           "canCollect": true,
-          "affinityModifier": 2
+          "affinityModifier": 2,
+		  "requiredComponentCount": 1
         },
         "synonyms": [
           "nerf",
           "gun"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "dart",
+            "description": "nerf darts",
+            "detailedDescription": "Ping, squeee, ouch, grrr.",
+            "attributes": {
+              "weight": 0.5,
+              "canCollect": true,
+			  "charges": 10,
+			  "chargeUnit": "round",
+			  "chargesDescription": "There's $charges $chargeUnit left",
+              "plural": true,
+              "affinityModifier": 0,
+              "componentOf": [
+                "nerf gun"
+              ]
+            },
+            "synonyms": [
+              "nerf darts",
+              "darts"
+            ]
+          }
         ]
       },
       {
@@ -8578,7 +8601,7 @@
               "weight": 1,
               "canCollect": true,
               "charges": 45,
-              "chargeUnit": "minutes",
+              "chargeUnit": "minute",
               "chargesDescription": "There's enough for about $charges $chargeUnit of power",
               "plural": true,
               "affinityModifier": 0,

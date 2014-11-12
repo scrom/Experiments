@@ -463,12 +463,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
 
         //returns "intact" components only!
-        self.getComponents = function(anObjectName) {
+        self.getComponents = function(anObjectName, includeDischargedItems) {
             var returnObjects = [];
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].isComponentOf(anObjectName)) {
-                    if((_items[index].chargesRemaining() > 0 || _items[index].chargesRemaining() < 0 ) && (!(_items[index].isBroken()) && !(_items[index].isDestroyed()))) {
-                        console.log("Charged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    if((_items[index].chargesRemaining() > 0 || _items[index].chargesRemaining() < 0 || includeDischargedItems) && (!(_items[index].isBroken()) && !(_items[index].isDestroyed()))) {
+                        console.log("Component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                         returnObjects.push(_items[index]);
                     };// else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);};                     
                 };

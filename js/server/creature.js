@@ -1923,12 +1923,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
 
             //use up one charge and consume if all used up...
-            medicalArtefact.consume();
+            var medicalArtefactChargesRemaining = medicalArtefact.consume(1);
  
             if (healer) {
                 if (healer.getType() == "player") { //only show these messages is player is doing the healing. 
                     healer.incrementHealCount();                                        
-                    if (medicalArtefact.chargesRemaining() == 0) {
+                    if (medicalArtefactChargesRemaining == 0) {
                         resultString += "You used up the last of your "+medicalArtefact.getName()+" to heal "+self.getDisplayName()+". ";
                     } else {
                         resultString += "You use "+medicalArtefact.getDescription()+" to heal "+self.getDisplayName()+". ";
@@ -3055,7 +3055,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.chargesRemaining = function() {
-            return _charges;
+            return Math.round(_charges*100)/100;
         };
 
         self.hasPower = function() {
@@ -3078,13 +3078,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "That's really not a polite thing to do to "+_genderSuffix+".";
         };
 
-        self.consume = function() {
-            return false;
+        self.consume = function(quantity) {
+            if (!(quantity)) {quantity = 1;};
+            if (_charges == 0) {return _charges;};
+            if (_charges > 0) {
+                if (_charges-quantity >0) {
+                    _charges -=quantity;
+                } else {
+                    _charges = 0;
+                };
+            };
+            //console.log("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
+
+            return Math.round(_charges*100)/100; //deliberately works but does nothing if charges are -ve
         };
 
         self.consumeItem = function(anObject) {
-            anObject.consume();
-            if (anObject.chargesRemaining() == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
+            var anObjectChargesRemaining = anObject.consume();
+            if (anObjectChargesRemaining == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
         };
 
         self.checkComponents = function() {

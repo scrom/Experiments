@@ -676,7 +676,7 @@ exports.hittingArtefactWhenArmedDamagesArtefact.meta = { traits: ["Player Test",
 
 exports.hittingUnbreakableArtefactReturnsSensibleMessage = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "Ding! You repeatedly attack the artefact with the sword.<br>It feels good in a gratuitously violent sort of way.";
+    var expectedResult = "Ding! You repeatedly hit the artefact with the sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
     var actualResult = p0.hit('hit',a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
