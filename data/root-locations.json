@@ -9584,7 +9584,9 @@
           "canTravel": true,
           "traveller": true,
           "avoiding": [
+			"office-front",
             "atrium",
+			"east-end-south-corridor-ground-floor",
             "first-floor-fire-escape"
           ],
           "smell": "As you bend down and sniff the cat, it lashes out at you.",
