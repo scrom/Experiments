@@ -941,6 +941,10 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'sign':
                     case 'autograph':
                     case 'tag':
+                        if (_object1) {
+                            //handle "sign x in y" - note, sign, tag and autograph will always overwrite with username
+                            _object0 = _object1;
+                        };
                         description = _player.writeOrDraw('sign', "$player", _object0);
                         break;
                     case 'clear':
@@ -988,6 +992,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'feel': //either activate something (like press) - or return a texture description
                     case 'cast':
                     case 'summon':
+                    case 'curse':
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;

@@ -154,7 +154,7 @@
             },
             "reward": {
               "score": -25,
-              "successMessage": "Bad you! Sometimes you just have to resist your violent urges. You lose 25 points.",
+              "successMessage": "Bad you! Sometimes you just have to resist your violent urges.",
               "failMessage": "Never mind, it's probably better left alone."
             }
           }
@@ -204,7 +204,7 @@
         },
         "reward": {
           "score": 100,
-          "successMessage": "<br>You're quite the explorer!<br>Congratulations, you've found every location. Have 100 points."
+          "successMessage": "<br>You're quite the explorer!<br>Congratulations, you've found every location."
         }
       },
       {
@@ -219,7 +219,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>Hey, that's some impressive adventuring!<br>You've found 100 locations. Have 50 points."
+          "successMessage": "<br>Hey, that's some impressive adventuring!<br>You've found 100 locations."
         }
       },
       {
@@ -234,7 +234,7 @@
         },
         "reward": {
           "score": -25,
-          "successMessage": "<br>Whoa, you're out of control. You need to seriously work on your anger management. You lose 25 points."
+          "successMessage": "<br>Whoa, you're out of control. You need to seriously work on your anger management."
         }
       },
       {
@@ -249,7 +249,7 @@
         },
         "reward": {
           "score": -15,
-          "successMessage": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe? You lose 15 points."
+          "successMessage": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe?"
         }
       },
       {
@@ -264,7 +264,7 @@
         },
         "reward": {
           "score": -35,
-          "successMessage": "<br>Stealing may be one way of achieving your goals but it really doesn't fit in with our values. You lose 35 points."
+          "successMessage": "<br>Stealing may be one way of achieving your goals but it really doesn't fit in with our values."
         }
       },
       {
@@ -279,7 +279,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>I like your attitude to learning, keep it up<br>Only three more items left to read! Have 50 points."
+          "successMessage": "<br>I like your attitude to learning, keep it up<br>Only three more items left to read!"
         }
       },
       {
@@ -295,7 +295,7 @@
         },
         "reward": {
           "score": 25,
-          "successMessage": "<br>You read 'all the things'!<br>Have another 25 points."
+          "successMessage": "<br>You read 'all the things'!"
         }
       },
       {
@@ -311,7 +311,7 @@
         },
         "reward": {
           "score": 25,
-          "successMessage": "<br>You're quite a chatterbox. We like people who talk and collaborate.<br>Have 25 points."
+          "successMessage": "<br>You're quite a chatterbox. We like people who talk and collaborate."
         }
       },
       {
@@ -327,7 +327,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>Wow, you spoke to <i>everyone</i>. That's quite a network you're building up.<br>Have 50 points."
+          "successMessage": "<br>Wow, you spoke to <i>everyone</i>. That's quite a network you're building up."
         }
       },
       {
@@ -342,7 +342,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You're making a real effort here. Looks like you've almost got a best friend forever!<br>Have 50 points."
+          "successMessage": "<br>You're making a real effort here. Looks like you've almost got a best friend forever!"
         }
       },
       {
@@ -357,7 +357,7 @@
         },
         "reward": {
           "score": 25,
-          "successMessage": "<br>We could do with someone like you on the first-aid team. You've got quite the healing skills.<br>Have 25 points."
+          "successMessage": "<br>We could do with someone like you on the first-aid team. You've got quite the healing skills."
         }
       },
       {
@@ -373,7 +373,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You've really 'got it' with the healing activities.<br>(Although where that level of repeated injury in an office environment came from is somewhat worrying.)<br>Have 50 points."
+          "successMessage": "<br>You've really 'got it' with the healing activities.<br>(Although where that level of repeated injury in an office environment came from is somewhat worrying.)"
         }
       },
       {
@@ -389,7 +389,7 @@
         },
         "reward": {
           "score": -100,
-          "successMessage": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know.<br>You lose 100 points."
+          "successMessage": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know."
         }
       },
       {
@@ -404,7 +404,7 @@
         },
         "reward": {
           "score": 100,
-          "successMessage": "<br>Wow. You're winning in the popularity stakes!<br>Have 100 points."
+          "successMessage": "<br>Wow. You're winning in the popularity stakes!"
         }
       },
       {
@@ -419,7 +419,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>You're treading a fine line here. Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good.<br>Have 5 points."
+          "successMessage": "<br>You're treading a fine line here. Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good."
         }
       },
       {
@@ -434,7 +434,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>You're think you're quite the artist, don't you.<br>Have 5 points."
+          "successMessage": "<br>You're think you're quite the artist, don't you."
         }
       },
       {
@@ -449,7 +449,7 @@
         },
         "reward": {
           "score": 10,
-          "successMessage": "<br>You seem to be writing quite a few notes.<br>Anyone would think you're destined for management.<br>Have 10 points."
+          "successMessage": "<br>You seem to be writing quite a few notes.<br>Anyone would think you're destined for management."
         }
       },
       {
@@ -479,7 +479,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?<br>Have 5 points."
+          "successMessage": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?"
         }
       },
       {
@@ -494,7 +494,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You've made quite a bit of money there, great job!<br>We hope you didn't come about it through foul means though.<br>Have 50 points."
+          "successMessage": "<br>You've made quite a bit of money there, great job!<br>We hope you didn't come about it through foul means though."
         }
       },
       {
@@ -509,7 +509,7 @@
         },
         "reward": {
           "score": 35,
-          "successMessage": "<br>You've collected quite a lot of valuable stuff there!<br>Have you considered <i>sell</i>ing any of it?<br>Have 35 points."
+          "successMessage": "<br>You've collected quite a lot of valuable stuff there!<br>Have you considered <i>sell</i>ing any of it?"
         }
       },
       {
@@ -524,7 +524,7 @@
         },
         "reward": {
           "score": -150,
-          "successMessage": "<br>Yeah...<br>...about all that money you've made.<br>That level of dishonesty will get you fired pretty much immediately.<br>You lose 150 points."
+          "successMessage": "<br>Yeah...<br>...about all that money you've made.<br>That level of dishonesty will get you fired pretty much immediately."
         }
       },
       {
@@ -782,7 +782,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "chris moore",
               "removeObject": "bike",
-              "successMessage": "You hand Chris' bike over to Rick.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
+              "successMessage": "You hand Chris' bike over to Rick.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it."
             }
           }
         ]
@@ -1186,7 +1186,7 @@
               "removeObject": "chocolate",
               "affinityModifier": 2,
               "increaseAffinityFor": "dene boulton",
-              "successMessage": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated.'<br> Have 25 points.",
+              "successMessage": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated.'",
               "failMessage": "Dene wanted some chocolate :("
             }
           }
@@ -1838,7 +1838,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "brian harris",
               "removeObject": "guardian newspaper",
-              "successMessage": "Brian says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now.<br> Have 25 points."
+              "successMessage": "Brian says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now."
             }
           }
         ]
@@ -2065,7 +2065,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "chris whitworth",
               "decreaseAffinityFor": "james dening",
-              "successMessage": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while.<br>Have 25 points."
+              "successMessage": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while."
             }
           }
         ]
@@ -2554,7 +2554,7 @@
               "score": 50,
               "affinityModifier": 2,
               "increaseAffinityFor": "filippa vajda",
-              "successMessage": "Great job! I'm sure Filippa will be really pleased.<br>There's a chance these might be useful later.<br>Have 50 points.",
+              "successMessage": "Great job! I'm sure Filippa will be really pleased.<br>There's a chance these might be useful later.",
               "failMessage": "I know you're busy but a little help never hurt anyone you know."
             }
           }
@@ -2658,7 +2658,7 @@
               "affinityModifier": 2,
               "removeObject": "trainers",
               "increaseAffinityFor": "adam parker",
-              "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'<br> Have 25 points."
+              "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'"
             }
           }
         ]
@@ -5236,7 +5236,7 @@
                       },
                       "reward": {
                         "score": 50,
-                        "successMessage": "Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles. Have 50 points."
+                        "successMessage": "Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
                       }
                     },
                     {
@@ -6042,7 +6042,7 @@
               "score": 5,
               "affinityModifier": 2,
               "increaseAffinityFor": "ice cream man",
-              "successMessage": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy.<br>Have 5 points.",
+              "successMessage": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy.",
               "failMessage": "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work."
             }
           }
@@ -6552,7 +6552,7 @@
               "increaseAffinityFor": "chris smith",
               "missionObject": "post-it pad",
               "score": 25,
-              "successMessage": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You facilitated the facilitator! Have 25 points."
+              "successMessage": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You facilitated the facilitator!"
             }
           }
         ]
@@ -6909,7 +6909,7 @@
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "amanda mansfield",
-              "successMessage": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i><br> Have 25 points."
+              "successMessage": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i>"
             }
           }
         ]
@@ -7152,7 +7152,7 @@
             "object": "mission",
             "name": "keyfob",
             "displayName": "get a keyfob",
-            "description": "It looks like you need to <i>sign in</i> to get a keyfob for the office.",
+            "description": "If you haven't done so already, you'll need to <i>sign in</i> to get a keyfob for the office.",
             "attributes": {
 			  "parent": "talktovic",
               "missionObject": "visitors book",
@@ -7181,7 +7181,7 @@
                 ]
               },
               "score": 10,
-              "successMessage": "'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'<br>Have 10 points."
+              "successMessage": "'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
             }
 		}
 	], 
@@ -7278,14 +7278,14 @@
               "missionObject": "Vic Wiseman",
               "static": true,
               "dialogue": [
-                "Good morning $player.<br>Welcome aboard! If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building."
+                "'Good morning $player.'<br>'Welcome aboard!'" 
               ]
             },
             "conditionAttributes": {
               "alive": true
             },
             "reward": {
-				"successMessage": ""
+				"successMessage": "'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'"
             }
           },
           {
@@ -7382,7 +7382,7 @@
               "removeObject": "small book",
               "score": 35,
               "increaseAffinityFor": "Vic Wiseman",
-              "successMessage": "Congratulations. Vic likes the book! Have 35 points."
+              "successMessage": "Congratulations. Vic likes the book!"
             }
           }
         ]
@@ -7851,7 +7851,7 @@
               "increaseAffinityFor": "justin heron",
               "decreaseAffinityFor": "james dening",
               "removeObject": "wig",
-              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Justin will have appreciated it.<br>Have 50 points."
+              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Justin will have appreciated it."
             }
           }
         ]
@@ -9262,7 +9262,7 @@
               "affinityModifier": 1,
               "removeObject": "tomatoes",
               "increaseAffinityFor": "everyone",
-              "successMessage": "Margaret says 'Thankyou so much $player.'<br>'I'm sure everyone will appreciate the effort you've gone to to keep us all fed.'<br> Have 125 points."
+              "successMessage": "Margaret says 'Thankyou so much $player.'<br>'I'm sure everyone will appreciate the effort you've gone to to keep us all fed.'"
             }
           }
         ]

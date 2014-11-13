@@ -1592,6 +1592,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "draw"||verb == "sketch") {
                 success = receiver.addDrawing(artwork);
             } else {
+                if (artwork == "name"||artwork == _username) {artwork = "$player"};
                 success = receiver.addWriting(artwork);
                 artwork = "'"+artwork+"'"; //add quotes afterward!
             };
@@ -3834,6 +3835,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString+= self.processMissionState(_missions[i], map, self, newlyCompletedMissions);
             };
 
+            //check missions from location creatures
+            var creatures = _currentLocation.getCreatures();
+            for (var i=0; i<creatures.length; i++) {
+                var creatureMissions = creatures[i].getMissions();
+                for (var j=0; j<creatureMissions.length;j++) {
+                    processedMissions.push(creatureMissions[j].getName());
+                    resultString+= self.processMissionState(creatureMissions[j], map, creatures[i], newlyCompletedMissions);
+                };
+            };
+
             //check missions from location
             var locationMissions = _currentLocation.getMissions();
             for (var j=0; j<locationMissions.length;j++) {
@@ -3849,16 +3860,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 for (var j=0; j<artefactMissions.length;j++) {
                     processedMissions.push(artefactMissions[j].getName());
                     resultString+= self.processMissionState(artefactMissions[j], map, artefacts[i], newlyCompletedMissions);
-                };
-            };
-
-            //check missions from location creatures
-            var creatures = _currentLocation.getCreatures();
-            for (var i=0; i<creatures.length; i++) {
-                var creatureMissions = creatures[i].getMissions();
-                for (var j=0; j<creatureMissions.length;j++) {
-                    processedMissions.push(creatureMissions[j].getName());
-                    resultString+= self.processMissionState(creatureMissions[j], map, creatures[i], newlyCompletedMissions);
                 };
             };
 
