@@ -514,6 +514,19 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                             return 1;
                         };
                     };
+                } else if (Object.prototype.toString.call(conditionAttribute) === '[object Array]') { 
+                    var requiredElements = conditionAttribute.length;
+                    var matchedElements = 0;
+                    //we assume the array can also have other values, we're just looking for a full set of matches
+                    for (var c=0;c<conditionAttribute.length;c++) {
+                        if (objectAttribute.indexOf(conditionAttribute[c]) >-1) {
+                            matchedElements++;
+                        };
+                    };
+
+                    if (matchedElements == requiredElements) {
+                        return 1;
+                    };
                 };
             };
 
@@ -668,6 +681,9 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.checkState = function (player, map) {
+            if (self.getName() == "junioroccultist") {
+                var debug = true;
+            };
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible

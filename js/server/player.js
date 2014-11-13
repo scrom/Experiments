@@ -1596,10 +1596,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = "";
             var randomReplies;
             if (success) {
-                resultString = "You "+verb+" "+artwork+" on "+receiver.getDisplayName()+".<br>";
+                var pluralArt = " "
+                if (verb == "draw") {
+                    if (artwork.substr(-1) == "s") {pluralArt = " some ";
+                    } else {pluralArt = " a "};
+                };
+
+                resultString = "You "+verb+pluralArt+artwork+" on "+receiver.getDisplayName()+".<br>";
                 randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that might sell for a fortune. Although for now, it just diminishes the value of "+receiver.getDisplayName(), "You step back and admire your handiwork."];
             } else {
-                randomReplies = ["You attempt to "+verb+" "+artwork+" on "+receiver.getDisplayName()+" but it smears and rubs off before you can finish.<br>"];
+                randomReplies = ["You attempt to "+verb+pluralArt+artwork+" on "+receiver.getDisplayName()+" but it smears and rubs off before you can finish.<br>"];
             };
 
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
