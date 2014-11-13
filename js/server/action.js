@@ -933,8 +933,15 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'draw':
+                    case 'sketch':
                     case 'write':
+                    case 'scrawl':
                         description = _player.writeOrDraw(_verb, _object0, _object1);
+                        break;
+                    case 'sign':
+                    case 'autograph':
+                    case 'tag':
+                        description = _player.writeOrDraw('sign', "$player", _object0);
                         break;
                     case 'clear':
                     case 'wipe':

@@ -1589,11 +1589,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var success = false;
 
-            if (verb == "write") {
+            if (verb == "draw"||verb == "sketch") {
+                success = receiver.addDrawing(artwork);
+            } else {
                 artwork = "'"+artwork+"'"
                 success = receiver.addWriting(artwork);
-            } else {
-                success = receiver.addDrawing(artwork);
             };
 
             if (receiver.getPrice() >0) {
@@ -1604,7 +1604,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = "";
             var randomReplies;
             if (success) {
-                if (verb == "draw") {
+                if (verb == "draw"||verb == "sketch") {
                     var pluralArt = false;
                     if (artwork.substr(-1) == "s") {
                         pluralArt = true;
