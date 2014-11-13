@@ -810,7 +810,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 for (var a=0;a<_writings.length;a++) {
                     if (a > 0 && a < _writings.length - 1) { resultString += ', '; };
                     if (a > 0 && a == _writings.length - 1) { resultString += ' and '; };
-                    resultString += _writings[a];
+                    resultString += "'"+_writings[a]+"'";
                 };
                 if (_drawings.length==0) {
                     resultString+= " on "+self.getSuffix();
@@ -844,7 +844,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 inventoryIsVisible = false;
             };
 
-            if ((_inventory.size() > 0) && inventoryIsVisible) {
+            var inventoryDescription = _inventory.describe()
+            if ((_inventory.size() > 0) && inventoryIsVisible && (!((inventoryDescription.substr(0,7) == "nothing") && inventoryDescription.length > 7))) {                
                 resultString += "<br>";
 
                 //inventory description may be extended...
@@ -855,7 +856,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
                 resultString += _extendedInventoryDescription;
 
-                resultString = resultString.replace("$inventory",_inventory.describe());
+                resultString = resultString.replace("$inventory", inventoryDescription);
                 
             } else if ((_inventory.size() > 0)) {
                 var positionedItems =  _inventory.describePositionedItems();

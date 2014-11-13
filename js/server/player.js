@@ -1592,8 +1592,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "draw"||verb == "sketch") {
                 success = receiver.addDrawing(artwork);
             } else {
-                artwork = "'"+artwork+"'"
                 success = receiver.addWriting(artwork);
+                artwork = "'"+artwork+"'"; //add quotes afterward!
             };
 
             if (receiver.getPrice() >0) {
@@ -1616,7 +1616,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 resultString = "You "+verb+" "+artwork+" on "+receiver.getDisplayName()+".<br>";
-                randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that might sell for a fortune. Although for now, it just diminishes the value of "+receiver.getDisplayName(), "You step back and admire your handiwork."];
+                randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that might sell for a fortune. Although for now, it just diminishes the value of "+receiver.getDisplayName()+".", "You step back and admire your handiwork."];
             } else {
                 randomReplies = ["You attempt to "+verb+" "+artwork+" on "+receiver.getDisplayName()+" but it smears and rubs off before you can finish.<br>"];
             };

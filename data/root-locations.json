@@ -7147,17 +7147,95 @@
         "hidden": true
       }
     ],
+	"missions": [
+	          {
+            "object": "mission",
+            "name": "keyfob",
+            "displayName": "get a keyfob",
+            "description": "It looks like you need to <i>sign in</i> to get a keyfob for the office.",
+            "attributes": {
+			  "parent": "talktovic",
+              "missionObject": "visitors book",
+              "static": true
+            },
+            "conditionAttributes": {
+              "writings": ["$player"]
+            },
+            "reward": {
+              "delivers": {
+                "object": "artefact",
+                "name": "keyfob",
+                "description": "key fob",
+                "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "key",
+                  "canCollect": true,
+                  "unlocks": "office door"
+                },
+                "synonyms": [
+                  "key fob",
+                  "fob",
+                  "keyring",
+                  "key ring"
+                ]
+              },
+              "score": 10,
+              "successMessage": "'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'<br>Have 10 points."
+            }
+		}
+	], 
     "inventory": [
       {
         "object": "artefact",
         "name": "desk",
-        "description": "a big red desk",
+        "description": "big red desk",
         "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
         "attributes": {
           "weight": 280,
-          "type": "scenery",
+          "type": "junk",
           "canDrawOn": true
+        }, 
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "visitors book",
+        "description": "visitor's book",
+        "detailedDescription": "It looks like you're the first newcomer today.",
+        "attributes": {
+          "weight": 1,
+		  "position": "on",
+          "canDrawOn": true,
+		  "customAction": [
+			"get", "steal"
+           ],
+          "defaultResult": "It needs to stay down here on reception."
         },
+        "synonyms": [
+          "book",
+		  "in"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "biro",
+        "description": "blue biro",
+        "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
+        "attributes": {
+          "weight": 0.1,
+		  "position": "on",
+		  "type": "writing",
+		  "customAction": [
+			"get", "steal"
+           ],
+          "defaultResult": "It's attached to the desk."
+        },
+        "synonyms": [
+          "pen",
+		  "blue pen",
+		  "blue biro"
+        ]
+      }	  ],
         "synonyms": [
           "big desk",
           "reception",
@@ -7193,40 +7271,21 @@
         "missions": [
           {
             "object": "mission",
-            "name": "keyfob",
-            "displayName": "get a keyfob",
-            "description": "Vic has a key fob for you.",
+            "name": "talktovic",
+            "displayName": "greet vic",
+            "description": "Vic needs you to sign in.",
             "attributes": {
               "missionObject": "Vic Wiseman",
               "static": true,
               "dialogue": [
-                "Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."
+                "Good morning $player.<br>Welcome aboard! If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building."
               ]
             },
             "conditionAttributes": {
               "alive": true
             },
             "reward": {
-              "delivers": {
-                "object": "artefact",
-                "name": "keyfob",
-                "description": "key fob",
-                "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
-                "attributes": {
-                  "weight": 0.1,
-                  "type": "key",
-                  "canCollect": true,
-                  "unlocks": "office door"
-                },
-                "synonyms": [
-                  "key fob",
-                  "fob",
-                  "keyring",
-                  "key ring"
-                ]
-              },
-              "score": 10,
-              "successMessage": "Have 10 points."
+				"successMessage": ""
             }
           },
           {
