@@ -59,6 +59,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _restsTaken = 0;
         var _sleepsTaken = 0;
         var _maxAffinity = 0;
+        var _drawingCount = 0;
+        var _writingCount = 0;
 
         //possible additional player stats
         var _creatureHitsMade = 0;
@@ -278,6 +280,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.restsTaken != undefined) {_restsTaken = playerAttributes.restsTaken;};
             if (playerAttributes.sleepsTaken != undefined) {_sleepsTaken = playerAttributes.sleepsTaken;};
             if (playerAttributes.maxAffinity != undefined) {_maxAffinity = playerAttributes.maxAffinity;};
+            if (playerAttributes.drawingCount != undefined) {_drawingCount = playerAttributes.drawingCount;};
+            if (playerAttributes.writingCount != undefined) {_writingCount = playerAttributes.writingCount;};
             if (playerAttributes.injuriesReceived != undefined) {_injuriesReceived = playerAttributes.injuriesReceived;};
             if (playerAttributes.healCount != undefined) {_healCount = playerAttributes.healCount;};
             if (playerAttributes.lastCreatureSpokenTo != undefined) {_lastCreatureSpokenTo = playerAttributes.lastCreatureSpokenTo;};
@@ -498,6 +502,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_waitCount > 0) {resultString += ',"waitCount":'+_waitCount;};
             if (_restsTaken > 0) {resultString += ',"restsTaken":'+_restsTaken;};
             if (_sleepsTaken > 0) {resultString += ',"sleepsTaken":'+_sleepsTaken;};
+            if (_drawingCount != 0) {resultString += ',"drawingCount":'+_drawingCount;};
+            if (_writingCount != 0) {resultString += ',"writingCount":'+_writingCount;};
             if (_maxAffinity != 0) {resultString += ',"maxAffinity":'+_maxAffinity;};
             if (_injuriesReceived > 0) {resultString += ',"injuriesReceived":'+_injuriesReceived;};
             if (_healCount > 0) {resultString += ',"healCount":'+_healCount;};
@@ -577,6 +583,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.restsTaken = _restsTaken;
             currentAttributes.sleepsTaken = _sleepsTaken;
             currentAttributes.maxAffinity =_maxAffinity;
+            currentAttributes.drawingCount =_drawingCount;
+            currentAttributes.writingCount =_writingCount;
             currentAttributes.injuriesReceived = _injuriesReceived;
             currentAttributes.healCount = _healCount;
             currentAttributes.repairSkills = _repairSkills;
@@ -1596,16 +1604,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = "";
             var randomReplies;
             if (success) {
-                var pluralArt = " "
                 if (verb == "draw") {
-                    if (artwork.substr(-1) == "s") {pluralArt = " some ";
-                    } else {pluralArt = " a "};
+                    var pluralArt = false;
+                    if (artwork.substr(-1) == "s") {
+                        pluralArt = true;
+                    }
+                    artwork = receiver.descriptionWithCorrectPrefix(artwork, pluralArt); //can't be a creature!
+                    _drawingCount ++;
+                } else {
+                    _writingCount ++;
                 };
 
-                resultString = "You "+verb+pluralArt+artwork+" on "+receiver.getDisplayName()+".<br>";
+                resultString = "You "+verb+" "+artwork+" on "+receiver.getDisplayName()+".<br>";
                 randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that might sell for a fortune. Although for now, it just diminishes the value of "+receiver.getDisplayName(), "You step back and admire your handiwork."];
             } else {
-                randomReplies = ["You attempt to "+verb+pluralArt+artwork+" on "+receiver.getDisplayName()+" but it smears and rubs off before you can finish.<br>"];
+                randomReplies = ["You attempt to "+verb+" "+artwork+" on "+receiver.getDisplayName()+" but it smears and rubs off before you can finish.<br>"];
             };
 
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -4065,6 +4078,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_waitCount > 0) {status += "You've hung around waiting for something to happen "+temporise(_waitCount)+".<br>";};
             if (_restsTaken > 0) {status += "You have rested "+temporise(_restsTaken)+".<br>";};
             if (_sleepsTaken > 0) {status += "You have slept "+temporise(_sleepsTaken)+".<br>";};
+
+            if (_drawingCount > 0) {status += "You have drawn "+pluralise(_drawingCount, "picture")+".<br>";};
+            if (_drawingCount > 0) {status += "You have written "+pluralise(_writingCount, "note")+".<br>";};
 
             if (_cashGained > 0) status += "You have gained a total of &pound;"+_cashGained.toFixed(2)+" in cash.<br>";
             if (_stolenCash > 0) status += "Of the total cash you've gained, &pound;"+_stolenCash.toFixed(2)+" was acquired by stealing.<br>";

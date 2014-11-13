@@ -317,13 +317,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
 
         //return right prefix for item       
-        self.descriptionWithCorrectPrefix = function(anItemDescription) {
+        self.descriptionWithCorrectPrefix = function(anItemDescription, plural) {
             if (anItemDescription.substr(0,1) == anItemDescription.substr(0,1).toUpperCase()) {
                 //Description starts with a proper noun.
                 return anItemDescription;
             };
 
-            if (_plural) {
+            if (_plural || plural) {
                 //special cases
                 var collectionPlurals = ["pair", "pack", "bowl", "set", "box", "tin", "jar", "packet", "bottle", "cluster", "collection"];
                 var descriptionAsWords = anItemDescription.split(" "); 
@@ -339,15 +339,26 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             switch (anItemDescription.substring(0,1).toLowerCase()) {
+                case "u":
+                    if (anItemDescription.length == 1) {return "a '"+anItemDescription+"'";};
+                    //note no break - fall through case
                 case "a":
                 case "e":
                 case "i":
                 case "o":
-                case "u":
                 case "h":
                 case "8": //e.g. "an 8 gallon container"
                     return "an "+anItemDescription;
                     break;
+                case "f":
+                case "l":
+                case "m":
+                case "n":
+                case "r":
+                case "s":
+                case "x":
+                    if (anItemDescription.length == 1) {return "an '"+anItemDescription+"'";};
+                    //note no break - fall through case
                 default:
                     return "a "+anItemDescription;
                     break;

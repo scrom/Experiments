@@ -424,6 +424,36 @@
       },
       {
         "object": "mission",
+        "name": "artist",
+        "displayName": "draw lots of pictures",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "drawingCount": ">5"
+        },
+        "reward": {
+          "score": 5,
+          "successMessage": "<br>You're think you're quite the artist, don't you.<br>Have 5 points."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "author",
+        "displayName": "write lots of notes",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "writingCount": ">10"
+        },
+        "reward": {
+          "score": 10,
+          "successMessage": "<br>You seem to be writing quite a few notes.<br>Anyone would think you're destined for management.<br>Have 10 points."
+        }
+      },
+      {
+        "object": "mission",
         "name": "junioroccultist",
         "displayName": "draw a pentagram on a floor",
         "attributes": {
