@@ -483,7 +483,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.put(_verb, _object1, _object0);
                         break;
                     case 'empty':
-                        description = _player.empty(_verb, _object0);
+                        description = _player.empty(_verb, _object0, _splitWord, _object1);
                         break;
                     case 'water':
                         //either "water plant" or "water plant with milk"

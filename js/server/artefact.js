@@ -74,6 +74,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _canDrawOn = false;
         var _drawings = [];
         var _writings = [];
+        var _wetted = [];
 
         //grammar support...
         var _itemPrefix = "It";
@@ -97,7 +98,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (itemDescription.substring(0,8) == "pair of ") {
                 _plural = true;
             };
-
 
             //set plural grammar for more sensible responses
             if (_plural) {
@@ -256,6 +256,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
             if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
             if (artefactAttributes.sound != undefined) {_sound = artefactAttributes.sound;};     
+            if (artefactAttributes.wetted != undefined) {_wetted = artefactAttributes.wetted;};     
+            
             if (artefactAttributes.contagion != undefined) {
                 for (var i=0;i<artefactAttributes.contagion.length;i++) {
                     _contagion.push(new contagionObjectModule.Contagion(artefactAttributes.contagion[i].name, artefactAttributes.contagion[i].displayName, artefactAttributes.contagion[i].attributes));
@@ -505,6 +507,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.imageName = _imageName;
             currentAttributes.smell = _smell;
             currentAttributes.sound = _sound;
+            currentAttributes.wetted = _wetted;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;
             currentAttributes.canDrawOn = _canDrawOn;
@@ -573,7 +576,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.hasLinkedDoor) { saveAttributes.hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};  
             if (artefactAttributes.smell != undefined) {saveAttributes.smell = artefactAttributes.smell;};                
-            if (artefactAttributes.sound != undefined) {saveAttributes.sound = artefactAttributes.sound;};                
+            if (artefactAttributes.sound != undefined) {saveAttributes.sound = artefactAttributes.sound;};   
+            if (artefactAttributes.wetted.length >0) {saveAttributes.wetted = artefactAttributes.wetted;};           
             if (artefactAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
                 for (var c=0;c<artefactAttributes.contagion.length;c++) {
@@ -2278,6 +2282,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             return "You're now carrying "+objectToGive.getDescription()+".";
+        };
+
+        self.addLiquid = function(liquidName) {
+            if (_wetted.indexOf(liquidName) == -1) {
+                _wetted.push(liquidName);
+            };
         };
 
         self.position = function(anObject, position) {

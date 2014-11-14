@@ -1136,11 +1136,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString;
         };
 
-        self.empty = function(verb, artefactName) {
+        self.empty = function(verb, artefactName, splitWord, receiverName) {
             if (stringIsEmpty(artefactName)){ return verb+" what?";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            if (receiverName) {
+                var receiver = getObjectFromPlayerOrLocation(receiverName);
+                if (!(receiver)) {return notFoundMessage(receiverName);};
+
+                var inventorySize = artefact.getInventoryObject().size(true);
+                if (inventorySize == 0) {return "There's nothing to "+verb+" out.";}; 
+
+                return "You'll need to "+verb+" "+artefact.getDisplayName()+" "+splitWord+" "+receiver.getDisplayName()+" one named item at a time.";
+            };
 
             var resultString = emptyContentsOfContainer(artefactName);
 
@@ -1727,7 +1737,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (artefact.isLiquid()) {
                     var artefactChargesRemaining = artefact.consume(1);
                     if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                    return "It seems a bit wasteful but it's your call...<br>You pour "+artefact.getName()+" "+position+" "+receiver.getDisplayName()+".";
+                    if (receiver.getType() != "creature"  && on) {
+                        receiver.addLiquid();
+                    };
+                    if (artefact.getName() == "blood" && on) {                  
+                        return "Hmm. You're a bit sick aren't you.<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
+                    } else {
+                        return "It seems a bit wasteful but it's your call...<br>You pour "+artefact.getName()+" "+position+" "+receiver.getDisplayName()+".";
+                    };
                 };   
 
                 if ((verb == "hide"||verb == "balance") && _currentLocation.liveCreaturesExist()) { 
@@ -1807,7 +1824,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 //validate if it's a container
-                if (receiver.getType() == 'creature') {
+                if (receiver.getType() == "creature") {
                     if (receiver.isDead()) {
                        return  "You're not really qualified as a taxidermist are you? Please stop interfering with corpses.";  
                     } else {
@@ -1862,8 +1879,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefact.isLiquid()) {
                         var artefactChargesRemaining = artefact.consume(1);
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                        if (artefactName == "blood") {_currentLocation.addBlood();};
-                        return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
+                        receiver.addLiquid(artefactName); //not a creature by this point
+                        if (artefactName == "blood") {                            
+                            return "Hmm. You're a bit sick aren't you.<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
+                        } else {
+                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
+                        };
                     };                   
                     
                     return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 

@@ -466,7 +466,25 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>Hmm. It seems we have a budding occultist here.<br>You might be getting ahead of yourself a bit but have 5 points anyway."
+          "successMessage": "<br>Hmm. It seems we have a budding occultist here.<br>You might be getting ahead of yourself a bit."
+        }
+      },
+	  {
+        "object": "mission",
+        "name": "scaryoccultist",
+        "displayName": "draw a pentagram on a floor and add blood to it",
+        "attributes": {
+          "missionObject": "floor"
+        },
+        "conditionAttributes": {
+          "drawings": [
+            "pentagram"
+          ],
+		  "wetted": ["blood"]
+        },
+        "reward": {
+          "score": 5,
+          "successMessage": "<br>I'm not really too comfortable with your behaviour here.<br>Blood and pentagrams is a bit of a worrying mix for an office environment."
         }
       },
       {

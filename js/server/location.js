@@ -172,6 +172,11 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.addBlood = function() {
             _blood = 10;
+            //if we have a floor object...
+            var floor = _inventory.getObject("floor", true, false, false);
+            if (floor) {
+                floor.addLiquid("blood");
+            };
         };
 
         self.setPlayerTrace = function(value) {
@@ -418,8 +423,11 @@ exports.Location = function Location(name, displayName, description, attributes)
                     //it's a physical thing.
                     canDrawOn = true;
                 };
+
+                if (anObjectName == "ground") {anObjectName = "floor";};
                 var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", {"type": "scenery", "subType": subType, "canDrawOn": canDrawOn}, null, null);
-                sceneryObject.addSyns([anObjectName+"s", anObjectName+"es"])
+                sceneryObject.addSyns([anObjectName+"s", anObjectName+"es"]);
+                if (anObjectName == "floor") {sceneryObject.addSyns("ground");};
                 _inventory.add(sceneryObject);
                 return sceneryObject;
             };
