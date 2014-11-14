@@ -317,7 +317,16 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
                 var rewardData = self.unpackReward(missionData.reward);
 
-                _map.incrementMissionCount();
+                if (missionData.attributes) {
+                    if (missionData.attributes.type == "event") {
+                        _map.incrementEventCount();
+                    } else {
+                        _map.incrementMissionCount();
+                    };
+                } else {
+                    _map.incrementMissionCount();
+                };
+                
 
                 var newMission = new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData);
                 return newMission;

@@ -858,6 +858,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return missions;
         };
 
+        self.getCompletedMissions = function() {
+            return _missionsCompleted;
+        };
+
+        self.getFailedMissions = function() {
+            return _missionsFailed;
+        };
+
         self.canAfford = function (price) {
             return _inventory.canAfford(price);
         };

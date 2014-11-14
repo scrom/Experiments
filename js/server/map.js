@@ -11,6 +11,7 @@ exports.Map = function Map() {
         var _startLocationIndex = 0;
         var _maxScore = 0; //missions add score
         var _missionCount = 0; //how many missions are there?
+        var _eventCount = 0; //how many "events" are there?
         var _bookCount = 0; //how many books are there?
         var _creatureCount = 0; //how many creatures are there?
 
@@ -88,6 +89,15 @@ exports.Map = function Map() {
 
         self.getMaxScore = function() {
             return _maxScore;
+        };
+
+        self.incrementEventCount = function() {
+            _eventCount++;
+            return _eventCount;
+        };
+
+        self.getEventCount = function() {
+            return _eventCount;
         };
 
         self.incrementMissionCount = function() {
@@ -529,9 +539,37 @@ exports.Map = function Map() {
             //Get all missions
             var missions = self.getAllMissions();
             missions = missions.concat(player.getMissions(true));
-            var missionList = "";
+
+            var completedMissions = player.getCompletedMissions();
+            var failedMissions = player.getFailedMissions();
+            var allMissions = [];
+            var events = [];
+
             for (var i=0;i<missions.length;i++) {
-                missionList+= i+1+": "+missions[i].getName()+" - "+missions[i].getDisplayName()+"<br>";
+                if (missions[i].getType() != "event") {
+                    allMissions.push(missions[i].getName()+" - "+missions[i].getDisplayName());
+                } else {
+                    events.push(missions[i].getName()+" - "+missions[i].getDisplayName());
+                };
+            };
+
+            for (var i=0;i<completedMissions.length;i++) {
+                allMissions.push(completedMissions[i]+" - completed");
+            };
+
+            for (var i=0;i<failedMissions.length;i++) {
+                allMissions.push(failedMissions[i]+" - failed");
+            };
+
+            allMissions.sort();
+            events.sort();
+
+            var missionList = "";
+            for (var i=0;i<allMissions.length;i++) {
+                missionList+= i+1+": "+allMissions[i]+"<br>";
+            };
+            for (var i=0;i<events.length;i++) {
+                missionList+= "Event: "+events[i]+"<br>";
             };
             return missionList;
         };

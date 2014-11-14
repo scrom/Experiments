@@ -460,7 +460,9 @@
           "missionObject": "floor"
         },
         "conditionAttributes": {
-          "drawings": ["pentagram"]
+          "drawings": [
+            "pentagram"
+          ]
         },
         "reward": {
           "score": 5,
@@ -1852,7 +1854,7 @@
                 },
                 {
                   "state": 4,
-				  "requestedObject": "guardian newspaper",
+                  "requestedObject": "guardian newspaper",
                   "keywords": [
                     "yes",
                     "ok",
@@ -2673,7 +2675,7 @@
                 },
                 {
                   "state": 4,
-				  "requestedObject": "trainers",
+                  "requestedObject": "trainers",
                   "keywords": [
                     "yes",
                     "ok",
@@ -6110,14 +6112,14 @@
         "detailedDescription": "An unlucky shot with this could take someone's eye out.",
         "attributes": {
           "weight": 2,
+          "carryWeight": 0.5,
           "attackStrength": 5,
-		  "carryWeight": 0.5,
           "type": "weapon",
           "subType": "projectile",
-		  "isBreakable": true,
           "canCollect": true,
+          "isBreakable": true,
           "affinityModifier": 2,
-		  "requiredComponentCount": 1
+          "requiredComponentCount": 1
         },
         "synonyms": [
           "nerf",
@@ -6132,9 +6134,9 @@
             "attributes": {
               "weight": 0.5,
               "canCollect": true,
-			  "charges": 10,
-			  "chargeUnit": "round",
-			  "chargesDescription": "There's $charges $chargeUnit left",
+              "charges": 10,
+              "chargeUnit": "round",
+              "chargesDescription": "There's $charges $chargeUnit left",
               "plural": true,
               "affinityModifier": 0,
               "componentOf": [
@@ -6556,7 +6558,7 @@
                 },
                 {
                   "state": 3,
-				  "requestedObject": "post-it pad",
+                  "requestedObject": "post-it pad",
                   "keywords": [
                     "yes",
                     "ok",
@@ -7055,7 +7057,7 @@
                 },
                 {
                   "state": 4,
-				  "requestedObject": "hard disk",
+                  "requestedObject": "hard disk",
                   "keywords": [
                     "yes",
                     "ok",
@@ -7187,44 +7189,6 @@
         "hidden": true
       }
     ],
-	"missions": [
-	          {
-            "object": "mission",
-            "name": "keyfob",
-            "displayName": "get a keyfob",
-            "description": "If you haven't done so already, you'll need to <i>sign in</i> to get a keyfob for the office.",
-            "attributes": {
-			  "parent": "talktovic",
-              "missionObject": "visitors book",
-              "static": true
-            },
-            "conditionAttributes": {
-              "writings": ["$player"]
-            },
-            "reward": {
-              "delivers": {
-                "object": "artefact",
-                "name": "keyfob",
-                "description": "key fob",
-                "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
-                "attributes": {
-                  "weight": 0.1,
-                  "type": "key",
-                  "canCollect": true,
-                  "unlocks": "office door"
-                },
-                "synonyms": [
-                  "key fob",
-                  "fob",
-                  "keyring",
-                  "key ring"
-                ]
-              },
-              "score": 10,
-              "successMessage": "'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
-            }
-		}
-	], 
     "inventory": [
       {
         "object": "artefact",
@@ -7233,55 +7197,57 @@
         "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
         "attributes": {
           "weight": 280,
-          "type": "junk",
           "canDrawOn": true
-        }, 
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "visitors book",
-        "description": "visitor's book",
-        "detailedDescription": "It looks like you're the first newcomer today.",
-        "attributes": {
-          "weight": 1,
-		  "position": "on",
-          "canDrawOn": true,
-		  "customAction": [
-			"get", "steal"
-           ],
-          "defaultResult": "It needs to stay down here on reception."
         },
-        "synonyms": [
-          "book",
-		  "in"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "biro",
-        "description": "blue biro",
-        "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
-        "attributes": {
-          "weight": 0.1,
-		  "position": "on",
-		  "type": "writing",
-		  "customAction": [
-			"get", "steal"
-           ],
-          "defaultResult": "It's attached to the desk."
-        },
-        "synonyms": [
-          "pen",
-		  "blue pen",
-		  "blue biro"
-        ]
-      }	  ],
         "synonyms": [
           "big desk",
           "reception",
           "reception desk",
           "red desk",
           "big red desk"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "visitors book",
+            "description": "visitor's book",
+            "detailedDescription": "It looks like you're the first newcomer today.",
+            "attributes": {
+              "weight": 1,
+              "position": "on",
+              "customAction": [
+                "get",
+                "steal"
+              ],
+              "defaultResult": "It needs to stay down here on reception.",
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "book",
+              "in"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "biro",
+            "description": "blue biro",
+            "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "writing",
+              "position": "on",
+              "customAction": [
+                "get",
+                "steal"
+              ],
+              "defaultResult": "It's attached to the desk."
+            },
+            "synonyms": [
+              "pen",
+              "blue pen",
+              "blue biro"
+            ]
+          }
         ]
       },
       {
@@ -7318,14 +7284,14 @@
               "missionObject": "Vic Wiseman",
               "static": true,
               "dialogue": [
-                "'Good morning $player.'<br>'Welcome aboard!'" 
+                "'Good morning $player.'<br>'Welcome aboard!'"
               ]
             },
             "conditionAttributes": {
               "alive": true
             },
             "reward": {
-				"successMessage": "'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'"
+              "successMessage": "'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'"
             }
           },
           {
@@ -7455,6 +7421,46 @@
           "office",
           "door"
         ]
+      }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "keyfob",
+        "displayName": "get a keyfob",
+        "description": "If you haven't done so already, you'll need to <i>sign in</i> to get a keyfob for the office.",
+        "attributes": {
+          "parent": "talktovic",
+          "missionObject": "visitors book",
+          "static": true
+        },
+        "conditionAttributes": {
+          "writings": [
+            "$player"
+          ]
+        },
+        "reward": {
+          "delivers": {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          },
+          "score": 10,
+          "successMessage": "'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
+        }
       }
     ]
   },
@@ -9280,7 +9286,7 @@
                 },
                 {
                   "state": 4,
-				  "requestedObject": "tomatoes",
+                  "requestedObject": "tomatoes",
                   "keywords": [
                     "yes",
                     "ok",
@@ -9729,9 +9735,9 @@
           "canTravel": true,
           "traveller": true,
           "avoiding": [
-			"office-front",
+            "office-front",
             "atrium",
-			"east-end-south-corridor-ground-floor",
+            "east-end-south-corridor-ground-floor",
             "first-floor-fire-escape"
           ],
           "smell": "As you bend down and sniff the cat, it lashes out at you.",
