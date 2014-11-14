@@ -165,6 +165,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.traveller != undefined) {
                 if (creatureAttributes.traveller== true || creatureAttributes.traveller == "true") { _traveller = true;};
             };
+
+            if (creatureAttributes.moves != undefined) {_moves = creatureAttributes.moves;};
+            if (creatureAttributes.timeSinceEating != undefined) {_timeSinceEating = creatureAttributes.timeSinceEating;};
+            if (creatureAttributes.returnHomeIn != undefined) {_returnHomeIn = creatureAttributes.returnHomeIn;};      
+
             if (creatureAttributes.weight != undefined) {_weight = creatureAttributes.weight;};
             if (creatureAttributes.affinity != undefined) {_affinity = creatureAttributes.affinity;};
             if (creatureAttributes.baseAffinity != undefined) {_baseAffinity = creatureAttributes.baseAffinity;}
@@ -564,8 +569,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};      
             if (creatureAttributes.canCollect) {saveAttributes.canCollect = true;};
             if (creatureAttributes.hidden) {saveAttributes.hidden = true;};
-            if (creatureAttributes.position != "") {saveAttributes.position = creatureAttributes.position;};
-
+            if (creatureAttributes.position != "" && creatureAttributes.position != undefined) {saveAttributes.position = creatureAttributes.position;};
             if (creatureAttributes.charges !=0) {saveAttributes.charges = creatureAttributes.charges;};
             if (creatureAttributes.isEdible) {saveAttributes.isEdible = true;};
             if (creatureAttributes.baseAffinity != creatureAttributes.affinity) {saveAttributes.baseAffinity = creatureAttributes.baseAffinity;};            
@@ -3000,7 +3004,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else {
                     //slowly recover health
                     healPoints++;
-                    _timeSinceEating++;
+                    if (_timeSinceEating <= 5) {
+                        _timeSinceEating++; //don't increment beyond what's needed
+                    };
                 };
             };     
 
