@@ -1021,6 +1021,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 case "collect":
                 case "remove":
                 case "make":
+                case "steal":
                     customVerb = "get";
             };
             if (artefact.checkCustomAction(customVerb)) {
@@ -2189,7 +2190,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (stringIsEmpty(giverName)){ 
                 var creatures = _currentLocation.getCreatures();
                 //can we determine who to steal from?
-                if (creatures.length!=1) {return initCap(verb)+" "+artefactName+" from whom or what?";}; 
+                if (creatures.length!=1) {
+                    return self.get("steal", artefactName);
+                }; 
                 giver = creatures[0]; //get the only creature there is.
             } else {
                 giver = getObjectFromLocation(giverName);

@@ -824,7 +824,7 @@
         "object": "artefact",
         "name": "whiteboard",
         "description": "large whiteboard",
-        "detailedDescription": "Despite regular cleaning, there's stil faint marks from long-disused whiteboard coding exercises and architecture diagrams.",
+        "detailedDescription": "Despite regular cleaning, there's still faint marks from long-disused whiteboard coding exercises and architecture diagrams.",
         "attributes": {
           "weight": 30,
           "canDrawOn": true
@@ -869,6 +869,7 @@
         },
         "synonyms": [
           "board pen",
+		  "blue pen",
           "whiteboard pen"
         ]
       },
@@ -880,6 +881,7 @@
         "attributes": {
           "weight": 120,
           "isBreakable": true,
+		  "canCollect": true,
           "canDrawOn": true
         },
         "synonyms": [
@@ -896,7 +898,11 @@
           "weight": 30,
           "type": "bed",
           "isBreakable": true,
-          "plural": true
+          "plural": true,
+          "customAction": [
+            "get"
+            ],
+          "defaultResult": "Sorry, they belong in here."
         },
         "synonyms": [
           "chair"
@@ -7216,8 +7222,7 @@
               "weight": 1,
               "position": "on",
               "customAction": [
-                "get",
-                "steal"
+                "get"
               ],
               "defaultResult": "It needs to stay down here on reception.",
               "canDrawOn": true
@@ -7237,8 +7242,7 @@
               "type": "writing",
               "position": "on",
               "customAction": [
-                "get",
-                "steal"
+                "get"
               ],
               "defaultResult": "It's attached to the desk."
             },
@@ -10573,7 +10577,7 @@
     "object": "location",
     "name": "windows-meeting-room",
     "displayName": "Windows meeting room",
-    "description": "You're in the 'Windows' meeting room.<br>It's a bit of a misnomer really as the meeting room next door has more windows. Perhaps it's just irony.<br>The room's slightly cramped with a small board, table and chairs but you can just about fit four people in here for a short meeting.<br>One of the walls is oddly curved for no obvious reason.",
+    "description": "You're in the 'Windows' meeting room.<br>It's a bit of a misnomer really as the meeting room next door has more windows. Perhaps it's just irony.<br>The room's slightly cramped but you can just about fit four people in here for a short meeting.<br>One of the walls is oddly curved for no obvious reason.",
     "exits": [
       {
         "object": "exit",
@@ -10581,6 +10585,93 @@
         "direction": "s",
         "source": "windows-meeting-room",
         "destination": "sales-break-out"
+      }
+    ],
+	    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "curved wall",
+        "detailedDescription": "It's a concave curve. Possibly so that people walking past the outside don't walk into a corner. (We're speculating here)",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "walls",
+          "curved walls",
+          "curved wall",
+          "curved"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "whiteboard",
+        "description": "small whiteboard",
+        "detailedDescription": "As meeting whiteboards go it's pretty average really.",
+        "attributes": {
+          "weight": 30,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "board",
+          "white board",
+          "whitebaord"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "pen",
+        "description": "whiteboard pen",
+        "detailedDescription": "It's a green pen.",
+        "attributes": {
+          "weight": 0.2,
+          "type": "writing",
+          "canCollect": true,
+          "charges": 20,
+          "chargeUnit": "use",
+          "chargesDescription": "It's good for about $charges more $chargeUnit"
+        },
+        "synonyms": [
+          "board pen",
+          "whiteboard pen", 
+          "green pen"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a plain white melamine meeting room table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "desk"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "group of office chairs",
+        "detailedDescription": "Yup, they're chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+		  "customAction": [
+            "get"
+            ],
+          "defaultResult": "Sorry, they belong in here."
+        },
+        "synonyms": [
+          "chair"
+        ]
       }
     ]
   }
