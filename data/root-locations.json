@@ -1174,8 +1174,44 @@
               "destination": "dene boulton",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'You don't have any chocolate do you?'<br>'I'm flat-out on the Salesforce project and will need to skip lunch.'<br>'If you manage to get any I'd really appreciate some.'",
-                "'How about that chocolate?'"
+                "'Hi $player.'<br>'I'm flat-out on the Salesforce project and will need to skip lunch.'<br>'You don't have any chocolate you can spare do you?'",
+                {
+                  "state": 1,
+                  "requestedObject": "chocolate",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Thanks $player.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "response": "'No worries. I'd really appreciate it if you could find some though.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 3,
+                  "response": "'Any joy finding that chocolate?'",
+                  "nextState": 4
+                },
+                {
+                  "state": 4,
+                  "requestedObject": "chocolate",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Excellent!'"
+                },
+                {
+                  "state": 4,
+                  "response": "'I won't ask again but I'd still appreciate some if you find any.'"
+                }
               ]
             },
             "conditionAttributes": {
@@ -1807,7 +1843,7 @@
                 {
                   "state": 2,
                   "response": "'Hey $player. Any sign of that newspaper?'",
-                  "nextState": 3
+                  "nextState": 4
                 },
                 {
                   "state": 3,
@@ -1816,6 +1852,7 @@
                 },
                 {
                   "state": 4,
+				  "requestedObject": "guardian newspaper",
                   "keywords": [
                     "yes",
                     "ok",
@@ -2636,6 +2673,7 @@
                 },
                 {
                   "state": 4,
+				  "requestedObject": "trainers",
                   "keywords": [
                     "yes",
                     "ok",
@@ -6518,6 +6556,7 @@
                 },
                 {
                   "state": 3,
+				  "requestedObject": "post-it pad",
                   "keywords": [
                     "yes",
                     "ok",
@@ -7016,6 +7055,7 @@
                 },
                 {
                   "state": 4,
+				  "requestedObject": "hard disk",
                   "keywords": [
                     "yes",
                     "ok",
@@ -9240,6 +9280,7 @@
                 },
                 {
                   "state": 4,
+				  "requestedObject": "tomatoes",
                   "keywords": [
                     "yes",
                     "ok",

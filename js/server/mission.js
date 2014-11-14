@@ -9,7 +9,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _parent; //parent mission - allows threads to be built up.
         var _dialogue = []; //an array/collection of dialogue sentences. 
         var _isStatic = false; //if true, mission stays in source location.
-        var _conversationState = 0; //track dialogue
+        var _conversationHistory = []; //track prior dialogue
+        var _conversationState = 0; //track current dialogue state
         var _initiateConversation = false; //should character initiate conversation
         var _huntPlayer = false; //should character actively hunt down the player
         var _missionObject; //the main object involved in the mission - could be a creature or an object (could be more than one in future) - name only
@@ -40,6 +41,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (missionAttributes.timeTaken != undefined) {_timeTaken = missionAttributes.timeTaken;};
             if (missionAttributes.ticking != undefined) {_ticking = missionAttributes.ticking;};
             if (missionAttributes.conversationState != undefined) {_conversationState = missionAttributes.conversationState;};
+            if (missionAttributes.conversationHistory != undefined) {_conversationHistory = missionAttributes.conversationHistory;};
             if (missionAttributes.lastResponse != undefined) {_lastResponse = missionAttributes.lastResponse;};
 
             if (missionAttributes.static != undefined) {
@@ -140,6 +142,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_timeTaken > 0) {currentAttributes.timeTaken = _timeTaken;};
             if (_ticking) {currentAttributes.ticking = _ticking;};
             if (_conversationState > 0) {currentAttributes.conversationState = _conversationState;};
+            if (_conversationHistory.length > 0) {currentAttributes.conversationHistory = _conversationHistory;};
             if (_initiateConversation) {currentAttributes.initiateConversation = _initiateConversation;};
             if (_huntPlayer) {currentAttributes.huntPlayer = _huntPlayer;};           
             if (_lastResponse) {currentAttributes.lastResponse = _lastResponse;};
@@ -358,6 +361,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (defaultDialogue) {return defaultDialogue;};
         };
 
+        self.backtrackDialogue = function() {
+            if (_conversationHistory.length >0) {
+                _conversationState = _conversationHistory.pop();
+                //console.log("conversationState:"+_conversationState);
+            } else {
+                _conversationState = 0;
+            };
+        };
+
         self.nextDialogueContainsKeyWord = function(keyword) {
             if (_dialogue.length == 0) {return false;};
             if (_conversationState < _dialogue.length) {
@@ -390,6 +402,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     };
                     if (nextDialogue) {
                         response += nextDialogue.response;
+                        if (nextDialogue.requestedObject) {
+                            response += "$request"+nextDialogue.requestedObject;
+                        };
+
+                        _conversationHistory.push(_conversationState);
+
                         if (nextDialogue.nextState) {
                             _conversationState = nextDialogue.nextState;
                         } else {
@@ -484,7 +502,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             for (var attr in attributes) {
                 if (typeof(attributes[attr]) == 'object') {
                     if (Object.prototype.toString.call(attributes[attr]) === '[object Array]') { 
-                        //do nothing
+                        //do nothing for now - we aim for an absolute match on these later
                     } else {
                         //how many child keys do we have that we want to match on?
                         var keysToMatch = Object.keys(attributes[attr]).length;
@@ -646,6 +664,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var objectAttributes = missionObject.getCurrentAttributes();
             var checkCount = 0;
             for (var attr in attributesToCheck) {
+                if (attr == "contains" || attr == "contagion" || attr == "antibodies") {
+                    //skip re-checking this attribute if already handled outside.
+                    //otherwise we'd double-count a success here that has special handling elsewhere.
+                    continue; 
+                };
                 if (objectAttributes.hasOwnProperty(attr)) {
                     var keycheckName = attr;
                     //console.log("required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
@@ -681,9 +704,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.checkState = function (player, map) {
-            if (self.getName() == "junioroccultist") {
-                var debug = true;
-            };
+
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible
@@ -856,7 +877,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
 
             //console.log('condition matches: '+successCount+" out of "+requiredSuccessCount);
-            if (successCount == requiredSuccessCount) {
+            if (successCount >= requiredSuccessCount) {
                 //if mission has dialogue, ensure that has been triggered at least once...
                 if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
                     return self.success();

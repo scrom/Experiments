@@ -338,19 +338,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var playerInventory = player.getInventoryObject();
             return playerInventory.getObject(objectName);
         };
+
         var getObjectFromLocation = function(objectName){
             return _currentLocation.getObject(objectName);
+        };
+
+        var getObjectFromPlayerOrLocation = function(objectName, player) {
+            var playerArtefact = getObjectFromPlayer(objectName, player);
+            if (playerArtefact) {return playerArtefact;};
+
+            return getObjectFromLocation(objectName);
         };
 
         var getObjectFromSelfPlayerOrLocation = function(objectName, player) {
             var artefact = _inventory.getObject(objectName);
             if (artefact) {return artefact;};
 
-            var playerArtefact = getObjectFromPlayer(objectName, player);
-            if (playerArtefact) {return playerArtefact;};
-
-            var locationArtefact = getObjectFromLocation(objectName);
-            return locationArtefact;
+            return getObjectFromPlayerOrLocation(objectName, player);
         };
 
 
@@ -2575,6 +2579,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //if creature has incomplete missions - return dialogue.
             var missionsToRemove = [];
+            var requestedObject;
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
                     if (_missions[i].isFailedOrComplete()) { 
@@ -2584,8 +2589,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //if (response.length >0) {response+= "<br>"};                        
                         var dialogueResponse = _missions[i].getNextDialogue(someSpeech, keyword);
                         if (dialogueResponse) {
+                            var requestIndex = dialogueResponse.indexOf("$request");
+                            if ( requestIndex >-1) {
+                                requestedObject = dialogueResponse.substr(requestIndex+8);
+                                dialogueResponse = dialogueResponse.substr(0,requestIndex);
+                            };
+
+                        if (requestedObject) {
+                            if (!(getObjectFromPlayerOrLocation(requestedObject, player))) {
+                                requestedObject = null; 
+                                dialogueResponse = "'Nice try $player.'<br> 'Come back when you have what I'm after.'"
+                            };
+                        };
                             //note, we override any responses from the earlier section here if we have a better one from the mission!
-                            response = dialogueResponse; 
+                            if (dialogueResponse.length >0) {
+                                response = dialogueResponse; 
+                            };
                         };
                     };
                 };
@@ -2606,7 +2625,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_imageName) {
                 response += "$image"+_imageName+"/$image";
             };
-            return  response+"<br>";
+            response+= "<br>"
+
+            if (requestedObject) {
+                response += player.give("give", requestedObject, self.getName())+"<br>";
+            };
+
+            return  response;
         };
 
         self.isCollectable = function() {
