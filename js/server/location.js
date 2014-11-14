@@ -390,7 +390,18 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, verb) {
             var returnObject = _inventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, verb);
-            if (returnObject) { return returnObject;};
+            if (returnObject) { 
+                if (anObjectName == "blood") {
+                    if (_blood >0) {
+                        //there's fresh blood to re-generate so let's remove what's there.
+                        _inventory.remove(anObjectName);
+                    } else {
+                        return returnObject; 
+                    };
+                } else {
+                    return returnObject;
+                };
+            };
 
             if (anObjectName.substr(-1) == "s") {
                 anObjectName = anObjectName.substr(0,anObjectName.length-1);
@@ -415,8 +426,37 @@ exports.Location = function Location(name, displayName, description, attributes)
 
             if (anObjectName == "blood") {
                 if (_blood >0) {
-                    var sceneryBlood = new artefactObjectModule.Artefact(anObjectName, anObjectName, "It's hard to tell where or who it came from.<br>", {"type": "scenery"}, null, null);
+                    var bloodAttributes = {
+                        "type": "food", 
+                        "weight": 0.1, 
+                        "defaultAction": "drink", 
+                        "nutrition": -5, 
+                        "requiresContainer": true, 
+                        "isLiquid": true,
+                        "canCollect": true,
+                        "plural": true,
+                        "charges": 1,
+                        "chargeUnit": "drink",
+                        "chargesDescription": "There's enough here for $charges $chargeUnit",
+                        "customAction": null,
+                        "defaultResult": ""
+                    };
+
+                    if (_blood <=5) {
+                        bloodAttributes.type = "scenery";
+                        bloodAttributes.canCollect = false;
+                        bloodAttributes.defaultAction = "examine";
+                        bloodAttributes.nutrition = 0;
+                        bloodAttributes.charges = -1;
+                        bloodAttributes.chargesDescription = "";
+                        bloodAttributes.customAction = ["get"];
+                        bloodAttributes.defaultResult = "There's not enough here to do anything useful with."
+                    };
+
+                    var sceneryBlood = new artefactObjectModule.Artefact(anObjectName, anObjectName, "It's hard to tell where or who it came from.", bloodAttributes, null, null);
+
                     _inventory.add(sceneryBlood);
+
                     return sceneryBlood;
                 };
             };

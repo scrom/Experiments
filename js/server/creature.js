@@ -2121,6 +2121,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _description = 'a dead '+self.getDisplayName().replace("the ","");
             self.addSyns(["corpse","body"]);
 
+            //add fresh blood to location
+            _currentLocation.addBlood();
+
             var resultString = "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
             resultString += self.exposePositionedItems();
 

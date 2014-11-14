@@ -181,6 +181,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (objectToRemove.requiresContainer()) {
                     //console.log(objectToRemove.getName()+" lost.");
                     lostObjectCount++;
+                    if (objectToRemove.getName() == "blood") {_currentLocation.addBlood();};
                 } else {
                     if (locationArtefact) {
                         _currentLocation.addObject(objectToRemove);
@@ -1861,6 +1862,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefact.isLiquid()) {
                         var artefactChargesRemaining = artefact.consume(1);
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
+                        if (artefactName == "blood") {_currentLocation.addBlood();};
                         return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
                     };                   
                     
