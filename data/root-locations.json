@@ -189,7 +189,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>Have 5 points as some encouragement to get moving."
+          "successMessage": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
         }
       },
       {
@@ -5002,7 +5002,7 @@
               "score": -100,
               "affinityModifier": 2,
               "decreaseAffinityFor": "everyone",
-              "successMessage": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>You lose 100 points (and good luck getting help from anyone now!)"
+              "successMessage": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>Good luck getting help from anyone now!"
             }
           },
           {
@@ -7110,7 +7110,7 @@
               "score": 50,
               "money": 25,
               "removeObject": "hard disk",
-              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus.<br>'If you've not done so already, I think you should double-check to ensure our problematic friend gives us no more trouble. (if you get my gist).'",
+              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have a cash bonus.<br>'If you've not done so already, I think you should double-check to ensure our problematic friend gives us no more trouble. (if you get my gist).'",
               "failMessage": "That was foolish. The hard disk was worth a lot in the right hands.<br>Well. Best you move on and see if you can redeem yourself elsewhere."
             }
           }
