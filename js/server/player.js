@@ -1738,7 +1738,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     var artefactChargesRemaining = artefact.consume(1);
                     if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
                     if (receiver.getType() != "creature"  && on) {
-                        receiver.addLiquid();
+                        receiver.addLiquid(artefact.getName());
                     };
                     if (artefact.getName() == "blood" && on) {                  
                         return "Hmm. You're a bit sick aren't you.<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
@@ -1877,10 +1877,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     }; 
                     
                     if (artefact.isLiquid()) {
+                        //@todo - should really trap if the liquid was *not* in a container prior to this
                         var artefactChargesRemaining = artefact.consume(1);
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                        receiver.addLiquid(artefactName); //not a creature by this point
-                        if (artefactName == "blood") {                            
+                        receiver.addLiquid(artefact.getName()); //not a creature by this point
+                        if (artefact.getName() == "blood") {                            
                             return "Hmm. You're a bit sick aren't you.<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
                         } else {
                             return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
