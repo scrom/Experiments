@@ -179,6 +179,25 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
         };
 
+        self.reduceBlood = function() {
+            if (_blood >0) {
+                _blood--;
+                if (_blood < 9) {
+                    //if we have a floor object...
+                    var floor = _inventory.getObject("floor", true, false, false);
+                    if (floor) {
+                        floor.removeLiquid("blood");
+                    };
+                };
+                if (_blood <= 0) {
+                    _inventory.remove("blood");
+                };
+            };
+
+            if (_blood <0) {_blood=0;};
+
+        };
+
         self.setPlayerTrace = function(value) {
             _playerTrace = value;
         };
@@ -447,10 +466,12 @@ exports.Location = function Location(name, displayName, description, attributes)
                         "chargeUnit": "drink",
                         "chargesDescription": "There's enough here for $charges $chargeUnit",
                         "customAction": null,
-                        "defaultResult": ""
+                        "defaultResult": "",
+                        "smell": "It smells metallic and fresh. You fight your gag-reflex at the thought of recent death here."
                     };
 
-                    if (_blood <=5) {
+                    if (_blood <=9) {
+                        //must be freshly spilled only to be able to collect.
                         bloodAttributes.type = "scenery";
                         bloodAttributes.canCollect = false;
                         bloodAttributes.defaultAction = "examine";
@@ -458,7 +479,12 @@ exports.Location = function Location(name, displayName, description, attributes)
                         bloodAttributes.charges = -1;
                         bloodAttributes.chargesDescription = "";
                         bloodAttributes.customAction = ["get"];
-                        bloodAttributes.defaultResult = "There's not enough here to do anything useful with."
+                        bloodAttributes.defaultResult = "There's not enough here to do anything useful with.";
+                        bloodAttributes.smell = "It smells somewhat disturbing but not quite fresh.";
+                    };
+
+                    if (_blood <=1) {
+                        bloodAttributes.smell = "There's just a tang of iron and salt in the air, nothing more."
                     };
 
                     var sceneryBlood = new artefactObjectModule.Artefact(anObjectName, anObjectName, "It's hard to tell where or who it came from.", bloodAttributes, null, null);
@@ -647,12 +673,8 @@ exports.Location = function Location(name, displayName, description, attributes)
                 };
             };
 
-            if (_blood >0) {
-                _blood--;
-                if (_blood == 0) {
-                    _inventory.remove("blood");
-                };
-            };
+            //decrease blood in location (if any there)
+            self.reduceBlood();
 
             for (var t=0; t < time; t++) {
                 _inventory.tick();

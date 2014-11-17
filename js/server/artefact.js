@@ -2290,6 +2290,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
         };
 
+        self.removeLiquid = function(liquidName) {
+            var index = _wetted.indexOf(liquidName);
+            if (index > -1) {
+                _wetted.splice(index,1);
+            };
+        };
+
         self.position = function(anObject, position) {
             if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" concealing anything.";};
 
