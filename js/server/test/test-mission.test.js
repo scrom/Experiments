@@ -107,6 +107,118 @@ exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
 
 exports.canCompleteHardDiskMissionByGivingDiskToSimon.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
 
+
+exports.testMissionDialogue = function (test) {
+
+    var dialogue = [
+                "'Psst!'<br>'I've got some covert jobs if you're interested. Are you up for it?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Never mind, your loss. You won't get another chance",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'Whatever. Check in later if you think you're up to the job.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "ok"
+                  ],                  
+                  "response": "'Come back when you've got what I'm after.'" ,  
+                  "nextState": 3
+                },                
+                {
+                  "state": 3,
+                  "response": "'Have you got it?'",
+                  "nextState": 4
+                },
+                {
+                  "state": 4,
+                  "requestedObject": "sketchbook",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Excellent!'",
+                  "nextState": 3
+                },
+                {
+                  "state": 4,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Come back when you've got what I'm after.'" ,  
+                  "nextState": 3
+                },                
+                {
+                  "state": 4,
+                  "response": "'I won't ask again but as i said before, I'll make it worth your while.'"
+                }
+              ];
+
+    var attributes, initialAttributes, conditionAttributes, failAttributes, reward;
+    attributes = {"missionObject": "sketchbook",
+                  "destination": "jordan miller",
+                  "static": true,
+                  "dialogue": dialogue}
+
+    failAttributes = {"isDestroyed": true,"conversationState": 99};
+    conditionAttributes = {"isDestroyed": false};
+    reward = {"affinityModifier": 2, "decreaseAffinityFor": "simon galbraith", "increaseAffinityFor": "jordan miller",
+              "removeObject": "sketchbook",
+              "money": 50,
+              "successMessage": "Jordan says 'Nice work!'"
+              };
+
+    var mish = new mission.Mission("stealsketchbook", "steal Simon's sketch book", "steal Simon's sketch book", attributes, initialAttributes, conditionAttributes, failAttributes, reward);
+    mish.startTimer();
+    //.getNextDialogue(someSpeech, keyword)
+    console.log(mish.getNextDialogue("")+" | "+mish.getConversationState());
+    console.log(mish.getNextDialogue("ok")+" | "+mish.getConversationState());
+    console.log(mish.getNextDialogue("ok")+" | "+mish.getConversationState());
+    console.log(mish.getNextDialogue("")+" | "+mish.getConversationState());
+    console.log(mish.getNextDialogue("no")+" | "+mish.getConversationState());
+    console.log(mish.getNextDialogue("")+" | "+mish.getConversationState());
+    console.log(mish.getNextDialogue("yes")+" | "+mish.getConversationState());
+    console.log(mish.getNextDialogue("")+" | "+mish.getConversationState());
+
+    
+    //var result = mish.checkState(inv, simon.getLocation(), m0);
+    var actualResult = mish.getNextDialogue("yes")+" | "+mish.getConversationState();
+    var expectedResult = "'Excellent!'$requestsketchbook | 3";
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.testMissionDialogue.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "Mission Dialogue Trait"], description: "Test that hard disk mission can be successfully completed." };
+
 //the below test needs rewriting - spy mission is now heavily embedded into a generated location later in the game
 /*exports.canCompleteKillSpyMission = function (test) {
     var spy = m0.getCreature('spy');

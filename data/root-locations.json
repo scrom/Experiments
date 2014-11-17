@@ -1672,7 +1672,7 @@
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or so partygoers (including yourself), it'll be time to relax.'",
-                "'Hey $player. How's the party organising going?'"
+                "'Hey $player, I hope the party organising is going well. Keep up the great work.'"
               ]
             },
             "failAttributes": {
@@ -5313,12 +5313,79 @@
                         "destination": "jordan miller",
                         "static": true,
                         "dialogue": [
-                          "'Psst!'<br>'I've got some covert jobs if you're interested.'<br>'If you can <i>steal</i> Simon Galbraith's sketchbook and bring it to me (or <i>mug</i> him if it's easier), I'll make it worth your while.'",
-                          "'How's that little <i>job</i> going?'"
-                        ]
+                              "'Psst!'<br>'I've got some covert jobs if you're interested. Are you up for it?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Never mind, your loss. You won't get another chance",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'Whatever. Check in later if you think you're up to the job.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "ok"
+                  ],                  
+                  "response": "'Come back when you've got what I'm after.'" ,  
+                  "nextState": 3
+                },                
+                {
+                  "state": 3,
+                  "response": "'Have you got it?'",
+                  "nextState": 4
+                },
+                {
+                  "state": 4,
+                  "requestedObject": "sketchbook",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Excellent!'",
+                  "nextState": 3
+                },
+                {
+                  "state": 4,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Come back when you've got what I'm after.'" ,  
+                  "nextState": 3
+                },                
+                {
+                  "state": 4,
+                  "response": "'I won't ask again but as i said before, I'll make it worth your while.'"
+                }
+              ]
                       },
                       "failAttributes": {
-                        "isDestroyed": true
+                        "isDestroyed": true,
+						"conversationState": 99
                       },
                       "conditionAttributes": {
                         "isDestroyed": false

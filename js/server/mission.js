@@ -338,15 +338,18 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                         if (_dialogue[i].keywords) {
                             //check whole input string match
                             if (_dialogue[i].keywords.indexOf(keyword) >-1) {
+                                //console.log("String Match: "+JSON.stringify(_dialogue[i]));
                                 return _dialogue[i];
                             };
                             //check single word match
                             for (var k=0;k<keywords.length;k++) {
                                 if (_dialogue[i].keywords.indexOf(keywords[k]) >-1) {
+                                    //console.log("Word Match: "+JSON.stringify(_dialogue[i]));
                                     return _dialogue[i];
                                 };
                             };
                         } else {
+                            //console.log("Trying without keywords: "+JSON.stringify(_dialogue[i]));
                             //this dialogue has no keywords. It's a default path.
                             //preserve this in case we don't return but only in the case where this is parsing an input string
                             //as that's our second-chance response.
@@ -358,7 +361,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
             };
             //we'll only get here if we don't have another match.
-            if (defaultDialogue) {return defaultDialogue;};
+            if (defaultDialogue) {
+                //console.log("Default: "+JSON.stringify(_dialogue[i]));
+                return defaultDialogue;
+            };
         };
 
         self.backtrackDialogue = function() {
@@ -387,8 +393,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
+        self.getConversationState = function() {
+            return _conversationState;
+        };
+
         self.getNextDialogue = function(inputSpeech, keyword) {
             var response ="";
+            //console.log("I: "+inputSpeech+" K: "+keyword)
             //console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
             //move conversation forward
             //if we reach the end of the array, stop there.             
