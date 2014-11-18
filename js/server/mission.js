@@ -424,6 +424,9 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                         } else {
                             _conversationState++;
                         };
+                    //} else {
+                        //still no match - repeat last response.
+                    //    return _lastResponse;   
                     };
                     //if match, set new conversation state
                     //return response

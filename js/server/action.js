@@ -138,6 +138,16 @@ exports.Action = function Action(player, map, fileManager) {
                 if (typeof(creatures) == "string") {return "";}; //mainly for stub testability - prevents crashing
                 for(var i=0; i < creatures.length; i++) {
                     resultString += creatures[i].tick(time, map, player);
+
+                    var lastCreatureSpokenTo = player.getLastCreatureSpokenTo();
+
+                    if (lastCreatureSpokenTo && lastCreatureSpokenTo != _inConversationWith) {
+                        _inConversationWith = lastCreatureSpokenTo;
+                        var questionIndex = resultString.indexOf("?");
+                        if (questionIndex >-1) {
+                            _awaitingPlayerAnswer = true;
+                        };
+                    };
                 };
             };
             return resultString;
@@ -285,6 +295,10 @@ exports.Action = function Action(player, map, fileManager) {
                         if (_inConversationWith) {
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(false, _map);
+                                if (description == ""||description==null||description==undefined) {
+                                    description = _player.say('say', _actionString,_inConversationWith, _map);
+                                    _player.setLastVerbUsed('say');
+                                };
                             } else {
                                 description = _player.say('say', _actionString,_inConversationWith, _map);
                                 _player.setLastVerbUsed('say');

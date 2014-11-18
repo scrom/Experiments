@@ -418,6 +418,8 @@ exports.Location = function Location(name, displayName, description, attributes)
                 if (anObjectName == "blood") {
                     if (_blood >0) {
                         //there's fresh blood to re-generate so let's remove what's there.
+                        //@todo - possible bug here.
+                        //if blood is also in a *container* in this location, we'd still get it returned at this point.
                         _inventory.remove(anObjectName);
                     } else {
                         return returnObject; 
