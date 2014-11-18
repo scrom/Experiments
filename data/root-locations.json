@@ -3423,7 +3423,7 @@
         "missions": [
           {
             "object": "mission",
-            "name": "lotleasteregg",
+            "name": "lotlsecurity",
             "displayName": "read the lotl security article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
             "attributes": {
@@ -4070,7 +4070,7 @@
         "missions": [
           {
             "object": "mission",
-            "name": "lotleasteregg",
+            "name": "lotlsolid",
             "displayName": "read the lotl SOLID article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
             "attributes": {
@@ -8342,7 +8342,7 @@
         "missions": [
           {
             "object": "mission",
-            "name": "lotleasteregg",
+            "name": "lotlboyscout",
             "displayName": "read LOTL boy scout article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
             "attributes": {
