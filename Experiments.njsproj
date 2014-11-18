@@ -19,6 +19,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="data\images\brokentoilet.jpg" />
+    <Content Include="data\images\pipe.jpg" />
     <Content Include="data\images\screen.jpg" />
     <Content Include="data\images\sticky-finger.jpg" />
     <Content Include="editor.html" />
@@ -34,12 +36,6 @@
     <Content Include="data\images\coffeemachine.jpg" />
     <Content Include="data\images\guitar.jpg" />
     <Content Include="data\images\icecreamman.jpg" />
-    <Content Include="data\images\imag2695.jpg" />
-    <Content Include="data\images\imag2696.jpg" />
-    <Content Include="data\images\imag2698.jpg" />
-    <Content Include="data\images\imag2699.jpg" />
-    <Content Include="data\images\imag2700.jpg" />
-    <Content Include="data\images\imag2702.jpg" />
     <Content Include="data\images\librarytable.jpg" />
     <Content Include="data\images\morpheuschair.jpg" />
     <Content Include="data\images\mug.jpg" />
