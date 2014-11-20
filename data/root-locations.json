@@ -4511,12 +4511,47 @@
               "missionObject": "Amanda Mansfield",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'I don't suppose you could fix the projector in Poppy for me could you?'<br>'It's pretty simple, here's a bulb. You'll need to do a bit of a repair on it as well though.'",
-                "'Hi again $player.'<br>Any joy with the projector?"
+                "'Hi $player.'<br>'Would you be willing to help me out with a simple maintenance job?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in Poppy for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Thanks for nothing.'<br>'Let's hope you don't need anything from me in future.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'OK. Maybe later?'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'Hi again $player.'<br>'Any chance you could help me out now?'",
+                  "nextState": 1
+                }
               ]
             },
+            "failAttributes": {
+				"conversationState": 99
+            },
             "conditionAttributes": {
-              "alive": true
+              "alive": true,
+			  "conversationState": 3
             },
             "reward": {
               "delivers": {
@@ -7049,10 +7084,6 @@
           "switched": true,
           "requiredComponentCount": 1
         },
-        "synonyms": [
-          "ohp",
-          "screen"
-        ],
         "missions": [
           {
             "object": "mission",
@@ -7062,6 +7093,9 @@
             "attributes": {
               "parent": "teachprojectorrepair",
               "missionObject": "projector"
+            },
+            "failAttributes": {
+				"isDestroyed": true
             },
             "conditionAttributes": {
               "isDestroyed": false,
