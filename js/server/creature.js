@@ -2410,16 +2410,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
-        self.initiateConversation = function(player) {
-            if (player.getLastVerbUsed() == "examine") {return "";};
-            var willInitiateConversation = false;
+        self.willInitiateConversation = function() {
             for (var i=0; i< _missions.length;i++) {
                 if (_missions[i].willInitiateConversation()) {
-                    willInitiateConversation = true;
+                    return true;
                     break;
                 };
             };
-            if (willInitiateConversation) {
+
+            return false;
+        };
+
+        self.initiateConversation = function(player) {
+            if (player.getLastVerbUsed() == "examine") {return "";};
+            if (self.willInitiateConversation()) {
                 var playerAggression = player.getAggression();
                 if (((_affinity <0) && (playerAggression>0))|| (_affinity <-1)) {return "<br>"+self.getDisplayName()+" seems to be behaving strangely around you.";}
                 player.setLastCreatureSpokenTo(self.getName());
@@ -3026,8 +3030,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //only show what's going on if the player is in the same location
             //note we store playerLocation at the beginning in case the player was killed as a result of the tick.
             if (playerLocation == _currentLocation.getName()) {
-                self.setHuntingPlayer(false);
-                resultString += self.initiateConversation(player);
+                if (!self.willInitiateConversation()) {
+                    self.setHuntingPlayer(false);
+                } else {
+                    //is player is not already talking to someone else?
+                    if (player.getLastCreatureSpokenTo() == undefined || player.getLastCreatureSpokenTo() == self.getName()) {
+                        self.setHuntingPlayer(false);
+                        resultString += self.initiateConversation(player);
+                    };
+                };
                 return resultString;
             } else if (playerLocation == homeLocation) {
                 return partialResultString; //just the outcome of fleeing.

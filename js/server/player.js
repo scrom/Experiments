@@ -2282,6 +2282,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var giver = getObjectFromLocation(giverName);
                 if (!(giver)) {return "There's no "+giverName+" here.";};
                 if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too           
+                giverName == giver.getName(); //let's get the correct name to avoid clashes
                 givers.push(giver);
             };
 
@@ -2389,7 +2390,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(receiver)) {return notFoundMessage(receiverName);};
 
                 //we'll only get this far if there is a valid receiver
-                self.setLastCreatureSpokenTo(receiverName);
+                self.setLastCreatureSpokenTo(receiver.getName());
                 var hasSpokenBefore = receiver.hasSpoken();
                 resultString += receiver.reply(speech, self, null, map);
                 var hasSpokenAfter = receiver.hasSpoken();

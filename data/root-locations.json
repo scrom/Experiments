@@ -2429,14 +2429,89 @@
             "attributes": {
               "missionObject": "chris moore",
               "static": true,
-              "dialogue": [
-                "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
-                "'Oops. You'll need the key. Here you go.'"
+             "dialogue": [
+                "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Cheers $player.'<br>'You'll need to <i>search</i> through the racks for it I'm afraid.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Well, thanks for nothing then.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'OK. Maybe later?'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'Hi again $player.'<br>'Any chance you could help me with my bike now?'",
+                  "nextState": 1
+                },
+                {
+                  "state": 3,
+                  "response": "'Oops. You'll need the key. Here you go.'",
+                  "keywords": [
+                    "key"
+                  ],                  
+                  "nextState": 5
+                },
+                {
+                  "state": 3,
+                  "response": "'Hey $player.'<br>'Have you been able to sort my bike out yet?'",
+                  "nextState": 4
+                },
+				{
+                  "state": 4,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Really? I'm pretty certain you'll need a key first.'",
+                  "nextState": 4
+                },
+                {
+                  "state": 4,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet",
+                    "key"
+                  ],
+                  "response": "'Oops. You'll need the key. Here you go.'",
+                  "nextState": 5
+                },
+                {
+                  "state": 4,
+                  "response": "'OK. Maybe later?'",
+                  "nextState": 3
+                }
               ]
+            },
+            "failAttributes": {
+              "conversationState": 99
             },
             "conditionAttributes": {
               "alive": true,
-              "conversationState": 2
+              "conversationState": 5
             },
             "reward": {
               "delivers": {
@@ -4520,7 +4595,7 @@
                     "yup",
                     "y"
                   ],
-                  "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in Poppy for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.",
+                  "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in Poppy for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.'",
                   "nextState": 3
                 },
                 {
