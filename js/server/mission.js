@@ -229,6 +229,57 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
+        self.processReward = function(map, reward, player) {
+            var resultString = "";
+            if (reward.locations) {
+                //add locations
+                for (var l=0; l<reward.locations.length;l++) {
+                    map.addLocation(reward.locations[l]);
+                    //var locationName = reward.locations[l].getName();
+                    //console.log("Location added: "+map.getLocation(reward.locations[l].getName()));
+                    if (reward.locations[l].inventory) {
+                        var newInventory = reward.locations[l].inventory;
+                        for (var i=0;i<newInventory.length;i++) {
+                            //console.log(newInventory[i]);
+                            //add item to location inventory
+                            if (newInventory[i].getType() == "creature") {
+                                newInventory[i].go(null, reward.locations[l]);  
+                            } else {
+                                reward.locations[l].addObject(newInventory[i]);                         
+                            }; 
+                        };
+
+                    };
+                };                        
+            };
+            if (reward.exits) {
+                //add exits
+                for (var e=0; e<reward.exits.length;e++) {
+                    var exitData = reward.exits[e];
+                    var locationToModify = map.getLocation(exitData.getSourceName())
+                    locationToModify.removeExit(exitData.getDestinationName()); //remove if already exists (allows modification)
+                    var hidden = true;
+                    if (exitData.isVisible()) {hidden = false;};
+                    locationToModify.addExit(exitData.getDirection(), exitData.getSourceName(), exitData.getDestinationName(), exitData.getDescription(), hidden, exitData.getRequiredAction());
+                    //var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
+                    //console.log("Exit added: "+exitDestination);
+                };
+            };
+            if (reward.removeObject) { map.removeObject(reward.removeObject, mission.getDestination(), player);};
+            if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
+            if (reward.removeLocation) { map.removeLocation(reward.removeLocation);};
+            if (reward.score) { player.updateScore(reward.score);};
+            if (reward.money) { player.updateCash(reward.money);};
+            if (reward.stealth) { player.setStealth(_stealth+reward.stealth);};
+            if (reward.hunt) { player.setHunt(_hunt+reward.hunt);};
+            if (reward.repairSkill) { player.addSkill(reward.repairSkill);};
+            if (reward.delivers) {resultString += player.acceptItem(reward.delivers);};
+
+            self.processAffinityModifiers(map, reward);
+
+            return resultString;
+        };
+
         self.processAffinityModifiers = function(map, reward) {
             //note, _reward is likely null at this point so we pass it back in.
             //console.log("Processing affinity modifiers from mission reward");

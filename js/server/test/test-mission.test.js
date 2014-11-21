@@ -321,6 +321,7 @@ exports.canGetBulbFromAmandaTalkingMission = function (test) {
     
     //var resultString = 
     p0.say("talk",null,"amanda");
+    p0.say("talk","ok","amanda");
     var resultString = p0.updateMissions(1, m0);
 
     var expectedResult = "<br>Amanda hands you a projector bulb.<br>You receive a projector bulb.";

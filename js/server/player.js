@@ -871,6 +871,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _inventory.canAfford(price);
         };
 
+        self.updateScore = function (pointsToChange) {
+            _score += pointsToChange; //handles -ve input.
+        };
+
+        self.updateCash = function (amountToChange) {
+            if (amountToChange <0) {
+                self.reduceCash(amountToChange*-1);
+            } else {
+                self.increaseCash(amountToChange);
+            };
+
+        };
+
         self.reduceCash = function(amount) {
             _cashSpent += amount;
             _inventory.reduceCash(amount);
@@ -3754,88 +3767,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (missionReward.hasOwnProperty("fail")) {
                 resultString += "<br>"+missionReward.failMessage+"<br>";
+                resultString += mission.processReward(map, missionReward, self);
                 _missionsFailed.push(mission.getName());
             } else if (mission.getType() == "event") {
                 resultString += "<br>"+missionReward.eventMessage+"<br>";
-                if (missionReward.locations) {
-                    //add locations
-                    for (var l=0; l<missionReward.locations.length;l++) {
-                        map.addLocation(missionReward.locations[l]);
-                        var locationName = missionReward.locations[l].getName();
-                        //console.log("Location added: "+map.getLocation(missionReward.locations[l].getName()));
-                    };                        
-                };
-                if (missionReward.exits) {
-                    //add exits
-                    for (var e=0; e<missionReward.exits.length;e++) {
-                        var exitData = missionReward.exits[e];
-                        var locationToModify = map.getLocation(exitData.getSourceName())
-                        locationToModify.removeExit(exitData.getDestinationName()); //remove if already exists (allows modification)
-                        var hidden = true;
-                        if (exitData.isVisible()) {hidden = false;};
-                        locationToModify.addExit(exitData.getDirection(), exitData.getSourceName(), exitData.getDestinationName(), exitData.getDescription(), hidden, exitData.getRequiredAction());
-                        var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
-                        //console.log("Exit added: "+exitDestination);
-                    };
-                };
-                if (missionReward.removeObject) { map.removeObject(missionReward.removeObject, mission.getDestination(), self);};
-                if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);}; //important! modify before remove
-                if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
-                if (missionReward.score) { _score += missionReward.score;};
-                if (missionReward.money) { self.increaseCash(missionReward.money);};
-                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};
-                if (missionReward.hunt) { self.setHunt(_hunt+missionReward.hunt);};
-                if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                mission.processAffinityModifiers(map, missionReward);
+                resultString += mission.processReward(map, missionReward, self);
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
             } else {
                 //normal mission success
                 if (missionReward.successMessage) {
                     resultString += "<br>"+missionReward.successMessage+"<br>";
                 };
-                if (missionReward.locations) {
-                    //add locations
-                    for (var l=0; l<missionReward.locations.length;l++) {
-                        map.addLocation(missionReward.locations[l]);
-                        if (missionReward.locations[l].inventory) {
-                            var newInventory = missionReward.locations[l].inventory;
-                            for (var i=0;i<newInventory.length;i++) {
-                                //console.log(newInventory[i]);
-                                //add item to location inventory
-                                if (newInventory[i].getType() == "creature") {
-                                    newInventory[i].go(null, missionReward.locations[l]);  
-                                } else {
-                                    missionReward.locations[l].addObject(newInventory[i]);                         
-                                }; 
-                            };
-
-                        };
-                    };                        
-                };
-                if (missionReward.exits) {
-                    //add exits
-                    for (var e=0; e<missionReward.exits.length;e++) {
-                        var exitData = missionReward.exits[e];
-                        var locationToModify = map.getLocation(exitData.getSourceName());
-                        locationToModify.removeExit(exitData.getDestinationName()); //remove if already exists (allows modification)
-                        var hidden = true;
-                        if (exitData.isVisible()) {hidden = false;};
-                        locationToModify.addExit(exitData.getDirection(),exitData.getSourceName(),exitData.getDestinationName(), exitData.getDescription(), hidden, exitData.getRequiredAction());
-                    };
-                };
-                if (missionReward.removeObject) { map.removeObject(missionReward.removeObject, mission.getDestination(), self);};
-                if (missionReward.modifyLocation) { map.modifyLocation(missionReward.modifyLocation);}; //important! modify before remove
-                if (missionReward.removeLocation) { map.removeLocation(missionReward.removeLocation);};
-                if (missionReward.score) { _score += missionReward.score;};
-                if (missionReward.money) { self.increaseCash(missionReward.money);};
-                if (missionReward.stealth) { self.setStealth(_stealth+missionReward.stealth);};  
-                if (missionReward.hunt) { self.setHunt(_hunt+missionReward.hunt);};                      
-                if (missionReward.repairSkill) { self.addSkill(missionReward.repairSkill);};
-                if (missionReward.delivers) {resultString += self.acceptItem(missionReward.delivers);};
-                mission.processAffinityModifiers(map, missionReward);
-                _missionsCompleted.push(mission.getName());
+                resultString += mission.processReward(map, missionReward, self);
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
+                _missionsCompleted.push(mission.getName());
             };
 
             if (!missionOwner) {
