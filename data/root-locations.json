@@ -8117,9 +8117,71 @@
               "missionObject": "wig",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'I've got a job for you'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
-                "'Hey $player, how's that secret errand going?"
+                "'Hi $player.'<br>'I've got a job for you if you're interested.'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'OK, here's the deal.'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
+   
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Meh. Just remember who keeps us in business here.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'OK. Maybe later?'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'Hi again $player.'<br>'Fancy that job now?'",
+                  "nextState": 1
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Remember. <i>hide</i> it somewhere outside if possible.'<br>'I'll leave this challenge in your capable hands.'",
+                  "nextState": 4
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Fine, forget I asked.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 3,
+                  "response": "'Well, if you're up for it, remember to <i>hide</i> it somewhere outside if possible.'<br>'I'll leave this little challenge in your capable hands.'",
+                  "nextState": 4
+                }              
               ]
+            },
+            "failAttributes": {
+              "conversationState": 99
             },
             "conditionAttributes": {
               "hidden": true
