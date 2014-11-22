@@ -661,7 +661,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'ask':
                         //console.log("split: "+_splitWord);
-                        if (_splitWord == "is"||_splitWord == "to") {
+                        if (_splitWord == "is"||_splitWord == "to"|| _splitWord == "are") {
                             //check for "ask x to find y" or "ask x where y is" or "ask x where is y";
                             if (_actionString.indexOf(" find ") >-1) {
                                 _object1 = _object1.replace("find ","")
@@ -679,6 +679,8 @@ exports.Action = function Action(player, map, fileManager) {
                                 _object1 = objectPair[1];
                                 _object1 = " "+_object1+" ";
                                 _object1 = _object1.replace(" is ", "");
+                                _object1 = _object1.replace(" are ", "");
+                                _object1 = _object1.replace(" to ", "");
                                 _object1 = _object1.replace(" a ", " ");
                                 _object1 = _object1.replace(" the ", " ");
                                 _object1 = _object1.replace(" some ", " ");

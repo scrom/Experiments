@@ -2699,10 +2699,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
-        self.hunt = function(verb, creatureName, map) {
+        self.hunt = function (verb, creatureName, map) {
+            if (verb = "where") { verb = "find"; };
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
             if (_hunt <1) {
-                return "Nice try $player. It was worth a shot...<br>You don't have the skills needed to "+verb+" anything that easily.<br>You could <i>ask</i> someone else to <i>find</i> out for you though.";
+                return "Nice try $player. It was worth a shot...<br>You don't have the skills needed to instantly "+verb+" anything that easily.<br>You could <i>ask</i> someone else to <i>find</i> out for you though.";
             };
             if (stringIsEmpty(creatureName)){ return verb+" who?"};
             var creature = map.getObject(creatureName);

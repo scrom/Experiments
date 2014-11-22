@@ -377,7 +377,7 @@ exports.Map = function Map() {
             var randomReplies = ["Sorry $player, I can't help you there.","Nope, sorry."];
             if (includeArtefacts) {
                 randomReplies.push("I'm sorry, I'm not aware of any '"+objectName+"' here.");
-                randomReplies.push("Nope, I've not seen any "+objectName+" around.", "I'm afraid you'll need to hunt that down yourself.");
+                randomReplies.push("Nope, I've not seen any " + objectName + " around.", "I'm afraid you'll need to hunt " + objectName + " down yourself.");
             } else {
                 randomReplies.push("I'm sorry, there's nobody who answers to the name '"+objectName+"' here.");    
             };
