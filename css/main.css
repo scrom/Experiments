@@ -22,6 +22,7 @@ a:link {
     color: #00DD00;
     border: 0px;
     background-color: black;
+    width: 90%; 
 }
 
 .textbox:focus
@@ -109,7 +110,7 @@ a:link {
 .inventoryBox
 {
     height:30vh;
-    width:220px;
+    width:30vh;
 }
 
 td {

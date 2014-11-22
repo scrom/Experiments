@@ -32,8 +32,24 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         return console;
     };
     
+    //window width handling
+    Ui.prototype.setWidth = function () {
+        var padding = Math.floor(($(window).width()) * 0.04);
+        if (padding < 15) { padding = 15; };
+        var width = $(window).width() - padding;
+        var elements = [console, statusBar, state, events, inputArea, interaction];
+        if (width < 805) {
+            //for each ui element...
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].removeAttr('style').css("width");
+                elements[i].css("width", width);
+            };
+        };
+
+    };
+
     //interaction with client
-    Ui.prototype.setState = function(stateData) {
+    Ui.prototype.setState = function(stateData) {	
         interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
         //console.append("scrolltop:"+interactionScrollTop+"height: "+interaction[0].scrollHeight);
         interaction.scrollTop(interaction[0].scrollHeight);
