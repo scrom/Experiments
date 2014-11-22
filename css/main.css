@@ -81,13 +81,13 @@ a:link {
 
 .oneLineBox
 {
-    height:25px;
+    height:20px;
     width:800px;
 }
 
 .halfLineBox
 {
-    height:15px;
+    height:12px;
     width:800px;
     transition:color 0.5s;
     -webkit-transition:color 0.5s;
@@ -97,7 +97,7 @@ a:link {
 
 .bigBox
 {
-    height:45vh;
+    height:48vh;
     width:800px;
 }
 
