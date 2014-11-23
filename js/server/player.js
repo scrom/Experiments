@@ -1058,12 +1058,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(_inventory.canCarry(artefact))) { return initCap(artefact.getDescriptivePrefix())+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getSuffix()+".";};
 
             var requiresContainer = artefact.requiresContainer();
-            var suitableContainer = _inventory.getSuitableContainer(artefact);
+            if (requiresContainer) {
+                var suitableContainer = _inventory.getSuitableContainer(artefact);
     
-            if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+artefact.getDisplayName()+".";};
+                if (!suitableContainer) { return "Sorry. You can't collect "+artefact.getDisplayName()+" without something suitable to carry "+artefact.getSuffix()+" in.";};
 
-            if(requiresContainer) {
-                var requiredContainer = artefact.getRequiredContainer(); 
+                var requiredContainer = artefact.getRequiredContainer();
                 return self.put("put", artefactName, suitableContainer.getName(), requiredContainer);
             };
         

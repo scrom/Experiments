@@ -245,7 +245,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.holdsLiquid != undefined) {
                 if (artefactAttributes.holdsLiquid== true || artefactAttributes.holdsLiquid == "true") { _holdsLiquid = true;};
             };
-            if (artefactAttributes.requiredContainer != undefined) {_requiredContainer = artefactAttributes.requiredContainer;};
+            if (artefactAttributes.requiredContainer != undefined) {
+                _requiredContainer = artefactAttributes.requiredContainer;
+                _requiresContainer = true; //override requires container if required container is specified.
+            };
             if (artefactAttributes.hidden != undefined) {
                 if (artefactAttributes.hidden== true || artefactAttributes.hidden == "true") { _hidden = true;};
             };
@@ -1205,7 +1208,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             } else if (_chewed) {
                 repairFactor = 8;
             };
-            return ((Math.round(_price * (1 + (repairFactor / 100)) * 100) / 100)-_price).toFixed(2);
+            return ((((Math.round(_price * (1 + (repairFactor / 100)) * 100) / 100)-_price).toFixed(2))/1); //tofixed returns a string!
         };
 
         self.increasePriceByPercent = function (percent) {

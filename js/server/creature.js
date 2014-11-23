@@ -1280,7 +1280,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             self.increaseCash(repairCost);
             var resultString = "";
             if (repairCost > 0) {
-                resultString = "You pay "+self.getDisplayName()+" &pound;"+repairCost+".<br>";
+                resultString = "You pay "+self.getDisplayName()+" &pound;"+repairCost.toFixed(2)+".<br>";
             };
 
             return resultString+self.repair(artefactName, player, true);
@@ -1318,7 +1318,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (repairCost >0 && !paid) {
                 self.setNextAction(false, "Well, you know where to come if you change your mind."); 
                 self.setNextAction(true, "$action pay "+self.getName()+" to repair "+artefactName); 
-                return "That'll cost you &pound;"+repairCost+" are you sure?"
+                return "That'll cost you &pound;" + repairCost.toFixed(2) + " are you sure?"
             };
 
             return artefact.repair(self);
