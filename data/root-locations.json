@@ -563,7 +563,7 @@
         },
         "reward": {
           "score": 75,
-          "message": "Congratulations, you managed to get your latte.<br>If you've not done so already, now might be a good time to <i>save<i/> your achievements so far."
+          "message": "<br>Congratulations, you managed to get your latte.<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
         }
       }
     ]
