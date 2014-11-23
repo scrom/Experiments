@@ -738,8 +738,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 var inventoryItem = _inventory.getAllObjects()[0];
                 if (inventoryItem.requiresContainer()) { 
-                    resultString = self.descriptionWithCorrectPrefix(_name);
-                    resultString+= " of "+inventoryItem.getName(); 
+                    resultString = self.descriptionWithCorrectPrefix(_description);
+                    resultString += " of " + inventoryItem.getRawDescription();
                 };
             };
             return resultString;

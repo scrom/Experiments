@@ -1746,6 +1746,100 @@
           "cromarty",
           "crom",
           "him"
+        ],
+        "missions": [
+{
+  "object": "mission",
+  "name": "rumforthecaptain",
+  "displayName": "find some Rum for Simon.",
+  "description": "Simon's team have just shipped a major release. He wants Rum to celebrate",
+  "attributes": {
+    "missionObject": "rum bottle",
+    "destination": "simon cromarty",
+    "static": true,
+    "dialogue": [
+      "'Hey $player.'<br>'I need a cheeky favour from you, if you're willing.'<br>'My team are just about to ship a new release but I forgot to stock up on the usual celebration supplies.'<br>'Most teams celebrate with champagne but we have a tradition of celebrating with something a bit tastier.'<br>'Could you track me down a decent bottle of rum from somewhere?'<br>'And don't worry, I'll pay you for it.'",
+      {
+        "state": 1,
+        "keywords": [
+          "yes",
+          "ok",
+          "y"
+        ],
+        "response": "'Great! I'll be wandering around the office. Come and find me when you've got some.'",
+        "nextState": 2
+      },
+      {
+        "state": 1,
+        "keywords": [
+          "n",
+          "no",
+          "not",
+          "not yet"
+        ],
+        "response": "'Well if you manage to get hold of any, I'll make it worthwhile.'",
+        "nextState": 2
+      },
+      {
+        "state": 1,
+        "response": "'If you find any around, give me a shout. I'd really appreciate it.'",
+        "nextState": 2
+      },
+      {
+        "state": 2,
+        "response": "'Hey $player. Did you get hold of any decent rum?'",
+        "nextState": 3
+      },
+      {
+        "state": 3,
+        "requestedObject": "rum bottle",
+        "keywords": [
+          "yes",
+          "ok",
+          "y"
+        ],
+        "response": "'Perfect!'",
+        "nextState": 4
+      },
+      {
+        "state": 3,
+        "keywords": [
+          "n",
+          "no",
+          "not",
+          "not yet"
+        ],
+        "response": "'Maybe later eh.'",
+        "nextState": 2
+      },
+      {
+        "state": 3,
+        "response": "'You'd be doing the rest of the team a favour too if you could get some.'",
+        "nextState": 2
+      },      
+      {
+        "state": 4,
+        "response": "'Hang on, this isn't the decent stuff.'<br>'Try again sunshine.'",
+        "nextState": 2
+      }
+    ]
+  },
+  "conditionAttributes": {
+    "isDestroyed": false,
+    "isBroken": false,
+    "isDamaged": false,
+    "contains": [
+                "quality rum"
+    ]
+  },
+  "reward": {
+    "increaseAffinityFor": "simon cromarty",
+    "missionObject": "rum bottle",
+    "score": 25,
+    "money": 20,
+    "message": "Simon opens the bottle and takes a large swig.<br>'Thankshh $player.' he says, 'It'ssh perfeck!'<br>He slaps a handful of money into your palm and staggers back towards his team area.<br>It's funny how many companies have a 'no drinking on site' policy. I think they'd struggle here given the number of release celebrations that seem to happen.<br>Let's hope there's enough rum left for the team by the time he gets back!<br>"
+  }
+}
         ]
       }
     ]
@@ -3361,6 +3455,54 @@
       }
     ],
     "inventory": [
+{
+  "object": "artefact",
+  "name": "rum bottle",
+  "description": "bottle",
+  "detailedDescription": "A large rum bottle",
+  "attributes": {
+    "extendedInventoryDescription": "There's $inventory in it.",
+    "weight": 1,
+    "carryWeight": 3,
+    "attackStrength": 1,
+    "type": "container",
+    "holdsLiquid": true,
+    "canCollect": true,
+    "isBreakable": true,
+    "affinityModifier": 0
+  },
+  "synonyms": [
+    "bottle",
+    "rum bottle",
+    "bottle of rum"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "cheap rum",
+      "description": "rum",
+      "detailedDescription": "It's pretty ropey. Best used for cooking and not much else.<br>I'm sure most people wouldn't notice though.",
+      "attributes": {
+        "defaultAction": "drink",
+        "weight": 1,
+        "type": "food",
+        "requiresContainer": true,
+        "requiredContainer": "rum bottle",
+        "isLiquid": true,
+        "canCollect": true,
+        "charges": 15,
+        "chargeUnit": "shot",
+        "chargesDescription": "There's enough here for about $charges $chargeUnit",
+        "plural": true,
+        "isEdible": true,
+        "nutrition": -3
+      },
+      "synonyms": [
+        "rum"
+      ]
+    }
+  ]
+},
       {
         "object": "artefact",
         "name": "beanbag",
@@ -4712,8 +4854,8 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "bottle",
-        "description": "milk bottle",
+        "name": "milk bottle",
+        "description": "bottle",
         "detailedDescription": "A large milk bottle",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
@@ -4728,7 +4870,6 @@
         },
         "synonyms": [
           "bottle",
-          "milk bottle",
           "milkbottle",
           "bottle of milk"
         ],
@@ -4794,8 +4935,8 @@
       },
       {
         "object": "artefact",
-        "name": "cup",
-        "description": "coffee cup",
+        "name": "coffee cup",
+        "description": "cup",
         "detailedDescription": "Just the right size for a decent brew.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
@@ -4811,7 +4952,7 @@
         },
         "synonyms": [
           "mug",
-          "coffee cup",
+          "cup",
           "coffee mug"
         ]
       },
@@ -6825,7 +6966,7 @@
                     "ok",
                     "y"
                   ],
-                  "response": "'Awesome. <i>Give</i> me them when you can.'"
+                  "response": "'Awesome.'"
                 },
                 {
                   "state": 3,
@@ -9517,6 +9658,51 @@
       }
     ],
     "inventory": [
+        {
+  "object": "artefact",
+  "name": "rum bottle",
+  "description": "bottle",
+  "detailedDescription": "A large rum bottle",
+  "attributes": {
+    "extendedInventoryDescription": "There's $inventory in it.",
+    "weight": 1,
+    "carryWeight": 3,
+    "attackStrength": 1,
+    "type": "container",
+    "holdsLiquid": true,
+    "canCollect": true,
+    "isBreakable": true,
+    "affinityModifier": 0
+  },
+  "synonyms": [
+    "bottle",
+    "bottle of rum"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "quality rum",
+      "description": "rum",
+      "detailedDescription": "Now <i>that's</i> the good stuff!<br>It looks like someone may have got their drinks mixed up. This is too good for cooking with.",
+      "attributes": {
+        "defaultAction": "drink",
+        "weight": 1,
+        "type": "food",
+        "requiresContainer": true,
+        "requiredContainer": "rum bottle",
+        "isLiquid": true,
+        "canCollect": true,
+        "charges": 1,
+        "plural": true,
+        "isEdible": true,
+        "nutrition": 1
+      },
+      "synonyms": [
+        "rum"
+      ]
+    }
+  ]
+},
       {
         "object": "artefact",
         "name": "marmite",
