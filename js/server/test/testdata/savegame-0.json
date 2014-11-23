@@ -83,7 +83,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>Have 5 points as some encouragement to get moving."
+          "message": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>Have 5 points as some encouragement to get moving."
         }
       },
       {
@@ -99,7 +99,7 @@
         },
         "reward": {
           "score": 100,
-          "successMessage": "<br>You're quite the explorer!<br>Congratulations, you've found every location. Have 100 points."
+          "message": "<br>You're quite the explorer!<br>Congratulations, you've found every location. Have 100 points."
         }
       },
       {
@@ -115,7 +115,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>Hey, that's some impressive adventuring!<br>You've found 100 locations. Have 50 points."
+          "message": "<br>Hey, that's some impressive adventuring!<br>You've found 100 locations. Have 50 points."
         }
       },
       {
@@ -131,7 +131,7 @@
         },
         "reward": {
           "score": -25,
-          "successMessage": "<br>Whoa, you're out of control. You need to seriously work on your anger management. You lose 25 points."
+          "message": "<br>Whoa, you're out of control. You need to seriously work on your anger management. You lose 25 points."
         }
       },
       {
@@ -147,7 +147,7 @@
         },
         "reward": {
           "score": -15,
-          "successMessage": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe?. You lose 15 points."
+          "message": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe?. You lose 15 points."
         }
       },
       {
@@ -163,7 +163,7 @@
         },
         "reward": {
           "score": -35,
-          "successMessage": "<br>I know stealing may be one way of achieving your goals but it really doesn't fit in with our values. You lose 35 points."
+          "message": "<br>I know stealing may be one way of achieving your goals but it really doesn't fit in with our values. You lose 35 points."
         }
       },
       {
@@ -179,7 +179,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>I like your attitude to learning, keep it up<br>Only one more item left to read! Have 50 points."
+          "message": "<br>I like your attitude to learning, keep it up<br>Only one more item left to read! Have 50 points."
         }
       },
       {
@@ -195,7 +195,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You're making a real effort here. Looks like you've almost got a best friend forever!<br>Have 50 points."
+          "message": "<br>You're making a real effort here. Looks like you've almost got a best friend forever!<br>Have 50 points."
         }
       },
       {
@@ -211,7 +211,7 @@
         },
         "reward": {
           "score": 25,
-          "successMessage": "<br>We could do with someone like you on the first-aid team. You've got quite the healing skills.<br>Have 25 points."
+          "message": "<br>We could do with someone like you on the first-aid team. You've got quite the healing skills.<br>Have 25 points."
         }
       },
       {
@@ -227,7 +227,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>You're treading a fine line here. I know you can't make an omelette without breaking some eggs but you'r actions aren't making you popular.<br>I'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good though.<br>Have 5 points."
+          "message": "<br>You're treading a fine line here. I know you can't make an omelette without breaking some eggs but you'r actions aren't making you popular.<br>I'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good though.<br>Have 5 points."
         }
       },
       {
@@ -243,7 +243,7 @@
         },
         "reward": {
           "score": 5,
-          "successMessage": "<br>Hey big spender.<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?<br>Have 5 points."
+          "message": "<br>Hey big spender.<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?<br>Have 5 points."
         }
       },
       {
@@ -259,7 +259,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You've made quite a bit of money there, great job!<br>I hope you didn't come about it through foul means though.<br>Have 50 points."
+          "message": "<br>You've made quite a bit of money there, great job!<br>I hope you didn't come about it through foul means though.<br>Have 50 points."
         }
       },
       {
@@ -275,7 +275,7 @@
         },
         "reward": {
           "score": -150,
-          "successMessage": "<br>Yeah... About that all money you made.<br>That level of dishonesty will get you fired pretty much immediately.<br>You lose 150 points."
+          "message": "<br>Yeah... About that all money you made.<br>That level of dishonesty will get you fired pretty much immediately.<br>You lose 150 points."
         }
       },
       {
@@ -294,7 +294,7 @@
         },
         "reward": {
           "score": 75,
-          "successMessage": "Congratulations. You managed to get your latte, have 75 points!"
+          "message": "Congratulations. You managed to get your latte, have 75 points!"
         }
       },
       {
@@ -310,7 +310,7 @@
         },
         "reward": {
           "score": 25,
-          "successMessage": "<br>You're quite a chatterbox. We like people who talk and collaborate.<br>Have 25 points."
+          "message": "<br>You're quite a chatterbox. We like people who talk and collaborate.<br>Have 25 points."
         }
       }
     ],
@@ -515,8 +515,10 @@
             },
             "reward": {
               "score": -25,
-              "successMessage": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points.",
-              "failMessage": "Never mind, it's probably better that way."
+              "message": "Bad you! Somtimes you just have to resist your violent urges. You lose 25 points."
+            },
+            "fail":  {
+                "message": "Never mind, it's probably better that way."
             }
           }
         ]
@@ -535,7 +537,7 @@
         },
         "reward": {
           "score": 25,
-          "successMessage": "<br>Nice one. You read 'all the things'.<br>Have another 25 points."
+          "message": "<br>Nice one. You read 'all the things'.<br>Have another 25 points."
         }
       },
       {
@@ -550,7 +552,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>Wow, you spoke to <i>everyone</i>. That's quite a network you're building up.<br>Have 50 points."
+          "message": "<br>Wow, you spoke to <i>everyone</i>. That's quite a network you're building up.<br>Have 50 points."
         }
       },
       {
@@ -565,7 +567,7 @@
         },
         "reward": {
           "score": 50,
-          "successMessage": "<br>You've really gone out of your way to do plenty of healing<br>Have 50 points."
+          "message": "<br>You've really gone out of your way to do plenty of healing<br>Have 50 points."
         }
       },
       {
@@ -580,7 +582,7 @@
         },
         "reward": {
           "score": -100,
-          "successMessage": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know.<br>You lose 100 points."
+          "message": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know.<br>You lose 100 points."
         }
       }
     ]
@@ -752,7 +754,7 @@
               "score": 50,
               "affinityModifier": 2,
               "increaseAffinityFor": "chris moore",
-              "successMessage": "Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
+              "message": "Nice one! Helping people out feels good, doesn't it.<br> Have 50 points."
             }
           }
         ]
@@ -1202,7 +1204,7 @@
                   "bicycle key"
                 ]
               },
-              "successMessage": "Chris hands you a bike key."
+              "message": "Chris hands you a bike key."
             }
           }
         ]
@@ -1441,7 +1443,7 @@
               "increaseAffinityFor": "simon galbraith",
               "score": 50,
               "money": 25,
-              "successMessage": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus."
+              "message": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have 50 points and a cash bonus."
             }
           }
         ]
@@ -1902,7 +1904,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "justin heron",
               "decreaseAffinityFor": "james dening",
-              "successMessage": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Justin will have appreciated it.<br>Have 50 points."
+              "message": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Justin will have appreciated it.<br>Have 50 points."
             }
           }
         ]
@@ -1987,8 +1989,10 @@
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "dene boulton",
-              "successMessage": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated'<br> Have 25 points.",
-              "failMessage": "Dene wanted some chocolate :("
+              "message": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated'<br> Have 25 points."
+            },
+            "fail":  {
+                "message":  "Dene wanted some chocolate :("
             }
           }
         ]
@@ -2185,7 +2189,7 @@
             "reward": {
               "score": 20,
               "repairSkill": "security",
-              "successMessage": "Congratulations. You've learned a basic mnemonic for considering software security."
+              "message": "Congratulations. You've learned a basic mnemonic for considering software security."
             }
           }
         ]
@@ -2631,7 +2635,7 @@
                   "read": true
                 },
                 "reward": {
-                  "successMessage": "I'm sure you'll never need to know any of this, right?"
+                  "message": "I'm sure you'll never need to know any of this, right?"
                 }
               }
             ]
@@ -2855,7 +2859,7 @@
             "reward": {
               "score": 20,
               "repairSkill": "architecture",
-              "successMessage": "Congratulations. You've learned the basics on how to develop good software architecture."
+              "message": "Congratulations. You've learned the basics on how to develop good software architecture."
             }
           }
         ]
@@ -3498,7 +3502,7 @@
             },
             "reward": {
               "score": 50,
-              "successMessage": "Congratulations. You got the coffee machine working, have 50 points!"
+              "message": "Congratulations. You got the coffee machine working, have 50 points!"
             }
           }
         ]
@@ -3657,7 +3661,7 @@
               "destination": "crash-site"
             }
           ],
-          "eventMessage": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
+          "message": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!"
         }
       }
     ]
@@ -4108,7 +4112,7 @@
                 ]
               },
               "repairSkill": "projector",
-              "successMessage": "Amanda hands you a projector bulb."
+              "message": "Amanda hands you a projector bulb."
             }
           }
         ]
@@ -4678,7 +4682,7 @@
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "amanda mansfield",
-              "successMessage": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i><br> Have 25 points."
+              "message": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i><br> Have 25 points."
             }
           }
         ]
@@ -4878,7 +4882,7 @@
               },
               "score": 35,
               "increaseAffinityFor": "Vic",
-              "successMessage": "Congratulations. Vic likes the book! Have 35 points."
+              "message": "Congratulations. Vic likes the book! Have 35 points."
             }
           }
         ]
@@ -5209,7 +5213,7 @@
             },
             "reward": {
               "score": 50,
-              "successMessage": "Congratulations. The spy is dead! Have 50 points."
+              "message": "Congratulations. The spy is dead! Have 50 points."
             }
           }
         ]
@@ -5328,7 +5332,7 @@
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "brian harris",
-              "successMessage": "Brian says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now.<br> Have 25 points."
+              "message": "Brian says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now.<br> Have 25 points."
             }
           }
         ]
@@ -5639,7 +5643,7 @@
             "reward": {
               "score": 20,
               "repairSkill": "clean code",
-              "successMessage": "Congratulations. You've learned a simple approach to keeping code clean."
+              "message": "Congratulations. You've learned a simple approach to keeping code clean."
             }
           }
         ]
@@ -5697,7 +5701,7 @@
               "score": 25,
               "affinityModifier": 2,
               "increaseAffinityFor": "adam parker",
-              "successMessage": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'<br> Have 25 points."
+              "message": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'<br> Have 25 points."
             }
           }
         ]
@@ -7290,7 +7294,7 @@
               "affinityModifier": 2,
               "increaseAffinityFor": "chris whitworth",
               "decreaseAffinityFor": "james dening",
-              "successMessage": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while.<br>Have 25 points."
+              "message": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while.<br>Have 25 points."
             }
           }
         ]
@@ -7647,9 +7651,11 @@
         },
         "reward": {
           "score": 200,
-          "successMessage": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty).",
-          "failMessage": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
-        }
+          "message": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? Have 200 points!<br>(Yep, that could have been *very* nasty)."
+        },
+            "fail":  {
+                "message":  "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+            }
       }
     ]
   },

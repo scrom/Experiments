@@ -300,7 +300,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
         self.buildMission = function(missionData) {
             //console.log("Building mission: "+missionData.name);
-            //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward
+            //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward, fail
             try {
                 var conditionAttr;
                 var initialAttr;
@@ -316,6 +316,8 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 };
 
                 var rewardData = self.unpackReward(missionData.reward);
+                var failData;
+                if (missionData.fail) { failData = self.unpackReward(missionData.fail); };
 
                 if (missionData.attributes) {
                     if (missionData.attributes.type == "event") {
@@ -328,7 +330,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 };
                 
 
-                var newMission = new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData);
+                var newMission = new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData, failData);
                 return newMission;
             } catch(err) {
 	            console.log("Failed to build mission: "+missionData.name+": "+err.stack);

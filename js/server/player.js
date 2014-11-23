@@ -3767,17 +3767,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(missionReward)) {return "";};
 
             if (missionReward.hasOwnProperty("fail")) {
-                resultString += "<br>"+missionReward.failMessage+"<br>";
+                resultString += "<br>"+missionReward.message+"<br>";
                 resultString += mission.processReward(map, missionReward, self);
                 _missionsFailed.push(mission.getName());
             } else if (mission.getType() == "event") {
-                resultString += "<br>"+missionReward.eventMessage+"<br>";
+                resultString += "<br>"+missionReward.message+"<br>";
                 resultString += mission.processReward(map, missionReward, self);
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
             } else {
                 //normal mission success
-                if (missionReward.successMessage) {
-                    resultString += "<br>"+missionReward.successMessage+"<br>";
+                if (missionReward.message) {
+                    resultString += "<br>"+missionReward.message+"<br>";
                 };
                 resultString += mission.processReward(map, missionReward, self);
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item

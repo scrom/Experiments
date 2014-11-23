@@ -1,6 +1,6 @@
 ﻿"use strict";
 //mission object
-module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, failAttributes, reward) {
+module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, failAttributes, reward, fail) {
     try{      
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
@@ -19,6 +19,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _failAttributes = failAttributes; //the required attributes for the mission object to be successful - this will replace enumerated condition.
         var _destination; //could be a creature, object or location - where the object needs to get to - name only
         var _reward = reward; //what does the player receive as a reward. This is an attributes/json type object.
+        var _fail = fail; //what does the player receive if they fail? This is an attributes/json type object.
         var _ticking = false; //is the timer running?
         var _timeTaken = 0; //track time taken to complete.
         var _lastResponse;
@@ -319,22 +320,29 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.fail = function(failReason, failObject) {
-            var failMessage = "";
+            var message = "";
+            var fail = _fail;
+            if (!fail) {
+                fail = {};
+            };
 
-            if (failReason == "time") {failMessage += "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
+            if (failReason == "time") {message += "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
 
-            if (_reward.hasOwnProperty("failMessage")) {failMessage += "<br>"+_reward.failMessage;};
+            if (fail.hasOwnProperty("message")) {message += "<br>"+fail.message;};
 
-            if (failReason == "destroyedObject") {failMessage += "<br>You failed to "+self.getDisplayName()+". "+failObject.getDisplayName()+" has been destroyed.";};
-            if (failReason == "destroyedDestination") {failMessage += "<br>Oh dear. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.";};
-            if (failReason == "killedObject" || failReason == "killedMissionObject") {failMessage += "<br>Hmm, that's bad. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" is dead.";};
-            if (failReason == "destroyedSource") {failMessage += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.";};
+            if (failReason == "destroyedObject") {message += "<br>You failed to "+self.getDisplayName()+". "+failObject.getDisplayName()+" has been destroyed.";};
+            if (failReason == "destroyedDestination") {message += "<br>Oh dear. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.";};
+            if (failReason == "killedObject" || failReason == "killedMissionObject") {message += "<br>Hmm, that's bad. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" is dead.";};
+            if (failReason == "destroyedSource") {message += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.";};
             
 
-            _reward=null;
+            fail.fail = true;
+            fail.message = message;
+            _reward = null;
+            _fail = null;
             _ticking = false;
             console.log("mission "+self.getName()+" failed");
-            return {"fail":true, "failMessage":failMessage};
+            return fail;
         };
 
         self.event = function() {
