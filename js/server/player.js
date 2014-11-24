@@ -93,7 +93,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //avoid dividebyzerot
             if (_maxHitPoints == 0) {return 0;};
 
-            return Math.floor((_hitPoints/_maxHitPoints))*100;
+            return Math.floor((_hitPoints/_maxHitPoints)*100);
         };
 
         var getObjectFromPlayer = function(objectName, verb){
