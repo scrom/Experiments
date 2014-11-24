@@ -154,7 +154,8 @@
             },
             "reward": {
               "score": -25,
-              "message": "Bad you! Sometimes you just have to resist your violent urges."
+			  "health": -15,
+              "message": "Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen."
             },
             "fail":  {
                 "message":  "Never mind, it's probably better left alone."
@@ -11011,6 +11012,7 @@
             ]
           },
           "score": 200,
+		  "maxHealth": 25,
           "affinityModifier": 2,
           "decreaseAffinityFor": "jordan miller",
           "message": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"

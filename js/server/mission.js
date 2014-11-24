@@ -269,6 +269,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
             if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
             if (reward.removeLocation) { map.removeLocation(reward.removeLocation);};
+            if (reward.health) { player.updateHitPoints(reward.health);};
+            if (reward.maxHealth) { player.updateMaxHitPoints(reward.maxHealth);};
             if (reward.score) { player.updateScore(reward.score);};
             if (reward.money) { player.updateCash(reward.money);};
             if (reward.stealth) { player.setStealth(_stealth+reward.stealth);};
@@ -277,6 +279,9 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (reward.delivers) {resultString += player.acceptItem(reward.delivers);};
 
             self.processAffinityModifiers(map, reward);
+
+            //if this mission ends up killing the player...
+            if (player.getHitPoints() <= 0) {resultString += player.kill();};
 
             return resultString;
         };

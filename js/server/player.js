@@ -93,7 +93,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //avoid dividebyzerot
             if (_maxHitPoints == 0) {return 0;};
 
-            return (_hitPoints/_maxHitPoints)*100;
+            return Math.floor((_hitPoints/_maxHitPoints))*100;
         };
 
         var getObjectFromPlayer = function(objectName, verb){
@@ -783,6 +783,28 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (itemToRemove) {
                 self.removeContagion(contagionName);
                 self.setAntibody(contagionName);
+            };
+        };
+
+        self.updateMaxHitPoints = function(changeBy) {
+            var newMaxHP = _maxHitPoints + changeBy;
+            if (newMaxHP < 10) {newMaxHP = 10;};
+            _maxHitPoints = newMaxHP;
+            console.log("MaxHP set to: " +_maxHitPoints);
+        };
+
+        self.getHitPoints = function() {
+            return _hitPoints;
+        };
+
+        self.updateHitPoints = function(changeBy) {
+            if (changeBy > 0) { 
+                _hitPoints += changeBy;
+                if (_hitPoints > _maxHitPoints) {_hitPoints = _maxHitPoints;};
+            };
+            if (changeBy < 0) {
+                self.reduceHitPoints(changeBy*-1);
+                //note - if hp ends up <=0, player tick will kill player.
             };
         };
 
