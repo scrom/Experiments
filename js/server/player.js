@@ -790,7 +790,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var newMaxHP = _maxHitPoints + changeBy;
             if (newMaxHP < 10) {newMaxHP = 10;};
             _maxHitPoints = newMaxHP;
-            console.log("MaxHP set to: " +_maxHitPoints);
         };
 
         self.getHitPoints = function() {
@@ -847,6 +846,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //skill used for hunting
             if (_hunt <0) {return 0;}; // safetynet to avoid divide by zero or odd results from caller
             return _hunt;
+        };
+
+        self.updateCarryWeight = function (changeBy) {
+            _inventory.updateCarryWeight(changeBy);
         };
 
         self.addStolenCash = function(quantity) {
