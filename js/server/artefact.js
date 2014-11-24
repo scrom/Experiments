@@ -720,6 +720,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.holdsLiquid = function() {
+                if (_broken || _destroyed) {return false;};
                 return _holdsLiquid;
         };
 
