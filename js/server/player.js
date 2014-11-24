@@ -2624,13 +2624,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return smell;
         };
 
-        self.listen = function (verb, artefactName) {
+        self.listen = function (verb, artefactName, splitWord, map) {
             if (stringIsEmpty(artefactName)){artefactName = "air";};           
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
             var sound = artefact.getSound();
             if (stringIsEmpty(sound)) {
-                var randomReplies = ["You don't hear anything out of the ordinary.", "You pause and listen carefully...<br>Nope, nothing there.", "You listen attentively to "+artefact.getDisplayName()+" but don't hear anything of note.", "You cup your ears (and hope nobody's watching) but can't hear anything out of the ordinary."];
+                if (artefact.getType() == "door") {
+                    var destinationName = artefact.getLinkedDestinationForSource(_currentLocation.getName());
+                    var destinationLocation = map.getLocation(destinationName);
+                    if (destinationLocation) {
+                        var creatureCount = destinationLocation.countCreatures();
+                        if (creatureCount > 0) {
+                            sound = "You listen carefully and hear ";
+                            if (creatureCount == 1) {
+                                sound += "feet shuffling or objects being shifted around."
+                            } else {
+                                sound += "shuffling, grunting and what <i>might</i> be voices nearby."
+                            };
+                            return sound;
+                        };
+                    };
+                };
+
+                var randomReplies = ["You don't hear anything out of the ordinary.", "You pause and listen carefully...<br>Nope, nothing there.", "You listen attentively "+splitWord+" "+artefact.getDisplayName()+" but don't hear anything of note.", "You cup your ears (and hope nobody's watching) but can't hear anything out of the ordinary."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 return randomReplies[randomIndex];
             };

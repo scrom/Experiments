@@ -643,6 +643,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _linkedExits;
         };
 
+        self.getLinkedDestinationForSource = function(currentLocationName) {
+            var exits = self.getLinkedExits();
+            for (var e=0;e<exits.length;e++) {
+                if (exits[e].getSourceName() == currentLocationName) {
+                    return exits[e].getDestinationName();
+                };
+            };
+        };
+
         self.sells = function(anObjectName) {
             return false;
         };

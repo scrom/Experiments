@@ -974,7 +974,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'listen':
                         if (!_object0) {_object0 = _object1};
-                        description = _player.listen(_verb, _object0);
+                        description = _player.listen(_verb, _object0, _splitWord,  _map);
                         break;
                     case 'repeat':
                     case 'again':
