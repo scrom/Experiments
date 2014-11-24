@@ -1170,6 +1170,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 _destroyedObjects.push(artefact);
                 resultString += emptyContentsOfContainer(artefact.getName());
                 removeObjectFromPlayerOrLocation(artefact.getName());
+            } else if (artefact.isBroken()) {
+                resultString += artefact.drain(_currentLocation);   
             };
             return resultString;
         };
@@ -1227,6 +1229,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     removeObjectFromLocation(droppedObject.getName());
                 } else if (!broken && droppedObject.isBroken()) {
                     brokenItemCount++;
+                    droppedObject.drain(_currentLocation);   
                 }; 
 
             };
@@ -1273,6 +1276,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //then remove it again.
                 removeObjectFromLocation(artefactName);
                 return "Oops. "+artefactDamage+ tempResult;
+            } else if (droppedObject.isBroken()) {
+                artefactDamage += droppedObject.drain(_currentLocation);   
             }; 
 
             //needs a container
@@ -3389,7 +3394,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += emptyContentsOfContainer(receiver.getName());
                 removeObjectFromPlayerOrLocation(receiver.getName());
                 _destroyedObjects.push(receiver);
-                resultString = "Oops. "+resultString 
+                resultString = "Oops. "+resultString; 
+            } else if (receiver.isBroken()) {
+                resultString += receiver.drain(_currentLocation);  
             }; 
 
             if (receiver.isDead()) {
@@ -3415,8 +3422,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //remove destroyed item
                         _destroyedObjects.push(weapon);
                         removeObjectFromPlayerOrLocation(artefactName);                    
+                    } else if (weapon.isBroken()) {
+                        resultString += "<br>You broke "+weapon.getDisplayName()+".";
+                        resultString += weapon.drain(_currentLocation);   
                     } else {
-                        resultString +="<br>You damaged "+weapon.getDisplayName()+"."
+                        resultString +="<br>You damaged "+weapon.getDisplayName()+".";
                     };
                 };
                 if (!weapon.isDestroyed()) {

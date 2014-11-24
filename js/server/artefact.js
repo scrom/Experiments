@@ -101,10 +101,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //set plural grammar for more sensible responses
             if (_plural) {
-                _itemPrefix = "They";
-                _itemSuffix = "them";
-                _itemPossessiveSuffix = "their";
-                _itemDescriptivePrefix = "they're";
+                if (_liquid) {
+                    _itemPrefix = "It";
+                    _itemSuffix = "it";
+                    _itemPossessiveSuffix = "its";
+                    _itemDescriptivePrefix = "it's";
+                } else {
+                    _itemPrefix = "They";
+                    _itemSuffix = "them";
+                    _itemPossessiveSuffix = "their";
+                    _itemDescriptivePrefix = "they're";
+                };
             }
             else {               
                 _itemPrefix = "It";
@@ -145,6 +152,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = artefactAttributes.defaultAction;};
             if (artefactAttributes.defaultResult != undefined) { _defaultResult = artefactAttributes.defaultResult;};
             if (artefactAttributes.customAction != undefined) { _customAction = artefactAttributes.customAction;};
+            if (artefactAttributes.isLiquid != undefined) {
+                if (artefactAttributes.isLiquid== true || artefactAttributes.isLiquid == "true") { 
+                    _liquid = true;
+                    _requiresContainer = true; //override requires container if liquid.
+                    artefactAttributes.plural = true; //override plural
+                };              
+            };
             if ((artefactAttributes.plural != undefined) || _description.substring(0,8) == "pair of ") {self.setPluralGrammar(artefactAttributes.plural, _description);};
             if (artefactAttributes.extendedInventoryDescription != undefined) {
                 _extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
@@ -235,12 +249,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
             if (artefactAttributes.requiresContainer != undefined) {
                 if (artefactAttributes.requiresContainer== true || artefactAttributes.requiresContainer == "true") { _requiresContainer = true;};
-            };
-            if (artefactAttributes.isLiquid != undefined) {
-                if (artefactAttributes.isLiquid== true || artefactAttributes.isLiquid == "true") { 
-                    _liquid = true;
-                    _requiresContainer = true; //override requires container if liquid.
-                };              
             };
             if (artefactAttributes.holdsLiquid != undefined) {
                 if (artefactAttributes.holdsLiquid== true || artefactAttributes.holdsLiquid == "true") { _holdsLiquid = true;};
@@ -731,6 +739,34 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.holdsLiquid = function() {
                 if (_broken || _destroyed) {return false;};
                 return _holdsLiquid;
+        };
+
+        self.drain = function(location) {
+            var resultString = "";
+            if (!_holdsLiquid) {return resultString;};
+
+            var inv = _inventory.getAllObjects(true);
+            var liquids = [];
+            for (var i=0;i<inv.length;i++) {
+                if (inv[i].isLiquid()) {
+                    liquids.push(inv[i].getName());
+                };
+            };
+
+            if (liquids.length ==0) {return resultString;};
+
+            resultString += "<br>The "
+            for (var l=0;l<liquids.length;l++) {
+                _inventory.remove(liquids[l]);
+                if (liquids[l] == "blood") {location.addBlood();};
+                if (l > 0 && l < liquids.length - 1) { resultString += ', '; };
+                if (l > 0 && l == liquids.length - 1) { resultString += ' and '; };
+                resultString += liquids[l]
+            };
+            var wasWere = "was";
+            if (liquids.length >1) {wasWere = "were";};
+            resultString += " that "+wasWere+" in "+self.getDisplayName()+" slowly trickles away.";
+            return resultString;
         };
 
         self.getNutrition = function() {

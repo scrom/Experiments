@@ -671,7 +671,155 @@ exports.hittingArtefactWhenArmedDamagesArtefact = function (test) {
     test.done();
 };
 
-exports.hittingArtefactWhenArmedDamagesArtefact.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+exports.hittingArtefactWhenArmedDamagesArtefact.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit an artefact with a weapon they're carrying." };
+
+
+exports.hittingLiquidContainerWhenArmedLosesLiquidContents = function (test) {    
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    console.log(p0.examine("examine","mug"));
+    p0.get('get', weapon.getName());
+    var expectedResult = "You broke it!<br>The coffee that was in the mug slowly trickles away.";
+    var actualResult = p0.hit('hit',mug.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.hittingLiquidContainerWhenArmedLosesLiquidContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
+
+exports.throwingLiquidContainerLosesLiquidContents = function (test) {    
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    console.log(p0.examine("examine","mug"));
+    p0.get('get', mug.getName());
+    var expectedResult = "You throw the mug. You broke it!<br>The coffee that was in the mug slowly trickles away.";
+    var actualResult = p0.drop('throw',mug.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.throwingLiquidContainerLosesLiquidContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
+exports.deliberatelyDestroyingLiquidContainerLosesLiquidContents = function (test) {    
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    console.log(p0.examine("examine","mug"));
+    p0.get('get', mug.getName());
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You destroyed it!<br>Its contents are beyond recovery.";
+    var actualResult = p0.breakOrDestroy('destroy',mug.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.deliberatelyDestroyingLiquidContainerLosesLiquidContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
+
+exports.deliberatelyBreakingLiquidContainerLosesLiquidContents = function (test) {    
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    console.log(p0.examine("examine","mug"));
+    p0.get('get', mug.getName());
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You broke it!<br>The coffee that was in the mug slowly trickles away.";
+    var actualResult = p0.breakOrDestroy('break',mug.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.deliberatelyBreakingLiquidContainerLosesLiquidContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
+
+exports.deliberatelyBreakingBloodContainerLeavesBloodOnFloor = function (test) {    
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
+    var coffee = new artefact.Artefact('blood', 'blood', "eek!", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    console.log(p0.examine("examine","mug"));
+    p0.get('get', mug.getName());
+    p0.breakOrDestroy('break',mug.getName());
+    var expectedResult = "Sorry. You can't collect the blood without something suitable to carry it in.";
+    var actualResult = p0.get('get',"blood");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.deliberatelyBreakingBloodContainerLeavesBloodOnFloor.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
+
+exports.throwingEverythingIsntPossible = function (test) {    
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    console.log(p0.examine("examine","mug"));
+    p0.get('get', mug.getName());
+    var expectedResult = "You'll need to throw things one at a time, sorry.";
+    var actualResult = p0.dropAll('throw');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.throwingEverythingIsntPossible.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
+
+exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents = function (test) {    
+    var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
+
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    console.log(p0.examine("examine","mug"));
+    p0.get('get', weapon.getName());
+    p0.hit('hit',weapon.getName(), mug.getName());
+    var expectedResult = "Ding! You repeatedly hit the sword with the mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the mug.<br>The coffee that was in the mug slowly trickles away.";
+    var actualResult = p0.hit('hit',weapon.getName(), mug.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
 
 
 exports.hittingUnbreakableArtefactReturnsSensibleMessage = function (test) {
