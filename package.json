@@ -19,7 +19,7 @@
   "dependencies": {
     "body-parser": "^1.9.3",
     "coffee-script": "^1.8.0",
-    "express": "^4.10.2",
+    "express": "^4.10.3",
     "iced-coffee-script": "^1.8.0-a",
     "jsonfile": "^2.0.0",
     "morgan": "^1.5.0",
