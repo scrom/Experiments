@@ -3181,6 +3181,7 @@
           "canCollect": true,
           "charges": 3,
           "plural": true,
+		  "isPowder": true,
           "affinityModifier": 0,
           "isEdible": true,
           "nutrition": 5,

@@ -4934,11 +4934,11 @@
           }
         ]
       },
-      {
+	  {
         "object": "artefact",
-        "name": "coffee cup",
-        "description": "cup",
-        "detailedDescription": "Just the right size for a decent brew.",
+        "name": "glass jar",
+        "description": "jar",
+        "detailedDescription": "It's a pretty standard storage jar.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
           "weight": 2,
@@ -4948,38 +4948,14 @@
           "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true,
-          "imageName": "mug.jpg",
           "canDrawOn": true
         },
         "synonyms": [
-          "mug",
-          "cup",
-          "coffee mug"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "coco pops",
-        "description": "bowl of coco pops",
-        "detailedDescription": "They're going a bit soggy but still tasty.",
-        "attributes": {
-          "weight": 1,
-          "type": "food",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 1,
-          "isEdible": true,
-          "nutrition": 20
-        },
-        "synonyms": [
-          "food",
-          "cereal",
-          "bowl",
-          "pops",
-          "coco",
-          "bowl of coco pops"
-        ]
-      },
+          "jar",
+          "sugar jar",
+          "storage jar"
+        ],
+		"inventory":[
       {
         "object": "artefact",
         "name": "sugar",
@@ -4993,6 +4969,7 @@
           "chargeUnit": "spoonfull",
           "chargesDescription": "There's about $charges $chargeUnit left",
           "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
+		  "isPowder": true,
           "plural": true,
           "affinityModifier": 0,
           "isEdible": true,
@@ -5081,6 +5058,54 @@
               "mocha"
             ]
           }
+        ]
+      }		
+		]
+      },
+      {
+        "object": "artefact",
+        "name": "coffee cup",
+        "description": "cup",
+        "detailedDescription": "Just the right size for a decent brew.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 2,
+          "carryWeight": 1.1,
+          "attackStrength": 2,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "imageName": "mug.jpg",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "mug",
+          "cup",
+          "coffee mug"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "coco pops",
+        "description": "bowl of coco pops",
+        "detailedDescription": "They're going a bit soggy but still tasty.",
+        "attributes": {
+          "weight": 1,
+          "type": "food",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 1,
+          "isEdible": true,
+          "nutrition": 20
+        },
+        "synonyms": [
+          "food",
+          "cereal",
+          "bowl",
+          "pops",
+          "coco",
+          "bowl of coco pops"
         ]
       },
       {

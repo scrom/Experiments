@@ -62,6 +62,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _requiresContainer = false;
         var _requiredContainer = null;
         var _liquid = false;
+        var _powder = false;
         var _holdsLiquid = false;
         var _hidden = false; 
         var _position; 
@@ -101,7 +102,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //set plural grammar for more sensible responses
             if (_plural) {
-                if (_liquid) {
+                if (_liquid || _powder) {
                     _itemPrefix = "It";
                     _itemSuffix = "it";
                     _itemPossessiveSuffix = "its";
@@ -152,10 +153,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = artefactAttributes.defaultAction;};
             if (artefactAttributes.defaultResult != undefined) { _defaultResult = artefactAttributes.defaultResult;};
             if (artefactAttributes.customAction != undefined) { _customAction = artefactAttributes.customAction;};
+            if (artefactAttributes.requiresContainer != undefined) {
+                if (artefactAttributes.requiresContainer== true || artefactAttributes.requiresContainer == "true") { _requiresContainer = true;};
+            };
             if (artefactAttributes.isLiquid != undefined) {
                 if (artefactAttributes.isLiquid== true || artefactAttributes.isLiquid == "true") { 
                     _liquid = true;
                     _requiresContainer = true; //override requires container if liquid.
+                    artefactAttributes.plural = true; //override plural
+                };              
+            };
+            if (artefactAttributes.isPowder != undefined) {
+                if (artefactAttributes.isPowder== true || artefactAttributes.isPowder == "true") { 
+                    _powder = true;
+                    _requiresContainer = true; //override requires container if powder.
                     artefactAttributes.plural = true; //override plural
                 };              
             };
@@ -247,9 +258,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.combinesWith != undefined) { _combinesWith = artefactAttributes.combinesWith; };
             
             if (artefactAttributes.requiredComponentCount != undefined) {_requiredComponentCount = artefactAttributes.requiredComponentCount;};
-            if (artefactAttributes.requiresContainer != undefined) {
-                if (artefactAttributes.requiresContainer== true || artefactAttributes.requiresContainer == "true") { _requiresContainer = true;};
-            };
             if (artefactAttributes.holdsLiquid != undefined) {
                 if (artefactAttributes.holdsLiquid== true || artefactAttributes.holdsLiquid == "true") { _holdsLiquid = true;};
             };
@@ -511,6 +519,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.requiresContainer = _requiresContainer;
             currentAttributes.requiredContainer = _requiredContainer;
             currentAttributes.isLiquid = _liquid;
+            currentAttributes.isPowder = _powder;
             currentAttributes.holdsLiquid = _holdsLiquid;
             currentAttributes.hidden = _hidden;
             currentAttributes.position = _position;
@@ -548,6 +557,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.subType != "") {saveAttributes.subType = artefactAttributes.subType;};           
             if (artefactAttributes.requiresContainer) {saveAttributes.requiresContainer = true;};
             if (artefactAttributes.isLiquid) {saveAttributes.isLiquid = true;};
+            if (artefactAttributes.isPowder) {saveAttributes.isPowder = true;};
             if (artefactAttributes.holdsLiquid) {saveAttributes.holdsLiquid = true;};
             if (artefactAttributes.requiredContainer != undefined) {saveAttributes.requiredContainer = artefactAttributes.requiredContainer;};
             if (artefactAttributes.canCollect) { saveAttributes.canCollect = true;};
@@ -734,6 +744,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isLiquid = function() {
                 return _liquid;
+        };
+
+        self.isPowder = function() {
+                return _powder;
         };
 
         self.holdsLiquid = function() {
@@ -1423,7 +1437,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //broken containers can't contain anything
             if (self.isDestroyed()) {return false;};
             if (self.getType() == "container" && self.isBroken()) {return false;};
-            if (anObject.isLiquid() && (!(self.holdsLiquid()))) {return false;};
+            if ((anObject.isLiquid()||anObject.isPowder()) && (!(self.holdsLiquid()))) {return false;};
             return _inventory.canContain(anObject, self.getName());
         };
 
@@ -1434,7 +1448,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canCarry = function(anObject, position) {
             //broken containers can't contain anything
             if (self.isDestroyed()) {return false};
-            if (anObject.isLiquid() && (!(self.holdsLiquid()))) {return false;};
+            if ((anObject.isLiquid()||anObject.isPowder()) && (!(self.holdsLiquid()))) {return false;};
             if (position) {
                 //can't carry something bigger than self
                 if (anObject.getWeight() > self.getWeight()) {
@@ -1529,6 +1543,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (anObject.isLiquid()) {
                     anObject.consume(1);
                     return "You smear "+anObject.getDisplayName()+" over "+self.getDisplayName()+". That was fun!";
+                } else if (anObject.isPowder()) {
+                    anObject.consume(1);
+                    return "You rub "+anObject.getDisplayName()+" over "+self.getDisplayName()+".";                    
                 };
             };
 

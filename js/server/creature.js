@@ -3093,6 +3093,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return false;
         };
 
+        self.isPowder = function() {
+                return false;
+        };
+
         self.holdsLiquid = function() {
                 return false;
         };

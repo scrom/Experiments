@@ -1381,7 +1381,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString+=". ";
 
             //swap artefacts?
-            if (firstArtefact.getSubType() == "buff" || firstArtefact.getSubType() == "sharpen" || firstArtefact.isLiquid()) {
+            if (firstArtefact.getSubType() == "buff" || firstArtefact.getSubType() == "sharpen" || firstArtefact.isLiquid()|| firstArtefact.isPowder()) {
                 var tempArtefact = firstArtefact;
                 firstArtefact = secondArtefact;
                 secondArtefact = tempArtefact;
@@ -1391,7 +1391,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "Try sharpening something more sensible.";
             };
 
-            if (firstArtefact.isLiquid()) {
+            if (firstArtefact.isLiquid() || firstArtefact.isPowder()) {
                 return "That's not going to do anything useful.";
             };
 
@@ -1777,10 +1777,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
 
-                if (artefact.isLiquid()) {
+                if (artefact.isLiquid() || artefact.isPowder()) {
                     var artefactChargesRemaining = artefact.consume(1);
                     if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                    if (receiver.getType() != "creature"  && on) {
+                    if (receiver.getType() != "creature"  && on && artefact.isLiquid()) {
                         receiver.addLiquid(artefact.getName());
                     };
                     if (artefact.getName() == "blood" && on) {                  
@@ -1797,7 +1797,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 
                 //check receiver can position item (container or not)
-                if (receiver.isLiquid()) {return "Nope, I don't think that'll work, sorry.";};
+                if (receiver.isLiquid()||receiver.isPowder()) {return "Nope, I don't think that'll work, sorry.";};
                 if (receiver.isDestroyed()){return "There's not enough of "+receiver.getDisplayName()+" to "+verb+" anything "+position+" "+receiver.getSuffix()+".";};
                 if (receiver.getWeight() < artefact.getWeight()) { return artefact.getDescriptivePrefix()+" too big to "+verb+" "+position+" "+receiver.getDisplayName()+".";};
                 
@@ -1919,11 +1919,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     }; 
                     
-                    if (artefact.isLiquid()) {
-                        //@todo - should really trap if the liquid was *not* in a container prior to this
+                    if (artefact.isLiquid()||artefact.isPowder()) {
+                        //@todo - should really trap if the liquid/powder was *not* in a container prior to this
                         var artefactChargesRemaining = artefact.consume(1);
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                        receiver.addLiquid(artefact.getName()); //not a creature by this point
+                        if (artefact.isLiquid()) {
+                            receiver.addLiquid(artefact.getName()); //not a creature by this point
+                        };
                         if (artefact.getName() == "blood") {                            
                             return "Hmm. You're a bit sick aren't you.<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
                         } else {

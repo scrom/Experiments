@@ -73,7 +73,7 @@ exports.cannotOverwriteTypeWithInvalidValueAfterConstruction = function (test) {
 exports.cannotOverwriteTypeWithInvalidValueAfterConstruction.meta = { traits: ["Artefact Test", "Attribute Trait"], description: "Test that an artefact object can have invalid type attribute set." };
 
 exports.canSetPluralAttributeAndRetrieveCorrectDescription = function (test) {
-    var sugarAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, plural: true};
+    var sugarAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, plural: true, isPowder: true};
     var sugar = new artefact.Artefact("sugar", "sugar", "sweet and sugary", sugarAttributes);
     var expectedResult = "some sugar";
     //artefact object is created in setUp
