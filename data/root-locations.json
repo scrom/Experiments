@@ -5064,7 +5064,7 @@
       },
       {
         "object": "artefact",
-        "name": "coffee cup",
+        "name": "cup",
         "description": "cup",
         "detailedDescription": "Just the right size for a decent brew.",
         "attributes": {
@@ -5081,7 +5081,7 @@
         },
         "synonyms": [
           "mug",
-          "cup",
+          "coffee cup",
           "coffee mug"
         ]
       },

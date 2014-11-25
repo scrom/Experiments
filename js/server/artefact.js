@@ -1344,8 +1344,25 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.combinesWith = function(anObject, crossCheck) {
             if (self.isDestroyed()) {return false;};
-            var combinesWithResult = self.getCombinesWith();
-            if (combinesWithResult == anObject.getName()) {
+            var combinesWithResultArray = self.getCombinesWith();
+            var combinesWithResult
+            if (typeof(combinesWithResultArray) == "string") { 
+                if (combinesWithResultArray == anObject.getName()) {
+                    combinesWithResult = combinesWithResultArray;
+                };                
+            }
+            else if (typeof(combinesWithResultArray) == 'object') {
+                if (Object.prototype.toString.call(combinesWithResultArray) === '[object Array]') {
+                    for (var i=0;i<combinesWithResultArray.length;i++) {
+                        if (combinesWithResultArray[i] == anObject.getName()) {
+                            combinesWithResult = combinesWithResultArray[i];
+                            break;
+                        }; 
+                    };
+                };
+            };
+            
+            if (combinesWithResult) { //we have a match
                 if (crossCheck) {
                     if (anObject.combinesWith(self, false)) { return true;};
                 } else {
