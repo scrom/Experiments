@@ -1346,20 +1346,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) {return false;};
             var combinesWithResultArray = self.getCombinesWith();
             var combinesWithResult
-            if (typeof(combinesWithResultArray) == "string") { 
+
+            if (Object.prototype.toString.call(combinesWithResultArray) === '[object Array]') {
+                    var index = combinesWithResultArray.indexOf(anObject.getName());
+                    if (index >-1) {
+                        combinesWithResult = combinesWithResultArray[index];
+                    }; 
+            } else {
                 if (combinesWithResultArray == anObject.getName()) {
                     combinesWithResult = combinesWithResultArray;
-                };                
-            }
-            else if (typeof(combinesWithResultArray) == 'object') {
-                if (Object.prototype.toString.call(combinesWithResultArray) === '[object Array]') {
-                    for (var i=0;i<combinesWithResultArray.length;i++) {
-                        if (combinesWithResultArray[i] == anObject.getName()) {
-                            combinesWithResult = combinesWithResultArray[i];
-                            break;
-                        }; 
-                    };
-                };
+                };                       
             };
             
             if (combinesWithResult) { //we have a match
@@ -1370,18 +1366,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return true;
                 };
             };
-            if (Object.prototype.toString.call(combinesWithResult) === '[object Array]') {
-                for (var i=0;i<combinesWithResult.length;i++) {
-                    if (combinesWithResult[i] == anObject.getName()) {
-                        if (crossCheck) {
-                            if (anObject.combinesWith(self, false)) { return true;};
-                        } else {
-                            //no need to cross-check
-                            return true;
-                        };
-                    };
-                };
-            };
+
             return false;
         };
 
