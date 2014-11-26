@@ -3905,6 +3905,7 @@
             "press",
             "push"
           ],
+          "imageName": "soapdispenser.jpg",
           "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands."
         },
         "synonyms": [
@@ -4551,6 +4552,7 @@
             "press",
             "push"
           ],
+          "imageName": "soapdispenser.jpg",
           "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out."
         },
         "synonyms": [
@@ -9478,6 +9480,7 @@
             "press",
             "push"
           ],
+          "imageName": "soapdispenser.jpg",
           "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands."
         },
         "synonyms": [
