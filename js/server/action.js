@@ -864,6 +864,8 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'destroy':
                     case 'break':
                     case 'force':
+                        _object0 = " "+_object0+" ";
+                        _object0 = _object0.replace(" open ", "").trim();
                         description = _player.breakOrDestroy(_verb, _object0);
                         break;
                     case 'kill':

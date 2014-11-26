@@ -1834,11 +1834,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             _damaged = true;
             if (_breakable) {
                 _broken = true;
+                var wasLocked = _locked;
+                var wasOpen = _open;
                 if (_lockable) {_locked = false;};
+                if (_opens && !_open) {_open = true;};
                 if (_price > 0) { self.discountPriceByPercent(50); };
                 _description += " (broken)";
                 _detailedDescription = initCap(_itemDescriptivePrefix)+" broken.";
-                return "You broke "+_itemSuffix+"!";
+                var opened = "";
+                if (wasLocked && !wasOpen && _open) {opened = " open";};  
+                return "You broke "+_itemSuffix+opened+"!";
             };
 
             if (!wasAlreadyDamaged) {

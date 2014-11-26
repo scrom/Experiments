@@ -266,6 +266,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     //console.log("Exit added: "+exitDestination);
                 };
             };
+            if (reward.modifyObject) { map.modifyObject(reward.modifyObject, player);};
             if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
             if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
             if (reward.removeLocation) { map.removeLocation(reward.removeLocation);};
