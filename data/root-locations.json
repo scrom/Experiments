@@ -1903,6 +1903,29 @@
       }
     ],
     "inventory": [
+        {
+            "object": "artefact",
+            "name": "map",
+            "description": "meeting room map",
+            "detailedDescription": "It's a crude map showing all three internal floors of the office and the locations of each meeting room.<br><i>You might want to download the picture for this one and take a good look</i>.",
+            "attributes": {
+            "defaultAction": "read",
+			"type": "book",
+            "weight": 0.1,
+            "canCollect": true,
+            "affinityModifier": 0,
+            "canDrawOn": true,
+			"imageName": "map.jpg",
+			"defaultResult": "You can't tell which way is North on here but it might still be useful."
+            },
+            "synonyms": [
+            "meeting room map",
+            "room map",
+            "plan",
+            "floor plan",
+            "floorplan"
+            ]
+        },
       {
         "object": "creature",
         "name": "brian harris",
@@ -5455,11 +5478,13 @@
                   "detailedDescription": "It looks like the tattered and charred remnants of a very rare comic book.<br>It could be a clue.",
                   "attributes": {
                     "defaultAction": "read",
+					"type": "book",
                     "weight": 1,
                     "canCollect": true,
                     "affinityModifier": 0,
                     "price": 15,
-                    "canDrawOn": true
+                    "canDrawOn": true,
+					"defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something."
                   },
                   "synonyms": [
                     "book",

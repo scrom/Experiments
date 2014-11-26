@@ -979,9 +979,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //if we define a custom result, return that. Otherwise perform default action.
-            var result = artefact.getDefaultResult();
-            if (result) {return result+"$result";};
-            
+            var action = artefact.getDefaultAction();
+            if (action !="read") { //@todo hack - this needs a proper test to decide what order default actions and results are handled when both are set.
+                var result = artefact.getDefaultResult();
+                if (result) {return result+"$result";};
+            };            
             return artefact.getDefaultAction();
         };
 
@@ -2814,13 +2816,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var noteCount = writings.length+drawings.length;
 
             if (artefact.getType() != "book" && noteCount == 0) {
+                var result;
+                if (artefact.getDefaultAction() == "read") {
+                    result = artefact.getDefaultResult();
+                    if (result) {return result+"$result";};
+                };
                 return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";
             };
 
             if (artefact.isRead() && noteCount == 0) {
-                return "You've read it before, you're not going to gain anything new from reading it again.";
+                return "You've read "+artefact.getSuffix()+" before, you're not going to gain anything new from reading "+artefact.getSuffix()+" again.";
             } else if (artefact.isRead() && noteCount > 0) {
-                resultString += "You've read it before but you decide to check the additional notes and drawings.<br>";
+                resultString += "You've read "+artefact.getSuffix()+" before but you decide to check the additional notes and drawings.<br>";
             } else {
                 _booksRead ++;
             };
@@ -2835,7 +2842,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += artefact.read(verb);
 
                 if (newMissions.length==0 && noteCount == 0) {
-                    resultString += "<br>"+artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
+                    var result;
+                    if (artefact.getDefaultAction() == "read") {
+                        result = artefact.getDefaultResult();
+                        if (result) {resultString += "<br>"+result+"$result";};
+                    };
+                    if (!result) {
+                        resultString += "<br>"+artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
+                    };
                     return resultString;
                 };
 
