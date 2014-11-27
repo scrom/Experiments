@@ -3,6 +3,7 @@
 exports.Creature = function Creature(name, description, detailedDescription, attributes, carrying, sells) {
     try{
         //module deps
+        var tools = require('./tools.js');
         var inventoryObjectModule = require('./inventory.js');
         var missionObjectModule = require('./mission.js');
         var contagionObjectModule = require('./contagion.js');
@@ -75,46 +76,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _originalType = "creature";
         var _originalBaseAffinity = 0;
         var _friendlyAttackCount = 0;
-
-        var oppositeOf = function(direction){
-            switch(direction)
-            {
-                case 'n':
-                    return 's';
-                    break; 
-                case 's':
-                    return 'n';
-                    break;
-                case 'e':
-                    return 'w';
-                    break;
-                case 'w':
-                    return 'e';
-                    break;
-                case 'u':
-                    return 'd';
-                    break;
-                case 'd':
-                    return 'u';
-                    break;
-                case 'i':
-                    return 'o';
-                    break;
-                case 'o':
-                    return 'i';
-                    break;
-                case 'l':
-                    return 'r';
-                    break;
-                case 'r':
-                    return 'l';
-                    break;
-                case 'c':
-                    return 'c'; 
-                    break;  
-            }; 
-            return null;       
-        };
 
         var healthPercent = function() {
             //avoid dividebyzero
@@ -300,66 +261,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        //captialise first letter of string.
-        var initCap = function(aString){
-            return aString.charAt(0).toUpperCase() + aString.slice(1);
-        };
-
-        //handle empty strings
-        var stringIsEmpty = function(aString){
-            if ((aString == "")||(aString == undefined)||(aString == null)) {return true;};
-            return false;
-        };
-
-        //shuffle arrays
-        var shuffle = function(array) {
-          var currentIndex = array.length;
-          var temporaryValue;
-          var randomIndex;
-
-          // While there remain elements to shuffle...
-          while (0 !== currentIndex) {
-
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-          };
-
-          return array;
-        };
-
         var notFoundMessage = function(objectName) {
             var randomReplies = ["There's no "+objectName+" here and neither of you are carrying any either.", self.getDisplayName()+" can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
             return randomReplies[randomIndex];
         };
 
-        var getObjectFromPlayer = function(objectName, player){
-            var playerInventory = player.getInventoryObject();
-            return playerInventory.getObject(objectName);
-        };
-
-        var getObjectFromLocation = function(objectName){
-            return _currentLocation.getObject(objectName);
-        };
-
-        var getObjectFromPlayerOrLocation = function(objectName, player) {
-            var playerArtefact = getObjectFromPlayer(objectName, player);
-            if (playerArtefact) {return playerArtefact;};
-
-            return getObjectFromLocation(objectName);
-        };
-
         var getObjectFromSelfPlayerOrLocation = function(objectName, player) {
             var artefact = _inventory.getObject(objectName);
             if (artefact) {return artefact;};
 
-            return getObjectFromPlayerOrLocation(objectName, player);
+            return player.getObjectFromPlayerOrLocation(objectName, player);
         };
 
 
@@ -995,10 +907,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //remove medicalArtefact if used up.
                         if (medicalArtefact.chargesRemaining() == 0) {
                             if (locationObject) {
-                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+medicalArtefact.getDisplayName()+"."
+                                resultString += "<br>"+tools.initCap(self.getDisplayName())+" used up "+medicalArtefact.getDisplayName()+"."
                                 _currentLocation.removeObject(medicalArtefact.getName());
                             } else {
-                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medicalArtefact.getDisplayName()+"."
+                                resultString += "<br>"+tools.initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medicalArtefact.getDisplayName()+"."
                                 _inventory.remove(medicalArtefact.getName());
                             };
                         };
@@ -1070,15 +982,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_repairSkills.length>0) {
                 resultString += "<br>" + _genderPrefix + " can repair ";
                 for (var r=0;r<_repairSkills.length;r++) {
-                    if (r > 0 && r < _repairSkills.length - 1) { resultString += ', '; };
-                    if (r > 0 && r == _repairSkills.length - 1) { resultString += ' and '; };
+                    resultString += tools.listSeparator(r, _repairSkills.length);
                     resultString += _repairSkills[r]+"s"; //plural
                 };
                 resultString += " if you <i>ask</i> "+_genderSuffix+" nicely.<br>"; 
             };
 
             if (_salesInventory.size() == 1) { resultString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
-            else if (_salesInventory.size() > 1) { resultString += "<br>" + initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
+            else if (_salesInventory.size() > 1) { resultString += "<br>" + tools.initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
             
             var wantsToTalk = false;
             for (var i=0; i< _missions.length;i++) {
@@ -1305,12 +1216,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             var resultString = "";
 
-            if (stringIsEmpty(artefactName)){ return verb+" what?"};
+            if (tools.stringIsEmpty(artefactName)){ return verb+" what?"};
 
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
             if (!(artefact)) {return notFoundMessage(artefactName);};
 
-            if (!(artefact.isBroken()) && !(artefact.isDamaged()) && !(artefact.isChewed())) {return initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
+            if (!(artefact.isBroken()) && !(artefact.isDamaged()) && !(artefact.isChewed())) {return tools.initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
 
             if (!(self.canRepair(artefact))) {return "'Sorry, that's not something I can fix for you I'm afraid.'";};
             
@@ -1329,7 +1240,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.position = function(anObject, position) {
             var objectAlreadyInPlace = _inventory.getObjectByPosition(position);
             if (objectAlreadyInPlace) {
-                if (objectAlreadyInPlace.getName() == anObject.getName()) {return initCap(_itemDescriptivePrefix)+" already there.";};
+                if (objectAlreadyInPlace.getName() == anObject.getName()) {return tools.initCap(_itemDescriptivePrefix)+" already there.";};
                 return "There's already something "+position+" there."
             };
             _inventory.position(anObject, position);            
@@ -1345,15 +1256,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         self.increaseAffinity(anObject.getAffinityModifier());
                         self.feed(anObject.getNutrition());
                         if (anObject.getWeight() < 5) {
-                            return initCap(self.getDisplayName())+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at it.";
+                            return tools.initCap(self.getDisplayName())+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at it.";
                         } else {
-                            return initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
+                            return tools.initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
                         };
                     };
                 };
                                     
                 _currentLocation.addObject(anObject);
-                return initCap(self.getDisplayName())+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getSuffix()+" comes back later.";
+                return tools.initCap(self.getDisplayName())+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getSuffix()+" comes back later.";
             };
             if (!(self.canCarry(anObject))) {return '';};              
             
@@ -1363,7 +1274,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //turn on delay
             _currentDelay = 0;
 
-            var resultString = initCap(self.getDisplayName())+" takes "+anObject.getDescription()+".";
+            var resultString = tools.initCap(self.getDisplayName())+" takes "+anObject.getDescription()+".";
 
             if (!anObject.isIntact() && self.canRepair(anObject) && player && !anObject.isDestroyed()) {
                 var brokenString = "broken";
@@ -1407,7 +1318,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //turn on delay
             _currentDelay = 0;
 
-            return initCap(self.getDisplayName()) + " bought " + anObject.getDisplayName() + ".";
+            return tools.initCap(self.getDisplayName()) + " bought " + anObject.getDisplayName() + ".";
         };
 
         self.willAcceptGift = function(playerAggression, artefact) {
@@ -1588,14 +1499,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //turn on delay
             _currentDelay = 0;
                 
-            return initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
+            return tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
         };
 
         self.sell = function (anObjectName, player) {
             if (self.isDead()) { return _genderDescriptivePrefix + " dead. Your money's no good to " + _genderPrefix.toLowerCase() + " now."; };
 
             var objectToGive = _salesInventory.getObject(anObjectName);
-            if (!(objectToGive)) { return initCap(self.getDisplayName()) + " doesn't have any " + anObjectName + " to sell."; };
+            if (!(objectToGive)) { return tools.initCap(self.getDisplayName()) + " doesn't have any " + anObjectName + " to sell."; };
 
             if (!(self.willTrade(player.getAggression(), objectToGive))) { return _genderPrefix + " doesn't want to sell " + objectToGive.getDisplayName() + " to you."; };
 
@@ -1644,7 +1555,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //turn on delay
             _currentDelay = 0;
 
-            return initCap(self.getDisplayName()) + " sells you " + deliveredItem.getDescription() + ".";
+            return tools.initCap(self.getDisplayName()) + " sells you " + deliveredItem.getDescription() + ".";
         };
 
 
@@ -1697,7 +1608,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //for each hostile creature, attack the player
             if(self.isHostile(playerAggression)) {
                 //console.log("Fight!");
-                return "<br>"+initCap(self.getDisplayName())+" attacks you. " + self.hit(player, 1);
+                return "<br>"+tools.initCap(self.getDisplayName())+" attacks you. " + self.hit(player, 1);
             };
 
         return "";
@@ -1730,7 +1641,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (!(fled)) {
                             var movementVerb = "flees";
                             if (_bleeding) {movementVerb = "staggers";};
-                            resultString += initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+".<br>";
+                            resultString += tools.initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+".<br>";
                             resultString += self.exposePositionedItems();
                             //if creature was heading somewhere, we'll need to regenerate their path later.
                             if (_destinations.length>0) {self.clearPath();};
@@ -1779,7 +1690,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             _moves++;
 
-            self.setReturnDirection(oppositeOf(direction));
+            self.setReturnDirection(tools.oppositeOf(direction));
 
             //slowly erode friendly attack count
             if (_friendlyAttackCount >0) {
@@ -1839,7 +1750,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _currentLocation.addBlood();
             };
 
-            return initCap(self.getDisplayName())+" follows you.<br>";
+            return tools.initCap(self.getDisplayName())+" follows you.<br>";
         };	
 
         self.getLocation = function() {
@@ -1883,7 +1794,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
 
-                resultString += initCap(self.getDisplayName())+" is hurt. "+self.health();
+                resultString += tools.initCap(self.getDisplayName())+" is hurt. "+self.health();
 
                 //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
             } else {
@@ -1912,8 +1823,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         
         self.heal = function(medicalArtefact, healer) {
-            if (_hitPoints >= _maxHitPoints-1) { return initCap(self.getDisplayName())+" doesn't need healing.";};
-            if (self.isDead()) {return initCap(self.getDisplayName())+"'s dead, healing won't help "+_genderSuffix+" any more.";};
+            if (_hitPoints >= _maxHitPoints-1) { return tools.initCap(self.getDisplayName())+" doesn't need healing.";};
+            if (self.isDead()) {return tools.initCap(self.getDisplayName())+"'s dead, healing won't help "+_genderSuffix+" any more.";};
 
             //heal self...
             var pointsToAdd = 0;
@@ -1944,7 +1855,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else { 
                     var recipient = self.getDisplayName();
                     if (healer.getDisplayName() == recipient) {recipient = _genderSuffix+"self";};
-                    resultString += initCap(healer.getDisplayName())+" uses "+medicalArtefact.getDescription()+" to heal "+recipient+".";
+                    resultString += tools.initCap(healer.getDisplayName())+" uses "+medicalArtefact.getDescription()+" to heal "+recipient+".";
                 };
             };
 
@@ -1994,7 +1905,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.bite = function(recipient) {
             var resultString = "<br>";
-            resultString+=initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
+            resultString+=tools.initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
             resultString+="<br>"+recipient.hurt(Math.floor(_attackStrength/5));
 
             //2 way transfer of contagion/antibodies!
@@ -2124,7 +2035,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //add fresh blood to location
             _currentLocation.addBlood();
 
-            var resultString = "<br>"+initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+            var resultString = "<br>"+tools.initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
             resultString += self.exposePositionedItems();
 
             //remove inactive missions - active ones will be handled elsewhere
@@ -2169,11 +2080,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.shove = function(verb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and push at the corpse. "+_genderPrefix+" makes some squishy gurgling sounds and some vile-smelling fluid seeps onto the floor."};
             self.decreaseAffinity(1);
-            return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around.";
+            return tools.initCap(self.getDisplayName())+" really doesn't appreciate being pushed around.";
         };
 
         self.pull = function(verb, player) {
-            if (self.isDead()) {return initCap(_genderDescriptivePrefix)+"dead. Leave "+_genderSuffix+" alone.";};
+            if (self.isDead()) {return tools.initCap(_genderDescriptivePrefix)+"dead. Leave "+_genderSuffix+" alone.";};
             if (player.getAggression() > 0) {
                  self.decreaseAffinity(1);
                 return "I think you need to calm down, don't you?";
@@ -2194,7 +2105,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.moveOrOpen = function(verb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You pull and tear at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
             self.decreaseAffinity(1);
-            if (verb == 'push'||verb == 'pull') {return initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
+            if (verb == 'push'||verb == 'pull') {return tools.initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
             //open
             return "I suggest you don't try to "+verb+" "+self.getDisplayName()+" again, it's not going to end well.";
         };
@@ -2390,11 +2301,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 if (_salesInventory.check(keyword)) {
                     var saleItem = _salesInventory.getObject(keyword);
-                    return initCap(self.getDisplayName())+" says 'You're in luck!' 'I have "+saleItem.getSuffix()+" for sale right here.'"+returnImage;
+                    return tools.initCap(self.getDisplayName())+" says 'You're in luck!' 'I have "+saleItem.getSuffix()+" for sale right here.'"+returnImage;
                 };
 
                 if (keyword == "help") {
-                    return initCap(self.getDisplayName())+" says 'OK. Here's some things to try...'<br>'You can interact with most objects and characters using common verbs.'<br>'To pick up some basic (but useful) commands, type <i>help</i>.'<br>'If you're stuck, try to <i>'talk to'</i> a person.'<br>'You can gain vital information if you <i>'examine'</i> a person or item.'<br>'There are also potential benefits from <i>read</i>ing some items you may find.'<br>'If you're not popular, you may need to <i>'give'</i> a potentially desirable item <i>to</i> someone before they'll help you.'<br>";
+                    return tools.initCap(self.getDisplayName())+" says 'OK. Here's some things to try...'<br>'You can interact with most objects and characters using common verbs.'<br>'To pick up some basic (but useful) commands, type <i>help</i>.'<br>'If you're stuck, try to <i>'talk to'</i> a person.'<br>'You can gain vital information if you <i>'examine'</i> a person or item.'<br>'There are also potential benefits from <i>read</i>ing some items you may find.'<br>'If you're not popular, you may need to <i>'give'</i> a potentially desirable item <i>to</i> someone before they'll help you.'<br>";
                 };
 
                 //if high affinity, try to find item for player
@@ -2404,7 +2315,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 var randomReplies = ["Sorry $player, I can't help you there.", "Nope, I've not seen any "+keyword+" around.", "I'm afraid you'll need to hunt that down yourself.", "Nope, sorry."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                return initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+                return tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };
 
             return null;
@@ -2464,7 +2375,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "good evening":  
                     randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];                  
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
+                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
                     break;
                 case "bye":
                 case "goodbye":
@@ -2479,7 +2390,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
 
                     //note - we exit early - shortcircuit before mission dialogue
-                    return initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
+                    return tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
                     break;
                 case "ok":
                 case "y":
@@ -2490,7 +2401,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "affirmatory":
                     randomReplies = ["Great", "OK $player", "OK"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 case "no":
                 case "n":
@@ -2505,7 +2416,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "negatory":
                     randomReplies = ["Maybe another time then", "OK $player", "OK", "Fair enough", "That's fine $player"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 case "thanks":
                 case "thankyou":
@@ -2513,7 +2424,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "cheers":
                     randomReplies = ["My pleasure", "Happy to help", "Good luck", "No problem $player"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 default:
                     break;
@@ -2546,7 +2457,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
                     case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
                         if (remainderString == "sorry") {
-                            return initCap(self.getDisplayName())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
+                            return tools.initCap(self.getDisplayName())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
                             break;
                         };
                     case 'who': //is/are [character]
@@ -2583,7 +2494,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                  */
                     case 'pardon': // [me - apology] / [please repeat last thing] 
                         console.log("*** Unhandled player speech - first Word:'"+firstWord+"', remainder:'"+remainderString+"'");                      
-                        return initCap(self.getDisplayName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
+                        return tools.initCap(self.getDisplayName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
                         break;
                 };
             };
@@ -2607,7 +2518,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             };
 
                         if (requestedObject) {
-                            if (!(getObjectFromPlayerOrLocation(requestedObject, player))) {
+                            if (!(player.getObjectFromPlayerOrLocation(requestedObject, player))) {
                                 requestedObject = null; 
                                 dialogueResponse = "'Nice try $player.'<br> 'Come back when you have what I'm after.'"
                             };
@@ -2629,7 +2540,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (response.length == 0) {
                 randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying.", "I don't think I can help you at the moment. Have you tried typing <i>help</i>?"];
                 randomIndex = Math.floor(Math.random() * randomReplies.length);
-                response += initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
+                response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
             };
 
             if (!(_spokenToPlayer)) {_spokenToPlayer = true;};
@@ -2740,10 +2651,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (currentWeapon) {
                 _inventory.remove(currentWeapon.getName());
                 _currentLocation.addObject(currentWeapon);
-                resultString += '<br>'+initCap(self.getDisplayName())+" dropped "+currentWeapon.getDisplayName()+".";
+                resultString += '<br>'+tools.initCap(self.getDisplayName())+" dropped "+currentWeapon.getDisplayName()+".";
             };
 
-            resultString += '<br>'+initCap(self.getDisplayName())+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
+            resultString += '<br>'+tools.initCap(self.getDisplayName())+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
 
             return resultString;
         };
@@ -2948,13 +2859,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 var movementVerb = "wanders";
                                 if (_bleeding) {movementVerb = "stumbles";};
                                 if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" in.";  
+                                resultString += "<br>"+tools.initCap(self.getDescription())+" "+movementVerb+" in.";  
                             } else {
                                 var movementVerb = "heads";
                                 if (_bleeding) {movementVerb = "limps";};
                                 if (exit.getLongName() == "in") {movementVerb = "goes";};
                                 if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += "<br>"+initCap(self.getDescription())+" "+movementVerb+" "+exit.getLongName()+"."; 
+                                resultString += "<br>"+tools.initCap(self.getDescription())+" "+movementVerb+" "+exit.getLongName()+"."; 
                                 if (showMoveToPlayer) {
                                     partialResultString += resultString+exposedItems;
                                 };
@@ -2998,10 +2909,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //remove medicalArtefact if used up.
                         if (medicalArtefact.chargesRemaining() == 0) {
                             if (locationObject) {
-                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+medicalArtefact.getDisplayName()+"."
+                                resultString += "<br>"+tools.initCap(self.getDisplayName())+" used up "+medicalArtefact.getDisplayName()+"."
                                 _currentLocation.removeObject(medicalArtefact.getName());
                             } else {
-                                resultString += "<br>"+initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medicalArtefact.getDisplayName()+"."
+                                resultString += "<br>"+tools.initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medicalArtefact.getDisplayName()+"."
                                 _inventory.remove(medicalArtefact.getName());
                             };
                         };
@@ -3025,7 +2936,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             
             if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
-            if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+initCap(self.getDisplayName())+" is bleeding. ";};    
+            if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+tools.initCap(self.getDisplayName())+" is bleeding. ";};    
 
             //only show what's going on if the player is in the same location
             //note we store playerLocation at the beginning in case the player was killed as a result of the tick.
@@ -3287,12 +3198,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (exits.length == 1 && currentLocation.getName() != homeLocation.getName()) {return null;};
 
             if (randomiseSearch) {
-                exits = shuffle(exits);
+                exits = tools.shuffle(exits);
             };
 
             for (var e=0;e<exits.length;e++) {
                 var direction = exits[e].getDirection();
-                if (direction == map.oppositeOf(lastDirection)) {
+                if (direction == tools.oppositeOf(lastDirection)) {
                     continue;
                 };
 

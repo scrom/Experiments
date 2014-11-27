@@ -1,7 +1,10 @@
 ﻿"use strict";
 //main map object
 exports.Map = function Map() {
-    try{   
+    try{
+        //module deps
+        var tools = require('./tools.js');
+                  
         //source data: 
         var _rootLocationsJSON = require('../../data/root-locations.json');          
 
@@ -22,23 +25,6 @@ exports.Map = function Map() {
 
 	    var _objectName = "Map";
 
-        //captialise first letter of string.
-        var initCap = function(aString){
-            return aString.charAt(0).toUpperCase() + aString.slice(1);
-        };
-        
-        //custom sort
-        var sortByProperty = function(property) {
-            return function (a, b) {
-                if( a[property] > b[property]){
-                    return 1;
-                }else if( a[property] < b[property] ){
-                    return -1;
-                };
-                return 0;
-            };
-        };
-
         console.log(_objectName + ' created');
 
         self.getCurrentAttributes = function() {
@@ -57,30 +43,6 @@ exports.Map = function Map() {
 
         self.getName = function() {
             return "$map";
-        };
-        
-        //direction opposites
-        self.oppositeOf = function(aDirection){
-            switch(aDirection)
-            {
-                case 'n':
-                    return 's'; 
-                case 's':
-                    return 'n';
-                case 'e':
-                    return 'w';
-                case 'w':
-                    return 'e';
-                case 'u':
-                    return 'd';
-                case 'd':
-                    return 'u';
-                case 'i':
-                    return 'o';
-                case 'o':
-                    return 'i';   
-            }; 
-            return null;       
         };
 
         self.increaseMaxScore = function(increaseBy) {
@@ -310,7 +272,7 @@ exports.Map = function Map() {
                 locationsAsJSON.push(JSON.parse(_locations[i].toString()));
                 } catch (e) {console.log("Error parsing JSON for location: error = "+e+": "+_locations[i].toString());};
             };
-            locationsAsJSON.sort(sortByProperty("name"));
+            locationsAsJSON.sort(tools.sortByProperty("name"));
             return locationsAsJSON;
         };
 
@@ -319,7 +281,7 @@ exports.Map = function Map() {
             for (var i=0; i<_locations.length;i++) {
                 locationsAsString.push(_locations[i].toString());
             };
-            locationsAsString.sort(sortByProperty("name"));
+            locationsAsString.sort(tools.sortByProperty("name"));
             return locationsAsString;
         };
 
@@ -530,10 +492,10 @@ exports.Map = function Map() {
             var contagionReport = "";
 
             for (var attr in contagionData) {
-                contagionReport+= initCap(attr)+ " infection level: "+Math.round((contagionData[attr]/creatures.length)*100)+"%<br>";
+                contagionReport+= tools.initCap(attr)+ " infection level: "+Math.round((contagionData[attr]/creatures.length)*100)+"%<br>";
             };
             for (var attr in antibodyData) {
-                contagionReport+= initCap(attr)+ " immunity level: "+Math.round((antibodyData[attr]/creatures.length)*100)+"%<br>";
+                contagionReport+= tools.initCap(attr)+ " immunity level: "+Math.round((antibodyData[attr]/creatures.length)*100)+"%<br>";
             };
 
             if (deathTollData.friendly >0) {contagionReport+="Friendly death toll: "+deathTollData.friendly+"<br>";};

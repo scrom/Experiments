@@ -2,6 +2,7 @@
 //action object - manager user actions and pack/unpack JSON equivalents
 exports.Action = function Action(player, map, fileManager) {
     try{
+        var tools = require('./tools.js');
         var locationObjectModule = require('./location');
         var artefactObjectModule = require('./artefact');
 	    var self = this; //closure so wec don't lose this reference in callbacks
@@ -27,22 +28,9 @@ exports.Action = function Action(player, map, fileManager) {
         var _inConversationWith; //who is the player talking to?
 
 	    var objectName = "Action";
-
-        var _directions = ['n','north','s','south','e','east','w','west','i','in','o','out','u','up','d','down', 'l','left', 'r','right', 'c','continue', 'b','back'];
-        var _positions =  ['onto', 'on to', 'on top of', 'on', 'above', 'under', 'underneath', 'below', 'beneath', 'behind']; //split words that are also "put" positions.
         var _adverbs =  ['closely', 'carefully', 'cautiously', 'slowly', 'quickly', 'softly', 'loudly','noisily', 'gently', 'quietly','silently', 'tightly','losely']; //not split words but we need to trim these out and occasionally handle them.
         //private functions
 
-        //captialise first letter of string.
-        var initCap = function(aString){
-            return aString.charAt(0).toUpperCase() + aString.slice(1);
-        };
-
-        //handle empty strings
-        var stringIsEmpty = function(aString){
-            if ((aString == "")||(aString == undefined)||(aString == null)) {return true;};
-            return false;
-        };
 
         //private - store results in class variables
         var buildResult = function(resultDescription, imageName) {
@@ -393,12 +381,12 @@ exports.Action = function Action(player, map, fileManager) {
                         
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         if (_object1) {
-                            var positionIndex = _positions.indexOf(_splitWord);
+                            var positionIndex = tools.positions.indexOf(_splitWord);
                             if ((positionIndex > -1) ||(_adverb == "closely" || _adverb == "carefully")) {
                                 //support "look under", "look behind" and "look in" etc.
                                 if (_adverb) {_verb = _verb+" "+_adverb;};
                                 if (positionIndex == -1) {_ticks = 3;}; //full search takes longer
-                                description = _player.search(_verb, _object1, _splitWord, _positions);
+                                description = _player.search(_verb, _object1, _splitWord, tools.positions);
                             } else {
                                 description = _player.examine(_verb+" "+_splitWord,_object1, _map);
                             };
@@ -424,7 +412,7 @@ exports.Action = function Action(player, map, fileManager) {
                         _ticks = 3; //random searching takes a while! - look under/behind x is faster
                         //would like to add "search for x" support here in future.  
                         if (!_object0) {
-                            description = _player.search(_verb, _object1, _splitWord, _positions);
+                            description = _player.search(_verb, _object1, _splitWord, tools.positions);
                         } else {            
                             description = _player.search(_verb, _object0);
                         };
@@ -436,12 +424,12 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examien':
                     case 'browse':
                         _player.setLastVerbUsed('examine');
-                        if ((_positions.indexOf(_splitWord) > -1)) {
+                        if ((tools.positions.indexOf(_splitWord) > -1)) {
                             //support "examine under", "examine behind" and "examine in" etc.
-                            description = _player.search(_verb, _object1, _splitWord, _positions);
+                            description = _player.search(_verb, _object1, _splitWord, tools.positions);
                         } else if (_adverb == "closely" || _adverb == "carefully") {
                             _ticks = 3; //full search takes longer
-                            description = _player.search(_verb, _object0, _splitWord, _positions);
+                            description = _player.search(_verb, _object0, _splitWord, tools.positions);
                         } else {
                             description = _player.examine(_verb, _object0, _map);
                         };
@@ -476,9 +464,9 @@ exports.Action = function Action(player, map, fileManager) {
                         //or fall through to normal "put"
                     case 'hide':
                     case 'balance':
-                        if (_positions.indexOf(_splitWord) > -1) {
+                        if (tools.positions.indexOf(_splitWord) > -1) {
                             //put or hide an item on/under/behind x
-                            description = _player.position(_verb, _object0, _object1, _splitWord, _positions);
+                            description = _player.position(_verb, _object0, _object1, _splitWord, tools.positions);
                             break;
                         };
                     case 'attach':
@@ -534,7 +522,7 @@ exports.Action = function Action(player, map, fileManager) {
 
                         //translate to "move north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
-                        if (_directions.indexOf(_object0) > -1) {
+                        if (tools.directions.indexOf(_object0) > -1) {
                             _direction = _object0;
                             break;
                         };
@@ -542,7 +530,7 @@ exports.Action = function Action(player, map, fileManager) {
                         //if player enters "move to x", we'll have an object 1 (but no object 0).
                         if (!_object0) {
                             if (_object1) {
-                                if (_directions.indexOf(_object1) > -1) {
+                                if (tools.directions.indexOf(_object1) > -1) {
                                     _direction = _object1;
                                     break;
                                 };
@@ -777,7 +765,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'tak':
                     case 'takl':
                         //we assume "talk to x" - it "to" is missing, handle speech anyway.
-                        if (stringIsEmpty(_object1) && (!(stringIsEmpty(_object0)))) {
+                        if (tools.stringIsEmpty(_object1) && (!(tools.stringIsEmpty(_object0)))) {
                             _object1 = _object0;
                             _object0 = null;
                         };
@@ -826,13 +814,13 @@ exports.Action = function Action(player, map, fileManager) {
                         //this will fall through to navigation later.
                         //if player enters "go to x", we'll have an object 1 (but no object 0).
                         if (_object1) {
-                            if (_directions.indexOf(_object1) > -1) {
+                            if (tools.directions.indexOf(_object1) > -1) {
                                 _direction = _object1;
                             } else {
                                 description = _player.goObject(_verb, _splitWord, _object1, _map);
                             };
                         } else if (_object0) {
-                            if (_directions.indexOf(_object0) > -1) {
+                            if (tools.directions.indexOf(_object0) > -1) {
                                 _direction = _object0;
                             } else {
                                 description = _player.goObject(_verb, _splitWord, _object0, _map);
@@ -1057,8 +1045,8 @@ exports.Action = function Action(player, map, fileManager) {
         self.performPlayerNavigation = function () {
 
             //if direction not yet set...
-            var index = _directions.indexOf(_verb);
-            if ((!_direction || _direction == "") && _directions.indexOf(_verb)>-1) {
+            var index = tools.directions.indexOf(_verb);
+            if ((!_direction || _direction == "") && tools.directions.indexOf(_verb)>-1) {
                 _direction = _verb;
                 _verb = "go";
             }; 
@@ -1072,9 +1060,9 @@ exports.Action = function Action(player, map, fileManager) {
 
                 //use whole word direction.
                 if (_direction.length == 1) {
-                    var index = _directions.indexOf(_direction);
+                    var index = tools.directions.indexOf(_direction);
                     if (index > -1) {
-                        _direction = _directions[index+1]; 
+                        _direction = tools.directions[index+1]; 
                     };
                 };
 
@@ -1241,7 +1229,7 @@ exports.Action = function Action(player, map, fileManager) {
 
             //replace any player substitution variables
             while (description.indexOf("$player") > -1) {
-                var username = initCap(_player.getUsername());
+                var username = tools.initCap(_player.getUsername());
                 while (username.indexOf("%20") > -1) {
                      username = username.replace("%20"," ");
                 };

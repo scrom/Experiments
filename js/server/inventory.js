@@ -1,7 +1,10 @@
 ﻿"use strict";
 //inventory object - used for player, creature and eventually object inventories
 module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBalance, ownerName) {
-    try{      
+    try{
+        //module deps
+        var tools = require('./tools.js');      
+                
 	    var self = this; //closure so we don't lose this reference in callbacks
 
 	    var _objectName = "Inventory";
@@ -12,24 +15,19 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //console.log(_objectName + ' created');
 
-        //captialise first letter of string.
-        var initCap = function(aString){
-            return aString.charAt(0).toUpperCase() + aString.slice(1);
-        };
-
         ////public methods
         self.toString = function() {
             //return self.describe;
             if (_items.length == 0) {return "[]";};
-            var list = "[";
+            var resultString = "[";
             for(var i = 0; i < _items.length; i++) {
-                    if (i>0) {list += ", ";};
-                    list+= _items[i].toString();
+                    if (i>0) {resultString += ", ";};
+                    resultString+= _items[i].toString();
             };
-            list += "]";
+            resultString += "]";
 
             //need to add money in here.
-            return list;
+            return resultString;
        
         };
 
@@ -120,15 +118,14 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (additionalAttribute == "price") {
                     if (items.length >1 ) {description += "- ";};
                     
-                    if (items.length >1 ) {description +=initCap(items[i].getDescription());}
+                    if (items.length >1 ) {description +=tools.initCap(items[i].getDescription());}
                     else { description += items[i].getDescription();};
                     
                     description+= " (price: &pound;"+items[i].getPrice().toFixed(2)+")"
                     
                     if (items.length >1 ) {description +="<br>";};
                 } else {
-                    if (i > 0 && i < items.length - 1) { description += ', '; };
-                    if (i > 0 && i == items.length - 1) { description += ' and '; };
+                    description += tools.listSeparator(i, items.length);
                     description += items[i].getDescription();
                 };
 
@@ -152,8 +149,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 description += "<br>There"+isAre+" ";
 
                 for(var i = 0; i < positionedItems.length; i++) {
-                    if (i > 0 && i < positionedItems.length - 1) { description += ', '; };
-                    if (i > 0 && i == positionedItems.length - 1) { description += ' and '; };
+                    description += tools.listSeparator(i, positionedItems.length);
                     description += positionedItems[i].getDescription();
                 };
 
@@ -199,7 +195,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
     
         self.add = function(anObject) {
             if (anObject == undefined) {return "Can't pick it up.";};
-            if (!(self.canCarry(anObject))) {return initCap(anObject.getDescriptivePrefix())+" too heavy.";};
+            if (!(self.canCarry(anObject))) {return tools.initCap(anObject.getDescriptivePrefix())+" too heavy.";};
             return self.forceAdd(anObject); 
         };
 
@@ -294,13 +290,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
             //return foundItems;
             if (foundItems.length==0) {return "nothing new";};
-            var list = "";
+            var resultString = "";
             for(var i = 0; i < foundItems.length; i++) {
-                    if ((i>0)&&(i<foundItems.length-1)){list+=', ';};
-                    if ((i==foundItems.length-1)&&(i>0)){list+=' and ';};
-                    list+=foundItems[i].getDescription();
+                    resultString += tools.listSeparator(i, foundItems.length);
+                    resultString+=foundItems[i].getDescription();
             };
-            return list;
+            return resultString;
         };
 
         self.showHiddenObjects = function(position, location) {
@@ -316,13 +311,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
             //return foundItems;
             if (foundItems.length==0) {return "nothing new";};
-            var list = "";
+            var resultString = "";
             for(var i = 0; i < foundItems.length; i++) {
-                    if ((i>0)&&(i<foundItems.length-1)){list+=', ';};
-                    if ((i==foundItems.length-1)&&(i>0)){list+=' and ';};
-                    list+=foundItems[i].getDescription();
+                    resultString += tools.listSeparator(i, foundItems.length);
+                    resultString+=foundItems[i].getDescription();
             };
-            return list;
+            return resultString;
         };
 
         self.getHiddenObjects = function(position, location) {
@@ -340,14 +334,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
 
         self.listObjects = function() {
-            var list = ''
+            var resultString = ""
             var items = self.getAllObjects();
             for(var i = 0; i < items.length; i++) {
-                    if ((i>0)&&(i<items.length-1)){list+=', ';};
-                    if ((i==items.length-1)&&(i>0)){list+=' and ';};
-                    list+=items[i].getDescription();
+                    resultString += tools.listSeparator(i, items.length);
+                    resultString+=items[i].getDescription();
             };
-            return list;
+            return resultString;
         };
 
         self.getRandomObject = function() {

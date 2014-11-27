@@ -219,20 +219,83 @@ exports.testMissionDialogue = function (test) {
 
 exports.testMissionDialogue.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "Mission Dialogue Trait"], description: "Test that hard disk mission can be successfully completed." };
 
-//the below test needs rewriting - spy mission is now heavily embedded into a generated location later in the game
-/*exports.canCompleteKillSpyMission = function (test) {
-    var spy = m0.getCreature('spy');
 
-    //var mission = new spy.getMissions()[0];
+exports.completingAnEventCanCreateANewLocationAndCreature = function (test) {
+    var kitchen = m0.getLocation("kitchen-ground-floor");
+    var planeCrash = kitchen.getMissions(true)[0];
+    var crashReward = planeCrash.event();
+    planeCrash.processReward(m0, crashReward, p0);
+
+    var spy = m0.getCreature('spy');
+    var name = spy.getName();
+    var location = m0.getLocation("crash-site");
+    var locationName = location.getName();
+
+    var expectedResult = "Name: jordan miller | Location: crash-site";
+    var actualResult = "Name: "+name+" | Location: "+locationName;
+    //if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.completingAnEventCanCreateANewLocationAndCreature.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+
+exports.completingSaveRedGateMissionDeliversHardDiskToSpy = function (test) {
+    var kitchen = m0.getLocation("kitchen-ground-floor");
+    var planeCrash = kitchen.getMissions(true)[0];
+    var crashReward = planeCrash.event();
+    planeCrash.processReward(m0, crashReward, p0);
+
+    var westcarpark = m0.getLocation("west-car-park");
+    var saveredgate = westcarpark.getMissions(true)[0];
+    var saveredgatereward = saveredgate.success();
+    saveredgate.processReward(m0, saveredgatereward, p0);
+
+    var spy = m0.getCreature('spy');
+    var disk = spy.getObject("hard disk");
+
+    var expectedResult = "hard disk";
+    var actualResult = disk.getName();
+    //if (result) {actualResult = true;};
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.completingSaveRedGateMissionDeliversHardDiskToSpy.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+
+exports.canCompleteKillSpyMission = function (test) {
+    var kitchen = m0.getLocation("kitchen-ground-floor");
+    var planeCrash = kitchen.getMissions(true)[0];
+    var crashReward = planeCrash.event();
+    planeCrash.processReward(m0, crashReward, p0);
+
+    var spy = m0.getCreature('spy');
+    var missions = spy.getMissions(true);
+    var missions;
+    for (var i=0;i<missions.length;i++) {
+        if (missions[i].getName() == "killthespy") {
+            mission = missions[i];
+            break;
+        };
+    };
+
+    //make the kill mission completeable
+    mission.clearParent();
+
     //mission.startTimer();
-    var location = m0.getLocation("machine-room-east");
+    var location = m0.getLocation("crash-site");
     p0.setLocation(location);
     spy.kill();
-    
-    //var result = mission.checkState(inv, simon.getLocation(), m0);
+
     var resultString = p0.updateMissions(1, m0);
 
-    var expectedResult = "<br>Congratulations. The spy is dead! Have 50 points.<br>";
+    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.<br>";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -244,18 +307,35 @@ exports.testMissionDialogue.meta = { traits: ["Mission Test", "Mission Completio
 exports.canCompleteKillSpyMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
 
 exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (test) {
-    var spy = m0.getCreature('spy');
+    var kitchen = m0.getLocation("kitchen-ground-floor");
+    var planeCrash = kitchen.getMissions(true)[0];
+    var crashReward = planeCrash.event();
+    planeCrash.processReward(m0, crashReward, p0);
 
-    //var mission = new spy.getMissions()[0];
-    //mission.startTimer();
+    var spy = m0.getCreature('spy');
+    var missions = spy.getMissions(true);
+    var missions;
+    for (var i=0;i<missions.length;i++) {
+        if (missions[i].getName() == "killthespy") {
+            mission = missions[i];
+            break;
+        };
+    };
+
+    //make the kill mission completeable
+    mission.clearParent();
+
+    //kill the spy before the player gets there
     spy.kill();
-    var location = m0.getLocation("machine-room-east");
+
+    //mission.startTimer();
+    var location = m0.getLocation("crash-site");
     p0.setLocation(location);
     
     //var result = mission.checkState(inv, simon.getLocation(), m0);
     var resultString = p0.updateMissions(1, m0);
 
-    var expectedResult = "<br>Congratulations. The spy is dead! Have 50 points.<br>";
+    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.<br>";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -265,7 +345,7 @@ exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (
 };
 
 exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
-*/
+
 
 exports.canCompleteReadArticleMission = function (test) {
     var book = m0.getObject("solid article");

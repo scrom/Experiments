@@ -4,6 +4,7 @@ exports.Location = function Location(name, displayName, description, attributes)
     //name, description, detailedDescription, attributes,
     try{
         //module deps
+        var tools = require('./tools.js');
         var artefactObjectModule = require('./artefact');
         var exitObjectModule = require('./exit');
         var inventoryObjectModule = require('./inventory');
@@ -32,20 +33,8 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _defaultOutdoorScenery = ["floor", "ground", "sky", "air"];
 
 	    var _objectName = "location";
-
-        //captialise first letter of string.
-        var initCap = function(aString){
-            return aString.charAt(0).toUpperCase() + aString.slice(1);
-        };
         
-        _displayName = initCap(_displayName);
-
-        var compassSort = function(a,b) {
-            var orderedDirections = ['n','s','e','w','u','d','i','o','l','r','c'];
-            if (orderedDirections.indexOf(a.getDirection()) < orderedDirections.indexOf(b.getDirection())) {return -1;};
-            if (orderedDirections.indexOf(a.getDirection()) > orderedDirections.indexOf(b.getDirection())) {return 1;};
-            return 0;
-        };
+        _displayName = tools.initCap(_displayName);
 
         var processAttributes = function(locationAttributes) {
             if (!locationAttributes) {return null;}; //leave defaults preset
@@ -324,7 +313,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                     };
                 };
             };
-            exitArray.sort(compassSort);
+            exitArray.sort(tools.compassSort);
             return exitArray;
         };
 
@@ -594,17 +583,16 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.listExits = function () {
-            var exitList = "";
+            var resultString = "";
             var exits = self.getAvailableExits();
             var compassExits = ["North","South","East","West"];
             for (var i = 0; i < exits.length; i++) {
-                if ((i==0) && (compassExits.indexOf(exits[i].getLongName()) >-1)) {exitList += "to the ";};
-                if ((i > 0) && (i < exits.length - 1)) { exitList += ', '; };
-                if ((i == exits.length - 1) && (i > 0)) { exitList += ' and '; };
-                exitList += exits[i].getLongName();
+                if ((i==0) && (compassExits.indexOf(exits[i].getLongName()) >-1)) {resultString += "to the ";};
+                resultString += tools.listSeparator(i, compassExits.length);
+                resultString += exits[i].getLongName();
             };
 
-            return exitList;
+            return resultString;
         };
 
         self.isDark = function () {

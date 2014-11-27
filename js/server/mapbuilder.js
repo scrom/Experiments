@@ -3,6 +3,7 @@
 exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
     try{   
         //module deps
+        var tools = require('./tools');
         var fs = require('fs');
         var mapObjectModule = require('./map');
         var locationObjectModule = require('./location'); 
@@ -426,7 +427,7 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
         //note, "fromDirection" should be the lowercase short version (e.g. "u" or "n")
         self.link = function(fromDirection, fromLocationName, toLocationName, fromDescription, toDescription, toIsHidden, fromIsHidden, toRequiredAction, fromRequiredAction) {
-             var toDirection = _map.oppositeOf(fromDirection);
+             var toDirection = tools.oppositeOf(fromDirection);
              //console.log('from:'+fromDirection+' to:'+toDirection);
              var fromLocation = _map.getLocation(fromLocationName);
              var toLocation = _map.getLocation(toLocationName);

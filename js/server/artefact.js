@@ -4,6 +4,7 @@
 module.exports.Artefact = function Artefact(name, description, detailedDescription, attributes, linkedExits, delivers) { 
     try{  
         //module deps
+        var tools = require('./tools.js');
         var inventoryObjectModule = require('./inventory');    
         var missionObjectModule = require('./mission.js');
         var contagionObjectModule = require('./contagion.js');
@@ -330,12 +331,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         validateType(_type, _subType);
-
-        //captialise first letter of string.
-        var initCap = function(aString){
-            return aString.charAt(0).toUpperCase() + aString.slice(1);
-        };
-
 
         //return right prefix for item       
         self.descriptionWithCorrectPrefix = function(anItemDescription, plural) {
@@ -773,8 +768,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             for (var l=0;l<liquids.length;l++) {
                 _inventory.remove(liquids[l]);
                 if (liquids[l] == "blood") {location.addBlood();};
-                if (l > 0 && l < liquids.length - 1) { resultString += ', '; };
-                if (l > 0 && l == liquids.length - 1) { resultString += ' and '; };
+                resultString += tools.listSeparator(l, liquids.length);
                 resultString += liquids[l]
             };
             var wasWere = "was";
@@ -861,8 +855,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_drawings.length>0) {
                 resultString += "<br>Someone has drawn ";
                 for (var a=0;a<_drawings.length;a++) {
-                    if (a > 0 && a < _drawings.length - 1) { resultString += ', '; };
-                    if (a > 0 && a == _drawings.length - 1) { resultString += ' and '; };
+                    resultString += tools.listSeparator(a, _drawings.length);
                     resultString += _drawings[a];
                 };
                 resultString+= " on "+self.getSuffix()+".<br>";
@@ -875,8 +868,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     resultString += "<br>Someone has written ";
                 };
                 for (var a=0;a<_writings.length;a++) {
-                    if (a > 0 && a < _writings.length - 1) { resultString += ', '; };
-                    if (a > 0 && a == _writings.length - 1) { resultString += ' and '; };
+                    resultString += tools.listSeparator(a, _writings.length);
                     resultString += "'"+_writings[a]+"'";
                 };
                 if (_drawings.length==0) {
@@ -898,16 +890,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (self.getPrice() > 0) {
-                resultString += "<br>" + initCap(_itemDescriptivePrefix) + " worth about £" + self.getPrice().toFixed(2) + ".";
+                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " worth about £" + self.getPrice().toFixed(2) + ".";
             };
 
             var inventoryIsVisible = true;
 
             if (_lockable && (_locked)) { 
-                resultString += " "+initCap(_itemDescriptivePrefix)+" locked.";
+                resultString += " "+tools.initCap(_itemDescriptivePrefix)+" locked.";
                 inventoryIsVisible = false;
             } else if (_opens && (!(_open))) { 
-                resultString += " "+initCap(_itemDescriptivePrefix)+" closed.";
+                resultString += " "+tools.initCap(_itemDescriptivePrefix)+" closed.";
                 inventoryIsVisible = false;
             };
 
@@ -936,15 +928,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //remove original description if it's not working.
             if (!(self.checkComponents())) { 
-                resultString += "<br>"+initCap(_itemDescriptivePrefix)+" missing something.";
+                resultString += "<br>"+tools.initCap(_itemDescriptivePrefix)+" missing something.";
                 resultString = resultString.replace(_detailedDescription, "");
             }  else if (_switched) {
                 if (!(self.hasPower())) {
-                    resultString += "<br>"+initCap(_itemDescriptivePrefix)+" not working.";
+                    resultString += "<br>"+tools.initCap(_itemDescriptivePrefix)+" not working.";
                     resultString = resultString.replace(_detailedDescription, "");
                 } else {
                     if(!(self.isPoweredOn())) {
-                        resultString += "<br>"+initCap(_itemDescriptivePrefix)+" switched off.";
+                        resultString += "<br>"+tools.initCap(_itemDescriptivePrefix)+" switched off.";
                         resultString = resultString.replace(_detailedDescription, "");
                     };
                 };
@@ -973,12 +965,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (combinesWithList.length > 0) {
                         //if we override the default "delivers" description...
                         if (_combinesDescription.length > 0) {
-                            resultString += "<br>" + initCap(_combinesDescription);
+                            resultString += "<br>" + tools.initCap(_combinesDescription);
                         } else {
-                            resultString += "<br>" + initCap(self.getName()) + " can be used to make ";
+                            resultString += "<br>" + tools.initCap(self.getName()) + " can be used to make ";
                             for (var i = 0; i < combinesWithList.length; i++) {
-                                if (i > 0 && i < combinesWithList.length - 1) { resultString += ", "; };
-                                if (i > 0 && i == combinesWithList.length - 1) { resultString += " and "; };
+                                resultString += tools.listSeparator(i, combinesWithList.length);
                                 resultString += combinesWithList[i].getName();
                             };
                         };
@@ -989,8 +980,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (canDeliverList.length > 0) {
                         resultString += "<br>" + _itemPrefix + " delivers ";
                         for (var i = 0; i < canDeliverList.length; i++) {
-                            if (i > 0 && i < canDeliverList.length - 1) { resultString += ", "; };
-                            if (i > 0 && i == canDeliverList.length - 1) { resultString += " and "; };
+                            resultString += tools.listSeparator(i, canDeliverList.length);
                             resultString += canDeliverList[i].getName();
                         };
                         resultString += ".";
@@ -1006,7 +996,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                         for (var i = 0; i < sellsList.length; i++) {
                             if (sellsList.length >1 ) {resultString += "- ";};
-                            if (sellsList.length >1 ) {resultString +=initCap(sellsList[i].getName());}
+                            if (sellsList.length >1 ) {resultString +=tools.initCap(sellsList[i].getName());}
                             else {  resultString +=sellsList[i].getName();};                   
                             resultString += " (£"+sellsList[i].getPrice().toFixed(2)+")<br>";
                         };
@@ -1019,8 +1009,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                         resultString += " delivers ";
                         for (var i = 0; i < cannotDeliverList.length; i++) {
-                            if (i > 0 && i < cannotDeliverList.length - 1) { resultString += ", "; };
-                            if (i > 0 && i == cannotDeliverList.length - 1) { resultString += " and "; };
+                            resultString += tools.listSeparator(i, cannotDeliverList.length);
                             resultString += cannotDeliverList[i].getName();
                         };
                         resultString += ".";
@@ -1030,7 +1019,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //describe remaining charges (if not unlimited)
             if (self.chargesRemaining() == 0) {
-                resultString += "<br>"+initCap(self.getDescriptivePrefix())+" all used up.";
+                resultString += "<br>"+tools.initCap(self.getDescriptivePrefix())+" all used up.";
             }
             else if (self.chargesRemaining() >1) { //we don't report when there's only a single use left.
                 //if (_detailedDescription.indexOf('$') >-1) {//we have custom placeholders in the description
@@ -1612,23 +1601,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.switchOnOrOff = function(verb, onOrOff) {
-            if (_broken||self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" broken.";};
+            if (_broken||self.isDestroyed()) {return tools.initCap(_itemDescriptivePrefix)+" broken.";};
             if (!(_switched)) {return "There's no obvious way to "+verb+" "+_itemSuffix+" on or off.";};
             if (!(self.hasPower())) {
-                var resultString = initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
-                if (!(self.checkComponents())) {resultString +=" "+initCap(_itemDescriptivePrefix)+" missing something.";};
+                var resultString = tools.initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
+                if (!(self.checkComponents())) {resultString +=" "+tools.initCap(_itemDescriptivePrefix)+" missing something.";};
                 return resultString;
 
             };
             switch(onOrOff) {
                 case "on":
-                    if (_on) {return initCap(_itemDescriptivePrefix)+" already on.";}; 
+                    if (_on) {return tools.initCap(_itemDescriptivePrefix)+" already on.";}; 
                     break;
                 case "off":
-                    if (!(_on)) {return initCap(_itemDescriptivePrefix)+" already off.";};
+                    if (!(_on)) {return tools.initCap(_itemDescriptivePrefix)+" already off.";};
                     break;
                 case "out":
-                    if (!(_on)) {return initCap(_itemDescriptivePrefix)+" already out.";};
+                    if (!(_on)) {return tools.initCap(_itemDescriptivePrefix)+" already out.";};
                     break;
                 default:
                     null; 
@@ -1742,7 +1731,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var repairerType = repairer.getType();
             var resultString = "";
 
-            if(_destroyed) {return initCap(_itemDescriptivePrefix)+" beyond repair."};
+            if(_destroyed) {return tools.initCap(_itemDescriptivePrefix)+" beyond repair."};
 
             if (!(repairer.canRepair(self))) {
                 if (repairerType == "player") {
@@ -1844,7 +1833,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_opens && !_open) {_open = true;};
                 if (_price > 0) { self.discountPriceByPercent(50); };
                 _description += " (broken)";
-                _detailedDescription = initCap(_itemDescriptivePrefix)+" broken.";
+                _detailedDescription = tools.initCap(_itemDescriptivePrefix)+" broken.";
                 var opened = "";
                 if (wasLocked && !wasOpen && _open) {opened = " open";};  
                 return "You broke "+_itemSuffix+opened+"!";
@@ -2031,7 +2020,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.moveOrOpen = function(verb, locationName) {
             if (self.isDestroyed()) {return "There's nothing viable left to work with.";};
-            if (_locked) {return initCap(_itemDescriptivePrefix)+" locked."};
+            if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked."};
             if (_opens && (!(_open))){
 
                 _open = true;
@@ -2073,17 +2062,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (verb == 'open'||verb == 'unlock') {
                     var resultString = "You "+verb+" "+self.getDisplayName()+".";
                     if (_inventory.size() > 0) {
-                        resultString += " "+initCap(_itemPrefix)+ " contain";
+                        resultString += " "+tools.initCap(_itemPrefix)+ " contain";
                         if (!(_plural)) resultString += "s"
                         resultString +=" "+_inventory.describe()+".";
                     } else if (_inventory.getCarryWeight() > 0) {
-                        resultString +=" "+initCap(_itemDescriptivePrefix)+" empty.";
+                        resultString +=" "+tools.initCap(_itemDescriptivePrefix)+" empty.";
                     };
                     return resultString;
                 };
             };
             if (verb == 'open') {
-                if (_opens && (_open)){return initCap(_itemDescriptivePrefix)+" already open.";};               
+                if (_opens && (_open)){return tools.initCap(_itemDescriptivePrefix)+" already open.";};               
                 return _itemPrefix+" "+doesPlural()+" open.";
             };
             if (verb == 'unlock') { return "You "+verb+" "+self.getDisplayName()+"."};
@@ -2118,7 +2107,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
 
                 return "You "+verb+" "+self.getDisplayName()+". "+exitResult;
-            } else {return initCap(_itemDescriptivePrefix)+" not open."};
+            } else {return tools.initCap(_itemDescriptivePrefix)+" not open."};
         };
 
         self.hasSpoken = function() {
@@ -2127,7 +2116,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.reply = function(someSpeech, player, keyword, map) {
             if (self.isDestroyed()) {return "The remaining fragments of inanimate spirit from "+self.getDisplayName()+" ignore you.";};
-            return initCap(_itemDescriptivePrefix)+" quietly aware of the sound of your voice but "+self.showsPlural()+" no sign of response.";
+            return tools.initCap(_itemDescriptivePrefix)+" quietly aware of the sound of your voice but "+self.showsPlural()+" no sign of response.";
         };
 
         self.canTravel = function() {
@@ -2199,7 +2188,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return "You try and try but just can't seem to keep "+_itemSuffix+" in your mouth without doing yourself harm."
                 };
             } else {
-                return initCap(_itemDescriptivePrefix)+" really not worth trying to eat again."
+                return tools.initCap(_itemDescriptivePrefix)+" really not worth trying to eat again."
             };
         };
 
@@ -2271,14 +2260,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
 
-            if ((!objectToGive) && _locked && (!(self.isDestroyed()))) { return initCap(_itemDescriptivePrefix) + " locked."; };
-            if ((!objectToGive) && (!(self.isOpen()))) { return initCap(_itemDescriptivePrefix) + " closed."; };
+            if ((!objectToGive) && _locked && (!(self.isDestroyed()))) { return tools.initCap(_itemDescriptivePrefix) + " locked."; };
+            if ((!objectToGive) && (!(self.isOpen()))) { return tools.initCap(_itemDescriptivePrefix) + " closed."; };
 
 
             //is this something we deliver
             var delivering = false;
             if (objectToGive) {
-                if (self.isDestroyed() || self.isBroken()) { return initCap(_itemDescriptivePrefix) + " broken."; };
+                if (self.isDestroyed() || self.isBroken()) { return tools.initCap(_itemDescriptivePrefix) + " broken."; };
                 if (objectToGive.getPrice() > 0) { 
                     if (!(player.canAfford(objectToGive.getPrice()))) {return "You can't afford " + objectToGive.getPrefix().toLowerCase() + ".";};
                 };
@@ -2288,7 +2277,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //if not a deliverable, check inventory
             if (!(objectToGive)) { objectToGive = _inventory.getObject(anObjectName); };
 
-            if ( !(objectToGive)) {return initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
+            if ( !(objectToGive)) {return tools.initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
 
             if (delivering && !(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" "+doesPlural()+" seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong.";};
 
@@ -2305,7 +2294,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var deliveredItem;
             if (delivering) {
                 deliveredItem = self.deliver(objectToGive.getName());
-                if (!(deliveredItem)) { return initCap(_itemDescriptivePrefix) + " not working at the moment." };
+                if (!(deliveredItem)) { return tools.initCap(_itemDescriptivePrefix) + " not working at the moment." };
                 objectToGive = deliveredItem;
                 if (objectToGive.getPrice() > 0) { 
                     player.reduceCash(objectToGive.getPrice());
@@ -2375,11 +2364,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.position = function(anObject, position) {
-            if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" concealing anything.";};
+            if (self.isDestroyed()) {return tools.initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" concealing anything.";};
 
             var objectAlreadyInPlace = _inventory.getObjectByPosition(position);
             if (objectAlreadyInPlace) {
-                if (objectAlreadyInPlace.getName() == anObject.getName()) {return initCap(_itemDescriptivePrefix)+" already there.";};
+                if (objectAlreadyInPlace.getName() == anObject.getName()) {return tools.initCap(_itemDescriptivePrefix)+" already there.";};
                 return "There's already something "+position+" there."
             };
             _inventory.position(anObject, position);            
@@ -2387,9 +2376,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.receive = function(anObject) {
-            if (self.getType() == "container" && self.isBroken()) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
-            if (self.isDestroyed()) {return initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
-            if (_locked) {return initCap(_itemDescriptivePrefix)+" locked.";};
+            if (self.getType() == "container" && self.isBroken()) {return tools.initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
+            if (self.isDestroyed()) {return tools.initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
+            if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked.";};
             var resultString = "";
 
             _inventory.add(anObject);
@@ -2412,7 +2401,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         _inventory.remove(newReceiver.getName());  
                         _inventory.add(newObject);   
                         resultString = "You add "+anObject.getDisplayName()+" to "+self.getDisplayName()+".<br>";
-                        return resultString+initCap(self.getDisplayName())+" now contains "+newObject.getDescription()+".";   
+                        return resultString+tools.initCap(self.getDisplayName())+" now contains "+newObject.getDescription()+".";   
                     } else {
                         resultString = "You attempt to make "+newObject.getDescription()+" by adding "+anObject.getDisplayName()+" to "+newReceiver.getDisplayName();
                         resultString += " in "+self.getDisplayName()+" but you need something else to put "+newObject.getPrefix().toLowerCase()+" in.<br>"
@@ -2469,7 +2458,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.lock = function(aKey, locationName) {
-            if (self.isDestroyed()||_broken) {return initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
+            if (self.isDestroyed()||_broken) {return tools.initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
             if (!(_locked)) {
                 if (!(aKey)) {return "You don't have a key that fits.";};
@@ -2482,13 +2471,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return "You need something else to lock "+_itemSuffix+".";
                 };
             };
-            return initCap(_itemDescriptivePrefix)+" already locked.";
+            return tools.initCap(_itemDescriptivePrefix)+" already locked.";
         };
 
         self.unlock = function(aKey, locationName) {
             if (self.isDestroyed()||_broken) {
                 _locked = false;
-                return initCap(_itemDescriptivePrefix)+" broken. No need to unlock "+_itemSuffix+".";
+                return tools.initCap(_itemDescriptivePrefix)+" broken. No need to unlock "+_itemSuffix+".";
             };
             if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
             if (_locked) {
@@ -2509,7 +2498,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return "You need something else to unlock "+_itemSuffix+".";
                 };
             };
-            return  initCap(_itemDescriptivePrefix)+" already unlocked.";
+            return  tools.initCap(_itemDescriptivePrefix)+" already unlocked.";
         };
 
         self.keyTo = function(anObject) {
