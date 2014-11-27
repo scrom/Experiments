@@ -1189,7 +1189,7 @@ exports.Action = function Action(player, map, fileManager) {
             };
 
             //admin "cheat" commands start with +
-            if (_verb.substring(0,1) == "+") {
+            if (_verb.charAt(0) == "+") {
                 description = self.performPlayerCheatAction();
             };
 

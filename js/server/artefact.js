@@ -334,7 +334,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         //return right prefix for item       
         self.descriptionWithCorrectPrefix = function(anItemDescription, plural) {
-            if (anItemDescription.substr(0,1) == anItemDescription.substr(0,1).toUpperCase()) {
+            if (tools.isProperNoun(anItemDescription)) {
                 //Description starts with a proper noun.
                 return anItemDescription;
             };
@@ -354,7 +354,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return "some "+anItemDescription;
                 };
             };
-            switch (anItemDescription.substring(0,1).toLowerCase()) {
+            switch (anItemDescription.charAt(0).toLowerCase()) {
                 case "u":
                     if (anItemDescription.length == 1) {return "a '"+anItemDescription+"'";};
                     //note no break - fall through case

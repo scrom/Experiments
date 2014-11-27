@@ -275,8 +275,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (reward.carryWeight) { player.updateCarryWeight(reward.carryWeight);};            
             if (reward.score) { player.updateScore(reward.score);};
             if (reward.money) { player.updateCash(reward.money);};
-            if (reward.stealth) { player.setStealth(_stealth+reward.stealth);};
-            if (reward.hunt) { player.setHunt(_hunt+reward.hunt);};
+            if (reward.stealth) { player.setStealth(player.getStealth() + reward.stealth);};
+            if (reward.hunt) { player.setHunt(player.getHunt() + reward.hunt); };
             if (reward.repairSkill) { player.addSkill(reward.repairSkill);};
             if (reward.delivers) {resultString += player.acceptItem(reward.delivers);};
 
@@ -600,13 +600,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 return 1;
             } else {
                 if (typeof(conditionAttribute) == 'string') {
-                    if (conditionAttribute.substring(0,1) == ">") {
+                    if (conditionAttribute.charAt(0) == ">") {
                         var conditionValue = parseFloat(conditionAttribute.substring(1,conditionAttribute.length));
                         if (objectAttribute > conditionValue) {
                             return 1;
                         };
                     };
-                    if (conditionAttribute.substring(0,1) == "<") {
+                    if (conditionAttribute.charAt(0) == "<") {
                         var conditionValue = parseFloat(conditionAttribute.substring(1,conditionAttribute.length));
                         if (objectAttribute < conditionValue) {
                             return 1;

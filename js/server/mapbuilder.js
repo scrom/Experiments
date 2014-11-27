@@ -109,10 +109,9 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
                 //determine name (proper noun or just noun)
                 var creatureName = creatureData.name;
-                var initial = creatureData.displayname.substring(0,1);
 
                 //is their name a proper noun?
-                if (initial == initial.toUpperCase()) {
+                if (tools.isProperNoun(creatureData.displayname)) {
                     if (creatureName.toLowerCase() != creatureData.displayname.toLowerCase()) {
                         console.log("Usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
                     };

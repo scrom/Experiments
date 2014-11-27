@@ -251,9 +251,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        //set display name (support for proper nouns)
-        var initial = _displayName.substring(0,1);
-        if (initial != initial.toUpperCase()) {
+        //set display name (if not a proper nouns)
+        if (!(tools.isProperNoun(_displayName))) {
             if (_type == "animal") {
                 _displayName = "the "+_displayName; //this needs work
             } else {
