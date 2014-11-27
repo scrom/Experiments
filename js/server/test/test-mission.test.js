@@ -269,6 +269,26 @@ exports.completingSaveRedGateMissionDeliversHardDiskToSpy = function (test) {
 exports.completingSaveRedGateMissionDeliversHardDiskToSpy.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
 
 
+exports.canGainHuntingSkillByReadingBook = function (test) {
+    var initialHuntValue = p0.getHunt(); //hunt starts from 0
+    var book = m0.getObject('battered book');
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    p0.read("read", "battered book");
+    p0.updateMissions(1, m0);
+    var resultString = p0.getHunt() - initialHuntValue;
+
+    var expectedResult = "2";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGainHuntingSkillByReadingBook.meta = { traits: ["Mission Test", "Read Trait", "Mission Completion Trait", "Mission Check Trait"], description: "Test that reading a book with a hunt mission bonus delivers attribute increase." };
+
 exports.canCompleteKillSpyMission = function (test) {
     var kitchen = m0.getLocation("kitchen-ground-floor");
     var planeCrash = kitchen.getMissions(true)[0];
