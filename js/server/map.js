@@ -6,6 +6,7 @@ exports.Map = function Map() {
         var _rootLocationsJSON = require('../../data/root-locations.json');          
 
 	    var self = this; //closure so we don't lose this reference in callbacks
+        var _locationIndexMap = [];
         var _locations = [];
         var _spawnDefinitions = [];
         var _startLocationIndex = 0;
@@ -133,6 +134,7 @@ exports.Map = function Map() {
         
         self.addLocation = function(location){
             _locations.push(location);
+            _locationIndexMap.push(location.getName());
             var newIndex = _locations.length-1;
             if (location.isStart()) {_startLocationIndex = newIndex;};
             return newIndex;
@@ -181,15 +183,28 @@ exports.Map = function Map() {
         self.removeLocation = function(locationName){
             //console.log("removing location: "+locationName);
             var locationToRemove;
-            var locationToRemoveIndex;
-            for (var i=0; i<_locations.length;i++) {
-                if (_locations[i].getName() == locationName) {
-                    //console.log("location removed");
-                    locationToRemove = _locations[i];
-                    //I considered rather than removing the location entirely, leave it in but remove entrances to it
-                    //decided to remove it but evacuate creatures first.
-                    _locations.splice(i,1); 
-                    break;
+            var locationToRemoveIndex = _locationIndexMap.indexOf(locationName);
+            locationToRemove = _locations[locationToRemoveIndex];
+            if (locationToRemove.getName() == locationName) {
+                _locations.splice(locationToRemoveIndex,1); 
+                _locationIndexMap.splice(locationToRemoveIndex,1); 
+            } else {
+                //we have a corrupted location map, find manually instead.
+                for (var i=0; i<_locations.length;i++) {
+                    if (_locations[i].getName() == locationName) {
+                        //console.log("location removed");
+                        locationToRemove = _locations[i];
+                        //I considered rather than removing the location entirely, leave it in but remove entrances to it
+                        //decided to remove it but evacuate creatures first.
+                        _locations.splice(i,1); 
+                        var locName = _locationIndexMap[i];
+                        if (locName == locationToRemove.getName()) {
+                            _locationIndexMap.splice(i,1); 
+                        } else {
+                            console.log("Map.removeLocation: location index map corrupted, working manually for now but performance will be impacted");   
+                        };
+                        break;
+                    };
                 };
             };
 
@@ -309,10 +324,20 @@ exports.Map = function Map() {
         };
 
         self.getLocation = function(aName){
+            var index = _locationIndexMap.indexOf(aName);
+            var returnLocation = _locations[index];
+            if (returnLocation) {
+                if (returnLocation.getName() == aName) {
+                    //index map is working fine :)
+                    return returnLocation;
+                };
+            };
             //we don't have name exposed any more...
             for(var index = 0; index < _locations.length; index++) {
                 if(_locations[index].getName() == aName) {
                     //console.log('location found: '+aName+' index: '+index);
+                    //the index map is damaged if we got this far.
+                    console.log("Map.getLocation: location index map corrupted, working manually for now but performance will be impacted");   
                     return _locations[index];
                 };
            };
