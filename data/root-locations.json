@@ -564,7 +564,7 @@
         },
         "reward": {
           "score": 75,
-          "message": "<br>Congratulations, you managed to get your latte.<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
+          "message": "<br>Congratulations, you managed to get your latte.<br><i>Drink</i> up, wake up and start doing a bit more to help your colleagues out (or not - it's up to you).<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
         }
       }
     ]
@@ -3363,7 +3363,7 @@
         "object": "artefact",
         "name": "black book",
         "description": "unassuming small black book",
-        "detailedDescription": "This one's a bit of an eye-opener about the challenges of theft in offices.",
+        "detailedDescription": "This looks like a bit of an eye-opener about the challenges of theft in offices.",
         "attributes": {
           "defaultAction": "read",
           "weight": 2,
@@ -5351,9 +5351,9 @@
             "object": "mission",
             "name": "destroycoffeemachine",
             "displayName": "destroy the coffee machine",
-            "description": "This place thrives on coffee, don't ruin it.",
             "attributes": {
-              "missionObject": "coffee machine"
+              "missionObject": "coffee machine",
+              "static": true
             },
             "conditionAttributes": {
               "isDestroyed": true
@@ -5990,7 +5990,7 @@
             "object": "artefact",
             "name": "large book",
             "description": "large book",
-            "detailedDescription": "It's a book on how to sell software in a friendly way.",
+            "detailedDescription": "It's called 'To Sell is Human'. It's a book on how to sell software in a friendly way.",
             "attributes": {
               "defaultAction": "read",
               "weight": 3,
@@ -6058,9 +6058,10 @@
             "object": "artefact",
             "name": "small book",
             "description": "small book",
-            "detailedDescription": "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers.<br>This kind of thing is perfect for someone in a customer-facing role.",
+            "detailedDescription": "It's called '50 Shades of Customer'.<br>(That's a really bad pun for a business book.)",
             "attributes": {
               "defaultAction": "read",
+              "defaultResult":  "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers and business relationships.<br>This kind of thing is perfect for someone in a front-line, customer-facing role.",
               "weight": 1,
               "attackStrength": 2,
               "type": "book",
@@ -7709,7 +7710,7 @@
         "name": "vic wiseman",
         "displayname": "Vic Wiseman",
         "description": "Vic the receptionist",
-        "detailedDescription": "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.",
+        "detailedDescription": "Well, receptionist is an understatement.<br>As well as dealing with all visitors & parcels, she also provides customer support!",
         "attributes": {
           "weight": 100,
           "attackStrength": 25,
@@ -8699,6 +8700,7 @@
         "detailedDescription": "Middle class pulp propaganda trash to be honest.",
         "attributes": {
           "defaultAction": "read",
+          "defaultResult":  "Blah blah government... blah scandal blah crucial blah liberal blah economics etc.",
           "weight": 1,
           "attackStrength": 2,
           "type": "book",

@@ -3678,7 +3678,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.drink = function(verb, artefactName) {
-            if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
+            if (tools.stringIsEmpty(artefactName)) { return verb + " what?"; };
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {
@@ -3712,10 +3712,28 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
 
-                return notFoundMessage(artefactName);
-            
-            }; 
+                //we've got this far so nothing named "up" is available.
+                if (artefactName == "up") {
+                    var food = _inventory.getAllObjectsOfType("food");
+                    //working from most recently collected, find drink...
+                    for (var f = food.length - 1; f >= 0 ; f--) {
+                        if (food[f].isLiquid) {
+                            artefact = food[f];
+                            break;
+                        };
 
+                    };
+                    if (!artefact) {
+                        return "You're not carrying anything to drink at the moment.";
+                    };
+                };
+
+            };
+
+            if (!artefact) {
+                return notFoundMessage(artefactName);
+            };
+            
             var result = artefact.drink(self); //trying to eat some things give interesting results.
             if (artefact.isEdible() && artefact.isLiquid()) {
 
