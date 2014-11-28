@@ -588,7 +588,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             var compassExits = ["North","South","East","West"];
             for (var i = 0; i < exits.length; i++) {
                 if ((i==0) && (compassExits.indexOf(exits[i].getLongName()) >-1)) {resultString += "to the ";};
-                resultString += tools.listSeparator(i, compassExits.length);
+                resultString += tools.listSeparator(i, exits.length);
                 resultString += exits[i].getLongName();
             };
 

@@ -1495,7 +1495,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return artefact.lock(key, _currentLocation.getName());
         };
 
-        //this can probably be made private
+        //this can probably be made private, moved to inventory or artefact.
+        //references _inventory, _currentLoction 2 artefacts and their potential containers
         self.combine = function(artefact, receiver) {
             //create new object, remove originals, place result in player inventory or location.
             //zero weight of ingredients to attempt combine
