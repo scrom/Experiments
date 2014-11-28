@@ -354,7 +354,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         processAttributes(attributes, map);
 
-
         //public member functions
 
         self.toString = function() {
@@ -821,7 +820,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_stealth <1) {return 1;}; // safetynet to avoid divide by zero or odd results from caller
             return _stealth;
         };
-
 
         self.setHunt = function(newValue) {
             //skill used for hunting
@@ -1644,26 +1642,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (verb == "draw"||verb == "sketch") {
                 success = receiver.addDrawing(artwork);
+
+                var pluralArt = false;               
+                if (artwork.length > 1 && ((artwork.substr(-1) == "s" && artwork.substr(-2) != "us")|| (artwork.substr(-2) == "ii"))) {
+                    pluralArt = true;
+                };
+                artwork = receiver.descriptionWithCorrectPrefix(artwork, pluralArt); //can't be a creature by this point!
             } else {
                 if (artwork == "name"||artwork == _username) {artwork = "$player"};
                 success = receiver.addWriting(artwork);
                 artwork = "'"+artwork+"'"; //add quotes afterward!
             };
 
-            if (receiver.getPrice() >0) {
-                //diminish value
-                receiver.discountPriceByPercent(5);
-            }; 
-
             var resultString = "";
             var randomReplies;
+
             if (success) {
+
                 if (verb == "draw"||verb == "sketch") {
-                    var pluralArt = false;
-                    if (artwork.substr(-1) == "s") {
-                        pluralArt = true;
-                    }
-                    artwork = receiver.descriptionWithCorrectPrefix(artwork, pluralArt); //can't be a creature!
                     _drawingCount ++;
                 } else {
                     _writingCount ++;
@@ -1694,11 +1690,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(receiver)) {
                 return notFoundMessage(receiverName);
             };
-            var cleanCount = 0;
-            if (receiver.getType() != "creature") {
-                cleanCount += receiver.clearDrawings();
-                cleanCount += receiver.clearWritings();
+            if (receiver.getType() == "creature") {
+                return "I think "+receiver.getPrefix().toLowerCase()+" can do that "+receiver.getSuffix()+"self.";
             };
+
+            var cleanCount = 0;
+
+            cleanCount += receiver.clearDrawings();
+            cleanCount += receiver.clearWritings();
             if (cleanCount >0) {
                 return "You clear all the previously added 'artwork' from "+receiver.getDisplayName()+".";
             } else {
@@ -2073,6 +2072,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return receiver.relinquish(artefactName, self, locationInventory);
             };
 
+//above this line - artefact interactions
+//Below this line - a large block of creature interactions
         /*Allow player to give an object to a recipient*/
         self.give = function(verb, artefactName, receiverName){
 
@@ -2113,8 +2114,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
             if (verb == "feed" && artefact.getType() != "food" && artefact.getType() != "creature") {return "I don't think that's a reasonable thing to do.";};
-            if (receiver.isDead()) { return  tools.initCap(receiver.getDisplayName())+"'s dead. Gifts won't help now.";};
-            if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getDisplayName()+". "+tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
+            if (receiver.isDead()) { return  tools.initCap(receiver.getPrefix())+"'s dead. Gifts won't help now.";};
+            if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  "Sorry, "+receiver.getPrefix().toLowerCase()+" can't carry "+artefact.getDisplayName()+". "+tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
+            //@todo - find an alternative for creature displayName on this response
             if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to accept gifts from you at the moment.";};
             if (verb == "feed" && receiver.getSubType() != "animal") {return "You should probably just <i>give</i> "+artefact.getDisplayName()+" to "+receiver.getSuffix()+".";};
 
@@ -2216,8 +2218,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var buyer = getObjectFromPlayerOrLocation(buyerName);
             if (!(buyer)) { return "There's no " + buyerName + " here."; };
 
+            //@todo - find an alternative for creature displayName on this response
             if (buyer.getType() != 'creature') { return buyer.getDisplayName() + " can't buy anything." };
-
 
             return buyer.buy(objectToGive, self);
         };
@@ -2235,6 +2237,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (giver.isDead()) {
                     return self.steal(verb, artefactName, giverName);
                 };
+
+                //@todo - find an alternative for creature displayName on this response
                 return "You'll need to be a little more specific. Do you want to <i>buy</i> or <i>steal</i> from "+giver.getDisplayName()+"?<br>(Or should you simply <i>ask</i> "+giver.getSuffix()+" instead?)";
 
             }  else {
@@ -2354,6 +2358,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //does the creature have dialogue instead?
                 var creatureResponse = givers[0].replyToKeyword(artefactName, self, map);
                 if (creatureResponse) {return creatureResponse;};
+
+                //@todo - find an alternative for creature displayName on this response
                 return "There's no "+artefactName+" here and "+givers[0].getDisplayName()+" isn't carrying any either.";
             };  
             
@@ -2368,6 +2374,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = "";
             if (getObjectFromLocation(artefactName)) {
                 //console.log('locationartefact');
+                //@todo - find an alternative for creature displayName on this response
                 if (!(artefact.isCollectable())) {return  "Sorry, "+givers[0].getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
                 if (!(givers[0].canCarry(artefact))) { return  "Sorry, "+givers[0].getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
                 removeObjectFromLocation(artefactName);
@@ -2654,7 +2661,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return sound;
         };
 
-
         self.examine = function(verb, artefactName, map) {
             var resultString = "";
             var newMissions = [];
@@ -2765,6 +2771,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_hunt >= 1) {
                 exit = _currentLocation.getExitWithBestTrace(creatureName,map);
             };
+            //@todo - find an alternative for creature displayName on this response
             if (!(exit)) {return "There's no sign that "+creature.getDisplayName()+" has been near here recently.";};
             return "After thorough investigation, you determine your best bet is to try <i>"+exit.getLongName()+"</i> from here.";
         };
@@ -3243,6 +3250,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.hit = function(verb, receiverName, artefactName){
+            //@todo - find an alternative for creature displayNames on responses here
             if (tools.stringIsEmpty(receiverName)){ return "You find yourself frantically lashing at thin air.";};
 
             var weapon;
@@ -3456,7 +3464,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             return resultString;
         };
-
 
         self.rest = function(verb, duration, map) {
             if (!(_currentLocation.getObjectByType('bed'))) {return "There's nothing to "+verb+" on here.";};

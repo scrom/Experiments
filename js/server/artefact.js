@@ -856,7 +856,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString += "<br>Someone has drawn ";
                 for (var a=0;a<_drawings.length;a++) {
                     resultString += tools.listSeparator(a, _drawings.length);
-                    resultString += _drawings[a];
+
+                    var pluralArt = false;
+                    if (_drawings[a].length > 1 && ((_drawings[a].substr(-1) == "s" && _drawings[a].substr(-2) != "us")|| (_drawings[a].substr(-2) == "ii"))) {
+                        pluralArt = true;
+                    };
+                    resultString += self.descriptionWithCorrectPrefix(_drawings[a], pluralArt);
                 };
                 resultString+= " on "+self.getSuffix()+".<br>";
             };
@@ -1120,6 +1125,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.addDrawing = function(drawing) {
             if (self.canDrawOn()) {
                 _drawings.push(drawing);
+                if (self.getPrice() >0) {
+                    //diminish value
+                    self.discountPriceByPercent(5);
+                }; 
                 return true;
             };
             return false;
@@ -1128,6 +1137,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.addWriting = function(writing) {
             if (self.canDrawOn()) {
                 _writings.push(writing);
+                if (self.getPrice() >0) {
+                    //diminish value
+                    self.discountPriceByPercent(5);
+                }; 
                 return true;
             };
             return false;

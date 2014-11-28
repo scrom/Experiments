@@ -1723,6 +1723,244 @@ exports.openingAndClosingDoorClosesRelatedDoor = function (test) {
 
 exports.openingAndClosingDoorClosesRelatedDoor.meta = { traits: ["Player Test", "Door Trait"], description: "Test that when closing a specific door in one location, we close its corresponding pair in another location." };
 
+exports.playerCanDrawOnAnBook = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+
+    var expectedResult = "You draw a cactus on the book.";
+    var actualResult = p0.writeOrDraw('draw','cactus', 'book').substring(0,30);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanDrawOnAnBook.meta = { traits: ["Player Test", "Draw Trait", "Book Trait"], description: "Test that player can draw/write in a book." };
+
+
+exports.drawingOnAnBookDiminishesItsValue = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true, price:100};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+
+    p0.writeOrDraw('draw','cactus', 'book')
+
+    var expectedResult = "95";
+    var actualResult = book.getPrice();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.drawingOnAnBookDiminishesItsValue.meta = { traits: ["Player Test", "Draw Trait", "Book Trait"], description: "Test that player can draw/write in a book." };
+
+exports.writingOnAnBookDiminishesItsValue = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true, price:100};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+
+    p0.writeOrDraw('write','cactus', 'book')
+
+    var expectedResult = "95";
+    var actualResult = book.getPrice();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.writingOnAnBookDiminishesItsValue.meta = { traits: ["Player Test", "Write Trait", "Book Trait"], description: "Test that player can draw/write in a book." };
+
+exports.playerCanWriteOnAnBook = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+
+    var expectedResult = "You write 'cactus' on the book.";
+    var actualResult = p0.writeOrDraw('write','cactus', 'book').substring(0,31);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanWriteOnAnBook.meta = { traits: ["Player Test", "Write Trait", "Book Trait"], description: "Test that player can draw/write in a book." };
+
+exports.playerCannotDrawOnANonDrawableItem = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: false};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+
+    var expectedResult = "You attempt to draw a cactus on the book but it smears and rubs off before you can finish.<br>";
+    var actualResult = p0.writeOrDraw('draw','cactus', 'book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCannotDrawOnANonDrawableItem.meta = { traits: ["Player Test", "Draw Trait"], description: "Test that player can draw/write in a book." };
+
+
+exports.playerCannotDrawWithoutAWritingTool = function (test) {
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+
+    var expectedResult = "You don't have anything to draw with.";
+    var actualResult = p0.writeOrDraw('draw','cactus', 'book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanDrawOnAnBook.meta = { traits: ["Player Test", "Draw Trait", "Book Trait"], description: "Test that player can draw/write in a book." };
+
+
+exports.playerCanCleanAnItemWithDrawingOn = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+    p0.writeOrDraw('draw','cactus', 'book');
+
+    var expectedResult = "You clear all the previously added 'artwork' from the book.";
+    var actualResult = p0.clean('clean','book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanCleanAnItemWithDrawingOn.meta = { traits: ["Player Test", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+exports.playerCanCleanAnItemWithWritingOn = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+    p0.writeOrDraw('write','cactus', 'book');
+
+    var expectedResult = "You clear all the previously added 'artwork' from the book.";
+    var actualResult = p0.clean('clean','book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanCleanAnItemWithWritingOn.meta = { traits: ["Player Test", "Write Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
+exports.playerCanCleanAnItemWithWritingAndDrawingOn = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+    p0.writeOrDraw('write','cactus', 'book');
+    p0.writeOrDraw('draw','cactus', 'book');
+    p0.clean('clean','book');
+
+    var expectedResult = "You read the book.<br>It's mildly interesting but you learn nothing new.";
+    var actualResult = p0.read("read", "book");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanCleanAnItemWithWritingAndDrawingOn.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
+exports.playerCanSeeWritingAndDrawingOnABook = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+    p0.writeOrDraw('write','cactus', 'book');
+    p0.writeOrDraw('draw','cactus', 'book');
+    p0.writeOrDraw('draw','cactii', 'book');
+
+    var expectedResult = "You read the book.<br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
+    var actualResult = p0.read("read", "book");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanSeeWritingAndDrawingOnABook.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can see what's drawn/written in a book." };
+
+
+exports.playerCanSeeWritingAndDrawingOnAnItem = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var itemAttributes = {weight: 1, type: "junk", canCollect: true, canDrawOn: true};
+    var item = new artefact.Artefact('item', 'item', "Read me.", itemAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+
+    var inv = p0.getInventoryObject();
+    inv.add(item);
+    inv.add(pen);
+    p0.writeOrDraw('write','cactus', 'item');
+    p0.writeOrDraw('draw','cactus', 'item');
+    p0.writeOrDraw('draw','cactii', 'item');
+
+    var expectedResult = "Read me.<br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
+    var actualResult = p0.examine("examine", "item");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanSeeWritingAndDrawingOnAnItem.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can see what's drawn/written in a item." };
+
 
 
 /*
