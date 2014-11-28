@@ -2471,7 +2471,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.canSee = function() {
-            if (!(self.getCurrentLocation().isDark())) {return true;};  //location is not dark
+            //shouldn't happen in a game but location can be unset during testing.
+            if (!_currentLocation) {return true;};
+
+            //we know we have a location...
+            if (!(_currentLocation.isDark())) {return true;};  //location is not dark
             var lamps = _inventory.getAllObjectsOfType("light");
             //console.log("Lamps found: "+lamps.length);
             for (var i=0; i<lamps.length; i++) {
