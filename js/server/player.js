@@ -2114,8 +2114,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live or dead creature!
             if (verb == "feed" && artefact.getType() != "food" && artefact.getType() != "creature") {return "I don't think that's a reasonable thing to do.";};
-            if (receiver.isDead()) { return  tools.initCap(receiver.getPrefix())+"'s dead. Gifts won't help now.";};
-            if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  "Sorry, "+receiver.getPrefix().toLowerCase()+" can't carry "+artefact.getDisplayName()+". "+tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
+            if (receiver.isDead()) { return  tools.initCap(receiver.getPrefix())+"'s dead. Gifts won't help "+receiver.getSuffix()+" now.";};
+            if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment, sorry.";};
             //@todo - find an alternative for creature displayName on this response
             if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to accept gifts from you at the moment.";};
             if (verb == "feed" && receiver.getSubType() != "animal") {return "You should probably just <i>give</i> "+artefact.getDisplayName()+" to "+receiver.getSuffix()+".";};
