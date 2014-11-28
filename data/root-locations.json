@@ -154,11 +154,11 @@
             },
             "reward": {
               "score": -25,
-			  "health": -15,
+              "health": -15,
               "message": "Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen."
             },
-            "fail":  {
-                "message":  "Never mind, it's probably better left alone."
+            "fail": {
+              "message": "Never mind, it's probably better left alone."
             }
           }
         ]
@@ -472,7 +472,7 @@
           "message": "<br>Hmm. It seems we have a budding occultist here.<br>You might be getting ahead of yourself a bit."
         }
       },
-	  {
+      {
         "object": "mission",
         "name": "scaryoccultist",
         "displayName": "draw a pentagram on a floor and add blood to it",
@@ -483,7 +483,9 @@
           "drawings": [
             "pentagram"
           ],
-		  "wetted": ["blood"]
+          "wetted": [
+            "blood"
+          ]
         },
         "reward": {
           "score": 5,
@@ -890,7 +892,7 @@
         },
         "synonyms": [
           "board pen",
-		  "blue pen",
+          "blue pen",
           "whiteboard pen"
         ]
       },
@@ -901,8 +903,8 @@
         "detailedDescription": "It's a standard wood-effect office desk/table.",
         "attributes": {
           "weight": 120,
+          "canCollect": true,
           "isBreakable": true,
-		  "canCollect": true,
           "canDrawOn": true
         },
         "synonyms": [
@@ -922,7 +924,7 @@
           "plural": true,
           "customAction": [
             "get"
-            ],
+          ],
           "defaultResult": "Sorry, they belong in here."
         },
         "synonyms": [
@@ -1253,8 +1255,8 @@
               "increaseAffinityFor": "dene boulton",
               "message": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated.'"
             },
-            "fail":  {
-                "message":  "Dene wanted some chocolate :("
+            "fail": {
+              "message": "Dene wanted some chocolate :("
             }
           }
         ]
@@ -1690,8 +1692,8 @@
               "score": 250,
               "message": "<br>Congratulations. You managed to get the bus loaded and ready to party. That's quite a feat!"
             },
-            "fail":  {
-                "message":  "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed. What else is left to do?"
+            "fail": {
+              "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed. What else is left to do?"
             }
           }
         ]
@@ -1749,98 +1751,98 @@
           "him"
         ],
         "missions": [
-{
-  "object": "mission",
-  "name": "rumforthecaptain",
-  "displayName": "find some Rum for Simon.",
-  "description": "Simon's team have just shipped a major release. He wants Rum to celebrate",
-  "attributes": {
-    "missionObject": "rum bottle",
-    "destination": "simon cromarty",
-    "static": true,
-    "dialogue": [
-      "'Hey $player.'<br>'I need a cheeky favour from you, if you're willing.'<br>'My team are just about to ship a new release but I forgot to stock up on the usual celebration supplies.'<br>'Most teams celebrate with champagne but we have a tradition of celebrating with something a bit tastier.'<br>'Could you track me down a decent bottle of rum from somewhere?'<br>'And don't worry, I'll pay you for it.'",
-      {
-        "state": 1,
-        "keywords": [
-          "yes",
-          "ok",
-          "y"
-        ],
-        "response": "'Great! I'll be wandering around the office. Come and find me when you've got some.'",
-        "nextState": 2
-      },
-      {
-        "state": 1,
-        "keywords": [
-          "n",
-          "no",
-          "not",
-          "not yet"
-        ],
-        "response": "'Well if you manage to get hold of any, I'll make it worthwhile.'",
-        "nextState": 2
-      },
-      {
-        "state": 1,
-        "response": "'If you find any around, give me a shout. I'd really appreciate it.'",
-        "nextState": 2
-      },
-      {
-        "state": 2,
-        "response": "'Hey $player. Did you get hold of any decent rum?'",
-        "nextState": 3
-      },
-      {
-        "state": 3,
-        "requestedObject": "rum bottle",
-        "keywords": [
-          "yes",
-          "ok",
-          "y"
-        ],
-        "response": "'Perfect!'",
-        "nextState": 4
-      },
-      {
-        "state": 3,
-        "keywords": [
-          "n",
-          "no",
-          "not",
-          "not yet"
-        ],
-        "response": "'Maybe later eh.'",
-        "nextState": 2
-      },
-      {
-        "state": 3,
-        "response": "'You'd be doing the rest of the team a favour too if you could get some.'",
-        "nextState": 2
-      },      
-      {
-        "state": 4,
-        "response": "'Hang on, this isn't the decent stuff.'<br>'Try again sunshine.'",
-        "nextState": 2
-      }
-    ]
-  },
-  "conditionAttributes": {
-    "isDestroyed": false,
-    "isBroken": false,
-    "isDamaged": false,
-    "contains": [
+          {
+            "object": "mission",
+            "name": "rumforthecaptain",
+            "displayName": "find some Rum for Simon.",
+            "description": "Simon's team have just shipped a major release. He wants Rum to celebrate",
+            "attributes": {
+              "missionObject": "rum bottle",
+              "destination": "simon cromarty",
+              "static": true,
+              "dialogue": [
+                "'Hey $player.'<br>'I need a cheeky favour from you, if you're willing.'<br>'My team are just about to ship a new release but I forgot to stock up on the usual celebration supplies.'<br>'Most teams celebrate with champagne but we have a tradition of celebrating with something a bit tastier.'<br>'Could you track me down a decent bottle of rum from somewhere?'<br>'And don't worry, I'll pay you for it.'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "y"
+                  ],
+                  "response": "'Great! I'll be wandering around the office. Come and find me when you've got some.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Well if you manage to get hold of any, I'll make it worthwhile.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 1,
+                  "response": "'If you find any around, give me a shout. I'd really appreciate it.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'Hey $player. Did you get hold of any decent rum?'",
+                  "nextState": 3
+                },
+                {
+                  "state": 3,
+                  "requestedObject": "rum bottle",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "y"
+                  ],
+                  "response": "'Perfect!'",
+                  "nextState": 4
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Maybe later eh.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 3,
+                  "response": "'You'd be doing the rest of the team a favour too if you could get some.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 4,
+                  "response": "'Hang on, this isn't the decent stuff.'<br>'Try again sunshine.'",
+                  "nextState": 2
+                }
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "isBroken": false,
+              "isDamaged": false,
+              "contains": [
                 "quality rum"
-    ]
-  },
-  "reward": {
-    "increaseAffinityFor": "simon cromarty",
-    "missionObject": "rum bottle",
-    "score": 25,
-    "money": 20,
-    "message": "Simon opens the bottle and takes a large swig.<br>'Thankshh $player.' he says, 'It'ssh perfeck!'<br>He slaps a handful of money into your palm and staggers back towards his team area.<br>It's funny how many companies have a 'no drinking on site' policy. I think they'd struggle here given the number of release celebrations that seem to happen.<br>Let's hope there's enough rum left for the team by the time he gets back!<br>"
-  }
-}
+              ]
+            },
+            "reward": {
+              "increaseAffinityFor": "simon cromarty",
+              "missionObject": "rum bottle",
+              "score": 25,
+              "money": 20,
+              "message": "Simon opens the bottle and takes a large swig.<br>'Thankshh $player.' he says, 'It'ssh perfeck!'<br>He slaps a handful of money into your palm and staggers back towards his team area.<br>It's funny how many companies have a 'no drinking on site' policy. I think they'd struggle here given the number of release celebrations that seem to happen.<br>Let's hope there's enough rum left for the team by the time he gets back!<br>"
+            }
+          }
         ]
       }
     ]
@@ -1903,29 +1905,29 @@
       }
     ],
     "inventory": [
-        {
-            "object": "artefact",
-            "name": "map",
-            "description": "meeting room map",
-            "detailedDescription": "It's a crude map showing all three internal floors of the office and the locations of each meeting room.<br><i>You might want to download the picture for this one and take a good look</i>.",
-            "attributes": {
-            "defaultAction": "read",
-			"type": "book",
-            "weight": 0.1,
-            "canCollect": true,
-            "affinityModifier": 0,
-            "canDrawOn": true,
-			"imageName": "map.jpg",
-			"defaultResult": "You can't tell which way is North on here but it might still be useful."
-            },
-            "synonyms": [
-            "meeting room map",
-            "room map",
-            "plan",
-            "floor plan",
-            "floorplan"
-            ]
+      {
+        "object": "artefact",
+        "name": "map",
+        "description": "meeting room map",
+        "detailedDescription": "It's a crude map showing all three internal floors of the office and the locations of each meeting room.<br><i>You might want to download the picture for this one and take a good look</i>.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 0.1,
+          "type": "book",
+          "canCollect": true,
+          "affinityModifier": 0,
+          "defaultResult": "You can't tell which way is North on here but it might still be useful.",
+          "imageName": "map.jpg",
+          "canDrawOn": true
         },
+        "synonyms": [
+          "meeting room map",
+          "room map",
+          "plan",
+          "floor plan",
+          "floorplan"
+        ]
+      },
       {
         "object": "creature",
         "name": "brian harris",
@@ -2268,7 +2270,7 @@
                   "state": 1,
                   "response": "'OK. Maybe later?'",
                   "nextState": 3
-                } ,        
+                },
                 {
                   "state": 3,
                   "response": "'Don't forget those maracas.'"
@@ -2288,10 +2290,10 @@
               "decreaseAffinityFor": "james dening",
               "message": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while."
             },
-            "fail":  {
-                "message":  "You know, refusing to help people out on your first day in the office is going to put you on thr fast track to nowhere.",
-                "affinityModifier": 1,
-                "decreaseAffinityFor": "chris whitworth"
+            "fail": {
+              "message": "You know, refusing to help people out on your first day in the office is going to put you on thr fast track to nowhere.",
+              "affinityModifier": 1,
+              "decreaseAffinityFor": "chris whitworth"
             }
           }
         ]
@@ -2558,7 +2560,7 @@
             "attributes": {
               "missionObject": "chris moore",
               "static": true,
-             "dialogue": [
+              "dialogue": [
                 "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'",
                 {
                   "state": 1,
@@ -2597,7 +2599,7 @@
                   "response": "'Oops. You'll need the key. Here you go.'",
                   "keywords": [
                     "key"
-                  ],                  
+                  ],
                   "nextState": 5
                 },
                 {
@@ -2605,7 +2607,7 @@
                   "response": "'Hey $player.'<br>'Have you been able to sort my bike out yet?'",
                   "nextState": 4
                 },
-				{
+                {
                   "state": 4,
                   "keywords": [
                     "yes",
@@ -2662,10 +2664,10 @@
               },
               "message": "Chris hands you a bike key."
             },
-            "fail":  {
-                "message":  "Nice move $player. That's just one of many potential friends knocked back.",
-                "affinityModifier": 2,
-                "decreaseAffinityFor": "chris moore"
+            "fail": {
+              "message": "Nice move $player. That's just one of many potential friends knocked back.",
+              "affinityModifier": 2,
+              "decreaseAffinityFor": "chris moore"
             }
           }
         ]
@@ -2862,8 +2864,8 @@
               "increaseAffinityFor": "filippa vajda",
               "message": "Great job! I'm sure Filippa will be really pleased.<br>There's a chance these might be useful later."
             },
-            "fail":  {
-                "message":  "I know you're busy but a little help never hurt anyone you know."
+            "fail": {
+              "message": "I know you're busy but a little help never hurt anyone you know."
             }
           }
         ]
@@ -3479,54 +3481,54 @@
       }
     ],
     "inventory": [
-{
-  "object": "artefact",
-  "name": "rum bottle",
-  "description": "bottle",
-  "detailedDescription": "A large rum bottle",
-  "attributes": {
-    "extendedInventoryDescription": "There's $inventory in it.",
-    "weight": 1,
-    "carryWeight": 3,
-    "attackStrength": 1,
-    "type": "container",
-    "holdsLiquid": true,
-    "canCollect": true,
-    "isBreakable": true,
-    "affinityModifier": 0
-  },
-  "synonyms": [
-    "bottle",
-    "rum bottle",
-    "bottle of rum"
-  ],
-  "inventory": [
-    {
-      "object": "artefact",
-      "name": "cheap rum",
-      "description": "rum",
-      "detailedDescription": "It's pretty ropey. Best used for cooking and not much else.<br>I'm sure most people wouldn't notice though.",
-      "attributes": {
-        "defaultAction": "drink",
-        "weight": 1,
-        "type": "food",
-        "requiresContainer": true,
-        "requiredContainer": "rum bottle",
-        "isLiquid": true,
-        "canCollect": true,
-        "charges": 15,
-        "chargeUnit": "shot",
-        "chargesDescription": "There's enough here for about $charges $chargeUnit",
-        "plural": true,
-        "isEdible": true,
-        "nutrition": -3
+      {
+        "object": "artefact",
+        "name": "rum bottle",
+        "description": "bottle",
+        "detailedDescription": "A large rum bottle",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 1,
+          "carryWeight": 3,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        },
+        "synonyms": [
+          "bottle",
+          "rum bottle",
+          "bottle of rum"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "cheap rum",
+            "description": "rum",
+            "detailedDescription": "It's pretty ropey. Best used for cooking and not much else.<br>I'm sure most people wouldn't notice though.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "requiredContainer": "rum bottle",
+              "canCollect": true,
+              "charges": 15,
+              "chargeUnit": "shot",
+              "chargesDescription": "There's enough here for about $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "nutrition": -3
+            },
+            "synonyms": [
+              "rum"
+            ]
+          }
+        ]
       },
-      "synonyms": [
-        "rum"
-      ]
-    }
-  ]
-},
       {
         "object": "artefact",
         "name": "beanbag",
@@ -3928,8 +3930,8 @@
             "press",
             "push"
           ],
-          "imageName": "soapdispenser.jpg",
-          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands."
+          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
+          "imageName": "soapdispenser.jpg"
         },
         "synonyms": [
           "dispenser",
@@ -4386,8 +4388,8 @@
           "weight": 180,
           "type": "scenery",
           "plural": true,
-          "canDrawOn": true,
-		  "imageName": "pipe.jpg"
+          "imageName": "pipe.jpg",
+          "canDrawOn": true
         },
         "synonyms": [
           "gas",
@@ -4575,8 +4577,8 @@
             "press",
             "push"
           ],
-          "imageName": "soapdispenser.jpg",
-          "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out."
+          "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out.",
+          "imageName": "soapdispenser.jpg"
         },
         "synonyms": [
           "dispenser",
@@ -4808,11 +4810,11 @@
               ]
             },
             "failAttributes": {
-				"conversationState": 99
+              "conversationState": 99
             },
             "conditionAttributes": {
               "alive": true,
-			  "conversationState": 3
+              "conversationState": 3
             },
             "reward": {
               "delivers": {
@@ -4838,10 +4840,10 @@
               "repairSkill": "projector",
               "message": "Amanda hands you a projector bulb."
             },
-            "fail":  {
-                "message":  "I bet you're always the first to make a fuss if things don't work when <i>you</i> need them.",
-                "affinityModifier": 1,
-                "decreaseAffinityFor": "amanda mansfield"
+            "fail": {
+              "message": "I bet you're always the first to make a fuss if things don't work when <i>you</i> need them.",
+              "affinityModifier": 1,
+              "decreaseAffinityFor": "amanda mansfield"
             }
           }
         ]
@@ -4959,7 +4961,7 @@
           }
         ]
       },
-	  {
+      {
         "object": "artefact",
         "name": "glass jar",
         "description": "jar",
@@ -4980,112 +4982,113 @@
           "sugar jar",
           "storage jar"
         ],
-		"inventory":[
-      {
-        "object": "artefact",
-        "name": "sugar",
-        "description": "sugar",
-        "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
-        "attributes": {
-          "weight": 0.1,
-          "type": "food",
-          "canCollect": true,
-          "charges": 3,
-          "chargeUnit": "spoonfull",
-          "chargesDescription": "There's about $charges $chargeUnit left",
-          "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
-		  "isPowder": true,
-          "plural": true,
-          "affinityModifier": 0,
-          "isEdible": true,
-          "nutrition": 5,
-          "combinesWith": [
-            "coffee",
-            "latte",
-            "mocha"
-          ]
-        },
-        "delivers": [
+        "inventory": [
           {
             "object": "artefact",
-            "name": "sweet coffee",
-            "description": "sweet coffee",
-            "detailedDescription": "Development fuel with added sugar!",
+            "name": "sugar",
+            "description": "sugar",
+            "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
             "attributes": {
-              "defaultAction": "drink",
-              "weight": 0.5,
+              "weight": 0.1,
               "type": "food",
               "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
+              "isPowder": true,
               "canCollect": true,
-              "charges": 1,
+              "charges": 3,
+              "chargeUnit": "spoonfull",
+              "chargesDescription": "There's about $charges $chargeUnit left",
+              "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
               "plural": true,
+              "affinityModifier": 0,
               "isEdible": true,
-              "nutrition": 15
+              "nutrition": 5,
+              "combinesWith": [
+                "coffee",
+                "latte",
+                "mocha"
+              ]
             },
-            "synonyms": [
-              "brew",
-              "drink",
-              "coffee",
-              "sugary coffee"
-            ]
-          },
-          {
-            "object": "artefact",
-            "name": "sweet latte",
-            "description": "sweet latte",
-            "detailedDescription": "Hipster Development fuel with added sugar!",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 0.5,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 25
-            },
-            "synonyms": [
-              "brew",
-              "drink",
-              "coffee",
-              "sugary latte",
-              "latte"
-            ]
-          },
-          {
-            "object": "artefact",
-            "name": "sweet mocha",
-            "description": "sweet mocha",
-            "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 0.5,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 25
-            },
-            "synonyms": [
-              "brew",
-              "drink",
-              "coffee",
-              "sugary mocha",
-              "mocha"
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "sweet coffee",
+                "description": "sweet coffee",
+                "detailedDescription": "Development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary coffee"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "sweet latte",
+                "description": "sweet latte",
+                "detailedDescription": "Hipster Development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary latte",
+                  "latte"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "sweet mocha",
+                "description": "sweet mocha",
+                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary mocha",
+                  "mocha"
+                ]
+              }
             ]
           }
         ]
-      }		
-		]
       },
       {
         "object": "artefact",
@@ -5173,6 +5176,7 @@
               "requiredContainer": "cup",
               "canCollect": true,
               "charges": 1,
+              "plural": true,
               "affinityModifier": 2,
               "isEdible": true,
               "nutrition": 12,
@@ -5226,6 +5230,7 @@
               "requiredContainer": "cup",
               "canCollect": true,
               "charges": 1,
+              "plural": true,
               "affinityModifier": 2,
               "isEdible": true,
               "nutrition": 35,
@@ -5454,6 +5459,7 @@
                     "isLiquid": true,
                     "canCollect": true,
                     "charges": 3,
+                    "plural": true,
                     "affinityModifier": 0,
                     "isEdible": true,
                     "antibodies": [
@@ -5478,13 +5484,13 @@
                   "detailedDescription": "It looks like the tattered and charred remnants of a very rare comic book.<br>It could be a clue.",
                   "attributes": {
                     "defaultAction": "read",
-					"type": "book",
                     "weight": 1,
+                    "type": "book",
                     "canCollect": true,
                     "affinityModifier": 0,
                     "price": 15,
-                    "canDrawOn": true,
-					"defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something."
+                    "defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something.",
+                    "canDrawOn": true
                   },
                   "synonyms": [
                     "book",
@@ -5675,79 +5681,79 @@
                         "destination": "jordan miller",
                         "static": true,
                         "dialogue": [
-                              "'Psst!'<br>'I've got some covert jobs if you're interested. Are you up for it?'",
-                {
-                  "state": 1,
-                  "keywords": [
-                    "yes",
-                    "ok",
-                    "yup",
-                    "y"
-                  ],
-                  "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
-                  "nextState": 3
-                },
-                {
-                  "state": 1,
-                  "keywords": [
-                    "n",
-                    "no",
-                    "not",
-                    "not yet"
-                  ],
-                  "response": "'Never mind, your loss. You won't get another chance",
-                  "nextState": 99
-                },
-                {
-                  "state": 1,
-                  "response": "'Whatever. Check in later if you think you're up to the job.'",
-                  "nextState": 3
-                },
-                {
-                  "state": 3,
-                  "keywords": [
-                    "ok"
-                  ],                  
-                  "response": "'Come back when you've got what I'm after.'" ,  
-                  "nextState": 3
-                },                
-                {
-                  "state": 3,
-                  "response": "'Have you got it?'",
-                  "nextState": 4
-                },
-                {
-                  "state": 4,
-                  "requestedObject": "sketchbook",
-                  "keywords": [
-                    "yes",
-                    "ok",
-                    "yup",
-                    "y"
-                  ],
-                  "response": "'Excellent!'",
-                  "nextState": 3
-                },
-                {
-                  "state": 4,
-                  "keywords": [
-                    "n",
-                    "no",
-                    "not",
-                    "not yet"
-                  ],
-                  "response": "'Come back when you've got what I'm after.'" ,  
-                  "nextState": 3
-                },                
-                {
-                  "state": 4,
-                  "response": "'I won't ask again but as i said before, I'll make it worth your while.'"
-                }
-              ]
+                          "'Psst!'<br>'I've got some covert jobs if you're interested. Are you up for it?'",
+                          {
+                            "state": 1,
+                            "keywords": [
+                              "yes",
+                              "ok",
+                              "yup",
+                              "y"
+                            ],
+                            "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+                            "nextState": 3
+                          },
+                          {
+                            "state": 1,
+                            "keywords": [
+                              "n",
+                              "no",
+                              "not",
+                              "not yet"
+                            ],
+                            "response": "'Never mind, your loss. You won't get another chance",
+                            "nextState": 99
+                          },
+                          {
+                            "state": 1,
+                            "response": "'Whatever. Check in later if you think you're up to the job.'",
+                            "nextState": 3
+                          },
+                          {
+                            "state": 3,
+                            "keywords": [
+                              "ok"
+                            ],
+                            "response": "'Come back when you've got what I'm after.'",
+                            "nextState": 3
+                          },
+                          {
+                            "state": 3,
+                            "response": "'Have you got it?'",
+                            "nextState": 4
+                          },
+                          {
+                            "state": 4,
+                            "requestedObject": "sketchbook",
+                            "keywords": [
+                              "yes",
+                              "ok",
+                              "yup",
+                              "y"
+                            ],
+                            "response": "'Excellent!'",
+                            "nextState": 3
+                          },
+                          {
+                            "state": 4,
+                            "keywords": [
+                              "n",
+                              "no",
+                              "not",
+                              "not yet"
+                            ],
+                            "response": "'Come back when you've got what I'm after.'",
+                            "nextState": 3
+                          },
+                          {
+                            "state": 4,
+                            "response": "'I won't ask again but as i said before, I'll make it worth your while.'"
+                          }
+                        ]
                       },
                       "failAttributes": {
                         "isDestroyed": true,
-						"conversationState": 99
+                        "conversationState": 99
                       },
                       "conditionAttributes": {
                         "isDestroyed": false
@@ -6061,11 +6067,11 @@
             "detailedDescription": "It's called '50 Shades of Customer'.<br>(That's a really bad pun for a business book.)",
             "attributes": {
               "defaultAction": "read",
-              "defaultResult":  "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers and business relationships.<br>This kind of thing is perfect for someone in a front-line, customer-facing role.",
               "weight": 1,
               "attackStrength": 2,
               "type": "book",
               "canCollect": true,
+              "defaultResult": "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers and business relationships.<br>This kind of thing is perfect for someone in a front-line, customer-facing role.",
               "canDrawOn": true
             },
             "synonyms": [
@@ -6538,8 +6544,8 @@
               "increaseAffinityFor": "ice cream man",
               "message": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy."
             },
-            "fail":  {
-                "message":  "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work."
+            "fail": {
+              "message": "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work."
             }
           }
         ]
@@ -7390,7 +7396,7 @@
               "missionObject": "projector"
             },
             "failAttributes": {
-				"isDestroyed": true
+              "isDestroyed": true
             },
             "conditionAttributes": {
               "isDestroyed": false,
@@ -7543,8 +7549,8 @@
               "removeObject": "hard disk",
               "message": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have a cash bonus.<br>'If you've not done so already, I think you should double-check to ensure our problematic friend gives us no more trouble. (if you get my gist).'"
             },
-            "fail":  {
-                "message":  "That was foolish. The hard disk was worth a lot in the right hands.<br>Well. Best you move on and see if you can redeem yourself elsewhere."
+            "fail": {
+              "message": "That was foolish. The hard disk was worth a lot in the right hands.<br>Well. Best you move on and see if you can redeem yourself elsewhere."
             }
           }
         ]
@@ -8349,7 +8355,6 @@
                     "y"
                   ],
                   "response": "'OK, here's the deal.'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
-   
                   "nextState": 3
                 },
                 {
@@ -8399,7 +8404,7 @@
                   "state": 3,
                   "response": "'Well, if you're up for it, remember to <i>hide</i> it somewhere outside if possible.'<br>'I'll leave this little challenge in your capable hands.'",
                   "nextState": 4
-                }              
+                }
               ]
             },
             "failAttributes": {
@@ -8700,11 +8705,11 @@
         "detailedDescription": "Middle class pulp propaganda trash to be honest.",
         "attributes": {
           "defaultAction": "read",
-          "defaultResult":  "Blah blah government... blah scandal blah crucial blah liberal blah economics etc.",
           "weight": 1,
           "attackStrength": 2,
           "type": "book",
           "canCollect": true,
+          "defaultResult": "Blah blah government... blah scandal blah crucial blah liberal blah economics etc.",
           "canDrawOn": true
         },
         "synonyms": [
@@ -9507,8 +9512,8 @@
             "press",
             "push"
           ],
-          "imageName": "soapdispenser.jpg",
-          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands."
+          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
+          "imageName": "soapdispenser.jpg"
         },
         "synonyms": [
           "dispenser",
@@ -9714,51 +9719,51 @@
       }
     ],
     "inventory": [
-        {
-  "object": "artefact",
-  "name": "rum bottle",
-  "description": "bottle",
-  "detailedDescription": "A large rum bottle",
-  "attributes": {
-    "extendedInventoryDescription": "There's $inventory in it.",
-    "weight": 1,
-    "carryWeight": 3,
-    "attackStrength": 1,
-    "type": "container",
-    "holdsLiquid": true,
-    "canCollect": true,
-    "isBreakable": true,
-    "affinityModifier": 0
-  },
-  "synonyms": [
-    "bottle",
-    "bottle of rum"
-  ],
-  "inventory": [
-    {
-      "object": "artefact",
-      "name": "quality rum",
-      "description": "rum",
-      "detailedDescription": "Now <i>that's</i> the good stuff!<br>It looks like someone may have got their drinks mixed up. This is too good for cooking with.",
-      "attributes": {
-        "defaultAction": "drink",
-        "weight": 1,
-        "type": "food",
-        "requiresContainer": true,
-        "requiredContainer": "rum bottle",
-        "isLiquid": true,
-        "canCollect": true,
-        "charges": 1,
-        "plural": true,
-        "isEdible": true,
-        "nutrition": 1
+      {
+        "object": "artefact",
+        "name": "rum bottle",
+        "description": "bottle",
+        "detailedDescription": "A large rum bottle",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 1,
+          "carryWeight": 3,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        },
+        "synonyms": [
+          "bottle",
+          "bottle of rum"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "quality rum",
+            "description": "rum",
+            "detailedDescription": "Now <i>that's</i> the good stuff!<br>It looks like someone may have got their drinks mixed up. This is too good for cooking with.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "requiredContainer": "rum bottle",
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 1
+            },
+            "synonyms": [
+              "rum"
+            ]
+          }
+        ]
       },
-      "synonyms": [
-        "rum"
-      ]
-    }
-  ]
-},
       {
         "object": "artefact",
         "name": "marmite",
@@ -9958,6 +9963,7 @@
           "isLiquid": true,
           "canCollect": true,
           "charges": 1,
+          "plural": true,
           "isEdible": true,
           "nutrition": 15
         },
@@ -11067,14 +11073,14 @@
             ]
           },
           "score": 200,
-		  "maxHealth": 25,
+          "maxHealth": 25,
           "affinityModifier": 2,
           "decreaseAffinityFor": "jordan miller",
           "message": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
-          },
-          "fail":  {
-                "message":  "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
-          }
+        },
+        "fail": {
+          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+        }
       }
     ]
   },
@@ -11150,7 +11156,7 @@
         "destination": "sales-break-out"
       }
     ],
-	    "inventory": [
+    "inventory": [
       {
         "object": "artefact",
         "name": "wall",
@@ -11198,7 +11204,7 @@
         },
         "synonyms": [
           "board pen",
-          "whiteboard pen", 
+          "whiteboard pen",
           "green pen"
         ]
       },
@@ -11227,9 +11233,9 @@
           "type": "bed",
           "isBreakable": true,
           "plural": true,
-		  "customAction": [
+          "customAction": [
             "get"
-            ],
+          ],
           "defaultResult": "Sorry, they belong in here."
         },
         "synonyms": [

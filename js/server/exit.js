@@ -10,7 +10,7 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, a
         
         //long names are in an array with short names, just 1 index later - pretty crappy but does the job
         var _longName = tools.directions[tools.directions.indexOf(_name)+1];
-        if (_name == 'n' || _longName == 's' || _longName== 'e'|| _longName == 'w') {
+        if (_name == 'n' || _name == 's' || _name== 'e'|| _name == 'w') {
             _longName = tools.initCap(_longName);
         };
 

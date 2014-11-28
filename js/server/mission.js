@@ -1,7 +1,7 @@
 ﻿"use strict";
 //mission object
 module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, failAttributes, reward, fail) {
-    try{      
+    try{     
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
         var _displayName = displayName;
@@ -129,7 +129,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_failAttributes) {
                     resultString +=',"failAttributes":'+self.literalToString(_failAttributes);
             };
-            resultString +=',"conditionAttributes":'+self.literalToString(_conditionAttributes)+',"reward":'+self.literalToString(_reward);
+            resultString +=',"conditionAttributes":'+self.literalToString(_conditionAttributes);
+            resultString +=',"reward":'+self.literalToString(_reward);
+            if (_fail) {
+                resultString +=',"fail":'+self.literalToString(_fail);
+            };
             resultString+= '}';
             return resultString;
         };

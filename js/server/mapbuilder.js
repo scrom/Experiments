@@ -317,7 +317,9 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
 
                 var rewardData = self.unpackReward(missionData.reward);
                 var failData;
-                if (missionData.fail) { failData = self.unpackReward(missionData.fail); };
+                if (missionData.fail) { 
+                    failData = self.unpackReward(missionData.fail); 
+                };
 
                 if (missionData.attributes) {
                     if (missionData.attributes.type == "event") {
