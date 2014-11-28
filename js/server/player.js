@@ -1633,7 +1633,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (receiver.getType() == "food") {return "You decide not to waste your "+receiver.getName()+" by defacing it.";};
             if (receiver.getSubType() == "intangible") {return "There's nothing there you can "+verb+" on.";};
             var maxWritings = 10;
-            if (receiver.getType() == "book") {maxWritings = 50;};
+            var inOn = "on"
+            if (receiver.getType() == "book") {
+                maxWritings = 50;
+                inOn = "in";
+            };
             if (receiver.getWritings().length+receiver.getDrawings().length >=maxWritings) {
                 if (receiver.getType() == "book") {return "You've run out of space to "+verb+" any more."}; 
                 return "I think it's time you moved onto something else now.";
@@ -1666,7 +1670,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     _writingCount ++;
                 };
 
-                resultString = "You "+verb+" "+artwork+" on "+receiver.getDisplayName()+".<br>";
+                resultString = "You "+verb+" "+artwork+" "+inOn+" "+receiver.getDisplayName()+".<br>";
                 randomReplies = ["", "My, aren't <i>you</i> clever.", "I hope you're pleased with yourself.", "Very nice.", "One day that might sell for a fortune. Although for now, it just diminishes the value of "+receiver.getDisplayName()+".", "You step back and admire your handiwork."];
             } else {
                 randomReplies = ["You attempt to "+verb+" "+artwork+" on "+receiver.getDisplayName()+" but it smears and rubs off before you can finish.<br>"];
