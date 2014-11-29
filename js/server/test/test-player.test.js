@@ -2048,6 +2048,42 @@ exports.bloodPouredOnFloorIsVisible = function (test) {
 };
 exports.bloodPouredOnFloorIsVisible.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait"], description: "Test that a player can use blood from a fresh kill." };
 
+exports.emptiedbottleOfBloodIsVisible = function (test) {
+    c0.kill();
+    var liquidContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true };
+    var bottle = new artefact.Artefact('bottle', 'a bottle', "Good for carrying liquids.", liquidContainerAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(bottle);
+    p0.get("collect", "blood");
+    l0.tick(15);
+    p0.empty("empty", "bottle");
+    var expected = "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.";
+    var actual = l0.describeBlood();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.emptiedbottleOfBloodIsVisible.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait"], description: "Test that a player can use blood from a fresh kill." };
+
+exports.playerCanEmptyaBottleOfBlood = function (test) {
+    c0.kill();
+    var liquidContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true };
+    var bottle = new artefact.Artefact('bottle', 'a bottle', "Good for carrying liquids.", liquidContainerAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(bottle);
+    p0.get("collect", "blood");
+    l0.tick(15);
+    
+    var expected = "You empty the bottle.<br>Its contents are beyond recovery.";
+    var actual = p0.empty("empty", "bottle");;
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCanEmptyaBottleOfBlood.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait"], description: "Test that a player can use blood from a fresh kill." };
+
 
 /*
 Methods needing testing:
