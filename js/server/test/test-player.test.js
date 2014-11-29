@@ -1997,6 +1997,56 @@ exports.playerCanSeeWritingAndDrawingOnAnItem = function (test) {
 
 exports.playerCanSeeWritingAndDrawingOnAnItem.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can see what's drawn/written in a item." };
 
+exports.playerCanCollectBloodFromAFreshKill = function (test) {
+    c0.kill();
+    var liquidContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true};
+    var bottle = new artefact.Artefact('bottle', 'a bottle', "Good for carrying liquids.", liquidContainerAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(bottle);
+
+    var expected = "You collect the blood into your bottle.<br>";
+    var actual = p0.get("collect", "blood");
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCanCollectBloodFromAFreshKill.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait", "Get Trait", "Container Trait"], description: "Test that a player can use blood from a fresh kill." };
+
+exports.playerCanCollectAndPourBloodOnFloor = function (test) {
+    c0.kill();
+    var liquidContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true };
+    var bottle = new artefact.Artefact('bottle', 'a bottle', "Good for carrying liquids.", liquidContainerAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(bottle);
+    p0.get("collect", "blood");
+    
+    var expected = "Hmm. You're a bit sick aren't you.<br>You pour blood over the floor.";
+    var actual = p0.put("pour", "blood", "floor");
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.playerCanCollectAndPourBloodOnFloor.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait", "Get Trait", "Container Trait"], description: "Test that a player can use blood from a fresh kill." };
+
+exports.bloodPouredOnFloorIsVisible = function (test) {
+    c0.kill();
+    var liquidContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true };
+    var bottle = new artefact.Artefact('bottle', 'a bottle', "Good for carrying liquids.", liquidContainerAttributes);
+    var inv = p0.getInventoryObject();
+    inv.add(bottle);
+    p0.get("collect", "blood");
+    l0.tick(15);
+    p0.put("pour", "blood", "floor");
+    var expected = "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.";
+    var actual = l0.describeBlood();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.bloodPouredOnFloorIsVisible.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait"], description: "Test that a player can use blood from a fresh kill." };
 
 
 /*

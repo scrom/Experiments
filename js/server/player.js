@@ -1077,7 +1077,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!suitableContainer) { return "Sorry. You can't collect "+artefact.getDisplayName()+" without something suitable to carry "+artefact.getSuffix()+" in.";};
 
                 var requiredContainer = artefact.getRequiredContainer();
-                return self.put("put", artefactName, suitableContainer.getName(), requiredContainer);
+                return self.put("collect", artefactName, suitableContainer.getName(), requiredContainer);
             };
         
             var collectedArtefact = removeObjectFromLocation(artefactName);
@@ -1920,7 +1920,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         if (artefact.isLiquid()) {
                             receiver.addLiquid(artefact.getName()); //not a creature by this point
                         };
-                        if (artefact.getName() == "blood") {                            
+                        if (artefact.getName() == "blood") {
+                            if (receiver.syn("floor")) {
+                                _currentLocation.addBlood()
+                            };
                             return "Hmm. You're a bit sick aren't you.<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
                         } else {
                             return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
@@ -1957,7 +1960,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     } else {
                         resultString += " in "; 
                     };
-                } else if (verb == "pour" || verb == "install" || verb == "insert"){
+                } else if (verb == "collect" ||verb == "pour" || verb == "install" || verb == "insert"){
                     resultString += " into "; 
                 } else {
                     resultString += " in ";    
