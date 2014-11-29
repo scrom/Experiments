@@ -145,7 +145,7 @@ function Client(aServerHost, aServerPort, aUi) {
             if (username == ''){
                 if (!(inputString)) {inputString = ""};
                 if (inputString.trim() == "") {
-                    ui.setState("I don't play with strangers.<br>You need to tell me who you are if you want to play with me.<br>Please type in your name and press <enter> (on your keyboard) to start.");
+                    ui.setState("I don't play with strangers.<br>You need to tell me who you are if you want to play with me.<br>Please type in your name and press &lt;enter> (on your keyboard) to start.");
                     return true;
                 };
                 requestGame(inputString);
