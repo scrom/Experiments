@@ -346,7 +346,7 @@ exports.canCompleteKillSpyMission = function (test) {
     test.done();
 };
 
-exports.canCompleteKillSpyMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+exports.canCompleteKillSpyMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "Dead Trait", "Kill Trait"], description: "Test that hard disk mission can be successfully completed." };
 
 exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (test) {
     var kitchen = m0.getLocation("kitchen-ground-floor");
@@ -386,7 +386,7 @@ exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (
     test.done();
 };
 
-exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "Dead Trait", "Kill Trait"], description: "Test that hard disk mission can be successfully completed." };
 
 
 exports.canCompleteReadArticleMission = function (test) {

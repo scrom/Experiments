@@ -197,21 +197,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var processGender = function() {
             //set gender for more sensible responses
             if ((_gender == "f")||(_gender == "female")) {
-                _gender == "female";
+                _gender = "female";
                 _genderPrefix = "She";
                 _genderSuffix = "her";
                 _genderPossessiveSuffix = "her";
                 _genderDescriptivePrefix = "she's";
             }
             else if ((_gender == "m")||(_gender == "male")) {
-                _gender == "male";
+                _gender = "male";
                 _genderPrefix = "He";
                 _genderSuffix = "him";
                 _genderPossessiveSuffix = "his";
                 _genderDescriptivePrefix = "he's";
             }
             else {
-                _gender == "unknown"
+                _gender = "unknown"
                 _genderPrefix = "It"
                 _genderSuffix = "it"
                 _genderPossessiveSuffix = "its";

@@ -2325,7 +2325,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var giver = getObjectFromLocation(giverName);
                 if (!(giver)) {return "There's no "+giverName+" here.";};
                 if (giver.getType() != 'creature') {return giver.getDescriptivePrefix()+" not alive, "+giver.getSuffix()+" can't give you anything.";}; //correct this for dead creatures too           
-                giverName == giver.getName(); //let's get the correct name to avoid clashes
+                giverName = giver.getName(); //let's get the correct name to avoid clashes
                 givers.push(giver);
             };
 

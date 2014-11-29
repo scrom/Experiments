@@ -538,6 +538,23 @@ exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage = function (test) {
 exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage.meta = { traits: ["Player Test", "Bleed Trait", "Hit Trait"], description: "Test that a bleeding player does less damage to a creature than normal." };
 
 
+exports.playerCanHitAndKillACreature = function (test) {
+    p0.get('get', weapon.getName());
+    p0.hit('hit', c0.getName());
+    p0.hit('hit', c0.getName());
+    p0.hit('hit', c0.getName());
+    p0.hit('hit', c0.getName());
+    var expectedResult = "He's dead.";
+    var actualResult = c0.health();
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanHitAndKillACreature.meta = { traits: ["Player Test", "Bleed Trait", "Hit Trait", "Dead Trait", "Kill Trait"], description: "Test that player can kill a creature!" };
+
+
 exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage = function (test) {
     p0.get('get', weapon.getName());
     p0.hurt(96);
@@ -551,7 +568,7 @@ exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage = function (test) 
     test.done();
 };
 
-exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage.meta = { traits: ["Player Test", "Bleed Trait", "Hit Trait"], description: "Test that a nearly dead player does double damage to a creature!" };
+exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage.meta = { traits: ["Player Test", "Bleed Trait", "Hit Trait", "Dead Trait", "Kill Trait"], description: "Test that a nearly dead player does double damage to a creature!" };
 
 
 
@@ -1336,7 +1353,7 @@ exports.cannotDrinkDeadCreature = function (test) {
     test.done();
 };
 
-exports.cannotDrinkDeadCreature.meta = { traits: ["Player Test", "Drink Trait", "Food Trait"], description: "Test that player cannot drink a dead creature." };
+exports.cannotDrinkDeadCreature.meta = { traits: ["Player Test", "Drink Trait", "Food Trait", "Dead Trait"], description: "Test that player cannot drink a dead creature." };
 
 exports.canEatDeadCreatureFromLocation = function (test) {
 
@@ -1355,7 +1372,7 @@ exports.canEatDeadCreatureFromLocation = function (test) {
     test.done();
 };
 
-exports.canEatDeadCreatureFromLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature that is in a location." };
+exports.canEatDeadCreatureFromLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait"], description: "Test that player can eat a dead creature that is in a location." };
 
 exports.canEatDeadCreatureFromInventory = function (test) {
 
@@ -1373,7 +1390,7 @@ exports.canEatDeadCreatureFromInventory = function (test) {
     test.done();
 };
 
-exports.canEatDeadCreatureFromInventory.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature that is in their inventory." };
+exports.canEatDeadCreatureFromInventory.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait"], description: "Test that player can eat a dead creature that is in their inventory." };
 
 
 exports.eatingAllOfDeadCreatureCarryingItemsDropsContents = function (test) {
@@ -1393,7 +1410,7 @@ exports.eatingAllOfDeadCreatureCarryingItemsDropsContents = function (test) {
     test.done();
 };
 
-exports.eatingAllOfDeadCreatureCarryingItemsDropsContents.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature that is carrying items." };
+exports.eatingAllOfDeadCreatureCarryingItemsDropsContents.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait", "Inventory Trait"], description: "Test that player can eat a dead creature that is carrying items." };
 
 
 exports.eatingAllOfDeadCreatureCarryingItemsReturnsContentsToPlayer = function (test) {
@@ -1413,7 +1430,7 @@ exports.eatingAllOfDeadCreatureCarryingItemsReturnsContentsToPlayer = function (
     test.done();
 };
 
-exports.eatingAllOfDeadCreatureCarryingItemsReturnsContentsToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player can eat a dead creature (from their inventory) that is carrying items." };
+exports.eatingAllOfDeadCreatureCarryingItemsReturnsContentsToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait", "Inventory Trait"], description: "Test that player can eat a dead creature (from their inventory) that is carrying items." };
 
 
 exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation = function (test) {
@@ -1434,7 +1451,7 @@ exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation = functi
     test.done();
 };
 
-exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature with inventory that their possessions are returned to the location." };
+exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait", "Inventory Trait"], description: "Test that when a player eats a dead creature with inventory that their possessions are returned to the location." };
 
 
 exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation = function (test) {
@@ -1455,7 +1472,7 @@ exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation = f
     test.done();
 };
 
-exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature with inventory that their possessions are returned to the location." };
+exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait"], description: "Test that when a player eats a dead creature with inventory that their possessions are returned to the location." };
 
 
 exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToPlayer = function (test) {
@@ -1476,7 +1493,7 @@ exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToPlayer = function
     test.done();
 };
 
-exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature that they're carrying that their possessions are returned to the player inventory." };
+exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait"], description: "Test that when a player eats a dead creature that they're carrying that their possessions are returned to the player inventory." };
 
 
 exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToPlayer = function (test) {
@@ -1499,7 +1516,7 @@ exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToPlayer = fun
     test.done();
 };
 
-exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that when a player eats a dead creature that they're carrying that their possessions are returned to the player inventory." };
+exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToPlayer.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait"], description: "Test that when a player eats a dead creature that they're carrying that their possessions are returned to the player inventory." };
 
 
 exports.cannotEatDeadFriendlyCreature = function (test) {
@@ -1518,7 +1535,7 @@ exports.cannotEatDeadFriendlyCreature = function (test) {
     test.done();
 };
 
-exports.cannotEatDeadFriendlyCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait"], description: "Test that player cannot eat a dead friendly creature." };
+exports.cannotEatDeadFriendlyCreature.meta = { traits: ["Player Test", "Eat Trait", "Food Trait", "Creature Trait", "Dead Trait"], description: "Test that player cannot eat a dead friendly creature." };
 
 
 exports.cannotEatLiveCreature = function (test) {
@@ -1553,7 +1570,7 @@ exports.playerCanHealSelfWhenBleeding = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCanHealSelfWhenBleeding.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player can heal themselves." };
+exports.playerCanHealSelfWhenBleeding.meta = { traits: ["Player Test", "Heal Trait", "Bleed Trait"], description: "Test that a player can heal themselves." };
 
 
 exports.playerCanHealSelfWhenNotBleeding = function (test) {
@@ -1571,7 +1588,7 @@ exports.playerCanHealSelfWhenNotBleeding = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCanHealSelfWhenNotBleeding.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player can heal themselves." };
+exports.playerCanHealSelfWhenNotBleeding.meta = { traits: ["Player Test", "Heal Trait", "Bleed Trait"], description: "Test that a player can heal themselves." };
 
 exports.playerCannotHealWithoutMedikit = function (test) {
 
@@ -1583,7 +1600,7 @@ exports.playerCannotHealWithoutMedikit = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCannotHealWithoutMedikit.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player cannot heal if not carrying a medikit." };
+exports.playerCannotHealWithoutMedikit.meta = { traits: ["Player Test", "Heal Trait"], description: "Test that a player cannot heal if not carrying a medikit." };
 
 exports.playerCannotHealIfNotInjured = function (test) {
     var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
@@ -1598,7 +1615,7 @@ exports.playerCannotHealIfNotInjured = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCannotHealIfNotInjured.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a player cannot heal if not injured." };
+exports.playerCannotHealIfNotInjured.meta = { traits: ["Player Test", "Heal Trait"], description: "Test that a player cannot heal if not injured." };
 
 
 exports.playerCanHealBleedingCreature = function (test) {
@@ -1618,7 +1635,7 @@ exports.playerCanHealBleedingCreature = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCanHealBleedingCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a bleeding creature can be healed by a player." };
+exports.playerCanHealBleedingCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleed Trait"], description: "Test that a bleeding creature can be healed by a player." };
 
 exports.playerCanHealNonBleedingCreature = function (test) {
 
@@ -1637,7 +1654,7 @@ exports.playerCanHealNonBleedingCreature = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCanHealNonBleedingCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a creature can be healed by a player." };
+exports.playerCanHealNonBleedingCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleed Trait"], description: "Test that a creature can be healed by a player." };
 
 
 exports.playerCannotHealADeadCreature = function (test) {
@@ -1658,7 +1675,7 @@ exports.playerCannotHealADeadCreature = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCannotHealADeadCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a dead creature cannot be healed by a player." };
+exports.playerCannotHealADeadCreature.meta = { traits: ["Player Test", "Heal Trait", "Dead Trait"], description: "Test that a dead creature cannot be healed by a player." };
 
 exports.playerCannotHealAHealthyCreature = function (test) {
 
@@ -1677,7 +1694,7 @@ exports.playerCannotHealAHealthyCreature = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.playerCannotHealAHealthyCreature.meta = { traits: ["Player Test", "Heal Trait", "Bleeding Trait"], description: "Test that a healthy creature cannot be healed by a player." };
+exports.playerCannotHealAHealthyCreature.meta = { traits: ["Player Test", "Heal Trait"], description: "Test that a healthy creature cannot be healed by a player." };
 
 exports.openingADoorOpensRelatedDoor = function (test) {
     var currentLocationName = "first-floor-toilet"

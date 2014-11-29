@@ -319,7 +319,7 @@ exports.deadCreatureWithNegativeAffinityWillShare = function (test) {
     test.done();
 };
 
-exports.deadCreatureWithNegativeAffinityWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a dead creature will share" };
+exports.deadCreatureWithNegativeAffinityWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait", "Dead Trait"], description: "Test that a dead creature will share" };
 
 
 exports.deadCreaturesCantAcceptGifts = function (test) {
@@ -336,7 +336,7 @@ exports.deadCreaturesCantAcceptGifts = function (test) {
     test.done();
 };
 
-exports.deadCreaturesCantAcceptGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a dead creature can't accept gifts" };
+exports.deadCreaturesCantAcceptGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait", "Dead Trait"], description: "Test that a dead creature can't accept gifts" };
 
 exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive = function (test) {
     var creatureName = 'creature';
@@ -623,7 +623,7 @@ exports.newCreatureWith50PercentHealthIsCreatedBleeding = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.newCreatureWith50PercentHealthIsCreatedBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleeding Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
+exports.newCreatureWith50PercentHealthIsCreatedBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleed Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
 
 exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding = function (test) {
     //creatures start bleeding at 50% health or lower.
@@ -635,7 +635,7 @@ exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleeding Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
+exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleed Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
 
 
 exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile = function (test) {
@@ -736,7 +736,7 @@ exports.deadCreatureWillNotFindForPlayer = function (test) {
     test.done();
 };
 
-exports.deadCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
+exports.deadCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait", "Dead Trait"], description: "Test that a friendly creature will share" };
 
 //collectBestAvailableWeapon
 exports.weakUnarmedCreatureWillCollectWeapon = function (test) {
@@ -945,7 +945,7 @@ exports.creatureCanHealAnotherBleedingCreature = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.creatureCanHealAnotherBleedingCreature.meta = { traits: ["Creature Test", "Heal Trait", "Bleeding Trait"], description: "Test that a bleeding creature can be healed by a player." };
+exports.creatureCanHealAnotherBleedingCreature.meta = { traits: ["Creature Test", "Heal Trait", "Bleed Trait"], description: "Test that a bleeding creature can be healed by a player." };
 
 exports.creaturesCanHealThemselves = function (test) {
 
@@ -963,7 +963,7 @@ exports.creaturesCanHealThemselves = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.creaturesCanHealThemselves.meta = { traits: ["Creature Test", "Heal Trait", "Bleeding Trait"], description: "Test that a bleeding creature can be healed by a player." };
+exports.creaturesCanHealThemselves.meta = { traits: ["Creature Test", "Heal Trait", "Bleed Trait"], description: "Test that a bleeding creature can be healed by a player." };
 
 
 exports.creatureCanFindPathToGoal = function (test) {
