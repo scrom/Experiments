@@ -67,6 +67,9 @@ exports.canSaveGameToFile = function (test) {
         console.log("File "+filename+" created? "+fileExists);
         test.equal(fileExists, true);
         fm.deleteFile(filename);
+        fileExists = fm.fileExists(filename);
+        console.log("File " + filename + " deleted? " + !fileExists);
+        test.equal(fileExists, false);
         test.done();
     };
 
@@ -104,8 +107,9 @@ exports.canSaveGameToRedis = function (test) {
 
             console.log("File "+filename+" created? "+fileExists);
             test.equal(fileExists, true);
-            //redisfm.deleteFile(filename);
-            test.done();            
+            redisfm.removeGameData(filename, function (result) {
+                test.done();
+            });           
         });
     };
 
@@ -142,7 +146,9 @@ exports.canSaveGameToRedisAndReadBack = function (test) {
                     console.log("Test did not retrieve data.");
                 };
                 //redisfm.deleteFile(filename);
-                test.done();    
+                redisfm.removeGameData(filename, function (result) {
+                    test.done();
+                });
             };
 
             fileExists = result;

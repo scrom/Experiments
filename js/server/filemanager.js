@@ -72,7 +72,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.removeGameData = function(fileName, callback) {
-            if (useFilesForGameData) {
+            if (useFilesForGameData || !(redisServer)) {
                 callback(self.deleteFile(fileName+".json"));
                 return null;
             };  
