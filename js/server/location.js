@@ -510,33 +510,46 @@ exports.Location = function Location(name, displayName, description, attributes)
         self.getDescription = function() {
             return _description;
         };
+        
+        self.describeBlood = function () {
+            if (_blood <=0) {
+                return "";
+            } 
+            else if (_blood >= 9) {
+                return "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.";
+            } else if (_blood > 5) {
+                return "<br>You notice splatters of blood in the area. It looks like someone or something's been bleeding here.";
+            } else if (_blood > 1) {
+                return "<br>There are fading signs of blood or violence here.";
+            } else if (_blood > 0) {
+                return "<br>You notice an oddly familiar metallic tang in the air.";
+            };
+            
+        };
+        
+        self.describeExits = function () {
+            var exitCount = self.getAvailableExits().length;
+            if (exitCount == 0) {
+                return "<br>There are no visible exits."; 
+            } else if (exitCount == 1) {
+                return "<br>There is a single exit " + self.listExits() + ".";
+            } else {
+                return "<br>There are exits " + self.listExits() + ".";
+            };            
+        };
 
         self.describe = function() {
             var resultString = _description;
-
-            if (_blood >=9) {
-                resultString+= "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently."; 
-            } else if (_blood >5) {
-                resultString+= "<br>You notice splatters of blood in the area. It looks like someone or something's been bleeding here."; 
-            } else if (_blood >1) {
-                resultString+= "<br>There are fading signs of blood or violence here."; 
-            } else if (_blood >0) {
-                resultString+= "<br>You notice a slight metallic tang of blood in the air."; 
-            };
 
             if (_inventory.size() > 0) {
                 //clean up grammar here (there is/there are)
                 resultString+="<br><br>You can see "+self.listObjects()+".";
             };
-            if (self.getAvailableExits().length > 0) {
-                if (self.getAvailableExits().length == 1) {
-                    resultString+="<br>There is a single exit "+self.listExits()+".";
-                } else {;
-                    resultString+="<br>There are exits "+self.listExits()+".";
-                };
-            } else { resultString+= "<br>There are no visible exits.";};
-
-            return resultString+"<br>";
+                        
+            resultString += self.describeBlood();
+            resultString += self.describeExits();
+            
+            return resultString + "<br>";
         };
 
         self.addVisit = function() {
@@ -663,10 +676,9 @@ exports.Location = function Location(name, displayName, description, attributes)
                 };
             };
 
-            //decrease blood in location (if any there)
-            self.reduceBlood();
-
-            for (var t=0; t < time; t++) {
+            for (var t = 0; t < time; t++) {
+                //decrease blood in location (if any there)
+                self.reduceBlood();
                 _inventory.tick();
             };
         };

@@ -1443,7 +1443,7 @@ exports.droppedItemsFromeatingAllOfDeadCreatureAreAllReturnedToLocation = functi
     p0.reduceHitPoints(6);
     p0.eat('eat','dead creature');
 
-    var expectedResult = "a home location<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.<br><br>You can see a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.<br>";
+    var expectedResult = "a home location<br><br>You can see a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.<br>There are no visible exits.<br>";
     var actualResult = p0.examine("look");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1464,7 +1464,7 @@ exports.droppedItemsFromeatingAllOfHeavyDeadCreatureAreAllReturnedToLocation = f
     p0.reduceHitPoints(6);
     p0.eat('eat','dead creature');
 
-    var expectedResult = "a home location<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.<br><br>You can see the remains of a well-chewed dead creature, a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There are no visible exits.<br>";
+    var expectedResult = "a home location<br><br>You can see the remains of a well-chewed dead creature, a slab of sugary goodness, a drinking glass, a mighty sword and a container.<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.<br>There are no visible exits.<br>";
     var actualResult = p0.examine("look");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

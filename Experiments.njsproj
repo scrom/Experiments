@@ -64,10 +64,6 @@
     <Compile Include="js\server\objectStub.js" />
     <Compile Include="js\server\player.js" />
     <Compile Include="js\server\server.js" />
-    <Compile Include="js\server\test\MochaTest1.js">
-      <SubType>Code</SubType>
-      <TestFramework>Mocha</TestFramework>
-    </Compile>
     <Compile Include="js\server\test\test-action.test.js" />
     <Compile Include="js\server\test\test-artefact.test.js" />
     <Compile Include="js\server\test\test-contagion.test.js" />

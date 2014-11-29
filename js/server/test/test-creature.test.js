@@ -1292,6 +1292,24 @@ exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers = function (test) {
 };
 exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a nearly dead creature creature does DOUBLE 'hit' damage!" };
 
+exports.killingCreatureLeavesBloodInLocation = function (test) {
+    
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
+    var l0 = new location.Location('home', 'Home', "You're home", {});
+    l0.addObject(c0);
+    c0.go(null, l0); 
+    c0.kill();
+    var blood = l0.getObject("blood");
+
+    var expected = "some blood";
+    var actual = blood.getDescription();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.killingCreatureLeavesBloodInLocation.meta = { traits: ["Creature Test", "Kill Trait", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+
 
 /*
 Methods needing testing:
