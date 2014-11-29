@@ -3476,8 +3476,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.rest = function(verb, duration, map) {
             if (!(_currentLocation.getObjectByType('bed'))) {return "There's nothing to "+verb+" on here.";};
 
-            //prevent resting if health > 80%
-            if (healthPercent() >80) {return "You're not tired at the moment.";};
+            //prevent resting if health > 90%
+            if (healthPercent() >90) {return "You're not tired at the moment.";};
 
             //check if there's an unfrindly creature here...
             var creatures = _currentLocation.getCreatures();
@@ -3856,24 +3856,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var initialScore = _score;
             var missionName = mission.getName();
             var missionReward = mission.checkState(self, map);
-            if (!(missionReward)) {return "";};
+            if (!(missionReward)) { return ""; };
+
+            //mission is either completed or failed...
+            if (missionReward.message) {
+                resultString += "<br>" + missionReward.message + "<br>";
+            };
+            resultString += mission.processReward(map, missionReward, self);
 
             if (missionReward.hasOwnProperty("fail")) {
-                resultString += "<br>"+missionReward.message+"<br>";
-                resultString += mission.processReward(map, missionReward, self);
                 _missionsFailed.push(mission.getName());
-            } else if (mission.getType() == "event") {
-                resultString += "<br>"+missionReward.message+"<br>";
-                resultString += mission.processReward(map, missionReward, self);
-                newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
             } else {
                 //normal mission success
-                if (missionReward.message) {
-                    resultString += "<br>"+missionReward.message+"<br>";
-                };
-                resultString += mission.processReward(map, missionReward, self);
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
-                _missionsCompleted.push(mission.getName());
+                if (mission.getType() == "mission") {
+                    _missionsCompleted.push(mission.getName());
+                };
             };
 
             if (!missionOwner) {

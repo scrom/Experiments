@@ -1,7 +1,8 @@
 ﻿"use strict";
 //mission object
 module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, failAttributes, reward, fail) {
-    try{     
+    try {
+        var tools = require('./tools.js');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
         var _displayName = displayName;
@@ -337,15 +338,27 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 fail = {};
             };
 
-            if (failReason == "time") {message += "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";};
-
-            if (fail.hasOwnProperty("message")) {message += "<br>"+fail.message;};
-
-            if (failReason == "destroyedObject") {message += "<br>You failed to "+self.getDisplayName()+". "+failObject.getDisplayName()+" has been destroyed.";};
-            if (failReason == "destroyedDestination") {message += "<br>Oh dear. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" had been destroyed.";};
-            if (failReason == "killedObject" || failReason == "killedMissionObject") {message += "<br>Hmm, that's bad. You can no longer "+self.getDisplayName()+". "+failObject.getDisplayName()+" is dead.";};
-            if (failReason == "destroyedSource") {message += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.";};
-            
+            if (fail.hasOwnProperty("message")) { message += "<br>" + fail.message; }
+            else {
+                switch (failReason) {
+                    case "time":
+                        message += "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";
+                        break;
+                    case "destroyedObject":
+                        message += "<br>You failed to "+self.getDisplayName()+". "+tools.initCap(failObject.getDisplayName())+" has been destroyed.";
+                        break;
+                    case "destroyedDestination":
+                        message += "<br>Oh dear. You can no longer " + self.getDisplayName() + ". " + tools.initCap(failObject.getDisplayName()) + " has been destroyed.";
+                        break;
+                    case "killedObject":
+                    case "killedMissionObject":
+                        message += "<br>Hmm, that's bad. You can no longer " + self.getDisplayName() + ". " + tools.initCap(failObject.getDisplayName()) + " is dead.";
+                        break;
+                    case "destroyedSource":
+                        message += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.";
+                        break;
+                };
+            };
 
             fail.fail = true;
             fail.message = message;
