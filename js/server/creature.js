@@ -2032,7 +2032,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             self.addSyns(["corpse","body"]);
 
             //add fresh blood to location
-            _currentLocation.addBlood();
+            if (_currentLocation) {
+                _currentLocation.addBlood();
+            };
 
             var resultString = "<br>"+tools.initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
             resultString += self.exposePositionedItems();
