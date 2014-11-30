@@ -1099,6 +1099,18 @@ exports.Action = function Action(player, map, fileManager) {
                 return "cannot kill "+_object0;               
             };
 
+            if (_verb == '+attrib') {
+                var item = _player.getObject(_object0);
+                if (!(item)) {
+                    item = _map.getObject(_object0);
+                };
+                if (item) {
+                    var itemString = item.toString();
+                    return itemString.replace(/"/g, '\\"');
+                };
+                return "cannot find " + _object0;
+            };
+
             if (_verb == '+wait') {
                 _ticks = parseInt(_object0);
                 return "Waiting "+_object0+" ticks..."+_player.incrementWaitCount(_ticks);       

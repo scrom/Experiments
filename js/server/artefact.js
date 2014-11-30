@@ -144,12 +144,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "shows";
         };
 
-        var processAttributes = function(artefactAttributes) {
+        var processAttributes = function (artefactAttributes) {
             if (_initialDetailedDescription == "") {
                 _initialDetailedDescription ="There's nothing of interest here.";
                 _detailedDescription = _initialDetailedDescription;
             };
-            if (!artefactAttributes) {return null;};
+            if (!artefactAttributes) { return null; };
+            if (artefactAttributes.initialDetailedDescription != undefined) { _initialDetailedDescription = artefactAttributes.initialDetailedDescription; };
+            if (artefactAttributes.initialDescription != undefined) { _initialDescription = artefactAttributes.initialDescription; };
             if (artefactAttributes.synonyms != undefined) { _synonyms = artefactAttributes.synonyms;};
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = artefactAttributes.defaultAction;};
             if (artefactAttributes.defaultResult != undefined) { _defaultResult = artefactAttributes.defaultResult;};
@@ -288,7 +290,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (artefactAttributes.canDrawOn== true || artefactAttributes.canDrawOn == "true") { _canDrawOn = true;};
             };     
             if (artefactAttributes.drawings != undefined) {_drawings = artefactAttributes.drawings;};    
-            if (artefactAttributes.writings != undefined) {_writings = artefactAttributes.writings;};                                       
+            if (artefactAttributes.writings != undefined) { _writings = artefactAttributes.writings; };
 
         };
 
@@ -333,8 +335,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         validateType(_type, _subType);
 
         //return right prefix for item       
-        self.descriptionWithCorrectPrefix = function(anItemDescription, plural) {
-            if (tools.isProperNoun(anItemDescription)) {
+        self.descriptionWithCorrectPrefix = function (anItemDescription, plural) {
+            if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0, 4) == "the ") {
                 //Description starts with a proper noun.
                 return anItemDescription;
             };
@@ -353,7 +355,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     //normal plural case
                     return "some "+anItemDescription;
                 };
-            };
+            }; 
             switch (anItemDescription.charAt(0).toLowerCase()) {
                 case "u":
                     if (anItemDescription.length == 1) {return "a '"+anItemDescription+"'";};
@@ -470,7 +472,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
-            //currentAttributes.synonyms = _synonyms;
+            currentAttributes.synonyms = _synonyms;
+            currentAttributes.initialDetailedDescription = _initialDetailedDescription;
+            currentAttributes.initialDescription = _initialDescription;
             currentAttributes.defaultAction = _defaultAction;
             currentAttributes.defaultResult = _defaultResult;
             currentAttributes.customAction = _customAction;
@@ -535,12 +539,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         };
 
-       self.getAttributesToSave = function() {
+        self.getAttributesToSave = function() {
             var saveAttributes = {};
             var artefactAttributes = self.getCurrentAttributes();
 
-            if (artefactAttributes.synonyms != undefined) { saveAttributes.synonyms = artefactAttributes.synonyms;};
-            
+            //we save syns separately
+            //if (artefactAttributes.synonyms != undefined) { saveAttributes.synonyms = artefactAttributes.synonyms;};
+
+            if (artefactAttributes.initialDetailedDescription != _detailedDescription) { saveAttributes.initialDetailedDescription = artefactAttributes.initialDetailedDescription; };
+            if (artefactAttributes.initialDescription != _initialDescription) { saveAttributes.initialDescription = artefactAttributes.initialDescription; };
+
             if (artefactAttributes.defaultAction != "examine") { saveAttributes.defaultAction = artefactAttributes.defaultAction;};
             if (artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contains $inventory." && artefactAttributes.extendedInventoryDescription != self.getPrefix()+" contain $inventory." && artefactAttributes.extendedInventoryDescription != "") {
                 saveAttributes.extendedInventoryDescription = artefactAttributes.extendedInventoryDescription;
@@ -603,8 +611,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.antibodies.length>0) {saveAttributes.antibodies = artefactAttributes.antibodies;}; 
             if (artefactAttributes.canDrawOn) {saveAttributes.canDrawOn = artefactAttributes.canDrawOn;};                  
             if (artefactAttributes.writings.length>0) {saveAttributes.writings = artefactAttributes.writings;};   
-            if (artefactAttributes.drawings.length>0) {saveAttributes.drawings = artefactAttributes.drawings;};             
+            if (artefactAttributes.drawings.length > 0) { saveAttributes.drawings = artefactAttributes.drawings; };
             return saveAttributes;
+        };
+
+        self.matches = function (anObject) {
+            if (self.toString() === anObject.toString()) {
+                return true;
+            };
+            return false;
         };
 
         self.syn = function (synonym) {

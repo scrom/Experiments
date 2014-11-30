@@ -376,6 +376,7 @@ exports.canCarryCorrectlyChecksOverWeight.meta = { traits: ["Inventory Test", "I
 /*
 Methods needing testing:
 describe, 
+listObjects,
 getWeight, 
 canCarry, 
 remove, 

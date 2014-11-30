@@ -32,6 +32,72 @@ exports.canCreateArtefactObject = function (test) {
 
 exports.canCreateArtefactObject.meta = { traits: ["Artefact Test", "Constructor Trait"], description: "Test that an artefact object can be created." };
 
+exports.canAddSynonymsToArtefactAndMatchOneOfThem = function (test) {
+    var expectedResult = true;
+    //artefact object is created in setUp
+    a0.addSyns(["hello", "unique", "synosyn"]);
+    var actualResult = a0.syn("unique");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canAddSynonymsToArtefactAndMatchOneOfThem.meta = { traits: ["Artefact Test", "Synonym Trait"], description: "Test that an artefact object can have syns added." };
+
+exports.canMatchTwoSameObjects = function (test) {
+    var drinkAttributes = { initialDescription: "desc!", weight: 1, carryWeight: 1, attackStrength: 5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var moreDrinkAttributes = { weight: 1, carryWeight: 1, initialDescription: "desc!", attackStrength: 5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    var moreCoffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    coffee.addSyns(["brew", "char", "cuppa"]);
+    moreCoffee.addSyns(["brew", "char", "cuppa"]);
+    var expectedResult = true;
+    var actualResult = coffee.matches(moreCoffee);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canMatchTwoSameObjects.meta = { traits: ["Artefact Test", "Match Trait"], description: "Test that an artefact object can be matched." };
+
+
+exports.cannotMatchTwoSameObjectsWithDifferingSyns = function (test) {
+    var drinkAttributes = { initialDescription: "desc!", weight: 1, carryWeight: 1, attackStrength: 5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var moreDrinkAttributes = { weight: 1, carryWeight: 1, initialDescription: "desc!", attackStrength: 5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    var moreCoffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    coffee.addSyns(["brew", "char", "cuppa"]);
+    moreCoffee.addSyns(["brew", "cuppa", "char"]);
+    var expectedResult = false;
+    var actualResult = coffee.matches(moreCoffee);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotMatchTwoSameObjectsWithDifferingSyns.meta = { traits: ["Artefact Test", "Match Trait"], description: "Test that an artefact object can be matched." };
+
+
+exports.cannotMatchTwoSlightlyDifferentObjects = function (test) {
+    var drinkAttributes = { initialDescription: "desc!", weight: 1, carryWeight: 1, attackStrength: 5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var moreDrinkAttributes = { weight: 1, carryWeight: 1, initialDescription: "desc!", attackStrength: 5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup', nutrition: 25 };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    var moreCoffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", moreDrinkAttributes, null);
+    coffee.addSyns(["brew", "char", "cuppa"]);
+    moreCoffee.addSyns(["brew", "char", "cuppa"]);
+    var expectedResult = false;
+    var actualResult = coffee.matches(moreCoffee);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotMatchTwoSlightlyDifferentObjects.meta = { traits: ["Artefact Test", "Match Trait"], description: "Test that an artefact object can be matched." };
+
 exports.canRetrieveACurrentAttribute = function (test) {
     var expectedResult = false;
     //artefact object is created in setUp

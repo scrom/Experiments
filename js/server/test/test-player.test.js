@@ -49,9 +49,9 @@ exports.setUp = function (callback) {
     container = new artefact.Artefact('container', 'container', 'hold hold hold',containerAttributes, null);
     a1 = new artefact.Artefact('box', 'box', 'just a box',breakableJunkAttributes, null);
     breakable = new artefact.Artefact('glass', 'drinking glass', 'a somewhat fragile drinking vessel',breakableJunkAttributes, null);
-    c0 = new creature.Creature('creature', 'A creature', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:100, affinity:5, canTravel:true},[a1]);
+    c0 = new creature.Creature('creature', 'creature', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:100, affinity:5, canTravel:true},[a1]);
     c0.go(null,l0); 
-    c1 = new creature.Creature('evil', 'An evil unfriendly creature', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:-5, canTravel:true},[a1]);
+    c1 = new creature.Creature('evil', 'Mr Evil', "Very shifty. I'm sure nobody would notice if they disappeared.", {weight:140, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:215, affinity:-5, canTravel:true},[a1]);
     c1.go(null,l0); 
 
     l0.addObject(a0);
@@ -59,8 +59,6 @@ exports.setUp = function (callback) {
     l0.addObject(breakable);
     l0.addObject(food);
     l0.addObject(container);
-    l0.addObject(c0);
-    l0.addObject(c1);
     callback(); 
 };
 
@@ -369,7 +367,7 @@ exports.canBeKilledAndDropInventory = function (test) {
 exports.canBeKilledAndDropInventory.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Kill Trait"], description: "Test that a killed player drops inventory." };
 
 exports.killPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.<br>";
+    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There are no visible exits.<br>";
     var actualResult = p0.kill();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -382,7 +380,7 @@ exports.killPlayerReturnsExpectedStringResult.meta = { traits: ["Player Test", "
 exports.creatureRetaliationCanKillPlayer = function (test) {
     c0.setAttackStrength(104);
     p0.setLocation(l0);
-    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.<br>";
+    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There are no visible exits.<br>";
     var actual = p0.hit('hit',c0.getName());
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -392,12 +390,12 @@ exports.creatureRetaliationCanKillPlayer = function (test) {
 exports.creatureRetaliationCanKillPlayer.meta = { traits: ["Player Test", "Affinity Trait", "Kill Trait", "Fight Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
 
 exports.creatureAttackCanKillPlayer = function (test) {
-    l0.removeObject(c0);
     var creatureName = 'creature';
-    var c1 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:104, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-15});
-    c1.go(null,l0);
-    var expected = "<br>The creature attacks you. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature, An evil unfriendly creature and a beastie.<br>There are no visible exits.<br>";
-    var actual = c1.fightOrFlight(null,p0);
+    l0.removeObject(c0.getName());
+    var c2 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:104, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-15});
+    c2.go(null, l0);
+    var expected = "<br>The creature attacks you. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container and a beastie.<br>There are no visible exits.<br>";
+    var actual = c2.fightOrFlight(null,p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);
@@ -407,7 +405,7 @@ exports.creatureAttackCanKillPlayer.meta = { traits: ["Player Test", "Affinity T
 
 
 exports.hitAndKillPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see A creature, An evil unfriendly creature, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, A creature and An evil unfriendly creature.<br>There are no visible exits.<br>";
+    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There are no visible exits.<br>";
     var actualResult = p0.hurt(101);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1626,7 +1624,7 @@ exports.playerCanHealBleedingCreature = function (test) {
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature 3';
-    var c2 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
+    var c2 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     c2.go('n',l0);
     var expected = "You use a first aid kit to heal the creature 3. You manage to stop it bleeding.<br>It seems much better but would benefit from a rest.";
     var actual = p0.healCharacter('creature 3');
@@ -1645,7 +1643,7 @@ exports.playerCanHealNonBleedingCreature = function (test) {
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature 3';
-    var c3 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:80, maxHealth:150, affinity:-2, canTravel:true});
+    var c3 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:80, maxHealth:150, affinity:-2, canTravel:true});
     c3.go('n',l0);
     var expected = "You use a first aid kit to heal the creature 3. It seems much better but would benefit from a rest.";
     var actual = p0.healCharacter('creature 3');
@@ -1665,7 +1663,7 @@ exports.playerCannotHealADeadCreature = function (test) {
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature 3';
-    var c3 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:1, maxHealth:150, affinity:-2, canTravel:true});
+    var c3 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:1, maxHealth:150, affinity:-2, canTravel:true});
     c3.go('n',l0);
     c3.kill();
     var expected = "The creature 3's dead, healing won't help it any more.";
@@ -1685,7 +1683,7 @@ exports.playerCannotHealAHealthyCreature = function (test) {
     inv.add(medikit);
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature 3';
-    var c3 = new creature.Creature(creatureName,'a beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:149, maxHealth:150, affinity:-2, canTravel:true});
+    var c3 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:149, maxHealth:150, affinity:-2, canTravel:true});
     c3.go('n',l0);
     var expected = "The creature 3 doesn't need healing.";
     var actual = p0.healCharacter('creature 3');
@@ -2084,6 +2082,22 @@ exports.playerCanEmptyaBottleOfBlood = function (test) {
 };
 exports.playerCanEmptyaBottleOfBlood.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait"], description: "Test that a player can use blood from a fresh kill." };
 
+
+exports.duplicateItemsAreCollatedInPlayerInventoryDescription = function (test) {
+    var item1 = new artefact.Artefact('item', 'box', 'just a box', breakableJunkAttributes, null);
+    var item2 = new artefact.Artefact('item', 'box', 'just a box', breakableJunkAttributes, null);
+    p0.acceptItem(item1);
+    p0.acceptItem(item2);
+    
+    var expectedResult = "You're carrying 2 boxes.<br>You have &pound;5.00 in cash.<br>";
+    var actualResult = p0.describeInventory();
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.duplicateItemsAreCollatedInPlayerInventoryDescription.meta = { traits: ["Player Test", "Match Trait"], description: "Test that a player inventory correctly reports duplicate items." };
 
 /*
 Methods needing testing:

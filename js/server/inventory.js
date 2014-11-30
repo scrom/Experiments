@@ -110,23 +110,55 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return _maxCarryingWeight;
         };
 
+        //take a set of objects and return simple JSON description and price.
+        //de-duplicate at the same time
+        self.prepareItemList = function (items) {
+            var itemList = [];
+            var finalList = [];
+            for (var i = 0; i < items.length; i++) {
+                var itemString = items[i].toString();
+                if (itemList[itemString]) {
+                    itemList[itemString].count += 1;
+                } else {
+                    itemList[itemString] = { "description": items[i].getDescription(), "rawDescription": items[i].getRawDescription(), "price": items[i].getPrice(), "count": 1 };
+                };
+            };
+
+            for (var key in itemList) {
+                if (itemList[key].count > 1) {
+                    itemList[key].description = tools.pluraliseDescription(itemList[key].rawDescription, itemList[key].count);
+                };
+                finalList.push({ "description": itemList[key].description, "price": itemList[key].price, "count": itemList[key].count });
+            };
+
+            return finalList;
+        };
+
         self.describe = function(additionalAttribute) {
             var description = '';
-            var items = self.getAllObjects();
-            if (items.length == 0) {description = "nothing"};
-            for(var i = 0; i < items.length; i++) {
+            var allItems = self.getAllObjects();
+            var items = self.prepareItemList(allItems);
+            if (items.length == 0) { description = "nothing" };
+
+            for (var i = 0; i < items.length; i++) {
+                //show as items for sale
                 if (additionalAttribute == "price") {
                     if (items.length >1 ) {description += "- ";};
                     
-                    if (items.length >1 ) {description +=tools.initCap(items[i].getDescription());}
-                    else { description += items[i].getDescription();};
+                    if (items.length >1 ) {description +=tools.initCap(items[i].description);}
+                    else { description += items[i].description;};
                     
-                    description+= " (price: &pound;"+items[i].getPrice().toFixed(2)+")"
+                    description += " (price: &pound;" + items[i].price.toFixed(2);
+                    if (items[i].count > 1) {
+                        description += " each";
+                    };
+                    description += ")";
                     
                     if (items.length >1 ) {description +="<br>";};
                 } else {
+                    //just show as items
                     description += tools.listSeparator(i, items.length);
-                    description += items[i].getDescription();
+                    description += items[i].description;
                 };
 
             };
@@ -135,9 +167,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 description += self.describePositionedItems();
             };
 
-
             return description;
-
         };	
 
         self.describePositionedItems = function() {
@@ -148,9 +178,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (positionedItems.length == 1) {isAre = "'s";};
                 description += "<br>There"+isAre+" ";
 
-                for(var i = 0; i < positionedItems.length; i++) {
-                    description += tools.listSeparator(i, positionedItems.length);
-                    description += positionedItems[i].getDescription();
+                var items = self.prepareItemList(positionedItems);
+                for (var i = 0; i < items.length; i++) {
+                    description += tools.listSeparator(i, items.length);
+                    description += items[i].description;
                 };
 
                 description += " placed on top";
@@ -289,11 +320,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
 
             //return foundItems;
-            if (foundItems.length==0) {return "nothing new";};
+            if (foundItems.length == 0) { return "nothing new"; };
+            var items = self.prepareItemList(foundItems);
             var resultString = "";
-            for(var i = 0; i < foundItems.length; i++) {
-                    resultString += tools.listSeparator(i, foundItems.length);
-                    resultString+=foundItems[i].getDescription();
+            for(var i = 0; i < items.length; i++) {
+                resultString += tools.listSeparator(i, items.length);
+                resultString += items[i].description;
             };
             return resultString;
         };
@@ -310,11 +342,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
 
             //return foundItems;
-            if (foundItems.length==0) {return "nothing new";};
+            if (foundItems.length == 0) { return "nothing new"; };
+            var items = self.prepareItemList(foundItems);
             var resultString = "";
-            for(var i = 0; i < foundItems.length; i++) {
-                    resultString += tools.listSeparator(i, foundItems.length);
-                    resultString+=foundItems[i].getDescription();
+            for (var i = 0; i < items.length; i++) {
+                resultString += tools.listSeparator(i, items.length);
+                resultString += items[i].description;
             };
             return resultString;
         };
@@ -335,10 +368,11 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         self.listObjects = function() {
             var resultString = ""
-            var items = self.getAllObjects();
+            var allItems = self.getAllObjects();
+            var items = self.prepareItemList(allItems);
             for(var i = 0; i < items.length; i++) {
                     resultString += tools.listSeparator(i, items.length);
-                    resultString+=items[i].getDescription();
+                    resultString+=items[i].description;
             };
             return resultString;
         };

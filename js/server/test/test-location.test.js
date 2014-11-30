@@ -307,12 +307,29 @@ exports.previouslyRetrievedbloodInLocationIsNoLongerAvailableAfter10Ticks = func
 exports.previouslyRetrievedbloodInLocationIsNoLongerAvailableAfter10Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
 
+exports.aNearlyDeadCreatureBleedsAndLeavesBloodInLocation = function (test) {
+
+    var l0 = new location.Location('home', 'Home', "You're home", {});
+    l0.addExit('n', 'home', 'home');
+
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
+    c0.go(null, l0);
+
+    var expected = "You're home<br><br>You can see a beastie.<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.<br>There is a single exit to the North.<br>";
+    var actual = l0.describe();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.aNearlyDeadCreatureBleedsAndLeavesBloodInLocation.meta = { traits: ["Location Test", "Bleed Trait", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+
 exports.fullLocationDescriptionIncludesBloodInventoryAndExits = function (test) {
     
     var l0 = new location.Location('home', 'Home', "You're home", {});
     l0.addExit('n', 'home', 'home');
         
-    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });        
+    var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });        
     c0.go(null, l0);
     c0.kill();
     
@@ -323,5 +340,29 @@ exports.fullLocationDescriptionIncludesBloodInventoryAndExits = function (test) 
     test.equal(actual, expected);
     test.done();
 };
-exports.locationAccuratelyDescribesFreshBlood.meta = { traits: ["Location Test", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.fullLocationDescriptionIncludesBloodInventoryAndExits.meta = { traits: ["Location Test", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
+exports.fullLocationDescriptionCollatesDuplicateCreaturesAndArtefacts = function (test) {
+
+    var l0 = new location.Location('home', 'Home', "You're home", {});
+    l0.addExit('n', 'home', 'home');
+
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
+    var c1 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
+    c0.go(null, l0);
+    c1.go(null, l0);
+
+    var keyAttributes = { weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: "" };
+    var bag = new artefact.Artefact('bag', 'bag of stones', "An object with key attributes - odd.", keyAttributes);
+    var bag2 = new artefact.Artefact('bag', 'bag of stones', "An object with key attributes - odd.", keyAttributes);
+    l0.addObject(bag);
+    l0.addObject(bag2);
+
+    var expected = "You're home<br><br>You can see 2 beasties and 2 bags of stones.<br>There is a single exit to the North.<br>";
+    var actual = l0.describe();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.fullLocationDescriptionCollatesDuplicateCreaturesAndArtefacts.meta = { traits: ["Location Test", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };

@@ -221,6 +221,55 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         processGender();
 
+        //return right prefix for item       
+        self.descriptionWithCorrectPrefix = function (anItemDescription, plural) {
+            if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0,4) == "the ") {
+                //Description starts with a proper noun.
+                return anItemDescription;
+            };
+
+            if (plural) {
+                //special cases
+                var collectionPlurals = ["pair", "pack", "bowl", "pool", "set", "box", "tin", "jar", "packet", "bottle", "cluster", "collection", "group"];
+                var descriptionAsWords = anItemDescription.split(" ");
+                if (descriptionAsWords.length > 2) {
+                    //"x of y" ?
+                    if (!(collectionPlurals.indexOf(descriptionAsWords[0]) > -1 && descriptionAsWords[1] == "of")) {
+                        //not a special case
+                        return "some " + anItemDescription;
+                    };
+                } else {
+                    //normal plural case
+                    return "some " + anItemDescription;
+                };
+            };
+            switch (anItemDescription.charAt(0).toLowerCase()) {
+                case "u":
+                    if (anItemDescription.length == 1) { return "a '" + anItemDescription + "'"; };
+                    //note no break - fall through case
+                case "a":
+                case "e":
+                case "i":
+                case "o":
+                case "h":
+                case "8": //e.g. "an 8 gallon container"
+                    return "an " + anItemDescription;
+                    break;
+                case "f":
+                case "l":
+                case "m":
+                case "n":
+                case "r":
+                case "s":
+                case "x":
+                    if (anItemDescription.length == 1) { return "an '" + anItemDescription + "'"; };
+                    //note no break - fall through case
+                default:
+                    return "a " + anItemDescription;
+                    break;
+            };
+        };
+
         //console.log('carrying: '+carrying);
         if (carrying) {
             //console.log('building creature inventory... ');
@@ -533,6 +582,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return saveAttributes;
         };
 
+        self.matches = function (anObject) {
+            if (self.toString() === anObject.toString()) {
+                return true;
+            };
+            return false;
+        };
+
         self.syn = function (synonym) {
             //match by name first
             if (synonym == _name) {
@@ -580,6 +636,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
         
         self.getDescription = function() {
+            return self.descriptionWithCorrectPrefix(_description);
+        };
+
+        self.getRawDescription = function () {
             return _description;
         };
 
@@ -2028,7 +2088,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _sound = "There's nothing quite like the silence of the dead.";
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
-            _description = 'a dead '+self.getDisplayName().replace("the ","");
+            _description = 'dead '+self.getDisplayName().replace("the ","");
             self.addSyns(["corpse","body"]);
 
             //add fresh blood to location

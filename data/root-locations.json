@@ -1087,7 +1087,7 @@
       {
         "object": "artefact",
         "name": "walls",
-        "description": "a wall full of assorted project and team status information",
+        "description": "wall full of assorted project and team status information",
         "detailedDescription": "There's a bunch of graphs that go up and to the right. Everything must be great.",
         "attributes": {
           "weight": 280,
@@ -1295,7 +1295,7 @@
       {
         "object": "artefact",
         "name": "backlog",
-        "description": "a scattering of analysis documentation but nothing interesting",
+        "description": "scattering of analysis documentation but nothing interesting",
         "detailedDescription": "You pick through the few pieces of paperwork you can see lying around but there's nothing that particularly interests you.",
         "attributes": {
           "type": "scenery",
@@ -5872,7 +5872,7 @@
                               "object": "creature",
                               "name": "mouse",
                               "displayname": "the mouse",
-                              "description": "a small grey mouse",
+                              "description": "small grey mouse",
                               "detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
                               "attributes": {
                                 "weight": 1,
@@ -6181,7 +6181,7 @@
       {
         "object": "artefact",
         "name": "alarm button",
-        "description": "an alarm button",
+        "description": "alarm button",
         "detailedDescription": "It doesn't look like it's been used in quite some time.",
         "attributes": {
           "type": "scenery",
@@ -9360,7 +9360,7 @@
       {
         "object": "artefact",
         "name": "wall",
-        "description": "a wall full of post-it notes",
+        "description": "wall full of post-it notes",
         "detailedDescription": "I see it! I can see the duplicate...<br>Oh. Nope, it's not.",
         "attributes": {
           "weight": 280,
@@ -10044,7 +10044,7 @@
       {
         "object": "artefact",
         "name": "wall",
-        "description": "a wall full of post cards",
+        "description": "wall full of post cards",
         "detailedDescription": "Poking through the cards on the wall, they generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.",
         "attributes": {
           "weight": 280,
@@ -10294,7 +10294,7 @@
         "object": "creature",
         "name": "cat",
         "displayname": "the cat",
-        "description": "a small tabby cat",
+        "description": "small tabby cat",
         "detailedDescription": "It looks like a stray. I think it's hungry.",
         "attributes": {
           "weight": 3,

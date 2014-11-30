@@ -26,6 +26,34 @@ var self = module.exports = {
         return aString.charAt(0).toUpperCase() + aString.slice(1);
     },
 
+    pluraliseDescription: function (aDescription, aCount) {
+        if (aCount < 2) { return aDescription; };
+        var wordToReplace = aDescription;
+        var replacement = wordToReplace;
+
+        var descriptionAsWords = aDescription.split(" ");
+        if (descriptionAsWords.length > 2) {
+            //"x of y" ?
+            if (descriptionAsWords[1] == "of") {
+                wordToReplace = descriptionAsWords[0];
+            };
+        };
+
+        if (wordToReplace.substr(-1) == "x") {
+            replacement = wordToReplace + "es";
+        } else if (wordToReplace.substr(-2) == "us") {
+            replacement = wordToReplace + "es";
+        } else if (wordToReplace.substr(-2) == "sh") {
+            replacement = wordToReplace + "es";
+        } else if (wordToReplace.substr(-1) == "s") {
+            replacement = wordToReplace + "es";
+        } else {
+            replacement = wordToReplace + "s";
+        };
+
+        return aCount+" "+aDescription.replace(wordToReplace, replacement);
+    },
+
     /* --- custom array handling ---*/
 
     listSeparator: function(listPosition, listLength) {
