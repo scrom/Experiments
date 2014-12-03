@@ -649,7 +649,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.increaseAggression = function(changeValue) {
-            _aggression += changeValue;
+            _aggression += Math.round(changeValue*100)/100;
             return _aggression;
         };
 
@@ -1162,7 +1162,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         /*allow player to try and break an object*/
         self.breakOrDestroy = function(verb, artefactName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {
+                if (artefactName == "wind") {
+                    _currentLocation.reduceLocalFriendlyCreatureAffinity(1);
+                    self.increaseAggression(0.1);
+                    var randomReplies = ["Well I guess that's one way to clear a room quickly.", "Trying to make friends and influence people again are you?", "You strain hard but don't have anything to give without following through.", "You try to quietly squeeze one out and fail spectacularly.<br>I think you're losing credibility (and friends) fast.", "I think it's time to get on with something more useful now.", "Stop that."];
+                    var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    return randomReplies[randomIndex];
+                };
+                return notFoundMessage(artefactName);
+            };
 
             if (artefact.getSubType() == "intangible") {return "Don't be silly.";};
 
@@ -1201,6 +1210,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.empty = function(verb, artefactName, splitWord, receiverName) {
             if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
+            if (artefactName == "all") {return "Sorry, you'll need to be more specific.";};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {return notFoundMessage(artefactName);};
@@ -1884,6 +1894,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
                 if (tools.stringIsEmpty(receiverName)){ return verb+" "+artefactName+" where?";};
+                if (artefactName == "all") {return "Sorry, you'll need to be more specific.";};
 
                 var artefact = getObjectFromPlayerOrLocation(artefactName);
                 if (!(artefact)) {return notFoundMessage(artefactName);};
