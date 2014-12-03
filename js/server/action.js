@@ -538,6 +538,13 @@ exports.Action = function Action(player, map, fileManager) {
                             };
                         };
 
+                        //is the player moving something to somewhere?
+                        //rewrite the action as "put"
+                        if (_object1) {
+                            description = "$action put "+_object0+" "+_splitWord+" "+_object1;     
+                            break;                       
+                        };
+
                         //if we've got to here the player isn't navigating somewhere
                         //fall through to "shove"
                     case 'shove':
