@@ -1497,6 +1497,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.getObject(anObjectName);
         };
 
+        self.getInventorySize = function(countHiddenObjects) {
+            return _inventory.size(countHiddenObjects);
+        };
+
         self.contains = function(anObjectName) {
             //console.log("checking inventory for "+anObjectName);
             return _inventory.check(anObjectName);

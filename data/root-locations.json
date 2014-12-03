@@ -5966,7 +5966,7 @@
         "object": "artefact",
         "name": "bookcase",
         "description": "set of bookcases",
-        "detailedDescription": "Books on everything from travel to SQL server and from sales to C#.",
+        "detailedDescription": "It usually contains books on everything from travel to SQL server and from sales to C#.",
         "attributes": {
           "extendedInventoryDescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",
           "weight": 80,

@@ -1088,9 +1088,40 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         /*Allow player to get all available objects from a location*/
-        self.getAll = function(verb) {
+        self.getAll = function(verb, sourceContainerName) {
 
-            var artefacts = _currentLocation.getAllObjects();
+            if (sourceContainerName) {
+                var sourceContainer = getObjectFromPlayerOrLocation(sourceContainerName);
+                if (!sourceContainer) {
+                    return notFoundMessage(sourceContainerName);
+                };
+                if (sourceContainer.getType() == "creature") {
+                    return "You'll need to find another way of getting what you're after from "+sourceContainer.getSuffix()+".";
+                };
+
+                if (sourceContainer.isLocked()) {
+                    return tools.initCap(sourceContainer.getDescriptivePrefix())+" locked.";
+                };
+
+                if ((!sourceContainer.isOpen())) {
+                    return tools.initCap(sourceContainer.getDescriptivePrefix())+" closed.";
+                };
+                
+                if (sourceContainer.getInventorySize(false) == 0) {
+                    if (sourceContainer.getInventorySize(true) > 0) {
+                        return "You can't see anything obvious to take from "+sourceContainer.getSuffix()+"."
+                    };
+                    return "There's nothing in "+sourceContainer.getSuffix()+" to take."
+                };
+            };
+
+            var artefacts;
+            if (sourceContainer) {
+                artefacts = sourceContainer.getAllObjects();
+            } else {
+                artefacts = _currentLocation.getAllObjects();
+            };
+
             var collectedArtefacts = [];
             var artefactCount = artefacts.length;
             var successCount = 0;
@@ -1102,7 +1133,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //bug workaround. get all won't auto-support required containers --V
                 if ((artefact.isCollectable()) && (_inventory.canCarry(artefact)) && (!(artefact.requiresContainer()))) {
-                    var artefactToCollect = getObjectFromLocation(artefact.getName());
+                    var artefactToCollect = getObjectFromPlayerOrLocation(artefact.getName());
                     _inventory.add(artefactToCollect);
                     collectedArtefacts.push(artefactToCollect);
                     successCount ++;
@@ -1111,7 +1142,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         
             //as we're passing the original object array around, must "remove" from location after collection
             collectedArtefacts.forEach(function(artefact) {
+                if (sourceContainer) {
+                    sourceContainer.removeObject(artefact.getName());
+                } else {
                     removeObjectFromLocation(artefact.getName());
+                };
             });
 
             if (collectibleArtefactCount==0) {return  "There's nothing here that can be picked up.";};
@@ -2064,6 +2099,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         /*Allow player to remove something from an object */
         self.remove = function(verb, artefactName, receiverName){
+                if (artefactName == "all") {return self.getAll(verb, receiverName);};
                 if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
                 if (tools.stringIsEmpty(receiverName)){ return verb+" "+artefactName+" from what?";};
 
@@ -2271,6 +2307,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(giver)) {return "There's no "+giverName+" here.";};
 
             if (giver.getType() == "creature") {
+                if (artefactName == "all") {return "You'll need to try "+verb+"ing things one at a time from "+giver.getSuffix()+".";};
                 var resultString = "";
                 self.increaseAggression(1); //we're stealing!  
                 _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName());   
