@@ -169,7 +169,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (objectToRemove.requiresContainer()) {
                     //console.log(objectToRemove.getName()+" lost.");
                     lostObjectCount++;
-                    if (objectToRemove.getName() == "blood") {_currentLocation.addBlood();};
+                    if (objectToRemove.isLiquid()) {
+                        _currentLocation.addLiquid(objectToRemove.getName());
+                    };
                 } else {
                     if (locationArtefact) {
                         _currentLocation.addObject(objectToRemove);
@@ -1899,6 +1901,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var artefact = getObjectFromPlayerOrLocation(artefactName);
                 if (!(artefact)) {return notFoundMessage(artefactName);};
 
+                //replace requested artefact name with real name...
+                artefactName = artefact.getName();
+
                 //get receiver if it exists
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
                 if (!(receiver)) {
@@ -1937,7 +1942,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                     return self.combine(artefact, newReceiver)                   
                 } else {
-                    if (verb == "combine") {return "Combining "+artefact.getName()+" and "+receiver.getName()+" doesn't make anything new.";};
+                    if (verb == "combine") {return "Combining "+artefactName+" and "+receiver.getName()+" doesn't make anything new.";};
                 };
                 
                 //check receiver can carry item (container or not)
@@ -1946,7 +1951,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (receiver.isBroken()){return receiver.getDescriptivePrefix()+" broken. You'll need to fix "+receiver.getSuffix()+" first.";};
 
                     //is it already there?
-                    if (receiver.getObject(artefact.getName())) {
+                    if (receiver.getObject(artefactName)) {
                         if (verb == "hide") {
                             if (!(artefact.isHidden())) {
                                 artefact.hide();
@@ -1963,16 +1968,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //@todo - should really trap if the liquid/powder was *not* in a container prior to this
                         var artefactChargesRemaining = artefact.consume(1);
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                        if (artefact.isLiquid()) {
-                            receiver.addLiquid(artefact.getName()); //not a creature by this point
-                        };
-                        if (artefact.getName() == "blood") {
-                            if (receiver.syn("floor")) {
-                                _currentLocation.addBlood()
+                        if (artefact.isLiquid()) { //not a creature by this point
+                            if (artefactName == "blood") {
+                                if (receiver.syn("floor")) {
+                                    _currentLocation.addLiquid("blood")
+                                } else {
+                                    receiver.addLiquid(artefactName);
+                                };
+                                return "Hmm. You're a bit sick aren't you.<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
+                            } else{
+                                receiver.addLiquid(artefactName);
+                                return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
                             };
-                            return "Hmm. You're a bit sick aren't you.<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
-                        } else {
-                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefact.getName()+" over "+receiver.getDisplayName()+".";
                         };
                     };                   
                     

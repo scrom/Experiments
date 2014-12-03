@@ -782,7 +782,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             resultString += "<br>The "
             for (var l=0;l<liquids.length;l++) {
                 _inventory.remove(liquids[l]);
-                if (liquids[l] == "blood") {location.addBlood();};
+                location.addLiquid(liquids[l]);
                 resultString += tools.listSeparator(l, liquids.length);
                 resultString += liquids[l]
             };

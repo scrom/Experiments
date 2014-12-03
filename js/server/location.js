@@ -159,12 +159,15 @@ exports.Location = function Location(name, displayName, description, attributes)
             _description=description;
         };
 
-        self.addBlood = function() {
-            _blood = 10;
+        self.addLiquid = function(liquidName) {
+            if (liquidName == "blood") {
+                _blood = 10;
+            };
+
             //if we have a floor object...
             var floor = _inventory.getObject("floor", true, false, false);
             if (floor) {
-                floor.addLiquid("blood");
+                floor.addLiquid(liquidName);
             };
         };
 

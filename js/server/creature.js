@@ -1806,7 +1806,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _currentLocation.addObject(self);
 
             if (_bleeding) {
-                _currentLocation.addBlood();
+                _currentLocation.addLiquid("blood");
             };
 
             return tools.initCap(self.getDisplayName())+" follows you.<br>";
@@ -2093,7 +2093,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //add fresh blood to location
             if (_currentLocation) {
-                _currentLocation.addBlood();
+                _currentLocation.addLiquid("blood");
             };
 
             var resultString = "<br>"+tools.initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
@@ -2952,7 +2952,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //bleed?
                 if (_bleeding) {
                     //bleed
-                    _currentLocation.addBlood();
+                    _currentLocation.addLiquid("blood");
 
                     //attempt to heal...
 
