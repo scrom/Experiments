@@ -964,7 +964,12 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'clear':
                     case 'wipe':
                     case 'clean':
-                        description = _player.clean(_verb, _object0);
+                        if (_object1) {
+                            //clean x from y
+                            description = _player.clean(_verb, _object1, _object0);
+                        } else {
+                            description = _player.clean(_verb, _object0);
+                        };
                         break;
                     case 'sniff': //see also smell - by default, not much but would want to add smell attributes to creatures and artefacts
                     case 'smell':

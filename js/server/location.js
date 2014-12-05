@@ -165,15 +165,16 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
 
             //if we have a floor object...
-            var floor = _inventory.getObject("floor", true, false, false);
+            var floor = self.getObject("floor", true, false, false);
             if (floor) {
                 floor.addLiquid(liquidName);
             };
         };
 
-        self.reduceBlood = function() {
+        self.reduceBlood = function(reduceBy) {
+            if (!reduceBy) {reduceBy = 1};
             if (_blood >0) {
-                _blood--;
+                _blood = _blood - reduceBy;
                 if (_blood < 9) {
                     //if we have a floor object...
                     var floor = _inventory.getObject("floor", true, false, false);
@@ -400,8 +401,54 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.check(anObjectName, ignoreSynonyms, searchCreatures);
         };
 
+        self.spilledLiquidExists = function(liquidName) {
+            //check if passed in liquid is on any location object.
+            return _inventory.hasLiquid(liquidName);
+        };
+
         self.getType = function() {
             return _type;
+        };
+
+        self.createBloodObject = function() {
+            if (_blood >0) {
+                var bloodAttributes = {
+                    "type": "food", 
+                    "weight": 0.1, 
+                    "defaultAction": "drink", 
+                    "nutrition": -5, 
+                    "requiresContainer": true, 
+                    "isLiquid": true,
+                    "canCollect": true,
+                    "plural": true,
+                    "charges": 1,
+                    "chargeUnit": "drink",
+                    "chargesDescription": "There's enough here for $charges $chargeUnit",
+                    "customAction": null,
+                    "defaultResult": "",
+                    "smell": "It smells metallic and fresh. You fight your gag-reflex at the thought of recent death here."
+                };
+
+                if (_blood <=9) {
+                    //must be freshly spilled only to be able to collect.
+                    bloodAttributes.type = "scenery";
+                    bloodAttributes.canCollect = false;
+                    bloodAttributes.defaultAction = "examine";
+                    bloodAttributes.nutrition = 0;
+                    bloodAttributes.charges = -1;
+                    bloodAttributes.chargesDescription = "";
+                    bloodAttributes.customAction = ["get"];
+                    bloodAttributes.defaultResult = "There's not enough here to do anything useful with.";
+                    bloodAttributes.smell = "It smells somewhat disturbing but not quite fresh.";
+                };
+
+                if (_blood <=1) {
+                    bloodAttributes.smell = "There's just a tang of iron and salt in the air, nothing more."
+                };
+
+                return new artefactObjectModule.Artefact("blood", "blood", "It's hard to tell where or who it came from.", bloodAttributes, null, null);
+            };
+            return null;
         };
 
         self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, verb) {
@@ -440,51 +487,17 @@ exports.Location = function Location(name, displayName, description, attributes)
                 if (anObjectName == "ground") {anObjectName = "floor";};
                 var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", {"type": "scenery", "subType": subType, "canDrawOn": canDrawOn}, null, null);
                 sceneryObject.addSyns([anObjectName+"s", anObjectName+"es"]);
-                if (anObjectName == "floor") {sceneryObject.addSyns("ground");};
+                if (anObjectName == "floor") {
+                    sceneryObject.addSyns("ground");
+                };
                 _inventory.add(sceneryObject);
                 return sceneryObject;
             };
 
             if (anObjectName == "blood") {
-                if (_blood >0) {
-                    var bloodAttributes = {
-                        "type": "food", 
-                        "weight": 0.1, 
-                        "defaultAction": "drink", 
-                        "nutrition": -5, 
-                        "requiresContainer": true, 
-                        "isLiquid": true,
-                        "canCollect": true,
-                        "plural": true,
-                        "charges": 1,
-                        "chargeUnit": "drink",
-                        "chargesDescription": "There's enough here for $charges $chargeUnit",
-                        "customAction": null,
-                        "defaultResult": "",
-                        "smell": "It smells metallic and fresh. You fight your gag-reflex at the thought of recent death here."
-                    };
-
-                    if (_blood <=9) {
-                        //must be freshly spilled only to be able to collect.
-                        bloodAttributes.type = "scenery";
-                        bloodAttributes.canCollect = false;
-                        bloodAttributes.defaultAction = "examine";
-                        bloodAttributes.nutrition = 0;
-                        bloodAttributes.charges = -1;
-                        bloodAttributes.chargesDescription = "";
-                        bloodAttributes.customAction = ["get"];
-                        bloodAttributes.defaultResult = "There's not enough here to do anything useful with.";
-                        bloodAttributes.smell = "It smells somewhat disturbing but not quite fresh.";
-                    };
-
-                    if (_blood <=1) {
-                        bloodAttributes.smell = "There's just a tang of iron and salt in the air, nothing more."
-                    };
-
-                    var sceneryBlood = new artefactObjectModule.Artefact(anObjectName, anObjectName, "It's hard to tell where or who it came from.", bloodAttributes, null, null);
-
+                var sceneryBlood = self.createBloodObject();
+                if (sceneryBlood) {
                     _inventory.add(sceneryBlood);
-
                     return sceneryBlood;
                 };
             };

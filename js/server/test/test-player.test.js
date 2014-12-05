@@ -1881,7 +1881,7 @@ exports.playerCannotDrawWithoutAWritingTool = function (test) {
 
 exports.playerCannotDrawWithoutAWritingTool.meta = { traits: ["Player Test", "Draw Trait", "Book Trait"], description: "Test that player can draw/write in a book." };
 
-exports.playerCanCleanAnItemWithDrawingOn = function (test) {
+exports.playerCannotCleanAnItemWithoutACleaningImplement = function (test) {
     var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
     var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
     var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
@@ -1890,6 +1890,31 @@ exports.playerCanCleanAnItemWithDrawingOn = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(book);
     inv.add(pen);
+    p0.writeOrDraw('draw','cactus', 'book');
+
+    var expectedResult = "You can't find anything to clean the book with.";
+    var actualResult = p0.clean('clean','book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCannotCleanAnItemWithoutACleaningImplement.meta = { traits: ["Player Test", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
+exports.playerCanCleanAnItemWithDrawingOn = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+    inv.add(cleaner);
     p0.writeOrDraw('draw','cactus', 'book');
 
     var expectedResult = "You clear all the previously added 'artwork' from the book.";
@@ -1902,15 +1927,45 @@ exports.playerCanCleanAnItemWithDrawingOn = function (test) {
 
 exports.playerCanCleanAnItemWithDrawingOn.meta = { traits: ["Player Test", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
 
+exports.playerCanConsumeACleaningItemByCleaning = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+    inv.add(cleaner);
+    p0.writeOrDraw('draw','cactus', 'book');
+    p0.clean('clean','book');
+    p0.writeOrDraw('draw','cactus', 'book');
+
+    var expectedResult = "You clear all the previously added 'artwork' from the book.<br>You used up all the cloth.";
+    var actualResult = p0.clean('clean','book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanConsumeACleaningItemByCleaning.meta = { traits: ["Player Test", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
 exports.playerCanCleanAnItemWithWritingOn = function (test) {
     var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
     var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
     var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
     var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
 
     var inv = p0.getInventoryObject();
     inv.add(book);
     inv.add(pen);
+    inv.add(cleaner);
     p0.writeOrDraw('write','cactus', 'book');
 
     var expectedResult = "You clear all the previously added 'artwork' from the book.";
@@ -1923,16 +1978,18 @@ exports.playerCanCleanAnItemWithWritingOn = function (test) {
 
 exports.playerCanCleanAnItemWithWritingOn.meta = { traits: ["Player Test", "Write Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
 
-
 exports.playerCanCleanAnItemWithWritingAndDrawingOn = function (test) {
     var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
     var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
     var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
     var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
 
     var inv = p0.getInventoryObject();
     inv.add(book);
     inv.add(pen);
+    inv.add(cleaner);
     p0.writeOrDraw('write','cactus', 'book');
     p0.writeOrDraw('draw','cactus', 'book');
     p0.clean('clean','book');
@@ -1946,6 +2003,184 @@ exports.playerCanCleanAnItemWithWritingAndDrawingOn = function (test) {
 };
 
 exports.playerCanCleanAnItemWithWritingAndDrawingOn.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+exports.playerCanCleanAnItemWithLiquidOn = function (test) {
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(cleaner);
+    book.addLiquid("water");
+    book.addLiquid("custard");
+
+    var expectedResult = "You clean the mess from the book.";
+    var actualResult = p0.clean('clean','book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanCleanAnItemWithLiquidOn.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+exports.playerCanCleanJustOneLiquidOffItem = function (test) {
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(cleaner);
+    book.addLiquid("water");
+    book.addLiquid("custard");
+
+    var expectedResult = "You clean the custard from the book.";
+    var actualResult = p0.clean('clean','book', 'custard');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanCleanJustOneLiquidOffItem.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+exports.cleaningJustOneLiquidOffItemLeavesRemainder = function (test) {
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(cleaner);
+    book.addLiquid("water");
+    book.addLiquid("custard");
+    p0.clean('clean','book', 'custard');
+
+    var expectedResult = "Read me.<br>Someone has spilled water on it.<br>It might be worth a <i>read</i>.";
+    var actualResult = p0.examine("examine", "book");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cleaningJustOneLiquidOffItemLeavesRemainder.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
+exports.playerCanCleanAnItemWithWritingDrawingAndLiquidOn = function (test) {
+    var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    var inv = p0.getInventoryObject();
+    inv.add(book);
+    inv.add(pen);
+    inv.add(cleaner);
+    p0.writeOrDraw('write','cactus', 'book');
+    p0.writeOrDraw('draw','cactus', 'book');
+    book.addLiquid("water");
+    book.addLiquid("custard");
+
+    var expectedResult = "You clear all the previously added 'artwork' and mess from the book.";
+    var actualResult = p0.clean('clean','book');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanCleanAnItemWithWritingDrawingAndLiquidOn.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+exports.addingLiquidsToLocationAddsThemToExistingFloorAsWell = function (test) { 
+
+    p0.examine("examine", "floor");
+    l0.addLiquid("blood");
+    l0.addLiquid("custard");
+
+    var expectedResult = "Someone has spilled blood and custard on it.";
+    var actualResult = p0.examine("examine", "floor");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.addingLiquidsToLocationAddsThemToExistingFloorAsWell.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
+exports.addingLiquidsToLocationAddsThemToFutureFloorAsWell = function (test) {
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+
+    l0.addLiquid("blood");
+    l0.addLiquid("custard");
+
+    var expectedResult = "Someone has spilled blood and custard on it.";
+    var actualResult = p0.examine("examine", "floor");
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.addingLiquidsToLocationAddsThemToFutureFloorAsWell.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
+exports.playerCanCleanBloodOffTheFloor = function (test) {
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    p0.examine("examine", "floor");
+    l0.addLiquid("blood");
+    l0.addLiquid("custard");
+    var inv = p0.getInventoryObject();
+    inv.add(cleaner);
+    
+    console.log(l0.describe());
+    console.log(p0.examine("examine", "floor"));
+
+    var expectedResult = "You clean the gory mess from the floor.";
+    var actualResult = p0.clean('clean','floor');
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanCleanBloodOffTheFloor.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
+
+
+exports.locationHasNoBloodAfterCleaningFloor = function (test) {
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
+    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var cleanAttributes = {weight: 1, type: "tool", subType: "clean", charges: 2, canCollect: true};
+    var cleaner = new artefact.Artefact('cloth','worn cloth',"A tatty and grimy wash cloth", cleanAttributes, null);
+
+    p0.examine("examine", "floor");
+    l0.addLiquid("blood");
+    var inv = p0.getInventoryObject();
+    inv.add(cleaner);
+    p0.clean('clean','floor');
+
+    var expectedResult = "";
+    var actualResult = l0.describeBlood();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.locationHasNoBloodAfterCleaningFloor.meta = { traits: ["Player Test", "Write Trait", "Draw Trait", "Clean Trait", "Book Trait"], description: "Test that player can draw/write in a book and clean it off." };
 
 
 exports.playerCanSeeWritingAndDrawingOnABook = function (test) {

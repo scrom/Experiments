@@ -152,6 +152,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!artefactAttributes) { return null; };
             if (artefactAttributes.initialDetailedDescription != undefined) { _initialDetailedDescription = artefactAttributes.initialDetailedDescription; };
             if (artefactAttributes.initialDescription != undefined) { _initialDescription = artefactAttributes.initialDescription; };
+            if (artefactAttributes.description != undefined) { _description = artefactAttributes.description; };
+            if (artefactAttributes.detailedDescription != undefined) { _detailedDescription = artefactAttributes.detailedDescription; };
             if (artefactAttributes.synonyms != undefined) { _synonyms = artefactAttributes.synonyms;};
             if (artefactAttributes.defaultAction != undefined) { _defaultAction = artefactAttributes.defaultAction;};
             if (artefactAttributes.defaultResult != undefined) { _defaultResult = artefactAttributes.defaultResult;};
@@ -308,7 +310,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (type == "tool") {
-                var validToolSubTypes = ["","buff","sharpen","assemble","sharp"];
+                var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean"];
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
             };
@@ -691,7 +693,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //artefact only function at the moment
         self.setAttributes = function(attributes) {
             if (attributes.type != undefined) {
-                try{validateType(attributes.type);}
+                try{validateType(attributes.type, attributes.subType);}
                 catch(err){
                     console.log("Error: "+err);
                     return null;//exit early
@@ -784,7 +786,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _inventory.remove(liquids[l]);
                 location.addLiquid(liquids[l]);
                 resultString += tools.listSeparator(l, liquids.length);
-                resultString += liquids[l]
+                resultString += liquids[l];
             };
             var wasWere = "was";
             if (liquids.length >1) {wasWere = "were";};
@@ -1062,6 +1064,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     resultString += "<br>There are "+self.chargesRemaining()+" uses remaining."
                 };
             };
+
+            if (_wetted.length > 0) {resultString += "<br>Someone has spilled ";};
+            for (var i = 0; i < _wetted.length; i++) {
+                resultString += tools.listSeparator(i, _wetted.length);
+                resultString += _wetted[i];
+            };
+            if (_wetted.length > 0) {resultString += " on "+self.getSuffix()+".";};
+
             
             if ((_inventory.size() != _inventory.size(true))) {
                 if ( inventoryIsVisible || (_inventory.getPositionedObjects(true).length > 0)) {
@@ -1083,7 +1093,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString = resultString.replace(_initialDetailedDescription+" ","");
             };
 
-            if (resultString.substr(0,4) == "<br>") {resultString = resultString.substr(4)}; //trim opening line break if needed.
+            if (resultString.substr(0,4) == "<br>") {resultString = resultString.substr(4);}; //trim opening line break if needed.
             return resultString;
         };
 
@@ -1162,11 +1172,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.removeDrawing = function(drawing) {
-            _drawings.splice(_drawings.indexOf(drawing),1);
+            var index = _drawings.indexOf(drawing);
+            if (index > -1) {
+                _drawings.splice(index,1);
+                return 1;
+            };
+            return 0;
         };
 
         self.removeWriting = function(writing) {
-            _writings.splice(_writings.indexOf(writing),1);
+            var index = _writings.indexOf(writing);
+            if (index > -1) {
+                _writings.splice(index,1);
+                return 1;
+            };
+            return 0;
         };
 
         self.clearDrawings = function() {
@@ -2386,13 +2406,29 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_wetted.indexOf(liquidName) == -1) {
                 _wetted.push(liquidName);
             };
-        };
+       };
 
         self.removeLiquid = function(liquidName) {
             var index = _wetted.indexOf(liquidName);
             if (index > -1) {
                 _wetted.splice(index,1);
+                return 1;
             };
+            return 0;
+        };
+
+        self.hasLiquid = function(liquidName) {
+            var index = _wetted.indexOf(liquidName);
+            if (index > -1) {
+                return true;
+            };
+            return false;
+        };
+
+        self.clearLiquids = function() {
+            var count = _wetted.length;
+            _wetted = [];
+            return count;
         };
 
         self.position = function(anObject, position) {

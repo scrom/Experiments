@@ -4434,9 +4434,8 @@
           "smell": "It smells of polish and solvents."
         },
         "synonyms": [
-          "cloth",
-          "wash cloth",
-          "cleaning cloth",
+          "dirty rag",
+          "cleaning rag",
           "duster"
         ]
       },
@@ -4880,6 +4879,24 @@
       }
     ],
     "inventory": [
+{
+        "object": "artefact",
+        "name": "cloth",
+        "description": "dishcloth",
+        "detailedDescription": "It's slightly damp but should clean things up.",
+        "attributes": {
+          "weight": 0.5,
+          "type": "tool",
+          "subType": "clean",
+          "canCollect": true,
+          "smell": "It smells of polish and solvents."
+        },
+        "synonyms": [
+          "cloth",
+          "dish cloth",
+          "cleaning cloth"
+        ]
+      },
       {
         "object": "artefact",
         "name": "milk bottle",

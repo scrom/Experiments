@@ -537,6 +537,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return false;
         };
 
+        self.hasLiquid = function(liquidName) {
+            for (var index = _items.length-1; index >= 0; index--) {
+                if (_items[index].hasLiquid(liquidName)) {return true;};
+            };
+            return false;
+        };
+
         self.getPositionedObjects = function(showHiddenObjects) {
             var itemsToReturn = [];
             for (var i=0;i<_items.length;i++) {

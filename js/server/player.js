@@ -200,6 +200,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         var notFoundMessage = function(objectName) {
+            //one last check - is there a spilled liquid we're trying to get?
+            if (_currentLocation.spilledLiquidExists(objectName) || _inventory.hasLiquid(objectName)) {
+                return "There's not enough left to do anything useful with.";
+            };
+            
             var randomReplies = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
             return randomReplies[randomIndex];
@@ -1734,7 +1739,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString+randomReplies[randomIndex];
         };
 
-        self.clean = function(verb, receiverName) {
+        self.clean = function(verb, receiverName, itemNameToRemove) {
             if (tools.stringIsEmpty(receiverName)){ return verb+" what?";};
 
             //get receiver if it exists
@@ -1746,17 +1751,65 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "I think "+receiver.getPrefix().toLowerCase()+" can do that "+receiver.getSuffix()+"self.";
             };
 
-            var cleanCount = 0;
+            //@todo - ensure we have a tool with a subtype of "clean" or "buff" - otherwise we can't clean things.
+            var cleanItem = _inventory.getObjectBySubType("clean");
+            if (!cleanItem) {
+                cleanItem = _currentLocation.getInventoryObject().getObjectBySubType("clean");
+            };
+            if (!cleanItem) {
+                cleanItem = _inventory.getObjectBySubType("buff");
+            };
+            if (!cleanItem) {
+                cleanItem = _currentLocation.getInventoryObject().getObjectBySubType("buff");
+            };
 
-            cleanCount += receiver.clearDrawings();
-            cleanCount += receiver.clearWritings();
-            if (cleanCount >0) {
-                return "You clear all the previously added 'artwork' from "+receiver.getDisplayName()+".";
+            //fail if nothing to clean with
+            if (!cleanItem) {return "You can't find anything to "+verb+" "+receiver.getDisplayName()+" with.";}
+            
+            var cleanCount = 0;
+            var liquidCount = 0;
+            var gory = " ";
+
+            if (itemNameToRemove == "blood" || !itemNameToRemove) {
+                if (receiver.syn("floor") && receiver.hasLiquid("blood")) {
+                    _currentLocation.reduceBlood(99);
+                    gory = " gory ";
+                    liquidCount++;
+                };
+            };
+
+            if (itemNameToRemove) {
+                //we're just cleaning one named thing up...
+                cleanCount += receiver.removeDrawing(itemNameToRemove);
+                cleanCount +=  receiver.removeWriting(itemNameToRemove);
+                liquidCount += receiver.removeLiquid(itemNameToRemove);
+
+                if (cleanCount > 0 || liquidCount > 0) {return "You "+verb+" the "+itemNameToRemove+" from "+receiver.getDisplayName()+".";};
+            } else {
+                cleanCount += receiver.clearDrawings();
+                cleanCount += receiver.clearWritings();
+                liquidCount += receiver.clearLiquids();
+            };
+
+            if (cleanCount >0 || liquidCount > 0) {
+                var resultString = "";
+                if (cleanCount >0) { resultString += "You clear all the previously added 'artwork'"; };
+                if (cleanCount >0 && liquidCount > 0) {resultString += " and"+gory+"mess"}
+                else if (liquidCount > 0)  {resultString += "You clean the"+gory+"mess"}
+                resultString += " from "+receiver.getDisplayName()+".";
+
+                //use some of the cleaning item (if it has charges)
+                cleanItem.consume(1);
+                if (cleanItem.chargesRemaining() == 0) {
+                    removeObjectFromPlayerOrLocation(cleanItem.getName());
+                    resultString += "<br>You used up all "+cleanItem.getDisplayName()+"."
+                };
+                return resultString;
             } else {
                 if (receiver.getSubType() == "intangible") {
                     return "I'm not sure how you can "+verb+" "+receiver.getDisplayName()+".";
                 };
-                return "You attempt to give "+receiver.getDisplayName()+" a bit of polish and shine.<br>After a while you get bored and give up.";
+                return "You attempt to "+verb+" "+receiver.getDisplayName()+".<br>After a while you get bored and give up.";
             };
         };
 
@@ -1969,17 +2022,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         var artefactChargesRemaining = artefact.consume(1);
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
                         if (artefact.isLiquid()) { //not a creature by this point
-                            if (artefactName == "blood") {
-                                if (receiver.syn("floor")) {
-                                    _currentLocation.addLiquid("blood")
-                                } else {
-                                    receiver.addLiquid(artefactName);
-                                };
-                                return "Hmm. You're a bit sick aren't you.<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
-                            } else{
-                                receiver.addLiquid(artefactName);
-                                return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
-                            };
+                        if (receiver.syn("floor")) {
+                            _currentLocation.addLiquid(artefactName)
+                        } else {
+                            receiver.addLiquid(artefactName);
+                        };
+
+                        if (artefactName == "blood") {
+                            return "Hmm. You're a bit sick aren't you.<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
+                        } else{
+                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
+                        };
                         };
                     };                   
                     
