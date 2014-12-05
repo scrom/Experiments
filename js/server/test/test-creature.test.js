@@ -1012,7 +1012,7 @@ exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit = function
     var destination = 'atrium';
     c0.go(null, m.getLocation('machine-room-east'));
 
-    var expected = "e,n,n,e,s,s,d,n,n,n,w,s,w,s,w,w,w,n,n,n,e,n,d,s,e,s,s,w,w,w,n,w,w";
+    var expected = "e,n,n,e,s,s,s,d,n,n,n,w,s,w,s,w,w,w,n,n,n,e,n,d,s,e,s,s,w,w,w,n,w,w";
     //var actual = c0.findPath(destination, m);
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:" + expected);
