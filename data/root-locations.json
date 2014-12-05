@@ -1546,7 +1546,7 @@
         "name": "chris george",
         "displayname": "Chris George",
         "description": "Chris George",
-        "detailedDescription": "Our resident head of Test.",
+        "detailedDescription": "Chris is our resident head of Test.<br>He's becoming pretty famous in the testing world and has even had people ask for his autograph.",
         "attributes": {
           "weight": 130,
           "money": 20,
@@ -1572,7 +1572,7 @@
         "name": "mark wightman",
         "displayname": "Mark Wightman",
         "description": "Mark Wightman",
-        "detailedDescription": "Our head of Development.",
+        "detailedDescription": "Mark's our head of Development.",
         "attributes": {
           "weight": 130,
           "money": 20,
@@ -1703,7 +1703,7 @@
         "name": "jeff foster",
         "displayname": "Jeff Foster",
         "description": "Jeff Foster",
-        "detailedDescription": "Our head of Software Engineering.",
+        "detailedDescription": "Jeff is our head of Software Engineering.",
         "attributes": {
           "weight": 130,
           "money": 20,
@@ -1729,7 +1729,7 @@
         "name": "simon cromarty",
         "displayname": "Simon Cromarty",
         "description": "Simon Cromarty",
-        "detailedDescription": "Our head of Project Management.",
+        "detailedDescription": "He's our head of Project Management (or a pirate if you give him enough rum).",
         "attributes": {
           "weight": 140,
           "money": 20,
@@ -1887,7 +1887,7 @@
     "object": "location",
     "name": "customer-delight-management-area",
     "displayName": "Customer Delight",
-    "description": "You're in the dead-zone of Customer Delight between the glass wall and Jellyfish.<br>There's a vacuum where the CEO and PA's used to sit although it's adequately filled by the presence of James Dening when he's around.",
+    "description": "You're in the dead-zone of Customer Delight between the glass wall and 'Jellyfish'.<br>There's a vacuum where the CEO and PA's used to sit although it's adequately filled by the presence of James Dening when he's around.",
     "exits": [
       {
         "object": "exit",
@@ -2135,7 +2135,7 @@
     "object": "location",
     "name": "customer-delight-north",
     "displayName": "Customer Delight",
-    "description": "You're in the Northern part of the Customer Delight team area.",
+    "description": "You're in a thoroughfare in the Northern part of the Customer Delight team area.<br>To the East lies our customer support team and a couple of meeting rooms whilst to the West is a small break-out area.<br>North heads towards the 'back stairs' whilst South takes you to the main Customer Delight areas.",
     "exits": [
       {
         "object": "exit",
@@ -2171,7 +2171,7 @@
     "object": "location",
     "name": "customer-delight-south",
     "displayName": "Customer Delight",
-    "description": "You're in the Southern part of the Customer Delight team area.",
+    "description": "You're in the Southern part of the Customer Delight team area. Currently this plays home to the SQL Monitor team.<br>There's another big glass wall here.",
     "exits": [
       {
         "object": "exit",
@@ -2196,6 +2196,22 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "glass wall",
+        "detailedDescription": "The Monitor team use this as their Scrum/Kanban board.<br>Right now it looks like things are going pretty well.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "glass wall",
+          "walls"
+        ]
+      },
       {
         "object": "creature",
         "name": "chris whitworth",
@@ -2678,7 +2694,7 @@
     "object": "location",
     "name": "customer-delight-west",
     "displayName": "Customer Delight",
-    "description": "You're at the West end of the Customer Delight team area. Also know as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
+    "description": "You're on the West side of the Customer Delight team area. Also know as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
     "exits": [
       {
         "object": "exit",
@@ -6645,7 +6661,7 @@
         "longname": "South",
         "direction": "s",
         "source": "opportunities-north",
-        "destination": "opportunities-south"
+        "destination": "opportunities-central"
       },
       {
         "object": "exit",
@@ -6750,6 +6766,122 @@
   },
   {
     "object": "location",
+    "name": "opportunities-central",
+    "displayName": "Opportunities",
+    "description": "You're standing next to a large floor-to-ceiling glass wall in middle of the opportunities and ventures area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-central",
+        "destination": "opportunities-east"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-central",
+        "destination": "opportunities-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-central",
+        "destination": "opportunities-north"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "opportunities-central",
+        "destination": "opportunities-south"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "glass wall",
+        "detailedDescription": "One one side this is used by the SQL Release team for planning and tracking work. On the other it's a working space for figuring 'stuff' out. (Stuff is important!)",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "glass wall",
+          "walls"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-west",
+    "displayName": "Opportunities",
+    "description": "You're standing in part of the opportunities and ventures area.<br>Peering through a window to the West you see staff wandering past on their way to and from their bikes.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-west",
+        "destination": "opportunities-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "opportunities-west",
+        "destination": "opportunities-south-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "Through the window you can see people with their bikes and a large car park.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "windows",
+          "people"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-south-west",
+    "displayName": "Opportunities",
+    "description": "You're in South-West corner of the opportunities and ventures area.<br>All around you are new market ideas blooming into fruition.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-south-west",
+        "destination": "opportunities-south"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-south-west",
+        "destination": "opportunities-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "opportunities-south",
     "displayName": "Opportunities",
     "description": "You're in south end of the opportunities and ventures area.",
@@ -6766,14 +6898,14 @@
         "longname": "West",
         "direction": "w",
         "source": "opportunities-south",
-        "destination": "opportunities-west"
+        "destination": "opportunities-south-west"
       },
       {
         "object": "exit",
         "longname": "North",
         "direction": "n",
         "source": "opportunities-south",
-        "destination": "opportunities-north"
+        "destination": "opportunities-central"
       }
     ],
     "inventory": [
@@ -6936,16 +7068,16 @@
   },
   {
     "object": "location",
-    "name": "opportunities-west",
+    "name": "opportunities-east",
     "displayName": "Opportunities",
-    "description": "You're in West end of the opportunities and ventures area.<br>Peering through the window you see staff wandering past on their way to and from their bikes.",
+    "description": "You're in a tucked-away East corner of the opportunities and ventures area. This is the home of the SQL Lighthouse team.",
     "exits": [
       {
         "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "opportunities-west",
-        "destination": "opportunities-south"
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-east",
+        "destination": "opportunities-central"
       }
     ],
     "inventory": [
@@ -8854,21 +8986,26 @@
         },
         "synonyms": [
           "latte",
-          "coffee", 
-		  "machine", 
-		  "coffee machine space"
+          "coffee",
+          "machine",
+          "coffee machine space"
         ]
       },
-	{
+      {
         "object": "artefact",
         "name": "whiteboard",
         "description": "large whiteboard",
         "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
         "attributes": {
-		  "type": "scenery",
+          "type": "scenery",
           "weight": 30,
           "canDrawOn": true,
-		  "writings": ["Who scrubbed off my cactus?", "That wasn't a cactus!", "meh", "Richard Mitchell"]
+          "writings": [
+            "Who scrubbed off my cactus?",
+            "That wasn't a cactus!",
+            "meh",
+            "Richard Mitchell"
+          ]
         },
         "synonyms": [
           "board",
@@ -8876,7 +9013,7 @@
           "whitebaord"
         ]
       },
-		{
+      {
         "object": "artefact",
         "name": "cloth",
         "description": "dishcloth",
@@ -10070,7 +10207,7 @@
     "object": "location",
     "name": "servery-north-west",
     "displayName": "Servery",
-    "description": "You're in the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
+    "description": "You're standing at the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
     "exits": [
       {
         "object": "exit",
@@ -10234,7 +10371,7 @@
     "object": "location",
     "name": "servery-south-west",
     "displayName": "Servery",
-    "description": "You're in the South-West end of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.",
+    "description": "You're in the South-West corner of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.",
     "exits": [
       {
         "object": "exit",
