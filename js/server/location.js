@@ -171,6 +171,16 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
         };
 
+        self.slipLevel = function() {
+            var slipCount = 0;
+            if (_blood >8) {slipCount++;};
+            var floor = _inventory.getObject("floor", true, false, false);
+            
+            if (floor) {slipCount += floor.countLiquid();};
+
+            return slipCount;
+        };
+
         self.reduceBlood = function(reduceBy) {
             if (!reduceBy) {reduceBy = 1};
             if (_blood >0) {

@@ -2425,6 +2425,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
 
+        self.countLiquid = function() {
+            return _wetted.length;
+        };
+
         self.clearLiquids = function() {
             var count = _wetted.length;
             _wetted = [];

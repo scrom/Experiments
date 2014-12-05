@@ -23,6 +23,7 @@ var self = module.exports = {
 
     //captialise first letter of string.
     initCap: function(aString){
+        if (self.stringIsEmpty(aString)) {return "";};
         return aString.charAt(0).toUpperCase() + aString.slice(1);
     },
 

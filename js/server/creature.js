@@ -1872,6 +1872,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.recover = function(pointsToAdd) {
+            if (self.isDead()) {return true;}; //don't recover if already dead
             if (_hitPoints < _maxHitPoints) {
                 _hitPoints += pointsToAdd;
                 if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;}
@@ -2809,7 +2810,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
                     
                 }; 
-                
+
                 //is a traveller, not delayed, not following player, not already acted...
                 if (((_traveller || (_canTravel && _destinations.length>0)) && (_currentDelay == -1)) && (!self.willFollow(playerAggression)) && (partialResultString.length ==0)) { 
                     var showMoveToPlayer = false;
@@ -2915,18 +2916,38 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //should really close the door behind us here.
 
                         if (newLocationName != originalLocationName) { //move was successful
+                            resultString += "<br>"+tools.initCap(self.getDescription())+" ";
+                                   
+                            //slip on liquid in new location?
+                            var slippy = _currentLocation.slipLevel();
+                            var slipString = ".";
+                            if (slippy >0) {
+                                var randomInt = Math.floor(Math.random() * 10); 
+                                if (randomInt == 0) {
+                                    slipString =".";
+                                } else if (randomInt < (slippy*2)) { //increasing % chance of success - 20% per slippy item (other than 0)
+                                    slipString = " and slips on the wet floor."
+                                    var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage you receive - up to a limit.
+                                    self.decreaseAffinity(Math.floor(slippy/2)); //may decrease affinity
+                                    var deadString = self.hurt(damage); 
+                                    if (!(self.isDead())) {
+                                        slipString += "<br>"+tools.initCap(self.getDescriptivePrefix())+" injured.";
+                                    };
+                                };
+                            };
+
                             //if creature ends up in player location (rather than starting there)...
                             if (player.getCurrentLocation().getName() == _currentLocation.getName()) {
                                 var movementVerb = "wanders";
                                 if (_bleeding) {movementVerb = "stumbles";};
                                 if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += "<br>"+tools.initCap(self.getDescription())+" "+movementVerb+" in.";  
+                                resultString += movementVerb+" in"+slipString;  
                             } else {
                                 var movementVerb = "heads";
                                 if (_bleeding) {movementVerb = "limps";};
                                 if (exit.getLongName() == "in") {movementVerb = "goes";};
                                 if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += "<br>"+tools.initCap(self.getDescription())+" "+movementVerb+" "+exit.getLongName()+"."; 
+                                resultString += movementVerb+" "+exit.getLongName()+"."; 
                                 if (showMoveToPlayer) {
                                     partialResultString += resultString+exposedItems;
                                 };
@@ -2993,7 +3014,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (damage>0) {_hitPoints -=damage;};
             //consider fleeing here if not quite dead
             if (self.isDead()) {
-                resultString += self.kill();
+                resultString += self.kill();                
             };
             
             if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};

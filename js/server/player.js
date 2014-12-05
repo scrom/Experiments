@@ -3297,6 +3297,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(self.canSee())) {resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
             else {resultString += newLocationDescription;};
 
+            //slip on liquid in new location?
+            var slippy = newLocation.slipLevel();
+            if (slippy >0) {
+                var randomInt = Math.floor(Math.random() * 10); 
+                if (randomInt == 0) {
+                    resultString +="<br>You might want to mind out, the floor's slippery here.";
+                } else if (randomInt < (slippy*2)) { //increasing % chance of success - 20% per slippy item (other than 0)
+                    resultString += "<br>As you enter, you slip on the wet floor and injure yourself.<br>"
+                    var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage you receive - up to a limit.
+                    resultString += self.hurt(damage); 
+                };
+            };
+
             //console.log('GO: '+resultString);
             return resultString;
         };	

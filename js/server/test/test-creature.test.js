@@ -5,6 +5,7 @@ var artefact = require('../artefact.js');
 var mission = require('../mission.js');
 var location = require('../location.js');
 var mapBuilder = require('../mapbuilder.js');
+var map = require('../map.js');
 var mb = new mapBuilder.MapBuilder('../../data/root-locations.json');
 var junkAttributes;
 var a0;
@@ -1309,6 +1310,88 @@ exports.killingCreatureLeavesBloodInLocation = function (test) {
     test.done();
 };
 exports.killingCreatureLeavesBloodInLocation.meta = { traits: ["Creature Test", "Kill Trait", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+
+
+exports.CreatureCanSlipOnWetFloor = function (test) { 
+
+    var l0 = new location.Location('home','home','a home location');
+    var l1 = new location.Location('new','new','a new location');
+    var p0 = new player.Player({username:"user"});
+    l1.addExit("N", "new", "home");
+    var m1 = new map.Map();
+    m1.addLocation(l0);
+    m1.addLocation(l1);
+    p0.setLocation(l0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0, canTravel: true, traveller: true, homeLocation: l0});
+    c0.go("n", l1);
+
+    //add enough liquids to guarantee slipping...
+    l0.addLiquid("blood");
+    l0.addLiquid("custard");
+    l0.addLiquid("water");
+    l0.addLiquid("liquid4");
+    l0.addLiquid("liquid5");
+    l0.addLiquid("liquid6");
+    l0.addLiquid("liquid7");
+    l0.addLiquid("liquid8");
+    l0.addLiquid("liquid9");
+    l0.addLiquid("liquid10");
+
+    console.log(p0.examine("look"));
+    //console.log(c0.tick(15, m1, p0));
+
+    var expectedResult = "<br>A beastie wanders in and slips on the wet floor.<br>It's injured.";
+    var actualResult = c0.tick(5, m1, p0);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.CreatureCanSlipOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait"], description: "Test that player can slip on a wet floor." };
+
+
+exports.CreatureCanSlipAndDieOnWetFloor = function (test) { 
+
+    var l0 = new location.Location('home','home','a home location');
+    var l1 = new location.Location('new','new','a new location');
+    var p0 = new player.Player({username:"user"});
+    l1.addExit("N", "new", "home");
+    var m1 = new map.Map();
+    m1.addLocation(l0);
+    m1.addLocation(l1);
+    p0.setLocation(l0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:20, affinity:0, canTravel: true, traveller: true, homeLocation: l0});
+    c0.go("n", l1);
+
+    //add enough liquids to guarantee slipping...
+    l0.addLiquid("blood");
+    l0.addLiquid("custard");
+    l0.addLiquid("water");
+    l0.addLiquid("liquid4");
+    l0.addLiquid("liquid5");
+    l0.addLiquid("liquid6");
+    l0.addLiquid("liquid7");
+    l0.addLiquid("liquid8");
+    l0.addLiquid("liquid9");
+    l0.addLiquid("liquid10");
+
+    console.log(p0.examine("look"));
+    //console.log(c0.tick(15, m1, p0));
+
+    //*note* - occasionaly - even with this much liquid, they might still not slip.
+    //this matches player behaviour for fairness.
+    var expectedResult = "<br>A beastie wanders in and slips on the wet floor.<br><br><br><br><br>The creature is dead. Now you can steal all its stuff.";
+    var actualResult = c0.tick(5, m1, p0);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.CreatureCanSlipAndDieOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait"], description: "Test that player can slip on a wet floor." };
 
 
 /*
