@@ -2759,7 +2759,9 @@
                 "description": "tomatoes",
                 "detailedDescription": "They're ripe and ready to pick.",
                 "attributes": {
-                  "weight": 5,
+                  "weight": 3,
+				  "type": "food",
+				  "nutrition": 15,
                   "canCollect": true,
                   "plural": true,
                   "customAction": [
@@ -4018,7 +4020,9 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-                      "weight": 5,
+					  "weight": 3,
+					  "type": "food",
+					  "nutrition": 15,
                       "canCollect": true,
                       "plural": true,
                       "customAction": [
@@ -4667,7 +4671,9 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-                      "weight": 5,
+					  "weight": 3,
+					  "type": "food",
+					  "nutrition": 15,
                       "canCollect": true,
                       "plural": true,
                       "customAction": [
@@ -7431,7 +7437,9 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-                      "weight": 5,
+					  "weight": 3,
+					  "type": "food",
+					  "nutrition": 15,
                       "canCollect": true,
                       "plural": true,
                       "customAction": [
@@ -9809,7 +9817,9 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-                      "weight": 5,
+					  "weight": 3,
+					  "type": "food",
+					  "nutrition": 15,
                       "canCollect": true,
                       "plural": true,
                       "customAction": [

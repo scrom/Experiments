@@ -2925,7 +2925,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 var randomInt = Math.floor(Math.random() * 10); 
                                 if (randomInt == 0) {
                                     slipString =".";
-                                } else if (randomInt < (slippy*2)) { //increasing % chance of success - 20% per slippy item (other than 0)
+                                } else if (randomInt <= (Math.floor(slippy*1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
                                     slipString = " and slips on the wet floor."
                                     var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage you receive - up to a limit.
                                     self.decreaseAffinity(Math.floor(slippy/2)); //may decrease affinity
