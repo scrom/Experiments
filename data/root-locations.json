@@ -6569,6 +6569,60 @@
   },
   {
     "object": "location",
+    "name": "opportunities-central",
+    "displayName": "Opportunities",
+    "description": "You're standing next to a large floor-to-ceiling glass wall in middle of the opportunities and ventures area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-central",
+        "destination": "opportunities-east"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-central",
+        "destination": "opportunities-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-central",
+        "destination": "opportunities-north"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "opportunities-central",
+        "destination": "opportunities-south"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "glass wall",
+        "detailedDescription": "One one side this is used by the SQL Release team for planning and tracking work. On the other it's a working space for figuring 'stuff' out. (Stuff is important!)",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "glass wall",
+          "walls"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "opportunities-cubbyhole",
     "displayName": "Opportunities cubbyhole",
     "description": "You're in a dead-end room full of clutter in the opportunities and ventures area.",
@@ -6646,6 +6700,133 @@
           "drum kit",
           "drumkit",
           "kit"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-east",
+    "displayName": "Opportunities",
+    "description": "You're in a tucked-away East corner of the opportunities and ventures area. This is the home of the SQL Lighthouse team.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-east",
+        "destination": "opportunities-central"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "chris smith",
+        "displayname": "Chris Smith",
+        "description": "Chris Smith",
+        "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
+        "attributes": {
+          "weight": 140,
+          "money": 40,
+          "attackStrength": 25,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 9,
+          "health": 140,
+          "affinity": 1,
+          "canTravel": true,
+          "traveller": true,
+          "imageName": "chrissmith.jpg"
+        },
+        "synonyms": [
+          "chris",
+          "smithy",
+          "smith",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "facilitatethefacilitator",
+            "displayName": "find some post-its for Chris.",
+            "description": "Chris is due to run a workshop but needs some fresh stickies.",
+            "attributes": {
+              "missionObject": "post-it pad",
+              "destination": "chris smith",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'Can you give me a hand?'<br>'I'm running a workshop later today but I'm running low on post-it notes.'<br>'Could you bring me some from the stationary cupboard when you get a chance?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "y"
+                  ],
+                  "response": "'Great! I'll be somewhere around the office. Come and find me when you've got them.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Well if you manage to find any, track me down.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 1,
+                  "response": "'If you manage to find any, track me down. I'd really appreciate it.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'Hey $player. Did you manage to find any stickies?'",
+                  "nextState": 3
+                },
+                {
+                  "state": 3,
+                  "requestedObject": "post-it pad",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "y"
+                  ],
+                  "response": "'Awesome.'"
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Well if you manage to find any, track me down.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 3,
+                  "response": "'It really would be a big help if you could find them.'",
+                  "nextState": 2
+                }
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "isBroken": false,
+              "isDamaged": false
+            },
+            "reward": {
+              "increaseAffinityFor": "chris smith",
+              "missionObject": "post-it pad",
+              "score": 25,
+              "message": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You facilitated the facilitator!"
+            }
+          }
         ]
       }
     ]
@@ -6761,122 +6942,6 @@
         "direction": "n",
         "source": "opportunities-north-east-corridor",
         "destination": "spiderman"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "opportunities-central",
-    "displayName": "Opportunities",
-    "description": "You're standing next to a large floor-to-ceiling glass wall in middle of the opportunities and ventures area.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "opportunities-central",
-        "destination": "opportunities-east"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "opportunities-central",
-        "destination": "opportunities-west"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "opportunities-central",
-        "destination": "opportunities-north"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "opportunities-central",
-        "destination": "opportunities-south"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "wall",
-        "description": "glass wall",
-        "detailedDescription": "One one side this is used by the SQL Release team for planning and tracking work. On the other it's a working space for figuring 'stuff' out. (Stuff is important!)",
-        "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "glass",
-          "glass wall",
-          "walls"
-        ]
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "opportunities-west",
-    "displayName": "Opportunities",
-    "description": "You're standing in part of the opportunities and ventures area.<br>Peering through a window to the West you see staff wandering past on their way to and from their bikes.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "opportunities-west",
-        "destination": "opportunities-central"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "opportunities-west",
-        "destination": "opportunities-south-west"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "window",
-        "description": "window",
-        "detailedDescription": "Through the window you can see people with their bikes and a large car park.",
-        "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "glass",
-          "windows",
-          "people"
-        ]
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "opportunities-south-west",
-    "displayName": "Opportunities",
-    "description": "You're in South-West corner of the opportunities and ventures area.<br>All around you are new market ideas blooming into fruition.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "opportunities-south-west",
-        "destination": "opportunities-south"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "opportunities-south-west",
-        "destination": "opportunities-west"
       }
     ]
   },
@@ -7068,127 +7133,62 @@
   },
   {
     "object": "location",
-    "name": "opportunities-east",
+    "name": "opportunities-south-west",
     "displayName": "Opportunities",
-    "description": "You're in a tucked-away East corner of the opportunities and ventures area. This is the home of the SQL Lighthouse team.",
+    "description": "You're in South-West corner of the opportunities and ventures area.<br>All around you are new market ideas blooming into fruition.",
     "exits": [
       {
         "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "opportunities-east",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-south-west",
+        "destination": "opportunities-south"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-south-west",
+        "destination": "opportunities-west"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "opportunities-west",
+    "displayName": "Opportunities",
+    "description": "You're standing in part of the opportunities and ventures area.<br>Peering through a window to the West you see staff wandering past on their way to and from their bikes.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-west",
         "destination": "opportunities-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "opportunities-west",
+        "destination": "opportunities-south-west"
       }
     ],
     "inventory": [
       {
-        "object": "creature",
-        "name": "chris smith",
-        "displayname": "Chris Smith",
-        "description": "Chris Smith",
-        "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "Through the window you can see people with their bikes and a large car park.",
         "attributes": {
-          "weight": 140,
-          "money": 40,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 9,
-          "health": 140,
-          "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
-          "imageName": "chrissmith.jpg"
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
         },
         "synonyms": [
-          "chris",
-          "smithy",
-          "smith",
-          "him"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "facilitatethefacilitator",
-            "displayName": "find some post-its for Chris.",
-            "description": "Chris is due to run a workshop but needs some fresh stickies.",
-            "attributes": {
-              "missionObject": "post-it pad",
-              "destination": "chris smith",
-              "static": true,
-              "dialogue": [
-                "'Hi $player.'<br>'Can you give me a hand?'<br>'I'm running a workshop later today but I'm running low on post-it notes.'<br>'Could you bring me some from the stationary cupboard when you get a chance?'",
-                {
-                  "state": 1,
-                  "keywords": [
-                    "yes",
-                    "ok",
-                    "y"
-                  ],
-                  "response": "'Great! I'll be somewhere around the office. Come and find me when you've got them.'",
-                  "nextState": 2
-                },
-                {
-                  "state": 1,
-                  "keywords": [
-                    "n",
-                    "no",
-                    "not",
-                    "not yet"
-                  ],
-                  "response": "'Well if you manage to find any, track me down.'",
-                  "nextState": 2
-                },
-                {
-                  "state": 1,
-                  "response": "'If you manage to find any, track me down. I'd really appreciate it.'",
-                  "nextState": 2
-                },
-                {
-                  "state": 2,
-                  "response": "'Hey $player. Did you manage to find any stickies?'",
-                  "nextState": 3
-                },
-                {
-                  "state": 3,
-                  "requestedObject": "post-it pad",
-                  "keywords": [
-                    "yes",
-                    "ok",
-                    "y"
-                  ],
-                  "response": "'Awesome.'"
-                },
-                {
-                  "state": 3,
-                  "keywords": [
-                    "n",
-                    "no",
-                    "not",
-                    "not yet"
-                  ],
-                  "response": "'Well if you manage to find any, track me down.'",
-                  "nextState": 2
-                },
-                {
-                  "state": 3,
-                  "response": "'It really would be a big help if you could find them.'",
-                  "nextState": 2
-                }
-              ]
-            },
-            "conditionAttributes": {
-              "isDestroyed": false,
-              "isBroken": false,
-              "isDamaged": false
-            },
-            "reward": {
-              "increaseAffinityFor": "chris smith",
-              "missionObject": "post-it pad",
-              "score": 25,
-              "message": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You facilitated the facilitator!"
-            }
-          }
+          "glass",
+          "windows",
+          "people"
         ]
       }
     ]
@@ -8997,8 +8997,8 @@
         "description": "large whiteboard",
         "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
         "attributes": {
-          "type": "scenery",
           "weight": 30,
+          "type": "scenery",
           "canDrawOn": true,
           "writings": [
             "Who scrubbed off my cactus?",
