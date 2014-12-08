@@ -300,7 +300,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.healCount != undefined) {_healCount = playerAttributes.healCount;};
             if (playerAttributes.lastCreatureSpokenTo != undefined) {_lastCreatureSpokenTo = playerAttributes.lastCreatureSpokenTo;};
             if (playerAttributes.lastVerbUsed != undefined) {_lastVerbUsed = playerAttributes.lastVerbUsed;};
-            if (playerAttributes.riding != undefined) {_riding = playerAttributes.riding;};        
+            if (playerAttributes.riding != undefined) {_riding = _mapBuilder.buildArtefact(playerAttributes.riding);};        
            
             if (playerAttributes.repairSkills != undefined) {
                 for(var i=0; i<playerAttributes.repairSkills.length;i++) {
@@ -496,7 +496,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_returnDirection) {resultString += ',"returnDirection":"'+_returnDirection+'"';};
             if (_lastCreatureSpokenTo) {resultString += ',"lastCreatureSpokenTo":"'+_lastCreatureSpokenTo+'"';};
             if (_lastVerbUsed) {resultString += ',"lastVerbUsed":"'+_lastVerbUsed+'"';};
-            if (_riding) {resultString += ',"riding":"'+_riding.toString()+'"';};
+            if (_riding) {resultString += ',"riding":'+_riding.toString();};
             if (_saveCount > 0) {resultString += ',"saveCount":'+_saveCount;};
             if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
             if (_timeSinceEating > 0) {resultString += ',"timeSinceEating":'+_timeSinceEating;};

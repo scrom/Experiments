@@ -45,7 +45,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _homeLocation;
         var _currentLocation;
-        var _moves = -1; //only incremented when moving between locations but not yet used elsewhere Starts at -1 due to game initialisation
+        var _moves = 0; //only incremented when moving between locations but not yet used elsewhere Starts at 0
         var _timeSinceEating = 0;
         var _returnHomeIn = -1 //set when first not at home and reset when home.
         var _spokenToPlayer = false;
@@ -1743,11 +1743,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.go = function(direction, aLocation) {
-            //note, if direction is *not* set, we're placing a dead creature somewhere so process as normal.
+            //note, if direction is *not* set, we're placing a dead/new creature somewhere so process as normal.
             //if direction *is* set, something called here when it shouldn't so we return early.
             if (direction && self.isDead()) {return ""}; 
 
-            _moves++;
+            if (direction) {
+                _moves++;
+            };
 
             self.setReturnDirection(tools.oppositeOf(direction));
 
