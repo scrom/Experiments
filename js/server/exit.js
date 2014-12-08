@@ -18,7 +18,10 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, a
         var _hidden = false;
         if (isHidden == true || isHidden == "true") { _hidden = true;};
 
-        var _requiredAction = requiredAction; //"run", "climb", "jump", "crawl"
+        var _possibleActions = ["run", "climb", "jump", "crawl", "drive", "sail", "fly", "ride", "",undefined];
+        var _requiredAction = requiredAction; //"run", "climb", "jump", "crawl", "drive", "sail", "fly", "ride", ""
+
+        if (_possibleActions.indexOf(_requiredAction) == -1) { throw "'" + requiredAction + "' is not a valid action.";}; 
 
         var _destinationName = aDestinationName;
         var _sourceName = aSourceName;

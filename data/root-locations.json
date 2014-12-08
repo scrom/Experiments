@@ -736,9 +736,10 @@
     "object": "location",
     "name": "bike-ambulance",
     "displayName": "Bike ambulance",
-    "description": "You're standing in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
+    "description": "You're in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike"]
     },
     "exits": [
       {
@@ -1642,9 +1643,6 @@
                   "name": "bus",
                   "displayName": "Party bus",
                   "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
-                  "attributes": {
-                    "type": "outdoor"
-                  },
                   "exits": [
                     {
                       "object": "exit",
@@ -3064,7 +3062,8 @@
     "displayName": "Bike racks (East side)",
     "description": "You're standing at the South-East corner of the the office building.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike"]
     },
     "exits": [
       {
@@ -3116,17 +3115,18 @@
             "detailedDescription": "It looks like Chris' new bike.",
             "attributes": {
               "weight": 15,
-              "type": "property",
+			  "defaultAction": "ride",
+              "type": "vehicle",
+			  "subType": "bike",
               "isBreakable": true,
               "lockable": true,
               "locked": true,
               "price": 25,
               "hidden": true,
               "customAction": [
-                "ride",
                 "cycle"
               ],
-              "defaultResult": "You hop on the bike and pedal it around for a while.<br>It's probably best not to get caught on it."
+              "defaultResult": "$action ride"
             },
             "synonyms": [
               "bicycle",
@@ -3144,7 +3144,8 @@
     "displayName": "Car park",
     "description": "You're standing in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike", "car", "van"]
     },
     "exits": [
       {
@@ -5487,7 +5488,8 @@
               "displayName": "Disaster scene",
               "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
               "attributes": {
-                "type": "outdoor"
+                "type": "outdoor",
+				"vehiclesAllowed": ["bike"]
               },
               "exits": [
                 {
@@ -5863,7 +5865,8 @@
                             "displayName": "Car park (East)",
                             "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
                             "attributes": {
-                              "type": "outdoor"
+                              "type": "outdoor",
+							  "vehiclesAllowed": ["bike", "van"]
                             },
                             "exits": [
                               {
@@ -5883,7 +5886,9 @@
                                 "attributes": {
                                   "weight": 3000,
                                   "carryWeight": 500,
-                                  "type": "property",
+								  "defaultAction": "drive",
+                                  "type": "vehicle",
+								  "subType": "van",
                                   "canDrawOn": true
                                 },
                                 "synonyms": [
@@ -6456,7 +6461,8 @@
     "displayName": "Office front",
     "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike"]
     },
     "exits": [
       {
@@ -10506,7 +10512,8 @@
     "displayName": "Smoking area",
     "description": "You're outside the back of the office under the fire escape.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike"]
     },
     "exits": [
       {
@@ -11046,7 +11053,8 @@
     "displayName": "Waste area",
     "description": "You're by a locked gate. On the far side are a series of waste containers full of carboard boxes, broken furniture and kitchen leftovers.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike"]
     },
     "exits": [
       {
@@ -11175,9 +11183,10 @@
     "object": "location",
     "name": "west-bike-racks",
     "displayName": "Bike racks (West)",
-    "description": "You're standing at the South-West corner of the the office building.",
+    "description": "You're at the South-West corner of the the office building.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike"]
     },
     "exits": [
       {
@@ -11231,14 +11240,18 @@
             "detailedDescription": "It's yours. Yay :D",
             "attributes": {
               "weight": 18,
-              "type": "property",
+			  "defaultAction": "ride",
+              "type": "vehicle",
+			  "subType": "bike",
               "canCollect": true,
               "isBreakable": true,
               "isDamaged": true,
               "lockable": true,
               "price": 8,
-              "customAction": "ride",
-              "defaultResult": "You're meant to be working!<br>You cycle around for a while until you feel guilty for not doing something more useful."
+			  "customAction": [
+                "cycle"
+              ],
+			  "defaultResult":"$action ride"
             },
             "synonyms": [
               "bicycle",
@@ -11255,9 +11268,10 @@
     "object": "location",
     "name": "west-car-park",
     "displayName": "Car park (West)",
-    "description": "You're standing in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+    "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+	  "vehiclesAllowed": ["bike", "car", "van"]
     },
     "exits": [
       {

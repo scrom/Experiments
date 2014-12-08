@@ -319,7 +319,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var artefact = _inventory.getObject(objectName);
             if (artefact) {return artefact;};
 
-            return player.getObjectFromPlayerOrLocation(objectName, player);
+            return player.getObjectFromPlayerOrLocation(objectName);
         };
 
 
@@ -2580,7 +2580,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             };
 
                         if (requestedObject) {
-                            if (!(player.getObjectFromPlayerOrLocation(requestedObject, player))) {
+                            if (!(player.getObjectFromPlayerOrLocation(requestedObject))) {
                                 requestedObject = null; 
                                 dialogueResponse = "'Nice try $player.'<br> 'Come back when you have what I'm after.'"
                             };

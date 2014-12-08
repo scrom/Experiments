@@ -611,7 +611,15 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                         
                     case 'get':
-                        if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to") {
+                        if (_splitWord == "off") {
+                            if (!(_object0)) {
+                                if (_object1.indexOf("of ") ==0) {
+                                    _object1 = _object1.substr(3);
+                                };
+                                return self.processAction("dismount "+_object1);
+                            };
+                        };
+                        if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to" ||_splitWord == "on" || _splitWord == "onto" || _splitWord == "on to") {
                             if (!(_object0)) {
                                 return self.processAction("use "+_object1);
                             };
@@ -835,6 +843,8 @@ exports.Action = function Action(player, map, fileManager) {
                             };
                         };
 
+                        description = tools.initCap(_verb)+" where?";
+
                         break;
                     case 'explore':
                         description = "Which direction do you want to go?"
@@ -1001,14 +1011,28 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'knock':
                         if (_object0 == "knock") {description = "Who's there?";};
                         break;  
+                    case 'sail': //boat.
+                    case 'fly': //plane.
+                    case 'drive': //cattle, cat etc out/to a location or car/bus but not so much bike. Tricky.
+                    case 'ride': //bike, horse but not car - some types vehicle or animal - animal should be larger than player.
+                    case 'board': //train, plane, boat?
+                    case 'mount': //disk drive or animal?
+                        //use whole word direction.
+                        if (_object0.length == 1) {
+                            var index = tools.directions.indexOf(_object0);
+                            if (index > -1) {
+                                _object0 = tools.directions[index+1]; 
+                            };
+                        };
+                        description = _player.ride(_verb, _object0, _map);
+                        break;                        
+                    case 'dismount': //disk drive or animal?
+                    case 'unmount': //don't think this is a real verb but still...
+                        description = _player.unRide(_verb, _object0);
+                        break;
                     case 'play': //generally a custom verb already
                     case 'burn': //relies on having either an ignition source or something else already burning.
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.
-                    case 'drive': //cattle, cat etc out/to a location or car/bus but not so much bike. Tricky.
-                    case 'ride': //bike, horse but not car - some types vehicle or animal - animal should be larger than player.
-                    case 'mount': //disk drive or animal?
-                    case 'dismount': //disk drive or animal?
-                    case 'unmount': //don't think this is a real verb but still...
                     case 'start':
                     case 'stop':                
                     case 'call':

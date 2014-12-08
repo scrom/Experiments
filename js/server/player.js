@@ -34,6 +34,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _antibodies = [];
         var _lastCreatureSpokenTo;
         var _lastVerbUsed;
+        var _riding;
 
         //player stats
         var _destroyedObjects = []; //track all objects player has destroyed
@@ -85,7 +86,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         var getObjectFromPlayer = function(objectName, verb){
-            return _inventory.getObject(objectName, null, null, verb);
+            var requestedObject = _inventory.getObject(objectName, null, null, verb);
+            if (!requestedObject) {
+                if (_riding) {
+                    if (_riding.syn(objectName)) {
+                        requestedObject = _riding;
+                    };
+                };
+            };
+            return requestedObject;
         };
         var getObjectFromLocation = function(objectName, verb){
             return _currentLocation.getObject(objectName, null, null, verb);
@@ -98,6 +107,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         var removeObjectFromPlayer = function(objectName){
             var objectToRemove = _inventory.remove(objectName);
+
+            if (!objectToRemove) {
+                if (_riding) {
+                    if (_riding.syn(objectName)) {
+                        objectToRemove = _riding;
+                        _riding = null;
+                    };
+                };
+            };
 
             if (objectToRemove) {
                 if (objectToRemove.getInventoryObject().hasPositionedObjects()) {
@@ -282,7 +300,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.healCount != undefined) {_healCount = playerAttributes.healCount;};
             if (playerAttributes.lastCreatureSpokenTo != undefined) {_lastCreatureSpokenTo = playerAttributes.lastCreatureSpokenTo;};
             if (playerAttributes.lastVerbUsed != undefined) {_lastVerbUsed = playerAttributes.lastVerbUsed;};
-            
+            if (playerAttributes.riding != undefined) {_riding = playerAttributes.riding;};        
            
             if (playerAttributes.repairSkills != undefined) {
                 for(var i=0; i<playerAttributes.repairSkills.length;i++) {
@@ -478,7 +496,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_returnDirection) {resultString += ',"returnDirection":"'+_returnDirection+'"';};
             if (_lastCreatureSpokenTo) {resultString += ',"lastCreatureSpokenTo":"'+_lastCreatureSpokenTo+'"';};
             if (_lastVerbUsed) {resultString += ',"lastVerbUsed":"'+_lastVerbUsed+'"';};
-            
+            if (_riding) {resultString += ',"riding":"'+_riding.toString()+'"';};
             if (_saveCount > 0) {resultString += ',"saveCount":'+_saveCount;};
             if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
             if (_timeSinceEating > 0) {resultString += ',"timeSinceEating":'+_timeSinceEating;};
@@ -554,6 +572,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.returnDirection = _returnDirection;
             currentAttributes.lastCreatureSpokenTo = _lastCreatureSpokenTo;
             currentAttributes.lastVerbUsed = _lastVerbUsed;           
+            currentAttributes.riding = _riding;           
 
             currentAttributes.saveCount = _saveCount;
             currentAttributes.loadCount = _loadCount;
@@ -609,6 +628,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.inventoryValue = _inventory.getInventoryValue();  
 
             return currentAttributes;
+        };
+
+        self.getObjectFromPlayerOrLocation = function(objectName, verb) {
+            return getObjectFromPlayerOrLocation(objectName, verb);
         };
 
         self.canSaveGame = function() {
@@ -3219,8 +3242,114 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
+        self.ride = function(verb, artefactName, map) {
+            if (!artefactName) {return verb+" what?"};
+
+            if (_riding && tools.directions.indexOf(artefactName) > -1) {
+                return self.go(verb, artefactName, map);
+            } else if (_riding) {
+                if (_riding.syn(artefactName)) {
+                    return "You're already using "+_riding.getSuffix()+".";
+                };
+
+                return "You'll need to stop using your "+_riding.getName()+" first.";
+            };   
+
+            var vehicle = getObjectFromLocation(artefactName);
+            var playerVehicle = false;
+            if (!vehicle) {
+                vehicle = getObjectFromPlayer(artefactName);
+                if (vehicle) {playerVehicle = true;};
+            };
+
+            if (!vehicle) {
+                return notFoundMessage(artefactName);
+            };
+
+            if (vehicle.getType() != "vehicle") {
+                return "You can't "+verb+" "+vehicle.getDisplayName();
+            };
+
+            if ((verb == "enter" || verb == "board") && self.getWeight() > vehicle.getCarryWeight()) {
+                return "You're too big to fit in "+vehicle.getSuffix()+".";
+            };
+
+            if (playerVehicle) {
+                //transfer from inventory to location
+                _inventory.remove(vehicle.getName());
+            } else {
+                _currentLocation.removeObject(vehicle.getName()); 
+            };
+
+            _riding = vehicle;
+
+            return "You "+verb+" "+vehicle.getDisplayName()+".";
+
+        };
+
+        self.isRiding = function() {
+            if (_riding) {return true;};
+            return false;
+        };
+
+        self.unRide = function(verb, artefactName) {
+            if (!_riding) { return "You're already on foot.";};
+            //if (!artefactName) {return verb+" what?"};
+            var resultString = "You "+verb+" "+_riding.getDisplayName();
+            //if (_inventory.canCarry(_riding) && _riding.isCollectable()) {
+            //    _inventory.add(_riding);   
+            //    resultString += " and collect "+_riding.getSuffix()+" to use again later."                
+            //} else {
+                _currentLocation.addObject(_riding);   
+                resultString += " and leave "+_riding.getSuffix()+" here for later."
+            //};
+            _riding = null;
+            return resultString;
+        };
+
         self.go = function(verb, direct, map) {//(aDirection, aLocation) {
             if (tools.stringIsEmpty(verb) || verb == direct || verb == direct.substring(0, 1)) {verb = "go";};
+
+            var vehicleType;
+            if (_riding) {
+                //can we still ride?
+                if (_riding.isBroken() || _riding.isDestroyed()) {
+                    return "Your "+_riding.getName()+" doesn't seem to work any more. You'll need to walk from here or fix "+_riding.getSuffix()+".<br>"
+                };
+                if (_riding.isSwitched() && (!(_riding.isPoweredOn()))) {
+                    return "Your "+_riding.getName()+" isn't running."; 
+                };
+                if (_riding.chargesRemaining() == 0) {
+                    return "Your "+_riding.getName()+" has run out of "+_riding.getChargeUnit()+".<br>"
+                } else if (!(_riding.checkComponents())) {
+                    var consumedComponents = _riding.getConsumedComponents;
+                    if (consumedComponents.length >0) {
+                        var res = "Your "+_riding.getName()+" has run out of ";
+                         for (var c=0;c<consumedComponents.length;c++) {
+                            res += tools.listSeparator(c, consumedComponents.length);
+                            status += "'"+consumedComponents[c]+"'";
+                         };
+                         res += ".<br>";
+                         return res;
+                    } else {
+                        return "Your "+_riding.getName()+" seems to be missing something vital.";
+                    };
+                };
+
+
+                //override "go" with riding equivalent...
+                vehicleType = _riding.getSubType();
+                if (vehicleType == "van" || vehicleType == "car") {
+                    verb = "drive";
+                } else if (vehicleType == "aeroplane") {
+                    verb = "fly";
+                } else if (vehicleType == "boat") {
+                    verb = "sail"; //row/paddle
+                } else {
+                    verb = "ride";
+                };
+            };
+
             //trim direct down to first letter...
             var direction = direct.substring(0, 1);
             if (direction == 'b') {
@@ -3239,7 +3368,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
             var exit = _currentLocation.getExit(direction);
-            if (!(exit)) {return "There's no exit "+direct+" from here.";};
+            if (!(exit)) {
+                if (_riding && direct == "out") {return self.unRide("exit");};
+                if (!_riding && direct == "in") {
+                    var vehicle = _currentLocation.getObjectByType("vehicle");
+                    if (vehicle) {
+                        return self.ride("enter", vehicle.getName());
+                    };
+                };
+                return "There's no exit "+direct+" from here.";
+            };
             if (!(exit.isVisible())) {return "Your way '"+direct+"' is blocked.";}; //this might be too obvious;
 
             var requiredAction = exit.getRequiredAction();
@@ -3259,7 +3397,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 } else if (requiredAction == "run") {
                     return "You'll need to <i>run</i> "+direct+" from here.";
                 } else {
-                    return "You'll need to try another means of travelling '"+direct+"'.";
+                    return "You'll need to <i>"+requiredAction+"</i> '"+direct+"'.";
                 };
             }; 
 
@@ -3272,6 +3410,37 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //build up return message:
             var resultString ="";
+
+            if (_riding) {
+                if (!(newLocation.allowsVehicle(_riding))) {
+                    return "You'll need to leave your "+_riding.getName()+" here I'm afraid.";
+                };
+                if (verb == "walk" || verb == "run" || verb == "climb") {
+                    resultString += self.unRide("leave", _riding.getName())+"<br>";
+                };
+            };
+
+            //from this point on we're definitely going somewhere...
+
+            if (_riding) {
+                _riding.consume(1);
+                _riding.consumeComponents(1);
+                if (_riding.chargesRemaining() == 0) {
+                    resultString += "Your "+_riding.getName()+" has run out of "+_riding.getChargeUnit()+".<br>"
+                } else if (!(_riding.checkComponents())) {
+                    var consumedComponents = _riding.getConsumedComponents;
+                    if (consumedComponents.length >0) {
+                        resultString += "Your "+_riding.getName()+" has run out of ";
+                         for (var c=0;c<consumedComponents.length;c++) {
+                            resultString += tools.listSeparator(c, consumedComponents.length);
+                            status += "'"+consumedComponents[c]+"'";
+                         };
+                         resultString += ".<br>";
+                    } else {
+                        resultString += "Your "+_riding.getName()+" seems to be missing something vital.";
+                    };
+                };
+            };
 
             //implement creature following here (note, the creature goes first so that it comes first in the output.)
             //rewrite this so that creature does this automagically
@@ -3298,8 +3467,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 hideNewLocationName = true;
             } else if (verb == "crawl" || verb == "climb" || verb == "run") {
                 resultString += "You " + verb + " " + direct + "...<br><br>";
+            } else if (_riding) {
+                resultString += "You " + _riding.getDefaultAction() + " " + direct + "...<br><br>";
             };
             var newLocationDescription = self.setLocation(newLocation, hideNewLocationName);
+
             if (!(self.canSee())) {resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
             else {resultString += newLocationDescription;};
 
@@ -3326,6 +3498,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (visits == 1) {return resultString+"once."}
             if (visits == 2) {return resultString+"twice."}
             return resultString+visits+" times.";
+        };
+
+        self.getWeight = function() {
+            return 120+_inventory.getWeight();
         };
 
         self.isArmed = function() {

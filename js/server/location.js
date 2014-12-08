@@ -15,6 +15,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _name = name.toLowerCase();
         var _displayName = displayName || name.replace(/-/g," ");
         var _visits = 0;
+        var _vehiclesAllowed = [];
         var _dark = false;
         var _echo = false;
         var _type = "indoor";
@@ -40,9 +41,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (!locationAttributes) {return null;}; //leave defaults preset
             if (locationAttributes.dark) {_dark = locationAttributes.dark;};
             if (locationAttributes.echo) {_echo = locationAttributes.echo;};
-            if (locationAttributes.type) {_type = locationAttributes.type;};
+            if (locationAttributes.type) {_type = locationAttributes.type;};            
             if (locationAttributes.subType) {_subType = locationAttributes.subType;};
             if (locationAttributes.start) {_start = locationAttributes.start;};
+            if (locationAttributes.vehiclesAllowed) {_vehiclesAllowed = locationAttributes.vehiclesAllowed;};
             if (locationAttributes.blood) {_blood = locationAttributes.blood;};
             if (locationAttributes.playerTrace) {_playerTrace = locationAttributes.playerTrace;};
             if (locationAttributes.creatureTraces) {_creatureTraces = locationAttributes.creatureTraces;};
@@ -104,6 +106,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             currentAttributes.creatureTraces = _creatureTraces;
             currentAttributes.type = _type;
             currentAttributes.subType = _subType;
+            currentAttributes.vehiclesAllowed = _vehiclesAllowed;
             currentAttributes.visits = _visits;
             currentAttributes.start = _start;
             currentAttributes.imageName = _imageName;  
@@ -125,6 +128,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (locationAttributes.playerTrace >0) {saveAttributes.playerTrace = locationAttributes.playerTrace;};
             if (Object.keys(locationAttributes.creatureTraces).length >0) {saveAttributes.creatureTraces = locationAttributes.creatureTraces;};
             if (locationAttributes.start) {saveAttributes.start = locationAttributes.start;};
+            if (locationAttributes.vehiclesAllowed.length >0) {saveAttributes.vehiclesAllowed = locationAttributes.vehiclesAllowed;};
             if (locationAttributes.imageName != undefined) {saveAttributes.imageName = locationAttributes.imageName;};
 
             return saveAttributes;
@@ -385,6 +389,18 @@ exports.Location = function Location(name, displayName, description, attributes)
             randomInt = Math.floor(Math.random() * (availableExits.length));
             //console.log('Random exit selected: '+availableExits[randomInt].getDirection());
             return availableExits[randomInt];
+        };
+
+        self.allowsVehicle = function(vehicle) {
+            if (!vehicle) {return true;};
+            if (!_vehiclesAllowed) {return false;};
+            if (_vehiclesAllowed.length == 0) {return false;};
+            if (_vehiclesAllowed.indexOf("all") > -1) {return true;};
+
+            var vehicleType = vehicle.getSubType();
+            if (_vehiclesAllowed.indexOf(vehicleType) > -1) {return true;};
+
+            return false;
         };
 
         //nasty - expose our internals - needed to support inventory containers

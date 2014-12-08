@@ -322,8 +322,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (type == "vehicle") {
-                var validVehicleSubTypes = ["", "car", "bike", "horse", "aeroplane", "train"];
+                var validVehicleSubTypes = ["", "van", "car", "bike", "horse", "aeroplane", "train", "boat"];
                 if (validVehicleSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
+                if (_defaultAction == "examine") { throw "vehicle type '" + subType + "' needs a valid default action."; };
             };
 
             if (type == "food") {
@@ -2536,7 +2537,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (!(aKey)) {return "You don't have a key that fits.";};
                 if (aKey.keyTo(self)) {
                     _locked = true;
-                    if (self.getType() == "property") {_collectable = false;};
+                    if (self.getType() == "property" || self.getType() == "vehicle") {_collectable = false;};
                     if (_open) {return self.close('close and lock',locationName);}
                     else {return "You lock "+self.getDisplayName()+"."};
                 } else {
@@ -2556,7 +2557,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (!(aKey)) {return "You need something to unlock "+self.getSuffix()+" with.";};
                 if (aKey.keyTo(self)) {
                     _locked = false;
-                    if (self.getType() == "property") {_collectable = true;};
+                    if (self.getType() == "property" || self.getType() == "vehicle") {_collectable = true;};
                     var resultString = self.moveOrOpen('unlock',locationName);
                     //unlocking with a breakable item will damage it
                     var bashResult = "";
