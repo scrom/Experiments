@@ -841,10 +841,9 @@ exports.Action = function Action(player, map, fileManager) {
                             } else {
                                 description = _player.goObject(_verb, _splitWord, _object0, _map);
                             };
+                        } else {
+                            description = tools.initCap(_verb)+" where?";
                         };
-
-                        description = tools.initCap(_verb)+" where?";
-
                         break;
                     case 'explore':
                         description = "Which direction do you want to go?"
