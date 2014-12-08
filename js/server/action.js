@@ -1039,22 +1039,22 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'curse':
                         description = "Damn you "+_object0+"!<br>I'm guessing that's not what you planned."
                     case 'play': //generally a custom verb already
-                    case 'burn': //relies on having either an ignition source or something else already burning.
+                    case 'burn': //see #299 - relies on having either an ignition source or something else already burning.
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                
-                    case 'call':
-                    case 'phone':
-                    case 'mail':
-                    case 'email':
-                    case 'log': //in/out
-                    case 'send':
+                    case 'call':  //see #243
+                    case 'phone': //see #243
+                    case 'mail':  //see #243
+                    case 'email': //see #243
+                    case 'log': //in/out //see #243
+                    case 'send': //see #243
                     case 'tie':
                     case 'untie':
                     case 'undo':
                     case 'tighten': //may also need to support "do up"? 
-                    case 'touch': //either activate something (like press) - or return a texture description
-                    case 'feel': //either activate something (like press) - or return a texture description
-                    case 'cast':
-                    case 'summon':
+                    case 'touch': // see #270 - either activate something (like press) - or return a texture description
+                    case 'feel': // see #270 - either activate something (like press) - or return a texture description
+                    case 'cast': //see #18
+                    case 'summon': //see #18
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;
