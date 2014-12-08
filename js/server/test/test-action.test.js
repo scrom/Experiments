@@ -88,3 +88,152 @@ exports.testAskXToFindYAction = function (test) {
 
 exports.testAskXToFindYAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
 
+
+exports.testWhereIsAction = function (test) {
+    var p = new player.Player("Tester");
+    var playerStub = sf.generateStubClass(p);
+    var m = new map.Map();
+    var mapStub = sf.generateStubClass(m);
+    var a = new action.Action(playerStub, mapStub);
+
+    var actionString = "where is the beef sandwich"
+    a.setActionString(actionString); 
+    a.convertActionToElements(actionString); //extract object, description, json
+
+    var expectedResult = 'function: hunt, args[0]:where, args[1]:beef sandwich, args[2]:<Object>';
+    var actualResult = a.performPlayerAction();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+            
+};
+
+exports.testWhereIsAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
+
+
+exports.testPositionAction = function (test) {
+    var p = new player.Player("Tester");
+    var playerStub = sf.generateStubClass(p);
+    var m = new map.Map();
+    var mapStub = sf.generateStubClass(m);
+    var a = new action.Action(playerStub, mapStub);
+
+    var actionString = "balance a bucket of water on top of the door"
+    a.setActionString(actionString); 
+    a.convertActionToElements(actionString); //extract object, description, json
+
+    var expectedResult = 'function: position, args[0]:balance, args[1]:bucket of water, args[2]:door, args[3]:on top of, args[4]:<Array>';
+    var actualResult = a.performPlayerAction();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+            
+};
+
+exports.testPositionAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
+
+
+exports.testMoveIntoAction = function (test) {
+    var p = new player.Player("Tester");
+    var playerStub = sf.generateStubClass(p);
+    var m = new map.Map();
+    var mapStub = sf.generateStubClass(m);
+    var a = new action.Action(playerStub, mapStub);
+
+    var actionString = "move fish into bowl"
+
+    var expectedResult = 'function: put, args[0]:put, args[1]:fish, args[2]:bowl';
+    var actualResult = a.processAction(actionString);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+            
+};
+
+exports.testMoveIntoAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
+
+
+exports.testMoveShoveAction = function (test) {
+    var p = new player.Player("Tester");
+    var playerStub = sf.generateStubClass(p);
+    var m = new map.Map();
+    var mapStub = sf.generateStubClass(m);
+    var a = new action.Action(playerStub, mapStub);
+
+    var actionString = "move bowl of fish"
+
+    var expectedResult = 'function: shove, args[0]:move, args[1]:bowl of fish';
+    var actualResult = a.processAction(actionString);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+            
+};
+
+exports.testMoveShoveAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
+
+exports.testMoveGoAction = function (test) {
+    var p = new player.Player("Tester");
+    var playerStub = sf.generateStubClass(p);
+    var m = new map.Map();
+    var mapStub = sf.generateStubClass(m);
+    var a = new action.Action(playerStub, mapStub);
+
+    var actionString = "move north"
+
+    var expectedResult = 'function: go, args[0]:move, args[1]:north, args[2]:<Object>';
+    var actualResult = a.processAction(actionString);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+            
+};
+
+exports.testMoveGoAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
+
+
+exports.testGoDirectionAction = function (test) {
+    var p = new player.Player("Tester");
+    var playerStub = sf.generateStubClass(p);
+    var m = new map.Map();
+    var mapStub = sf.generateStubClass(m);
+    var a = new action.Action(playerStub, mapStub);
+
+    var actionString = "go north"
+
+    var expectedResult = 'function: go, args[0]:go, args[1]:north, args[2]:<Object>';
+    var actualResult = a.processAction(actionString);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+            
+};
+
+exports.testGoDirectionAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
+
+
+exports.testGoObjectAction = function (test) {
+    var p = new player.Player("Tester");
+    var playerStub = sf.generateStubClass(p);
+    var m = new map.Map();
+    var mapStub = sf.generateStubClass(m);
+    var a = new action.Action(playerStub, mapStub);
+
+    var actionString = "go to fruit bowl"
+
+    var expectedResult = 'function: goObject, args[0]:go, args[1]:to, args[2]:fruit bowl, args[3]:<Object>';
+    var actualResult = a.processAction(actionString);
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+            
+};
+
+exports.testGoObjectAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
