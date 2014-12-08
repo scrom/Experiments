@@ -495,7 +495,9 @@ exports.Location = function Location(name, displayName, description, attributes)
                 };
 
                 if (anObjectName == "ground") {anObjectName = "floor";};
-                var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", {"type": "scenery", "subType": subType, "canDrawOn": canDrawOn}, null, null);
+
+                var sceneryAttributes = {"type": "scenery", "subType": subType, "canDrawOn": canDrawOn};
+                var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", sceneryAttributes, null, null);
                 sceneryObject.addSyns([anObjectName+"s", anObjectName+"es"]);
                 if (anObjectName == "floor") {
                     sceneryObject.addSyns("ground");

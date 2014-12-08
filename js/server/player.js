@@ -1166,16 +1166,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString;          
         };
 
+        self.bodilyFunction = function(verb, artefactName) {
+            _currentLocation.reduceLocalFriendlyCreatureAffinity(1);
+            self.increaseAggression(0.1);
+            if (verb == "wind") {
+                var randomReplies = ["Well I guess that's one way to clear a room quickly.", "Trying to make friends and influence people again are you?", "You strain hard but don't have anything to give without following through.", "You try to quietly squeeze one out and fail spectacularly.<br>I think you're losing credibility (and friends) fast.", "I think it's time to get on with something more useful now.", "Stop that."];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return randomReplies[randomIndex];
+            };
+        };
+
         /*allow player to try and break an object*/
         self.breakOrDestroy = function(verb, artefactName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {
                 if (artefactName == "wind") {
-                    _currentLocation.reduceLocalFriendlyCreatureAffinity(1);
-                    self.increaseAggression(0.1);
-                    var randomReplies = ["Well I guess that's one way to clear a room quickly.", "Trying to make friends and influence people again are you?", "You strain hard but don't have anything to give without following through.", "You try to quietly squeeze one out and fail spectacularly.<br>I think you're losing credibility (and friends) fast.", "I think it's time to get on with something more useful now.", "Stop that."];
-                    var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    return randomReplies[randomIndex];
+                    return self.bodilyFunction("wind", artefactName);
                 };
                 return notFoundMessage(artefactName);
             };

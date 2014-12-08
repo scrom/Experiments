@@ -992,6 +992,7 @@
             "description": "single post-it note",
             "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
             "attributes": {
+			  "type":"book",
               "canCollect": true,
               "affinityModifier": 2,
               "imageName": "sticky-finger.jpg",
@@ -2165,7 +2166,55 @@
         "source": "customer-delight-north",
         "destination": "support-west"
       }
-    ]
+    ],
+"inventory": [ {
+  "object": "artefact",
+  "name": "printer",
+  "description": "a3 colour printer",
+  "detailedDescription": "It prints and copies things (in colour!).",
+  "attributes": {
+    "customAction": ["print", "copy"],
+    "weight": 151,
+    "carryWeight": 25,
+    "isBreakable": true,
+    "canOpen": true,
+    "requiredComponentCount": 1,
+    "imageName": "printer.jpg",
+    "canDrawOn": true,
+    "defaultResult": "You don't really have a use for any printouts or copies at the moment.<br>Let's not waste paper. You never know when you'll need some."
+  },
+  "synonyms": [
+    "colour printer",
+    "a3 printer",
+    "copier",
+    "colour copier"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "paper",
+      "description": "a3 paper",
+      "detailedDescription": "Ahhh, the dream of the paperless office.<br>Maybe one day.",
+      "attributes": {
+        "weight": 5,
+        "attackStrength": 1,
+        "canCollect": true,
+        "charges": 50,
+        "chargeUnit": "sheet",
+        "chargesDescription": "There's about $charges $chargeUnit here.",
+        "plural": true,
+        "affinityModifier": 0,
+        "componentOf": [
+          "printer"
+        ]
+      },
+      "synonyms": [
+        "a3 paper",
+        "sheet"
+      ]
+    }
+  ]
+} ]
   },
   {
     "object": "location",
@@ -2268,7 +2317,7 @@
                     "yup",
                     "y"
                   ],
-                  "response": "'Great! He's often hanging around the Customer Delight management area.'<br>'He's pretty friendly so as long as you've not upset him in any way, or taken anything else of his, you might be able to simply <i>ask</i> him for them.'",
+                  "response": "'Great! He's often hanging around the Customer Delight management area.'<br>'He's pretty friendly so as long as you've not upset him in any way (or taken anything else of his) you might be able to simply <i>ask</i> him for them.'",
                   "nextState": 3
                 },
                 {
@@ -9410,6 +9459,7 @@
             "description": "black and red notebook",
             "detailedDescription": "An A4 'Black and Red' brand notebook.<br> These are really useful for keeping track of tasks.<br>In case you accidentally leave it somewhere, I strongly suggest you <i>write</i> your name in it though.",
             "attributes": {
+              "type": "book",
               "weight": 0.5,
               "canCollect": true,
               "price": 3,

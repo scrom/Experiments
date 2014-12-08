@@ -87,7 +87,7 @@ exports.Action = function Action(player, map, fileManager) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['with', 'into', 'in to', 'onto', 'on to', 'on top of', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'through', 'about', 'around', 'under', 'below', 'behind', 'above']; //the words we'll try to split on.
+            var splitWordArray = ['with', 'into', 'in to', 'onto', 'on to', 'on top of', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid substring oddities
                 if (objectPair != aString) { //split successful
@@ -988,9 +988,20 @@ exports.Action = function Action(player, map, fileManager) {
                             description = "Sorry, try something else.";
                         };
                         break;
-                    case 'play': //generally a custom verb already
+                    case 'print':
+                        description = "$action use printer";
+                        break;
+                    case 'copy':
+                        description = "$action use copier";
+                        break;
                     case 'hum':
                     case 'whistle':
+                        description = "You attempt to "+_verb+" and manage to emit a tuneless, annoying noise.<br>Thanks for that then."
+                        break;
+                    case 'knock':
+                        if (_object0 == "knock") {description = "Who's there?";};
+                        break;  
+                    case 'play': //generally a custom verb already
                     case 'burn': //relies on having either an ignition source or something else already burning.
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.
                     case 'drive': //cattle, cat etc out/to a location or car/bus but not so much bike. Tricky.
@@ -999,10 +1010,13 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'dismount': //disk drive or animal?
                     case 'unmount': //don't think this is a real verb but still...
                     case 'start':
-                    case 'stop':
-                    case 'knock':
+                    case 'stop':                
                     case 'call':
                     case 'phone':
+                    case 'mail':
+                    case 'email':
+                    case 'log': //in/out
+                    case 'send':
                     case 'tie':
                     case 'untie':
                     case 'undo':
