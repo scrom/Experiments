@@ -1038,6 +1038,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;      
                     case 'curse':
                         description = "Damn you "+_object0+"!<br>I'm guessing that's not what you planned."
+                        break;
                     case 'play': //generally a custom verb already
                     case 'burn': //see #299 - relies on having either an ignition source or something else already burning.
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                
