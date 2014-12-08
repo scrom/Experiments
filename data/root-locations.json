@@ -158,7 +158,7 @@
               "message": "Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen."
             },
             "fail": {
-              "message": "Never mind, it's probably better left alone."
+              "message": "You didn't manage to destroy the screen quickly enough.<br>Never mind, it's probably better left alone anyway."
             }
           }
         ]
