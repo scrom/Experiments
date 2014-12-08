@@ -573,7 +573,7 @@ exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage.meta = { traits: [
 
 exports.canTurnFriendlyCreatureToFightableByHitting3Times = function (test) {
     var friendlyCreature = new creature.Creature('friend', 'A friend', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:215, affinity:2, canTravel:true});
-    friendlyCreature.go(null,l0); 
+    friendlyCreature.go("n",l0); 
     p0.get('get', weapon.getName());
     
     p0.hit('hit',friendlyCreature.getName());
@@ -592,13 +592,13 @@ exports.canTurnFriendlyCreatureToFightableByHitting3Times.meta = { traits: ["Pla
 
 exports.friendlyCreatureHitCountErodesSuccessfullyByWalkigTheEffectsOff = function (test) {
     var friendlyCreature = new creature.Creature('friend', 'A friend', "Super-friendly.", {weight:140, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:215, affinity:2, canTravel:true});
-    friendlyCreature.go(null,l0); 
+    friendlyCreature.go("n",l0); 
     p0.get('get', weapon.getName());
     
     p0.hit('hit',friendlyCreature.getName());
     p0.hit('hit',friendlyCreature.getName());
-    friendlyCreature.go(null,l0);
-    friendlyCreature.go(null,l0); //after 2 moves, hitcount should reduce by 1 so that they don't "turn" on the next hit.
+    friendlyCreature.go("n",l0);
+    friendlyCreature.go("n",l0); //after 2 moves, hitcount should reduce by 1 so that they don't "turn" on the next hit.
     var expectedResult = "You missed. This is your last chance. Seriously, don't do that again any time soon.";
     var actualResult = p0.hit('hit',friendlyCreature.getName());
     console.log("Expected: "+expectedResult);
