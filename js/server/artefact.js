@@ -1660,11 +1660,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 var resultString = tools.initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
                 if (!(self.checkComponents())) {resultString +=" "+tools.initCap(_itemDescriptivePrefix)+" missing something.";};
                 return resultString;
-
             };
+
+            if (verb == "start") {
+                onOrOff = "start";
+            };
+
+            if (verb == "stop") {
+                onOrOff = "off";
+            };
+
             switch(onOrOff) {
                 case "on":
                     if (_on) {return tools.initCap(_itemDescriptivePrefix)+" already on.";}; 
+                    break;
+                case "start":
+                    if (_on) {return tools.initCap(_itemDescriptivePrefix)+" already running.";}; 
                     break;
                 case "off":
                     if (!(_on)) {return tools.initCap(_itemDescriptivePrefix)+" already off.";};
@@ -1678,7 +1689,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             _on = (!(_on)); //toggle switch 
             var resultString ="You "+verb+" "+self.getDisplayName();
-            if (verb == 'light') {resultString+= ".";}
+            if (verb == 'light' || verb == 'ignite' || verb == 'start' || verb == 'stop') {resultString+= ".";}
             else { 
                 if (_on) {resultString+= " on.";} 
                 else {resultString+= " off.";};

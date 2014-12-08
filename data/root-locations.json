@@ -125,6 +125,8 @@
         "attributes": {
           "weight": 51,
           "isBreakable": true,
+          "switched": true,
+          "isOn": true,
           "imageName": "screen.jpg",
           "canDrawOn": true
         },

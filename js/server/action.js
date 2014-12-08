@@ -893,6 +893,7 @@ exports.Action = function Action(player, map, fileManager) {
                             description = _player.turn(_verb, _object0,_splitWord);
                         };                    
                         break;
+                    case 'ignite':
                     case 'light':
                         description = _player.turn('light', _object0, 'on');
                         break;
@@ -1029,11 +1030,17 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'unmount': //don't think this is a real verb but still...
                         description = _player.unRide(_verb, _object0);
                         break;
+                    case 'start':
+                        description = _player.turn(_verb, _object0);
+                        break;
+                    case 'stop':  
+                        description = _player.turn(_verb, _object0);
+                        break;      
+                    case 'curse':
+                        description = "Damn you "+_object0+"!<br>I'm guessing that's not what you planned."
                     case 'play': //generally a custom verb already
                     case 'burn': //relies on having either an ignition source or something else already burning.
-                    case 'delete': //similar to "clean" or "clear" but specifically tech/data related.
-                    case 'start':
-                    case 'stop':                
+                    case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                
                     case 'call':
                     case 'phone':
                     case 'mail':
@@ -1048,7 +1055,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'feel': //either activate something (like press) - or return a texture description
                     case 'cast':
                     case 'summon':
-                    case 'curse':
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;
