@@ -739,7 +739,9 @@
     "description": "You're in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike"]
+      "vehiclesAllowed": [
+        "bike"
+      ]
     },
     "exits": [
       {
@@ -993,7 +995,7 @@
             "description": "single post-it note",
             "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
             "attributes": {
-			  "type":"book",
+              "type": "book",
               "canCollect": true,
               "affinityModifier": 2,
               "imageName": "sticky-finger.jpg",
@@ -2165,54 +2167,59 @@
         "destination": "support-west"
       }
     ],
-"inventory": [ {
-  "object": "artefact",
-  "name": "printer",
-  "description": "a3 colour printer",
-  "detailedDescription": "It prints and copies things (in colour!).",
-  "attributes": {
-    "customAction": ["print", "copy"],
-    "weight": 151,
-    "carryWeight": 25,
-    "isBreakable": true,
-    "canOpen": true,
-    "requiredComponentCount": 1,
-    "imageName": "printer.jpg",
-    "canDrawOn": true,
-    "defaultResult": "You don't really have a use for any printouts or copies at the moment.<br>Let's not waste paper. You never know when you'll need some."
-  },
-  "synonyms": [
-    "colour printer",
-    "a3 printer",
-    "copier",
-    "colour copier"
-  ],
-  "inventory": [
-    {
-      "object": "artefact",
-      "name": "paper",
-      "description": "a3 paper",
-      "detailedDescription": "Ahhh, the dream of the paperless office.<br>Maybe one day.",
-      "attributes": {
-        "weight": 5,
-        "attackStrength": 1,
-        "canCollect": true,
-        "charges": 50,
-        "chargeUnit": "sheet",
-        "chargesDescription": "There's about $charges $chargeUnit here.",
-        "plural": true,
-        "affinityModifier": 0,
-        "componentOf": [
-          "printer"
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "printer",
+        "description": "a3 colour printer",
+        "detailedDescription": "It prints and copies things (in colour!).",
+        "attributes": {
+          "weight": 151,
+          "carryWeight": 25,
+          "isBreakable": true,
+          "canOpen": true,
+          "requiredComponentCount": 1,
+          "customAction": [
+            "print",
+            "copy"
+          ],
+          "defaultResult": "You don't really have a use for any printouts or copies at the moment.<br>Let's not waste paper. You never know when you'll need some.",
+          "imageName": "printer.jpg",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "colour printer",
+          "a3 printer",
+          "copier",
+          "colour copier"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "paper",
+            "description": "a3 paper",
+            "detailedDescription": "Ahhh, the dream of the paperless office.<br>Maybe one day.",
+            "attributes": {
+              "weight": 5,
+              "attackStrength": 1,
+              "canCollect": true,
+              "charges": 50,
+              "chargeUnit": "sheet",
+              "chargesDescription": "There's about $charges $chargeUnit here.",
+              "plural": true,
+              "affinityModifier": 0,
+              "componentOf": [
+                "printer"
+              ]
+            },
+            "synonyms": [
+              "a3 paper",
+              "sheet"
+            ]
+          }
         ]
-      },
-      "synonyms": [
-        "a3 paper",
-        "sheet"
-      ]
-    }
-  ]
-} ]
+      }
+    ]
   },
   {
     "object": "location",
@@ -2807,10 +2814,11 @@
                 "detailedDescription": "They're ripe and ready to pick.",
                 "attributes": {
                   "weight": 3,
-				  "type": "food",
-				  "nutrition": 15,
+                  "type": "food",
                   "canCollect": true,
                   "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15,
                   "customAction": [
                     "get"
                   ],
@@ -3063,7 +3071,9 @@
     "description": "You're standing at the South-East corner of the the office building.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike"]
+      "vehiclesAllowed": [
+        "bike"
+      ]
     },
     "exits": [
       {
@@ -3114,10 +3124,10 @@
             "description": "shiny new bike",
             "detailedDescription": "It looks like Chris' new bike.",
             "attributes": {
+              "defaultAction": "ride",
               "weight": 15,
-			  "defaultAction": "ride",
               "type": "vehicle",
-			  "subType": "bike",
+              "subType": "bike",
               "isBreakable": true,
               "lockable": true,
               "locked": true,
@@ -3145,7 +3155,11 @@
     "description": "You're standing in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike", "car", "van"]
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
     },
     "exits": [
       {
@@ -4070,11 +4084,12 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-					  "weight": 3,
-					  "type": "food",
-					  "nutrition": 15,
+                      "weight": 3,
+                      "type": "food",
                       "canCollect": true,
                       "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
                       "customAction": [
                         "get"
                       ],
@@ -4721,11 +4736,12 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-					  "weight": 3,
-					  "type": "food",
-					  "nutrition": 15,
+                      "weight": 3,
+                      "type": "food",
                       "canCollect": true,
                       "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
                       "customAction": [
                         "get"
                       ],
@@ -5489,7 +5505,9 @@
               "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
               "attributes": {
                 "type": "outdoor",
-				"vehiclesAllowed": ["bike"]
+                "vehiclesAllowed": [
+                  "bike"
+                ]
               },
               "exits": [
                 {
@@ -5866,7 +5884,10 @@
                             "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
                             "attributes": {
                               "type": "outdoor",
-							  "vehiclesAllowed": ["bike", "van"]
+                              "vehiclesAllowed": [
+                                "bike",
+                                "van"
+                              ]
                             },
                             "exits": [
                               {
@@ -5884,11 +5905,11 @@
                                 "description": "white van",
                                 "detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
                                 "attributes": {
+                                  "defaultAction": "drive",
                                   "weight": 3000,
                                   "carryWeight": 500,
-								  "defaultAction": "drive",
                                   "type": "vehicle",
-								  "subType": "van",
+                                  "subType": "van",
                                   "canDrawOn": true
                                 },
                                 "synonyms": [
@@ -6462,7 +6483,9 @@
     "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike"]
+      "vehiclesAllowed": [
+        "bike"
+      ]
     },
     "exits": [
       {
@@ -7492,11 +7515,12 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-					  "weight": 3,
-					  "type": "food",
-					  "nutrition": 15,
+                      "weight": 3,
+                      "type": "food",
                       "canCollect": true,
                       "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
                       "customAction": [
                         "get"
                       ],
@@ -9465,8 +9489,8 @@
             "description": "black and red notebook",
             "detailedDescription": "An A4 'Black and Red' brand notebook.<br> These are really useful for keeping track of tasks.<br>In case you accidentally leave it somewhere, I strongly suggest you <i>write</i> your name in it though.",
             "attributes": {
-              "type": "book",
               "weight": 0.5,
+              "type": "book",
               "canCollect": true,
               "price": 3,
               "canDrawOn": true
@@ -9873,11 +9897,12 @@
                     "description": "tomatoes",
                     "detailedDescription": "They're ripe and ready to pick.",
                     "attributes": {
-					  "weight": 3,
-					  "type": "food",
-					  "nutrition": 15,
+                      "weight": 3,
+                      "type": "food",
                       "canCollect": true,
                       "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
                       "customAction": [
                         "get"
                       ],
@@ -10513,7 +10538,9 @@
     "description": "You're outside the back of the office under the fire escape.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike"]
+      "vehiclesAllowed": [
+        "bike"
+      ]
     },
     "exits": [
       {
@@ -11054,7 +11081,9 @@
     "description": "You're by a locked gate. On the far side are a series of waste containers full of carboard boxes, broken furniture and kitchen leftovers.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike"]
+      "vehiclesAllowed": [
+        "bike"
+      ]
     },
     "exits": [
       {
@@ -11186,7 +11215,9 @@
     "description": "You're at the South-West corner of the the office building.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike"]
+      "vehiclesAllowed": [
+        "bike"
+      ]
     },
     "exits": [
       {
@@ -11239,19 +11270,19 @@
             "description": "tatty old bike",
             "detailedDescription": "It's yours. Yay :D",
             "attributes": {
+              "defaultAction": "ride",
               "weight": 18,
-			  "defaultAction": "ride",
               "type": "vehicle",
-			  "subType": "bike",
+              "subType": "bike",
               "canCollect": true,
               "isBreakable": true,
               "isDamaged": true,
               "lockable": true,
               "price": 8,
-			  "customAction": [
+              "customAction": [
                 "cycle"
               ],
-			  "defaultResult":"$action ride"
+              "defaultResult": "$action ride"
             },
             "synonyms": [
               "bicycle",
@@ -11271,7 +11302,11 @@
     "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
     "attributes": {
       "type": "outdoor",
-	  "vehiclesAllowed": ["bike", "car", "van"]
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
     },
     "exits": [
       {
