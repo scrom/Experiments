@@ -3226,6 +3226,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var artefact = getObjectFromLocation(artefactName);
             if (!(artefact)) {
+                if (_riding) {
+                    if (_riding.syn(artefactName)) {
+                        artefact = _riding;
+                    };
+                };
+            };
+
+            if (!(artefact)) {
                 return "You'll need to explore and find your way there yourself I'm afraid.";
             };
 
@@ -3243,7 +3251,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 }
             };
 
-            if (tools.positions.indexOf(splitWord) < tools.onIndex) {
+            var index = tools.positions.indexOf(splitWord);
+            if (0 <= index && index < tools.onIndex) {
                 //if not default scenery
                 if (_currentLocation.defaultScenery().indexOf(artefact.getName()) == -1 && artefact.getType() != "door") {
                     if (splitWord == "over" && verb == "jump") {
@@ -3256,6 +3265,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                         return "You take a short run up, prepare to leap into the air and then decide it's not such a wise thing to do."
                     };
+
+                    if (artefact.getType() == "vehicle") {
+                        //it's a vehicle that won't hold the player inside - therefore player is trying to ride it.
+                        if (self.getWeight() > artefact.getCarryWeight()) {
+                            return self.ride("ride", artefact.getName(), map);
+                        };
+                    }; 
+                    
                     if (artefact.canCarry(self, "on")) {
                         return "You "+verb+" up onto "+artefact.getDisplayName()+" and peer around.<br>Other than a mild rush of vertigo, being up here offers no benefit so you climb back down again."
                     } else {
@@ -3267,6 +3284,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
             };
+
+            if (artefact.getType() == "vehicle") {
+                if (splitWord == "in" || splitWord == "into" || splitWord == "in to") {
+                    //it's a vehicle that can hold the player inside...
+                    return self.ride("enter", artefact.getName(), map);
+                } else if (splitWord == "out" || splitWord == "out of") {
+                    if (_riding.getName() == artefact.getName()) {
+                        return self.unRide("exit", artefact.getName());
+                    };
+                };
+            }; 
 
             return "You can't see any way to "+verb+" "+splitWord+" there."
 
@@ -3307,10 +3335,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (vehicle.isSwitched() && (!vehicle.isPoweredOn())) {
-                var tempResult = self.customAction(verb, vehicle.getName());
-                if (tempResult) {return tempResult;};
-
-                return "You'll need to get "+vehicle.getSuffix()+" running first.";
+                var actions = ["sail", "fly", "drive", "ride"]
+                if (actions.indexOf(verb) > -1) {
+                    var tempResult = self.customAction(verb, vehicle.getName());
+                    if (tempResult) {return tempResult;};
+                    return "You'll need to get "+vehicle.getSuffix()+" running first.";
+                };
             };
 
             if (playerVehicle) {

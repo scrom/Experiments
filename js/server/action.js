@@ -100,7 +100,7 @@ exports.Action = function Action(player, map, fileManager) {
                 if (aString.indexOf(splitWordArray[i]+' ') == 0) {
                     //console.log('first word is split');
                     _splitWord = splitWordArray[i];
-                    return ["",aString.substr(aString.indexOf(' ')).trim()];
+                    return ["",aString.substr(splitWordArray[i].length).trim()];
                 };
 
                 //support case where last word of string is a "split" word
@@ -272,7 +272,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'n':
                             if (_inConversationWith && _awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(false, _map);
-                                if (description == ""||description==null||description==undefined) {
+                                if (tools.stringIsEmpty(description)) {
                                     description = _player.say('say', _actionString,_inConversationWith, _map);
                                     _player.setLastVerbUsed('say');
                                 };
@@ -283,7 +283,7 @@ exports.Action = function Action(player, map, fileManager) {
                         if (_inConversationWith) {
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(false, _map);
-                                if (description == ""||description==null||description==undefined) {
+                                if (tools.stringIsEmpty(description)) {
                                     description = _player.say('say', _actionString,_inConversationWith, _map);
                                     _player.setLastVerbUsed('say');
                                 };
@@ -376,10 +376,12 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'l':
                         _direction = "l";
+                        break;
                     case 'show':
                     case 'look':
                         //trap a few junk words - will return "look" with no object. 
-                        if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
+                        var junkWords = ["exits", "objects", "artefacts", "creatures", "artifacts"]
+                        if (junkWords.indexOf(_object0) > -1) {_object0 = null;};
                         
                         //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
                         if (_object1) {
@@ -628,7 +630,7 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         if (_splitWord == "on" || _splitWord == "onto" || _splitWord == "on to") {
                             if (!(_object0)) {
-                                return self.processAction("use "+_object1);
+                                return self.processAction("climb "+_splitWord+" "+_object1);
                             };
                         };
                         if (_object0 == "in" && (!_object1)) {
@@ -848,6 +850,9 @@ exports.Action = function Action(player, map, fileManager) {
                             if (tools.directions.indexOf(_object1) > -1) {
                                 _direction = _object1;
                             } else {
+                                if (_splitWord == "out" && _object1.indexOf("of ") == 0) {
+                                    _object1 = _object1.replace("of ", "");
+                                };
                                 description = _player.goObject(_verb, _splitWord, _object1, _map);
                             };
                         } else if (_object0) {
@@ -952,7 +957,8 @@ exports.Action = function Action(player, map, fileManager) {
                         description = "That's a slightly over-friendly thing to do don't you think?<br>It won't actually make you any more popular either.";
                         break;
                     case 'jump':
-                        if (!_object0 && _object1 && tools.positions.indexOf(_splitWord) < tools.onIndex) {
+                        var index = tools.positions.indexOf(_splitWord);
+                        if (!_object0 && _object1 && (0 <= index && index < tools.onIndex)) {
                             //player is trying "jump on or jump over"
                             description = _player.goObject(_verb, _splitWord, _object1, _map);
                         } else if (_object0) {
@@ -1272,12 +1278,12 @@ exports.Action = function Action(player, map, fileManager) {
             };
 
             //try to perform the player action
-            if ((description == undefined)||(description == "")) {
+            if (tools.stringIsEmpty(description)) {
                 description = self.performPlayerAction();
             };
             
             //navigation
-            if ((description == undefined)||(description == "")) {
+            if (tools.stringIsEmpty(description)) {
                 description = self.performPlayerNavigation();
             };
 
@@ -1294,7 +1300,7 @@ exports.Action = function Action(player, map, fileManager) {
             };
 
             //final fall-through
-            if ((description == undefined)||(description == "")){
+            if (tools.stringIsEmpty(description)){
                 description = self.catchPlayerNotUnderstood(); //@bug: this might not work as it references "act"
             } else {
                 //reset consecutive user errors
