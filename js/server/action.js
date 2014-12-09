@@ -471,6 +471,7 @@ exports.Action = function Action(player, map, fileManager) {
                             break;
                         };
                     case 'attach':
+                    case 'hang':
                     case 'stick':
                         //I'd like to do something smarter with sticking items to others - they're on the surface, not in them.
                     case 'combine':
@@ -828,7 +829,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'go':
                         //translate to "go north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
-                        //if player enters "go to x", we'll have an object 1 (but no object 0).
+                        //if player enters "go to x" or "climb on x", we'll have an object 1 (but no object 0).
                         if (_object1) {
                             if (tools.directions.indexOf(_object1) > -1) {
                                 _direction = _object1;

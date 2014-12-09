@@ -1499,8 +1499,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return false;
                 };
 
-                //is the space already taken?
-                if (_inventory.getObjectByPosition(position, true)) {
+                //is the space already taken? //note we allow a player plus another object!
+                if (_inventory.getObjectByPosition(position, true) && anObject.getType() != "player") {
                     return false; 
                 };
 

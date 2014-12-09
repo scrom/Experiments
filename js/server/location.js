@@ -134,6 +134,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             return saveAttributes;
         };
 
+        self.defaultScenery = function() {
+            return _defaultIndoorScenery.concat(_defaultOutdoorScenery);
+        };
+
         self.isDestroyed = function() {
             return false;
         };

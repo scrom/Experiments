@@ -12,6 +12,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         //member variables
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _username = attributes.username;       
+        var _weight = 120 //not available as an attribute - just a default value
         var _inventory =  new inventoryObjectModule.Inventory(20, 5.00, _username);
         var _missions = []; //player can "carry" missions.
         var _repairSkills = []; //player can learn repair skills.
@@ -1851,7 +1852,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //first 5 positions are all "on"
                 if (position) {
                     var index = tools.positions.indexOf(position);
-                    if (index >=5) {
+                    if (index >=tools.onIndex) {
                         on = false;
                         if (position == "behind") {
                             behind = true;
@@ -3228,6 +3229,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "You'll need to explore and find your way there yourself I'm afraid.";
             };
 
+            if (artefact.getType() == "creature") {
+                return "I don't think "+artefact.getPrefix().toLowerCase()+"'ll appreciate that.";
+            };
+
             var linkedExits = artefact.getLinkedExits();
 
             for (var i=0;i<linkedExits.length;i++) {
@@ -3236,6 +3241,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return self.go(verb, linkedExits[i].getLongName(), map);
                     };
                 }
+            };
+
+            if (tools.positions.indexOf(splitWord) < tools.onIndex) {
+                //if not default scenery
+                if (_currentLocation.defaultScenery().indexOf(artefact.getName()) == -1 && artefact.getType() != "door") {
+                    if (artefact.canCarry(self, "on")) {
+                        return "You climb up onto "+artefact.getDisplayName()+" and peer around.<br>Being up here offers no benefit so you climb back down again."
+                    } else {
+                        var resultString = "You clamber onto "+artefact.getDisplayName()+" but it can't hold your weight. ";
+                        resultString += artefact.break();
+                        resultString += "<br>You tumble to the floor and twist your ankle. Ouch!<br>";
+                        resultString += self.hurt(8);
+                        return resultString;
+                    };
+                };
             };
 
             return "You can't see any way to "+verb+" "+splitWord+" there."
@@ -3501,7 +3521,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.getWeight = function() {
-            return 120+_inventory.getWeight();
+            return _weight+_inventory.getWeight();
         };
 
         self.isArmed = function() {
@@ -3557,6 +3577,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (_hitPoints <=0) {return self.kill();};
             
+            //@todo - add some more random alternatives to "you feel weaker"
             return "You feel weaker. ";
         };
 
@@ -4488,6 +4509,25 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.isDead = function() {
             if (_hitPoints <= 0) {return true;};
             return false;
+        };
+
+        self.isLiquid = function() {
+                return false;
+        };
+        self.isPowder = function() {
+                return false;
+        };
+        self.isBreakable = function() {
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
+        };
+        self.isDestroyed = function() {
+            return false; //it's hard to "destroy" a creature or corpse (at least for the purposes of the game)
+        };
+        self.isBroken = function() {
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
+        };
+        self.isDamaged = function() {
+            return false; //it's hard to "break" a creature or corpse (at least for the purposes of the game)
         };
 
         self.status = function(maxScore) {
