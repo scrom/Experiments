@@ -1411,9 +1411,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString = "";
 
             //attempt to steal...
-            //will randomly return 0 to 6 by default(<15% chance of success)
-            var successDivider = 7; 
-            if (self.getSubType() == 'friendly') {successDivider = 14;}; //only ~7% chance of success when stealing from a friend
+            //will randomly return 0 to 5 by default(<20% chance of success)
+            var successDivider = 5; 
+            if (self.getSubType() == 'friendly') {successDivider = 9;}; //only ~10% chance of success when stealing from a friend
             if (self.isDead()) {successDivider = 0;}; //guaranteed success if dead.
             var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
             //console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
@@ -1435,7 +1435,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (verb == "mug") {
                      self.decreaseAffinity(1); //significant affinity hit
                      resultString += self.hurt((player.getAttackStrength(verb)*0.75),player)+"<br>";
-                     if (self.getSubType() == "friendly" && _friendlyAttackCount <3) {
+                     if (self.getSubType() == "friendly" && _friendlyAttackCount <2) {
                          return resultString;
                      };
                 };
@@ -1469,6 +1469,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
 
                 if (playerInventory.canCarry(objectToGive)) {
+                    if (objectToGive.isLiquid()) {return  "You'll need the container "+self.getDescriptivePrefix().toLowerCase()+" carrying "+objectToGive.getSuffix()+" in. Otherwise "+objectToGive.getSuffix()+"'ll all go to waste.";};
                     playerInventory.add(objectToGive);
                     if(stealingFromSalesInventory) {_salesInventory.remove(anObjectName);}
                     else {_inventory.remove(anObjectName);};
@@ -1542,6 +1543,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
  
 
             if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry "+anObjectName+" at the moment.";};
+            if (objectToGive.isLiquid()) {return  "You'll need the container "+self.getDescriptivePrefix().toLowerCase()+" carrying "+objectToGive.getSuffix()+" in. Otherwise "+objectToGive.getSuffix()+"'ll all go to waste.";};
 
             playerInventory.add(objectToGive);
             _inventory.remove(anObjectName);

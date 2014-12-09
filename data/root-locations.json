@@ -568,7 +568,7 @@
         },
         "reward": {
           "score": 75,
-          "message": "<br>Congratulations, you managed to get your latte.<br><i>Drink</i> up, wake up and start doing a bit more to help your colleagues out (or not - it's up to you).<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
+          "message": "<br>Congratulations, you managed to get your latte.<br><br>Drink up, wake up and start doing a bit more to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
         }
       }
     ]
@@ -3468,7 +3468,57 @@
         "source": "facilities-area",
         "destination": "fishing"
       }
-    ]
+    ],
+	"inventory": [
+          {
+            "object": "artefact",
+            "name": "coffee machine book",
+            "description": "maintenance manual for the coffee machines",
+            "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
+            "attributes": {
+              "defaultAction": "read",
+              "weight": 2,
+              "attackStrength": 5,
+              "type": "book",
+              "canCollect": true,
+              "affinityModifier": 0,
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "manual",
+              "book",
+              "repair book",
+              "maintenance book",
+              "repair manual",
+              "maintenance manual",
+              "machine manual",
+              "coffee machine manual",
+              "coffee machine repair manual",
+              "coffee machine maintenance manual",
+              "machine maintenance manual"
+            ],
+            "missions": [
+              {
+                "object": "mission",
+                "name": "repaircoffeemachine",
+                "displayName": "repair the coffee machine",
+                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
+                "attributes": {
+                  "missionObject": "coffee machine book",
+                  "static": true
+                },
+                "conditionAttributes": {
+                  "isDestroyed": false,
+                  "read": true
+                },
+                "reward": {
+                  "repairSkill": "coffee machine",
+                  "message": "Congratulations. You've learned how to repair a coffee machine."
+                }
+              }
+            ]
+          }
+		  ]
   },
   {
     "object": "location",
@@ -3527,7 +3577,7 @@
             "object": "mission",
             "name": "learntosteal",
             "displayName": "improve your stealing skills",
-            "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues!",
+            "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues.<br>Worse still, there's even been reports of <i>mug</i>gings in rare circumstances!",
             "attributes": {
               "missionObject": "black book",
               "static": true
@@ -6162,54 +6212,6 @@
               "sales book",
               "selling book",
               "software book"
-            ]
-          },
-          {
-            "object": "artefact",
-            "name": "coffee machine book",
-            "description": "maintenance manual for the coffee machines",
-            "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
-            "attributes": {
-              "defaultAction": "read",
-              "weight": 2,
-              "attackStrength": 5,
-              "type": "book",
-              "canCollect": true,
-              "affinityModifier": 0,
-              "canDrawOn": true
-            },
-            "synonyms": [
-              "manual",
-              "book",
-              "repair book",
-              "maintenance book",
-              "repair manual",
-              "maintenance manual",
-              "machine manual",
-              "coffee machine manual",
-              "coffee machine repair manual",
-              "coffee machine maintenance manual",
-              "machine maintenance manual"
-            ],
-            "missions": [
-              {
-                "object": "mission",
-                "name": "repaircoffeemachine",
-                "displayName": "repair the coffee machine",
-                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
-                "attributes": {
-                  "missionObject": "coffee machine book",
-                  "static": true
-                },
-                "conditionAttributes": {
-                  "isDestroyed": false,
-                  "read": true
-                },
-                "reward": {
-                  "repairSkill": "coffee machine",
-                  "message": "Congratulations. You've learned how to repair a coffee machine."
-                }
-              }
             ]
           },
           {

@@ -2266,7 +2266,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "feed" && receiver.getSubType() != "animal") {return "You should probably just <i>give</i> "+artefact.getDisplayName()+" to "+receiver.getSuffix()+".";};
 
             //we know they *can* carry it...
-
+            if (artefact.isLiquid()) {return  "You'll need to "+verb+" "+artefact.getSuffix()+" to "+receiver.getSuffix()+" in a container otherwise "+artefact.getSuffix()+"'ll all go to waste.";};
             if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
 
             var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
@@ -2415,8 +2415,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var playerStealth = self.getStealth();
                 if (verb == "mug") {
                     self.increaseAggression(1); //we're mugging!  - even more aggressive
-                    playerStealth +=3; //major increase in theft chances
-                };                    
+                    _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName()); //and even more worrying to others!
+                    if (self.getAttackStrength() >= self.getAttackStrength()) {
+                        playerStealth +=4; //major increase in theft chances if stronger
+                    } else {
+                        playerStealth +=2; //minor increase in theft chances if weaker - still better than stealing
+                    };
+                };  
+                               
                 resultString += giver.theft(verb, artefactName, _inventory, self, playerStealth);
                 return resultString;
             } else {
