@@ -3246,8 +3246,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (tools.positions.indexOf(splitWord) < tools.onIndex) {
                 //if not default scenery
                 if (_currentLocation.defaultScenery().indexOf(artefact.getName()) == -1 && artefact.getType() != "door") {
+                    if (splitWord == "over" && verb == "jump") {
+                        //50% chance of serious injury
+                        var randomInt = Math.floor(Math.random() * 2);
+                        if (randomInt != 0) {
+                            self.hurt(65);
+                            artefact.break();
+                            return "You take a short run up, leap into the air and catch your ankle on "+artefact.getDisplayName()+".<br>You fall heavily face-down on the floor, it feels like you broke something serious.";
+                        };
+                        return "You take a short run up, prepare to leap into the air and then decide it's not such a wise thing to do."
+                    };
                     if (artefact.canCarry(self, "on")) {
-                        return "You climb up onto "+artefact.getDisplayName()+" and peer around.<br>Being up here offers no benefit so you climb back down again."
+                        return "You "+verb+" up onto "+artefact.getDisplayName()+" and peer around.<br>Other than a mild rush of vertigo, being up here offers no benefit so you climb back down again."
                     } else {
                         var resultString = "You clamber onto "+artefact.getDisplayName()+" but it can't hold your weight. ";
                         resultString += artefact.break();

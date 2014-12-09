@@ -938,8 +938,11 @@ exports.Action = function Action(player, map, fileManager) {
                         description = "That's a slightly over-friendly thing to do don't you think?<br>It won't actually make you any more popular either.";
                         break;
                     case 'jump':
-                        if (_object0 || _object1) {
-                            description = "You take a short run up, prepare to leap into the air and then decide it's not such a wise thing to do."
+                        if (!_object0 && _object1 && tools.positions.indexOf(_splitWord) < tools.onIndex) {
+                            //player is trying "jump on or jump over"
+                            description = _player.goObject(_verb, _splitWord, _object1, _map);
+                        } else if (_object0) {
+                            description = _player.goObject(_verb, "over", _object0, _map);
                         } else {
                             description = "You jump up and down repeatedly on the spot.<br>Other than making you feel slightly foolish and out of breath, nothing happens.";
                         };
