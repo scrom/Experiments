@@ -1760,7 +1760,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
 
-            var writingToolChargesRemaining = writingTool.consume(1);
+            var writingToolChargesRemaining = writingTool.consume();
             if (writingToolChargesRemaining == 0) {
                 writingTool.discountPriceByPercent(100); //worthless
                 resultString+="You used up your "+writingTool.getName()+".<br>";
@@ -1829,7 +1829,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += " from "+receiver.getDisplayName()+".";
 
                 //use some of the cleaning item (if it has charges)
-                cleanItem.consume(1);
+                cleanItem.consume();
                 if (cleanItem.chargesRemaining() == 0) {
                     removeObjectFromPlayerOrLocation(cleanItem.getName());
                     resultString += "<br>You used up all "+cleanItem.getDisplayName()+"."
@@ -1902,7 +1902,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 if (artefact.isLiquid() || artefact.isPowder()) {
-                    var artefactChargesRemaining = artefact.consume(1);
+                    var artefactChargesRemaining = artefact.consume();
                     if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
                     if (receiver.getType() != "creature"  && on && artefact.isLiquid()) {
                         receiver.addLiquid(artefact.getName());
@@ -2049,7 +2049,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     
                     if (artefact.isLiquid()||artefact.isPowder()) {
                         //@todo - should really trap if the liquid/powder was *not* in a container prior to this
-                        var artefactChargesRemaining = artefact.consume(1);
+                        var artefactChargesRemaining = artefact.consume();
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
                         if (artefact.isLiquid()) { //not a creature by this point
                         if (receiver.syn("floor")) {
@@ -3283,7 +3283,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 return "You'll need to stop using your "+_riding.getName()+" first.";
-            };   
+            } else if (!_riding && tools.directions.indexOf(artefactName) > -1) {
+                return tools.initCap(verb)+" what?"
+            };
 
             var vehicle = getObjectFromLocation(artefactName);
             var playerVehicle = false;
@@ -3302,6 +3304,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if ((verb == "enter" || verb == "board") && self.getWeight() > vehicle.getCarryWeight()) {
                 return "You're too big to fit in "+vehicle.getSuffix()+".";
+            };
+
+            if (vehicle.isSwitched() && (!vehicle.isPoweredOn())) {
+                var tempResult = self.customAction(verb, vehicle.getName());
+                if (tempResult) {return tempResult;};
+
+                return "You'll need to get "+vehicle.getSuffix()+" running first.";
             };
 
             if (playerVehicle) {
@@ -3324,6 +3333,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.unRide = function(verb, artefactName) {
             if (!_riding) { return "You're already on foot.";};
+
+            if (_riding.isPoweredOn()) {
+                return "You probably don't want to do that whilst "+_riding.getDisplayName()+" is still running.";
+            };
             //if (!artefactName) {return verb+" what?"};
             var resultString = "You "+verb+" "+_riding.getDisplayName();
             //if (_inventory.canCarry(_riding) && _riding.isCollectable()) {
@@ -3344,15 +3357,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_riding) {
                 //can we still ride?
                 if (_riding.isBroken() || _riding.isDestroyed()) {
+                    if (direct == "out") {return self.unRide("exit");};
                     return "Your "+_riding.getName()+" doesn't seem to work any more. You'll need to walk from here or fix "+_riding.getSuffix()+".<br>"
                 };
                 if (_riding.isSwitched() && (!(_riding.isPoweredOn()))) {
+                    if (direct == "out") {return self.unRide("exit");};
                     return "Your "+_riding.getName()+" isn't running."; 
                 };
                 if (_riding.chargesRemaining() == 0) {
+                    if (direct == "out") {return self.unRide("exit");};
                     return "Your "+_riding.getName()+" has run out of "+_riding.getChargeUnit()+".<br>"
                 } else if (!(_riding.checkComponents())) {
-                    var consumedComponents = _riding.getConsumedComponents;
+                    if (direct == "out") {return self.unRide("exit");};
+                    var consumedComponents = _riding.getConsumedComponents();
                     if (consumedComponents.length >0) {
                         var res = "Your "+_riding.getName()+" has run out of ";
                          for (var c=0;c<consumedComponents.length;c++) {
@@ -3362,6 +3379,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                          res += ".<br>";
                          return res;
                     } else {
+                        if (direct == "out") {return self.unRide("exit");};
                         return "Your "+_riding.getName()+" seems to be missing something vital.";
                     };
                 };
@@ -3406,6 +3424,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return self.ride("enter", vehicle.getName());
                     };
                 };
+
+                if (direct == "continue") {direct = "that way";};
                 return "There's no exit "+direct+" from here.";
             };
             if (!(exit.isVisible())) {return "Your way '"+direct+"' is blocked.";}; //this might be too obvious;
@@ -3453,17 +3473,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //from this point on we're definitely going somewhere...
 
             if (_riding) {
-                _riding.consume(1);
-                _riding.consumeComponents(1);
+                _riding.consume();
+                _riding.consumeComponents();
                 if (_riding.chargesRemaining() == 0) {
                     resultString += "Your "+_riding.getName()+" has run out of "+_riding.getChargeUnit()+".<br>"
                 } else if (!(_riding.checkComponents())) {
-                    var consumedComponents = _riding.getConsumedComponents;
+                    var consumedComponents = _riding.getConsumedComponents();
                     if (consumedComponents.length >0) {
                         resultString += "Your "+_riding.getName()+" has run out of ";
                          for (var c=0;c<consumedComponents.length;c++) {
                             resultString += tools.listSeparator(c, consumedComponents.length);
                             status += "'"+consumedComponents[c]+"'";
+                         };
+                         for (var c=0;c<consumedComponents.length;c++) {
+                            _riding.removeObject(consumedComponents[c].getName());
                          };
                          resultString += ".<br>";
                     } else {
@@ -3492,13 +3515,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //set player's current location
             var exitDescription = exit.getDescription();
             var hideNewLocationName = false;
+            if (direct == "continue") {direct = "onward";};
             if (exitDescription) {
                 resultString += exitDescription + "<br><br>";
                 hideNewLocationName = true;
             } else if (verb == "crawl" || verb == "climb" || verb == "run") {
                 resultString += "You " + verb + " " + direct + "...<br><br>";
             } else if (_riding) {
-                resultString += "You " + _riding.getDefaultAction() + " " + direct + "...<br><br>";
+                var ridingAction = _riding.getDefaultAction();
+                if (direct == "left" || direct == "right") {
+                    ridingAction = "turn";
+                };
+                resultString += "You " + ridingAction + " " + direct + "...<br><br>";
             };
             var newLocationDescription = self.setLocation(newLocation, hideNewLocationName);
 
@@ -3705,8 +3733,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (weapon.getSubType() == "projectile") {
                 var randomInt = Math.floor(Math.random() * 7); 
                 if (randomInt == 0) { //1 in 7 chance of failure
-                    weapon.consume(1);
-                    weapon.consumeComponents(1);
+                    weapon.consume();
+                    weapon.consumeComponents();
                     resultString = "You try to "+verb+" "+receiver.getDisplayName()+". Unfortunately your "+weapon.getName()+" jammed.";
                     var newRandomInt = Math.floor(Math.random() * 10);
                     if (newRandomInt == 0 && weapon.isBreakable()) { //further 10% chance of worse!
@@ -3769,8 +3797,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var componentChargesRemaining = -1
             if (weapon) {
 
-                chargesRemaining = weapon.consume(1); //(we may have already used some earlier)
-                componentChargesRemaining = weapon.consumeComponents(1);
+                chargesRemaining = weapon.consume(); //(we may have already used some earlier)
+                componentChargesRemaining = weapon.consumeComponents();
                 if (weapon.isBreakable() && weapon.getSubType() != "projectile") {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
@@ -3867,7 +3895,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //we do have something to heal with so...
             //use up one charge and consume if all used up...
-            var medicalChargesRemaining = medicalArtefact.consume(1);
+            var medicalChargesRemaining = medicalArtefact.consume();
 
             if (healer) {
                 if (healer.getType() == "player") { //only show these messages is player is doing the healing. 

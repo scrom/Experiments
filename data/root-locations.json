@@ -3154,7 +3154,7 @@
     "object": "location",
     "name": "east-car-park",
     "displayName": "Car park",
-    "description": "You're standing in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+    "description": "You're in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
     "attributes": {
       "type": "outdoor",
       "vehiclesAllowed": [
@@ -3177,6 +3177,60 @@
         "direction": "s",
         "source": "east-car-park",
         "destination": "east-bike-racks"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "east-car-park",
+        "destination": "access-road-east",
+        "requiredAction": "drive"        
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "car",
+        "description": "tatty car",
+        "detailedDescription": "Well, most people around here cycle, there's no point in buying anything decent right?",
+        "attributes": {
+          "defaultAction": "drive",
+          "weight": 1200,
+          "carryWeight": 175,
+          "type": "vehicle",
+          "subType": "car",
+          "burnRate": 0.1,
+          "switched": true,
+          "canDrawOn": true,
+          "requiredComponentCount": 1,
+		  "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first."
+        },
+        "synonyms": [
+          "tatty car"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "petrol",
+            "description": "fuel",
+            "detailedDescription": "It looks like there's only a few pounds worth left.",
+            "attributes": {
+              "weight": 10,
+              "isLiquid": true,
+              "charges": 2,
+              "plural": true,
+              "chargeUnit": "gallon",
+              "chargesDescription": "There's about $charges $chargeUnit in the tank",
+              "affinityModifier": 0,
+              "componentOf": [
+                "car"
+              ]
+            },
+            "synonyms": [
+              "fuel"
+            ]
+          }
+        ]
       }
     ]
   },
@@ -11543,6 +11597,378 @@
         "synonyms": [
           "chair"
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-east",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "access-road-east",
+        "destination": "access-road-central",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-central",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "access-road-central",
+        "destination": "access-road-west",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-west",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "access-road-west",
+        "destination": "access-road-junction",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-junction",
+    "displayName": "Business park access road",
+    "description": "You're at the junction with Milton Road. Left leads into Cambridge, right heads towards Milton and the A14.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Right",
+        "direction": "r",
+        "source": "access-road-junction",
+        "destination": "a14-roundabout-entrance",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "access-road-junction",
+        "destination": "milton-road",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-entrance",
+    "displayName": "Milton roundabout",
+    "description": "You're waiting at the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-entrance",
+        "destination": "a14-roundabout",
+        "requiredAction": "drive"
+      },
+	  {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-entrance",
+        "destination": "a14-westbound",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout",
+        "destination": "a10-nothbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout",
+        "destination": "a14-roundabout-east",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-north-east",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-north-east",
+        "destination": "milton-sliproad",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-north-east",
+        "destination": "a14-roundabout-east",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-east",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-east",
+        "destination": "a14-eastbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-east",
+        "destination": "a14-roundabout-south",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-south",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-south",
+        "destination": "milton-road-north-end",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-south",
+        "destination": "a14-roundabout-south-west",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-south-west",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-south-west",
+        "destination": "a14-westbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-south-west",
+        "destination": "a14-roundabout",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "milton-road-north-end",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading towards the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "milton-road-north-end",
+        "destination": "milton-road",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-westbound",
+    "displayName": "A14 Westbound",
+    "description": "You're stationary on the sliproad of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>To be honest you might as well just give up now.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    }
+  },
+  {
+    "object": "location",
+    "name": "a14-eastbound",
+    "displayName": "A14 Eastbound",
+    "description": "You're driving East along the A14. On the opposite side of the road you see a stationary line of cars stretching beyond the horizon.<br>I bet you're glad you didn't head west!",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    }
+  },
+  {
+    "object": "location",
+    "name": "milton-road",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading into Cambridge.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "milton-road",
+        "destination": "golden-hind-junction",
+        "requiredAction": "drive"
       }
     ]
   }

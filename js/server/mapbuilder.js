@@ -370,10 +370,12 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                     self.addLocation(builtLocation);
                     var newLocation = _map.getLocation(locationData.name);
 
-                    for (var j=0; j<locationData.exits.length;j++) {
-                        var exitData = locationData.exits[j];
-                        //manually add exits from each location (linking not needed)
-                        newLocation.addExit(exitData.direction, locationData.name, exitData.destination, exitData.description, exitData.hidden, exitData.requiredAction);
+                    if (locationData.exits) {
+                        for (var j=0; j<locationData.exits.length;j++) {
+                            var exitData = locationData.exits[j];
+                            //manually add exits from each location (linking not needed)
+                            newLocation.addExit(exitData.direction, locationData.name, exitData.destination, exitData.description, exitData.hidden, exitData.requiredAction);
+                        };
                     };
                 }; 
             };

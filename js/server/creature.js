@@ -1904,7 +1904,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //would be good to fail if player doesn't have first aid skills (but might be a bit too evil)
 
             //use up one charge and consume if all used up...
-            var medicalArtefactChargesRemaining = medicalArtefact.consume(1);
+            var medicalArtefactChargesRemaining = medicalArtefact.consume();
  
             if (healer) {
                 if (healer.getType() == "player") { //only show these messages is player is doing the healing. 
@@ -2907,9 +2907,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         var originalLocationName = _currentLocation.getName();
                         var newLocationName = originalLocationName;
                         if (exit) {
+                            var canUseExit = true;
                             exitAction = exit.getRequiredAction();
-                            if (!(_bleeding && (exitAction == "run"||exitAction=="climb"))) {
+
+                            if (_bleeding && (exitAction == "run"||exitAction=="climb")) {
                                 //can only run/climb if not bleeding.
+                                canUseExit = false;
+                            } else if (exitAction == "drive" || exitAction == "fly" || exitAction == "sail" || exitAction == "ride") {
+                                //cant use vehicles (for now)
+                                canUseExit = false;
+                            };
+
+                            if (canUseExit) {                                
                                 exposedItems = self.exposePositionedItems();
                                 self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
                             };

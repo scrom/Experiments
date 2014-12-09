@@ -1443,7 +1443,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var originalArtefactCharges = anObject.chargesRemaining();
             var anObjectChargesRemaining = -1;
             if (originalArtefactCharges > 0) {
-                anObjectChargesRemaining = anObject.consume(1);
+                anObjectChargesRemaining = anObject.consume();
             };
 
             //zero the weights of both source objects. Unfortunately the caller must remove them from wherever they came from 
@@ -1564,7 +1564,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //we may rub this with another object or creature
                 if (anObject.getType() == "food") {
                     if (_attackStrength >=5) {_attackStrength -= 5;}; //yes you can reduce the strenght of an item by repeatedly coating it with food!
-                    anObject.consume(1);
+                    anObject.consume();
                     return "You make a sticky mess that leaves "+self.getDisplayName()+" somewhat slippery but see no obvious benefit.";
                 };
 
@@ -1572,7 +1572,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (_polished <2) {
                         _polished++;
                         self.increasePriceByPercent(5);
-                        anObject.consume(1);
+                        anObject.consume();
                         return "Ooh shiny!"
                     };
                     return self.getDescriptivePrefix()+" polished as much as "+self.getPrefix().toLowerCase()+" can be already.";
@@ -1582,17 +1582,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (_sharpened <2) {
                         _sharpened++;
                         _attackStrength+=3;
-                        anObject.consume(1);
+                        anObject.consume();
                         return "That's a keen edge you've got going there!<br>Nice job."
                     };
                     return "I think "+self.getDescriptivePrefix().toLowerCase()+" as sharp as you're going to get "+self.getPrefix().toLowerCase()+".";
                 };
 
                 if (anObject.isLiquid()) {
-                    anObject.consume(1);
+                    anObject.consume();
                     return "You smear "+anObject.getDisplayName()+" over "+self.getDisplayName()+". That was fun!";
                 } else if (anObject.isPowder()) {
-                    anObject.consume(1);
+                    anObject.consume();
                     return "You rub "+anObject.getDisplayName()+" over "+self.getDisplayName()+".";                    
                 };
             };
@@ -1656,6 +1656,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.switchOnOrOff = function(verb, onOrOff) {
             if (_broken||self.isDestroyed()) {return tools.initCap(_itemDescriptivePrefix)+" broken.";};
             if (!(_switched)) {return "There's no obvious way to "+verb+" "+_itemSuffix+" on or off.";};
+            if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked, you'll need to find a way into "+_itemSuffix+" first.";};
             if (!(self.hasPower())) {
                 var resultString = tools.initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
                 if (!(self.checkComponents())) {resultString +=" "+tools.initCap(_itemDescriptivePrefix)+" missing something.";};
@@ -1698,8 +1699,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
+        self.getBurnRate = function() {
+            return _burnRate;
+        };
+
         self.consume = function(quantity) {
-            if (!(quantity)) {quantity = 1;};
+            if (!(quantity)) {
+                if (_burnRate > 0) {
+                    quantity = _burnRate;
+                } else {
+                    quantity = 1;
+                };
+            };
             if (_charges == 0) {return _charges;};
             if (_charges > 0) {
                 if (_charges-quantity >0) {
@@ -1720,6 +1731,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.consumeComponents = function(quantity) {
             //comsume a charge from each component and return the lowest remaining charge.
             var components = _inventory.getComponents(self.getName(),true);
+            if (!(quantity)) {
+                if (_burnRate > 0) {
+                    quantity = _burnRate;
+                };
+            };
+
             var minChargesRemaining = -1;
             for (var i=0;i<components.length;i++) {
                 var chargesRemaining = components[i].consume(quantity);
@@ -1770,7 +1787,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             components = components.concat(_inventory.getComponents(anObjectName));
 
             //iterate thru each component and remove charge.
-            self.consumeComponents(1);
+            self.consumeComponents();
 
             //get the source we're using...
             var deliveryItemSource;
@@ -2604,8 +2621,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var usedItem; 
             if (_on) {
                 if (_burnRate >0) {
-                    var remainingcharge = self.consume(_burnRate)
-                    var remainingComponentCharge = self.consumeComponents(_burnRate);
+                    var remainingcharge = self.consume()
+                    var remainingComponentCharge = self.consumeComponents();
                     if (remainingcharge == 0) {usedItem = self;};
 
                     if (!(usedItem)) {

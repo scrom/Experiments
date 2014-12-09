@@ -580,9 +580,17 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (exitCount == 0) {
                 return "<br>There are no visible exits."; 
             } else if (exitCount == 1) {
-                return "<br>There is a single exit " + self.listExits() + ".";
+                var exitDescription = self.listExits();
+                if (exitDescription == "continue") {
+                    return "<br>Your only way onward from here is forward.";
+                };
+                return "<br>There is a single exit " + exitDescription + ".";
             } else {
-                return "<br>There are exits " + self.listExits() + ".";
+                var exitDescription = self.listExits();
+                if (exitCount == 2 && exitDescription.indexOf("continue") >-1) {
+                    return "<br>There's an exit " + exitDescription + ".";
+                };
+                return "<br>There are exits " + exitDescription + ".";
             };            
         };
 
@@ -646,12 +654,14 @@ exports.Location = function Location(name, displayName, description, attributes)
         self.listExits = function () {
             var resultString = "";
             var exits = self.getAvailableExits();
-            var compassExits = ["North","South","East","West"];
+            var compassExits = ["North","South","East","West", "left", "right"]; //not *quite* compass but still...
             for (var i = 0; i < exits.length; i++) {
                 if ((i==0) && (compassExits.indexOf(exits[i].getLongName()) >-1)) {resultString += "to the ";};
                 resultString += tools.listSeparator(i, exits.length);
                 resultString += exits[i].getLongName();
             };
+
+            resultString = resultString.replace("and continue", "or you can continue straight-on");
 
             return resultString;
         };

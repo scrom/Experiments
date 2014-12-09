@@ -374,9 +374,10 @@ exports.Action = function Action(player, map, fileManager) {
                         _ticks = 0;
                         description = _player.describeInventory();
                         break;
+                    case 'l':
+                        _direction = "l";
                     case 'show':
                     case 'look':
-                    case 'l':
                         //trap a few junk words - will return "look" with no object. 
                         if (_object0 == 'exits'||_object0 == 'objects'||_object0 == 'artefacts'||_object0 == 'creatures'||_object0 == 'artifacts') {_object0 = null;};
                         
@@ -620,7 +621,12 @@ exports.Action = function Action(player, map, fileManager) {
                                 return self.processAction("dismount "+_object1);
                             };
                         };
-                        if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to" ||_splitWord == "on" || _splitWord == "onto" || _splitWord == "on to") {
+                        if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to") {
+                            if (!(_object0)) {
+                                return self.processAction("enter "+_object1);
+                            };
+                        };
+                        if (_splitWord == "on" || _splitWord == "onto" || _splitWord == "on to") {
                             if (!(_object0)) {
                                 return self.processAction("use "+_object1);
                             };
@@ -822,6 +828,14 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'goodbye':
                         description = _player.say('say', "Goodbye",_object0, _map);   
+                        break;
+                    case 'straight':
+                    case 'straight-on':
+                    case 'forward':
+                    case 'f':
+                    case 'o':
+                    case 'onward':
+                        _direction = "c";
                         break;
                     case 'run':
                     case 'crawl':
@@ -1160,7 +1174,13 @@ exports.Action = function Action(player, map, fileManager) {
             };
 
             if (_verb == '+attrib') {
-                var item = _player.getObject(_object0);
+                var item;
+                if (!_object0) {
+                    item = _player.getCurrentLocation();
+                };
+                if (!(item)) {
+                    item = _player.getObject(_object0);
+                };
                 if (!(item)) {
                     item = _map.getObject(_object0);
                 };
