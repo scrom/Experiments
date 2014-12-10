@@ -33,7 +33,16 @@ function Response(someJsonData, aConsole) {
                 return response.id;
             }
             catch(err){
-                return ''; //send empty string if we can't obtain username
+                return ''; //send empty string if we can't obtain id
+            }
+    };
+
+    Response.prototype.getSaveId = function() {
+            try {
+                return response.saveid;
+            }
+            catch(err){
+                return ''; //send empty string if we can't obtain saveid
             }
     };
     

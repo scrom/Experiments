@@ -57,7 +57,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
 
             var postSaveGameCallback = function() {
                 console.log("game saved as "+_filename);
-                callback('{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+_filename+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>","attributes":'+_player.getClientAttributesString()+'}', self);
+                callback('{"username":"'+_player.getUsername()+ '","id":"'+_id+'","saveid":"'+_filename+'","description":"'+"Game saved as <b>"+_filename+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>","attributes":'+_player.getClientAttributesString()+'}', self);
                 return null;
             };
 
@@ -69,7 +69,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                 } else {                    
                     newIndex++;
                     if (newIndex>=25) {
-                        callback( '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'Unable to save game. It looks like we\'ve got too many previous games saved with your name already.<br>Try loading one of your old games or playing under a different name instead."}');
+                        callback( '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","saveid":"'+_filename+'","description":"'+'Unable to save game. It looks like we\'ve got too many previous games saved with your name already.<br>Try loading one of your old games or playing under a different name instead."}');
                     } else {
                         _filename = _player.getUsername()+"-"+fileId+newIndex; 
                         _fm.gameDataExists(_filename, postDataCheckCallback);
@@ -97,7 +97,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         };
 
         self.state = function() {
-            var resultString = '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+locationDescription+'"';
+            var resultString = '{"username":"'+_player.getUsername()+ '","id":"'+_id+'","saveid":"'+_filename+'","description":"'+locationDescription+'"';
             resultString += ',"attributes":'+_player.getClientAttributesString();
             if (locationImage) {
                 resultString += ',"image":"'+locationImage+'"';
