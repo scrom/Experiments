@@ -280,6 +280,11 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
 
         };
 
+        self.getRootMap = function() {
+            var map = _mapBuilder.buildMap();
+            return map.getLocationsJSON();
+        };
+
         //// end public methods
 
     }

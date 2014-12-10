@@ -199,6 +199,13 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                     };
                                 
                     break;
+                case 'data':
+                    //respond to event requests
+                    if (actionString == "locations.json") {
+                        return _gameController.getRootMap();
+                    };
+                    return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
+                    break;
                 case 'events':
                     //respond to event requests
                     return 'ping.';

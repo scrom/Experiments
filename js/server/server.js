@@ -126,11 +126,11 @@ exports.Server = function Server(anInterpreter, aWatcher) {
 
         //serve data
         app.get('/data/locations.json*', function (request, response) {
-            //var sanitisedRequestURL = sanitiseString(request.url);
+            var sanitisedRequestURL = sanitiseString(request.url);
             //response.writeHead(200, {'Content-type':'text/plain'});
             //response.write(_interpreter.getData(0));
             //response.end();
-            response.send(_watcher.getLocations()); 
+            response.send(_interpreter.translate(sanitisedRequestURL,_config)); 
         });
 
         //serve default dynamic
