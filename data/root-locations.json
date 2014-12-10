@@ -1841,6 +1841,7 @@
             "reward": {
               "increaseAffinityFor": "simon cromarty",
               "missionObject": "rum bottle",
+			  "removeObject": "quality rum",
               "score": 25,
               "money": 20,
               "message": "Simon opens the bottle and takes a large swig.<br>'Thankshh $player.' he says, 'It'ssh perfeck!'<br>He slaps a handful of money into your palm and staggers back towards his team area.<br>It's funny how many companies have a 'no drinking on site' policy. I think they'd struggle here given the number of release celebrations that seem to happen.<br>Let's hope there's enough rum left for the team by the time he gets back!<br>"
