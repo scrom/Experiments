@@ -1313,23 +1313,61 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     var nutrition = anObject.getNutrition();
                     if (nutrition > 0 && self.isHungry()) {
                         self.increaseAffinity(anObject.getAffinityModifier());
-                        self.feed(anObject.getNutrition());
-                        if (anObject.getWeight() < 5) {
-                            return tools.initCap(self.getDisplayName())+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at it.";
-                        } else {
+                        var originalObjectWeight = anObject.getWeight();
+                        anObject.eat(self);
+                        _timeSinceEating = 0;
+                        if (originalObjectWeight <= self.getWeight()) {
                             return tools.initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
+                        } else if (originalObjectWeight < 5) {
+                            if (anObject.chargesRemaining() >0) {_currentLocation.addObject(anObject);};
+                            return tools.initCap(self.getDisplayName())+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at it.";
+
+                        } else {
+                            //food is bigger than "5" and bigger than them...
+                            var leftovers = " and devours "+anObject.getSuffix()+" all noisily in front of you.";
+                            if (anObject.chargesRemaining() >0) {
+                                _currentLocation.addObject(anObject);
+                                leftovers = ", chews a small piece off to eat and leaves the remainder on the floor for later."
+                            };
+                            return tools.initCap(self.getDisplayName())+" pulls at "+anObject.getDisplayName()+leftovers;
                         };
                     };
                 };
                                     
                 _currentLocation.addObject(anObject);
-                return tools.initCap(self.getDisplayName())+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getSuffix()+" comes back later.";
+                return tools.initCap(self.getDisplayName())+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getPrefix().toLowerCase()+" comes back later.";
             };
-            if (!(self.canCarry(anObject))) {return '';};              
+            if (!(self.canCarry(anObject))) {return '';};    
             
-            self.increaseAffinity(anObject.getAffinityModifier());
-            _inventory.add(anObject);
+            self.increaseAffinity(anObject.getAffinityModifier());  //if affinity modifier is negative this will actually subtract
+            
+            if (anObject.getType() == "food" && self.isHungry()) {
+                //don't eat mission objects!
+                var isMissionObject = false;
+                var allMissions = _missions.concat(player.getMissions(true));     
+                if (allMissions.length >0) {
+                    for (var i=0;i<allMissions.length;i++) {
+                        if (allMissions[i].getMissionObjectName() == anObject.getName()) {
+                            isMissionObject = true; 
+                            break;
+                        };
+                    };
+                };   
+                
+                if (!(isMissionObject)) {                        
+                    var eat = anObject.eat(self);
+                    _timeSinceEating = 0;    
+                    var leftovers = ""; 
+                    if (anObject.chargesRemaining() != 0) {
+                        _inventory.add(anObject);
+                        leftovers = "<br>"+tools.initCap(self.getPrefix())+" holds onto the remainder for later.";
+                    };  
+                
+                    return eat+leftovers;     
+                };                    
+            };                   
 
+            _inventory.add(anObject);
             //turn on delay
             _currentDelay = 0;
 

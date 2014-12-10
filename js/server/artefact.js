@@ -2234,9 +2234,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _itemPrefix+"'d get stuck in your throat if you tried."
         };
 
-        self.eat = function(aPlayer) {
-            if (self.getSubType() == "intangible") {return "Nope, that's not going to work for you.";}
-            if ((!self.isOpen()) && self.opens()) {return "You'll need to open "+self.getSuffix()+" up first";};
+        self.eat = function(consumer) {
+            var s = "";
+            if (consumer.getType() != "player") {
+                s = "s";
+            };
+            if (self.getSubType() == "intangible") {return "Nope, that's not going to work for "+consumer.getSuffix()+".";}
+            if ((!self.isOpen()) && self.opens()) {return tools.initCap(consumer.getPrefix())+"'ll need to open "+self.getSuffix()+" up first";};
             if (self.isDestroyed()) {return "There's nothing left to chew on.";};
             if ((!(_chewed)) || (_edible && self.chargesRemaining() !=0))  {
                 _chewed = true; 
@@ -2249,27 +2253,27 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         _weight = 0;
                         eatenAll = " all "
                     };
-                    var resultString = "You eat"+eatenAll+self.getDisplayName()+". "
+                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+eatenAll+self.getDisplayName();
                     if (_nutrition >=0) {
-                        aPlayer.recover(_nutrition);
-                        var randomReplies = ["You feel fitter, happier and healthier.", "Mmm, tasty. Much better!", "That hit the spot.", "That should keep you going for a while."];
+                        consumer.recover(_nutrition);
+                        var randomReplies = [", mmm, tasty. Much better!", ", that hit the spot.", ", that should keep "+consumer.getSuffix()+" going for a while."];
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
                         return resultString +=randomReplies[randomIndex];
                     } else { //nutrition is negative
-                        resultString += "That wasn't a good idea. ";
-                        resultString += aPlayer.hurt(_nutrition*-1);
+                        resultString += ". That wasn't a good idea. ";
+                        resultString += consumer.hurt(_nutrition*-1);
                     };
-                    resultString += self.transmit(aPlayer, "bite");
+                    resultString += self.transmit(consumer, "bite");
                     return resultString;
 
                 } else {
                     if (_price > 0) { self.discountPriceByPercent(10); };
                     _detailedDescription += ".<br>"+_itemPrefix+" looks like "+_itemDescriptivePrefix.toLowerCase()+" been chewed by something.";
-                    aPlayer.hurt(5);
-                    return "You try and try but just can't seem to keep "+_itemSuffix+" in your mouth without doing yourself harm."
+                    consumer.hurt(5);
+                    return tools.initCap(consumer.getPrefix())+" just can't seem to keep "+_itemSuffix+" in "+consumer.getPossessiveSuffix()+" mouth without causing an injury."
                 };
             } else {
-                return tools.initCap(_itemDescriptivePrefix)+" really not worth trying to eat again."
+                return tools.initCap(_itemDescriptivePrefix)+" really not worth "+consumer.getSuffix()+" trying to eat it again."
             };
         };
 

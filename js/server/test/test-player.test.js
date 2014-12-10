@@ -191,12 +191,26 @@ exports.canGetWeapon = function (test) {
 
 exports.canGetWeapon.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Weapon Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
 
+exports.cannotEatNonFoodItemEvenWhenHungry = function (test) {
+    p0.increaseTimeSinceEating(54);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "You just can't seem to keep it in your mouth without causing an injury.";
+    var actualResult = p0.eat('eat',breakable.getName());
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotEatNonFoodItemEvenWhenHungry.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Eat Trait"], description: "Test that a player can eat food when hungry." };
+
+
 exports.canEatFoodWhenHungry = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(54);
     //p0.reduceHitPoints(6);
-    var expectedResult = 'You eat the cake. ';
-    var actualResult = p0.eat('eat','cake').substring(0,18);
+    var expectedResult = 'You eat the cake';
+    var actualResult = p0.eat('eat','cake').substring(0,16);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -209,8 +223,8 @@ exports.canEatFoodWhenHungry.meta = { traits: ["Player Test", "Inventory Trait",
 exports.canEatFoodWhenHungryTestBoundaryCase = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(50);
-    var expectedResult = "You eat the cake. ";
-    var actualResult = p0.eat('eat','cake').substring(0,18);
+    var expectedResult = "You eat the cake";
+    var actualResult = p0.eat('eat','cake').substring(0,16);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -252,8 +266,8 @@ exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(32);
     p0.reduceHitPoints(6); //test boundary
-    var expectedResult = "You eat the cake. ";
-    var actualResult = p0.eat('eat','cake').substring(0,18);
+    var expectedResult = "You eat the cake";
+    var actualResult = p0.eat('eat','cake').substring(0,16);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
