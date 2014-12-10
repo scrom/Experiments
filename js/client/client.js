@@ -121,12 +121,7 @@ function Client(aServerHost, aServerPort, aUi) {
             serverRequest('save/save/'+username+'/'+gameId);
         };
     };
-
-    //request game list
-    var requestGameList = function() {
-        serverRequest('list/list/watcher');
-    };
-    
+   
     //generic client request
     var request = function(someUserInput) {
         var inputString = sanitiseString(someUserInput);
@@ -139,8 +134,6 @@ function Client(aServerHost, aServerPort, aUi) {
             loadGame(fileName);            
         } else if (inputString.indexOf("save") >-1) {
             saveGame();
-        } else if (inputString == "list") {
-            requestGameList();
         } else {
             if (username == ''){
                 if (!(inputString)) {inputString = ""};

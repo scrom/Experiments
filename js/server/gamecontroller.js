@@ -8,6 +8,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
         var _savedGames = [];
         var _savedGamesDataKey = "mvta.savedGames";
         var _mapBuilder = mapBuilder; //
+        var _map;
 	    var _objectName = "GameController";
 
         //module deps
@@ -248,9 +249,9 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
 
             for (var i = 0; i < _games.length; i++) {
                 if (i>0) {gamelist +=','};
-                var aGame = self.getGame(i).getNameAndId();
+                var aGame = self.getGame(null, i).getNameAndId();
                 gamelist += aGame;
-                console.log('game: '+i+' details: '+self.getGame(i).getNameAndId());//+' toString: '+self.getGame(i).toString());
+                console.log('game: '+i+' details: '+self.getGame(null, i).getNameAndId());//+' toString: '+self.getGame(i).toString());
             };
 
             gamelist += ']}';
@@ -281,8 +282,11 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
         };
 
         self.getRootMap = function() {
-            var map = _mapBuilder.buildMap();
-            return map.getLocationsJSON();
+            if (!_map) {
+                //cache map the first time we ask for it.
+                _map = _mapBuilder.buildMap();
+            };
+            return _map.getLocationsJSON();
         };
 
         //// end public methods

@@ -1,10 +1,9 @@
 "use strict";
-exports.Server = function Server(anInterpreter, aWatcher) {
+exports.Server = function Server(anInterpreter) {
     try{
         var self = this; //closure so we don't lose this reference in callbacks
         var _objectName = 'Server'; //for reference
         var _interpreter = anInterpreter;
-        var _watcher = aWatcher;
 
         //module deps
         var _root = __dirname+'/';
@@ -144,14 +143,22 @@ exports.Server = function Server(anInterpreter, aWatcher) {
             console.log('Post received: '+request.body.name);    
             response.writeHead(200, {'Content-type':'text/plain'});
             var requestJson = JSON.stringify(request.body);
-            //post this response work to the watcher
-            var responseJSON = _watcher.processRequest(request);
+            //past response work to post request handler
+            var responseJSON = self.processPostRequest(request);
             var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}';  
             response.write(reply);
             response.end();
 
         });
         //public member functions
+
+        //handle post requests
+        self.processPostRequest = function(request) {
+            switch (request.body.object) {
+                default:
+                return '{"description":"Request received for object: '+request.body.object+'"}';
+            };           
+        };
 
         //Function that will send a message to each waiting response - used for eventsourcing
         self.sendToWaitingResponses = function() {

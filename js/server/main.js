@@ -4,7 +4,6 @@ var serverObjectModule = require('./server.js');
 var interpreterObjectModule = require('./interpreter.js');
 var gameControllerModule = require('./gamecontroller.js');
 var fileManagerModule = require('./filemanager.js');
-var watcherObjectModule = require('./watcher/watcher.js');
 
 //load and initialise map
 var mapBuilderModule = require('./mapbuilder');
@@ -15,8 +14,7 @@ var mapBuilder = new mapBuilderModule.MapBuilder(gameDataJSONPath);
 var fileManager = new fileManagerModule.FileManager();
 var gameController = new gameControllerModule.GameController(mapBuilder, fileManager);
 gameController.monitor(7, 55); //5,60
-var watcher = new watcherObjectModule.Watcher(mapBuilder, gameController);
-var interpreter = new interpreterObjectModule.Interpreter(gameController, fileManager);
 
-var server = new serverObjectModule.Server(interpreter, watcher);
+var interpreter = new interpreterObjectModule.Interpreter(gameController, fileManager);
+var server = new serverObjectModule.Server(interpreter);
 server.listen();
