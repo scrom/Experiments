@@ -1492,7 +1492,7 @@
     "object": "location",
     "name": "customer-delight-central",
     "displayName": "Customer Delight",
-    "description": "You're in the Customer Delight team area - a large, open-plan office space.<br>From where you're standing, the most dominant feature in the room is a floor-to-ceiling glass wall decorated with LED lights.",
+    "description": "You're in the Customer Delight area - a large, open-plan office space.<br>From where you're standing, the most dominant feature in the room is a floor-to-ceiling glass wall decorated with LED lights.",
     "exits": [
       {
         "object": "exit",
@@ -1841,7 +1841,7 @@
             "reward": {
               "increaseAffinityFor": "simon cromarty",
               "missionObject": "rum bottle",
-			  "removeObject": "quality rum",
+              "removeObject": "quality rum",
               "score": 25,
               "money": 20,
               "message": "Simon opens the bottle and takes a large swig.<br>'Thankshh $player.' he says, 'It'ssh perfeck!'<br>He slaps a handful of money into your palm and staggers back towards his team area.<br>It's funny how many companies have a 'no drinking on site' policy. I think they'd struggle here given the number of release celebrations that seem to happen.<br>Let's hope there's enough rum left for the team by the time he gets back!<br>"
@@ -1855,7 +1855,7 @@
     "object": "location",
     "name": "customer-delight-east",
     "displayName": "Customer Delight",
-    "description": "You're at the Eastern entrance of the Customer Delight team area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
+    "description": "You're at the Eastern entrance of the Customer Delight area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
     "exits": [
       {
         "object": "exit",
@@ -2064,7 +2064,11 @@
             "attributes": {
               "weight": 1,
               "canCollect": true,
-              "affinityModifier": 2
+              "affinityModifier": 2,
+              "customAction": [
+                "wear"
+              ],
+              "defaultResult": "Nope, that's really not a good look for you. (Or anyone for that matter)"
             },
             "synonyms": [
               "blonde",
@@ -2139,7 +2143,7 @@
     "object": "location",
     "name": "customer-delight-north",
     "displayName": "Customer Delight",
-    "description": "You're in a thoroughfare in the Northern part of the Customer Delight team area.<br>To the East lies our customer support team and a couple of meeting rooms whilst to the West is a small break-out area.<br>North heads towards the 'back stairs' whilst South takes you to the main Customer Delight areas.",
+    "description": "You're in a thoroughfare in the Northern part of the Customer Delight area.<br>To the East lies our customer support team and a couple of meeting rooms whilst to the West is a small break-out area.<br>North heads towards the 'back stairs' whilst South takes you to the main Customer Delight areas.",
     "exits": [
       {
         "object": "exit",
@@ -2228,7 +2232,7 @@
     "object": "location",
     "name": "customer-delight-south",
     "displayName": "Customer Delight",
-    "description": "You're in the Southern part of the Customer Delight team area. Currently this plays home to the SQL Monitor team.<br>There's another big glass wall here.",
+    "description": "You're in the Southern part of the Customer Delight development area. This is where the SQL Source control team sit. They're probably all held captive in a meeting at the moment though.",
     "exits": [
       {
         "object": "exit",
@@ -2255,18 +2259,24 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "wall",
-        "description": "glass wall",
-        "detailedDescription": "The Monitor team use this as their Scrum/Kanban board.<br>Right now it looks like things are going pretty well.",
+        "name": "build screen",
+        "description": "flat-panel screen",
+        "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
+          "weight": 51,
+          "isBreakable": true,
+          "switched": true,
+          "isOn": true,
           "canDrawOn": true
         },
         "synonyms": [
-          "glass",
-          "glass wall",
-          "walls"
+          "screen",
+          "display",
+          "flat-panel",
+          "panel",
+          "flat panel",
+          "flat-panel screen",
+          "flat panel screen"
         ]
       },
       {
@@ -2377,7 +2387,7 @@
     "object": "location",
     "name": "customer-delight-south-east",
     "displayName": "Customer Delight",
-    "description": "You're in the South-Eastern corner of the Customer Delight team area.<br>This is the home of the SQL Source Control development team.",
+    "description": "You're in the South-Eastern corner of the Customer Delight development area.<br>This is the part of the large area occupied be the SQL Source Control development team.<br>One of the walls has been painted for use as a whiteboard.",
     "exits": [
       {
         "object": "exit",
@@ -2393,13 +2403,45 @@
         "source": "customer-delight-south-east",
         "destination": "customer-delight-east"
       }
-    ]
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "large white-painted wall",
+        "detailedDescription": "Whiteboard paint seems like a great idea until you to try to use it for sticky notes or want to clean it. This one's seen its day I think.",
+        "attributes": {
+          "weight": 300,
+          "type": "scenery",
+          "canDrawOn": true,
+          "writings": [
+            "<s>Sprint 7 - ship the alpha</s>",
+            "<s>Sprint 8 - ship the beta</s>",
+            "Sprint 9 - shippit",
+            "dammit, clean me!"
+          ]
+        },
+        "synonyms": [
+          "board",
+          "white board",
+          "white wall",
+          "painted wall",
+          "white-painted wall",
+          "white painted wall",
+          "white",
+          "paint",
+          "walls",
+          "white board",
+          "whitebaord"
+        ]
+      }
+      ]
   },
   {
     "object": "location",
     "name": "customer-delight-south-west",
     "displayName": "Customer Delight",
-    "description": "You're in the South-West corner of the Customer Delight team area.",
+    "description": "You're in the South-West corner of the Customer Delight development area.  Currently this plays home to the SQL Monitor team.<br>There's another big glass wall here.",
     "exits": [
       {
         "object": "exit",
@@ -2417,6 +2459,22 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "glass wall",
+        "detailedDescription": "The Monitor team use this as their Scrum/Kanban board.<br>Right now it looks like things are going pretty well.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "glass wall",
+          "walls"
+        ]
+      },      
       {
         "object": "creature",
         "name": "jonathan watts",
@@ -2751,7 +2809,7 @@
     "object": "location",
     "name": "customer-delight-west",
     "displayName": "Customer Delight",
-    "description": "You're on the West side of the Customer Delight team area. Also know as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
+    "description": "You're on the West side of the Customer Delight development area. Also know as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
     "exits": [
       {
         "object": "exit",
@@ -2769,6 +2827,21 @@
       }
     ],
     "inventory": [
+                {
+                  "object": "artefact",
+                  "name": "window",
+                  "description": "window",
+                  "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
+                  "attributes": {
+                    "weight": 280,
+                    "type": "scenery",
+                    "canDrawOn": true
+                  },
+                  "synonyms": [
+                    "glass",
+                    "windows"
+                  ]
+                },
       {
         "object": "artefact",
         "name": "tomato plants",
@@ -3416,56 +3489,56 @@
         "destination": "fishing"
       }
     ],
-	"inventory": [
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "coffee machine book",
+        "description": "maintenance manual for the coffee machines",
+        "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 2,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true,
+          "affinityModifier": 0,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "manual",
+          "book",
+          "repair book",
+          "maintenance book",
+          "repair manual",
+          "maintenance manual",
+          "machine manual",
+          "coffee machine manual",
+          "coffee machine repair manual",
+          "coffee machine maintenance manual",
+          "machine maintenance manual"
+        ],
+        "missions": [
           {
-            "object": "artefact",
-            "name": "coffee machine book",
-            "description": "maintenance manual for the coffee machines",
-            "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
+            "object": "mission",
+            "name": "repaircoffeemachine",
+            "displayName": "repair the coffee machine",
+            "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
             "attributes": {
-              "defaultAction": "read",
-              "weight": 2,
-              "attackStrength": 5,
-              "type": "book",
-              "canCollect": true,
-              "affinityModifier": 0,
-              "canDrawOn": true
+              "missionObject": "coffee machine book",
+              "static": true
             },
-            "synonyms": [
-              "manual",
-              "book",
-              "repair book",
-              "maintenance book",
-              "repair manual",
-              "maintenance manual",
-              "machine manual",
-              "coffee machine manual",
-              "coffee machine repair manual",
-              "coffee machine maintenance manual",
-              "machine maintenance manual"
-            ],
-            "missions": [
-              {
-                "object": "mission",
-                "name": "repaircoffeemachine",
-                "displayName": "repair the coffee machine",
-                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
-                "attributes": {
-                  "missionObject": "coffee machine book",
-                  "static": true
-                },
-                "conditionAttributes": {
-                  "isDestroyed": false,
-                  "read": true
-                },
-                "reward": {
-                  "repairSkill": "coffee machine",
-                  "message": "Congratulations. You've learned how to repair a coffee machine."
-                }
-              }
-            ]
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "read": true
+            },
+            "reward": {
+              "repairSkill": "coffee machine",
+              "message": "Congratulations. You've learned how to repair a coffee machine."
+            }
           }
-		  ]
+        ]
+      }
+    ]
   },
   {
     "object": "location",
@@ -5949,7 +6022,7 @@
                                 "direction": "n",
                                 "source": "east-car-park-corner",
                                 "destination": "access-road-east",
-								"requiredAction": "drive"   
+                                "requiredAction": "drive"
                               },
                               {
                                 "object": "exit",
@@ -5969,40 +6042,40 @@
                                   "defaultAction": "drive",
                                   "weight": 3000,
                                   "carryWeight": 500,
-								  "burnRate": 0.1,
-								  "switched": true,
+                                  "burnRate": 0.1,
+                                  "switched": true,
                                   "type": "vehicle",
                                   "subType": "van",
                                   "canDrawOn": true,
-								  "requiredComponentCount": 1,
-								  "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first."
+                                  "requiredComponentCount": 1,
+                                  "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first."
                                 },
                                 "synonyms": [
                                   "white van"
                                 ],
-									"inventory": [
-									  {
-										"object": "artefact",
-										"name": "petrol",
-										"description": "fuel",
-										"detailedDescription": "It looks like there's only a few pounds worth left.",
-										"attributes": {
-										  "weight": 10,
-										  "isLiquid": true,
-										  "charges": 2,
-										  "plural": true,
-										  "chargeUnit": "gallon",
-										  "chargesDescription": "There's about $charges $chargeUnit in the tank",
-										  "affinityModifier": 0,
-										  "componentOf": [
-											"van"
-										  ]
-										},
-										"synonyms": [
-										  "fuel"
-										]
-									  }
-									]
+                                "inventory": [
+                                  {
+                                    "object": "artefact",
+                                    "name": "petrol",
+                                    "description": "fuel",
+                                    "detailedDescription": "It looks like there's only a few pounds worth left.",
+                                    "attributes": {
+                                      "weight": 10,
+                                      "isLiquid": true,
+                                      "charges": 2,
+                                      "plural": true,
+                                      "chargeUnit": "gallon",
+                                      "chargesDescription": "There's about $charges $chargeUnit in the tank",
+                                      "affinityModifier": 0,
+                                      "componentOf": [
+                                        "van"
+                                      ]
+                                    },
+                                    "synonyms": [
+                                      "fuel"
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -11710,7 +11783,7 @@
         "destination": "a14-roundabout",
         "requiredAction": "drive"
       },
-	  {
+      {
         "object": "exit",
         "longname": "Left",
         "direction": "l",
