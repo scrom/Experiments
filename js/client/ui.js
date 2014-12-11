@@ -62,11 +62,11 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         input.focus();
     };
 
-    Ui.prototype.setStatus = function(attributes) {
+    Ui.prototype.setStatus = function(attributes, oldAttributes) {
         var money = 0;
         var score = 0;
         var contagion = "";
-        if (attributes) {
+        if (attributes != "" && attributes != undefined){
             if (attributes.money) {
                 money = attributes.money;
             };
@@ -98,6 +98,17 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
             } else {
                 self.bleed(false);
             };
+
+            if (attributes.injuriesReceived > oldAttributes.injuriesReceived) {
+                var hitCount = attributes.injuriesReceived - oldAttributes.injuriesReceived;
+                self.hit(hitCount, attributes.bleeding);
+            };
+
+            if (attributes.score != oldAttributes.score || attributes.money != oldAttributes.money) {
+                self.flashStats(attributes.bleeding);
+            };
+
+
         };
         
         money = money.toFixed(2);

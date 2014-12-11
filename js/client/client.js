@@ -38,7 +38,7 @@ function Client(aServerHost, aServerPort, aUi) {
         return aString.replace(/[^a-zA-Z0-9 +-.]+/g,"").toLowerCase().substring(0,255);
     };
 
-    var untangleResponse = function(someJSONData) {
+    var processResponse = function(someJSONData) {
         var response = new Response(someJSONData, console);
         if (response.getUsername() != "" && response.getUsername() != undefined){ //we've got a new username/id back
             username = response.getUsername();
@@ -46,19 +46,10 @@ function Client(aServerHost, aServerPort, aUi) {
         };
 
         var attributes = response.getAttributes();
-        ui.setStatus(attributes);
+        ui.setStatus(attributes, _attributes);
 
         if (attributes != "" && attributes != undefined){
-            if (attributes.injuriesReceived > _attributes.injuriesReceived) {
-                var hitCount = attributes.injuriesReceived - _attributes.injuriesReceived;
-                ui.hit(hitCount, attributes.bleeding);
-            };
-
-            if (attributes.score != _attributes.score || attributes.money != _attributes.money) {
-                ui.flashStats(attributes.bleeding);
-            };
-
-            //copy to old attributes after processing
+            //overwrite old attributes after processing
             _attributes = attributes;
         };
 
@@ -67,6 +58,7 @@ function Client(aServerHost, aServerPort, aUi) {
         } else {
             ui.clearImage();
         };
+
         ui.setState(response.getDescription());
 
     };
@@ -74,7 +66,7 @@ function Client(aServerHost, aServerPort, aUi) {
     //callback from server request (split out for readability)
     var serverRequestCallback = function(someData) {
 	    if(debug) {console.append('Server Response: '+someData+'<br>');};
-        untangleResponse(someData);
+        processResponse(someData);
     };
 
     //make a get request to the server. Might change to POST in future. Uses a callback for async responses.
