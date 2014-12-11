@@ -1531,7 +1531,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (self.getSubType() == "friendly" && _friendlyAttackCount <3) {
                         _friendlyAttackCount ++;
                     };
-                    resultString += self.getPrefix()+" dodges your attack and hits you instead. "+self.hit(player, 0.5)+"<br>You failed to gain anything but pain for your actions.";
+                    resultString += self.getPrefix()+" dodges out of the way and attacks you instead. "+self.hit(player, 0.5)+"<br>You failed to gain anything but pain for your actions.";
                 } else {
                    resultString +="Not smart! You were caught."; 
                 };

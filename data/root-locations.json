@@ -930,7 +930,7 @@
           "customAction": [
             "get"
           ],
-          "defaultResult": "Sorry, they belong in here."
+          "defaultResult": "It's best to leave them here."
         },
         "synonyms": [
           "chair"
