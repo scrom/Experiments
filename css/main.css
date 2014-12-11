@@ -10,6 +10,11 @@ body
     font-size: 80%;
     color: #00DD00;
     background-color: black;
+    scrollbar-base-color: black;
+    scrollbar-track-color: black;
+    scrollbar-face-color: #006600;
+    scrollbar-arrow-color: #006600;
+
 }
 
 ::-webkit-scrollbar
@@ -21,14 +26,14 @@ body
 {
     border:1px solid;
     border-radius:5px;
-    color: #000000;
+    color: black;
     background: #006600;
 }
 ::-webkit-scrollbar-thumb:horizontal
 {
     border:1px solid;
     border-radius:5px;
-    color: #000000;
+    color: black;
     background: #006600;
 }
 
@@ -38,7 +43,7 @@ body
     border-radius:5px;
     height: 10px;
     width: 10px;
-    color: #000000;
+    color: black;
     background: #006600;
 }
 ::-webkit-scrollbar-button:end:increment
@@ -47,13 +52,13 @@ body
     border-radius:5px;
     height: 10px;
     width: 10px;
-    color: #000000;
+    color: black;
     background: #006600;
 }
 ::-webkit-scrollbar-corner
 {
-    color: #000000;
-    background: #000000;
+    color: black;
+    background: black;
 }
 
 a:link {
