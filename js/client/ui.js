@@ -38,13 +38,12 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         if (padding < 15) { padding = 15; };
         var width = $(window).width() - padding;
         var elements = [console, statusBar, state, events, inputArea, interaction];
-        if (width < 805) {
+        if (width > 805) { width -= Math.floor(($(window).height()) * 0.29)}; //make space for image
             //for each ui element...
             for (var i = 0; i < elements.length; i++) {
                 elements[i].removeAttr('style').css("width");
                 elements[i].css("width", width);
             };
-        };
 
     };
 
