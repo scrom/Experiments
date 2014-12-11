@@ -391,6 +391,7 @@ exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem.meta = { tra
 
 exports.canCompleteReadArticleMission = function (test) {
     var book = m0.getObject("solid article");
+    m0.removeObject("solid article");
     var inventory = p0.getInventoryObject();
     inventory.add(book);
 

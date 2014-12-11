@@ -3896,7 +3896,7 @@
             "displayName": "read the lotl security article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
             "attributes": {
-              "missionObject": "security article",
+              "missionObject": "article on software security",
               "static": true
             },
             "conditionAttributes": {
@@ -4547,7 +4547,7 @@
             "displayName": "read the lotl SOLID article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
             "attributes": {
-              "missionObject": "solid article",
+              "missionObject": "article on solid design principles",
               "static": true
             },
             "conditionAttributes": {
@@ -4984,7 +4984,7 @@
             "description": "Amanda knows how to fix stuff.",
             "attributes": {
               "parent": "keyfob",
-              "missionObject": "Amanda Mansfield",
+              "missionObject": "amanda mansfield",
               "static": true,
               "dialogue": [
                 "'Hi $player.'<br>'Would you be willing to help me out with a simple maintenance job?'",
@@ -8073,7 +8073,7 @@
             "displayName": "greet vic",
             "description": "Vic needs you to sign in.",
             "attributes": {
-              "missionObject": "Vic Wiseman",
+              "missionObject": "vic wiseman",
               "static": true,
               "dialogue": [
                 "'Good morning $player.'<br>'Welcome aboard!'"
@@ -9077,7 +9077,7 @@
             "displayName": "read LOTL boy scout article",
             "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
             "attributes": {
-              "missionObject": "boy scout article",
+              "missionObject": "article on the boy scout principle",
               "static": true
             },
             "conditionAttributes": {

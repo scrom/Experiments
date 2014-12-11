@@ -667,7 +667,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     return location;
                 } else {
                     //console.log('mission destination location reached');
-                    return location.getObject(_missionObject);
+                    return location.getObject(_missionObject, true); //ignore syns and don't search creatures
                 };
                 break;
             };
@@ -694,7 +694,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (missionObject) { return missionObject;};
 
             //try current location
-            destinationObjectOrCreature = location.getObject(_destination);
+            destinationObjectOrCreature = location.getObject(_destination, true); //ignore syns and don't search creatures
             if (destinationObjectOrCreature) {
                 if (_destination == _missionObject) {return destinationObjectOrCreature}
                 else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
@@ -704,7 +704,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //try all locations
             var locations = map.getLocations();
             for (var i=0;i<locations.length;i++) {
-                destinationObjectOrCreature = locations[i].getObject(_destination);
+                destinationObjectOrCreature = locations[i].getObject(_destination, true); //ignore syns and don't search creatures
                 if (destinationObjectOrCreature) {
                     if (_destination == _missionObject) {return destinationObjectOrCreature}
                     else { missionObject = destinationObjectOrCreature.getObject(_missionObject);};
