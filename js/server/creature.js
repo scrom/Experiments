@@ -1037,11 +1037,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.getDetailedDescription = function(playerAggression) {
-            var resultString = _detailedDescription+"<br>"+self.getAffinityDescription();
-            if (_contagion.length>0) {resultString+= "<br>"+_genderPrefix + " really doesn't look very well."};
-            if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe() + "."; };
+        self.getDetailedDescription = function(playerAggression, map, minSize) {
+            if (!minSize) {minSize = -999;};
+            var resultString = _detailedDescription;
+            if (minSize < tools.minimumSizeForDistanceViewing) {
+                //we're viewing from close-by
+                resultString += "<br>"+self.getAffinityDescription();
+                if (_contagion.length>0) {resultString+= "<br>"+_genderPrefix + " really doesn't look very well."};
+            };
+
+            if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe(null, minSize) + "."; };
             resultString = resultString.replace("placed on top", "placed on top of "+self.getSuffix());
+
+            if (minSize >= tools.minimumSizeForDistanceViewing) {
+                //we're viewing from a distance
+                return resultString;
+            };
+
             if (self.isDead()) {
                 if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; };
 

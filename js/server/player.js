@@ -2886,7 +2886,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 // - are they looking thru a window or similar?
                 var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
-                var minSize = 0
+                var minSize = -999
                 if (viewObjects.length > 0 && map) {
                     for (var i=0;i<viewObjects.length;i++) {
                         var destination = map.getLocation(viewObjects[i].getViewLocation());
@@ -2894,7 +2894,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             artefact = destination.getObject(artefactName);
                             if (artefact) {
                                 if (artefact.getWeight() < 2) {artefact = null;};
-                                minSize = 2;
+                                minSize = tools.minimumSizeForDistanceViewing;
                             };
                             break;
                         };

@@ -962,7 +962,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
 
                 //if viewing from a distance and nothing is visible, don't report it.
-                if (!(minSize >0 && inventoryDescription == "nothing")) {
+                if (!(minSize >=tools.minimumSizeForDistanceViewing && inventoryDescription == "nothing")) {
                     resultString += _extendedInventoryDescription;
                     resultString = resultString.replace("$inventory", inventoryDescription);
                 };

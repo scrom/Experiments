@@ -6,6 +6,7 @@ var self = module.exports = {
     directions: ['n','north','s','south','e','east','w','west', 'l','left', 'r', 'right', 'i', 'in', 'o', 'out', 'u', 'up', 'd', 'down', 'c', 'continue', 'b','back'],
     positions:  ['onto', 'on to', 'on top of', 'on', 'above', 'over', 'under', 'underneath', 'below', 'beneath', 'behind'], //split words that are also "put" positions.
     onIndex: 6,
+    minimumSizeForDistanceViewing : 2,
 
     /* --- String handling ---*/
     //check if a string is null, undefined or "" 
