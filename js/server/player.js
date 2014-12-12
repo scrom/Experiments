@@ -2600,6 +2600,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //we'll only get this far if there is a valid receiver
                 self.setLastCreatureSpokenTo(receiver.getName());
+                if (verb == "shout" && (tools.stringIsEmpty(speech) || speech == "!")) {return "I suggest you speak nicely to "+receiver.getSuffix()+" if you want something.";};
+
                 var hasSpokenBefore = receiver.hasSpoken();
                 resultString += receiver.reply(speech, self, null, map);
                 var hasSpokenAfter = receiver.hasSpoken();
