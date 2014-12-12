@@ -551,6 +551,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.getAllObjectsOfType(anObjectType);
         };
 
+        self.getAllObjectsWithViewLocation = function() {
+            return _inventory.getAllObjectsWithViewLocation();
+        };
+
         self.countCreatures = function(subType, includeDeadCreatures) {
             return _inventory.creatureCount(subType, includeDeadCreatures);
         };
@@ -687,8 +691,8 @@ exports.Location = function Location(name, displayName, description, attributes)
             return false;
         };
 
-        self.listObjects = function() {
-            return _inventory.listObjects();
+        self.listObjects = function(minSize) {
+            return _inventory.listObjects(minSize);
         };
 
         self.liveCreaturesExist = function() {

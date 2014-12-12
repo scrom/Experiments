@@ -223,6 +223,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_currentLocation.spilledLiquidExists(objectName) || _inventory.hasLiquid(objectName)) {
                 return "There's not enough left to do anything useful with.";
             };
+
+            // - are they looking thru a window or similar?
+            var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
+            if (viewObjects.length > 0) {
+                for (var i=0;i<viewObjects.length;i++) {
+                    var destination = _map.getLocation(viewObjects[i].getViewLocation());
+                    if (destination) {
+                        var artefact = destination.getObject(objectName);
+                        if (artefact) {
+                            if (artefact.getWeight() >= 2) {
+                                return "You can't reach "+artefact.getSuffix()+" from here.";
+                            };
+                        };
+                    };
+                };
+            };
             
             var randomReplies = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -2512,7 +2528,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (creatureResponse) {return creatureResponse;};
 
                 //@todo - find an alternative for creature displayName on this response
-                return "There's no "+artefactName+" here and "+givers[0].getDisplayName()+" isn't carrying any either.";
+                return givers[0].notFoundMessage(artefactName);
             };  
             
             //@todo if verb == open/unlock 
@@ -2867,10 +2883,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return tools.initCap(artefactName)+" leads to '"+resultString+"'.";
                     };
                 };
-                return notFoundMessage(artefactName);
+
+                // - are they looking thru a window or similar?
+                var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
+                var minSize = 0
+                if (viewObjects.length > 0 && map) {
+                    for (var i=0;i<viewObjects.length;i++) {
+                        var destination = map.getLocation(viewObjects[i].getViewLocation());
+                        if (destination) {
+                            artefact = destination.getObject(artefactName);
+                            if (artefact) {
+                                if (artefact.getWeight() < 2) {artefact = null;};
+                                minSize = 2;
+                            };
+                            break;
+                        };
+                    };
+                };
+
+                if (!artefact) {
+                    return notFoundMessage(artefactName);
+                };
             };
  
-            resultString += artefact.getDetailedDescription(_aggression); //we pass aggression in here in case it's a creature
+            resultString += artefact.getDetailedDescription(_aggression, map, minSize); //we pass aggression in here in case it's a creature
 
             if (artefact.getType() == "book") {
                 resultString += "<br>"+artefact.getPrefix()+" might be worth a <i>read</i>.";

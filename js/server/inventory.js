@@ -112,10 +112,11 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //take a set of objects and return simple JSON description and price.
         //de-duplicate at the same time
-        self.prepareItemList = function (items) {
+        self.prepareItemList = function (items, minSize) {
             var itemList = [];
             var finalList = [];
             for (var i = 0; i < items.length; i++) {
+                if (minSize) {if (items[i].getWeight() < minSize) {continue;};};
                 var itemString = items[i].toString();
                 if (itemList[itemString]) {
                     itemList[itemString].count += 1;
@@ -140,10 +141,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return finalList;
         };
 
-        self.describe = function(additionalAttribute) {
+        self.describe = function(additionalAttribute, minSize) {
             var description = '';
             var allItems = self.getAllObjects();
-            var items = self.prepareItemList(allItems);
+            var items = self.prepareItemList(allItems, minSize);
             if (items.length == 0) { description = "nothing" };
 
             for (var i = 0; i < items.length; i++) {
@@ -170,14 +171,14 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
 
             if (additionalAttribute != "price") {
-                description += self.describePositionedItems();
+                description += self.describePositionedItems(minSize);
             };
 
             return description;
         };	
 
-        self.describePositionedItems = function() {
-            var positionedItems = self.getPositionedObjects(false);
+        self.describePositionedItems = function(minSize) {
+            var positionedItems = self.getPositionedObjects(false, minSize);
             var description = "";
             if (positionedItems.length >0) {
                 var isAre = " are";
@@ -372,10 +373,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return foundItems;
         };
 
-        self.listObjects = function() {
+        self.listObjects = function(minSize) {
             var resultString = ""
             var allItems = self.getAllObjects();
-            var items = self.prepareItemList(allItems);
+            var items = self.prepareItemList(allItems, minSize);
             for(var i = 0; i < items.length; i++) {
                     resultString += tools.listSeparator(i, items.length);
                     resultString+=items[i].description;
@@ -550,10 +551,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return false;
         };
 
-        self.getPositionedObjects = function(showHiddenObjects) {
+        self.getPositionedObjects = function(showHiddenObjects, minSize) {
             var itemsToReturn = [];
             for (var i=0;i<_items.length;i++) {
-                if (((!_items[i].isHidden())||showHiddenObjects) && (_items[i].getPosition())) {itemsToReturn.push(_items[i])};
+                if (_items[i].getWeight() >= minSize) {
+                    if (((!_items[i].isHidden())||showHiddenObjects) && (_items[i].getPosition())) {itemsToReturn.push(_items[i])};
+                };
             };
             return itemsToReturn;
         };
@@ -587,6 +590,27 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                             var itemInventory = _items[index].getInventoryObject();
                             if (itemInventory.size()>0) {
                                 returnObjects = returnObjects.concat(itemInventory.getAllObjectsOfType(anObjectType));
+                            };
+                        };
+                    }; 
+                };
+           };
+           return returnObjects;
+        };
+
+        self.getAllObjectsWithViewLocation = function() {
+           var returnObjects = [];
+           for(var index = 0; index < _items.length; index++) {
+                if(_items[index].getViewLocation()  && ((!(_items[index].isHidden())) || _items[index].getType() == "scenery")) {
+                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    returnObjects.push(_items[index]);
+                } else {
+                    //accessible children.
+                    if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
+                        if (_items[index].isOpen()) {
+                            var itemInventory = _items[index].getInventoryObject();
+                            if (itemInventory.size()>0) {
+                                returnObjects = returnObjects.concat(itemInventory.getAllObjectsWithViewLocation());
                             };
                         };
                     }; 

@@ -77,6 +77,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _drawings = [];
         var _writings = [];
         var _wetted = [];
+        var _viewDestination;
 
         //grammar support...
         var _itemPrefix = "It";
@@ -281,6 +282,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
             if (artefactAttributes.sound != undefined) {_sound = artefactAttributes.sound;};     
             if (artefactAttributes.wetted != undefined) {_wetted = artefactAttributes.wetted;};     
+            if (artefactAttributes.viewDestination != undefined) {_viewDestination = artefactAttributes.viewDestination;};     
+            
             
             if (artefactAttributes.contagion != undefined) {
                 for (var i=0;i<artefactAttributes.contagion.length;i++) {
@@ -553,6 +556,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.canDrawOn = _canDrawOn;
             currentAttributes.drawings = _drawings;
             currentAttributes.writings = _writings;
+            currentAttributes.viewDestination = _viewDestination;    
             
             currentAttributes.inventoryValue = _inventory.getInventoryValue();  
 
@@ -633,6 +637,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.canDrawOn) {saveAttributes.canDrawOn = artefactAttributes.canDrawOn;};                  
             if (artefactAttributes.writings.length>0) {saveAttributes.writings = artefactAttributes.writings;};   
             if (artefactAttributes.drawings.length > 0) { saveAttributes.drawings = artefactAttributes.drawings; };
+            if (artefactAttributes.viewDestination != undefined) {saveAttributes.viewDestination = _viewDestination;}; 
             return saveAttributes;
         };
 
@@ -921,7 +926,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
-        self.getDetailedDescription = function(playerAggression) {
+        self.getDetailedDescription = function(playerAggression, map, minSize) {
+            if (!minSize) {minSize = -999;};
             //note we can change description based on player aggression - better for creatures but supported here too.
             var resultString = _detailedDescription; //original description
             if (_destroyed) { return resultString; }; //don't go any further.
@@ -944,7 +950,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 inventoryIsVisible = false;
             };
 
-            var inventoryDescription = _inventory.describe()
+            var inventoryDescription = _inventory.describe(null, minSize)
             if ((_inventory.size() > 0) && inventoryIsVisible && (!((inventoryDescription.substr(0,7) == "nothing") && inventoryDescription.length > 7))) {                
                 resultString += "<br>";
 
@@ -954,18 +960,31 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (placeholder == -1) {
                     _extendedInventoryDescription+="$inventory."
                 };
-                resultString += _extendedInventoryDescription;
 
-                resultString = resultString.replace("$inventory", inventoryDescription);
+                //if viewing from a distance and nothing is visible, don't report it.
+                if (!(minSize >0 && inventoryDescription == "nothing")) {
+                    resultString += _extendedInventoryDescription;
+                    resultString = resultString.replace("$inventory", inventoryDescription);
+                };
                 
             } else if ((_inventory.size() > 0)) {
-                var positionedItems =  _inventory.describePositionedItems();
+                var positionedItems =  _inventory.describePositionedItems(minSize);
                 if (positionedItems.length >0) {
                     resultString += positionedItems+"."; 
                 };              
             };
 
             resultString = resultString.replace("placed on top", "on "+self.getSuffix());
+
+            if (_viewDestination && map) {
+                var destination = map.getLocation(_viewDestination);
+                if (destination) {
+                    var objectList = destination.listObjects(2);
+                    if (objectList.length > 1) {
+                        resultString += "<br>Through "+self.getDisplayName()+" you can see "+destination.listObjects(2)+".";
+                    };
+                };
+            };
 
             //remove original description if it's not working.
             if (!(self.checkComponents())) { 
@@ -1127,6 +1146,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.isRead = function() {
             return _read;
+        };
+
+        self.getViewLocation = function() {
+            return _viewDestination;
         };
 
         self.hasContagion = function(contagionName) {

@@ -314,8 +314,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        var notFoundMessage = function(objectName) {
-            var randomReplies = ["There's no "+objectName+" here and neither of you are carrying any either.", self.getDisplayName()+" can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
+        var notFoundMessage = function(objectName, map) {
+            // - are they looking thru a window or similar?
+            var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
+            if (viewObjects.length > 0 && map) {
+                for (var i=0;i<viewObjects.length;i++) {
+                    var destination = map.getLocation(viewObjects[i].getViewLocation());
+                    if (destination) {
+                        var artefact = destination.getObject(objectName);
+                        if (artefact) {
+                            if (artefact.getWeight() >= 2) {
+                                return "I can't reach "+artefact.getPrefix().toLowerCase()+" from here.";
+                            };
+                        };
+                    };
+                };
+            };
+
+            var randomReplies = ["Sorry $player, I can't help you there.", "Nope, I've not seen any "+objectName+" around.", "I'm afraid you'll need to hunt that down yourself.", "Nope, sorry."];
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
             return randomReplies[randomIndex];
         };
@@ -1248,7 +1264,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.sellRepair = function(artefactName, player) {
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
-            if (!artefact) { return notFoundMessage(artefactName);};
+            if (!artefact) { return "'"+notFoundMessage(artefactName)+"'";};
             var repairCost = artefact.getRepairCost();
             if (!player.canAfford(repairCost)) {return "'Sorry $player, come back when you can afford it.'";};
             player.reduceCash(repairCost);
@@ -1283,7 +1299,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (tools.stringIsEmpty(artefactName)){ return verb+" what?"};
 
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {return "'"+notFoundMessage(artefactName)+"'";};
 
             if (!(artefact.isBroken()) && !(artefact.isDamaged()) && !(artefact.isChewed())) {return tools.initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
 
@@ -2422,9 +2438,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     return self.find(keyword, playerAggression, map);
                 };
 
-                var randomReplies = ["Sorry $player, I can't help you there.", "Nope, I've not seen any "+keyword+" around.", "I'm afraid you'll need to hunt that down yourself.", "Nope, sorry."];
-                var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                return tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+                return tools.initCap(self.getDisplayName())+" says '"+notFoundMessage(keyword, map)+"'"+returnImage;
             };
 
             return null;
@@ -3217,6 +3231,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.deliver = function(anObjectName) {
+            return null;
+        };
+
+        self.getViewLocation = function() {
             return null;
         };
 

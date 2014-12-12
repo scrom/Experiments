@@ -637,6 +637,22 @@
       },
       {
         "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "Are you spying on the lawyers?",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "lawyer-lobby"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "lawyer door",
         "description": "door heading south",
         "detailedDescription": "Peering through the window you see serious people in suits looking busy and important.",
@@ -2435,7 +2451,7 @@
           "whitebaord"
         ]
       }
-      ]
+    ]
   },
   {
     "object": "location",
@@ -2474,7 +2490,7 @@
           "glass wall",
           "walls"
         ]
-      },      
+      },
       {
         "object": "creature",
         "name": "jonathan watts",
@@ -2827,22 +2843,22 @@
       }
     ],
     "inventory": [
-                {
-                  "object": "artefact",
-                  "name": "window",
-                  "description": "window",
-                  "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
-                  "attributes": {
-                    "weight": 280,
-                    "type": "scenery",
-                    "canDrawOn": true,
-					"viewDestination": "west-car-park"
-                  },
-                  "synonyms": [
-                    "glass",
-                    "windows"
-                  ]
-                },
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "west-car-park"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
+      },
       {
         "object": "artefact",
         "name": "tomato plants",
@@ -3460,6 +3476,24 @@
         "source": "enterprise-meeting-room",
         "destination": "support-east"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "It's a long way down.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "office-front"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
+      }
     ]
   },
   {
@@ -3980,7 +4014,7 @@
     "object": "location",
     "name": "first-floor-landing-east",
     "displayName": "First floor landing",
-    "description": "You're at the East end of the first floor landing.<br>Through the window to the East you can see some of the sales team relaxing and playing on an XBox.",
+    "description": "You're at the East end of the first floor landing.<br>Through the window to the East you can often see the sales team relaxing and playing on an XBox.",
     "exits": [
       {
         "object": "exit",
@@ -3999,6 +4033,22 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "If this were a house, it'd seem odd having indoor windows.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "sales-seating"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
+      },
       {
         "object": "artefact",
         "name": "office door",
@@ -4200,7 +4250,7 @@
                 },
                 "synonyms": [
                   "tomato plant",
-				  "tomato plants",
+                  "tomato plants",
                   "plant",
                   "plants"
                 ],
@@ -5068,7 +5118,7 @@
     "object": "location",
     "name": "jellyfish-meeting-room",
     "displayName": "Jellyfish meeting room",
-    "description": "You're in Jellyfish meeting room. The carpet in here is a rather vivid green.<br>Through the window to the north you can see people scurrying up and down the stairs trying not to spill their coffee.",
+    "description": "You're in Jellyfish meeting room. The carpet in here is a rather vivid green.<br>Through the window to the north you can see the main office stairs I wonder who's trying not to spill their coffee today.",
     "exits": [
       {
         "object": "exit",
@@ -5076,6 +5126,24 @@
         "direction": "w",
         "source": "jellyfish-meeting-room",
         "destination": "customer-delight-management-area"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "It's not the greatest view you could get from a meeting room.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "stairs-first-floor"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
       }
     ]
   },
@@ -7377,11 +7445,12 @@
         "object": "artefact",
         "name": "window",
         "description": "window",
-        "detailedDescription": "Through the window you can see people with their bikes and a large car park.",
+        "detailedDescription": "Through the window lies the West car park. You can occasionally see people passing by with their bikes.",
         "attributes": {
           "weight": 280,
           "type": "scenery",
-          "canDrawOn": true
+          "canDrawOn": true,
+          "viewDestination": "west-car-park"
         },
         "synonyms": [
           "glass",
@@ -8844,8 +8913,24 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "It's usually pretty busy down there.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "reception"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "xbox",
-        "description": "Xbox 360",
+        "description": "xbox 360",
         "detailedDescription": "Fancy a game of Forza?",
         "attributes": {
           "weight": 6,
@@ -9308,6 +9393,22 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "Things look pretty cosy in that corner.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "facilities-area"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
+      },
       {
         "object": "artefact",
         "name": "office door",
@@ -10205,13 +10306,13 @@
           "margaret s"
         ],
         "missions": [
-{
+          {
             "object": "mission",
             "name": "lunchtime",
             "displayName": "get some lunch",
             "description": "Margaret has your lunch ready",
             "attributes": {
-              "parent": "tomatoesformargaret",              
+              "parent": "tomatoesformargaret",
               "missionObject": "margaret sexton",
               "static": true,
               "dialogue": [
@@ -10266,7 +10367,7 @@
               "score": 25,
               "message": "Yay for you! Time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
             }
-          },        
+          },
           {
             "object": "mission",
             "name": "tomatoesformargaret",
@@ -10330,8 +10431,8 @@
             },
             "conditionAttributes": {
               "isDestroyed": false,
-			  "isDamaged": false,
-			  "chewed": false
+              "isDamaged": false,
+              "chewed": false
             },
             "reward": {
               "score": 125,
@@ -10823,6 +10924,24 @@
         "source": "snorting-horses",
         "destination": "second-floor-north-west-corridor-north-east"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "It's a long way down.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "office-front"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
+      }
     ]
   },
   {
@@ -10895,6 +11014,24 @@
         "direction": "s",
         "source": "spiderman",
         "destination": "opportunities-north-east-corridor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "It's the usual view out of the front of the office.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "office-front"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
       }
     ]
   },
@@ -11121,6 +11258,24 @@
         "direction": "n",
         "source": "support-east",
         "destination": "enterprise-meeting-room"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "Wave!",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "stairs-first-floor"
+        },
+        "synonyms": [
+          "glass",
+          "windows"
+        ]
       }
     ]
   },
