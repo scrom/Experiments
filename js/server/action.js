@@ -3,8 +3,6 @@
 exports.Action = function Action(player, map, fileManager) {
     try{
         var tools = require('./tools.js');
-        var locationObjectModule = require('./location');
-        var artefactObjectModule = require('./artefact');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _resultString = '';
         var _resultJson = '';
