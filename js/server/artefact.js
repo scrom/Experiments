@@ -2413,7 +2413,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //add to suitable container or to player inventory
             //if container is required, we _know_ we have a suitable container by this point.
             if (requiresContainer) {
-                var resultString = suitableContainer.receive(objectToGive);
+                var resultString = suitableContainer.receive(objectToGive, player);
                 //return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
 
                 if (playerInventory.check(suitableContainer.getName())) {

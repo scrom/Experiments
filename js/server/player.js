@@ -1643,7 +1643,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString = "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName();
             if (container) {
 
-                container.receive(newObject);
+                container.receive(newObject, self);
 
                 if (containerIsInLocation) {
                     console.log(originalObjectIsInContainer);
@@ -2103,7 +2103,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };               
                 resultString += receiverDisplayNameString+".<br>";
 
-                var receiveResult = receiver.receive(collectedArtefact);
+                var receiveResult = receiver.receive(collectedArtefact, self);
                 //if receiving failed...
                 if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
                     resultString += receiveResult;
@@ -2527,10 +2527,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (getObjectFromLocation(artefactName)) {
                 //console.log('locationartefact');
                 //@todo - find an alternative for creature displayName on this response
-                if (!(artefact.isCollectable())) {return  "Sorry, "+givers[0].getDisplayName()+" can't pick "+artefact.getSuffix()+" up.";};
-                if (!(givers[0].canCarry(artefact))) { return  "Sorry, "+givers[0].getDisplayName()+" can't carry "+artefact.getSuffix()+".";};
+                if (!(artefact.isCollectable())) {return  tools.initCap(givers[0].getPrefix())+" can't pick "+artefact.getSuffix()+" up.";};
+                if (!(givers[0].canCarry(artefact))) { return tools.initCap(givers[0].getPrefix())+" can't carry "+artefact.getSuffix()+".";};
                 removeObjectFromLocation(artefactName);
-                resultString = givers[0].receive(artefact)+"<br>";
+                resultString = givers[0].receive(artefact, self, true)+"<br>";
             };
             
             var locationInventory = _currentLocation.getInventoryObject();

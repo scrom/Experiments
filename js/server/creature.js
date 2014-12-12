@@ -1311,7 +1311,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return self.getDisplayName()+" now has "+anObject.getDescription()+" "+position+" "+self.getSuffix()+".";
         };
 
-        self.receive = function(anObject, player) {
+        self.receive = function(anObject, player, playerisAsking) {
             if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
             if (self.getSubType() == "animal") {
                 if (anObject.getType() == "food" || anObject.getType() == "creature") {
@@ -1346,7 +1346,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             self.increaseAffinity(anObject.getAffinityModifier());  //if affinity modifier is negative this will actually subtract
             
-            if (anObject.getType() == "food" && self.isHungry()) {
+            if (anObject.getType() == "food" && self.isHungry() && !playerisAsking) {
                 //don't eat mission objects!
                 var isMissionObject = false;
                 var allMissions = _missions.concat(player.getMissions(true));     

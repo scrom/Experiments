@@ -2867,7 +2867,7 @@
         "delivers": [
           {
             "object": "artefact",
-            "name": "tomato plants",
+            "name": "healthy tomato plants",
             "description": "tomato plants",
             "detailedDescription": "They're well watered and fruiting.",
             "attributes": {
@@ -2877,7 +2877,7 @@
               "plural": true
             },
             "synonyms": [
-              "healthy tomato plants",
+              "tomato plants",
               "tomato plant",
               "plant",
               "plants"
@@ -4188,7 +4188,7 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "tomato plants",
+                "name": "healthy tomato plants",
                 "description": "tomato plants",
                 "detailedDescription": "They're well watered and fruiting.",
                 "attributes": {
@@ -4198,8 +4198,8 @@
                   "plural": true
                 },
                 "synonyms": [
-                  "healthy tomato plants",
                   "tomato plant",
+				  "tomato plants",
                   "plant",
                   "plants"
                 ],
@@ -4840,7 +4840,7 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "tomato plants",
+                "name": "healthy tomato plants",
                 "description": "tomato plants",
                 "detailedDescription": "They're well watered and fruiting.",
                 "attributes": {
@@ -4850,7 +4850,7 @@
                   "plural": true
                 },
                 "synonyms": [
-                  "healthy tomato plants",
+                  "tomato plants",
                   "tomato plant",
                   "plant",
                   "plants"
@@ -7606,7 +7606,7 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "tomato plants",
+                "name": "healthy tomato plants",
                 "description": "tomato plants",
                 "detailedDescription": "They're well watered and fruiting.",
                 "attributes": {
@@ -7616,7 +7616,7 @@
                   "plural": true
                 },
                 "synonyms": [
-                  "healthy tomato plants",
+                  "tomato plants",
                   "tomato plant",
                   "plant",
                   "plants"
@@ -9988,7 +9988,7 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "tomato plants",
+                "name": "healthy tomato plants",
                 "description": "tomato plants",
                 "detailedDescription": "They're well watered and fruiting.",
                 "attributes": {
@@ -9998,7 +9998,7 @@
                   "plural": true
                 },
                 "synonyms": [
-                  "healthy tomato plants",
+                  "tomato plants",
                   "tomato plant",
                   "plant",
                   "plants"
@@ -10204,6 +10204,68 @@
           "margaret s"
         ],
         "missions": [
+{
+            "object": "mission",
+            "name": "lunchtime",
+            "displayName": "get some lunch",
+            "description": "Margaret has your lunch ready",
+            "attributes": {
+              "parent": "tomatoesformargaret",              
+              "missionObject": "margaret sexton",
+              "static": true,
+              "dialogue": [
+                "'Thanks for the help with the tomatoes earlier.'<br>'Lunch is ready when you are, would you like it now?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Here you go!'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "response": "'Maybe later then?'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'How about that lunch now?'",
+                  "nextState": 1
+                }
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 3
+            },
+            "reward": {
+              "delivers": {
+                "object": "artefact",
+                "name": "lunch",
+                "description": "large plate of nut roast",
+                "detailedDescription": "It's got all the trimmings of a full roast dinner (even roasted tomatoes) and it's also veggie friendly.<br>A very hearty meal!",
+                "attributes": {
+                  "defaultAction": "eat",
+                  "weight": 1,
+                  "type": "food",
+                  "canCollect": true,
+                  "isEdible": true,
+                  "nutrition": 45
+                },
+                "synonyms": [
+                  "dinner",
+                  "food",
+                  "nut roast"
+                ]
+              },
+              "score": 25,
+              "message": "Yay for you! Time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
+            }
+          },        
           {
             "object": "mission",
             "name": "tomatoesformargaret",
@@ -10266,7 +10328,9 @@
               ]
             },
             "conditionAttributes": {
-              "isDestroyed": false
+              "isDestroyed": false,
+			  "isDamaged": false,
+			  "chewed": false
             },
             "reward": {
               "score": 125,
