@@ -2809,7 +2809,7 @@
     "object": "location",
     "name": "customer-delight-west",
     "displayName": "Customer Delight",
-    "description": "You're on the West side of the Customer Delight development area. Also know as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
+    "description": "You're on the West side of the Customer Delight development area - also known as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
     "exits": [
       {
         "object": "exit",
@@ -2835,7 +2835,8 @@
                   "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "canDrawOn": true
+                    "canDrawOn": true,
+					"viewDestination": "west-car-park"
                   },
                   "synonyms": [
                     "glass",
