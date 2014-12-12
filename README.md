@@ -3,11 +3,9 @@ Experiments
 
 Getting back into coding
 
-IF-Node. March 2014: (Readme last updated October 2014)
+IF-Node. March 2014: (Readme last updated December 2014)
 
 *** This game is live and running at: http://mvta.herokuapp.com/ ***
-
-(note - loading saved games is currently broken on the hosted version of the game though)
 
 About:
 ------
@@ -29,12 +27,14 @@ Another key part of this was simply to get back into coding properly. But by del
 
 Having to cram in unit and integration tests to prize seams apart and facing the pain of adding coverage analysis (still to do!)
 
+*** Update: December 2014 - I finally reached that tipping point in the last month and have had to start adding large regression tests back in in order to continue working relatively safely. All the simple works is done (other than adding more game data) and all most of what's left is invasive and risky. This is a great place to have ended up but it does mean there's a strong chance it's getting buggier. Welcome to the world of legacy code! ***
+
 I know it's not the "right" way but it's how a lot of projects end up under pressure.
-In some way therefore, the commit history on this will be a history lesson in how to not write good software and then how to recover from it later.
+In some way therefore, the commit history on this will be a history lesson in how to not write good software and then how to recover from it (or survive) later.
 
 Direction
 ---------
-As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands about 90 verbs but there's a load of work to do. 
+As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands well over 100 verbs but there's a load of work to do. 
 
 Other than *loads* of additional game mechanics, features and sample content, the other major components to work on are:
  - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently a single (large) json file and the set of attributes available for everything isn't documented.  Eventually I'd like players  to choose, extend and reuse maps. Right now, there's just the one.
@@ -44,7 +44,7 @@ Other than *loads* of additional game mechanics, features and sample content, th
  - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done - only "real" games can be saved*
  - server-side throttling to limit resource usage. *done*
  - the game really needs a battery of tests but that's after the legacy code "peak" is reached (I'm nearly there I think).
- - finding somewhere simple that I can get this hosted for free that doesn't require installing Ruby and a pile of junk.
+ - finding somewhere simple that I can get this hosted for free that doesn't require mountains of manual config. *done - yay for Heroku!*
 
 
 Technical stuff:
@@ -56,19 +56,20 @@ Server Configuration
 2: Set the following server environment variables to configure the application hostname and port
 - 	HOSTNAME (e.g. mvta.herokuapp.com)
 -  PORT     (e.g. 1337)
+
 Note, if the game is running on port 80, you don't need to explicitly set port number as an environment variable.
 
 3: MVTA is written to use either .json files or Redis (as a non-file data store) to save player game data and timed-out games.
 
 If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be password authenticated).
 Once you have a store available, set the following environment variables for your Redis data store 
-- REDISSERVER (the hostname of your redis server)
-- REDISPWD (the auth password of your redis server)
+- REDISSERVER (the addressable hostname of your redis server)
+- REDISPWD (the auth password of your redis server in plain text)
 - REDISPORT (the port number of your redis host)
 
 *If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
 As of October 2014, Redis support is fully functional. 
-Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully.
+Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully. (A bit more work if you're developing in a Windows environment)
 
 4: NodeJS may still have a default limit on the number of active http connections to 5.
 In order to support more connections, you'll need to set another environment variable (I think)...
@@ -92,18 +93,24 @@ Client Configuration
 --------------------
 The client consists of an index.html page in the root of the project and a series of referenced JS files under the js/client folder.
 There's also a css folder with some *very* basic layout and styling.
-The express server coded into the server.js file will automatically server static files from the root of the node project (where the index.html file lives). 
+The express server coded into the server.js file will automatically serve static files from the root of the node project (where the index.html file lives). 
 
-The client runs over http and assumes the game is running from the "root" of the node server on the node listening port.
+The client runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
 
-In order to support some of the scripted calls, the client needs to know it's paired with the server...
+In order to support some of the scripted calls, the client needs to know it's paired with the server. This means you need to edit a client file...
+
 1: Modify /js/client/main.js to set the node Server name and port number:
 -     var serverHost = 'Your-Server';
 -     var serverPort = 1337;
 The values for these 2 variables should match the corresponding environment variables on your server.
 If the server is running on port 80, leave serverPort undefined (but keep the variable). 
 
-These must match the entries supplied in config.js on the server.
+These *must* match the entries supplied in config.js on the server.
+
+You can also enable client "console" output by setting 
+- var debug = true; 
+in the client main.js file
+
 That's it. You're ready to go!
 
 
@@ -111,14 +118,15 @@ Launching the client
 --------------------
 Use your favourite browser to navigate to the webroot and port of the node server: e.g. http://your-server:1337/ 
 Upon successful launch, the console of the client should show the client and UI successfully initiated.
-(I'll also add a server communication test here so that we can see the server is accessible and running)
+(Sometime I'll add a server communication test here so that we can see the server is accessible and running)
 
 
 Coding style
 ------------
 The code is deliberately written in an old-fashioned static OO style for the most part. 
-This is the case for both client and server code.
-Whilst JS is a dynamic language, this was as much an exercise in OO design and maintainability. 
+This is the case for both client and server code although the client is closer to more "correct" javascript object/prototypal definitions.
+
+Whilst JS is a dynamic language, this was as much an exercise in poor OO design and maintainability. 
 To this end, please stick to the same javascript object style that's in use if extending.
 On the server side, I'm trying to keep the main game engine away from node-specific features and code as much as posssible. 
 
@@ -129,6 +137,8 @@ This game is deliberately developed on Windows and as a result, will not use any
 
 Whilst the game was originally developed in Visual Studio 2012, when I'm not in the office I've been updating and testing from a standard Windows laptop running Sublime Text or a similar basic JS editor plus command-line tooling. 
 
+For editing the game data files, I heartily recommend "JSON Editor Online" for editing the large JSON game data file - it's fast, syntax checks and formats easily. (way better than Visual Studio). (see http://www.jsoneditoronline.org)
+
 
 Tests
 -----
@@ -137,29 +147,30 @@ these are found in \IF-Node\js\server\test\
 
 The file naming convention for these tests is test-<classname>.test.js This allows optimum doscoverability from the VS testRunner whilst being very clear what they are.
 
-When writing new tests, please ensure every test has its metadata correctly set to define which class it is running tests for and the set of traits being tested. This makes running subsets of tests much easier and allows us to see when a "family" of tests or traits has a problem.
+When writing new tests, please ensure every test has its metadata correctly set to define which class it is running tests for and the set of traits being tested. This makes running subsets of tests much easier and allows us to see when a "family" of tests or traits has a problem. (you'll notice some of the existing tests have copy-paste errors in these - surprise!!!)
 
-Please use one test file per class and please keep these passing and growing.
+Please use one test file per class as much as possible and please keep these passing and growing.
+The tests in here are a mix of unit and functional regression tests - sad but realistic!
 
 
 Module Dependencies
 -------------------
-The game is designed to run on Node version 0.10.31 (this is the latest version that is also available on Windows)
+The game is designed to run on Node version 0.10.33 (this is the latest version that is also available on Windows)
 Node Module dependencies are defined in \IF-Node\package.json
-As of 11th September 2014 they are...
+As of 12th December 2014 they are...
 
 For the server:
--     "express": "^4.9.0",
--     "body-parser": "^1.8.1",
--     "morgan": "^1.3.0"
+-     "express": "^4.10.3",
+-     "body-parser": "^1.9.3",
+-     "morgan": "^1.5.0"
 -     "jsonfile": "^2.0.0",
 -     "redis": "^0.12.1"
 
 For running NodeUnit:
 -     "nodeunit": "^0.9.0",
 -     "coffee-script": "^1.8.0",
--     "iced-coffee-script": "^1.7.1-f",
--     "streamline": "^0.10.9"
+-     "iced-coffee-script": "^1.8.0-a",
+-     "streamline": "^0.10.16"
 
 
 End. Thanks for reading! ;)
