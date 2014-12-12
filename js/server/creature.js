@@ -223,6 +223,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         //return right prefix for item       
         self.descriptionWithCorrectPrefix = function (anItemDescription, plural) {
+            if (!anItemDescription) {
+                //we're referencing self instead
+                anItemDescription = self.getRawDescription();
+                //plural = _plural;
+            };
             if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0,4) == "the ") {
                 //Description starts with a proper noun.
                 return anItemDescription;
@@ -636,7 +641,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
         
         self.getDescription = function() {
-            return self.descriptionWithCorrectPrefix(_description);
+            return self.descriptionWithCorrectPrefix();
         };
 
         self.getRawDescription = function () {
@@ -1518,7 +1523,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         return resultString;
                     };
                     self.decreaseAffinity(objectToGive.getAffinityModifier());
-                    resultString += "You manage to steal "+objectToGive.descriptionWithCorrectPrefix(objectToGive.getName())+" from "+self.getDisplayName()+".";  
+                    resultString += "You manage to steal "+objectToGive.descriptionWithCorrectPrefix()+" from "+self.getDisplayName()+".";  
                     return resultString;                 
                 };
 
@@ -3165,6 +3170,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.hasPower = function() {
             return false;
+        };
+
+        self.saleUnit = function() {
+            return -1;
         };
 
         self.isPoweredOn = function() {

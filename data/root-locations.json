@@ -424,7 +424,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>You're treading a fine line here. Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good."
+          "message": "<br>You're treading a fine line here.<br>Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br><br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good."
         }
       },
       {

@@ -152,6 +152,86 @@ exports.canSetPluralAttributeAndRetrieveCorrectDescription = function (test) {
 
 exports.canSetPluralAttributeAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Attribute Trait", "Quantity Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
 
+exports.canDamageAnItemAndRetrieveCorrectDescription = function (test) {
+    var woodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true, plural: true, isPowder: true};
+    var wood = new artefact.Artefact("wood", "wood", "sharp and woody", woodAttributes);
+    wood.bash();
+    var expectedResult = "some damaged wood";
+    //artefact object is created in setUp
+    var actualResult = wood.getDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canDamageAnItemAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Damage Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
+
+exports.canBreakAnItemAndRetrieveCorrectDescription = function (test) {
+    var woodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true, plural: true, isPowder: true};
+    var wood = new artefact.Artefact("wood", "wood", "sharp and woody", woodAttributes);
+    wood.break();
+    var expectedResult = "some broken wood";
+    //artefact object is created in setUp
+    var actualResult = wood.getDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canBreakAnItemAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Break Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
+
+exports.canChewAnItemAndRetrieveCorrectDescription = function (test) {
+    var woodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true, plural: true, isPowder: true};
+    var wood = new artefact.Artefact("wood", "wood", "sharp and woody", woodAttributes);
+    var p0 = new player.Player({carryWeight:25},null,null);
+    var _inventory = p0.getInventoryObject();
+    _inventory.add(wood);
+    wood.eat(p0);
+    var expectedResult = "some chewed wood";
+    //artefact object is created in setUp
+    var actualResult = wood.getDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canChewAnItemAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Eat Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
+
+exports.canDestroyAnItemAndRetrieveCorrectDescription = function (test) {
+    var woodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true, plural: true, isPowder: true};
+    var wood = new artefact.Artefact("wood", "wood", "sharp and woody", woodAttributes);
+    wood.destroy();
+    var expectedResult = "some wreckage that was once some wood";
+    //artefact object is created in setUp
+    var actualResult = wood.getDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canDestroyAnItemAndRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Destroy Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
+
+exports.canDestroyAPreviouslyBrokenItemAndStillRetrieveCorrectDescription = function (test) {
+    var woodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: false, canOpen: false, isEdible: false, isBreakable: true, plural: true, isPowder: true};
+    var wood = new artefact.Artefact("wood", "wood", "sharp and woody", woodAttributes);
+    wood.break();
+    wood.destroy();
+    var expectedResult = "some wreckage that was once some wood";
+    //artefact object is created in setUp
+    var actualResult = wood.getDescription();
+    console.log("Expected: "+expectedResult);
+    console.log("Actual  : "+actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canDestroyAPreviouslyBrokenItemAndStillRetrieveCorrectDescription.meta = { traits: ["Artefact Test", "Break Trait", "Destroy Trait", "Description Trait"], description: "Test that an artefact object can have plural set and return its correct description." };
+
+
 exports.canUnlockDoor = function (test) {
     var doorAttributes = {
         weight: 200, 
@@ -419,7 +499,7 @@ exports.canCreateToxicFood = function (test) {
     test.done();
 };
 
-exports.canCreateToxicFood.meta = { traits: ["Artefact Test", "Food Trait"], description: "Test that a player is carrying a weapon that can be retrieved." };
+exports.canCreateToxicFood.meta = { traits: ["Artefact Test", "Food Trait"], description: "Test that a food with -ve nutrition can be made." };
 
 
 exports.canCreateCoffeeMachineInKitchen = function (test) {

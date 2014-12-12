@@ -1237,6 +1237,11 @@ exports.Action = function Action(player, map, fileManager) {
                 };
                 return "Global creature affinity increased by "+_object0;
             };
+
+            if (_verb == '+cash' || _verb == '+money') {
+                _player.updateCash(_object0);
+                return "Player cash balance changed by "+_object0;
+            };
         };
 
         self.catchPlayerNotUnderstood = function() {

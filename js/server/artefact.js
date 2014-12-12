@@ -339,12 +339,30 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         //return right prefix for item       
         self.descriptionWithCorrectPrefix = function (anItemDescription, plural) {
+            var state = " ";
+            if (!anItemDescription) {
+                //we're referencing self instead
+                anItemDescription = self.getRawDescription();
+                plural = _plural;
+                if (self.isDestroyed()) {
+                    return self.getRawDescription();  
+                } 
+                if (self.isBroken()) {
+                    state = " broken ";   
+                } else if (self.isDamaged()) {
+                    state = " damaged ";   
+                } else if (self.isChewed()) {
+                    state = " chewed ";   
+                };
+
+            };
+
             if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0, 4) == "the ") {
                 //Description starts with a proper noun.
                 return anItemDescription;
             };
 
-            if (_plural || plural) {
+            if (plural) {
                 //special cases
                 var collectionPlurals = ["pair", "pack", "bowl", "pool", "set", "box", "tin", "jar", "packet", "bottle", "cluster", "collection", "group"];
                 var descriptionAsWords = anItemDescription.split(" "); 
@@ -352,16 +370,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     //"x of y" ?
                     if (!(collectionPlurals.indexOf(descriptionAsWords[0]) > -1 && descriptionAsWords[1] == "of")) {
                         //not a special case
-                        return "some "+anItemDescription;
+                        return "some"+state+anItemDescription;
                     };
                 } else {
                     //normal plural case
-                    return "some "+anItemDescription;
+                    return "some"+state+anItemDescription;
                 };
             }; 
             switch (anItemDescription.charAt(0).toLowerCase()) {
                 case "u":
-                    if (anItemDescription.length == 1) {return "a '"+anItemDescription+"'";};
+                    if (anItemDescription.length == 1) {return "a"+state+"'"+anItemDescription+"'";};
                     //note no break - fall through case
                 case "a":
                 case "e":
@@ -369,7 +387,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 case "o":
                 case "h":
                 case "8": //e.g. "an 8 gallon container"
-                    return "an "+anItemDescription;
+                    return "an"+state+anItemDescription;
                     break;
                 case "f":
                 case "l":
@@ -378,10 +396,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 case "r":
                 case "s":
                 case "x":
-                    if (anItemDescription.length == 1) {return "an '"+anItemDescription+"'";};
+                    if (anItemDescription.length == 1) {return "an"+state+"'"+anItemDescription+"'";};
                     //note no break - fall through case
                 default:
-                    return "a "+anItemDescription;
+                    return "a"+state+anItemDescription;
                     break;
             };
         };
@@ -807,13 +825,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.getDescription = function() {
-            var resultString = self.descriptionWithCorrectPrefix(_description);
+            var resultString = self.descriptionWithCorrectPrefix();
             //if it's a container with a single item and it's open (or fixed open), include contents
             if (self.getType() == "container" && _inventory.size() == 1 && ((!_opens)||_open)) {
 
                 var inventoryItem = _inventory.getAllObjects()[0];
                 if (inventoryItem.requiresContainer()) { 
-                    resultString = self.descriptionWithCorrectPrefix(_description);
+                    resultString = self.descriptionWithCorrectPrefix();
                     resultString += " of " + inventoryItem.getRawDescription();
                 };
             };
@@ -1913,8 +1931,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_lockable) {_locked = false;};
                 if (_opens && !_open) {_open = true;};
                 if (_price > 0) { self.discountPriceByPercent(50); };
-                _description += " (broken)";
-                _detailedDescription = tools.initCap(_itemDescriptivePrefix)+" broken.";
+                _detailedDescription = tools.initCap(_itemDescriptivePrefix)+" broken";
                 var opened = "";
                 if (wasLocked && !wasOpen && _open) {opened = " open";};  
                 return "You broke "+_itemSuffix+opened+"!";
@@ -1934,6 +1951,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var wasAlreadyDamaged = _damaged;
             _damaged = true;
             if (_breakable) {
+                var desc = self.descriptionWithCorrectPrefix();
                 _broken = true;
                 _destroyed = true;
                 if (_price > 0) { self.discountPriceByPercent(100); };
@@ -1944,8 +1962,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
 
                 if (_lockable) {_locked = false;};
-                _description = _description.replace(" (broken)","")
-                _description = "some wreckage that was once "+self.descriptionWithCorrectPrefix(_description);
+
+                desc = desc.replace(" broken "," ")
+                desc = desc.replace(" chewed "," ")
+                desc = desc.replace(" damaged "," ")
+                _description = "some wreckage that was once "+desc;
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
                 var resultString = "You destroyed "+_itemSuffix+"!";

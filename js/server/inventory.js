@@ -120,7 +120,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (itemList[itemString]) {
                     itemList[itemString].count += 1;
                 } else {
-                    itemList[itemString] = { "description": items[i].getDescription(), "rawDescription": items[i].getRawDescription(), "price": items[i].getPrice(), "count": 1 };
+                    var unitCount = 1
+                    var charges = items[i].chargesRemaining();
+                    var saleUnit = items[i].saleUnit()
+                    if (charges > 0 && saleUnit > 0) {
+                        unitCount = Math.floor(Math.round((charges*100)/(saleUnit*100)));
+                    };
+                    itemList[itemString] = { "description": items[i].getDescription(), "rawDescription": items[i].getRawDescription(), "price": items[i].getPrice(), "count": unitCount };
                 };
             };
 

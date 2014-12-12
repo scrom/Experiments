@@ -918,12 +918,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.updateCash = function (amountToChange) {
+            amountToChange = Math.round(parseFloat(amountToChange)*100)/100;
             if (amountToChange <0) {
                 self.reduceCash(amountToChange*-1);
             } else {
                 self.increaseCash(amountToChange);
             };
-
         };
 
         self.reduceCash = function(amount) {
