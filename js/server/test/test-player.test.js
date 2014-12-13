@@ -885,7 +885,7 @@ exports.hittingContainerArtefactTwiceWhenArmedUsuallyDamagesContents = function 
     p0.hit('hit',container.getName());
     p0.hit('hit',container.getName());
     var expectedResult;
-    var expectedResult1 = "It's broken.";
+    var expectedResult1 = "It's broken";
     var expectedResult2 = "a somewhat fragile drinking vessel It shows signs of being dropped or abused.";
     var actualResult = p0.examine("examine", "glass");
     if (actualResult == expectedResult1) {
