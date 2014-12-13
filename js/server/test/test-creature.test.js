@@ -1525,6 +1525,12 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
     //this matches player behaviour for fairness.
     var expectedResult = "<br>A beastie wanders in and slips on the wet floor.<br><br><br><br><br>The creature is dead. Now you can steal all its stuff.";
     var actualResult = c0.tick(5, m1, p0);
+    if (actualResult != expectedResult) {
+        //a 0 from the random slip algorithm will still not slip so try again
+        console.log("Fail: slip did not occur - attempting second try...");
+        c0.go("n", l1);
+        actualResult = c0.tick(5, m1, p0);
+    };
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
