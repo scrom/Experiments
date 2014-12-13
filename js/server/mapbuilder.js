@@ -322,6 +322,16 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                 };
 
                 if (missionData.attributes) {
+                    if (missionData.attributes.missionObject) {
+                        if (missionData.attributes.missionObject.toLowerCase() != missionData.attributes.missionObject) {
+                            console.log("Mission warning: missionObject contains mixed case; may not be true objectName'"+missionData.attributes.missionObject+"'.");
+                        };
+                    };
+                    if (missionData.attributes.destination) {
+                        if (missionData.attributes.destination.toLowerCase() != missionData.attributes.destination) {
+                            console.log("Mission warning: mission destination contains mixed case; may not be true objectName'"+missionData.attributes.destination+"'.");
+                        };
+                    };
                     if (missionData.attributes.type == "event") {
                         _map.incrementEventCount();
                     } else {
@@ -412,7 +422,10 @@ exports.MapBuilder = function MapBuilder(mapDataFileAndPath) {
                         for (var l=0; l<locationData.missions.length; l++) {
                             location.addMission(self.buildMission(locationData.missions[l]));
                         };
-                    }; 
+                    };
+
+                    //@todo - validate all exits have valid destinations and warn if not
+                    //@todo - validate all mission objects and destinations have objects in map and warn if not
                 };                       
             };
             console.log("Objects, creatures and missions built.");
