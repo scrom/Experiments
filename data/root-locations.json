@@ -3527,7 +3527,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "coffee machine book",
+        "name": "coffee machine manual",
         "description": "maintenance manual for the coffee machines",
         "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
         "attributes": {
@@ -3547,7 +3547,7 @@
           "repair manual",
           "maintenance manual",
           "machine manual",
-          "coffee machine manual",
+          "coffee machine book",
           "coffee machine repair manual",
           "coffee machine maintenance manual",
           "machine maintenance manual"
@@ -3559,7 +3559,7 @@
             "displayName": "repair the coffee machine",
             "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
             "attributes": {
-              "missionObject": "coffee machine book",
+              "missionObject": "coffee machine manual",
               "static": true
             },
             "conditionAttributes": {
@@ -5764,9 +5764,9 @@
                 },
                 {
                   "object": "artefact",
-                  "name": "comic",
+                  "name": "charred book",
                   "description": "book with charred pages",
-                  "detailedDescription": "It looks like the tattered and charred remnants of a very rare comic book.<br>It could be a clue.",
+                  "detailedDescription": "It looks like the tattered and charred remnants of a very rare graphic novel.<br>It could be a clue.",
                   "attributes": {
                     "defaultAction": "read",
                     "weight": 1,
@@ -5783,7 +5783,10 @@
                     "charred book",
                     "burned comic",
                     "charred comic",
-                    "comic book"
+                    "comic book",
+					"graphic",
+					"graphic novel",
+					"rare graphic novel"
                   ]
                 },
                 {
@@ -6290,21 +6293,21 @@
       },
       {
         "object": "artefact",
-        "name": "bookcase",
-        "description": "set of bookcases",
-        "detailedDescription": "It usually contains books on everything from travel to SQL server and from sales to C#.",
+        "name": "bookshelf",
+        "description": "set of bookshelves",
+        "detailedDescription": "They usually contain books on everything from travel to SQL server and from sales to C#.",
         "attributes": {
-          "extendedInventoryDescription": "Amongst the hundreds of pages of reading material available you find $inventory that may be of interest.",
+          "extendedInventoryDescription": "Amongst the hundreds of pages of reading material available you find $inventory.",
           "weight": 80,
           "carryWeight": 8,
           "type": "container",
+		  "plural": true,
           "isBreakable": true,
           "canDrawOn": true
         },
         "synonyms": [
           "library",
           "bookcase",
-          "bookshelf",
           "bookcases",
           "bookshelves",
           "book case",
@@ -6320,9 +6323,9 @@
         "inventory": [
           {
             "object": "artefact",
-            "name": "large book",
-            "description": "large book",
-            "detailedDescription": "It's called 'To Sell is Human'. It's a book on how to sell software in a friendly way.",
+            "name": "to sell",
+            "description": "'To Sell is Human'",
+            "detailedDescription": "'To Sell is Human'. It's a book on how to sell software in a friendly way.",
             "attributes": {
               "defaultAction": "read",
               "weight": 3,
@@ -6335,27 +6338,31 @@
               "book",
               "sales book",
               "selling book",
-              "software book"
+			  "sell book",
+              "software book",
+			  "to sell is human"
             ]
           },
           {
             "object": "artefact",
-            "name": "small book",
-            "description": "small book",
-            "detailedDescription": "It's called '50 Shades of Customer'.<br>(That's a really bad pun for a business book.)",
+            "name": "50 shades",
+            "description": "'50 shades of customer'",
+            "detailedDescription": "'50 Shades of Customer'. Wow. That's a really bad pun for a business book.",
             "attributes": {
               "defaultAction": "read",
               "weight": 1,
               "attackStrength": 2,
               "type": "book",
               "canCollect": true,
-              "defaultResult": "It's a book on why not all customers are created equal.<br>I think it's meant to help you work with difficult customers and business relationships.<br>This kind of thing is perfect for someone in a front-line, customer-facing role.",
-              "canDrawOn": true
+              "defaultResult": "'As he took my hand and shook it I realised this was a man who meant business.'<br>'His double-fist-pump hand shake only meant one thing...'<br>'SENIOR EXECUTIVE!'<br><br>As a working professional, you provide a service to everyone you interact with. The class of service you provide in these interactions is largely your choice but for optimum results you must determine a person's unmet need and establish if you are able (and willing) to help them fulfil it.<br>...furthermore, understand their role, their sphere of influence and the value of your relationship to them.<br>How can you both achieve mutual success? Not from a purely cynical or financial perspective but from a longer term holistic business relationship.<br>Don't let anyone fool you. Just because it's business doesn't mean it's not personal...<br><br>It continues switching between bad storytelling and business explanation and goes on to explain why not all customers are created equal.<br><br>I think it's meant to help you work with difficult customers and business relationships.<br>Although some of it smells like BS, there's almost certainly some useful nuggets hiding in there for someone in a front-line, customer-facing role.",
+              "canDrawOn": true,
+              "smell": "Hmmm. You're <i>sure</i> that smell's familiar but you can't quite place it."
             },
             "synonyms": [
               "book",
               "care book",
-              "customer book"
+              "customer book",
+			  "50 shades of customer"
             ]
           }
         ]
@@ -7477,7 +7484,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "people folder",
+        "name": "folder",
         "description": "document folder",
         "detailedDescription": "Leafing through the contents, it appears to be folder of notes on working effectively with others.",
         "attributes": {
@@ -7490,7 +7497,7 @@
         },
         "synonyms": [
           "notes",
-          "folder",
+          "people folder",
           "document",
           "document folder",
           "working effectively with others",
@@ -7503,7 +7510,7 @@
             "displayName": "read about working with others",
             "description": "Whilst in the real world working relationships are not transactional, working well with others here is largely about <i>give</i> and <i>take</i>.<br>The more you give, the more help you can ask for.<br>Be aware however that your kind deeds won't be remembered forever.<br>Acts of violence or unwanted attention will not be tolerated.<br>Those in favour can <i>ask</i> a friend <i>where</i> someone else is. They may also be able to ask individuals or <i>everyone<i> to <i>wait</i> for them or to <i>go</i> to places.<br>Colleagues with exceptionally strong working relationships may even support you in times of danger and need.<br>",
             "attributes": {
-              "missionObject": "people folder",
+              "missionObject": "folder",
               "static": true
             },
             "conditionAttributes": {
@@ -8087,6 +8094,7 @@
             },
             "synonyms": [
               "book",
+			  "visitor book",
               "in"
             ]
           },
@@ -8162,7 +8170,7 @@
             "displayName": "give Vic something interesting to read",
             "description": "Vic has a parcel for you but she'd like something interesting to read first.",
             "attributes": {
-              "missionObject": "small book",
+              "missionObject": "50 shades",
               "destination": "vic wiseman",
               "static": true
             },
@@ -8247,7 +8255,7 @@
                   }
                 ]
               },
-              "removeObject": "small book",
+              "removeObject": "50 shades",
               "score": 35,
               "increaseAffinityFor": "Vic Wiseman",
               "message": "Congratulations. Vic likes the book!"
