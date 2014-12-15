@@ -798,6 +798,11 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'sing':
                     case 'shout':
                     //case 'howl':
+                        if (!_object0 && _splitWord == "for") {
+                            //e.g. "shout for help"
+                            _object0 = _object1;
+                            _object1 = null;
+                        };
                         description = _player.say(_verb, _object0,_object1, _map);
                         _player.setLastVerbUsed('say');
                         break;
