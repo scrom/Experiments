@@ -107,29 +107,31 @@ a:link {
     width:800px;
 }
 
-.smallBox
+.historyBox
 {
-    height:35vh;
+    height:33.5vh;
     width:800px;
 }
 
-.oneLineBox
+.inputLineBox
 {
-    height:20px;
+    height:18px;
+    font-size: 95%;
     width:800px;
 }
 
-.halfLineBox
+.statusBarBox
 {
     height:12px;
     width:800px;
+    font-size: 85%;
     transition:color 0.5s;
     -webkit-transition:color 0.5s;
     -moz-transition:color 0.5s;
     -o-transition:color 0.5s;
 }
 
-.bigBox
+.stateBox
 {
     height:48vh;
     width:800px;
@@ -156,11 +158,10 @@ img{
     height:100%;
 }
 
-.softBorder.smallBox{}
-.softBorder.oneLineBox{}
-.softBorder.halfLineBox{}
-.softBorder.bigBox.verticalScroll{}
-.softBorder.smallBox.verticalScroll{}
-.softBorder.narrowBox.verticalScroll{}
+.softBorder.historyBox{}
+.softBorder.inputLineBox{}
+.softBorder.statusBarBox{}
+.softBorder.stateBox.verticalScroll{}
+.softBorder.historyBox.verticalScroll{}
 .softBorder.pictureBox{}
 .softBorder.inventoryBox.verticalScroll{}

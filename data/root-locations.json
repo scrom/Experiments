@@ -8163,7 +8163,7 @@
             "description": "Vic has a parcel for you but she'd like something interesting to read first.",
             "attributes": {
               "missionObject": "small book",
-              "destination": "Vic Wiseman",
+              "destination": "vic wiseman",
               "static": true
             },
             "conditionAttributes": {
