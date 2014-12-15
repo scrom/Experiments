@@ -351,17 +351,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return self.getRawDescription();  
                 } 
                 if (self.isBroken()) {
-                    state = " broken ";   
-                } else if (self.isDamaged()) {
-                    state = " damaged ";   
+                    state = " broken ";
+                //we don't report damaged                      
+                //} else if (self.isDamaged()) {
+                //    state = " damaged ";   
                 } else if (self.isChewed()) {
                     state = " chewed ";   
                 };
 
             };
 
-            if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0, 4) == "the ") {
-                //Description starts with a proper noun.
+            if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0, 4) == "the " || anItemDescription.substr(0, 1) == "'") {
+                //Description starts with a proper noun, "the" or is quoted.
                 return anItemDescription;
             };
 
@@ -833,11 +834,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var resultString = self.descriptionWithCorrectPrefix();
             //if it's a container with a single item and it's open (or fixed open), include contents
             if (self.getType() == "container" && _inventory.size() == 1 && ((!_opens)||_open)) {
+                var inventoryItems = _inventory.getAllObjects();
+                var inventoryItem;
+                if (inventoryItems.length > 0) {
+                    inventoryItem = inventoryItems[0];
 
-                var inventoryItem = _inventory.getAllObjects()[0];
-                if (inventoryItem.requiresContainer()) { 
-                    resultString = self.descriptionWithCorrectPrefix();
-                    resultString += " of " + inventoryItem.getRawDescription();
+                    //object is not hidden or positioned
+                    if (inventoryItem.requiresContainer()) {
+                        resultString = self.descriptionWithCorrectPrefix();
+                        resultString += " of " + inventoryItem.getRawDescription();
+                    }                    ;
                 };
             };
             return resultString;
@@ -2406,7 +2412,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //if not a deliverable, check inventory
             if (!(objectToGive)) { objectToGive = _inventory.getObject(anObjectName); };
 
-            if ( !(objectToGive)) {return tools.initCap(self.getDisplayName())+" doesn't contain "+anObjectName+".";};
+            if (!(objectToGive)) {
+                var firstWord = anObjectName.split(" ", 1)[0];
+                if (firstWord == "all") {
+                    return player.getAll("collect", self.getName(), anObjectName.replace("all ", ""));
+                };
+                return tools.initCap(self.getDisplayName()) + " doesn't contain " + anObjectName + ".";
+            };
 
             if (delivering && !(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" "+doesPlural()+" seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong.";};
 

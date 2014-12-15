@@ -819,7 +819,7 @@ exports.throwingEverythingIsntPossible = function (test) {
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
-    var expectedResult = "You'll need to throw things one at a time, sorry.";
+    var expectedResult = "You'll need to throw things one at a time.";
     var actualResult = p0.dropAll('throw');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
