@@ -511,8 +511,20 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'throw':
+                        if (_object0 && _splitWord == "at" && _object1) {
+                            //throw x at y
+                             description = _player.hit (_verb, _object1, _object0);
+                             break;
+                        };
+                        //fall through...
                     case 'drpo': //common user typo
                     case 'drop': //add support for "all" later
+                        if (_object0 && _splitWord && _object1) {
+                            if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to") {
+                                description = _player.put(_verb, _object0, _object1);
+                                break;
+                            } else { _object0 = _object0+" "+_splitWord+" "+_object1;};
+                        };
                         description = _player.drop(_verb, _object0);
                         //we're throwing the object *at* something. Use it as a weapon.
                         //this needs work

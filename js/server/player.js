@@ -3750,7 +3750,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(tools.stringIsEmpty(artefactName))){ 
                 weapon = getObjectFromPlayerOrLocation(artefactName);
                 if (!(weapon)) {return "You prepare your most aggressive stance and then realise there's no "+artefactName+" here and you don't have one on your person.<br>Fortunately, I don't think anyone noticed.";};
-                if (!(weapon.supportsAction(verb))) {return "You prepare your most aggressive stance and then realise you can't effectively "+verb+" with "+weapon.getDescription()+".";};
+                if (verb == "throw") {
+                    if (!(weapon.isCollectable())) {return "You attempt to grab "+weapon.getDescription()+" but can't get a good enough grip to "+verb+" "+weapon.getSuffix()+".";};
+                } else {
+                    if (!(weapon.supportsAction(verb))) {return "You prepare your most aggressive stance and then realise you can't effectively "+verb+" with "+weapon.getDescription()+".";};
+                };
             };
 
             //try to get whatever the player might be armed with instead.
@@ -3873,6 +3877,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //get initial damage level
             var pointsToRemove = weapon.getAttackStrength();
 
+            if (verb == "throw") {
+                pointsToRemove += weapon.getWeight();
+                if (_inventory.check(weapon.getName())) {
+                    _inventory.remove(weapon.getName());
+                    _currentLocation.addObject(weapon);
+                };
+                weapon.bash(); //we'll bash it a second time later!
+            };
+
             //alter strength/damage if bleeding or nearly dying.
             if (healthPercent() <=5) {
                 //double damage for dying blow if they can get one in!!
@@ -3885,12 +3898,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 pointsToRemove = pointsToRemove*0.8
             };
 
-            var resultString = receiver.hurt(Math.floor(pointsToRemove), self);
+            var tempResult = receiver.hurt(Math.floor(pointsToRemove), self);
+            if (verb == "throw") {
+                tempResult = tempResult.replace(" "+receiver.getSuffix(), " "+receiver.getDisplayName());
+            };
+
+            var resultString = tempResult;
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
-                weapon.consume(2); //use up multiple charges!
-                weapon.consumeComponents(2);
-                resultString +=  "Ding! You repeatedly "+verb+" "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way."
+                if (verb == "throw") {
+                    resultString +=  "Ding! You "+verb+" "+weapon.getDisplayName()+" at "+receiver.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                } else {
+                    weapon.consume(2); //use up multiple charges!
+                    weapon.consumeComponents(2);
+                    resultString +=  "Ding! You repeatedly "+verb+" "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                };
             }; 
 
             if (receiver.isDestroyed()) { 
@@ -3918,10 +3940,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var chargesRemaining = -1
             var componentChargesRemaining = -1
             if (weapon) {
-
-                chargesRemaining = weapon.consume(); //(we may have already used some earlier)
-                componentChargesRemaining = weapon.consumeComponents();
-                if (weapon.isBreakable() && weapon.getSubType() != "projectile") {
+                if (verb != "throw") {
+                    chargesRemaining = weapon.consume(); //(we may have already used some earlier)
+                    componentChargesRemaining = weapon.consumeComponents();
+                };
+                if (weapon.isBreakable() && (weapon.getSubType() != "projectile" || verb == "throw")) {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
                         resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+". "+weapon.getDescriptivePrefix()+" not the most durable of weapons.";
@@ -3936,7 +3959,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString +="<br>You damaged "+weapon.getDisplayName()+".";
                     };
                 };
-                if (!weapon.isDestroyed()) {
+                if (!weapon.isDestroyed() && verb != "throw") {
                     if (chargesRemaining == 0) {
                         resultString +="<br>You used up all the "+weapon.getChargeUnit()+"s in "+weapon.getDisplayName()+".";
                     };
@@ -3949,8 +3972,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //remove consumed items.
                         for (var c=0;c<consumedItems.length;c++) {_inventory.remove(consumedItems[c].getName());};
                     };
-                };                
-                
+                };                                
 
             };
 
