@@ -156,7 +156,7 @@ exports.canDamageAnItemAndRetrieveCorrectDescription = function (test) {
     var woodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true, plural: true, isPowder: true};
     var wood = new artefact.Artefact("wood", "wood", "sharp and woody", woodAttributes);
     wood.bash();
-    var expectedResult = "some damaged wood";
+    var expectedResult = "some wood"; //note we don't show "damaged"
     //artefact object is created in setUp
     var actualResult = wood.getDescription();
     console.log("Expected: "+expectedResult);

@@ -228,8 +228,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 anItemDescription = self.getRawDescription();
                 //plural = _plural;
             };
-            if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0,4) == "the ") {
-                //Description starts with a proper noun.
+
+            if (tools.isProperNoun(anItemDescription) || anItemDescription.substr(0, 4) == "the " || anItemDescription.substr(0, 1) == "'") {
+                //Description starts with a proper noun, "the" or is quoted.
                 return anItemDescription;
             };
 

@@ -87,7 +87,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         var getObjectFromPlayer = function(objectName, verb){
-            var requestedObject = _inventory.getObject(objectName, null, null, verb);
+            var requestedObject = _inventory.getObject(objectName, false, false, verb);
             if (!requestedObject) {
                 if (_riding) {
                     if (_riding.syn(objectName)) {
@@ -98,12 +98,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return requestedObject;
         };
         var getObjectFromLocation = function(objectName, verb){
-            return _currentLocation.getObject(objectName, null, null, verb);
+            return _currentLocation.getObject(objectName, false, false, verb);
         };
         var getObjectFromPlayerOrLocation = function(objectName, verb){
             var playerArtefact = getObjectFromPlayer(objectName, verb);
-            if (playerArtefact) {return playerArtefact;}
-            else {return getObjectFromLocation(objectName, verb);};
+            if (playerArtefact) { return playerArtefact; };
+            
+            var locationObject = getObjectFromLocation(objectName, verb);
+            if (locationObject) { return locationObject; }            ;
+
+            //we've not found it - try again but wildcard?
         };
 
         var removeObjectFromPlayer = function(objectName){
@@ -1035,10 +1039,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var artefact = getObjectFromLocation(artefactName);
             if (!(artefact)) {
-                if (_inventory.check(artefactName)) {
-                    var inventoryObject = _inventory.getObject(artefactName);
-                    return "You're carrying "+inventoryObject.getSuffix()+" already.";
-                };
 
                 //if object doesn't exist, attempt "relinquish" from each non-creature object in location.
                 var allLocationObjects = _currentLocation.getAllObjects();
@@ -1077,6 +1077,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                         return creatures[c].relinquish(artefactName,self,_currentLocation.getInventoryObject())
                     };
+                };
+                
+                //does the player already have one? We try this last assuming that player may want more than one
+                if (_inventory.check(artefactName)) {
+                    var inventoryObject = _inventory.getObject(artefactName);
+                    return "You're carrying " + inventoryObject.getSuffix() + " already.";
+                }                ;
+                
+                //are we trying a "get all X"...
+                var firstWord = artefactName.split(" ", 1)[0];
+                if (firstWord == "all") {
+                    return self.getAll(verb, null, artefactName.replace("all ", ""));
                 };
 
                 return notFoundMessage(artefactName);
@@ -1134,8 +1146,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "You "+verb+" "+collectedArtefact.getDisplayName()+".";          
         };
 
-        /*Allow player to get all available objects from a location*/
-        self.getAll = function(verb, sourceContainerName) {
+        /*Allow player to get all available objects from a location or container*/
+        self.getAll = function(verb, sourceContainerName, objectNames) {
 
             if (sourceContainerName) {
                 var sourceContainer = getObjectFromPlayerOrLocation(sourceContainerName);
@@ -1161,12 +1173,28 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return "There's nothing in "+sourceContainer.getSuffix()+" to take."
                 };
             };
+            
+            if (objectNames) {
+                if (objectNames.substr(-1) == "s") { objectNames = objectNames.substr(0, objectNames.length - 1); };
+            };
 
             var artefacts;
             if (sourceContainer) {
-                artefacts = sourceContainer.getAllObjects();
+                if (objectNames) {
+                    var sourceInv = sourceContainer.getInventoryObject();
+                    artefacts = sourceInv.getAllObjectsOfType(objectNames);
+                    artefacts = artefacts.concat(sourceInv.getAllObjectswithSyn(objectNames)); //this may give duplicates
+                } else {
+                    artefacts = sourceContainer.getAllObjects().slice();
+                };
             } else {
-                artefacts = _currentLocation.getAllObjects();
+                if (objectNames) {
+                    var locInv = _currentLocation.getInventoryObject();
+                    artefacts = locInv.getAllObjectsOfType(objectNames);
+                    artefacts = artefacts.concat(locInv.getAllObjectswithSyn(objectNames)); //this may give duplicates
+                } else {
+                    artefacts = _currentLocation.getAllObjects().slice();
+                };                
             };
 
             var collectedArtefacts = [];
@@ -1180,19 +1208,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //bug workaround. get all won't auto-support required containers --V
                 if ((artefact.isCollectable()) && (_inventory.canCarry(artefact)) && (!(artefact.requiresContainer()))) {
-                    var artefactToCollect = getObjectFromPlayerOrLocation(artefact.getName());
-                    _inventory.add(artefactToCollect);
-                    collectedArtefacts.push(artefactToCollect);
-                    successCount ++;
-                };
-            });
-        
-            //as we're passing the original object array around, must "remove" from location after collection
-            collectedArtefacts.forEach(function(artefact) {
-                if (sourceContainer) {
-                    sourceContainer.removeObject(artefact.getName());
-                } else {
-                    removeObjectFromLocation(artefact.getName());
+                    var artefactToCollect;                    
+                    if (sourceContainer) {
+                        artefactToCollect = sourceContainer.getObject(artefact.getName());
+                    } else {
+                        artefactToCollect = getObjectFromLocation(artefact.getName());
+                    };
+                    
+                    if (artefactToCollect) {
+                        _inventory.add(artefactToCollect);
+                        if (sourceContainer) {
+                            sourceContainer.removeObject(artefact.getName());
+                        } else {
+                            removeObjectFromLocation(artefact.getName());
+                        };
+                        successCount++;
+                    } else {
+                        artefactCount--; //we found a duplicate
+                    };
                 };
             });
 
@@ -1285,10 +1318,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "You "+verb+" "+artefact.getDisplayName()+"."+resultString;
         };
 
-        self.dropAll = function(verb) {
-            if (verb == "throw"||verb=="put down") {return "You'll need to "+verb+" things one at a time, sorry.";};
-
-            var inventoryContents = _inventory.getAllObjects(true).slice(); //clone array so we don't delete from the same thing we're processing
+        self.dropAll = function(verb, objectNames) {
+            if (verb == "throw" || verb == "put down") { return "You'll need to " + verb + " things one at a time."; };
+            
+            var inventoryContents;
+            if (objectNames) {
+                if (objectNames.substr(-1) == "s") { objectNames = objectNames.substr(0, objectNames.length - 1); };
+                inventoryContents = _inventory.getAllObjectsOfType(objectNames);
+                inventoryContents = inventoryContents.concat(_inventory.getAllObjectswithSyn(objectNames)); //this may give duplicates
+            } else {
+                inventoryContents = _inventory.getAllObjects(true).slice(); //clone array so we don't delete from the same thing we're processing
+            };
             if (inventoryContents.length == 0) {return "You're not carrying anything.";};
             if (inventoryContents.length == 1) {
                 return self.drop(verb, inventoryContents[0].getName());
@@ -1300,6 +1340,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             for (var i=0;i<inventoryContents.length;i++) {
 
                 var droppedObject = removeObjectFromPlayer(inventoryContents[i].getName());
+                if (!(droppedObject)) { continue; }; //skip onto next iteration if no dropped item - probably already dropped
+
                 var broken = droppedObject.isBroken();
                 var destroyed = droppedObject.isDestroyed();
                 droppedObject.bash();
@@ -1334,7 +1376,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return self.dropAll(verb);
             };
             var artefact = getObjectFromPlayer(artefactName);
-            if (!(artefact)) {return "You're not carrying any "+artefactName+".";};
+            if (!(artefact)) {
+                var firstWord = artefactName.split(" ", 1)[0];
+                if (firstWord == "all") {
+                    return self.dropAll(verb, artefactName.replace("all ", ""));  
+                };
+                return "You're not carrying any " + artefactName + ".";
+            };
 
             var artefactDamage = "";
             if (verb != "put down") {
@@ -2216,22 +2264,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         /*Allow player to remove something from an object */
         self.remove = function(verb, artefactName, receiverName){
-                if (artefactName == "all") {return self.getAll(verb, receiverName);};
-                if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
-                if (tools.stringIsEmpty(receiverName)){ return verb+" "+artefactName+" from what?";};
+            if (artefactName == "all") { return self.getAll(verb, receiverName); }            ;
 
-                //get receiver if it exists
-                var receiver = getObjectFromPlayerOrLocation(receiverName);
-                if (!(receiver)) {return notFoundMessage(receiverName);};
+            if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
+            if (tools.stringIsEmpty(receiverName)){ return verb+" "+artefactName+" from what?";};
 
-                //check receiver is a container 
-                if (receiver.getType() == 'creature') {
-                    return  "It's probably better to 'ask' "+receiver.getSuffix()+"."; 
-                };
+            //get receiver if it exists
+            var receiver = getObjectFromPlayerOrLocation(receiverName);
+            if (!(receiver)) {return notFoundMessage(receiverName);};
 
-                var locationInventory = _currentLocation.getInventoryObject();
-                return receiver.relinquish(artefactName, self, locationInventory);
+            if (receiver.getType() == 'creature') {
+                return  "It's probably better to 'ask' "+receiver.getSuffix()+"."; 
             };
+
+            var locationInventory = _currentLocation.getInventoryObject();
+            return receiver.relinquish(artefactName, self, locationInventory);
+        };
 
 //above this line - artefact interactions
 //Below this line - a large block of creature interactions

@@ -529,7 +529,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
 
         self.getAllObjects = function(includeHiddenObjects) {
-            if (includeHiddenObjects) { return _items;};
+            if (includeHiddenObjects) { return _items;}; //caution - this returns the original array
             var itemsToReturn = [];
             for (var i=0;i<_items.length;i++) {
                 if (!(_items[i].isHidden()) && !(_items[i].getPosition())) {itemsToReturn.push(_items[i])};
@@ -597,6 +597,29 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
            };
            return returnObjects;
         };
+        
+        
+        self.getAllObjectswithSyn = function (aSynonym) {
+            var returnObjects = [];
+            for (var index = 0; index < _items.length; index++) {
+                if (_items[index].syn(aSynonym) && (!(_items[index].isHidden()))) {
+                    //console.log(aSynonym+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    returnObjects.push(_items[index]);
+                } else {
+                    //accessible children.
+                    if (_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
+                        if (_items[index].isOpen()) {
+                            var itemInventory = _items[index].getInventoryObject();
+                            if (itemInventory.size() > 0) {
+                                returnObjects = returnObjects.concat(itemInventory.getAllObjectswithSyn(aSynonym));
+                            };
+                        };
+                    };
+                };
+            };
+            return returnObjects;
+        };
+        
 
         self.getAllObjectsWithViewLocation = function() {
            var returnObjects = [];
