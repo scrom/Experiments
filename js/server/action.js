@@ -838,7 +838,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'straight-on':
                     case 'forward':
                     case 'f':
-                    case 'o':
                     case 'onward':
                         _direction = "c";
                         break;
