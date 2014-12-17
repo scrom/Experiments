@@ -337,7 +337,7 @@ exports.canCompleteKillSpyMission = function (test) {
 
     var resultString = p0.updateMissions(1, m0);
 
-    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.<br>";
+    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -377,7 +377,7 @@ exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (
     //var result = mission.checkState(inv, simon.getLocation(), m0);
     var resultString = p0.updateMissions(1, m0);
 
-    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.<br>";
+    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -397,7 +397,7 @@ exports.canCompleteReadArticleMission = function (test) {
 
     p0.read("read", "article");
     var resultString = p0.updateMissions(1, m0);
-    var expectedResult = "<br>Congratulations. You've learned the basics on how to develop good software architecture.<br>";
+    var expectedResult = "<br>Congratulations. You've learned the basics on how to develop good software architecture.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -447,7 +447,7 @@ exports.canGetBulbFromAmandaTalkingMission = function (test) {
     p0.say("talk","ok","amanda");
     var resultString = p0.updateMissions(1, m0);
 
-    var expectedResult = "<br>Amanda hands you a projector bulb.<br>You receive a projector bulb.";
+    var expectedResult = "<br>Amanda hands you a projector bulb.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -457,3 +457,77 @@ exports.canGetBulbFromAmandaTalkingMission = function (test) {
 };
 
 exports.canGetBulbFromAmandaTalkingMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+
+exports.bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull = function (test) {
+    var missions = m0.getAllMissions();
+    for (var i = 0; i < missions.length; i++) {
+        if (missions[i].getName() == "teachprojectorrepair") {
+            missions[i].clearParent();
+        };
+    };
+    
+    var amanda = m0.getCreature('amanda');
+    
+    //var mission = new spy.getMissions()[0];
+    //mission.startTimer();
+    var location = m0.getLocation("is-area");
+    p0.setLocation(location);
+    
+    var inv = p0.getInventoryObject();
+    inv.setCarryWeight(0);
+    
+    //var resultString = 
+    p0.say("talk", null, "amanda");
+    p0.say("talk", "ok", "amanda");
+    p0.updateMissions(1, m0);
+    
+    var loc = p0.getCurrentLocation();
+    var resultString = loc.objectExists("bulb");
+    
+    var expectedResult = true;
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+
+exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull = function (test) {
+    var missions = m0.getAllMissions();
+    for (var i = 0; i < missions.length; i++) {
+        if (missions[i].getName() == "teachprojectorrepair") {
+            missions[i].clearParent();
+        }        ;
+    }    ;
+    
+    var amanda = m0.getCreature('amanda');
+    
+    //var mission = new spy.getMissions()[0];
+    //mission.startTimer();
+    var location = m0.getLocation("is-area");
+    p0.setLocation(location);
+    
+    var inv = p0.getInventoryObject();
+    inv.setCarryWeight(0);
+    
+    //var resultString = 
+    p0.say("talk", null, "amanda");
+    p0.say("talk", "ok", "amanda");
+    var resultString = p0.updateMissions(1, m0);
+    
+    var expectedResult = "<br>Amanda hands you a projector bulb.<br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+

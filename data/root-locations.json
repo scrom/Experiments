@@ -5175,6 +5175,7 @@
                 "description": "projector bulb",
                 "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
                 "attributes": {
+				  "weight": 0.1,
                   "attackStrength": 5,
                   "canCollect": true,
                   "isBreakable": true,
@@ -8347,7 +8348,7 @@
               "removeObject": "50 shades",
               "score": 35,
               "increaseAffinityFor": "Vic Wiseman",
-              "message": "Congratulations. Vic likes the book!"
+              "message": "Congratulations. Vic likes the book!<br>She hands you a parcel."
             }
           }
         ]

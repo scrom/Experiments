@@ -4384,18 +4384,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.acceptItem = function(anObject)  {
-           var resultString = "You receive "+anObject.getDescription();
             
            if (_inventory.canCarry(anObject)) { 
                _inventory.add(anObject);
-               return resultString+".";   
+               return "";   
            };
 
            //can't carry it
-           _currentLocation.addObject(anObject);
-           return resultString +" but "+anObject.getDescriptivePrefix().toLowerCase()+" too heavy for you right now.<br>"+anObject.getDescriptivePrefix()+" been left here until you can carry "+anObject.getSuffix()+".";  
+            _currentLocation.addObject(anObject);
+           return "Unfortunately "+anObject.getDescriptivePrefix().toLowerCase()+" too heavy for you to carry right now.<br>You leave "+anObject.getSuffix()+" here to collect when you're ready.";  
        
-           //need to add support for required containers         
+           //@todo need to add support for required containers         
 
         };
 
@@ -4409,9 +4408,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //mission is either completed or failed...
             if (missionReward.message) {
-                resultString += "<br>" + missionReward.message + "<br>";
+                resultString += "<br>" + missionReward.message;
             };
-            resultString += mission.processReward(map, missionReward, self);
+            
+            var rewardString = mission.processReward(map, missionReward, self);
+            if (rewardString.length > 0) {
+                resultString += "<br>" + rewardString
+            };
+            
 
             if (missionReward.hasOwnProperty("fail")) {
                 _missionsFailed.push(mission.getName());
