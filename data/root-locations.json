@@ -6347,7 +6347,7 @@
           {
             "object": "artefact",
             "name": "50 shades",
-            "description": "'50 shades of customer'",
+            "description": "'50 Shades of Customer'",
             "detailedDescription": "'50 Shades of Customer'.<br>Wow. That's a really bad pun for a business book.",
             "attributes": {
               "defaultAction": "read",
