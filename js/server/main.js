@@ -8,8 +8,9 @@ var fileManagerModule = require('./filemanager.js');
 //load and initialise map
 var mapBuilderModule = require('./mapbuilder');
 //source data: 
-var gameDataJSONPath = '../../data/root-locations.json';  
-var mapBuilder = new mapBuilderModule.MapBuilder(gameDataJSONPath);
+var gameDataFolder = '../../data/';  
+var gameDataJSONFile = 'root-locations.json';  
+var mapBuilder = new mapBuilderModule.MapBuilder(gameDataFolder, gameDataJSONFile);
 
 var fileManager = new fileManagerModule.FileManager();
 var gameController = new gameControllerModule.GameController(mapBuilder, fileManager);

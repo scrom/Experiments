@@ -3,10 +3,7 @@
 exports.Map = function Map() {
     try{
         //module deps
-        var tools = require('./tools.js');
-                  
-        //source data: 
-        var _rootLocationsJSON = require('../../data/root-locations.json');          
+        var tools = require('./tools.js');                     
 
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _locationIndexMap = [];

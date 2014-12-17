@@ -5,7 +5,7 @@ var location = require('../location.js');
 var gamecontroller = require('../gamecontroller.js');
 var game = require('../game.js');
 var filemanager = require('../filemanager.js');
-var mb = new mapbuilder.MapBuilder('../../data/root-locations.json');
+var mb = new mapbuilder.MapBuilder('../../data/','root-locations.json');
 var fm = new filemanager.FileManager(true, "./test/testdata/");
 var gc = new gamecontroller.GameController(mb, fm);
 
