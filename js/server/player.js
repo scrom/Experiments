@@ -243,6 +243,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
             };
+
+            //is it a drawing?
+            var isPlayerArt = _currentLocation.checkWritingOrDrawing(objectName);
+            if (!isPlayerArt) {
+                isPlayerArt = _inventory.checkWritingOrDrawing(objectName);
+            };
+
+            if (isPlayerArt) {
+                return "It's just some idle scrawl. Nothing you can do much with.";
+            };
             
             var randomReplies = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -1175,7 +1185,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
             if (objectNames) {
-                if (objectNames.substr(-1) == "s") { objectNames = objectNames.substr(0, objectNames.length - 1); };
+                if (objectNames.substr(-2) == "es") { objectNames = objectNames.substr(0, objectNames.length - 2); }
+                else if (objectNames.substr(-1) == "s") { objectNames = objectNames.substr(0, objectNames.length - 1); }
+                else if (objectNames.substr(-2) == "ii") { objectNames = objectNames.substr(0, objectNames.length - 2)+"us"; }
             };
 
             var artefacts;
@@ -1183,7 +1195,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (objectNames) {
                     var sourceInv = sourceContainer.getInventoryObject();
                     artefacts = sourceInv.getAllObjectsOfType(objectNames);
-                    artefacts = artefacts.concat(sourceInv.getAllObjectswithSyn(objectNames)); //this may give duplicates
+                    artefacts = artefacts.concat(sourceInv.getAllObjectsWithSyn(objectNames)); //this may give duplicates
                 } else {
                     artefacts = sourceContainer.getAllObjects().slice();
                 };
@@ -1191,7 +1203,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (objectNames) {
                     var locInv = _currentLocation.getInventoryObject();
                     artefacts = locInv.getAllObjectsOfType(objectNames);
-                    artefacts = artefacts.concat(locInv.getAllObjectswithSyn(objectNames)); //this may give duplicates
+                    artefacts = artefacts.concat(locInv.getAllObjectsWithSyn(objectNames)); //this may give duplicates
                 } else {
                     artefacts = _currentLocation.getAllObjects().slice();
                 };                
@@ -1308,6 +1320,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var inventorySize = artefact.getInventoryObject().size(true);
                 if (inventorySize == 0) {return "There's nothing to "+verb+" out.";}; 
 
+                //@todo - issue #305
                 return "You'll need to "+verb+" "+artefact.getDisplayName()+" "+splitWord+" "+receiver.getDisplayName()+" one named item at a time.";
             };
 
@@ -1325,7 +1338,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (objectNames) {
                 if (objectNames.substr(-1) == "s") { objectNames = objectNames.substr(0, objectNames.length - 1); };
                 inventoryContents = _inventory.getAllObjectsOfType(objectNames);
-                inventoryContents = inventoryContents.concat(_inventory.getAllObjectswithSyn(objectNames)); //this may give duplicates
+                inventoryContents = inventoryContents.concat(_inventory.getAllObjectsWithSyn(objectNames)); //this may give duplicates
             } else {
                 inventoryContents = _inventory.getAllObjects(true).slice(); //clone array so we don't delete from the same thing we're processing
             };
@@ -2948,6 +2961,36 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             };
                             break;
                         };
+                    };
+                };
+
+                //have they pluralised something?
+                if (artefactName.substr(-1) == "s" || artefactName.substr(-2) == "ii") {
+                    var singularName;
+                    if (artefactName.substr(-2) == "es") {
+                        singularName = artefactName.substr(0, artefactName.length-2);
+                    } else if (artefactName.substr(-2) == "es"){
+                        singularName = artefactName.substr(0, artefactName.length-2)+"us";
+                    } else if (artefactName.substr(-1) == "s"){
+                        singularName = artefactName.substr(0, artefactName.length-1);                        
+                    };
+
+                    var tempArtefacts = _inventory.getAllObjectsWithSyn(singularName);
+                    if (tempArtefacts.length < 2) {
+                        tempArtefacts = tempArtefacts.concat(_inventory.getAllObjectsOfType(singularName));
+                    };
+                    if (tempArtefacts.length < 2) {
+                        tempArtefacts = tempArtefacts.concat(_currentLocation.getAllObjectsWithSyn(singularName));
+                    };
+                    if (tempArtefacts.length < 2) {
+                        tempArtefacts = tempArtefacts.concat(_currentLocation.getAllObjectsOfType(singularName));
+                    };
+                    if (tempArtefacts.length < 2) {
+                        if (tempArtefacts.length == 1) {
+                            artefact = tempArtefacts[0];
+                        };
+                    } else {
+                        return "There's more than one "+singularName+" here, you'll need to be more specific.";
                     };
                 };
 

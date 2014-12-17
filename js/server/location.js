@@ -555,6 +555,14 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.getAllObjectsWithViewLocation();
         };
 
+        self.getAllObjectsWithSyn = function(synonym) {
+            return _inventory.getAllObjectsWithSyn(synonym);
+        };
+
+        self.checkWritingOrDrawing = function(content) {
+            return _inventory.checkWritingOrDrawing(content);
+        };
+
         self.countCreatures = function(subType, includeDeadCreatures) {
             return _inventory.creatureCount(subType, includeDeadCreatures);
         };

@@ -830,6 +830,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "";
         };
 
+        self.canDrawOn = function() {
+            return false;
+        };
+
+        self.hasWritingOrDrawing = function(content) {
+            return false;
+        };
+
         self.cure = function(contagionName) {
             itemToRemove = _antibodies.indexOf(contagionName);
             if (itemToRemove) {

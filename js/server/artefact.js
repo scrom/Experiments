@@ -1143,7 +1143,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.read = function(verb) {
             _read = true;
-            var resultString = "You "+verb+" "+self.getDisplayName()+".";
+            var resultString = "You "+verb+" "+self.descriptionWithCorrectPrefix()+".";
             if (_imageName) {
                 resultString += "$image"+_imageName+"/$image";
             };
@@ -1193,6 +1193,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.canDrawOn = function() {
             return _canDrawOn;
+        };
+
+        self.hasWritingOrDrawing = function(content) {
+            var index = _drawings.indexOf(content);
+            if (index > -1) {
+                return true;
+            };
+
+            index = _writings.indexOf(content);
+            if (index > -1) {
+                return true;
+            };
+
+            return false;
         };
 
         self.addDrawing = function(drawing) {

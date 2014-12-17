@@ -599,7 +599,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
         
         
-        self.getAllObjectswithSyn = function (aSynonym) {
+        self.getAllObjectsWithSyn = function (aSynonym) {
             var returnObjects = [];
             for (var index = 0; index < _items.length; index++) {
                 if (_items[index].syn(aSynonym) && (!(_items[index].isHidden()))) {
@@ -611,13 +611,34 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         if (_items[index].isOpen()) {
                             var itemInventory = _items[index].getInventoryObject();
                             if (itemInventory.size() > 0) {
-                                returnObjects = returnObjects.concat(itemInventory.getAllObjectswithSyn(aSynonym));
+                                returnObjects = returnObjects.concat(itemInventory.getAllObjectsWithSyn(aSynonym));
                             };
                         };
                     };
                 };
             };
             return returnObjects;
+        };
+
+        self.checkWritingOrDrawing = function(content) {
+            for (var index = 0; index < _items.length; index++) {
+                if (_items[index].hasWritingOrDrawing(content) && ((!(_items[index].isHidden())) || _items[index].getType() == "scenery")) {
+                    return true;
+                } else {
+                    //accessible children.
+                    if (_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
+                        if (_items[index].isOpen()) {
+                            var itemInventory = _items[index].getInventoryObject();
+                            if (itemInventory.size() > 0) {
+                                var result = returnObjects.concat(itemInventory.checkWritingOrDrawing(content));
+                                if (result == true) {return true;};
+                            };
+                        };
+                    };
+                };
+            };
+
+            return false;
         };
         
 
