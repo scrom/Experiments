@@ -49,7 +49,7 @@ exports.tearDown = function (callback) {
 exports.canGetObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var expectedResult = "You get the artefact.";
+    var expectedResult = "You get "+ a0.getDisplayName()+".";
     var actualResult = p0.get('get', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

@@ -728,8 +728,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             processAttributes(attributes);
         };
 
-        self.getDisplayName = function() {
-            return "the "+_name;
+        self.getDisplayName = function () {
+            if (tools.isProperNoun(_description) || _description.substr(0, 4).toLowerCase() == "the " || _description.substr(0, 1) == "'") {
+                return _description;
+            };
+            return "the "+_description;
         };
 
         self.getType = function() {
@@ -1143,11 +1146,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.read = function(verb) {
             _read = true;
-            var description = self.getRawDescription();
-            if (!(tools.isProperNoun(description) || description.substr(0, 4) == "the " || description.substr(0, 1) == "'")) {
-                description = "the " + description;
-            };
-            var resultString = "You "+verb+" "+ description+".";
+            var resultString = "You "+verb+" "+ self.getDisplayName()+".";
             if (_imageName) {
                 resultString += "$image"+_imageName+"/$image";
             };

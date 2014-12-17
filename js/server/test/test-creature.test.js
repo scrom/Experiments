@@ -751,14 +751,14 @@ exports.weakUnarmedCreatureWillCollectWeapon = function (test) {
     //var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
     //var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
     
-    var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
-    var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
-    //var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
-    //var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
+    var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
+    //var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    //var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
 
     l.addObject(weakWeapon);
     l.addObject(lightWeapon);
-    var expected = "<br>The creature picked up the light. Watch out!<br>";
+    var expected = "<br>The creature picked up the light weapon. Watch out!<br>";
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
@@ -808,17 +808,17 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne = function (test) {
     var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
     var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
     
-    var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
-    var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
-    var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
-    var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
+    var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
+    var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
 
     c0.receive(weakWeapon);
 
     l.addObject(mediumWeapon);
     l.addObject(heavyWeapon);
     l.addObject(lightWeapon);
-    var expected = "<br>The creature dropped the weak.<br>The creature picked up the heavy. Watch out!<br>";
+    var expected = "<br>The creature dropped the weak weapon.<br>The creature picked up the heavy weapon. Watch out!<br>";
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
@@ -1207,7 +1207,7 @@ exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharg
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "The creature grabs the cake with his teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
+    var expected = "The creature grabs the slab of sugary goodness with his teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -1225,7 +1225,7 @@ exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBeh
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "The creature pulls at the cake, chews a small piece off to eat and leaves the remainder on the floor for later.";
+    var expected = "The creature pulls at the slab of sugary goodness, chews a small piece off to eat and leaves the remainder on the floor for later.";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -1243,7 +1243,7 @@ exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll =
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "The creature pulls at the cake and devours it all noisily in front of you.";
+    var expected = "The creature pulls at the slab of sugary goodness and devours it all noisily in front of you.";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -1260,7 +1260,7 @@ exports.receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood = function (test) 
     var c0 = new creature.Creature('creature','beastie', 'an animal',{weight:10, attackStrength:50, gender:'male', type:'animal', carryWeight:50, health:100, maxHealth:150});
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
-    var expected = "The creature sniffs at the cake, makes a disgruntled snort and turns away.<br>You leave it on the ground in case he comes back later.";
+    var expected = "The creature sniffs at the slab of sugary goodness, makes a disgruntled snort and turns away.<br>You leave it on the ground in case he comes back later.";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -1279,8 +1279,8 @@ exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood = function (test) 
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "He eats all the cake,";
-    var actual = c0.receive(food, p0).substr(0,21);
+    var expected = "He eats all the slab";
+    var actual = c0.receive(food, p0).substr(0,20);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);
@@ -1298,8 +1298,8 @@ exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood 
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var resultString = c0.receive(food, p0);
-    var expected = "He eats the cake, He holds onto the remainder for later.";
-    var actual = resultString.substr(0,18)+resultString.substr(-38);
+    var expected = "He eats the slab He holds onto the remainder for later.";
+    var actual = resultString.substr(0,17)+resultString.substr(-38);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);

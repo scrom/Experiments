@@ -114,9 +114,8 @@ exports.canGetUsername.meta = { traits: ["Player Test", "Attribute Trait"], desc
 
 exports.canGetAndDropObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact'
     p0.get('get', a0.getName());
-    var expectedResult = "You throw the "+artefactName+". ";
+    var expectedResult = "You throw the artefact of little consequence. ";
     var actualResult = p0.drop('throw', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -128,9 +127,9 @@ exports.canGetAndDropObject.meta = { traits: ["Player Test", "Inventory Trait", 
 
 exports.canGetAndThrowBreakableObject = function (test) {
     var artefactDescription = breakable.getDescription();
-    var artefactName = breakable.getName()
+    var artefactName = breakable.getDisplayName()
     p0.get('get', breakable.getName());
-    var expectedResult = "You throw the "+artefactName+". You broke it!";
+    var expectedResult = "You throw "+artefactName+". You broke it!";
     var actualResult = p0.drop('throw', breakable.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -142,7 +141,7 @@ exports.canGetAndThrowBreakableObject.meta = { traits: ["Player Test", "Inventor
 
 exports.canWaveObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact'
+    var artefactName = 'artefact of little consequence'
     p0.get('get', a0.getName());
     var expectedResult = "You wave the "+artefactName+". Nothing happens.<br>Your arms get tired and you feel slightly awkward.";
     var actualResult = p0.wave('wave', a0.getName());
@@ -209,7 +208,7 @@ exports.canEatFoodWhenHungry = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(54);
     //p0.reduceHitPoints(6);
-    var expectedResult = 'You eat the cake';
+    var expectedResult = 'You eat the slab';
     var actualResult = p0.eat('eat','cake').substring(0,16);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -223,7 +222,7 @@ exports.canEatFoodWhenHungry.meta = { traits: ["Player Test", "Inventory Trait",
 exports.canEatFoodWhenHungryTestBoundaryCase = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(50);
-    var expectedResult = "You eat the cake";
+    var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat','cake').substring(0,16);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -266,7 +265,7 @@ exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(32);
     p0.reduceHitPoints(6); //test boundary
-    var expectedResult = "You eat the cake";
+    var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat','cake').substring(0,16);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -709,12 +708,12 @@ exports.hittingLiquidContainerWhenArmedLosesLiquidContents = function (test) {
     var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
 
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
-    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', weapon.getName());
-    var expectedResult = "You broke it!<br>The coffee that was in the mug slowly trickles away.";
+    var expectedResult = "You broke it!<br>The coffee that was in the coffee mug slowly trickles away.";
     var actualResult = p0.hit('hit',mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -730,12 +729,12 @@ exports.throwingLiquidContainerLosesLiquidContents = function (test) {
     var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
 
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
-    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
-    var expectedResult = "You throw the mug. You broke it!<br>The coffee that was in the mug slowly trickles away.";
+    var expectedResult = "You throw the coffee mug. You broke it!<br>The coffee that was in the coffee mug slowly trickles away.";
     var actualResult = p0.drop('throw',mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -771,12 +770,12 @@ exports.deliberatelyBreakingLiquidContainerLosesLiquidContents = function (test)
     var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
 
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
-    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
-    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You broke it!<br>The coffee that was in the mug slowly trickles away.";
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You broke it!<br>The coffee that was in the coffee mug slowly trickles away.";
     var actualResult = p0.breakOrDestroy('break',mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -835,13 +834,13 @@ exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents = function (test) {
     var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
 
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
-    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', weapon.getName());
     p0.hit('hit',weapon.getName(), mug.getName());
-    var expectedResult = "Ding! You repeatedly hit the sword with the mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the mug.<br>The coffee that was in the mug slowly trickles away.";
+    var expectedResult = "Ding! You repeatedly hit the mighty sword with the coffee mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the coffee mug.<br>The coffee that was in the coffee mug slowly trickles away.";
     var actualResult = p0.hit('hit',weapon.getName(), mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -854,7 +853,7 @@ exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents.meta = { traits: ["
 
 exports.hittingUnbreakableArtefactReturnsSensibleMessage = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "Ding! You repeatedly hit the artefact with the sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
+    var expectedResult = "Ding! You repeatedly hit the artefact of little consequence with the mighty sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
     var actualResult = p0.hit('hit',a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -917,7 +916,7 @@ exports.cannotPutObjectInClosedContainer.meta = { traits: ["Player Test", "Inven
 
 exports.canPutObjectInOpenContainer = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = "You put the cake in the container.<br>";
+    var expectedResult = "You put the slab of sugary goodness in the container.<br>";
     p0.open('open','container');
     var actualResult = p0.put('put','cake', 'container');
     console.log("Expected: "+expectedResult);
@@ -981,7 +980,7 @@ exports.canMakeSweetCoffeeByAddingSugarToCup.meta = { traits: ["Player Test", "C
 
 exports.cantPutObjectInItemWithNoCarryWeight = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = "Sorry, the sword can't hold the cake.";
+    var expectedResult = "Sorry, the mighty sword can't hold the slab of sugary goodness.";
     var actualResult = p0.put('put','cake', 'sword');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1009,7 +1008,7 @@ exports.cantPutObjectInItemThatDoesntExist.meta = { traits: ["Player Test", "Inv
 
 exports.canPutObjectInNonContainerItemWithCarryWeight = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = "You put the cake in the artefact.<br>";
+    var expectedResult = "You put the slab of sugary goodness in the artefact of little consequence.<br>";
     var actualResult = p0.put('put','cake', 'artefact');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1022,7 +1021,7 @@ exports.canPutObjectInNonContainerItemWithCarryWeight.meta = { traits: ["Player 
 exports.canPutObjectInBrokenNonContainerItemWithCarryWeight = function (test) {
     p0.get('get', food.getName());
     p0.breakOrDestroy('break','glass');
-    var expectedResult = "You put the cake in the glass.<br>";
+    var expectedResult = "You put the slab of sugary goodness in the drinking glass.<br>";
     var actualResult = p0.put('put','cake', 'glass');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1049,7 +1048,7 @@ exports.canRemoveObjectFromOpenContainer.meta = { traits: ["Player Test", "Inven
 
 exports.canDropObjectFromOpenContainer = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = "You drop the cake. ";//note trailing space
+    var expectedResult = "You drop the slab of sugary goodness. ";//note trailing space
     p0.open('open','container');
     p0.put('put','cake', 'container');
     p0.get('get', 'container');
@@ -1958,7 +1957,7 @@ exports.playerCanConsumeACleaningItemByCleaning = function (test) {
     p0.clean('clean','book');
     p0.writeOrDraw('draw','cactus', 'book');
 
-    var expectedResult = "You clear all the previously added 'artwork' from the book.<br>You used up all the cloth.";
+    var expectedResult = "You clear all the previously added 'artwork' from the book.<br>You used up all the worn cloth.";
     var actualResult = p0.clean('clean','book');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -2348,7 +2347,7 @@ exports.emptiedbottleOfBloodIsVisible.meta = { traits: ["Player Test", "Blood Tr
 exports.playerCanEmptyaBottleOfBlood = function (test) {
     c0.kill();
     var liquidContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true };
-    var bottle = new artefact.Artefact('bottle', 'a bottle', "Good for carrying liquids.", liquidContainerAttributes);
+    var bottle = new artefact.Artefact('bottle', 'bottle', "Good for carrying liquids.", liquidContainerAttributes);
     var inv = p0.getInventoryObject();
     inv.add(bottle);
     p0.get("collect", "blood");
