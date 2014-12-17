@@ -924,7 +924,6 @@
         "detailedDescription": "It's a standard wood-effect office desk/table.",
         "attributes": {
           "weight": 120,
-          "canCollect": true,
           "isBreakable": true,
           "canDrawOn": true
         },
@@ -3145,8 +3144,8 @@
   {
     "object": "location",
     "name": "darth-vader",
-    "displayName": "Darth Vader meeting room",
-    "description": "You're in the 'Darth Vader' meeting room. Another great space tucked out of the way behind facilities this time.<br>There's a great view up the road out of the business park.",
+    "displayName": "Darth Vader",
+    "description": "You're in the 'Darth Vader' meeting room. This is a really great space that it seems most people forget exists.<br>I guess it's tucked out of the way behind the facilities team in the furthest corner of the office.<br>It's bright, airy, spacious and has a great view outside.",
     "exits": [
       {
         "object": "exit",
@@ -3154,6 +3153,95 @@
         "direction": "s",
         "source": "darth-vader",
         "destination": "facilities-area"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "You peer out of the window and look down to the office entrance.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true,
+          "viewDestination": "office-front"
+        },
+        "synonyms": [
+          "glass",
+          "windows",
+          "outside"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "whiteboard",
+        "description": "large whiteboard",
+        "detailedDescription": "It's n surprisingly good shape!.",
+        "attributes": {
+          "weight": 30,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "board",
+          "white board",
+          "whitebaord",
+          "diagram",
+          "code"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "pen",
+        "description": "whiteboard pen",
+        "detailedDescription": "It's a decent-ish black whiteboard pen",
+        "attributes": {
+          "weight": 0.2,
+          "type": "writing",
+          "canCollect": true,
+          "charges": 30,
+          "chargeUnit": "use",
+          "chargesDescription": "It's good for about $charges more $chargeUnit"
+        },
+        "synonyms": [
+          "board pen",
+          "black pen",
+          "whiteboard pen"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "large oval table",
+        "detailedDescription": "It's the kind you see in office boardrooms.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "desk"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "set of office chairs",
+        "detailedDescription": "They're fairly plain chairs. There's enough to fit a decent-sized team in here for a meeting though.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair"
+        ]
       }
     ]
   },
@@ -5784,9 +5872,9 @@
                     "burned comic",
                     "charred comic",
                     "comic book",
-					"graphic",
-					"graphic novel",
-					"rare graphic novel"
+                    "graphic",
+                    "graphic novel",
+                    "rare graphic novel"
                   ]
                 },
                 {
@@ -6301,7 +6389,7 @@
           "weight": 80,
           "carryWeight": 8,
           "type": "container",
-		  "plural": true,
+          "plural": true,
           "isBreakable": true,
           "canDrawOn": true
         },
@@ -6332,16 +6420,16 @@
               "type": "book",
               "canCollect": true,
               "canDrawOn": true,
-			  "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff to be honest."
+              "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff to be honest."
             },
             "synonyms": [
               "book",
               "selling book",
-			  "sell book",
-			  "smell sell",
-			  "sell smell",
-			  "smell of sell",
-			  "the smell of sell"
+              "sell book",
+              "smell sell",
+              "sell smell",
+              "smell of sell",
+              "the smell of sell"
             ]
           },
           {
@@ -6355,7 +6443,7 @@
               "attackStrength": 2,
               "type": "book",
               "canCollect": true,
-              "defaultResult": "'As he took my hand my heart quickened and I realised this was a man who meant business.'<br>'His double-fist-pump hand shake only meant one thing...'<br>'SENIOR EXECUTIVE!'<br><br>As a working professional, you provide a service to everyone you interact with. The class of service you provide in these interactions is largely your choice but for optimum results you must determine a person's unmet need and establish if you are able (and willing) to help them fulfil it.<br>...furthermore, understand their role, their sphere of influence and the value of your relationship to them.<br>How can you both achieve mutual success? Not from a purely cynical or financial perspective but from a longer term holistic business relationship.<br>Don't let anyone fool you. Just because it's business doesn't mean it's not personal...<br><br>It continues switching between bad storytelling and business explanation and goes on to explain why not all customers are created equal.<br><br>I think it's meant to help you work with difficult customers and business relationships.<br>Although the writing style is awful, there's almost certainly some useful nuggets hiding in there for someone in a front-line, customer-facing role.",
+              "defaultResult": "'As he took my hand my heart quickened and I realised this was a man who meant business.'<br>'His double-fist-pump hand shake meant only one thing...'<br>'SENIOR EXECUTIVE!'<br><br>As a working professional, you provide a service to everyone you interact with. The class of service you provide in these interactions is largely your choice but for optimum results you must determine a person's unmet need and establish if you are able (and willing) to help them fulfil it.<br>...furthermore, understand their role, their sphere of influence and the value of your relationship to them.<br>How can you both achieve mutual success? Not from a purely cynical or financial perspective but from a longer term holistic business relationship.<br>Don't let anyone fool you. Just because it's business doesn't mean it's not personal...<br><br>It continues switching between bad storytelling and business explanation and goes on to explain why not all customers are created equal.<br><br>I think it's meant to help you work with difficult customers and business relationships.<br>Although the writing style is awful, there's almost certainly some useful nuggets hiding in there for someone in a front-line, customer-facing role.",
               "canDrawOn": true,
               "smell": "Hmmm. You're <i>sure</i> that smell's familiar but you can't quite place it."
             },
@@ -6363,7 +6451,7 @@
               "book",
               "care book",
               "customer book",
-			  "50 shades of customer"
+              "50 shades of customer"
             ]
           }
         ]
@@ -8095,7 +8183,7 @@
             },
             "synonyms": [
               "book",
-			  "visitor book",
+              "visitor book",
               "in"
             ]
           },
