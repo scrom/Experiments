@@ -2232,7 +2232,7 @@ exports.locationHasNoBloodAfterCleaningFloor.meta = { traits: ["Player Test", "W
 exports.playerCanSeeWritingAndDrawingOnABook = function (test) {
     var penAttributes = {weight: 0.5, type: "writing", canCollect: true, canOpen: false, isBreakable: true};
     var bookAttributes = {weight: 1, type: "book", canCollect: true, canDrawOn: true};
-    var book = new artefact.Artefact('book', 'book', "Read me.", bookAttributes, null); 
+    var book = new artefact.Artefact('book', "'how to read'", "Read me.", bookAttributes, null); 
     var pen = new artefact.Artefact('pen', 'pen', "Something to draw with.", penAttributes, null); 
 
     var inv = p0.getInventoryObject();
@@ -2242,7 +2242,7 @@ exports.playerCanSeeWritingAndDrawingOnABook = function (test) {
     p0.writeOrDraw('draw','cactus', 'book');
     p0.writeOrDraw('draw','cactii', 'book');
 
-    var expectedResult = "You read the book.<br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
+    var expectedResult = "You read 'how to read'.<br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
     var actualResult = p0.read("read", "book");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

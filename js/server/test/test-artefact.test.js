@@ -720,7 +720,7 @@ exports.readABoringBookGivesRelevantMessage = function (test) {
     var inv = p0.getInventoryObject();
     var _inventory = p0.getInventoryObject();
     inv.add(comic);
-    var expectedResult = "You read the comic.<br>It's mildly interesting but you learn nothing new.";
+    var expectedResult = "You read the book with charred pages.<br>It's mildly interesting but you learn nothing new.";
     var actualResult = p0.read("read", "comic");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -738,7 +738,7 @@ exports.readABookWithContentButNoMissionsReturnsContent = function (test) {
     var inv = p0.getInventoryObject();
     var _inventory = p0.getInventoryObject();
     inv.add(comic);
-    var expectedResult = "You read the comic.<br>Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something.$result";
+    var expectedResult = "You read the book with charred pages.<br>Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something.$result";
     var actualResult = p0.read("read", "comic");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

@@ -1143,7 +1143,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.read = function(verb) {
             _read = true;
-            var resultString = "You "+verb+" "+self.descriptionWithCorrectPrefix()+".";
+            var description = self.getRawDescription();
+            if (!(tools.isProperNoun(description) || description.substr(0, 4) == "the " || description.substr(0, 1) == "'")) {
+                description = "the " + description;
+            };
+            var resultString = "You "+verb+" "+ description+".";
             if (_imageName) {
                 resultString += "$image"+_imageName+"/$image";
             };
