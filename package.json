@@ -17,10 +17,10 @@
     "url": "git://github.com/scrom/Experiments.git"
   },
   "dependencies": {
-    "body-parser": "^1.9.3",
+    "body-parser": "^1.10.0",
     "coffee-script": "^1.8.0",
-    "express": "^4.10.3",
-    "iced-coffee-script": "^1.8.0-a",
+    "express": "^4.10.6",
+    "iced-coffee-script": "^1.8.0-c",
     "jsonfile": "^2.0.0",
     "morgan": "^1.5.0",
     "nodeunit": "^0.9.0",
