@@ -1,8 +1,10 @@
 ﻿"use strict";
 //map builder object
 exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
-    try{   
+    try{
         //module deps
+        var requireDirectory = require('require-directory');
+
         var tools = require('./tools');
         var fs = require('fs');
         var mapObjectModule = require('./map');
@@ -13,7 +15,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         var missionObjectModule = require('./mission.js');
 
         //source data: 
-        var _rootLocationsJSON = require(mapDataPath+mapDataFile);          
+        var data = requireDirectory(module, mapDataPath, { recurse: false });
+        //console.log(Object.keys(data));
+        var _rootLocationsJSON = data[mapDataFile];
+ 
 
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _map = new mapObjectModule.Map();

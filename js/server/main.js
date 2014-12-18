@@ -9,7 +9,7 @@ var fileManagerModule = require('./filemanager.js');
 var mapBuilderModule = require('./mapbuilder');
 //source data: 
 var gameDataFolder = '../../data/';  
-var gameDataJSONFile = 'root-locations.json';  
+var gameDataJSONFile = 'root-locations';  
 var mapBuilder = new mapBuilderModule.MapBuilder(gameDataFolder, gameDataJSONFile);
 
 var fileManager = new fileManagerModule.FileManager();
