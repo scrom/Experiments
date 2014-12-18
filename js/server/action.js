@@ -1202,6 +1202,12 @@ exports.Action = function Action(player, map, fileManager) {
                     item = _player.getObject(_object0);
                 };
                 if (!(item)) {
+                    var loc = _player.getCurrentLocation();
+                    if (loc) {
+                        item = loc.getObject(_object0);
+                    };
+                };
+                if (!(item)) {
                     item = _map.getObject(_object0);
                 };
                 if (item) {

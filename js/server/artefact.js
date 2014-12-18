@@ -348,8 +348,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 anItemDescription = self.getRawDescription();
                 plural = _plural;
                 if (self.isDestroyed()) {
-                    return self.getRawDescription();  
-                } 
+                    return "some "+self.getRawDescription();  
+                };
                 if (self.isBroken()) {
                     state = " broken ";
                 //we don't report damaged                      
@@ -934,12 +934,28 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             return resultString;
         };
+        
+        self.describeView = function (viewDestination, map) {
+            if (viewDestination && map) {
+                var destination = map.getLocation(viewDestination);
+                if (destination) {
+                    var objectList = destination.listObjects(2);
+                    if (objectList.length > 1) {
+                        return "<br>Through " + self.getDisplayName() + " you can see " + destination.listObjects(2) + ".";
+                    };
+                };
+            };
+            return "";
+        };
 
         self.getDetailedDescription = function(playerAggression, map, minSize) {
             if (!minSize) {minSize = -999;};
             //note we can change description based on player aggression - better for creatures but supported here too.
             var resultString = _detailedDescription; //original description
-            if (_destroyed) { return resultString; }; //don't go any further.
+            if (_destroyed) {
+                resultString += self.describeView(_viewDestination, map);
+                return resultString;
+            }; //don't go any further.
 
             if (self.getType() != "book") {
                 resultString += self.describeNotes();
@@ -983,17 +999,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };              
             };
 
-            resultString = resultString.replace("placed on top", "on "+self.getSuffix());
-
-            if (_viewDestination && map) {
-                var destination = map.getLocation(_viewDestination);
-                if (destination) {
-                    var objectList = destination.listObjects(2);
-                    if (objectList.length > 1) {
-                        resultString += "<br>Through "+self.getDisplayName()+" you can see "+destination.listObjects(2)+".";
-                    };
-                };
-            };
+            resultString = resultString.replace("placed on top", "on " + self.getSuffix());
+            
+            resultString += self.describeView(_viewDestination, map);
 
             //remove original description if it's not working.
             if (!(self.checkComponents())) { 
@@ -1982,7 +1990,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_price > 0) { self.discountPriceByPercent(50); };
                 _detailedDescription = tools.initCap(_itemDescriptivePrefix)+" broken";
                 var opened = "";
-                if (wasLocked && !wasOpen && _open) {opened = " open";};  
+                if (wasLocked && !wasOpen && _open) { opened = " open"; };
+                if (_viewDestination) {
+                    self.revealHiddenExits();
+                };
                 return "You broke "+_itemSuffix+opened+"!";
             };
 
@@ -2003,6 +2014,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 var desc = self.descriptionWithCorrectPrefix();
                 _broken = true;
                 _destroyed = true;
+                _hidden = false;
+                _synonyms.push("wreckage");
                 if (_price > 0) { self.discountPriceByPercent(100); };
                 //mark delivery items as destroyed too
                 var deliveryItems = self.getDeliveryItems();
@@ -2015,7 +2028,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 desc = desc.replace(" broken "," ")
                 desc = desc.replace(" chewed "," ")
                 desc = desc.replace(" damaged "," ")
-                _description = "some wreckage that was once "+desc;
+                _description = "wreckage that was once " + desc;
                 _detailedDescription = " There's nothing left but a few useless fragments.";
                 //note, player will remove object from game if possible
                 var resultString = "You destroyed "+_itemSuffix+"!";

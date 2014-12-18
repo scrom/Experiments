@@ -31,6 +31,7 @@
     <Content Include="data\sweet-latte.json" />
     <Content Include="data\sweet-mocha.json" />
     <Content Include="data\water.json" />
+    <Content Include="data\window.json" />
     <Content Include="index.html" />
     <Content Include="js\server\test\testdata\canonical-game-data.json" />
     <Content Include="js\server\test\testdata\savegame-0.json" />

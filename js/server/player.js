@@ -3430,8 +3430,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
             }; 
-
-            return "You can't see any way to "+verb+" "+splitWord+" there."
+            
+            var injury = "";
+            if (artefact.getViewLocation() && (artefact.isBroken() || artefact.isDestroyed())) {
+                injury = " without doing yourself fatal harm (which would make the effort somewhat pointless)"
+            };
+            return "You can't see any way to "+verb+" "+splitWord+" there"+injury+"."
 
         };
 

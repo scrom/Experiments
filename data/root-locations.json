@@ -637,19 +637,11 @@
       },
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Are you spying on the lawyers?",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "lawyer-lobby"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -2808,19 +2800,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "west-car-park"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -3084,13 +3068,9 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "You peer out of the window and look down to the office entrance.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "office-front"
         },
         "synonyms": [
@@ -3494,19 +3474,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's a long way down.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -4049,19 +4021,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "If this were a house, it'd seem odd having indoor windows.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "sales-seating"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -5006,19 +4970,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's not the greatest view you could get from a meeting room.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "stairs-first-floor"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -7151,13 +7107,9 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Through the window lies the West car park. You can occasionally see people passing by with their bikes.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "west-car-park"
         },
         "synonyms": [
@@ -8545,19 +8497,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's usually pretty busy down there.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "reception"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -9009,19 +8953,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Things look pretty cosy in that corner.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "facilities-area"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -10447,19 +10383,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's a long way down.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -10538,19 +10466,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's the usual view out of the front of the office.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -10740,19 +10660,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Wave!",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
           "viewDestination": "stairs-first-floor"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
