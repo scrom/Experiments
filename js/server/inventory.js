@@ -631,7 +631,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         if (_items[index].isOpen()) {
                             var itemInventory = _items[index].getInventoryObject();
                             if (itemInventory.size() > 0) {
-                                var result = returnObjects.concat(itemInventory.checkWritingOrDrawing(content));
+                                var result = itemInventory.checkWritingOrDrawing(content);
                                 if (result == true) {return true;};
                             };
                         };
