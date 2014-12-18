@@ -166,6 +166,7 @@ For the server:
 -     "morgan": "^1.5.0"
 -     "jsonfile": "^2.0.0",
 -     "redis": "^0.12.1"
+-     "require-directory": "^2.0.0"
 
 For running NodeUnit:
 -     "nodeunit": "^0.9.0",
