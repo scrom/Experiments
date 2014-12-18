@@ -1,0 +1,15 @@
+﻿{
+"object": "artefact",
+"name": "window",
+"description": "window",
+"attributes": {
+    "weight": 280,
+    "type": "scenery",
+    "canDrawOn": true,
+	"isBreakable": true
+},
+"synonyms": [
+    "glass",
+    "windows"
+]
+}
