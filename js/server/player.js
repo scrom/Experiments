@@ -3106,7 +3106,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.isRead() && noteCount == 0) {
                 return "You've read "+artefact.getSuffix()+" before, you're not going to gain anything new from reading "+artefact.getSuffix()+" again.";
             } else if (artefact.isRead() && noteCount > 0) {
-                resultString += "You've read "+artefact.getSuffix()+" before but you decide to check the additional notes and drawings.<br>";
+                resultString += "You've read "+artefact.getSuffix()+" before but you decide to check the additional notes and drawings.";
             } else {
                 _booksRead ++;
             };
@@ -3120,15 +3120,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 resultString += artefact.read(verb);
 
-                if (newMissions.length==0 && noteCount == 0) {
-                    var result;
-                    if (artefact.getDefaultAction() == "read") {
-                        result = artefact.getDefaultResult();
-                        if (result) {resultString += "<br>"+result+"$result";};
-                    };
-                    if (!result) {
-                        resultString += "<br>"+artefact.getDescriptivePrefix()+" mildly interesting but you learn nothing new.";
-                    };
+                var result;
+                if (artefact.getDefaultAction() == "read") {
+                    result = artefact.getDefaultResult();
+                    if (result) {resultString += "<br>"+result+"$result";};
+                };
+                if (!result && newMissions.length == 0 && noteCount == 0) {
+                    resultString += "<br>" + artefact.getDescriptivePrefix() + " mildly interesting but you learn nothing new.";
                     return resultString;
                 };
 
@@ -3139,12 +3137,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         self.addMission(newMissions[i]);
                         artefact.removeMission(newMissions[i].getName());
                     };
-                    resultString+= newMissions[i].getDescription()+"<br>";
+                    resultString+= newMissions[i].getDescription();
                 };
             };
-
-            //if we've got this far, we have notes to read...
-            resultString += artefact.describeNotes();
+            
+            if (noteCount > 0) {
+                //if we've got this far, we probably have notes to read...
+                resultString += "<br>"+artefact.describeNotes();
+            };
 
             return resultString;
 

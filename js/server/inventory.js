@@ -103,8 +103,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 _maxCarryingWeight = self.getWeight();
             } else {
                 _maxCarryingWeight = parseFloat(newWeight);
-            }            ;
-            console.log("carryWeight set to " + _maxCarryingWeight);
+            };
         };
 
         self.getCarryWeight = function() {

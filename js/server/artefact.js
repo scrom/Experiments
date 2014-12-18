@@ -1144,9 +1144,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
-        self.read = function(verb) {
-            _read = true;
-            var resultString = "You "+verb+" "+ self.getDisplayName()+".";
+        self.read = function (verb) {
+            var resultString = "";
+            if (!_read) {
+                _read = true;
+                resultString += "You " + verb + " " + self.getDisplayName() + ".";
+            };
             if (_imageName) {
                 resultString += "$image"+_imageName+"/$image";
             };

@@ -2241,7 +2241,7 @@ exports.playerCanSeeWritingAndDrawingOnABook = function (test) {
     p0.writeOrDraw('draw','cactus', 'book');
     p0.writeOrDraw('draw','cactii', 'book');
 
-    var expectedResult = "You read 'how to read'.<br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
+    var expectedResult = "You read 'how to read'.<br><br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
     var actualResult = p0.read("read", "book");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
