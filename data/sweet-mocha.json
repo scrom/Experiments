@@ -13,6 +13,7 @@
     "canCollect": true,
     "charges": 1,
     "plural": true,
+	"affinityModifier": 2,
     "isEdible": true,
     "nutrition": 25
 },

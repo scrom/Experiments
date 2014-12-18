@@ -1,6 +1,332 @@
 ﻿[
   {
     "object": "location",
+    "name": "a14-eastbound",
+    "displayName": "A14 Eastbound",
+    "description": "You're driving East along the A14. On the opposite side of the road you see a stationary line of cars stretching beyond the horizon.<br>I bet you're glad you didn't head west!",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": []
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "left",
+        "direction": "l",
+        "source": "a14-roundabout",
+        "destination": "a10-nothbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "a14-roundabout",
+        "destination": "a14-roundabout-east",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-east",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "left",
+        "direction": "l",
+        "source": "a14-roundabout-east",
+        "destination": "a14-eastbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "a14-roundabout-east",
+        "destination": "a14-roundabout-south",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-entrance",
+    "displayName": "Milton roundabout",
+    "description": "You're waiting at the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "a14-roundabout-entrance",
+        "destination": "a14-roundabout",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "left",
+        "direction": "l",
+        "source": "a14-roundabout-entrance",
+        "destination": "a14-westbound",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-north-east",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "left",
+        "direction": "l",
+        "source": "a14-roundabout-north-east",
+        "destination": "milton-sliproad",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "a14-roundabout-north-east",
+        "destination": "a14-roundabout-east",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-south",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "left",
+        "direction": "l",
+        "source": "a14-roundabout-south",
+        "destination": "milton-road-north-end",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "a14-roundabout-south",
+        "destination": "a14-roundabout-south-west",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-south-west",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "left",
+        "direction": "l",
+        "source": "a14-roundabout-south-west",
+        "destination": "a14-westbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "a14-roundabout-south-west",
+        "destination": "a14-roundabout",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-westbound",
+    "displayName": "A14 Westbound",
+    "description": "You're stationary on the sliproad of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>To be honest you might as well just give up now.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": []
+  },
+  {
+    "object": "location",
+    "name": "access-road-central",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "access-road-central",
+        "destination": "access-road-west",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-east",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "access-road-east",
+        "destination": "access-road-central",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-junction",
+    "displayName": "Business park access road",
+    "description": "You're at the junction with Milton Road. Left leads into Cambridge, right heads towards Milton and the A14.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "right",
+        "direction": "r",
+        "source": "access-road-junction",
+        "destination": "a14-roundabout-entrance",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "left",
+        "direction": "l",
+        "source": "access-road-junction",
+        "destination": "milton-road",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-west",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "access-road-west",
+        "destination": "access-road-junction",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "atrium",
     "displayName": "Atrium",
     "description": "You're standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
@@ -1162,7 +1488,25 @@
         "inventory": [
           {
             "object": "artefact",
-            "template": "first-aid-kit"
+            "name": "first aid kit",
+            "description": "first aid kit",
+            "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+            "attributes": {
+              "defaultAction": "heal",
+              "weight": 1,
+              "type": "medical",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 5,
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "first aid",
+              "kit",
+              "firstaid kit",
+              "first-aid kit",
+              "first-aid"
+            ]
           }
         ],
         "synonyms": [
@@ -2543,7 +2887,25 @@
           },
           {
             "object": "artefact",
-            "template": "first-aid-kit"
+            "name": "first aid kit",
+            "description": "first aid kit",
+            "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+            "attributes": {
+              "defaultAction": "heal",
+              "weight": 1,
+              "type": "medical",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 5,
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "first aid",
+              "kit",
+              "firstaid kit",
+              "first-aid kit",
+              "first-aid"
+            ]
           },
           {
             "object": "artefact",
@@ -2847,7 +3209,45 @@
         "delivers": [
           {
             "object": "artefact",
-            "template": "healthy-tomato-plants"
+            "name": "healthy tomato plants",
+            "description": "tomato plants",
+            "detailedDescription": "They're well watered and fruiting.",
+            "attributes": {
+              "weight": 35,
+              "carryWeight": 5,
+              "isBreakable": true,
+              "plural": true
+            },
+            "synonyms": [
+              "tomato plants",
+              "tomato plant",
+              "plant",
+              "plants"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "tomatoes",
+                "description": "tomatoes",
+                "detailedDescription": "They're ripe and ready to pick.",
+                "attributes": {
+                  "weight": 3,
+                  "type": "food",
+                  "canCollect": true,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15,
+                  "customAction": [
+                    "get"
+                  ],
+                  "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                },
+                "synonyms": [
+                  "tomato",
+                  "tomatoes"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -4065,8 +4465,18 @@
       },
       {
         "object": "artefact",
-        "template": "office-door",
+        "name": "office door",
+        "description": "office door",
         "detailedDescription": "One of the main doors into the first floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "canDrawOn": true
+        },
         "linkedexits": [
           {
             "object": "exit",
@@ -4076,6 +4486,10 @@
             "destination": "servery-back-corridor",
             "hidden": true
           }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
     ]
@@ -4216,7 +4630,70 @@
         "delivers": [
           {
             "object": "artefact",
-            "template": "water"
+            "name": "water",
+            "description": "water",
+            "detailedDescription": "No real nutritional value but great for thirst and plants.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "drink",
+              "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "combinesWith": [
+                "tree",
+                "tomato plants"
+              ]
+            },
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "healthy tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're well watered and fruiting.",
+                "attributes": {
+                  "weight": 35,
+                  "carryWeight": 5,
+                  "isBreakable": true,
+                  "plural": true
+                },
+                "synonyms": [
+                  "tomato plants",
+                  "tomato plant",
+                  "plant",
+                  "plants"
+                ],
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tomatoes",
+                    "description": "tomatoes",
+                    "detailedDescription": "They're ripe and ready to pick.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                    },
+                    "synonyms": [
+                      "tomato",
+                      "tomatoes"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -4805,7 +5282,70 @@
         "delivers": [
           {
             "object": "artefact",
-            "template": "water"
+            "name": "water",
+            "description": "water",
+            "detailedDescription": "No real nutritional value but great for thirst and plants.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "drink",
+              "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "combinesWith": [
+                "tree",
+                "tomato plants"
+              ]
+            },
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "healthy tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're well watered and fruiting.",
+                "attributes": {
+                  "weight": 35,
+                  "carryWeight": 5,
+                  "isBreakable": true,
+                  "plural": true
+                },
+                "synonyms": [
+                  "tomato plants",
+                  "tomato plant",
+                  "plant",
+                  "plants"
+                ],
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tomatoes",
+                    "description": "tomatoes",
+                    "detailedDescription": "They're ripe and ready to pick.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                    },
+                    "synonyms": [
+                      "tomato",
+                      "tomatoes"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -5168,15 +5708,81 @@
             "delivers": [
               {
                 "object": "artefact",
-                "template": "sweet-coffee"
+                "name": "sweet coffee",
+                "description": "sweet coffee",
+                "detailedDescription": "Development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 1,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary coffee"
+                ]
               },
               {
                 "object": "artefact",
-                "template": "sweet-latte"
+                "name": "sweet latte",
+                "description": "sweet latte",
+                "detailedDescription": "Hipster Development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary latte",
+                  "latte"
+                ]
               },
               {
                 "object": "artefact",
-                "template": "sweet-mocha"
+                "name": "sweet mocha",
+                "description": "sweet mocha",
+                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "affinityModifier": 2,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary mocha",
+                  "mocha"
+                ]
               }
             ]
           }
@@ -5282,7 +5888,29 @@
             "delivers": [
               {
                 "object": "artefact",
-                "template": "sweet-latte"
+                "name": "sweet latte",
+                "description": "sweet latte",
+                "detailedDescription": "Hipster Development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary latte",
+                  "latte"
+                ]
               }
             ]
           },
@@ -5314,7 +5942,30 @@
             "delivers": [
               {
                 "object": "artefact",
-                "template": "sweet-mocha"
+                "name": "sweet mocha",
+                "description": "sweet mocha",
+                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 0.5,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "affinityModifier": 2,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary mocha",
+                  "mocha"
+                ]
               }
             ]
           },
@@ -5347,7 +5998,28 @@
             "delivers": [
               {
                 "object": "artefact",
-                "template": "sweet-coffee"
+                "name": "sweet coffee",
+                "description": "sweet coffee",
+                "detailedDescription": "Development fuel with added sugar!",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 1,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "cup",
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15
+                },
+                "synonyms": [
+                  "brew",
+                  "drink",
+                  "coffee",
+                  "sugary coffee"
+                ]
               },
               {
                 "object": "artefact",
@@ -5654,13 +6326,18 @@
                   },
                   "inventory": [
                     {
-					  "object": "artefact",
-					  "template": "first-aid-kit",                      
+                      "object": "artefact",
                       "name": "emergency first aid kit",
                       "description": "single-use first aid kit",
                       "detailedDescription": "A one-off emergency first-aid kit.",
                       "attributes": {
-                        "charges": 1
+                        "defaultAction": "heal",
+                        "weight": 1,
+                        "type": "medical",
+                        "canCollect": true,
+                        "isBreakable": true,
+                        "charges": 1,
+                        "canDrawOn": true
                       },
                       "synonyms": [
                         "first aid",
@@ -5853,13 +6530,13 @@
                                   "defaultAction": "drive",
                                   "weight": 3000,
                                   "carryWeight": 500,
-                                  "burnRate": 0.1,
-                                  "switched": true,
                                   "type": "vehicle",
                                   "subType": "van",
-                                  "canDrawOn": true,
+                                  "burnRate": 0.1,
+                                  "switched": true,
                                   "requiredComponentCount": 1,
-                                  "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first."
+                                  "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first.",
+                                  "canDrawOn": true
                                 },
                                 "synonyms": [
                                   "white van"
@@ -5872,11 +6549,12 @@
                                     "detailedDescription": "It looks like there's only a few pounds worth left.",
                                     "attributes": {
                                       "weight": 10,
+                                      "requiresContainer": true,
                                       "isLiquid": true,
                                       "charges": 2,
-                                      "plural": true,
                                       "chargeUnit": "gallon",
                                       "chargesDescription": "There's about $charges $chargeUnit in the tank",
+                                      "plural": true,
                                       "affinityModifier": 0,
                                       "componentOf": [
                                         "van"
@@ -6040,8 +6718,8 @@
           "weight": 80,
           "carryWeight": 8,
           "type": "container",
-          "plural": true,
           "isBreakable": true,
+          "plural": true,
           "canDrawOn": true
         },
         "synonyms": [
@@ -6070,8 +6748,8 @@
               "attackStrength": 5,
               "type": "book",
               "canCollect": true,
-              "canDrawOn": true,
-              "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff to be honest."
+              "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff to be honest.",
+              "canDrawOn": true
             },
             "synonyms": [
               "book",
@@ -6095,8 +6773,8 @@
               "type": "book",
               "canCollect": true,
               "defaultResult": "'As he took my hand my heart quickened and I realised this was a man who meant business.'<br>'His double-fist-pump hand shake meant only one thing...'<br>'SENIOR EXECUTIVE!'<br><br>As a working professional, you provide a service to everyone you interact with. The class of service you provide in these interactions is largely your choice but for optimum results you must determine a person's unmet need and establish if you are able (and willing) to help them fulfil it.<br>...furthermore, understand their role, their sphere of influence and the value of your relationship to them.<br>How can you both achieve mutual success? Not from a purely cynical or financial perspective but from a longer term holistic business relationship.<br>Don't let anyone fool you. Just because it's business doesn't mean it's not personal...<br><br>It continues switching between bad storytelling and business explanation and goes on to explain why not all customers are created equal.<br><br>I think it's meant to help you work with difficult customers and business relationships.<br>Although the writing style is awful, there's almost certainly some useful nuggets hiding in there for someone in a front-line, customer-facing role.",
-              "canDrawOn": true,
-              "smell": "Hmmm. You're <i>sure</i> that smell's familiar but you can't quite place it."
+              "smell": "Hmmm. You're <i>sure</i> that smell's familiar but you can't quite place it.",
+              "canDrawOn": true
             },
             "synonyms": [
               "book",
@@ -6371,6 +7049,54 @@
   },
   {
     "object": "location",
+    "name": "milton-road",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading into Cambridge.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "milton-road",
+        "destination": "golden-hind-junction",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "milton-road-north-end",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading towards the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "continue",
+        "direction": "c",
+        "source": "milton-road-north-end",
+        "destination": "milton-road",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "northwest-corridor-ground-floor",
     "displayName": "West corridor ground floor",
     "description": "You're in the West corridor of the ground floor.",
@@ -6458,11 +7184,30 @@
         "sells": [
           {
             "object": "artefact",
-            "template": "ice-cream",
+            "name": "ice cream",
+            "description": "99 flake ice cream",
+            "detailedDescription": "Ice cream makes a great gift!",
             "attributes": {
+              "defaultAction": "eat",
               "weight": 15,
-              "charges": 15
-            }
+              "type": "food",
+              "canCollect": true,
+              "charges": 15,
+              "chargeUnit": "99 flake ice cream",
+              "chargesDescription": "$charges $chargeUnit",
+              "saleUnit": 1,
+              "affinityModifier": 5,
+              "isEdible": true,
+              "nutrition": 15,
+              "price": 3.5
+            },
+            "synonyms": [
+              "ice",
+              "icecream",
+              "99",
+              "99 flake",
+              "99 flake ice cream"
+            ]
           }
         ],
         "synonyms": [
@@ -6523,10 +7268,30 @@
             "reward": {
               "delivers": {
                 "object": "artefact",
-                "template": "ice-cream",
-				"attributes": {
-					"price": 3
-				}
+                "name": "ice cream",
+                "description": "99 flake ice cream",
+                "detailedDescription": "Ice cream makes a great gift!",
+                "attributes": {
+                  "defaultAction": "eat",
+                  "weight": 1,
+                  "type": "food",
+                  "canCollect": true,
+                  "charges": 1,
+                  "chargeUnit": "99 flake ice cream",
+                  "chargesDescription": "$charges $chargeUnit",
+                  "saleUnit": 1,
+                  "affinityModifier": 5,
+                  "isEdible": true,
+                  "nutrition": 15,
+                  "price": 3
+                },
+                "synonyms": [
+                  "ice",
+                  "icecream",
+                  "99",
+                  "99 flake",
+                  "99 flake ice cream"
+                ]
               },
               "score": 5,
               "affinityModifier": 2,
@@ -7361,7 +8126,70 @@
         "delivers": [
           {
             "object": "artefact",
-            "template": "water"
+            "name": "water",
+            "description": "water",
+            "detailedDescription": "No real nutritional value but great for thirst and plants.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "drink",
+              "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "combinesWith": [
+                "tree",
+                "tomato plants"
+              ]
+            },
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "healthy tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're well watered and fruiting.",
+                "attributes": {
+                  "weight": 35,
+                  "carryWeight": 5,
+                  "isBreakable": true,
+                  "plural": true
+                },
+                "synonyms": [
+                  "tomato plants",
+                  "tomato plant",
+                  "plant",
+                  "plants"
+                ],
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tomatoes",
+                    "description": "tomatoes",
+                    "detailedDescription": "They're ripe and ready to pick.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                    },
+                    "synonyms": [
+                      "tomato",
+                      "tomatoes"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -7903,8 +8731,18 @@
       },
       {
         "object": "artefact",
-        "template": "office-door",
+        "name": "office door",
+        "description": "office door",
         "detailedDescription": "One of the main doors into the ground floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "canDrawOn": true
+        },
         "linkedexits": [
           {
             "object": "exit",
@@ -7914,6 +8752,10 @@
             "destination": "east-corridor-ground-floor-north-west",
             "hidden": true
           }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
     ],
@@ -8951,7 +9793,25 @@
       },
       {
         "object": "artefact",
-        "template": "first-aid-kit"
+        "name": "first aid kit",
+        "description": "first aid kit",
+        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 5,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
+        ]
       }
     ]
   },
@@ -9025,8 +9885,18 @@
       },
       {
         "object": "artefact",
-        "template": "office-door",
+        "name": "office door",
+        "description": "office door",
         "detailedDescription": "One of the main doors into the first floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "canDrawOn": true
+        },
         "linkedexits": [
           {
             "object": "exit",
@@ -9036,6 +9906,10 @@
             "destination": "second-floor-east-corridor",
             "hidden": true
           }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
     ]
@@ -9667,7 +10541,70 @@
         "delivers": [
           {
             "object": "artefact",
-            "template": "water"
+            "name": "water",
+            "description": "water",
+            "detailedDescription": "No real nutritional value but great for thirst and plants.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "drink",
+              "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "combinesWith": [
+                "tree",
+                "tomato plants"
+              ]
+            },
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "healthy tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're well watered and fruiting.",
+                "attributes": {
+                  "weight": 35,
+                  "carryWeight": 5,
+                  "isBreakable": true,
+                  "plural": true
+                },
+                "synonyms": [
+                  "tomato plants",
+                  "tomato plant",
+                  "plant",
+                  "plants"
+                ],
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tomatoes",
+                    "description": "tomatoes",
+                    "detailedDescription": "They're ripe and ready to pick.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                    },
+                    "synonyms": [
+                      "tomato",
+                      "tomatoes"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -10159,7 +11096,25 @@
       },
       {
         "object": "artefact",
-        "template": "first-aid-kit"
+        "name": "first aid kit",
+        "description": "first aid kit",
+        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 5,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
+        ]
       },
       {
         "object": "artefact",
@@ -10593,8 +11548,18 @@
     "inventory": [
       {
         "object": "artefact",
-        "template": "office-door",
+        "name": "office door",
+        "description": "office door",
         "detailedDescription": "One of the main doors into the first floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "canDrawOn": true
+        },
         "linkedexits": [
           {
             "object": "exit",
@@ -10604,6 +11569,10 @@
             "destination": "servery-north-west",
             "hidden": true
           }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
     ]
@@ -10654,8 +11623,18 @@
     "inventory": [
       {
         "object": "artefact",
-        "template": "office-door",
+        "name": "office door",
+        "description": "office door",
         "detailedDescription": "One of the main doors into the ground floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "canDrawOn": true
+        },
         "linkedexits": [
           {
             "object": "exit",
@@ -10665,6 +11644,10 @@
             "destination": "northwest-corridor-ground-floor",
             "hidden": true
           }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
     ]
@@ -10701,8 +11684,18 @@
     "inventory": [
       {
         "object": "artefact",
-        "template": "office-door",
+        "name": "office door",
+        "description": "office door",
         "detailedDescription": "One of the main doors into the first floor working area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "canDrawOn": true
+        },
         "linkedexits": [
           {
             "object": "exit",
@@ -10712,6 +11705,10 @@
             "destination": "second-floor-reception",
             "hidden": true
           }
+        ],
+        "synonyms": [
+          "office",
+          "door"
         ]
       }
     ]
@@ -11351,378 +12348,6 @@
         "synonyms": [
           "chair"
         ]
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "access-road-east",
-    "displayName": "Business park access road",
-    "description": "You're driving West along the East/West access road for the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "access-road-east",
-        "destination": "access-road-central",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "access-road-central",
-    "displayName": "Business park access road",
-    "description": "You're driving West along the East/West access road for the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "access-road-central",
-        "destination": "access-road-west",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "access-road-west",
-    "displayName": "Business park access road",
-    "description": "You're driving West along the East/West access road for the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "access-road-west",
-        "destination": "access-road-junction",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "access-road-junction",
-    "displayName": "Business park access road",
-    "description": "You're at the junction with Milton Road. Left leads into Cambridge, right heads towards Milton and the A14.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Right",
-        "direction": "r",
-        "source": "access-road-junction",
-        "destination": "a14-roundabout-entrance",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "access-road-junction",
-        "destination": "milton-road",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-entrance",
-    "displayName": "Milton roundabout",
-    "description": "You're waiting at the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "a14-roundabout-entrance",
-        "destination": "a14-roundabout",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "a14-roundabout-entrance",
-        "destination": "a14-westbound",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "a14-roundabout",
-        "destination": "a10-nothbound",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "a14-roundabout",
-        "destination": "a14-roundabout-east",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-north-east",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "a14-roundabout-north-east",
-        "destination": "milton-sliproad",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "a14-roundabout-north-east",
-        "destination": "a14-roundabout-east",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-east",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "a14-roundabout-east",
-        "destination": "a14-eastbound",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "a14-roundabout-east",
-        "destination": "a14-roundabout-south",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-south",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "a14-roundabout-south",
-        "destination": "milton-road-north-end",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "a14-roundabout-south",
-        "destination": "a14-roundabout-south-west",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-south-west",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "a14-roundabout-south-west",
-        "destination": "a14-westbound",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "a14-roundabout-south-west",
-        "destination": "a14-roundabout",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "milton-road-north-end",
-    "displayName": "Milton Road",
-    "description": "You're driving south along Milton road heading towards the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "milton-road-north-end",
-        "destination": "milton-road",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-westbound",
-    "displayName": "A14 Westbound",
-    "description": "You're stationary on the sliproad of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>To be honest you might as well just give up now.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    }
-  },
-  {
-    "object": "location",
-    "name": "a14-eastbound",
-    "displayName": "A14 Eastbound",
-    "description": "You're driving East along the A14. On the opposite side of the road you see a stationary line of cars stretching beyond the horizon.<br>I bet you're glad you didn't head west!",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    }
-  },
-  {
-    "object": "location",
-    "name": "milton-road",
-    "displayName": "Milton Road",
-    "description": "You're driving south along Milton road heading into Cambridge.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "milton-road",
-        "destination": "golden-hind-junction",
-        "requiredAction": "drive"
       }
     ]
   }

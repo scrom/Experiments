@@ -40,6 +40,27 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         */
         console.log(_objectName + ' created');
         
+        self.buildFromTemplate = function (template, objectData) {
+            var data = objectData;
+            for (var property in template) {
+                if (template.hasOwnProperty(property)) {
+                    //copy in properties from template if not overridden on artefact
+                    if (!data.hasOwnProperty(property)) {
+                        //copy entire property
+                        data[property] = template[property];
+                    } else {
+                        if (typeof data[property] == "object") {
+                            //includes arrays - this can mean template arrays may be only *partially* overwritten - use caution
+                            //recursively copy sub-properties
+                            data[property] = self.buildFromTemplate(template[property], data[property]);
+                        };
+                    };
+                };
+            };
+
+            return data;
+        };
+        
         //public member functions
         self.buildArtefact = function(artefactData) {
             //console.log('Building: '+artefactData.name);
@@ -47,9 +68,18 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 //start with template if defined
                 if (artefactData.template) {
                     var template = data[artefactData.template];
-                    artefactData = template;
+                    artefactData = self.buildFromTemplate(template, artefactData);
                 };
             };
+
+            if (artefactData.attributes) {
+                //fill in attribute template if defined
+                if (artefactData.attributes.template) {
+                    var template = data[artefactData.attributes.template];
+                    artefactData.attributes = self.buildFromTemplate(template, artefactData.attributes);
+                };
+            };
+
 
             try {
                 if (_map.checkExists(artefactData.name)) {console.log("Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};

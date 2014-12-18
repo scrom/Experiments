@@ -5,7 +5,7 @@ var location = require('../location.js');
 var artefact = require('../artefact.js');
 var mapBuilder = require('../mapbuilder.js');
 var map = require('../map.js');
-var mb = new mapBuilder.MapBuilder('../../data/','root-locations.json');
+var mb = new mapBuilder.MapBuilder('../../data/','root-locations');
 
 //these are used in setup and teardown - need to be accessible to all tests
 var junkAttributes;

@@ -1,0 +1,18 @@
+﻿{
+"object": "artefact",
+"name": "office door",
+"description": "office door",
+"attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "lockable": true,
+    "locked": true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "office",
+    "door"
+]
+}

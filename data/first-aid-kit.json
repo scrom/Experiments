@@ -1,0 +1,22 @@
+﻿{
+"object": "artefact",
+"name": "first aid kit",
+"description": "first aid kit",
+"detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+"attributes": {
+    "defaultAction": "heal",
+    "weight": 1,
+    "type": "medical",
+    "canCollect": true,
+    "isBreakable": true,
+    "charges": 5,
+    "canDrawOn": true
+},
+"synonyms": [
+    "first aid",
+    "kit",
+    "firstaid kit",
+    "first-aid kit",
+    "first-aid"
+]
+}

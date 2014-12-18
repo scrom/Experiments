@@ -6,7 +6,7 @@ var mission = require('../mission.js');
 var location = require('../location.js');
 var mapBuilder = require('../mapbuilder.js');
 var map = require('../map.js');
-var mb = new mapBuilder.MapBuilder('../../data/','root-locations.json');
+var mb = new mapBuilder.MapBuilder('../../data/','root-locations');
 var junkAttributes;
 var a0;
 

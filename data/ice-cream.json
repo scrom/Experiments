@@ -1,0 +1,27 @@
+﻿          {
+            "object": "artefact",
+            "name": "ice cream",
+            "description": "99 flake ice cream",
+            "detailedDescription": "Ice cream makes a great gift!",
+            "attributes": {
+              "defaultAction": "eat",
+              "weight": 1,
+              "type": "food",
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "99 flake ice cream",
+              "chargesDescription": "$charges $chargeUnit",
+              "saleUnit": 1,
+              "affinityModifier": 5,
+              "isEdible": true,
+              "nutrition": 15,
+              "price": 3.5
+            },
+            "synonyms": [
+              "ice",
+              "icecream",
+              "99",
+              "99 flake",
+              "99 flake ice cream"
+            ]
+          }
