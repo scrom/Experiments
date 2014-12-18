@@ -46,25 +46,25 @@
       }
     ],
     "inventory": [
-      {
-        "object": "artefact",
-        "name": "smell of coffee",
-        "description": "coffee",
-        "detailedDescription": "You'll need to head to the kitchen.",
-        "attributes": {
-          "type": "scenery",
-          "subType": "intangible",
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
-          "smell": "Yup, smells like coffee here.<br>Good coffee at that."
-        },
-        "synonyms": [
-          "latte",
-          "coffee"
-        ]
-      },
+		{
+			"object": "artefact",
+			"name": "smell of coffee",
+			"description": "coffee",
+			"detailedDescription": "You'll need to head to the kitchen.",
+			"attributes": {
+				"type": "scenery",
+				"subType": "intangible",
+				"customAction": [
+				"get"
+				],
+				"defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
+				"smell": "Yup, smells like coffee here.<br>Good coffee at that."
+			},
+			"synonyms": [
+				"latte",
+				"coffee"
+			]
+		},
       {
         "object": "artefact",
         "name": "air",
@@ -2883,46 +2883,8 @@
         "delivers": [
           {
             "object": "artefact",
-            "name": "healthy tomato plants",
-            "description": "tomato plants",
-            "detailedDescription": "They're well watered and fruiting.",
-            "attributes": {
-              "weight": 35,
-              "carryWeight": 5,
-              "isBreakable": true,
-              "plural": true
-            },
-            "synonyms": [
-              "tomato plants",
-              "tomato plant",
-              "plant",
-              "plants"
-            ],
-            "inventory": [
-              {
-                "object": "artefact",
-                "name": "tomatoes",
-                "description": "tomatoes",
-                "detailedDescription": "They're ripe and ready to pick.",
-                "attributes": {
-                  "weight": 3,
-                  "type": "food",
-                  "canCollect": true,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15,
-                  "customAction": [
-                    "get"
-                  ],
-                  "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                },
-                "synonyms": [
-                  "tomato",
-                  "tomatoes"
-                ]
-              }
-            ]
-          }
+            "template": "healthy-tomato-plants"
+			}
         ]
       },
       {
@@ -4302,73 +4264,10 @@
           "tap"
         ],
         "delivers": [
-          {
-            "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plant",
-                  "tomato plants",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+			{
+			"object": "artefact",
+			"template": "water"
+			}
         ]
       }
     ]
@@ -4954,73 +4853,10 @@
           "hands"
         ],
         "delivers": [
-          {
-            "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+			{
+			"object": "artefact",
+			"template": "water"
+			}
         ]
       }
     ]
@@ -5380,83 +5216,18 @@
               ]
             },
             "delivers": [
-              {
-                "object": "artefact",
-                "name": "sweet coffee",
-                "description": "sweet coffee",
-                "detailedDescription": "Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary coffee"
-                ]
-              },
-              {
-                "object": "artefact",
-                "name": "sweet latte",
-                "description": "sweet latte",
-                "detailedDescription": "Hipster Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary latte",
-                  "latte"
-                ]
-              },
-              {
-                "object": "artefact",
-                "name": "sweet mocha",
-                "description": "sweet mocha",
-                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary mocha",
-                  "mocha"
-                ]
-              }
+				{
+				"object": "artefact",
+				"template": "sweet-coffee"
+				},
+				{
+				"object": "artefact",
+				"template": "sweet-latte"
+				},
+				{
+				"object": "artefact",
+				"template": "sweet-mocha"
+				}
             ]
           }
         ]
@@ -5559,32 +5330,10 @@
               "drink"
             ],
             "delivers": [
-              {
-                "object": "artefact",
-                "name": "sweet latte",
-                "description": "sweet latte",
-                "detailedDescription": "Hipster Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary latte",
-                  "latte"
-                ]
-              }
+				{
+				"object": "artefact",
+				"template": "sweet-latte"
+				}
             ]
           },
           {
@@ -5613,33 +5362,10 @@
               "drink"
             ],
             "delivers": [
-              {
-                "object": "artefact",
-                "name": "sweet mocha",
-                "description": "sweet mocha",
-                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "affinityModifier": 2,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary mocha",
-                  "mocha"
-                ]
-              }
+				{
+				"object": "artefact",
+				"template": "sweet-mocha"
+				}
             ]
           },
           {
@@ -5669,31 +5395,10 @@
               "drink"
             ],
             "delivers": [
-              {
-                "object": "artefact",
-                "name": "sweet coffee",
-                "description": "sweet coffee",
-                "detailedDescription": "Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary coffee"
-                ]
-              },
+				{
+				"object": "artefact",
+				"template": "sweet-coffee"
+				},
               {
                 "object": "artefact",
                 "name": "white coffee",
@@ -7748,73 +7453,10 @@
           "cooler"
         ],
         "delivers": [
-          {
-            "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for thirst and plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+		{
+		"object": "artefact",
+		"template": "water"
+		}
         ]
       }
     ]
@@ -10163,73 +9805,10 @@
           "tap"
         ],
         "delivers": [
-          {
-            "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+			{
+			"object": "artefact",
+			"template": "water"
+			}
         ]
       }
     ]

@@ -1,0 +1,29 @@
+﻿{
+"object": "artefact",
+"name": "water",
+"description": "water",
+"detailedDescription": "No real nutritional value but great for thirst and plants.",
+"attributes": {
+    "defaultAction": "drink",
+    "weight": 1,
+    "type": "food",
+    "requiresContainer": true,
+    "isLiquid": true,
+    "canCollect": true,
+    "charges": 1,
+    "chargeUnit": "drink",
+    "chargesDescription": "There's enough here for $charges $chargeUnit",
+    "plural": true,
+    "isEdible": true,
+    "combinesWith": [
+    "tree",
+    "tomato plants"
+    ]
+},
+"delivers": [
+	{
+	"object": "artefact",
+	"template": "healthy-tomato-plants"
+	}
+]
+}

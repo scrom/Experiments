@@ -1,0 +1,25 @@
+﻿{
+"object": "artefact",
+"name": "sweet coffee",
+"description": "sweet coffee",
+"detailedDescription": "Development fuel with added sugar!",
+"attributes": {
+    "defaultAction": "drink",
+    "weight": 1,
+    "type": "food",
+    "requiresContainer": true,
+    "isLiquid": true,
+    "requiredContainer": "cup",
+    "canCollect": true,
+    "charges": 1,
+    "plural": true,
+    "isEdible": true,
+    "nutrition": 15
+},
+"synonyms": [
+    "brew",
+    "drink",
+    "coffee",
+    "sugary coffee"
+]
+}

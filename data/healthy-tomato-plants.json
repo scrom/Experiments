@@ -1,0 +1,42 @@
+﻿{
+	"object": "artefact",
+	"name": "healthy tomato plants",
+	"description": "tomato plants",
+	"detailedDescription": "They're well watered and fruiting.",
+	"attributes": {
+		"weight": 35,
+		"carryWeight": 5,
+		"isBreakable": true,
+		"plural": true
+	},
+	"synonyms": [
+		"tomato plants",
+		"tomato plant",
+		"plant",
+		"plants"
+	],
+	"inventory": [
+		{
+		"object": "artefact",
+		"name": "tomatoes",
+		"description": "tomatoes",
+		"detailedDescription": "They're ripe and ready to pick.",
+		"attributes": {
+			"weight": 3,
+			"type": "food",
+			"canCollect": true,
+			"plural": true,
+			"isEdible": true,
+			"nutrition": 15,
+			"customAction": [
+			"get"
+			],
+			"defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+		},
+		"synonyms": [
+			"tomato",
+			"tomatoes"
+		]
+		}
+	]
+}

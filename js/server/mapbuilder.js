@@ -43,6 +43,14 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         //public member functions
         self.buildArtefact = function(artefactData) {
             //console.log('Building: '+artefactData.name);
+            if (artefactData) {
+                //start with template if defined
+                if (artefactData.template) {
+                    var template = data[artefactData.template];
+                    artefactData = template;
+                };
+            };
+
             try {
                 if (_map.checkExists(artefactData.name)) {console.log("Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};
                 var artefact;
