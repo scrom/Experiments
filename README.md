@@ -155,13 +155,14 @@ The tests in here are a mix of unit and functional regression tests - sad but re
 
 Module Dependencies
 -------------------
-The game is designed to run on Node version 0.10.33 (this is the latest version that is also available on Windows)
+The game is designed to run on Node version 0.10.33 (this is the latest version that is also available on Windows) but runs fine on 0.10.34 on Linux too.
+
 Node Module dependencies are defined in \IF-Node\package.json
-As of 12th December 2014 they are...
+As of 18th December 2014 they are...
 
 For the server:
--     "express": "^4.10.3",
--     "body-parser": "^1.9.3",
+-     "express": "^4.10.6",
+-     "body-parser": "^1.10.0",
 -     "morgan": "^1.5.0"
 -     "jsonfile": "^2.0.0",
 -     "redis": "^0.12.1"
@@ -169,7 +170,7 @@ For the server:
 For running NodeUnit:
 -     "nodeunit": "^0.9.0",
 -     "coffee-script": "^1.8.0",
--     "iced-coffee-script": "^1.8.0-a",
+-     "iced-coffee-script": "^1.8.0-c",
 -     "streamline": "^0.10.16"
 
 
