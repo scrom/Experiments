@@ -21,6 +21,7 @@
   <ItemGroup>
     <Content Include="data\basin.json" />
     <Content Include="data\chairs.json" />
+    <Content Include="data\fire-exit.json" />
     <Content Include="data\hand-dryer.json" />
     <Content Include="data\mirror.json" />
     <Content Include="data\rum-bottle.json" />

@@ -1,0 +1,19 @@
+﻿{
+"object": "artefact",
+"name": "fire exit",
+"description": "fire exit",
+"detailedDescription": "If you open the door, you'll probably set off an alarm.",
+"attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "bar",
+    "door",
+    "fire door",
+    "exit"
+]
+}

@@ -3834,7 +3834,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "door",
+        "name": "fire exit",
         "description": "fire exit",
         "detailedDescription": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
@@ -3864,7 +3864,7 @@
         ],
         "synonyms": [
           "bar",
-          "fire exit",
+          "door",
           "fire door",
           "exit"
         ]
@@ -10456,7 +10456,7 @@
       },
       {
         "object": "artefact",
-        "name": "door",
+        "name": "fire exit",
         "description": "fire exit",
         "detailedDescription": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
@@ -10486,7 +10486,7 @@
         ],
         "synonyms": [
           "bar",
-          "fire exit",
+          "door",
           "fire door",
           "exit"
         ]
@@ -11146,7 +11146,7 @@
       },
       {
         "object": "artefact",
-        "name": "door",
+        "name": "fire exit",
         "description": "fire exit",
         "detailedDescription": "If you open the door, you'll probably set off an alarm.",
         "attributes": {
@@ -11176,7 +11176,7 @@
         ],
         "synonyms": [
           "bar",
-          "fire exit",
+          "door",
           "fire door",
           "exit"
         ]
