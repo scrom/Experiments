@@ -3,6 +3,7 @@ var artefact = require('../artefact.js');
 var location = require('../location.js');
 var inventory = require('../inventory.js');
 var player = require('../player.js');
+var map = require('../map.js');
 var a0;
 var attributes = null;
 var aName = 'name';
@@ -555,6 +556,168 @@ exports.canVendCoffeeIntoCup = function (test) {
 };
 
 exports.canVendCoffeeIntoCup.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait"], description: "Test that coffee can be delivered into a cup from a working machine." };
+
+
+exports.cannotVendCoffeeIntoBrokenCup = function (test) {
+    var drinkAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    
+    var componentAttributes = { weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, charges: 10, componentOf: ["machine"], requiresContainer: true };
+    var coffeeBeans = new artefact.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null);
+    
+    var lockedStaticMachineAttributes = { weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1 };
+    var coffeeMachine = new artefact.Artefact('machine', 'a coffee vending machine', "When it works it uses coffee beans to make coffee.", lockedStaticMachineAttributes, null, [coffee]);
+    
+    var coffeeMachineKeyAttributes = { weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: "machine" };
+    var key = new artefact.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 2, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+
+    var bottomkitchen = new location.Location('kitchen-ground-floor', "You're in the atrium kitchen.");
+    bottomkitchen.addObject(coffeeMachine);
+    var m0 = new map.Map();
+    m0.addLocation(bottomkitchen);
+    
+    var p0 = new player.Player({ carryWeight: 25 }, m0, null);
+    p0.setLocation(bottomkitchen);
+    var _inventory = p0.getInventoryObject();
+    _inventory.add(cup);
+    cup.break();
+   
+    coffeeMachine.unlock(key);
+    coffeeMachine.receive(coffeeBeans);
+    
+    var expectedResult = 'It looks like the only available cup around here has seen better days.';
+    var actualResult = p0.get("get", "coffee");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotVendCoffeeIntoBrokenCup.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait"], description: "Test that coffee can be delivered into a cup from a working machine." };
+
+
+exports.cannotVendCoffeeIntoFullCup = function (test) {
+    var drinkAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    
+    var componentAttributes = { weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, charges: 10, componentOf: ["machine"], requiresContainer: true };
+    var coffeeBeans = new artefact.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null);
+    
+    var lockedStaticMachineAttributes = { weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1 };
+    var coffeeMachine = new artefact.Artefact('machine', 'a coffee vending machine', "When it works it uses coffee beans to make coffee.", lockedStaticMachineAttributes, null, [coffee]);
+    
+    var coffeeMachineKeyAttributes = { weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: "machine" };
+    var key = new artefact.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 1.5, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    cup.receive(coffee);
+    
+    var bottomkitchen = new location.Location('kitchen-ground-floor', "You're in the atrium kitchen.");
+    bottomkitchen.addObject(coffeeMachine);
+    var m0 = new map.Map();
+    m0.addLocation(bottomkitchen);
+    
+    var p0 = new player.Player({ carryWeight: 25 }, m0, null);
+    p0.setLocation(bottomkitchen);
+    var _inventory = p0.getInventoryObject();
+    _inventory.add(cup);
+    
+    coffeeMachine.unlock(key);
+    coffeeMachine.receive(coffeeBeans);
+    
+    var expectedResult = "The only available cup already has some coffee in it. There isn't room for coffee as well.";
+    var actualResult = p0.get("get", "coffee");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotVendCoffeeIntoFullCup.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait"], description: "Test that coffee can be delivered into a cup from a working machine." };
+
+exports.cannotVendCoffeeIntoCupThatIsTooSmall = function (test) {
+    var drinkAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    
+    var componentAttributes = { weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, charges: 10, componentOf: ["machine"], requiresContainer: true };
+    var coffeeBeans = new artefact.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null);
+    
+    var lockedStaticMachineAttributes = { weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1 };
+    var coffeeMachine = new artefact.Artefact('machine', 'a coffee vending machine', "When it works it uses coffee beans to make coffee.", lockedStaticMachineAttributes, null, [coffee]);
+    
+    var coffeeMachineKeyAttributes = { weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: "machine" };
+    var key = new artefact.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 0.1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    
+    var bottomkitchen = new location.Location('kitchen-ground-floor', "You're in the atrium kitchen.");
+    bottomkitchen.addObject(coffeeMachine);
+    var m0 = new map.Map();
+    m0.addLocation(bottomkitchen);
+    
+    var p0 = new player.Player({ carryWeight: 25 }, m0, null);
+    p0.setLocation(bottomkitchen);
+    var _inventory = p0.getInventoryObject();
+    _inventory.add(cup);
+    
+    coffeeMachine.unlock(key);
+    coffeeMachine.receive(coffeeBeans);
+    
+    var expectedResult = 'You need a cup that can hold coffee. None here seem to fit the bill.';
+    var actualResult = p0.get("get", "coffee");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotVendCoffeeIntoCupThatIsTooSmall.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait"], description: "Test that coffee can be delivered into a cup from a working machine." };
+
+
+exports.cannotVendCoffeeWithoutACup = function (test) {
+    var drinkAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    
+    var componentAttributes = { weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, charges: 10, componentOf: ["machine"], requiresContainer: true };
+    var coffeeBeans = new artefact.Artefact('beans', 'coffee beans', "Development fuel. Almost enough to last a day here.", componentAttributes, null);
+    
+    var lockedStaticMachineAttributes = { weight: 151, carryWeight: 3, attackStrength: 0, type: "container", canCollect: false, canOpen: true, isEdible: false, isBreakable: true, lockable: true, locked: true, requiredComponentCount: 1 };
+    var coffeeMachine = new artefact.Artefact('machine', 'a coffee vending machine', "When it works it uses coffee beans to make coffee.", lockedStaticMachineAttributes, null, [coffee]);
+    
+    var coffeeMachineKeyAttributes = { weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: "machine" };
+    var key = new artefact.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 0.1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    
+    var bottomkitchen = new location.Location('kitchen-ground-floor', "You're in the atrium kitchen.");
+    bottomkitchen.addObject(coffeeMachine);
+    var m0 = new map.Map();
+    m0.addLocation(bottomkitchen);
+    
+    var p0 = new player.Player({ carryWeight: 25 }, m0, null);
+    p0.setLocation(bottomkitchen);
+    var _inventory = p0.getInventoryObject();
+    _inventory.add(mug);
+    
+    coffeeMachine.unlock(key);
+    coffeeMachine.receive(coffeeBeans);
+    
+    var expectedResult = "Sorry. You can't collect the coffee without something suitable to carry it in.";
+    var actualResult = p0.get("get", "coffee");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotVendCoffeeWithoutACup.meta = { traits: ["Artefact Test", "Container Trait", "Location Trait", "Inventory Trait", "Delivery Trait"], description: "Test that coffee can be delivered into a cup from a working machine." };
+
 
 exports.canMakeSweetCoffeeByAddingSugarToCoffee = function (test) {
 

@@ -1055,15 +1055,39 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var locationInventory = _currentLocation.getInventoryObject();
                 for (var i=0;i<allLocationObjects.length;i++) {
                     var deliversRequestedItem = false;
+                    var tempDeliveryItem;
                     if (allLocationObjects[i].getType() != 'creature') {
                         var deliveryItems = allLocationObjects[i].getDeliveryItems();
                         for (var d=0;d<deliveryItems.length;d++) {
                             if (deliveryItems[d].getName() == artefactName) {
                                 deliversRequestedItem = true;
+                                tempDeliveryItem = deliveryItems[d];
                                 break;
                             };
                         };
                         if (deliversRequestedItem) {
+                            var tmpRequiresContainer = tempDeliveryItem.requiresContainer();
+                            if (tmpRequiresContainer) {
+                                var tmpSuitableContainer = _inventory.getSuitableContainer(tempDeliveryItem);
+                                if (!tmpSuitableContainer) {                        
+                                    var tmpRequiredContainerName = tempDeliveryItem.getRequiredContainer();
+                                    var tmpRequiredContainer = getObjectFromPlayerOrLocation(tmpRequiredContainerName)
+                                    if (tmpRequiredContainer) {
+                                        //the required object exists but can't carry it.
+                                        if (tmpRequiredContainer.isBroken() || tmpRequiredContainer.isDestroyed()) {
+                                            return "It looks like the only available " + tmpRequiredContainer.getName() + " around here has seen better days."; 
+                                        };
+                                        if (tmpRequiredContainer.getInventorySize() > 0) {
+                                            var tmpContainerInventory = tmpRequiredContainer.getInventoryObject();
+                                            return "The only available " + tmpRequiredContainer.getName() + " already has "+ tmpContainerInventory.listObjects()+" in "+ tmpRequiredContainer.getSuffix()+". There isn't room for "+ tempDeliveryItem.getName() +" as well.";
+                                        };
+                                        return "You need a " + tmpRequiredContainer.getName() + " that can hold " + tempDeliveryItem.getName()+ ". None here seem to fit the bill."; 
+                                    } else {
+                                        return "Sorry. You can't collect " + tempDeliveryItem.getDisplayName() + " without something suitable to carry " + tempDeliveryItem.getSuffix() + " in."; 
+                                    };
+                                };
+                            };
+                                            
                             var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
                             if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
                                 //we got the requested object back!
