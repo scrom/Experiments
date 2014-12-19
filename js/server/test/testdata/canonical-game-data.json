@@ -1245,8 +1245,8 @@
           "chargesDescription": "It's good for about $charges more $chargeUnit"
         },
         "synonyms": [
-          "board pen",
           "blue pen",
+          "board pen",
           "whiteboard pen"
         ]
       },
@@ -3553,8 +3553,8 @@
           "chargesDescription": "It's good for about $charges more $chargeUnit"
         },
         "synonyms": [
-          "board pen",
           "black pen",
+          "board pen",
           "whiteboard pen"
         ]
       },
@@ -12366,9 +12366,9 @@
           "chargesDescription": "It's good for about $charges more $chargeUnit"
         },
         "synonyms": [
+          "green pen",
           "board pen",
-          "whiteboard pen",
-          "green pen"
+          "whiteboard pen"
         ]
       },
       {

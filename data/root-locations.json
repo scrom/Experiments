@@ -873,21 +873,13 @@
       },
       {
         "object": "artefact",
-        "name": "pen",
-        "description": "whiteboard pen",
+        "template": "whiteboard-pen",
         "detailedDescription": "Not great quality but it's a blue pen.",
         "attributes": {
-          "weight": 0.2,
-          "type": "writing",
-          "canCollect": true,
-          "charges": 10,
-          "chargeUnit": "use",
-          "chargesDescription": "It's good for about $charges more $chargeUnit"
+          "charges": 10
         },
         "synonyms": [
-          "board pen",
-          "blue pen",
-          "whiteboard pen"
+          "blue pen"
         ]
       },
       {
@@ -2919,22 +2911,11 @@
       },
       {
         "object": "artefact",
-        "name": "pen",
-        "description": "whiteboard pen",
+        "template": "whiteboard-pen",
         "detailedDescription": "It's a decent-ish black whiteboard pen",
         "attributes": {
-          "weight": 0.2,
-          "type": "writing",
-          "canCollect": true,
-          "charges": 30,
-          "chargeUnit": "use",
-          "chargesDescription": "It's good for about $charges more $chargeUnit"
-        },
-        "synonyms": [
-          "board pen",
-          "black pen",
-          "whiteboard pen"
-        ]
+          "charges": 30
+        }
       },
       {
         "object": "artefact",
@@ -10582,20 +10563,9 @@
       },
       {
         "object": "artefact",
-        "name": "pen",
-        "description": "whiteboard pen",
+        "template": "whiteboard-pen",
         "detailedDescription": "It's a green pen.",
-        "attributes": {
-          "weight": 0.2,
-          "type": "writing",
-          "canCollect": true,
-          "charges": 20,
-          "chargeUnit": "use",
-          "chargesDescription": "It's good for about $charges more $chargeUnit"
-        },
         "synonyms": [
-          "board pen",
-          "whiteboard pen",
           "green pen"
         ]
       },

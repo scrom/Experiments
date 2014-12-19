@@ -1,0 +1,19 @@
+﻿{
+"object": "artefact",
+"name": "pen",
+"description": "whiteboard pen",
+"detailedDescription": "It's a black pen.",
+"attributes": {
+    "weight": 0.2,
+    "type": "writing",
+    "canCollect": true,
+    "charges": 20,
+    "chargeUnit": "use",
+    "chargesDescription": "It's good for about $charges more $chargeUnit"
+},
+"synonyms": [
+	"black pen",
+    "board pen",
+    "whiteboard pen"
+]
+}
