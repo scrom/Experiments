@@ -1,0 +1,20 @@
+﻿{
+"object": "artefact",
+"name": "chairs",
+"description": "set of office chairs",
+"detailedDescription": "They're just standard office chairs.",
+"attributes": {
+    "defaultAction": "rest",
+    "weight": 30,
+    "type": "bed",
+    "isBreakable": true,
+    "plural": true,
+    "customAction": [
+    "get"
+    ],
+    "defaultResult": "It's best to leave them here."
+},
+"synonyms": [
+    "chair"
+]
+}

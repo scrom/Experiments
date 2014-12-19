@@ -898,23 +898,8 @@
       },
       {
         "object": "artefact",
-        "name": "chairs",
-        "description": "pair of office chairs",
-        "detailedDescription": "They're just standard office meeting room chairs.",
-        "attributes": {
-          "defaultAction": "rest",
-          "weight": 30,
-          "type": "bed",
-          "isBreakable": true,
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "It's best to leave them here."
-        },
-        "synonyms": [
-          "chair"
-        ]
+        "template": "chairs",
+        "description": "pair of office chairs"
       }
     ]
   },
@@ -2933,23 +2918,8 @@
       },
       {
         "object": "artefact",
-        "name": "chairs",
-        "description": "set of office chairs",
-        "detailedDescription": "They're fairly plain chairs. There's enough to fit a decent-sized team in here for a meeting though.",
-        "attributes": {
-          "defaultAction": "rest",
-          "weight": 30,
-          "type": "bed",
-          "isBreakable": true,
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "It's best to leave them here."
-        },
-        "synonyms": [
-          "chair"
-        ]
+        "template": "chairs",
+        "detailedDescription": "They're fairly plain chairs. There's enough to fit a decent-sized team in here for a meeting though."
       }
     ]
   },
@@ -10585,23 +10555,12 @@
       },
       {
         "object": "artefact",
-        "name": "chairs",
+        "template": "chairs",
         "description": "group of office chairs",
         "detailedDescription": "Yup, they're chairs.",
         "attributes": {
-          "defaultAction": "rest",
-          "weight": 30,
-          "type": "bed",
-          "isBreakable": true,
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
           "defaultResult": "Sorry, they belong in here."
-        },
-        "synonyms": [
-          "chair"
-        ]
+        }
       }
     ]
   },

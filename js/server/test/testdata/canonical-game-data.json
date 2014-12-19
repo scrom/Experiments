@@ -1268,7 +1268,7 @@
         "object": "artefact",
         "name": "chairs",
         "description": "pair of office chairs",
-        "detailedDescription": "They're just standard office meeting room chairs.",
+        "detailedDescription": "They're just standard office chairs.",
         "attributes": {
           "defaultAction": "rest",
           "weight": 30,
