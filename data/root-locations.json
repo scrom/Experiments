@@ -1,332 +1,6 @@
 ﻿[
   {
     "object": "location",
-    "name": "a14-eastbound",
-    "displayName": "A14 Eastbound",
-    "description": "You're driving East along the A14. On the opposite side of the road you see a stationary line of cars stretching beyond the horizon.<br>I bet you're glad you didn't head west!",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": []
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "left",
-        "direction": "l",
-        "source": "a14-roundabout",
-        "destination": "a10-nothbound",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "a14-roundabout",
-        "destination": "a14-roundabout-east",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-east",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "left",
-        "direction": "l",
-        "source": "a14-roundabout-east",
-        "destination": "a14-eastbound",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "a14-roundabout-east",
-        "destination": "a14-roundabout-south",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-entrance",
-    "displayName": "Milton roundabout",
-    "description": "You're waiting at the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "a14-roundabout-entrance",
-        "destination": "a14-roundabout",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "left",
-        "direction": "l",
-        "source": "a14-roundabout-entrance",
-        "destination": "a14-westbound",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-north-east",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "left",
-        "direction": "l",
-        "source": "a14-roundabout-north-east",
-        "destination": "milton-sliproad",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "a14-roundabout-north-east",
-        "destination": "a14-roundabout-east",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-south",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "left",
-        "direction": "l",
-        "source": "a14-roundabout-south",
-        "destination": "milton-road-north-end",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "a14-roundabout-south",
-        "destination": "a14-roundabout-south-west",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-roundabout-south-west",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "left",
-        "direction": "l",
-        "source": "a14-roundabout-south-west",
-        "destination": "a14-westbound",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "a14-roundabout-south-west",
-        "destination": "a14-roundabout",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "a14-westbound",
-    "displayName": "A14 Westbound",
-    "description": "You're stationary on the sliproad of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>To be honest you might as well just give up now.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": []
-  },
-  {
-    "object": "location",
-    "name": "access-road-central",
-    "displayName": "Business park access road",
-    "description": "You're driving West along the East/West access road for the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "access-road-central",
-        "destination": "access-road-west",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "access-road-east",
-    "displayName": "Business park access road",
-    "description": "You're driving West along the East/West access road for the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "access-road-east",
-        "destination": "access-road-central",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "access-road-junction",
-    "displayName": "Business park access road",
-    "description": "You're at the junction with Milton Road. Left leads into Cambridge, right heads towards Milton and the A14.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "right",
-        "direction": "r",
-        "source": "access-road-junction",
-        "destination": "a14-roundabout-entrance",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "left",
-        "direction": "l",
-        "source": "access-road-junction",
-        "destination": "milton-road",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "access-road-west",
-    "displayName": "Business park access road",
-    "description": "You're driving West along the East/West access road for the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "access-road-west",
-        "destination": "access-road-junction",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
     "name": "atrium",
     "displayName": "Atrium",
     "description": "You're standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
@@ -446,26 +120,11 @@
       {
         "object": "artefact",
         "name": "screen",
-        "description": "flat-panel screen",
+        "template": "flat-screen",
         "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
         "attributes": {
-          "weight": 51,
-          "isBreakable": true,
-          "switched": true,
-          "isOn": true,
-          "imageName": "screen.jpg",
-          "canDrawOn": true
+          "imageName": "screen.jpg"
         },
-        "synonyms": [
-          "screen",
-          "display",
-          "flat-panel",
-          "panel",
-          "flat panel",
-          "flat-panel screen",
-          "flat panel screen",
-          "monitor"
-        ],
         "missions": [
           {
             "object": "mission",
@@ -965,20 +624,11 @@
       },
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Are you spying on the lawyers?",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "lawyer-lobby"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -1121,14 +771,9 @@
         "description": "Rick the bike ambulance guy",
         "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
         "attributes": {
-          "weight": 140,
-          "money": 50,
-          "attackStrength": 20,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 18,
-          "health": 225,
-          "canTravel": true,
+          "template": "creature-male-l4",
+          "cantravel": false,
+          "traveller": false,
           "repairSkills": [
             "bike"
           ]
@@ -1197,21 +842,16 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
-        "description": "large whiteboard",
+        "template": "whiteboard",
         "detailedDescription": "Despite regular cleaning, there's still faint marks from long-disused whiteboard coding exercises and architecture diagrams.",
-        "attributes": {
-          "weight": 30,
-          "canDrawOn": true
-        },
         "synonyms": [
-          "board",
-          "white board",
-          "large white board",
-          "large whiteboard",
-          "whitebaord",
-          "diagram",
-          "code"
+			"board",
+			"white board",
+			"large white board",
+			"large whiteboard",
+			"whitebaord",
+			"diagram",
+			"code"
         ]
       },
       {
@@ -1233,56 +873,23 @@
       },
       {
         "object": "artefact",
-        "name": "pen",
-        "description": "whiteboard pen",
+        "template": "whiteboard-pen",
         "detailedDescription": "Not great quality but it's a blue pen.",
         "attributes": {
-          "weight": 0.2,
-          "type": "writing",
-          "canCollect": true,
-          "charges": 10,
-          "chargeUnit": "use",
-          "chargesDescription": "It's good for about $charges more $chargeUnit"
+          "charges": 10
         },
         "synonyms": [
-          "blue pen",
-          "board pen",
-          "whiteboard pen"
+          "blue pen"
         ]
       },
       {
         "object": "artefact",
-        "name": "table",
-        "description": "plain rectangular table",
-        "detailedDescription": "It's a standard wood-effect office desk/table.",
-        "attributes": {
-          "weight": 120,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+        "template": "table"
       },
       {
         "object": "artefact",
-        "name": "chairs",
-        "description": "pair of office chairs",
-        "detailedDescription": "They're just standard office chairs.",
-        "attributes": {
-          "defaultAction": "rest",
-          "weight": 30,
-          "type": "bed",
-          "isBreakable": true,
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "It's best to leave them here."
-        },
-        "synonyms": [
-          "chair"
-        ]
+        "template": "chairs",
+        "description": "pair of office chairs"
       }
     ]
   },
@@ -1303,17 +910,13 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "table",
+        "template": "table",
         "description": "large boardroom style table",
         "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
         "attributes": {
-          "weight": 120,
           "type": "scenery",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+		  "isBreakable": false
+        }
       },
       {
         "object": "artefact",
@@ -1383,21 +986,9 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "floor",
+        "template": "floor",
         "description": "office carpet",
         "detailedDescription": "On the surface it's just a plain office carpet but it's a bit prickly.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
         "synonyms": [
           "ground",
           "carpet"
@@ -1467,25 +1058,12 @@
       {
         "object": "artefact",
         "name": "monitor",
-        "description": "flat-panel screen",
+        "template": "flat-screen",
         "detailedDescription": "It's cycling through web site statistics and error logs.",
         "attributes": {
-          "weight": 51,
           "type": "scenery",
-          "switched": true,
-          "isOn": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "screen",
-          "display",
-          "flat-panel",
-          "panel",
-          "flat panel",
-          "flat-panel screen",
-          "flat panel screen",
-          "monitor"
-        ]
+		  "isBreakable": false
+        }
       },
       {
         "object": "creature",
@@ -1494,39 +1072,13 @@
         "description": "Zara Sheldrake",
         "detailedDescription": "Our one and only business analyst. She mostly works with the core team but is also one of our first-aiders.",
         "attributes": {
-          "weight": 105,
-          "money": 20,
-          "attackStrength": 17,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 130,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l3",
           "imageName": "zarasheldrake.jpg"
         },
         "inventory": [
           {
             "object": "artefact",
-            "name": "first aid kit",
-            "description": "first aid kit",
-            "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
-            "attributes": {
-              "defaultAction": "heal",
-              "weight": 1,
-              "type": "medical",
-              "canCollect": true,
-              "isBreakable": true,
-              "charges": 5,
-              "canDrawOn": true
-            },
-            "synonyms": [
-              "first aid",
-              "kit",
-              "firstaid kit",
-              "first-aid kit",
-              "first-aid"
-            ]
+            "template": "first-aid-kit"
           }
         ],
         "synonyms": [
@@ -1543,15 +1095,7 @@
         "description": "Dene Boulton",
         "detailedDescription": "CORE team tester and specialist in the art of looking grumpy and happy at the same time.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-male-l3",
           "imageName": "deneboulton.jpg"
         },
         "synonyms": [
@@ -1915,15 +1459,7 @@
         "description": "Chris George",
         "detailedDescription": "Chris is our resident head of Test.<br>He's becoming pretty famous in the testing world and has even had people ask for his autograph.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "chrisgeorge.jpg"
         },
         "synonyms": [
@@ -1941,15 +1477,7 @@
         "description": "Mark Wightman",
         "detailedDescription": "Mark's our head of Development.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+	      "template": "creature-male-l3",
           "imageName": "markwightman.jpg"
         },
         "synonyms": [
@@ -2069,15 +1597,7 @@
         "description": "Jeff Foster",
         "detailedDescription": "Jeff is our head of Software Engineering.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "jefffoster.jpg"
         },
         "synonyms": [
@@ -2095,15 +1615,7 @@
         "description": "Simon Cromarty",
         "detailedDescription": "He's our head of Project Management (or a pirate if you give him enough rum).",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "simoncromarty.jpg"
         },
         "synonyms": [
@@ -2300,15 +1812,7 @@
         "description": "Brian Harris",
         "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe's (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
         "attributes": {
-          "weight": 100,
-          "money": 10,
-          "attackStrength": 12,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 100,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l2",
           "imageName": "brianharris.jpg"
         },
         "synonyms": [
@@ -2404,16 +1908,8 @@
         "description": "James Dening",
         "detailedDescription": "Our head of Sales. Like a 6-foot-plus tigger.",
         "attributes": {
-          "weight": 160,
-          "money": 80,
-          "attackStrength": 30,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 25,
-          "health": 275,
+		  "template": "creature-male-l5",
           "affinity": 2,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "jamesdening.jpg"
         },
         "inventory": [
@@ -2479,15 +1975,7 @@
         "description": "Alan Platt",
         "detailedDescription": "The master of Customer Delight.",
         "attributes": {
-          "weight": 160,
-          "money": 80,
-          "attackStrength": 30,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 25,
-          "health": 275,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l5",
           "imageName": "alanplatt.jpg"
         },
         "synonyms": [
@@ -2621,25 +2109,8 @@
       {
         "object": "artefact",
         "name": "build screen",
-        "description": "flat-panel screen",
-        "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control.",
-        "attributes": {
-          "weight": 51,
-          "isBreakable": true,
-          "switched": true,
-          "isOn": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "screen",
-          "display",
-          "flat-panel",
-          "panel",
-          "flat panel",
-          "flat-panel screen",
-          "flat panel screen",
-          "monitor"
-        ]
+        "template": "flat-screen",
+        "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control."
       },
       {
         "object": "creature",
@@ -2648,15 +2119,7 @@
         "description": "Chris Whitworth",
         "detailedDescription": "Great developer, exceptional musician. Part of our customer delight development team.",
         "attributes": {
-          "weight": 90,
-          "money": 5,
-          "attackStrength": 8,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 10,
-          "health": 90,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l1",
           "destinations": [
             "customer-delight-south",
             "kitchen-ground-floor",
@@ -2844,16 +2307,8 @@
         "description": "Jonathan Watts",
         "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
         "attributes": {
-          "weight": 100,
-          "money": 10,
-          "attackStrength": 12,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 100,
+		  "template": "creature-male-l2",
           "affinity": -1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "jonathanwatts.jpg"
         },
         "synonyms": [
@@ -2873,16 +2328,8 @@
         "description": "Alice Easey",
         "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best best for survival in a zombie apocalypse.",
         "attributes": {
-          "weight": 105,
-          "money": 20,
-          "attackStrength": 17,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 130,
+          "template": "creature-female-l3",
           "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "aliceeasey.jpg"
         },
         "inventory": [
@@ -2908,25 +2355,7 @@
           },
           {
             "object": "artefact",
-            "name": "first aid kit",
-            "description": "first aid kit",
-            "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
-            "attributes": {
-              "defaultAction": "heal",
-              "weight": 1,
-              "type": "medical",
-              "canCollect": true,
-              "isBreakable": true,
-              "charges": 5,
-              "canDrawOn": true
-            },
-            "synonyms": [
-              "first aid",
-              "kit",
-              "firstaid kit",
-              "first-aid kit",
-              "first-aid"
-            ]
+            "template": "first-aid-kit"
           },
           {
             "object": "artefact",
@@ -3017,16 +2446,8 @@
         "description": "Chris Moore",
         "detailedDescription": "Endlessly cheerful security guru extraordinaire. Keep him away from Rum and pub floors.",
         "attributes": {
-          "weight": 100,
-          "money": 10,
-          "attackStrength": 12,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 100,
+		  "template": "creature-male-l2",
           "affinity": 2,
-          "canTravel": true,
-          "traveller": true,
           "destinations": [
             "customer-delight-south-west",
             "east-bike-racks",
@@ -3191,20 +2612,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "west-car-park"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -3231,45 +2643,7 @@
         "delivers": [
           {
             "object": "artefact",
-            "name": "healthy tomato plants",
-            "description": "tomato plants",
-            "detailedDescription": "They're well watered and fruiting.",
-            "attributes": {
-              "weight": 35,
-              "carryWeight": 5,
-              "isBreakable": true,
-              "plural": true
-            },
-            "synonyms": [
-              "tomato plants",
-              "tomato plant",
-              "plant",
-              "plants"
-            ],
-            "inventory": [
-              {
-                "object": "artefact",
-                "name": "tomatoes",
-                "description": "tomatoes",
-                "detailedDescription": "They're ripe and ready to pick.",
-                "attributes": {
-                  "weight": 3,
-                  "type": "food",
-                  "canCollect": true,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15,
-                  "customAction": [
-                    "get"
-                  ],
-                  "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                },
-                "synonyms": [
-                  "tomato",
-                  "tomatoes"
-                ]
-              }
-            ]
+            "template": "healthy-tomato-plants"
           }
         ]
       },
@@ -3280,15 +2654,7 @@
         "description": "Filippa Vajda",
         "detailedDescription": "Roaming UX redhead.",
         "attributes": {
-          "weight": 105,
-          "money": 20,
-          "attackStrength": 17,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 130,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l3",
           "imageName": "filippavajda.jpg"
         },
         "synonyms": [
@@ -3390,15 +2756,7 @@
         "description": "Adam Parker",
         "detailedDescription": "Master of user experience and a somewhat problematic addiction to stationery.",
         "attributes": {
-          "weight": 140,
-          "money": 50,
-          "attackStrength": 20,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 18,
-          "health": 225,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l4",
           "imageName": "adamparker.jpg"
         },
         "synonyms": [
@@ -3506,14 +2864,9 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "You peer out of the window and look down to the office entrance.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "office-front"
         },
         "synonyms": [
@@ -3524,73 +2877,27 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
-        "description": "large whiteboard",
-        "detailedDescription": "It's in surprisingly good shape!",
-        "attributes": {
-          "weight": 30,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "board",
-          "white board",
-          "large white board",
-          "large whiteboard",
-          "whitebaord"
-        ]
+        "template": "whiteboard",
+        "detailedDescription": "It's in surprisingly good shape!"
       },
       {
         "object": "artefact",
-        "name": "pen",
-        "description": "whiteboard pen",
+        "template": "whiteboard-pen",
         "detailedDescription": "It's a decent-ish black whiteboard pen",
         "attributes": {
-          "weight": 0.2,
-          "type": "writing",
-          "canCollect": true,
-          "charges": 30,
-          "chargeUnit": "use",
-          "chargesDescription": "It's good for about $charges more $chargeUnit"
-        },
-        "synonyms": [
-          "black pen",
-          "board pen",
-          "whiteboard pen"
-        ]
+          "charges": 30
+        }
       },
       {
         "object": "artefact",
-        "name": "table",
+        "template": "table",
         "description": "large oval table",
-        "detailedDescription": "It's the kind you see in office boardrooms.",
-        "attributes": {
-          "weight": 120,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+        "detailedDescription": "It's the kind you see in office boardrooms."
       },
       {
         "object": "artefact",
-        "name": "chairs",
-        "description": "set of office chairs",
-        "detailedDescription": "They're fairly plain chairs. There's enough to fit a decent-sized team in here for a meeting though.",
-        "attributes": {
-          "defaultAction": "rest",
-          "weight": 30,
-          "type": "bed",
-          "isBreakable": true,
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "It's best to leave them here."
-        },
-        "synonyms": [
-          "chair"
-        ]
+        "template": "chairs",
+        "detailedDescription": "They're fairly plain chairs. There's enough to fit a decent-sized team in here for a meeting though."
       }
     ]
   },
@@ -3834,16 +3141,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "fire exit",
-        "description": "fire exit",
-        "detailedDescription": "If you open the door, you'll probably set off an alarm.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "canDrawOn": true
-        },
+        "template": "fire-exit",
         "linkedexits": [
           {
             "object": "exit",
@@ -3861,12 +3159,6 @@
             "destination": "east-end-south-corridor-ground-floor",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "bar",
-          "door",
-          "fire door",
-          "exit"
         ]
       }
     ]
@@ -3917,20 +3209,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's a long way down.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -4164,25 +3447,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "rum bottle",
-        "description": "bottle",
-        "detailedDescription": "A large rum bottle",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 1,
-          "carryWeight": 3,
-          "attackStrength": 1,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0
-        },
-        "synonyms": [
-          "bottle",
-          "rum bottle",
-          "bottle of rum"
-        ],
+        "template": "rum-bottle",
         "inventory": [
           {
             "object": "artefact",
@@ -4271,18 +3536,7 @@
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you're finished...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-out",
         "linkedexits": [
           {
             "object": "exit",
@@ -4292,11 +3546,6 @@
             "destination": "first-floor-toilet",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
@@ -4473,35 +3722,16 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "If this were a house, it'd seem odd having indoor windows.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "sales-seating"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
-        "name": "office door",
-        "description": "office door",
+        "template": "office-door",
         "detailedDescription": "One of the main doors into the first floor working area.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "locked": true,
-          "canDrawOn": true
-        },
         "linkedexits": [
           {
             "object": "exit",
@@ -4511,10 +3741,6 @@
             "destination": "servery-back-corridor",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "office",
-          "door"
         ]
       }
     ]
@@ -4571,74 +3797,24 @@
       }
     ],
     "inventory": [
-      {
+	  {
         "object": "artefact",
-        "name": "floor",
-        "description": "floor",
-        "detailedDescription": "Shiny and clean.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground"
-        ]
+        "template": "floor"
       },
       {
         "object": "artefact",
-        "name": "mirror",
-        "description": "bathroom mirror",
-        "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
-        "attributes": {
-          "type": "scenery"
-        },
-        "synonyms": [
-          "bathroom mirror"
-        ]
+        "template": "mirror"
       },
       {
         "object": "artefact",
-        "name": "hand dryer",
-        "description": "hand dryer",
-        "detailedDescription": "These things are good but loud.",
-        "attributes": {
-          "weight": 15,
-          "type": "scenery",
-          "isBreakable": true,
-          "customAction": "dry",
-          "defaultResult": "You wave your hands under the dryer. After a while it cuts out automatically but at least your hands seem mostly dry.<br>You wonder how someone would be able to dry their face with one of these and reminisce about the days of 'real' paper towels."
-        },
-        "synonyms": [
-          "dryer",
-          "drier",
-          "hand drier",
-          "hand-dryer",
-          "hand",
-          "hands"
-        ]
+        "template": "hand-dryer",
+		"attributes": {
+			"defaultResult": "You wave your hands under the dryer. After a while it cuts out automatically but at least your hands seem mostly dry.<br>You wonder how someone would be able to dry their face with one of these and reminisce about the days of 'real' paper towels."
+		}
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-in",
         "linkedexits": [
           {
             "object": "exit",
@@ -4648,125 +3824,20 @@
             "destination": "first-floor-cubicle",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "toilet",
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
         "object": "artefact",
-        "name": "soap",
-        "description": "soap dispenser",
-        "detailedDescription": "After careful inspection, you figure out where to push it to make it work.",
+        "template": "soap",
         "attributes": {
-          "weight": 1,
+          "type": "junk",
           "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": -1,
-          "customAction": [
-            "press",
-            "push"
-          ],
-          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
-          "imageName": "soapdispenser.jpg"
-        },
-        "synonyms": [
-          "dispenser",
-          "soap dispenser",
-          "dispensers",
-          "soap dispensers"
-        ]
+          "isBreakable": true
+		}
       },
       {
         "object": "artefact",
-        "name": "basin",
-        "description": "wash basin",
-        "detailedDescription": "Clean and with a supply of fresh water.",
-        "attributes": {
-          "weight": 100,
-          "type": "scenery",
-          "customAction": "wash",
-          "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "wash basin",
-          "sink",
-          "tap",
-          "hands"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for thirst and plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        "template": "basin"
       }
     ]
   },
@@ -4979,39 +4050,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "floor",
-        "description": "floor",
-        "detailedDescription": "Shiny and clean.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground"
-        ]
+        "template": "floor"
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you're finished...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-out",
         "linkedexits": [
           {
             "object": "exit",
@@ -5021,11 +4064,6 @@
             "destination": "ground-floor-toilet",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
@@ -5247,74 +4285,21 @@
       }
     ],
     "inventory": [
-      {
+	  {
         "object": "artefact",
-        "name": "floor",
-        "description": "floor",
-        "detailedDescription": "Shiny and clean.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground"
-        ]
+        "template": "floor"
       },
       {
         "object": "artefact",
-        "name": "mirror",
-        "description": "bathroom mirror",
-        "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
-        "attributes": {
-          "type": "scenery"
-        },
-        "synonyms": [
-          "bathroom mirror"
-        ]
+        "template": "mirror"
       },
       {
         "object": "artefact",
-        "name": "hand dryer",
-        "description": "hand dryer",
-        "detailedDescription": "These things are good but loud.",
-        "attributes": {
-          "weight": 15,
-          "type": "scenery",
-          "isBreakable": true,
-          "customAction": "dry",
-          "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels."
-        },
-        "synonyms": [
-          "dryer",
-          "drier",
-          "hand drier",
-          "hand-dryer",
-          "hand",
-          "hands"
-        ]
+        "template": "hand-dryer"
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-in",
         "linkedexits": [
           {
             "object": "exit",
@@ -5324,124 +4309,20 @@
             "destination": "ground-floor-cubicle",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "toilet",
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
         "object": "artefact",
-        "name": "soap",
+        "template": "soap",
         "description": "soap dispenser",
-        "detailedDescription": "After careful inspection, you figure out where to push it to make it work.",
-        "attributes": {
-          "weight": 1,
-          "type": "scenery",
-          "affinityModifier": -1,
-          "customAction": [
-            "press",
-            "push"
-          ],
-          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
-          "imageName": "soapdispenser.jpg"
-        },
-        "synonyms": [
-          "dispenser",
-          "soap dispenser",
-          "dispensers",
-          "soap dispensers"
-        ]
+          "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out."
       },
       {
         "object": "artefact",
-        "name": "basin",
-        "description": "wash basin",
-        "detailedDescription": "Clean and with a supply of fresh water.",
+        "template": "basin",
         "attributes": {
-          "weight": 100,
-          "type": "scenery",
-          "customAction": "wash",
-          "defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "wash basin",
-          "sink",
-          "tap",
-          "hands"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for thirst and plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+          "defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm."
+        }
       }
     ]
   },
@@ -5510,15 +4391,7 @@
         "description": "Amanda from IS",
         "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
         "attributes": {
-          "weight": 90,
-          "money": 10,
-          "attackStrength": 13,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 8,
-          "health": 100,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l2",
           "imageName": "amandamansfield.jpg",
           "repairSkills": [
             "projector",
@@ -5641,20 +4514,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's not the greatest view you could get from a meeting room.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "stairs-first-floor"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -5725,31 +4589,10 @@
               "cow juice"
             ],
             "delivers": [
-              {
-                "object": "artefact",
-                "name": "white coffee",
-                "description": "white coffee",
-                "detailedDescription": "Milky development fuel",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 18
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "milky coffee"
-                ]
-              }
+				{
+				"object": "artefact",
+				"template": "white-coffee"
+				}
             ]
           }
         ]
@@ -5804,81 +4647,15 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "sweet coffee",
-                "description": "sweet coffee",
-                "detailedDescription": "Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary coffee"
-                ]
+                "template": "sweet-coffee"
               },
               {
                 "object": "artefact",
-                "name": "sweet latte",
-                "description": "sweet latte",
-                "detailedDescription": "Hipster Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary latte",
-                  "latte"
-                ]
+                "template": "sweet-latte"
               },
               {
                 "object": "artefact",
-                "name": "sweet mocha",
-                "description": "sweet mocha",
-                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "affinityModifier": 2,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary mocha",
-                  "mocha"
-                ]
+                "template": "sweet-mocha"
               }
             ]
           }
@@ -5984,29 +4761,7 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "sweet latte",
-                "description": "sweet latte",
-                "detailedDescription": "Hipster Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary latte",
-                  "latte"
-                ]
+                "template": "sweet-latte"
               }
             ]
           },
@@ -6038,30 +4793,7 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "sweet mocha",
-                "description": "sweet mocha",
-                "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 0.5,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "affinityModifier": 2,
-                  "isEdible": true,
-                  "nutrition": 25
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary mocha",
-                  "mocha"
-                ]
+                "template": "sweet-mocha"
               }
             ]
           },
@@ -6094,54 +4826,12 @@
             "delivers": [
               {
                 "object": "artefact",
-                "name": "sweet coffee",
-                "description": "sweet coffee",
-                "detailedDescription": "Development fuel with added sugar!",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "sugary coffee"
-                ]
+                "template": "sweet-coffee"
               },
-              {
-                "object": "artefact",
-                "name": "white coffee",
-                "description": "white coffee",
-                "detailedDescription": "Milky development fuel",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 18
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "milky coffee"
-                ]
-              }
+				{
+				"object": "artefact",
+				"template": "white-coffee"
+				}
             ]
           }
         ],
@@ -6308,15 +4998,7 @@
                   "description": "Dave Convery",
                   "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
                   "attributes": {
-                    "weight": 140,
-                    "money": 50,
-                    "attackStrength": 20,
-                    "gender": "male",
-                    "type": "friendly",
-                    "carryWeight": 18,
-                    "health": 225,
-                    "canTravel": true,
-                    "traveller": true,
+				    "template": "creature-male-l4",
                     "destinations": [
                       "atrium-seating",
                       "kitchen-ground-floor",
@@ -6358,15 +5040,7 @@
                   "description": "Roger Hart",
                   "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.<br>He runs a regular podcast on comics (along with Dave and Lucy)",
                   "attributes": {
-                    "weight": 120,
-                    "money": 20,
-                    "attackStrength": 15,
-                    "gender": "male",
-                    "type": "friendly",
-                    "carryWeight": 15,
-                    "health": 120,
-                    "canTravel": true,
-                    "traveller": true,
+					"template": "creature-male-l3",
                     "destinations": [
                       "east-bike-racks"
                     ],
@@ -6405,16 +5079,10 @@
                   "description": "Jordan Miller",
                   "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
                   "attributes": {
-                    "weight": 140,
-                    "money": 50,
+					"template": "creature-male-l4",
                     "attackStrength": 12,
-                    "gender": "male",
-                    "type": "creature",
-                    "carryWeight": 18,
-                    "health": 225,
+					"type": "creature",
                     "affinity": -1,
-                    "canTravel": true,
-                    "traveller": true,
                     "destinations": [
                       "machine-room-east"
                     ],
@@ -6423,18 +5091,13 @@
                   },
                   "inventory": [
                     {
-                      "object": "artefact",
+					  "object": "artefact",
+					  "template": "first-aid-kit",                      
                       "name": "emergency first aid kit",
                       "description": "single-use first aid kit",
                       "detailedDescription": "A one-off emergency first-aid kit.",
                       "attributes": {
-                        "defaultAction": "heal",
-                        "weight": 1,
-                        "type": "medical",
-                        "canCollect": true,
-                        "isBreakable": true,
-                        "charges": 1,
-                        "canDrawOn": true
+                        "charges": 1
                       },
                       "synonyms": [
                         "first aid",
@@ -6627,13 +5290,13 @@
                                   "defaultAction": "drive",
                                   "weight": 3000,
                                   "carryWeight": 500,
-                                  "type": "vehicle",
-                                  "subType": "van",
                                   "burnRate": 0.1,
                                   "switched": true,
+                                  "type": "vehicle",
+                                  "subType": "van",
+                                  "canDrawOn": true,
                                   "requiredComponentCount": 1,
-                                  "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first.",
-                                  "canDrawOn": true
+                                  "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first."
                                 },
                                 "synonyms": [
                                   "white van"
@@ -6646,12 +5309,11 @@
                                     "detailedDescription": "It looks like there's only a few pounds worth left.",
                                     "attributes": {
                                       "weight": 10,
-                                      "requiresContainer": true,
                                       "isLiquid": true,
                                       "charges": 2,
+                                      "plural": true,
                                       "chargeUnit": "gallon",
                                       "chargesDescription": "There's about $charges $chargeUnit in the tank",
-                                      "plural": true,
                                       "affinityModifier": 0,
                                       "componentOf": [
                                         "van"
@@ -6815,8 +5477,8 @@
           "weight": 80,
           "carryWeight": 8,
           "type": "container",
-          "isBreakable": true,
           "plural": true,
+          "isBreakable": true,
           "canDrawOn": true
         },
         "synonyms": [
@@ -6845,8 +5507,8 @@
               "attackStrength": 5,
               "type": "book",
               "canCollect": true,
-              "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff to be honest.",
-              "canDrawOn": true
+              "canDrawOn": true,
+              "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff to be honest."
             },
             "synonyms": [
               "book",
@@ -6870,8 +5532,8 @@
               "type": "book",
               "canCollect": true,
               "defaultResult": "'As he took my hand my heart quickened and I realised this was a man who meant business.'<br>'His double-fist-pump hand shake meant only one thing...'<br>'SENIOR EXECUTIVE!'<br><br>As a working professional, you provide a service to everyone you interact with. The class of service you provide in these interactions is largely your choice but for optimum results you must determine a person's unmet need and establish if you are able (and willing) to help them fulfil it.<br>...furthermore, understand their role, their sphere of influence and the value of your relationship to them.<br>How can you both achieve mutual success? Not from a purely cynical or financial perspective but from a longer term holistic business relationship.<br>Don't let anyone fool you. Just because it's business doesn't mean it's not personal...<br><br>It continues switching between bad storytelling and business explanation and goes on to explain why not all customers are created equal.<br><br>I think it's meant to help you work with difficult customers and business relationships.<br>Although the writing style is awful, there's almost certainly some useful nuggets hiding in there for someone in a front-line, customer-facing role.",
-              "smell": "Hmmm. You're <i>sure</i> that smell's familiar but you can't quite place it.",
-              "canDrawOn": true
+              "canDrawOn": true,
+              "smell": "Hmmm. You're <i>sure</i> that smell's familiar but you can't quite place it."
             },
             "synonyms": [
               "book",
@@ -7146,54 +5808,6 @@
   },
   {
     "object": "location",
-    "name": "milton-road",
-    "displayName": "Milton Road",
-    "description": "You're driving south along Milton road heading into Cambridge.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "milton-road",
-        "destination": "golden-hind-junction",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "milton-road-north-end",
-    "displayName": "Milton Road",
-    "description": "You're driving south along Milton road heading towards the business park.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "continue",
-        "direction": "c",
-        "source": "milton-road-north-end",
-        "destination": "milton-road",
-        "requiredAction": "drive"
-      }
-    ]
-  },
-  {
-    "object": "location",
     "name": "northwest-corridor-ground-floor",
     "displayName": "West corridor ground floor",
     "description": "You're in the West corridor of the ground floor.",
@@ -7270,44 +5884,17 @@
         "description": "ice cream man",
         "detailedDescription": "A random guy who occasionally has ice cream for sale.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "icecreamman.jpg"
         },
         "sells": [
           {
             "object": "artefact",
-            "name": "ice cream",
-            "description": "99 flake ice cream",
-            "detailedDescription": "Ice cream makes a great gift!",
+            "template": "ice-cream",
             "attributes": {
-              "defaultAction": "eat",
               "weight": 15,
-              "type": "food",
-              "canCollect": true,
-              "charges": 15,
-              "chargeUnit": "99 flake ice cream",
-              "chargesDescription": "$charges $chargeUnit",
-              "saleUnit": 1,
-              "affinityModifier": 5,
-              "isEdible": true,
-              "nutrition": 15,
-              "price": 3.5
-            },
-            "synonyms": [
-              "ice",
-              "icecream",
-              "99",
-              "99 flake",
-              "99 flake ice cream"
-            ]
+              "charges": 15
+            }
           }
         ],
         "synonyms": [
@@ -7368,30 +5955,10 @@
             "reward": {
               "delivers": {
                 "object": "artefact",
-                "name": "ice cream",
-                "description": "99 flake ice cream",
-                "detailedDescription": "Ice cream makes a great gift!",
-                "attributes": {
-                  "defaultAction": "eat",
-                  "weight": 1,
-                  "type": "food",
-                  "canCollect": true,
-                  "charges": 1,
-                  "chargeUnit": "99 flake ice cream",
-                  "chargesDescription": "$charges $chargeUnit",
-                  "saleUnit": 1,
-                  "affinityModifier": 5,
-                  "isEdible": true,
-                  "nutrition": 15,
-                  "price": 3
-                },
-                "synonyms": [
-                  "ice",
-                  "icecream",
-                  "99",
-                  "99 flake",
-                  "99 flake ice cream"
-                ]
+                "template": "ice-cream",
+				"attributes": {
+					"price": 3
+				}
               },
               "score": 5,
               "affinityModifier": 2,
@@ -7565,16 +6132,8 @@
         "description": "Chris Smith",
         "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
+		  "template": "creature-male-l3",
           "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "chrissmith.jpg"
         },
         "synonyms": [
@@ -7713,15 +6272,9 @@
         "description": "James Moore",
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
-          "weight": 160,
-          "money": 80,
-          "attackStrength": 30,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 25,
-          "health": 275,
+		  "template": "creature-male-l5",
           "affinity": -1,
-          "canTravel": true,
+          "traveller": false,
           "imageName": "jamesmoore.jpg"
         },
         "synonyms": [
@@ -7820,16 +6373,8 @@
         "description": "Lucy Boyes",
         "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.<br>She runs a regular podcast on comics (along with Roger and Dave)",
         "attributes": {
-          "weight": 125,
-          "money": 50,
-          "attackStrength": 20,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 17,
-          "health": 180,
+		  "template": "creature-female-l4",
           "affinity": -1,
-          "canTravel": true,
-          "traveller": true,
           "destinations": [
             "atrium",
             "customer-delight-south",
@@ -7917,16 +6462,8 @@
         "description": "Sara Stopford-Pickering",
         "detailedDescription": "One of our super-capable and friendly PA team.",
         "attributes": {
-          "weight": 90,
-          "money": 10,
-          "attackStrength": 13,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 8,
-          "health": 100,
+          "template": "creature-female-l2",
           "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "sarastopfordpickering.jpg"
         },
         "synonyms": [
@@ -8016,14 +6553,9 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Through the window lies the West car park. You can occasionally see people passing by with their bikes.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "west-car-park"
         },
         "synonyms": [
@@ -8227,70 +6759,7 @@
         "delivers": [
           {
             "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for thirst and plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
+            "template": "water"
           }
         ]
       }
@@ -8398,15 +6867,9 @@
         "description": "Simon the CEO",
         "detailedDescription": "He runs the show.",
         "attributes": {
-          "weight": 160,
-          "money": 80,
+		  "template": "creature-male-l5",
           "attackStrength": 45,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 25,
           "health": 500,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "simongalbraith.jpg"
         },
         "inventory": [
@@ -8695,15 +7158,7 @@
         "description": "Vic the receptionist",
         "detailedDescription": "Well, receptionist is an understatement.<br>As well as dealing with all visitors & parcels, she also provides customer support!",
         "attributes": {
-          "weight": 105,
-          "money": 20,
-          "attackStrength": 17,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 130,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l3",
           "imageName": "vicwiseman.jpg"
         },
         "synonyms": [
@@ -8836,18 +7291,8 @@
       },
       {
         "object": "artefact",
-        "name": "office door",
-        "description": "office door",
+        "template": "office-door",
         "detailedDescription": "One of the main doors into the ground floor working area.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "locked": true,
-          "canDrawOn": true
-        },
         "linkedexits": [
           {
             "object": "exit",
@@ -8857,10 +7302,6 @@
             "destination": "east-corridor-ground-floor-north-west",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "office",
-          "door"
         ]
       }
     ],
@@ -9244,15 +7685,7 @@
         "description": "Alex Freeman",
         "detailedDescription": "Can haz mor Accountz.",
         "attributes": {
-          "weight": 140,
-          "money": 50,
-          "attackStrength": 20,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 18,
-          "health": 225,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l4",
           "imageName": "alexfreeman.jpg"
         },
         "synonyms": [
@@ -9271,15 +7704,7 @@
         "description": "James King",
         "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "jamesking.jpg"
         },
         "synonyms": [
@@ -9298,15 +7723,7 @@
         "description": "Justin Heron",
         "detailedDescription": "He's a master of selling!",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "justinheron.jpg"
         },
         "synonyms": [
@@ -9411,15 +7828,7 @@
         "description": "Cassi Roper",
         "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
         "attributes": {
-          "weight": 125,
-          "money": 50,
-          "attackStrength": 20,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 17,
-          "health": 180,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l4",
           "imageName": "cassiroper.jpg"
         },
         "synonyms": [
@@ -9492,20 +7901,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's usually pretty busy down there.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "reception"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -9618,18 +8018,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you're finished...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-out",
         "linkedexits": [
           {
             "object": "exit",
@@ -9639,33 +8028,11 @@
             "destination": "second-floor-toilet",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
         "object": "artefact",
-        "name": "floor",
-        "description": "floor",
-        "detailedDescription": "Shiny and clean.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground"
-        ]
+        "template": "floor"
       },
       {
         "object": "artefact",
@@ -9859,27 +8226,17 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
-        "description": "large whiteboard",
+        "template": "whiteboard",
         "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
         "attributes": {
-          "weight": 30,
           "type": "scenery",
-          "canDrawOn": true,
           "writings": [
             "Who scrubbed off my cactus?",
             "That wasn't a cactus!",
             "meh",
             "Richard Mitchell"
           ]
-        },
-        "synonyms": [
-          "board",
-          "white board",
-          "large white board",
-          "large whiteboard",
-          "whitebaord"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -9901,25 +8258,7 @@
       },
       {
         "object": "artefact",
-        "name": "first aid kit",
-        "description": "first aid kit",
-        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
-        "attributes": {
-          "defaultAction": "heal",
-          "weight": 1,
-          "type": "medical",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 5,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "first aid",
-          "kit",
-          "firstaid kit",
-          "first-aid kit",
-          "first-aid"
-        ]
+        "template": "first-aid-kit"
       }
     ]
   },
@@ -9977,35 +8316,16 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Things look pretty cosy in that corner.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "facilities-area"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       },
       {
         "object": "artefact",
-        "name": "office door",
-        "description": "office door",
+        "template": "office-door",
         "detailedDescription": "One of the main doors into the first floor working area.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "locked": true,
-          "canDrawOn": true
-        },
         "linkedexits": [
           {
             "object": "exit",
@@ -10015,10 +8335,6 @@
             "destination": "second-floor-east-corridor",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "office",
-          "door"
         ]
       }
     ]
@@ -10456,16 +8772,7 @@
       },
       {
         "object": "artefact",
-        "name": "fire exit",
-        "description": "fire exit",
-        "detailedDescription": "If you open the door, you'll probably set off an alarm.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "canDrawOn": true
-        },
+        "template": "fire-exit",
         "linkedexits": [
           {
             "object": "exit",
@@ -10483,12 +8790,6 @@
             "destination": "second-floor-seating-area-east",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "bar",
-          "door",
-          "fire door",
-          "exit"
         ]
       }
     ]
@@ -10545,98 +8846,34 @@
       }
     ],
     "inventory": [
-      {
+	  {
         "object": "artefact",
-        "name": "floor",
-        "description": "floor",
-        "detailedDescription": "Shiny and clean.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground"
-        ]
+        "template": "floor"
       },
       {
         "object": "artefact",
-        "name": "mirror",
-        "description": "bathroom mirror",
-        "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
-        "attributes": {
-          "type": "scenery"
-        },
-        "synonyms": [
-          "bathroom mirror"
-        ]
+        "template": "mirror"
       },
       {
         "object": "artefact",
-        "name": "hand dryer",
-        "description": "hand dryer",
-        "detailedDescription": "These things are good but loud.",
+        "template": "hand-dryer",
         "attributes": {
-          "weight": 15,
-          "type": "scenery",
-          "isBreakable": true,
-          "customAction": "dry",
           "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
-          "smell": "It has that reassuring, safe smell of ozone and burned electrics."
-        },
-        "synonyms": [
-          "dryer",
-          "drier",
-          "hand drier",
-          "hand-dryer",
-          "hand",
-          "hands"
-        ]
+		  "smell": "It has that reassuring, safe smell of ozone and burned electrics."
+        }
       },
       {
         "object": "artefact",
-        "name": "soap",
-        "description": "soap dispenser",
-        "detailedDescription": "Your mind must be playing tricks on you, it's just the same as all the others.",
-        "attributes": {
-          "weight": 1,
-          "type": "scenery",
-          "affinityModifier": -1,
-          "customAction": [
-            "press",
-            "push"
-          ],
-          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
-          "imageName": "soapdispenser.jpg"
-        },
-        "synonyms": [
-          "dispenser",
-          "soap dispenser",
-          "dispensers",
-          "soap dispensers"
-        ]
+        "template": "soap",
+        "detailedDescription": "Your mind must be playing tricks on you, it's just the same as all the others."
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
+        "template": "cubicle-door-in",
         "detailedDescription": "The lock on the door has a slot to allow turning from the outside with a suitable tool.",
         "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
           "lockable": true,
-          "locked": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
+          "locked": true
         },
         "linkedexits": [
           {
@@ -10647,101 +8884,11 @@
             "destination": "second-floor-cubicle",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "toilet",
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
         "object": "artefact",
-        "name": "basin",
-        "description": "wash basin",
-        "detailedDescription": "Clean and with a supply of fresh water.",
-        "attributes": {
-          "weight": 100,
-          "type": "scenery",
-          "customAction": "wash",
-          "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "wash basin",
-          "sink",
-          "tap",
-          "hands"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "name": "water",
-            "description": "water",
-            "detailedDescription": "No real nutritional value but great for thirst and plants.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "drink",
-              "chargesDescription": "There's enough here for $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "combinesWith": [
-                "tree",
-                "tomato plants"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "name": "healthy tomato plants",
-                "description": "tomato plants",
-                "detailedDescription": "They're well watered and fruiting.",
-                "attributes": {
-                  "weight": 35,
-                  "carryWeight": 5,
-                  "isBreakable": true,
-                  "plural": true
-                },
-                "synonyms": [
-                  "tomato plants",
-                  "tomato plant",
-                  "plant",
-                  "plants"
-                ],
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "tomatoes",
-                    "description": "tomatoes",
-                    "detailedDescription": "They're ripe and ready to pick.",
-                    "attributes": {
-                      "weight": 3,
-                      "type": "food",
-                      "canCollect": true,
-                      "plural": true,
-                      "isEdible": true,
-                      "nutrition": 15,
-                      "customAction": [
-                        "get"
-                      ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-                    },
-                    "synonyms": [
-                      "tomato",
-                      "tomatoes"
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        "template": "basin"
       }
     ]
   },
@@ -10827,25 +8974,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "rum bottle",
-        "description": "bottle",
-        "detailedDescription": "A large rum bottle",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 1,
-          "carryWeight": 3,
-          "attackStrength": 1,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0
-        },
-        "synonyms": [
-          "bottle",
-          "rum bottle",
-          "bottle of rum"
-        ],
+        "template": "rum-bottle",
         "inventory": [
           {
             "object": "artefact",
@@ -10898,14 +9027,8 @@
         "description": "Margaret Sexton",
         "detailedDescription": "A true ray of sunshine every lunchtime. Serving you food on a daily basis.<br>Seriously - she's lovely and looks out for all of us.",
         "attributes": {
-          "weight": 90,
-          "money": 10,
-          "attackStrength": 13,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 8,
-          "health": 100,
-          "canTravel": true,
+          "template": "creature-female-l2",
+          "traveller": false,
           "imageName": "margaretsexton.jpg"
         },
         "synonyms": [
@@ -11061,15 +9184,7 @@
         "description": "Wayne Stanford",
         "detailedDescription": "Chef Wayne, master of the Red Gate dessert!",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "destinations": [
             "servery-kitchen",
             "smoking-area"
@@ -11146,16 +9261,7 @@
       },
       {
         "object": "artefact",
-        "name": "fire exit",
-        "description": "fire exit",
-        "detailedDescription": "If you open the door, you'll probably set off an alarm.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "canDrawOn": true
-        },
+        "template": "fire-exit",
         "linkedexits": [
           {
             "object": "exit",
@@ -11173,12 +9279,6 @@
             "destination": "servery-main",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "bar",
-          "door",
-          "fire door",
-          "exit"
         ]
       }
     ]
@@ -11232,25 +9332,7 @@
       },
       {
         "object": "artefact",
-        "name": "first aid kit",
-        "description": "first aid kit",
-        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
-        "attributes": {
-          "defaultAction": "heal",
-          "weight": 1,
-          "type": "medical",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 5,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "first aid",
-          "kit",
-          "firstaid kit",
-          "first-aid kit",
-          "first-aid"
-        ]
+        "template": "first-aid-kit"
       },
       {
         "object": "artefact",
@@ -11538,20 +9620,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's a long way down.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -11630,20 +9703,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "It's the usual view out of the front of the office.",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -11686,18 +9750,8 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "office door",
-        "description": "office door",
+        "template": "office-door",
         "detailedDescription": "One of the main doors into the first floor working area.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "locked": true,
-          "canDrawOn": true
-        },
         "linkedexits": [
           {
             "object": "exit",
@@ -11707,10 +9761,6 @@
             "destination": "servery-north-west",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "office",
-          "door"
         ]
       }
     ]
@@ -11761,18 +9811,8 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "office door",
-        "description": "office door",
+        "template": "office-door",
         "detailedDescription": "One of the main doors into the ground floor working area.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "locked": true,
-          "canDrawOn": true
-        },
         "linkedexits": [
           {
             "object": "exit",
@@ -11782,10 +9822,6 @@
             "destination": "northwest-corridor-ground-floor",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "office",
-          "door"
         ]
       }
     ]
@@ -11822,18 +9858,8 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "office door",
-        "description": "office door",
+        "template": "office-door",
         "detailedDescription": "One of the main doors into the first floor working area.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "locked": true,
-          "canDrawOn": true
-        },
         "linkedexits": [
           {
             "object": "exit",
@@ -11843,10 +9869,6 @@
             "destination": "second-floor-reception",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "office",
-          "door"
         ]
       }
     ]
@@ -11875,20 +9897,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "window",
-        "description": "window",
+        "template": "window",
         "detailedDescription": "Wave!",
         "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "isBreakable": true,
-          "canDrawOn": true,
           "viewDestination": "stairs-first-floor"
-        },
-        "synonyms": [
-          "glass",
-          "windows"
-        ]
+        }
       }
     ]
   },
@@ -11928,15 +9941,7 @@
         "description": "Chris Allen",
         "detailedDescription": "Support and music skills. What more could you need?",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "chrisallen.jpg"
         },
         "synonyms": [
@@ -12056,15 +10061,7 @@
         "description": "Pawel Jonczak",
         "detailedDescription": "One of the hidden heroes of our catering team.",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "destinations": [
             "servery-kitchen",
             "waste-area",
@@ -12422,13 +10419,8 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
+        "template": "whiteboard",
         "description": "small whiteboard",
-        "detailedDescription": "As whiteboards go it's pretty average really.",
-        "attributes": {
-          "weight": 30,
-          "canDrawOn": true
-        },
         "synonyms": [
           "board",
           "white board",
@@ -12439,56 +10431,397 @@
       },
       {
         "object": "artefact",
-        "name": "pen",
-        "description": "whiteboard pen",
+        "template": "whiteboard-pen",
         "detailedDescription": "It's a green pen.",
-        "attributes": {
-          "weight": 0.2,
-          "type": "writing",
-          "canCollect": true,
-          "charges": 20,
-          "chargeUnit": "use",
-          "chargesDescription": "It's good for about $charges more $chargeUnit"
-        },
         "synonyms": [
-          "green pen",
-          "board pen",
-          "whiteboard pen"
+          "green pen"
         ]
       },
       {
         "object": "artefact",
-        "name": "table",
-        "description": "plain rectangular table",
-        "detailedDescription": "It's a plain white melamine meeting room table.",
-        "attributes": {
-          "weight": 120,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+        "template": "table",
+        "detailedDescription": "It's a plain white melamine meeting room table."
       },
       {
         "object": "artefact",
-        "name": "chairs",
+        "template": "chairs",
         "description": "group of office chairs",
         "detailedDescription": "Yup, they're chairs.",
         "attributes": {
-          "defaultAction": "rest",
-          "weight": 30,
-          "type": "bed",
-          "isBreakable": true,
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
           "defaultResult": "Sorry, they belong in here."
-        },
-        "synonyms": [
-          "chair"
-        ]
+        }
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-east",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "access-road-east",
+        "destination": "access-road-central",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-central",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "access-road-central",
+        "destination": "access-road-west",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-west",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "access-road-west",
+        "destination": "access-road-junction",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "access-road-junction",
+    "displayName": "Business park access road",
+    "description": "You're at the junction with Milton Road. Left leads into Cambridge, right heads towards Milton and the A14.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Right",
+        "direction": "r",
+        "source": "access-road-junction",
+        "destination": "a14-roundabout-entrance",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "access-road-junction",
+        "destination": "milton-road",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-entrance",
+    "displayName": "Milton roundabout",
+    "description": "You're waiting at the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-entrance",
+        "destination": "a14-roundabout",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-entrance",
+        "destination": "a14-westbound",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout",
+        "destination": "a10-nothbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout",
+        "destination": "a14-roundabout-east",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-north-east",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-north-east",
+        "destination": "milton-sliproad",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-north-east",
+        "destination": "a14-roundabout-east",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-east",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-east",
+        "destination": "a14-eastbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-east",
+        "destination": "a14-roundabout-south",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-south",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-south",
+        "destination": "milton-road-north-end",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-south",
+        "destination": "a14-roundabout-south-west",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-roundabout-south-west",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-south-west",
+        "destination": "a14-westbound",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-south-west",
+        "destination": "a14-roundabout",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "milton-road-north-end",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading towards the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "milton-road-north-end",
+        "destination": "milton-road",
+        "requiredAction": "drive"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "a14-westbound",
+    "displayName": "A14 Westbound",
+    "description": "You're stationary on the sliproad of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>To be honest you might as well just give up now.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    }
+  },
+  {
+    "object": "location",
+    "name": "a14-eastbound",
+    "displayName": "A14 Eastbound",
+    "description": "You're driving East along the A14. On the opposite side of the road you see a stationary line of cars stretching beyond the horizon.<br>I bet you're glad you didn't head west!",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    }
+  },
+  {
+    "object": "location",
+    "name": "milton-road",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading into Cambridge.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "milton-road",
+        "destination": "golden-hind-junction",
+        "requiredAction": "drive"
       }
     ]
   }
