@@ -1,0 +1,21 @@
+﻿{
+"object": "artefact",
+"name": "hand dryer",
+"description": "hand dryer",
+"detailedDescription": "These things are good but loud.",
+"attributes": {
+    "weight": 15,
+    "type": "scenery",
+    "isBreakable": true,
+    "customAction": "dry",
+    "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels."
+},
+"synonyms": [
+    "dryer",
+    "drier",
+    "hand drier",
+    "hand-dryer",
+    "hand",
+    "hands"
+]
+}

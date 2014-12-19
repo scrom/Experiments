@@ -3814,15 +3814,14 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "mirror",
-        "description": "bathroom mirror",
-        "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
-        "attributes": {
-          "type": "scenery"
-        },
-        "synonyms": [
-          "bathroom mirror"
-        ]
+        "template": "mirror"
+      },
+      {
+        "object": "artefact",
+        "template": "hand-dryer",
+		"attributes": {
+			"defaultResult": "You wave your hands under the dryer. After a while it cuts out automatically but at least your hands seem mostly dry.<br>You wonder how someone would be able to dry their face with one of these and reminisce about the days of 'real' paper towels."
+		}
       },
       {
         "object": "artefact",
@@ -4299,27 +4298,14 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "mirror",
-        "description": "bathroom mirror",
-        "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
-        "attributes": {
-          "type": "scenery"
-        },
-        "synonyms": [
-          "bathroom mirror"
-        ]
+        "template": "mirror"
       },
       {
         "object": "artefact",
-        "name": "hand dryer",
-        "description": "hand dryer",
-        "detailedDescription": "These dryers are good but loud.",
+        "template": "hand-dryer",
         "attributes": {
-          "weight": 15,
-          "type": "scenery",
-          "isBreakable": true,
-          "customAction": "dry",
-          "defaultResult": "You wave your hands under the dryer. After a while it cuts out automatically but at least your hands seem mostly dry.<br>You wonder how someone would be able to dry their face with one of these and reminisce about the days of 'real' paper towels."
+          "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
+		  "smell": "It has that reassuring, safe smell of ozone and burned electrics."
         },
         "synonyms": [
           "dryer",
@@ -8896,36 +8882,11 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "mirror",
-        "description": "bathroom mirror",
-        "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
-        "attributes": {
-          "type": "scenery"
-        },
-        "synonyms": [
-          "bathroom mirror"
-        ]
+        "template": "mirror"
       },
       {
         "object": "artefact",
-        "name": "hand dryer",
-        "description": "hand dryer",
-        "detailedDescription": "These things are good but loud.",
-        "attributes": {
-          "weight": 15,
-          "type": "scenery",
-          "isBreakable": true,
-          "customAction": "dry",
-          "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels."
-        },
-        "synonyms": [
-          "dryer",
-          "drier",
-          "hand drier",
-          "hand-dryer",
-          "hand",
-          "hands"
-        ]
+        "template": "hand-dryer"
       },
       {
         "object": "artefact",
