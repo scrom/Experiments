@@ -1026,15 +1026,12 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "carpet",
+        "template": "floor",
         "description": "office carpet",
         "detailedDescription": "On the surface it's just a plain office carpet but it's a bit prickly.",
-        "attributes": {
-          "type": "scenery"
-        },
         "synonyms": [
-          "floor",
-          "ground"
+          "ground",
+          "carpet"
         ],
         "inventory": [
           {
@@ -4169,24 +4166,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "floor",
-        "description": "floor",
-        "detailedDescription": "Shiny and clean.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground"
-        ]
+        "template": "floor"
       },
       {
         "object": "artefact",
@@ -8189,24 +8169,7 @@
       },
       {
         "object": "artefact",
-        "name": "floor",
-        "description": "floor",
-        "detailedDescription": "Shiny and clean.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground"
-        ]
+        "template": "floor"
       },
       {
         "object": "artefact",

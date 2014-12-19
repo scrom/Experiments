@@ -32,6 +32,7 @@
     <Content Include="data\cubicle-door-in.json" />
     <Content Include="data\first-aid-kit.json" />
     <Content Include="data\flat-screen.json" />
+    <Content Include="data\floor.json" />
     <Content Include="data\ice-cream.json" />
     <Content Include="data\healthy-tomato-plants.json" />
     <Content Include="data\images\brokentoilet.jpg" />
