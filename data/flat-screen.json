@@ -1,0 +1,21 @@
+﻿{
+"object": "artefact",
+"description": "flat-panel screen",
+	"attributes": {
+    "weight": 51,
+    "isBreakable": true,
+    "switched": true,
+    "isOn": true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "screen",
+	"display",
+    "flat-panel",
+    "panel",
+    "flat panel",
+    "flat-panel screen",
+    "flat panel screen",
+	"monitor"
+]
+}

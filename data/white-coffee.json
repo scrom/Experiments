@@ -1,0 +1,25 @@
+﻿{
+"object": "artefact",
+"name": "white coffee",
+"description": "white coffee",
+"detailedDescription": "Milky development fuel",
+"attributes": {
+    "defaultAction": "drink",
+    "weight": 1,
+    "type": "food",
+    "requiresContainer": true,
+    "isLiquid": true,
+    "requiredContainer": "cup",
+    "canCollect": true,
+    "charges": 1,
+    "plural": true,
+    "isEdible": true,
+    "nutrition": 18
+},
+"synonyms": [
+    "brew",
+    "drink",
+    "coffee",
+    "milky coffee"
+]
+}

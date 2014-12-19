@@ -120,24 +120,11 @@
       {
         "object": "artefact",
         "name": "screen",
-        "description": "flat-panel screen",
+        "template": "flat-screen",
         "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
         "attributes": {
-          "weight": 51,
-          "isBreakable": true,
-          "switched": true,
-          "isOn": true,
-          "imageName": "screen.jpg",
-          "canDrawOn": true
+          "imageName": "screen.jpg"
         },
-        "synonyms": [
-          "display",
-          "flat-panel",
-          "panel",
-          "flat panel",
-          "flat-panel screen",
-          "flat panel screen"
-        ],
         "missions": [
           {
             "object": "mission",
@@ -1117,21 +1104,12 @@
       {
         "object": "artefact",
         "name": "monitor",
-        "description": "flat-panel screen",
+        "template": "flat-screen",
         "detailedDescription": "It's cycling through web site statistics and error logs.",
         "attributes": {
-          "weight": 51,
-          "type": "scenery"
-        },
-        "synonyms": [
-          "screen",
-          "display",
-          "flat-panel",
-          "panel",
-          "flat panel",
-          "flat-panel screen",
-          "flat panel screen"
-        ]
+          "type": "scenery",
+		  "isBreakable": false
+        }
       },
       {
         "object": "creature",
@@ -2249,24 +2227,8 @@
       {
         "object": "artefact",
         "name": "build screen",
-        "description": "flat-panel screen",
-        "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control.",
-        "attributes": {
-          "weight": 51,
-          "isBreakable": true,
-          "switched": true,
-          "isOn": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "screen",
-          "display",
-          "flat-panel",
-          "panel",
-          "flat panel",
-          "flat-panel screen",
-          "flat panel screen"
-        ]
+        "template": "flat-screen",
+        "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control."
       },
       {
         "object": "creature",
@@ -5045,31 +5007,10 @@
               "cow juice"
             ],
             "delivers": [
-              {
-                "object": "artefact",
-                "name": "white coffee",
-                "description": "white coffee",
-                "detailedDescription": "Milky development fuel",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 18
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "milky coffee"
-                ]
-              }
+				{
+				"object": "artefact",
+				"template": "white-coffee"
+				}
             ]
           }
         ]
@@ -5305,31 +5246,10 @@
                 "object": "artefact",
                 "template": "sweet-coffee"
               },
-              {
-                "object": "artefact",
-                "name": "white coffee",
-                "description": "white coffee",
-                "detailedDescription": "Milky development fuel",
-                "attributes": {
-                  "defaultAction": "drink",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "cup",
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 18
-                },
-                "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "milky coffee"
-                ]
-              }
+				{
+				"object": "artefact",
+				"template": "white-coffee"
+				}
             ]
           }
         ],

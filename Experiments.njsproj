@@ -20,6 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="data\first-aid-kit.json" />
+    <Content Include="data\flat-screen.json" />
     <Content Include="data\ice-cream.json" />
     <Content Include="data\healthy-tomato-plants.json" />
     <Content Include="data\images\brokentoilet.jpg" />
@@ -31,6 +32,7 @@
     <Content Include="data\sweet-latte.json" />
     <Content Include="data\sweet-mocha.json" />
     <Content Include="data\water.json" />
+    <Content Include="data\white-coffee.json" />
     <Content Include="data\window.json" />
     <Content Include="index.html" />
     <Content Include="js\server\test\testdata\canonical-game-data.json" />
