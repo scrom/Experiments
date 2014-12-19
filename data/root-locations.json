@@ -3548,25 +3548,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "rum bottle",
-        "description": "bottle",
-        "detailedDescription": "A large rum bottle",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 1,
-          "carryWeight": 3,
-          "attackStrength": 1,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0
-        },
-        "synonyms": [
-          "bottle",
-          "rum bottle",
-          "bottle of rum"
-        ],
+        "template": "rum-bottle",
         "inventory": [
           {
             "object": "artefact",
@@ -9151,24 +9133,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "rum bottle",
-        "description": "bottle",
-        "detailedDescription": "A large rum bottle",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 1,
-          "carryWeight": 3,
-          "attackStrength": 1,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0
-        },
-        "synonyms": [
-          "bottle",
-          "bottle of rum"
-        ],
+        "template": "rum-bottle",
         "inventory": [
           {
             "object": "artefact",

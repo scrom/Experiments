@@ -20,6 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="data\basin.json" />
+    <Content Include="data\rum-bottle.json" />
     <Content Include="data\creature-female-l2.json" />
     <Content Include="data\creature-female-l3.json" />
     <Content Include="data\creature-female-l4.json" />
