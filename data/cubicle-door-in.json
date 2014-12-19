@@ -1,0 +1,21 @@
+﻿{
+"object": "artefact",
+"name": "cubicle door",
+"description": "cubicle door",
+"detailedDescription": "When you need to go...",
+"attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "lockable": true,
+    "hasLinkedDoor": true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "toilet",
+    "cubicle",
+    "toilet door",
+    "door"
+]
+}

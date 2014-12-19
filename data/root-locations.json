@@ -3658,18 +3658,7 @@
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you're finished...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-out",
         "linkedexits": [
           {
             "object": "exit",
@@ -3679,11 +3668,6 @@
             "destination": "first-floor-toilet",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
@@ -3949,18 +3933,7 @@
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-in",
         "linkedexits": [
           {
             "object": "exit",
@@ -3970,12 +3943,6 @@
             "destination": "first-floor-cubicle",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "toilet",
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
@@ -4236,18 +4203,7 @@
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you're finished...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-out",
         "linkedexits": [
           {
             "object": "exit",
@@ -4257,11 +4213,6 @@
             "destination": "ground-floor-toilet",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
@@ -4518,18 +4469,7 @@
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you need to go...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-in",
         "linkedexits": [
           {
             "object": "exit",
@@ -4539,12 +4479,6 @@
             "destination": "ground-floor-cubicle",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "toilet",
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
@@ -8268,18 +8202,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
-        "detailedDescription": "When you're finished...",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
-        },
+        "template": "cubicle-door-out",
         "linkedexits": [
           {
             "object": "exit",
@@ -8289,11 +8212,6 @@
             "destination": "second-floor-toilet",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
@@ -9208,18 +9126,11 @@
       },
       {
         "object": "artefact",
-        "name": "cubicle door",
-        "description": "cubicle door",
+        "template": "cubicle-door-in",
         "detailedDescription": "The lock on the door has a slot to allow turning from the outside with a suitable tool.",
         "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
           "lockable": true,
-          "locked": true,
-          "hasLinkedDoor": true,
-          "canDrawOn": true
+          "locked": true
         },
         "linkedexits": [
           {
@@ -9230,12 +9141,6 @@
             "destination": "second-floor-cubicle",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "toilet",
-          "cubicle",
-          "toilet door",
-          "door"
         ]
       },
       {
