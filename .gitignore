@@ -254,3 +254,4 @@ data/images/margaretsexton.jpg
 data/images/waynestanford.jpg
 js/server/test/testdata/mvta.savedGames.json
 /.ntvs_analysis.dat
+/js/server/test/testdata/generated.json

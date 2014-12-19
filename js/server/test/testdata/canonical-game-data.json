@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "object": "location",
     "name": "a14-eastbound",
@@ -457,12 +457,14 @@
           "canDrawOn": true
         },
         "synonyms": [
+          "screen",
           "display",
           "flat-panel",
           "panel",
           "flat panel",
           "flat-panel screen",
-          "flat panel screen"
+          "flat panel screen",
+          "monitor"
         ],
         "missions": [
           {
@@ -832,7 +834,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?"
+          "message": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to &pound;100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?"
         }
       },
       {
@@ -969,6 +971,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "lawyer-lobby"
         },
@@ -1455,7 +1458,10 @@
         "detailedDescription": "It's cycling through web site statistics and error logs.",
         "attributes": {
           "weight": 51,
-          "type": "scenery"
+          "type": "scenery",
+          "switched": true,
+          "isOn": true,
+          "canDrawOn": true
         },
         "synonyms": [
           "screen",
@@ -1464,7 +1470,8 @@
           "panel",
           "flat panel",
           "flat-panel screen",
-          "flat panel screen"
+          "flat panel screen",
+          "monitor"
         ]
       },
       {
@@ -2278,7 +2285,7 @@
         "name": "brian harris",
         "displayname": "Brian Harris",
         "description": "Brian Harris",
-        "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe’s (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
+        "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe's (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
         "attributes": {
           "weight": 110,
           "money": 30,
@@ -2617,7 +2624,8 @@
           "panel",
           "flat panel",
           "flat-panel screen",
-          "flat panel screen"
+          "flat panel screen",
+          "monitor"
         ]
       },
       {
@@ -3176,6 +3184,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "west-car-park"
         },
@@ -3490,6 +3499,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "office-front"
         },
@@ -3900,6 +3910,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "office-front"
         },
@@ -4455,6 +4466,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "sales-seating"
         },
@@ -5552,6 +5564,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "stairs-first-floor"
         },
@@ -7922,6 +7935,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "west-car-park"
         },
@@ -9393,6 +9407,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "reception"
         },
@@ -9875,6 +9890,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "facilities-area"
         },
@@ -11408,6 +11424,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "office-front"
         },
@@ -11499,6 +11516,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "office-front"
         },
@@ -11743,6 +11761,7 @@
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "isBreakable": true,
           "canDrawOn": true,
           "viewDestination": "stairs-first-floor"
         },

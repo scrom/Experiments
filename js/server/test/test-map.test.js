@@ -1,6 +1,9 @@
 ﻿"use strict";
 var mapBuilder = require('../mapbuilder.js');
-var mb = new mapBuilder.MapBuilder('../../data/','root-locations');
+var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+var filemanager = require('../filemanager.js');
+var fm = new filemanager.FileManager(true, "./test/testdata/");
+var canonicalData = require("./testdata/canonical-game-data.json");
 var m0;
 //var artefact = require('../artefact.js');
 //var location = require('../location.js');
@@ -15,6 +18,20 @@ exports.tearDown = function (callback) {
     m0 = null;
     callback();
 };  
+
+exports.generatedMapDataMatchesCanonicalData = function (test) {
+    fm.writeFile("generated.json", m0.getLocationsJSON(), true);
+    var expectedResult = JSON.stringify(canonicalData);//fm.readFile("canonical-game-data.json");
+    var actualResult = JSON.stringify(m0.getLocationsJSON());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.generatedMapDataMatchesCanonicalData.meta = { traits: ["Map Test"], description: "Test that the full generated map data matches what we expect." };
+
 
 exports.canGetNamedCreatureFromMap = function (test) {
 

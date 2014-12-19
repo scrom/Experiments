@@ -493,7 +493,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to £100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?"
+          "message": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to &pound;100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?"
         }
       },
       {
@@ -1904,7 +1904,7 @@
         "name": "brian harris",
         "displayname": "Brian Harris",
         "description": "Brian Harris",
-        "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe’s (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
+        "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe's (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
         "attributes": {
           "weight": 110,
           "money": 30,

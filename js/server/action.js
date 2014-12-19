@@ -595,6 +595,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'hurt':
                     case 'hit':
                     case 'slap':
+                    case 'smack':
                     case 'punch':
                     case 'kick':
                         description = _player.hit(_verb, _object0, _object1);
