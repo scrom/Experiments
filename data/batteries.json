@@ -1,0 +1,22 @@
+﻿{
+"object": "artefact",
+"name": "batteries",
+"description": "torch batteries",
+"detailedDescription": "Shine a light on the world.",
+"attributes": {
+    "weight": 1,
+    "canCollect": true,
+    "charges": 45,
+    "chargeUnit": "minute",
+    "chargesDescription": "There's enough for about $charges $chargeUnit of power",
+    "plural": true,
+    "affinityModifier": 0,
+    "componentOf": [
+    "torch"
+    ]
+},
+"synonyms": [
+    "battery",
+    "torch batteries"
+]
+}
