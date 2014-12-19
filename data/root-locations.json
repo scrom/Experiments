@@ -856,20 +856,7 @@
       },
       {
         "object": "artefact",
-        "name": "flipchart",
-        "description": "flipchart",
-        "detailedDescription": "It's just a regular flipchart.",
-        "attributes": {
-          "weight": 25,
-          "canCollect": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "chart",
-          "flip",
-          "flip chart",
-          "paper"
-        ]
+        "template": "flipchart"
       },
       {
         "object": "artefact",

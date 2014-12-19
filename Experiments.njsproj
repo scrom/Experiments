@@ -23,6 +23,7 @@
     <Content Include="data\batteries.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\fire-exit.json" />
+    <Content Include="data\flipchart.json" />
     <Content Include="data\hand-dryer.json" />
     <Content Include="data\mirror.json" />
     <Content Include="data\rum-bottle.json" />
