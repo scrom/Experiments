@@ -46,6 +46,7 @@
     <Content Include="data\sweet-coffee.json" />
     <Content Include="data\sweet-latte.json" />
     <Content Include="data\sweet-mocha.json" />
+    <Content Include="data\table.json" />
     <Content Include="data\water.json" />
     <Content Include="data\white-coffee.json" />
     <Content Include="data\whiteboard-pen.json" />

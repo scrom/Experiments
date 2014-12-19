@@ -1,0 +1,14 @@
+﻿{
+"object": "artefact",
+"name": "table",
+"description": "plain rectangular table",
+"detailedDescription": "It's a standard wood-effect office desk/table.",
+"attributes": {
+    "weight": 120,
+    "isBreakable": true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "desk"
+]
+}

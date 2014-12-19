@@ -1307,7 +1307,7 @@
         "description": "large boardroom style table",
         "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
         "attributes": {
-          "weight": 160,
+          "weight": 120,
           "type": "scenery",
           "canDrawOn": true
         },

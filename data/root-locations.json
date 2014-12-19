@@ -884,17 +884,7 @@
       },
       {
         "object": "artefact",
-        "name": "table",
-        "description": "plain rectangular table",
-        "detailedDescription": "It's a standard wood-effect office desk/table.",
-        "attributes": {
-          "weight": 120,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+        "template": "table"
       },
       {
         "object": "artefact",
@@ -920,17 +910,13 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "table",
+        "template": "table",
         "description": "large boardroom style table",
         "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
         "attributes": {
-          "weight": 160,
           "type": "scenery",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+		  "isBreakable": false
+        }
       },
       {
         "object": "artefact",
@@ -2904,17 +2890,9 @@
       },
       {
         "object": "artefact",
-        "name": "table",
+        "template": "table",
         "description": "large oval table",
-        "detailedDescription": "It's the kind you see in office boardrooms.",
-        "attributes": {
-          "weight": 120,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+        "detailedDescription": "It's the kind you see in office boardrooms."
       },
       {
         "object": "artefact",
@@ -10541,17 +10519,8 @@
       },
       {
         "object": "artefact",
-        "name": "table",
-        "description": "plain rectangular table",
-        "detailedDescription": "It's a plain white melamine meeting room table.",
-        "attributes": {
-          "weight": 120,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "desk"
-        ]
+        "template": "table",
+        "detailedDescription": "It's a plain white melamine meeting room table."
       },
       {
         "object": "artefact",
