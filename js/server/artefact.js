@@ -2461,7 +2461,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //fallback option, is there a container in the location itself?
             if (!(suitableContainer)) {suitableContainer = locationInventory.getSuitableContainer(objectToGive);};
     
-            if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need a suitable container that can hold "+objectToGive.getDisplayName()+".";};
+            if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need something (suitable) to carry "+objectToGive.getDisplayName()+" in.";};
 
             if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry " + anObjectName + " at the moment." };
 

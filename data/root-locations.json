@@ -4002,26 +4002,7 @@
       },
       {
         "object": "artefact",
-        "name": "basin",
-        "description": "wash basin",
-        "detailedDescription": "Clean and with a supply of fresh water.",
-        "attributes": {
-          "weight": 100,
-          "type": "scenery",
-          "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "wash basin",
-          "sink",
-          "tap"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "template": "water"
-          }
-        ]
+        "template": "basin"
       }
     ]
   },
@@ -4588,29 +4569,10 @@
       },
       {
         "object": "artefact",
-        "name": "basin",
-        "description": "wash basin",
-        "detailedDescription": "Clean and with a supply of fresh water.",
+        "template": "basin",
         "attributes": {
-          "defaultAction": "get water from sink",
-          "weight": 100,
-          "type": "scenery",
-          "customAction": "wash",
-          "defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "wash basin",
-          "sink",
-          "tap",
-          "hands"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "template": "water"
-          }
-        ]
+          "defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm."
+        }
       }
     ]
   },
@@ -9278,26 +9240,7 @@
       },
       {
         "object": "artefact",
-        "name": "basin",
-        "description": "wash basin",
-        "detailedDescription": "Clean and with a supply of fresh water.",
-        "attributes": {
-          "defaultAction": "get water from sink",
-          "weight": 100,
-          "type": "scenery",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "wash basin",
-          "sink",
-          "tap"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "template": "water"
-          }
-        ]
+        "template": "basin"
       }
     ]
   },

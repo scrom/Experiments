@@ -1050,9 +1050,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromLocation(artefactName);
             if (!(artefact)) {
 
-                //if object doesn't exist, attempt "relinquish" from each non-creature object in location.
-                var allLocationObjects = _currentLocation.getAllObjects();
-                var locationInventory = _currentLocation.getInventoryObject();
+                //if object doesn't exist, attempt "relinquish" from each non-creature object in location (including scenery).
+                var allLocationObjects = _currentLocation.getAllObjects(false, true);
                 for (var i=0;i<allLocationObjects.length;i++) {
                     var deliversRequestedItem = false;
                     var tempDeliveryItem;
@@ -1069,9 +1068,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             var tmpRequiresContainer = tempDeliveryItem.requiresContainer();
                             if (tmpRequiresContainer) {
                                 var tmpSuitableContainer = _inventory.getSuitableContainer(tempDeliveryItem);
-                                if (!tmpSuitableContainer) {                        
+                                if (!tmpSuitableContainer) {
                                     var tmpRequiredContainerName = tempDeliveryItem.getRequiredContainer();
-                                    var tmpRequiredContainer = getObjectFromPlayerOrLocation(tmpRequiredContainerName)
+                                    var tmpRequiredContainer;
+                                    if (tmpRequiredContainerName) {
+                                        tmpRequiredContainer = getObjectFromPlayerOrLocation(tmpRequiredContainerName);
+                                    };
                                     if (tmpRequiredContainer) {
                                         //the required object exists but can't carry it.
                                         if (tmpRequiredContainer.isBroken() || tmpRequiredContainer.isDestroyed()) {
@@ -1087,7 +1089,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                                     };
                                 };
                             };
-                                            
+
+                            var locationInventory = _currentLocation.getInventoryObject();                                            
                             var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
                             if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
                                 //we got the requested object back!

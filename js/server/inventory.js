@@ -528,11 +528,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return returnObjects;
         };
 
-        self.getAllObjects = function(includeHiddenObjects) {
+        self.getAllObjects = function(includeHiddenObjects, includeScenery) {
             if (includeHiddenObjects) { return _items;}; //caution - this returns the original array
             var itemsToReturn = [];
             for (var i=0;i<_items.length;i++) {
-                if (!(_items[i].isHidden()) && !(_items[i].getPosition())) {itemsToReturn.push(_items[i])};
+                if ((_items[i].getType() == "scenery" && includeScenery) || (!(_items[i].isHidden()) && !(_items[i].getPosition()))) {
+                    itemsToReturn.push(_items[i])
+                };
             };
             return itemsToReturn;
         };

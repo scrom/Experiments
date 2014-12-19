@@ -539,8 +539,8 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.getObjectByType(anObjectType);
         };
 
-        self.getAllObjects = function(includeHiddenObjects) {
-            return _inventory.getAllObjects(includeHiddenObjects);
+        self.getAllObjects = function(includeHiddenObjects, includeScenery) {
+            return _inventory.getAllObjects(includeHiddenObjects, includeScenery);
         };
 
         self.getAllObjectsAndChildren = function(includeInaccessible) {

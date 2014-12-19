@@ -4633,13 +4633,15 @@
         "attributes": {
           "weight": 100,
           "type": "scenery",
+          "customAction": "wash",
           "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
           "canDrawOn": true
         },
         "synonyms": [
           "wash basin",
           "sink",
-          "tap"
+          "tap",
+          "hands"
         ],
         "delivers": [
           {
@@ -5280,7 +5282,6 @@
         "description": "wash basin",
         "detailedDescription": "Clean and with a supply of fresh water.",
         "attributes": {
-          "defaultAction": "get water from sink",
           "weight": 100,
           "type": "scenery",
           "customAction": "wash",
@@ -10555,15 +10556,17 @@
         "description": "wash basin",
         "detailedDescription": "Clean and with a supply of fresh water.",
         "attributes": {
-          "defaultAction": "get water from sink",
           "weight": 100,
           "type": "scenery",
+          "customAction": "wash",
+          "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
           "canDrawOn": true
         },
         "synonyms": [
           "wash basin",
           "sink",
-          "tap"
+          "tap",
+          "hands"
         ],
         "delivers": [
           {

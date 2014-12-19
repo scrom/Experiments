@@ -1,0 +1,25 @@
+﻿{
+"object": "artefact",
+"name": "basin",
+"description": "wash basin",
+"detailedDescription": "Clean and with a supply of fresh water.",
+"attributes": {
+    "weight": 100,
+    "type": "scenery",
+    "customAction": "wash",
+    "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
+    "canDrawOn": true
+},
+"synonyms": [
+    "wash basin",
+    "sink",
+    "tap",
+    "hands"
+],
+"delivers": [
+    {
+    "object": "artefact",
+    "template": "water"
+    }
+]
+}
