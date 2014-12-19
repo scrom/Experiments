@@ -3947,25 +3947,12 @@
       },
       {
         "object": "artefact",
-        "name": "soap",
-        "description": "soap dispenser",
-        "detailedDescription": "After careful inspection, you figure out where to push it to make it work.",
+        "template": "soap",
         "attributes": {
-          "weight": 1,
+          "type": "junk",
           "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": -1,
-          "customAction": [
-            "press",
-            "push"
-          ],
-          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
-          "imageName": "soapdispenser.jpg"
-        },
-        "synonyms": [
-          "dispenser",
-          "soap dispenser"
-        ]
+          "isBreakable": true
+		}
       },
       {
         "object": "artefact",
@@ -4483,23 +4470,9 @@
       },
       {
         "object": "artefact",
-        "name": "soap",
+        "template": "soap",
         "description": "soap dispenser",
-        "detailedDescription": "After careful inspection, you figure out where to push it to make it work.",
-        "attributes": {
-          "weight": 1,
-          "type": "scenery",
-          "customAction": [
-            "press",
-            "push"
-          ],
-          "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out.",
-          "imageName": "soapdispenser.jpg"
-        },
-        "synonyms": [
-          "dispenser",
-          "soap dispenser"
-        ]
+          "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out."
       },
       {
         "object": "artefact",
@@ -9105,24 +9078,8 @@
       },
       {
         "object": "artefact",
-        "name": "soap",
-        "description": "soap dispenser",
-        "detailedDescription": "Your mind must be playing tricks on you, it's just the same as all the others.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "press",
-            "push"
-          ],
-          "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
-          "imageName": "soapdispenser.jpg"
-        },
-        "synonyms": [
-          "dispenser",
-          "soap dispenser",
-          "dispensers",
-          "soap dispensers"
-        ]
+        "template": "soap",
+        "detailedDescription": "Your mind must be playing tricks on you, it's just the same as all the others."
       },
       {
         "object": "artefact",

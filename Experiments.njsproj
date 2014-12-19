@@ -39,6 +39,7 @@
     <Content Include="data\images\screen.jpg" />
     <Content Include="data\images\sticky-finger.jpg" />
     <Content Include="data\office-door.json" />
+    <Content Include="data\soap.json" />
     <Content Include="data\sweet-coffee.json" />
     <Content Include="data\sweet-latte.json" />
     <Content Include="data\sweet-mocha.json" />

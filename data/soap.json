@@ -1,0 +1,23 @@
+﻿{
+"object": "artefact",
+"name": "soap",
+"description": "soap dispenser",
+"detailedDescription": "After careful inspection, you figure out where to push it to make it work.",
+"attributes": {
+    "weight": 1,
+	"type": "scenery",
+    "affinityModifier": -1,
+    "customAction": [
+    "press",
+    "push"
+    ],
+    "defaultResult": "You push the top of the dispenser. With a little bit of slipping and repositioning you manage to lather and wash your hands.",
+    "imageName": "soapdispenser.jpg"
+},
+"synonyms": [
+    "dispenser",
+    "soap dispenser",
+    "dispensers",
+    "soap dispensers"
+]
+}
