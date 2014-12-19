@@ -29,15 +29,6 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
 	    var _objectName = "MapBuilder";
 
-        /*var jsonFileReader = function(err, data) {
-            if (err) console.log(err);
-            try{
-               _locationsJSON = JSON.parse(data);              
-                } catch(err) {console.log("JSON Parse error: "+err+": ")};
-        };
-
-        fs.readFile('../../data/root-locations.json',{encoding: 'utf8'},jsonFileReader);
-        */
         console.log(_objectName + ' created');
         
         self.buildFromTemplate = function (template, objectData) {
@@ -64,9 +55,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         //public member functions
         self.buildArtefact = function(artefactData) {
             //console.log('Building: '+artefactData.name);
+            var usingTemplate = false;
             if (artefactData) {
                 //start with template if defined
                 if (artefactData.template) {
+                    usingTemplate = true;
                     var template = data[artefactData.template];
                     artefactData = self.buildFromTemplate(template, artefactData);
                 };
@@ -80,9 +73,14 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
             };
 
-
             try {
-                if (_map.checkExists(artefactData.name)) {console.log("Usability warning: duplicate artefact name/synonym '"+artefactData.name+"'.");};
+                if (_map.checkExists(artefactData.name)) {
+                    var templated = "";
+                    if (usingTemplate) {
+                        templated = " (templated)"
+                    };
+                    console.log("usability warning: duplicate artefact name/synonym '" + artefactData.name + "'"+templated+".");
+                };
                 var artefact;
                 var inventory;
                 var linkedExits = [];
@@ -133,7 +131,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
 
                 //check artefact has syns
-                if (artefact.getSyns().length ==0) {console.log("Usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
+                if (artefact.getSyns().length ==0) {console.log("usability warning: artefact '"+artefact.getName()+"' has no synonyms defined.");};
                 return artefact;
             } catch(err) {
 	            console.log("Failed to build artefact: "+artefactData.name+": "+err.stack);
@@ -143,8 +141,33 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         self.buildCreature = function(creatureData) {
             //name, description, detailedDescription, attributes, carrying
             //console.log('Building Creature: '+creatureData.name);
+            var usingTemplate = false;
+            if (creatureData) {
+                //start with template if defined
+                if (creatureData.template) {
+                    usingTemplate = true;
+                    var template = data[creatureData.template];
+                    creatureData = self.buildFromTemplate(template, creatureData);
+                };
+            };
+            
+            if (creatureData.attributes) {
+                //fill in attribute template if defined
+                if (creatureData.attributes.template) {
+                    var template = data[creatureData.attributes.template];
+                    creatureData.attributes = self.buildFromTemplate(template, creatureData.attributes);
+                };
+            };                       
+
             try {
-                if (_map.checkExists(creatureData.name)) {console.log("Usability warning: duplicate creature name/synonym '"+creatureData.name+"'.");};
+                if (_map.checkExists(creatureData.name)) {
+                    var templated = "";
+                    if (usingTemplate) {
+                        templated = " (templated)"
+                    };
+                    console.log("usability warning: duplicate creature name/synonym '" + creatureData.name + "'" + templated + ".");
+                };
+                
                 var creature;
                 var inventory;
                 var salesInventory;
@@ -156,7 +179,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 //is their name a proper noun?
                 if (tools.isProperNoun(creatureData.displayname)) {
                     if (creatureName.toLowerCase() != creatureData.displayname.toLowerCase()) {
-                        console.log("Usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
+                        console.log("usability warning: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
                     };
                     creatureName = creatureData.displayname;
                 }; //creature name is a proper noun
@@ -199,7 +222,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
                 _map.incrementCreatureCount();
 
-                if (creature.getSyns().length ==0) {console.log("Usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
+                if (creature.getSyns().length ==0) {console.log("usability warning: creature '"+creature.getName()+"' has no synonyms defined.");};
                 return creature;
             } catch(err) {
 	            console.log("Failed to build creature: "+creatureData.name+": "+err.stack);

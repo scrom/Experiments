@@ -1,0 +1,11 @@
+﻿{
+	"weight": 160,
+	"money": 80,
+	"attackStrength": 30,
+	"gender": "male",
+	"type": "friendly",
+	"carryWeight": 25,
+	"health": 275,
+	"canTravel": true,
+	"traveller": true
+}

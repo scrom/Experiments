@@ -771,12 +771,9 @@
         "description": "Rick the bike ambulance guy",
         "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
         "attributes": {
-          "weight": 140,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 18,
-          "health": 215,
+          "template": "creature-male-l4",
+          "cantravel": false,
+          "traveller": false,
           "repairSkills": [
             "bike"
           ]
@@ -1149,15 +1146,7 @@
         "description": "Dene Boulton",
         "detailedDescription": "CORE team tester and specialist in the art of looking grumpy and happy at the same time.",
         "attributes": {
-          "weight": 110,
-          "money": 30,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-male-l3",
           "imageName": "deneboulton.jpg"
         },
         "synonyms": [
@@ -1521,15 +1510,7 @@
         "description": "Chris George",
         "detailedDescription": "Chris is our resident head of Test.<br>He's becoming pretty famous in the testing world and has even had people ask for his autograph.",
         "attributes": {
-          "weight": 130,
-          "money": 20,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "chrisgeorge.jpg"
         },
         "synonyms": [
@@ -1547,15 +1528,7 @@
         "description": "Mark Wightman",
         "detailedDescription": "Mark's our head of Development.",
         "attributes": {
-          "weight": 130,
-          "money": 20,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+	      "template": "creature-male-l3",
           "imageName": "markwightman.jpg"
         },
         "synonyms": [
@@ -1675,15 +1648,7 @@
         "description": "Jeff Foster",
         "detailedDescription": "Jeff is our head of Software Engineering.",
         "attributes": {
-          "weight": 130,
-          "money": 20,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "jefffoster.jpg"
         },
         "synonyms": [
@@ -1701,15 +1666,7 @@
         "description": "Simon Cromarty",
         "detailedDescription": "He's our head of Project Management (or a pirate if you give him enough rum).",
         "attributes": {
-          "weight": 140,
-          "money": 20,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "simoncromarty.jpg"
         },
         "synonyms": [
@@ -1906,15 +1863,7 @@
         "description": "Brian Harris",
         "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe's (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
         "attributes": {
-          "weight": 110,
-          "money": 30,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l2",
           "imageName": "brianharris.jpg"
         },
         "synonyms": [
@@ -2010,16 +1959,8 @@
         "description": "James Dening",
         "detailedDescription": "Our head of Sales. Like a 6-foot-plus tigger.",
         "attributes": {
-          "weight": 170,
-          "money": 200,
-          "attackStrength": 35,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 30,
-          "health": 120,
+		  "template": "creature-male-l5",
           "affinity": 2,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "jamesdening.jpg"
         },
         "inventory": [
@@ -2085,15 +2026,7 @@
         "description": "Alan Platt",
         "detailedDescription": "The master of Customer Delight.",
         "attributes": {
-          "weight": 160,
-          "money": 100,
-          "attackStrength": 30,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l5",
           "imageName": "alanplatt.jpg"
         },
         "synonyms": [
@@ -2237,15 +2170,7 @@
         "description": "Chris Whitworth",
         "detailedDescription": "Great developer, exceptional musician. Part of our customer delight development team.",
         "attributes": {
-          "weight": 100,
-          "money": 20,
-          "attackStrength": 10,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 80,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l1",
           "destinations": [
             "customer-delight-south",
             "kitchen-ground-floor",
@@ -2433,16 +2358,8 @@
         "description": "Jonathan Watts",
         "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
         "attributes": {
-          "weight": 110,
-          "money": 10,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 100,
+		  "template": "creature-male-l2",
           "affinity": -1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "jonathanwatts.jpg"
         },
         "synonyms": [
@@ -2588,16 +2505,8 @@
         "description": "Chris Moore",
         "detailedDescription": "Endlessly cheerful security guru extraordinaire. Keep him away from Rum and pub floors.",
         "attributes": {
-          "weight": 100,
-          "money": 10,
-          "attackStrength": 5,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 100,
+		  "template": "creature-male-l2",
           "affinity": 2,
-          "canTravel": true,
-          "traveller": true,
           "destinations": [
             "customer-delight-south-west",
             "east-bike-racks",
@@ -2914,15 +2823,7 @@
         "description": "Adam Parker",
         "detailedDescription": "Master of user experience and a somewhat problematic addiction to stationery.",
         "attributes": {
-          "weight": 130,
-          "money": 20,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l4",
           "imageName": "adamparker.jpg"
         },
         "synonyms": [
@@ -5416,15 +5317,7 @@
                   "description": "Dave Convery",
                   "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
                   "attributes": {
-                    "weight": 140,
-                    "money": 10,
-                    "attackStrength": 25,
-                    "gender": "male",
-                    "type": "friendly",
-                    "carryWeight": 18,
-                    "health": 200,
-                    "canTravel": true,
-                    "traveller": true,
+				    "template": "creature-male-l4",
                     "destinations": [
                       "atrium-seating",
                       "kitchen-ground-floor",
@@ -5466,15 +5359,7 @@
                   "description": "Roger Hart",
                   "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.<br>He runs a regular podcast on comics (along with Dave and Lucy)",
                   "attributes": {
-                    "weight": 120,
-                    "money": 10,
-                    "attackStrength": 25,
-                    "gender": "male",
-                    "type": "friendly",
-                    "carryWeight": 18,
-                    "health": 160,
-                    "canTravel": true,
-                    "traveller": true,
+					"template": "creature-male-l3",
                     "destinations": [
                       "east-bike-racks"
                     ],
@@ -5513,15 +5398,10 @@
                   "description": "Jordan Miller",
                   "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
                   "attributes": {
-                    "weight": 140,
+					"template": "creature-male-l4",
                     "attackStrength": 12,
-                    "gender": "male",
-                    "type": "creature",
-                    "carryWeight": 15,
-                    "health": 225,
+					"type": "creature",
                     "affinity": -1,
-                    "canTravel": true,
-                    "traveller": true,
                     "destinations": [
                       "machine-room-east"
                     ],
@@ -6323,12 +6203,7 @@
         "description": "ice cream man",
         "detailedDescription": "A random guy who occasionally has ice cream for sale.",
         "attributes": {
-          "weight": 140,
-          "attackStrength": 5,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 215,
+		  "template": "creature-male-l3",
           "imageName": "icecreamman.jpg"
         },
         "sells": [
@@ -6576,16 +6451,8 @@
         "description": "Chris Smith",
         "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
         "attributes": {
-          "weight": 140,
-          "money": 40,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 9,
-          "health": 140,
+		  "template": "creature-male-l3",
           "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "chrissmith.jpg"
         },
         "synonyms": [
@@ -6724,15 +6591,9 @@
         "description": "James Moore",
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
-          "weight": 190,
-          "money": 100,
-          "attackStrength": 45,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 18,
-          "health": 200,
+		  "template": "creature-male-l5",
           "affinity": -1,
-          "canTravel": true,
+          "traveller": false,
           "imageName": "jamesmoore.jpg"
         },
         "synonyms": [
@@ -7341,14 +7202,9 @@
         "description": "Simon the CEO",
         "detailedDescription": "He runs the show.",
         "attributes": {
-          "weight": 180,
+		  "template": "creature-male-l5",
           "attackStrength": 45,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
           "health": 500,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "simongalbraith.jpg"
         },
         "inventory": [
@@ -8169,15 +8025,7 @@
         "description": "Alex Freeman",
         "detailedDescription": "Can haz mor Accountz.",
         "attributes": {
-          "weight": 140,
-          "money": 30,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l4",
           "imageName": "alexfreeman.jpg"
         },
         "synonyms": [
@@ -8196,15 +8044,7 @@
         "description": "James King",
         "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
         "attributes": {
-          "weight": 140,
-          "money": 30,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "jamesking.jpg"
         },
         "synonyms": [
@@ -8223,15 +8063,7 @@
         "description": "Justin Heron",
         "detailedDescription": "He's a master of selling!",
         "attributes": {
-          "weight": 120,
-          "money": 30,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "justinheron.jpg"
         },
         "synonyms": [
@@ -9844,15 +9676,7 @@
         "description": "Wayne Stanford",
         "detailedDescription": "Chef Wayne, master of the Red Gate dessert!",
         "attributes": {
-          "weight": 130,
-          "money": 10,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 100,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "destinations": [
             "servery-kitchen",
             "smoking-area"
@@ -10624,15 +10448,7 @@
         "description": "Chris Allen",
         "detailedDescription": "Support and music skills. What more could you need?",
         "attributes": {
-          "weight": 120,
-          "money": 10,
-          "attackStrength": 15,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 100,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "imageName": "chrisallen.jpg"
         },
         "synonyms": [
@@ -10752,15 +10568,7 @@
         "description": "Pawel Jonczak",
         "detailedDescription": "One of the hidden heroes of our catering team.",
         "attributes": {
-          "weight": 130,
-          "money": 10,
-          "attackStrength": 25,
-          "gender": "male",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 100,
-          "canTravel": true,
-          "traveller": true,
+		  "template": "creature-male-l3",
           "destinations": [
             "servery-kitchen",
             "waste-area",

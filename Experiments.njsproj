@@ -19,6 +19,11 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="data\creature-male-l2.json" />
+    <Content Include="data\creature-male-l3.json" />
+    <Content Include="data\creature-male-l4.json" />
+    <Content Include="data\creature-male-l5.json" />
+    <Content Include="data\creature-male-l1.json" />
     <Content Include="data\first-aid-kit.json" />
     <Content Include="data\flat-screen.json" />
     <Content Include="data\ice-cream.json" />
