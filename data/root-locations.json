@@ -1115,15 +1115,7 @@
         "description": "Zara Sheldrake",
         "detailedDescription": "Our one and only business analyst. She mostly works with the core team but is also one of our first-aiders.",
         "attributes": {
-          "weight": 100,
-          "money": 25,
-          "attackStrength": 15,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 140,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l3",
           "imageName": "zarasheldrake.jpg"
         },
         "inventory": [
@@ -2379,16 +2371,8 @@
         "description": "Alice Easey",
         "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best best for survival in a zombie apocalypse.",
         "attributes": {
-          "weight": 90,
-          "money": 30,
-          "attackStrength": 25,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 140,
+          "template": "creature-female-l3",
           "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "aliceeasey.jpg"
         },
         "inventory": [
@@ -2713,15 +2697,7 @@
         "description": "Filippa Vajda",
         "detailedDescription": "Roaming UX redhead.",
         "attributes": {
-          "weight": 110,
-          "money": 15,
-          "attackStrength": 15,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 100,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l3",
           "imageName": "filippavajda.jpg"
         },
         "synonyms": [
@@ -4703,14 +4679,7 @@
         "description": "Amanda from IS",
         "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
         "attributes": {
-          "weight": 90,
-          "attackStrength": 25,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 12,
-          "health": 215,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l2",
           "imageName": "amandamansfield.jpg",
           "repairSkills": [
             "projector",
@@ -6692,16 +6661,8 @@
         "description": "Lucy Boyes",
         "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.<br>She runs a regular podcast on comics (along with Roger and Dave)",
         "attributes": {
-          "weight": 120,
-          "money": 20,
-          "attackStrength": 20,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 160,
+		  "template": "creature-female-l4",
           "affinity": -1,
-          "canTravel": true,
-          "traveller": true,
           "destinations": [
             "atrium",
             "customer-delight-south",
@@ -6789,16 +6750,8 @@
         "description": "Sara Stopford-Pickering",
         "detailedDescription": "One of our super-capable and friendly PA team.",
         "attributes": {
-          "weight": 100,
-          "money": 20,
-          "attackStrength": 15,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 120,
+          "template": "creature-female-l2",
           "affinity": 1,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "sarastopfordpickering.jpg"
         },
         "synonyms": [
@@ -7493,12 +7446,7 @@
         "description": "Vic the receptionist",
         "detailedDescription": "Well, receptionist is an understatement.<br>As well as dealing with all visitors & parcels, she also provides customer support!",
         "attributes": {
-          "weight": 100,
-          "attackStrength": 25,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 215,
+          "template": "creature-female-l3",
           "imageName": "vicwiseman.jpg"
         },
         "synonyms": [
@@ -8168,15 +8116,7 @@
         "description": "Cassi Roper",
         "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
         "attributes": {
-          "weight": 160,
-          "money": 45,
-          "attackStrength": 35,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 15,
-          "health": 100,
-          "canTravel": true,
-          "traveller": true,
+          "template": "creature-female-l4",
           "imageName": "cassiroper.jpg"
         },
         "synonyms": [
@@ -9513,14 +9453,8 @@
         "description": "Margaret Sexton",
         "detailedDescription": "A true ray of sunshine every lunchtime. Serving you food on a daily basis.<br>Seriously - she's lovely and looks out for all of us.",
         "attributes": {
-          "weight": 110,
-          "money": 10,
-          "attackStrength": 25,
-          "gender": "female",
-          "type": "friendly",
-          "carryWeight": 5,
-          "health": 90,
-          "canTravel": true,
+          "template": "creature-female-l2",
+          "traveller": false,
           "imageName": "margaretsexton.jpg"
         },
         "synonyms": [

@@ -1,0 +1,11 @@
+﻿{
+	"weight": 90,
+	"money": 10,
+	"attackStrength": 13,
+	"gender": "female",
+	"type": "friendly",
+	"carryWeight": 8,
+	"health": 100,
+	"canTravel": true,
+	"traveller": true
+}
