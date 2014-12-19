@@ -4573,6 +4573,27 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "floor",
+        "description": "floor",
+        "detailedDescription": "Shiny and clean.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "mirror",
         "description": "bathroom mirror",
         "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
@@ -5228,6 +5249,27 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "floor",
+        "description": "floor",
+        "detailedDescription": "Shiny and clean.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "mirror",
         "description": "bathroom mirror",
         "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
@@ -5248,8 +5290,7 @@
           "type": "scenery",
           "isBreakable": true,
           "customAction": "dry",
-          "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
-          "smell": "It has that reassuring, safe smell of ozone and burned electrics."
+          "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels."
         },
         "synonyms": [
           "dryer",
@@ -10506,6 +10547,27 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "floor",
+        "description": "floor",
+        "detailedDescription": "Shiny and clean.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "mirror",
         "description": "bathroom mirror",
         "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
@@ -10526,7 +10588,8 @@
           "type": "scenery",
           "isBreakable": true,
           "customAction": "dry",
-          "defaultResult": "You wave your hands under the dryer for a minute or so.<br>You feel like your hands have been assaulted by a horde of angels."
+          "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
+          "smell": "It has that reassuring, safe smell of ozone and burned electrics."
         },
         "synonyms": [
           "dryer",

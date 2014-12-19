@@ -3812,6 +3812,10 @@
       }
     ],
     "inventory": [
+	  {
+        "object": "artefact",
+        "template": "floor"
+      },
       {
         "object": "artefact",
         "template": "mirror"
@@ -4296,25 +4300,17 @@
       }
     ],
     "inventory": [
+	  {
+        "object": "artefact",
+        "template": "floor"
+      },
       {
         "object": "artefact",
         "template": "mirror"
       },
       {
         "object": "artefact",
-        "template": "hand-dryer",
-        "attributes": {
-          "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
-		  "smell": "It has that reassuring, safe smell of ozone and burned electrics."
-        },
-        "synonyms": [
-          "dryer",
-          "drier",
-          "hand drier",
-          "hand-dryer",
-          "hand",
-          "hands"
-        ]
+        "template": "hand-dryer"
       },
       {
         "object": "artefact",
@@ -8880,13 +8876,21 @@
       }
     ],
     "inventory": [
+	  {
+        "object": "artefact",
+        "template": "floor"
+      },
       {
         "object": "artefact",
         "template": "mirror"
       },
       {
         "object": "artefact",
-        "template": "hand-dryer"
+        "template": "hand-dryer",
+        "attributes": {
+          "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
+		  "smell": "It has that reassuring, safe smell of ozone and burned electrics."
+        }
       },
       {
         "object": "artefact",
