@@ -842,19 +842,16 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
-        "description": "large whiteboard",
+        "template": "whiteboard",
         "detailedDescription": "Despite regular cleaning, there's still faint marks from long-disused whiteboard coding exercises and architecture diagrams.",
-        "attributes": {
-          "weight": 30,
-          "canDrawOn": true
-        },
         "synonyms": [
-          "board",
-          "white board",
-          "whitebaord",
-          "diagram",
-          "code"
+			"board",
+			"white board",
+			"large white board",
+			"large whiteboard",
+			"whitebaord",
+			"diagram",
+			"code"
         ]
       },
       {
@@ -2917,20 +2914,8 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
-        "description": "large whiteboard",
-        "detailedDescription": "It's n surprisingly good shape!.",
-        "attributes": {
-          "weight": 30,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "board",
-          "white board",
-          "whitebaord",
-          "diagram",
-          "code"
-        ]
+        "template": "whiteboard",
+        "detailedDescription": "It's in surprisingly good shape!"
       },
       {
         "object": "artefact",
@@ -8345,25 +8330,17 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
-        "description": "large whiteboard",
+        "template": "whiteboard",
         "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
         "attributes": {
-          "weight": 30,
           "type": "scenery",
-          "canDrawOn": true,
           "writings": [
             "Who scrubbed off my cactus?",
             "That wasn't a cactus!",
             "meh",
             "Richard Mitchell"
           ]
-        },
-        "synonyms": [
-          "board",
-          "white board",
-          "whitebaord"
-        ]
+        }
       },
       {
         "object": "artefact",
@@ -10593,16 +10570,13 @@
       },
       {
         "object": "artefact",
-        "name": "whiteboard",
+        "template": "whiteboard",
         "description": "small whiteboard",
-        "detailedDescription": "As meeting whiteboards go it's pretty average really.",
-        "attributes": {
-          "weight": 30,
-          "canDrawOn": true
-        },
         "synonyms": [
           "board",
           "white board",
+          "small white board",
+          "small whiteboard",
           "whitebaord"
         ]
       },

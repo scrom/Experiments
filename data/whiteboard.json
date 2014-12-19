@@ -1,0 +1,17 @@
+﻿{
+"object": "artefact",
+"name": "whiteboard",
+"description": "large whiteboard",
+"detailedDescription": "As whiteboards go it's pretty average really.",
+"attributes": {
+    "weight": 30,
+    "canDrawOn": true
+},
+"synonyms": [
+    "board",
+    "white board",
+	"large white board",
+	"large whiteboard",
+    "whitebaord"
+]
+}
