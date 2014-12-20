@@ -5055,6 +5055,21 @@
       },
       {
         "object": "artefact",
+        "name": "brush",
+        "description": "toilet brush",
+        "detailedDescription": "Be nice and clean up after yourself when you're done.",
+        "attributes": {
+          "weight": 1,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": -2
+        },
+        "synonyms": [
+          "toilet brush"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "article on solid design principles",
         "description": "'Learn on the Loo' article",
         "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
@@ -9688,6 +9703,21 @@
           "chain",
           "loo",
           "crapper"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "brush",
+        "description": "toilet brush",
+        "detailedDescription": "Be nice and clean up after yourself when you're done.",
+        "attributes": {
+          "weight": 1,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": -2
+        },
+        "synonyms": [
+          "toilet brush"
         ]
       },
       {

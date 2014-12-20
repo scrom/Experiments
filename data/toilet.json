@@ -1,0 +1,26 @@
+﻿{
+"object": "artefact",
+"name": "toilet",
+"description": "toilet",
+"detailedDescription": "Pretty much your standard office porcelain.",
+"attributes": {
+    "weight": 100,
+    "type": "scenery",
+    "customAction": [
+    "flush",
+    "pee",
+    "urinate",
+    "piss",
+    "shit",
+    "crap"
+    ],
+    "defaultResult": "You relieve yourself and give the toilet a rather satisfying flush.<br>You gaze at the water as it gently gushes into the u-bend and drift into a peaceful, calm place...<br><br>...You jolt back to your senses and remember you have work to do. Time to get going $player!",
+    "canDrawOn": true
+},
+"synonyms": [
+    "pan",
+    "chain",
+    "loo",
+    "crapper"
+]
+}

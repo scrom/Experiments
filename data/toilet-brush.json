@@ -1,0 +1,15 @@
+﻿{
+"object": "artefact",
+"name": "brush",
+"description": "toilet brush",
+"detailedDescription": "Be nice and clean up after yourself when you're done.",
+"attributes": {
+    "weight": 1,
+    "canCollect": true,
+    "isBreakable": true,
+    "affinityModifier": -2
+},
+"synonyms": [
+    "toilet brush"
+]
+}
