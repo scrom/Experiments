@@ -26,6 +26,9 @@ exports.generatedMapDataMatchesCanonicalData = function (test) {
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
+    if (actualResult == expectedResult) {
+        fm.deleteFile("generated.json");  
+    };
     test.done();
 
 };
