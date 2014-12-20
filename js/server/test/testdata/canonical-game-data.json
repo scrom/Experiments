@@ -1128,7 +1128,6 @@
           "type": "friendly",
           "carryWeight": 18,
           "health": 225,
-          "canTravel": true,
           "repairSkills": [
             "bike"
           ]
@@ -7277,8 +7276,6 @@
           "type": "friendly",
           "carryWeight": 15,
           "health": 120,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "icecreamman.jpg"
         },
         "sells": [
@@ -8702,8 +8699,6 @@
           "type": "friendly",
           "carryWeight": 12,
           "health": 130,
-          "canTravel": true,
-          "traveller": true,
           "imageName": "vicwiseman.jpg"
         },
         "synonyms": [

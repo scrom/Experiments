@@ -772,7 +772,7 @@
         "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
         "attributes": {
           "template": "creature-male-l4",
-          "cantravel": false,
+          "canTravel": false,
           "traveller": false,
           "repairSkills": [
             "bike"
@@ -1464,7 +1464,7 @@
         "description": "Mark Wightman",
         "detailedDescription": "Mark's our head of Development.",
         "attributes": {
-	      "template": "creature-male-l3",
+            "template": "creature-male-l3",
           "imageName": "markwightman.jpg"
         },
         "synonyms": [
@@ -5839,7 +5839,9 @@
         "description": "ice cream man",
         "detailedDescription": "A random guy who occasionally has ice cream for sale.",
         "attributes": {
-		  "template": "creature-male-l3",
+            "template": "creature-male-l3",
+          "canTravel": false,
+          "traveller": false,
           "imageName": "icecreamman.jpg"
         },
         "sells": [
@@ -7113,7 +7115,9 @@
         "description": "Vic the receptionist",
         "detailedDescription": "Well, receptionist is an understatement.<br>As well as dealing with all visitors & parcels, she also provides customer support!",
         "attributes": {
-          "template": "creature-female-l3",
+            "template": "creature-female-l3",
+          "canTravel": false,
+          "traveller": false,
           "imageName": "vicwiseman.jpg"
         },
         "synonyms": [
