@@ -1,17 +1,20 @@
 "use strict";
 //main bootstrap code for game client
-    var serverHost = "mvta.herokuapp.com";
-    var serverPort;
-	var ui;
-    var client;
-    var debug = false; //enable/disable client console logging
+var serverHost = "mvta.herokuapp.com";
+var serverPort;
+var ui;
+var client;
+var debug = false; //enable/disable client console logging
 	
 function init(window, body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image) {
     //create UI
 	ui = new Ui(body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image);
 
     //set initial width
-	ui.setWidth();
+    ui.setWidth();
+    
+    //set initial message:
+    ui.setState('Welcome to MVTA.<br>Your "Minimum Viable Text Adventure" experience starts here...<br><br>Please type in your name and press &lt;enter&gt; <i>(on your keyboard)</i> to start.');
 
     //handle resizing
 	var resizeTimer;
