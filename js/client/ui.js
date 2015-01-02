@@ -19,7 +19,6 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
 
         var _lastImageURL = ""; //primitive hack to ensure image doesn't reload every move unless it's actually changed.
 
-        state.append('Welcome to MVTA.<br>Your "Minimum Viable Text Adventure" experience starts here...<br><br>Please type in your name and press &lt;enter&gt; <i>(on your keyboard)</i> to start.');
         //console.append(objectName+" Initiated<br>");
     //end try
     }
@@ -48,13 +47,21 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
     };
 
     //interaction with client
-    Ui.prototype.setState = function(stateData) {	
-        interaction.append(state.html()+'<br>'+'>'+input.val()+"<br>");
-        //console.append("scrolltop:"+interactionScrollTop+"height: "+interaction[0].scrollHeight);
-        interaction.scrollTop(interaction[0].scrollHeight);
-        input.val("");
+    Ui.prototype.setState = function (stateData) {
+        if (state.text() != "") {
+            if (interaction.text() != "") {
+                interaction.append('<hr>');
+            };
+            interaction.append(state.html() + '<br>' + '>' + input.val() + "<br>");
+        };
+
         //console.append('setting state: '+stateData);
         state.html(stateData);
+
+        //console.append("scrolltop:"+interactionScrollTop+"height: "+interaction[0].scrollHeight);
+        interaction.scrollTop(interaction[0].scrollHeight);
+
+        input.val("");
         //re-enable input. 
         //we check this state on the keyboard input listener to prevent repeated keypresses if server response is slow
         input.disabled = false;

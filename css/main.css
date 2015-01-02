@@ -17,6 +17,14 @@ body
 
 }
 
+hr
+{
+    color: #00DD00;
+    background-color:#00DD00;
+    border-width:0;
+    height:1px;
+}
+
 ::-webkit-scrollbar
 {
     width: 10px;
