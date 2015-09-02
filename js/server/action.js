@@ -221,7 +221,10 @@ exports.Action = function Action(player, map, fileManager) {
                 switch(_verb) {
                     case '':
                         _ticks = 0;
-                        description = "Sorry, I didn't hear you there. Were you mumbling to yourself again?";
+                        description = "Sorry, I didn't hear you there. ";
+                        var randomReplies = ["Can you try again?", "It's probably my fault for not listening to you properly.", "Can you try something else?", "I'm sensing that we have a communication problem here.", "Is everything ok?"];
+                        var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        return description + randomReplies[randomIndex];
                         break;
                     case 'i':
                         //need to ensure navigation still works with this one so only respond if there's words other than "i".
@@ -314,10 +317,12 @@ exports.Action = function Action(player, map, fileManager) {
                         } else {
                             _ticks = 0;
                             if (_awaitingPlayerAnswer == true) {
-                                description = "Fair enough but it's probably not going to help you here.";
+                                var randomReplies = ["Are you sure about that?","Let's do this!", "OK.", "Really?", "Good for you!", "I'm not sure what else I can do for you right now. Let's just move on."];
+                                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                                description =  randomReplies[randomIndex];
                                 _awaitingPlayerAnswer = false;                            
                             } else {
-                                description = "I'm sorry, I hadn't realised I asked you a question. Let's just get on with things shall we.";
+                                description = "I'm sorry, I hadn't realised I asked you a question. Let's just get on with things shall we?";
                                 _awaitingPlayerAnswer = false;
                             };
                         };
