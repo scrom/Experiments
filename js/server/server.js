@@ -28,7 +28,7 @@ exports.Server = function Server(anInterpreter) {
         app.use(bodyParser.json());
 
         //serve static files from project root
-        app.use(express.static(_root + '../../'));
+        app.use(express.static(_root + '../../client/'));
 
         app.get('/config', function (request, response) {
             request.socket.setTimeout(120);

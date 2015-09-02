@@ -59,14 +59,14 @@
     <Content Include="data\whiteboard-pen.json" />
     <Content Include="data\whiteboard.json" />
     <Content Include="data\window.json" />
-    <Content Include="index.html" />
+    <Content Include="client\index.html" />
     <Content Include="js\server\test\testdata\canonical-game-data.json" />
     <Content Include="js\server\test\testdata\savegame-0.json" />
     <Content Include="package.json" />
     <Content Include="Procfile" />
     <Content Include="README.md" />
     <Content Include=".git\ms-persist.xml" />
-    <Content Include="css\main.css" />
+    <Content Include="client\css\main.css" />
     <Content Include="data\root-locations.json" />
     <Content Include="data\images\axe.jpg" />
     <Content Include="data\images\coffeemachine.jpg" />
@@ -77,10 +77,10 @@
     <Content Include="data\images\mug.jpg" />
     <Content Include="data\images\spy.jpg" />
     <Content Include="data\images\sword.jpg" />
-    <Compile Include="js\client\client.js" />
-    <Compile Include="js\client\main.js" />
-    <Compile Include="js\client\response.js" />
-    <Compile Include="js\client\ui.js" />
+    <Compile Include="client\js\client.js" />
+    <Compile Include="client\js\main.js" />
+    <Compile Include="client\js\response.js" />
+    <Compile Include="client\js\ui.js" />
     <Compile Include="js\server\action.js" />
     <Compile Include="js\server\artefact.js" />
     <Compile Include="js\server\config.js" />
@@ -118,14 +118,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".git" />
-    <Folder Include="css" />
+    <Folder Include="client\css\" />
+    <Folder Include="client\js\" />
     <Folder Include="data" />
     <Folder Include="data\images" />
     <Folder Include="data\usergames" />
     <Folder Include="js\" />
-    <Folder Include="js\client" />
+    <Folder Include="client\" />
     <Folder Include="js\server" />
-    <Folder Include="js\server\thirdparty\" />
+    <Folder Include="client\thirdparty\" />
     <Folder Include="js\server\test" />
     <Folder Include="js\server\test\testdata\" />
     <Folder Include="js\server\test\stubs" />

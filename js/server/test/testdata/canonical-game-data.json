@@ -3960,56 +3960,6 @@
         "source": "facilities-area",
         "destination": "fishing"
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "coffee machine manual",
-        "description": "maintenance manual for the coffee machines",
-        "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
-        "attributes": {
-          "defaultAction": "read",
-          "weight": 2,
-          "attackStrength": 5,
-          "type": "book",
-          "canCollect": true,
-          "affinityModifier": 0,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "manual",
-          "book",
-          "repair book",
-          "maintenance book",
-          "repair manual",
-          "maintenance manual",
-          "machine manual",
-          "coffee machine book",
-          "coffee machine repair manual",
-          "coffee machine maintenance manual",
-          "machine maintenance manual"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "repaircoffeemachine",
-            "displayName": "repair the coffee machine",
-            "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
-            "attributes": {
-              "missionObject": "coffee machine manual",
-              "static": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": false,
-              "read": true
-            },
-            "reward": {
-              "repairSkill": "coffee machine",
-              "message": "Congratulations. You've learned how to repair a coffee machine."
-            }
-          }
-        ]
-      }
     ]
   },
   {
@@ -8946,6 +8896,85 @@
           "comfy hammock",
           "comfy-looking hammock",
           "comfy looking hammock"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "bookshelf",
+        "description": "set of bookshelves",
+        "detailedDescription": "These bookshelves contain all the old, unwanted and duplicate books. They're 'free to a good home'.",
+        "attributes": {
+          "extendedInventoryDescription": "Amongst the dozens of out of date SQL Server and HTML guides you find $inventory.",
+          "weight": 80,
+          "carryWeight": 8,
+          "type": "container",
+          "isBreakable": true,
+          "plural": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "library",
+          "bookcase",
+          "bookcases",
+          "bookshelves",
+          "book case",
+          "book cases",
+          "book shelf",
+          "book shelves",
+          "case",
+          "shelf",
+          "cases",
+          "shelves"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "coffee machine manual",
+            "description": "maintenance manual for the coffee machines",
+            "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
+            "attributes": {
+              "defaultAction": "read",
+              "weight": 2,
+              "attackStrength": 5,
+              "type": "book",
+              "canCollect": true,
+              "affinityModifier": 0,
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "manual",
+              "book",
+              "repair book",
+              "maintenance book",
+              "repair manual",
+              "maintenance manual",
+              "machine manual",
+              "coffee machine book",
+              "coffee machine repair manual",
+              "coffee machine maintenance manual",
+              "machine maintenance manual"
+            ],
+            "missions": [
+              {
+                "object": "mission",
+                "name": "repaircoffeemachine",
+                "displayName": "repair the coffee machine",
+                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
+                "attributes": {
+                  "missionObject": "coffee machine manual",
+                  "static": true
+                },
+                "conditionAttributes": {
+                  "isDestroyed": false,
+                  "read": true
+                },
+                "reward": {
+                  "repairSkill": "coffee machine",
+                  "message": "Congratulations. You've learned how to repair a coffee machine."
+                }
+              }
+            ]
+          }
         ]
       },
       {
