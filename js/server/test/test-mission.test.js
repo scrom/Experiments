@@ -456,7 +456,43 @@ exports.canGetBulbFromAmandaTalkingMission = function (test) {
     test.done();
 };
 
-exports.canGetBulbFromAmandaTalkingMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+exports.canGetBulbFromAmandaTalkingMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that retrieve bulb mission can be successfully completed." };
+
+
+exports.canRepairProjectorWithBulbAndSkills = function (test) {
+    var missions = m0.getAllMissions();
+    for (var i = 0; i < missions.length; i++) {
+        if (missions[i].getName() == "teachprojectorrepair") {
+            missions[i].clearParent();
+        }        ;
+    }    ;
+    
+    var amanda = m0.getCreature('amanda');
+    
+    //var mission = new spy.getMissions()[0];
+    //mission.startTimer();
+    var location = m0.getLocation("is-area");
+    p0.setLocation(location);
+    
+    //var resultString = 
+    p0.say("talk", null, "amanda");
+    p0.say("talk", "ok", "amanda");
+    p0.updateMissions(1, m0);
+    
+    location = m0.getLocation("poppy");
+    p0.setLocation(location);
+    var resultString = p0.repair('repair','projector')
+    
+    var expectedResult = "You fixed the projector and put the projector bulb you were carrying into it.<br><br>Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i>";
+    var actualResult = resultString + p0.updateMissions(1, m0);
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canRepairProjectorWithBulbAndSkills.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "Repair Trait"], description: "Test that projector repair mission can be successfully completed." };
 
 
 exports.bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull = function (test) {
@@ -494,7 +530,7 @@ exports.bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull = function
     test.done();
 };
 
-exports.bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+exports.bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that retrieve bulb mission can be successfully completed." };
 
 
 exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull = function (test) {

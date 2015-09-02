@@ -8317,6 +8317,7 @@
         "attributes": {
           "defaultAction": "turn on",
           "weight": 6,
+          "carryWeight": 0.1,
           "isBreakable": true,
           "isBroken": true,
           "switched": true,
