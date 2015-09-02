@@ -667,7 +667,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.canSaveGame = function() {
             //prevent saving if not enough moves taken or no achievements (prevents casual saving)
-            if ((_stepsTaken+_waitCount < 8) || (_missionsCompleted.length < 3)) { return false;};
+            //if ((_stepsTaken+_waitCount < 8) || (_missionsCompleted.length < 3)) { return false;};
 
             return true;
         };
@@ -4827,7 +4827,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_antibodies.length>0) {
                  status += "You're immune to ";
                  for (var a=0;a<_antibodies.length;a++) {
-                    resultString += tools.listSeparator(a, _antibodies.length);
+                    status += tools.listSeparator(a, _antibodies.length);
                     status += "'"+_antibodies[a]+"'";
                 };
                  status += " infections.<br>";
