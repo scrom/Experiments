@@ -1079,11 +1079,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                                         if (tmpRequiredContainer.isBroken() || tmpRequiredContainer.isDestroyed()) {
                                             return "It looks like the only available " + tmpRequiredContainer.getName() + " around here has seen better days."; 
                                         };
-                                        if (tmpRequiredContainer.getInventorySize() > 0) {
+                                        if (tmpRequiredContainer.getInventorySize() > 0 && (!(tmpRequiredContainer.canCarry(tempDeliveryItem)))) {
                                             var tmpContainerInventory = tmpRequiredContainer.getInventoryObject();
-                                            return "The only available " + tmpRequiredContainer.getName() + " already has "+ tmpContainerInventory.listObjects()+" in "+ tmpRequiredContainer.getSuffix()+". There isn't room for "+ tempDeliveryItem.getName() +" as well.";
+                                            var deliveryItemName = tempDeliveryItem.getName();
+                                            //depending on whether container already has some of this in it, tweak the "full" wording.
+                                            if (tmpContainerInventory.check(deliveryItemName)) {
+                                                deliveryItemName = "any more.";
+                                            } else {
+                                                deliveryItemName += " as well.";
+                                            };
+                                            return "The only available " + tmpRequiredContainer.getName() + " already has "+ tmpContainerInventory.listObjects()+" in "+ tmpRequiredContainer.getSuffix()+". There isn't room for "+ deliveryItemName;
+                                        };                                        ;
+                                        if (tmpRequiredContainer.getCarryWeight() < tempDeliveryItem.getWeight()) {
+                                            return "You need a " + tmpRequiredContainer.getName() + " that can hold " + tempDeliveryItem.getName() + ". None here seem to fit the bill.";
                                         };
-                                        return "You need a " + tmpRequiredContainer.getName() + " that can hold " + tempDeliveryItem.getName()+ ". None here seem to fit the bill."; 
                                     } else {
                                         return "Sorry. You can't collect " + tempDeliveryItem.getDisplayName() + " without something suitable to carry " + tempDeliveryItem.getSuffix() + " in."; 
                                     };
