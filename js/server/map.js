@@ -123,9 +123,12 @@ exports.Map = function Map() {
             if (locationName.length >0) {
                 for (var i=0; i<_locations.length;i++) {
                     if (_locations[i].getName() == locationName) {
-                        
-                        if (newDisplayName.length >0) { _locations[i].setDisplayName(newDisplayName);};
-                        if (newDescription.length >0) { _locations[i].setDescription(newDescription);};
+                        if (newDisplayName) {
+                            if (newDisplayName.length > 0) { _locations[i].setDisplayName(newDisplayName); }                            ;
+                        };
+                        if (newDescription) {
+                            if (newDescription.length > 0) { _locations[i].setDescription(newDescription); }                            ;
+                        };
                         for (var v=0;v<inventory.length;v++) {
                             if (inventory[v].getType() == "creature") {
                                 inventory[v].go(null, _locations[i]); 

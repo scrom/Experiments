@@ -8522,7 +8522,7 @@
           "isBreakable": true,
           "plural": true,
           "customAction": "get",
-          "defaultResult": "They're not yours!"
+          "defaultResult": "These ones aren't yours!"
         },
         "synonyms": [
           "parcel"
@@ -8594,7 +8594,7 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "desk",
+        "name": "reception desk",
         "description": "big red desk",
         "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
         "attributes": {
@@ -8604,31 +8604,11 @@
         "synonyms": [
           "big desk",
           "reception",
-          "reception desk",
+          "desk",
           "red desk",
           "big red desk"
         ],
         "inventory": [
-          {
-            "object": "artefact",
-            "name": "visitors book",
-            "description": "visitor's book",
-            "detailedDescription": "It looks like you're the first newcomer today.",
-            "attributes": {
-              "weight": 1,
-              "position": "on",
-              "customAction": [
-                "get"
-              ],
-              "defaultResult": "It needs to stay down here on reception.",
-              "canDrawOn": true
-            },
-            "synonyms": [
-              "book",
-              "visitor book",
-              "in"
-            ]
-          },
           {
             "object": "artefact",
             "name": "biro",
@@ -8686,22 +8666,48 @@
               "missionObject": "vic wiseman",
               "static": true,
               "dialogue": [
-                "'Good morning $player.'<br>'Welcome aboard!'"
+                "'Good morning. You must be $player.'<br>'Welcome aboard!'"
               ]
             },
             "conditionAttributes": {
               "alive": true
             },
             "reward": {
-              "message": "'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'"
+              "modifyObject": {
+                "name": "reception desk",
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "visitors book",
+                    "description": "visitor's book",
+                    "detailedDescription": "It looks like you're the first newcomer today.",
+                    "attributes": {
+                      "weight": 1,
+                      "position": "on",
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "It needs to stay down here on reception.",
+                      "canDrawOn": true
+                    },
+                    "synonyms": [
+                      "book",
+                      "visitor book",
+                      "in"
+                    ]
+                  }
+                ]
+              },
+              "message": "Vic Places a large visitors book on the desk.<br>'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'"
             }
           },
           {
             "object": "mission",
             "name": "vicsbook",
             "displayName": "give Vic something interesting to read",
-            "description": "Vic has a parcel for you but she'd like something interesting to read first.",
+            "description": "Vic would like something interesting to read.",
             "attributes": {
+              "parent": "keyfob",
               "missionObject": "50 shades",
               "destination": "vic wiseman",
               "static": true
@@ -8711,76 +8717,84 @@
               "isBroken": false
             },
             "reward": {
-              "delivers": {
-                "object": "artefact",
-                "name": "parcel",
-                "description": "parcel from Amazon",
-                "detailedDescription": "It's got a sticker saying 'fragile' on it. Hopefully there's something useful inside.",
-                "attributes": {
-                  "defaultAction": "open",
-                  "weight": 2,
-                  "carryWeight": 25,
-                  "attackStrength": 2,
-                  "type": "container",
-                  "canCollect": true,
-                  "isBreakable": true,
-                  "affinityModifier": 0,
-                  "canOpen": true,
-                  "canDrawOn": true
-                },
-                "synonyms": [
-                  "package",
-                  "amazon parcel",
-                  "amazon package",
-                  "coffee parcel",
-                  "coffee package",
-                  "box"
-                ],
+              "modifyLocation": {
+                "name": "post-room",
                 "inventory": [
                   {
                     "object": "artefact",
-                    "name": "bag",
-                    "description": "giant bag",
-                    "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
+                    "name": "parcel",
+                    "description": "parcel from Co____ D____t",
+                    "detailedDescription": "The label's smudged and it's hard to tell who it's from or to.<br>With a bit of creative deciphering (clever you!) it really does look like it's addressed to '$player' but you're not expecting anything.<br>Maybe Vic had you mixed up with someone else.<br>",
                     "attributes": {
                       "defaultAction": "open",
                       "weight": 2,
-                      "carryWeight": 3,
+                      "carryWeight": 25,
                       "attackStrength": 2,
                       "type": "container",
                       "canCollect": true,
                       "isBreakable": true,
                       "affinityModifier": 0,
-                      "canOpen": true
+                      "canOpen": true,
+                      "smell": "Mmmm it smells of fresh coffee.",
+                      "canDrawOn": true
                     },
                     "synonyms": [
-                      "bean bag",
-                      "bag of beans",
-                      "giant bag",
-                      "big bag"
+                      "package",
+                      "my parcel",
+                      "my package",
+                      "coffee parcel",
+                      "coffee package",
+                      "box"
                     ],
                     "inventory": [
                       {
                         "object": "artefact",
-                        "name": "beans",
-                        "description": "coffee beans",
-                        "detailedDescription": "Development fuel. Almost enough to last a day here.",
+                        "name": "bag",
+                        "description": "giant bag",
+                        "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
                         "attributes": {
+                          "defaultAction": "open",
                           "weight": 2,
-                          "attackStrength": 5,
-                          "requiresContainer": true,
+                          "carryWeight": 3,
+                          "attackStrength": 2,
+                          "type": "container",
                           "canCollect": true,
-                          "charges": 10,
-                          "chargeUnit": "cup",
-                          "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
-                          "plural": true,
+                          "isBreakable": true,
                           "affinityModifier": 0,
-                          "componentOf": [
-                            "coffee machine"
-                          ]
+                          "canOpen": true,
+                          "smell": "You can almost taste the coffee beans."
                         },
                         "synonyms": [
-                          "coffee beans"
+                          "bean bag",
+                          "bag of beans",
+                          "giant bag",
+                          "big bag"
+                        ],
+                        "inventory": [
+                          {
+                            "object": "artefact",
+                            "name": "beans",
+                            "description": "coffee beans",
+                            "detailedDescription": "Development fuel. Almost enough to last a day here.",
+                            "attributes": {
+                              "weight": 2,
+                              "attackStrength": 5,
+                              "requiresContainer": true,
+                              "canCollect": true,
+                              "charges": 10,
+                              "chargeUnit": "cup",
+                              "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
+                              "plural": true,
+                              "affinityModifier": 0,
+                              "componentOf": [
+                                "coffee machine"
+                              ],
+                              "smell": "They smell like pretty good quality coffee."
+                            },
+                            "synonyms": [
+                              "coffee beans"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -8790,7 +8804,7 @@
               "removeObject": "50 shades",
               "score": 35,
               "increaseAffinityFor": "Vic Wiseman",
-              "message": "Congratulations. Vic likes the book!<br>She hands you a parcel."
+              "message": "Congratulations. Vic likes the book!<br>'Oh, I just remembered. A parcel arrived for you a moment ago.'<br>'I've popped it in the post room'."
             }
           }
         ]
@@ -8861,7 +8875,7 @@
             ]
           },
           "score": 10,
-          "message": "Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
+          "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'<br><br>'Whilst I think of it; things are pretty unpredictable around here so I'm not able to leave reception at the moment.'<br>'If you happen to find any interesting reading material on your travels, stop by with it if you can.'"
         }
       }
     ]
