@@ -368,7 +368,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (plural) {
                 //special cases
-                var collectionPlurals = ["pair", "pack", "bowl", "pool", "set", "box", "tin", "jar", "packet", "bottle", "cluster", "collection", "group"];
+                var collectionPlurals = ["pair", "pack", "bowl", "pool", "set", "box", "tin", "jar", "packet", "bag", "bottle", "cluster", "collection", "group"];
                 var descriptionAsWords = anItemDescription.split(" "); 
                 if (descriptionAsWords.length>2) {
                     //"x of y" ?
