@@ -325,12 +325,12 @@
       {
         "object": "mission",
         "name": "bff",
-        "displayName": "gain affinity from one character up to level 15",
+        "displayName": "gain affinity from one character up to level 12",
         "attributes": {
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "maxAffinity": 15
+          "maxAffinity": 12
         },
         "reward": {
           "score": 50,
@@ -355,13 +355,13 @@
       {
         "object": "mission",
         "name": "doctor",
-        "displayName": "heal more than 10 times",
+        "displayName": "heal more than 8 times",
         "attributes": {
           "parent": "first-aider",
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "healCount": 11
+          "healCount": 9
         },
         "reward": {
           "score": 50,
@@ -545,7 +545,7 @@
         "object": "mission",
         "name": "latte",
         "displayName": "get yourself a latte",
-        "description": "It's your first day in the office. Head to the kitchen and get yourself off to a good start with a nice latte.",
+        "description": "It's your first day in the office. Check in with Vic at reception and then head to the kitchen and get yourself off to a decent start with a nice latte.",
         "attributes": {
           "missionObject": "latte",
           "destination": "player"
@@ -1099,6 +1099,7 @@
             "displayName": "get Dene's chocolate",
             "description": "Dene's wants to warm up some chocolate.",
             "attributes": {
+			  "parent": "latte",
               "missionObject": "chocolate",
               "destination": "dene boulton",
               "static": true,
@@ -1620,6 +1621,7 @@
             "displayName": "find some Rum for Simon.",
             "description": "Simon's team have just shipped a major release. He wants Rum to celebrate",
             "attributes": {
+			  "parent": "latte",
               "missionObject": "rum bottle",
               "destination": "simon cromarty",
               "static": true,
@@ -1816,6 +1818,7 @@
             "displayName": "find The Gaurdian for Brian",
             "description": "Brian wants to do the crossword.",
             "attributes": {
+			  "parent": "latte",
               "missionObject": "guardian newspaper",
               "destination": "brian harris",
               "static": true,
@@ -2133,6 +2136,7 @@
             "displayName": "destroy the maracas",
             "description": "Chris gave James something really annoying.",
             "attributes": {
+			  "parent": "saveredgate",
               "missionObject": "maracas",
               "initiateConversation": true,
               "huntPlayer": true,
@@ -2459,6 +2463,7 @@
             "displayName": "fix Chris' bike",
             "description": "Chris wants his bike fixed.",
             "attributes": {
+			  "parent": "beans",
               "missionObject": "chris moore",
               "static": true,
               "dialogue": [
@@ -2661,6 +2666,7 @@
             "displayName": "water filippa's plants",
             "description": "Filippa wants her tomato plants watered.",
             "attributes": {
+			  "parent": "latte",
               "missionObject": "healthy tomato plants",
               "destination": "customer-delight-west",
               "static": true,
@@ -2760,6 +2766,7 @@
             "displayName": "find Adam's trainers",
             "description": "Adam soaked his feet.",
             "attributes": {
+			  "parent": "beans",
               "missionObject": "trainers",
               "destination": "adam parker",
               "static": true,
@@ -6010,6 +6017,7 @@
             "displayName": "find some post-its for Chris.",
             "description": "Chris is due to run a workshop but needs some fresh stickies.",
             "attributes": {
+			  "parent": "saveredgate",
               "missionObject": "post-it pad",
               "destination": "chris smith",
               "static": true,
@@ -7696,6 +7704,7 @@
             "displayName": "hide James' wig",
             "description": "Make the wig 'go away'.",
             "attributes": {
+			  "parent": "keyfob",
               "missionObject": "wig",
               "static": true,
               "dialogue": [
