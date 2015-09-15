@@ -275,7 +275,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
             if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
             if (reward.removeLocation) { map.removeLocation(reward.removeLocation);};
-            if (reward.health) { player.updateHitPoints(reward.health);};
+            if (reward.health) { player.updateHitPoints(reward.health); };
+            if (reward.teleport) {
+                var newLocation = map.getLocation(reward.teleport);
+                console.log("teleporting to:" + reward.teleport);
+                if (newLocation) {
+                    console.log("location found");
+                    player.setLocation(newLocation);
+                };
+            };
             if (reward.maxHealth) { player.updateMaxHitPoints(reward.maxHealth);};
             if (reward.carryWeight) { player.updateCarryWeight(reward.carryWeight);};            
             if (reward.score) { player.updateScore(reward.score);};
@@ -869,6 +877,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     return self.fail("destroyedSource", source);
                 };
                 //if not, there's nothing else we can do for now.
+                //console.log("mission not yet complete");
                 return null;
             };   
                        

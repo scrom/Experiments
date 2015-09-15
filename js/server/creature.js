@@ -2372,6 +2372,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (locationName == _currentLocation.getName()) {
                 return self.getDisplayName()+" says 'we're both here already.'"+returnImage;
             };
+            
+            //refuse to go to location if in "avoiding" list.
+            var avoidIndex = _avoiding.indexOf(locationName);
+            if (avoidIndex > -1) {
+                var randomReplies = ["Sorry $player, I can't go there at the moment.", "I'm too busy at the moment, give me a shout later.", "No!", "I've got more important things to do right now.", "I'd rather not if it's all the same to you."];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return self.getDisplayName() + " says '" + randomReplies[randomIndex] + "'" + returnImage;              
+            };
 
             var destinationIndex = _destinations.indexOf(locationName);
             if (destinationIndex >-1) {
@@ -2384,7 +2392,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var location = map.getLocation(locationName);
             if (!(location)) {
-                var randomReplies = ["Sorry $player, I don't know where that is.", "I don't think there's a "+locationName+" anywhere around here.", "I think you might have the wrong place.", "Where's that? Are you sure you've got the name right"];
+                var randomReplies = ["Sorry $player, I don't know where that is.", "I don't think there's a "+locationName+" anywhere around here.", "I think you might have the wrong place.", "Where's that? Are you sure you've got the name right."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };

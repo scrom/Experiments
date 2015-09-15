@@ -129,7 +129,8 @@ exports.Map = function Map() {
                         if (newDescription) {
                             if (newDescription.length > 0) { _locations[i].setDescription(newDescription); }                            ;
                         };
-                        for (var v=0;v<inventory.length;v++) {
+                        for (var v = 0; v < inventory.length; v++) {
+                            //@todo - add check for a "remove" attribute here? -- may need to support in underlying objects
                             if (inventory[v].getType() == "creature") {
                                 inventory[v].go(null, _locations[i]); 
                             } else {
@@ -142,8 +143,14 @@ exports.Map = function Map() {
             };
         };
 
-        self.removeLocation = function(locationName){
+        self.removeLocation = function(removeLocationData){
             //console.log("removing location: "+locationName);
+            if (!removeLocationData) {
+                console.log("Map.removeLocation: no location data received for removal");   
+                return true;
+            };
+            var locationName = removeLocationData.name;
+            var removeCreatures = removeLocationData.removeCreatures;
             var locationToRemove;
             var locationToRemoveIndex = _locationIndexMap.indexOf(locationName);
             locationToRemove = _locations[locationToRemoveIndex];
@@ -173,21 +180,22 @@ exports.Map = function Map() {
             if (locationToRemove) {
                 var locationName = locationToRemove.getName();
                 var creatures = locationToRemove.getCreatures();
-                //all creatures take the first available exit...
-                for (var c=0;c<creatures.length;c++) {
-                    var exit = locationToRemove.getRandomExit(true);
-                    if (!(exit)) {
-                        var exits = locationToRemove.getAvailableExits(true);
-                        if (exits.length>0) {
-                            exit = exits[0];
+                if (!removeCreatures) {
+                    //all creatures take the first available exit...
+                    for (var c = 0; c < creatures.length; c++) {
+                        var exit = locationToRemove.getRandomExit(true);
+                        if (!(exit)) {
+                            var exits = locationToRemove.getAvailableExits(true);
+                            if (exits.length > 0) {
+                                exit = exits[0];
+                            };
+                        };
+                        if (exit) {
+                            //if there's truly no exit, the creature is lost!
+                            creatures[c].go(exit.getDirection(), self.getLocation(exit.getDestinationName()));
                         };
                     };
-                    if (exit) {
-                        //if there's truly no exit, the creature is lost!
-                        creatures[c].go(exit.getDirection(), self.getLocation(exit.getDestinationName()));
-                    };
                 };
-
                 //remove exits linking to this location
                 for (var l=0; l<_locations.length;l++) {
                     _locations[l].removeExit(locationName);
@@ -524,6 +532,15 @@ exports.Map = function Map() {
                 };
             };
             return missions;
+        };
+        
+        self.getNamedMission = function (missionName) {
+            var missions = self.getAllMissions();
+            for (var i = 0; i < missions.length; i++) {
+                if (missions[i].getName() == missionName) {
+                    return missions[i];
+                };
+            };
         };
 
         self.listAllMissions = function(player) {

@@ -2036,28 +2036,88 @@
             "object": "mission",
             "name": "partybus",
             "displayName": "get everyone on the party bus",
-            "description": "You did a great job of saving the company. Let's celebrate. Get everyone onto the party bus before it leaves!",
+            "description": "You did a great job of saving the company. Time for a break. Get everyone onto the party bus before it leaves!",
             "attributes": {
               "parent": "partytime",
               "missionObject": "bus",
               "static": true,
               "dialogue": [
-                "'Hi $player.'<br>'Thanks for the amazing job saving everyone.'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to celebrate and unwind after the day we've had.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or so partygoers (including yourself), it'll be time to relax.'",
-                "'Hey $player, I hope the party organising is going well. Keep up the great work.'"
+                "'Hi $player.'<br>'That was quite a job with the zombies, thanks!'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to unwind after the day we've had.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or so partygoers (including yourself), it'll be time to relax.'",
+                "'Hey $player, I hope the people organising is going well. Keep up the great work.'"
               ]
             },
             "failAttributes": {
-              "time": 350
+              "time": 250
             },
             "conditionAttributes": {
-              "friendlyCreatureCount": ">11"
+              "friendlyCreatureCount": ">7",
+              "time": 150
             },
             "reward": {
-              "score": 250,
-              "message": "<br>Congratulations. You managed to get the bus loaded and ready to party. That's quite a feat!"
+              "modifyLocation": {
+                "name": "office-front",
+                "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "smoke",
+                    "description": "smoke",
+                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                    "attributes": {
+                      "type": "scenery",
+                      "smell": "It's going to linger in your nose and memories for quite some time."
+                    },
+                    "synonyms": [
+                      "ash",
+                      "wreckage",
+                      "burning",
+                      "hint of ash",
+                      "debris",
+                      "bodies"
+                    ]
+                  }
+                ]
+              },
+              "score": -150,
+              "message": "<br>Congratulations. You're doing great at getting the bus loaded. It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows. Something's wrong here.<br><br>As precious seconds pass you register what's happening and dive for cover.<br>As the bus explodes into flames before your eyes you realise you've just lured some of your colleagues to their doom.",
+              "teleport": "office-front",
+              "removeLocation": {
+                "name": "bus",
+                "removeCreatures": true
+              }
             },
             "fail": {
-              "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed. What else is left to do?"
+              "modifyLocation": {
+                "name": "office-front",
+                "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "smoke",
+                    "description": "smoke",
+                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                    "attributes": {
+                      "type": "scenery",
+                      "smell": "It's going to linger in your nose and memories for quite some time."
+                    },
+                    "synonyms": [
+                      "ash",
+                      "wreckage",
+                      "burning",
+                      "hint of ash",
+                      "debris",
+                      "bodies"
+                    ]
+                  }
+                ]
+              },
+              "score": 50,
+              "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush to the front of the office to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows. Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.",
+              "teleport": "office-front",
+              "removeLocation": {
+                "name": "bus",
+                "removeCreatures": true
+              }
             }
           }
         ]
@@ -2886,6 +2946,9 @@
           "affinity": 1,
           "canTravel": true,
           "traveller": true,
+          "avoiding": [
+            "bus"
+          ],
           "imageName": "aliceeasey.jpg"
         },
         "inventory": [
@@ -6389,6 +6452,9 @@
                     "destinations": [
                       "machine-room-east"
                     ],
+                    "avoiding": [
+                      "bus"
+                    ],
                     "destinationDelay": 15,
                     "imageName": "spy.jpg"
                   },
@@ -6707,7 +6773,9 @@
                         "decreaseAffinityFor": "everyone",
                         "increaseAffinityFor": "jordan miller",
                         "removeObject": "van",
-                        "removeLocation": "east-car-park-corner",
+                        "removeLocation": {
+                          "name": "east-car-park-corner"
+                        },
                         "money": 200,
                         "message": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
                       }
@@ -8378,6 +8446,9 @@
           "health": 500,
           "canTravel": true,
           "traveller": true,
+          "avoiding": [
+            "bus"
+          ],
           "imageName": "simongalbraith.jpg"
         },
         "inventory": [

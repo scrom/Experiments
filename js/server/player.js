@@ -4451,6 +4451,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += "<br>" + missionReward.message;
             };
             
+            //note, if the mission failed, the "fail" object will be passdd as missionReward
             var rewardString = mission.processReward(map, missionReward, self);
             if (rewardString.length > 0) {
                 resultString += "<br>" + rewardString

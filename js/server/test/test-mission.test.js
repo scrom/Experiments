@@ -311,6 +311,94 @@ exports.canGainStealthAttributeFromReadBookMission = function (test) {
 exports.canGainStealthAttributeFromReadBookMission.meta = { traits: ["Mission Test", "Read Trait", "Mission Completion Trait", "Mission Check Trait"], description: "Test that reading a book with a hunt mission bonus delivers attribute increase." };
 
 
+exports.canFailPartyBusMission = function (test) {
+    var missionOwner = m0.getCreature('mark wightman');
+    var missions = missionOwner.getMissions(true);
+    var missions;
+    var mission;
+    for (var i = 0; i < missions.length; i++) {
+        if (missions[i].getName() == "partybus") {
+            mission = missions[i];
+            break;
+        }        ;
+    }    ;
+    
+    //make the mission completeable
+    mission.clearParent();
+    mission.startTimer();
+    mission.addTicks(250);
+    //var location = m0.getLocation("crash-site");
+    //p0.setLocation(location);
+    //spy.kill();
+    
+    var resultString = mission.checkState(p0, m0).message;
+    
+    var expectedResult = "<br><br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush to the front of the office to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows. Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.";
+    var actualResult = resultString
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canFailPartyBusMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that party bus mission can be successfully completed." };
+
+
+exports.canCompletePartyBusMission = function (test) {
+    var missionOwner = m0.getCreature('mark wightman');
+    var missions = missionOwner.getMissions(true);
+    var missions;
+    var mission;
+    var preMission;
+    for (var i = 0; i < missions.length; i++) {
+        if (missions[i].getName() == "partytime") {
+            preMission = missions[i];
+        };
+        if (missions[i].getName() == "partybus") {
+            mission = missions[i];
+        };
+    };
+    
+    preMission.clearParent();
+    console.log(preMission.getNextDialogue('y','y'));
+    console.log(preMission.getNextDialogue('y', 'y'));
+    console.log(preMission.getNextDialogue('y', 'y'));
+    var reward = preMission.checkState(p0, m0);
+    console.log(preMission.processReward(m0, reward, p0));
+
+    //make the party mission completeable
+    mission.clearParent();
+    console.log(mission.getNextDialogue('y', 'y'));  
+    mission.startTimer();
+    mission.addTicks(150);
+    var creatures = m0.getAllCreatures();
+    var location = m0.getLocation("bus");
+    console.log(location.getName());
+    for (var i = 0; i < creatures.length; i++) {
+        creatures[i].go("", location);
+        if (i==7) { break;} //we need 8 creatures to complete mission
+    };
+    p0.setLocation(location); //player must be in location
+    //spy.kill();
+    reward = mission.checkState(p0, m0);
+    var resultString = reward.message;
+    
+    var expectedResult = "<br>Congratulations. You're doing great at getting the bus loaded. It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows. Something's wrong here.<br><br>As precious seconds pass you register what's happening and dive for cover.<br>As the bus explodes into flames before your eyes you realise you've just lured some of your colleagues to their doom.";
+    var actualResult = resultString
+    
+    mission.processReward(m0, reward, p0);
+    console.log(p0.examine("look","",m0));
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canCompletePartyBusMission.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that party bus mission can be successfully completed." };
+
+
 exports.canCompleteKillSpyMission = function (test) {
     var kitchen = m0.getLocation("kitchen-ground-floor");
     var planeCrash = kitchen.getMissions(true)[0];
