@@ -270,7 +270,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                             };
                             break;
                         case "violence":
-                            //eventually - perform a random violent action on any object (or player) in current location
+                            //@todo eventually - perform a random violent action on any object (or player) in current location
+                            break;
+                        case "weaken":
+                            //@todo eventually - reduce carrier's carry limit and attack strength. (may or may not be recoverable)
                             break;
                     };
                 };
