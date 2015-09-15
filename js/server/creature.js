@@ -1809,6 +1809,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.followPlayer = function(direction, aLocation) {
             if (self.canTravel()) {
+                //check "avoid" locations if not very high affinity
+                if (_affinity <= 7) {
+                    var avoidIndex = _avoiding.indexOf(aLocation.getName());
+                    if (avoidIndex > -1) {
+                        return "";
+                    };
+                };
                 //erode affinity lower than base if following a player (prevents indefinite following)
                 //it'll recover again as part of bsic creature wandering.
                 if ((_affinity <= _baseAffinity) && _affinity>0) {
@@ -2368,15 +2375,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_imageName) {
                 returnImage= "$image"+_imageName+"/$image";
             };
-
-            if (locationName == _currentLocation.getName()) {
-                return self.getDisplayName()+" says 'we're both here already.'"+returnImage;
+            
+            if (_currentLocation) {
+                if (locationName == _currentLocation.getName()) {
+                    return self.getDisplayName() + " says 'we're both here already.'" + returnImage;
+                };
             };
             
             //refuse to go to location if in "avoiding" list.
             var avoidIndex = _avoiding.indexOf(locationName);
             if (avoidIndex > -1) {
-                var randomReplies = ["Sorry $player, I can't go there at the moment.", "I'm too busy at the moment, give me a shout later.", "No!", "I've got more important things to do right now.", "I'd rather not if it's all the same to you."];
+                var randomReplies = ["Sorry $player, I can't go there at the moment.", "I'm too busy at the moment, give me a shout later.", "I've got more important things to do right now.", "I'd rather not if it's all the same to you."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 return self.getDisplayName() + " says '" + randomReplies[randomIndex] + "'" + returnImage;              
             };
@@ -3306,7 +3315,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (_homeLocation) {
                     _destinations.unshift(_homeLocation.getName());
                 } else {
-                    _destinations.unshift(_currentLocation.getName());
+                    if (_currentLocation) {
+                        _destinations.unshift(_currentLocation.getName());
+                    };
                 };
             };
         };

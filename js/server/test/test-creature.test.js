@@ -1198,6 +1198,108 @@ exports.cannotAddDuplicateAvoidLocations = function (test) {
 };
 exports.cannotAddDuplicateAvoidLocations.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a duplicate avoid location is not added to 'avoiding' array." };
 
+
+exports.creatureRefusesToTravelToAvoidedLocation = function (test) {
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    var atrium = m.getLocation("atrium");
+    p0.setLocation(atrium); 
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: 2, canTravel: true, avoiding: ["reception"] });
+    var expectedReplyArray = ["Sorry $player, I can't go there at the moment.", "I'm too busy at the moment, give me a shout later.", "I've got more important things to do right now.", "I'd rather not if it's all the same to you."];
+    var actual = c0.goTo("reception", p0, m);
+    actual = actual.replace("the creature says '", "");
+    actual = actual.replace(".'",".")
+    var expected = "Expected a refusal result from 'random' list of refusals."
+    var resultIndex = expectedReplyArray.indexOf(actual);
+    if (resultIndex > -1) {
+        expected = actual;  
+    };
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureRefusesToTravelToAvoidedLocation.meta = { traits: ["Creature Test", "Avoid Trait", "Ask Trait"], description: "Test that a player cannot ask a creature to go to an avoided location." };
+
+
+exports.creatureWillAcceptTravelToLocation = function (test) {
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    var atrium = m.getLocation("atrium");
+    p0.setLocation(atrium);
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: 2, canTravel: true });
+    var expectedReplyArray = ["OK.", "Okay. See you there?", "I'm on my way.", "I'll be over there shortly."];
+    var actual = c0.goTo("reception", p0, m);
+    actual = actual.replace("the creature says '", "");
+    actual = actual.replace(".'", ".")
+    actual = actual.replace("?'", "?")
+    var expected = "Expected an acceptance result from 'random' list of acceptances."
+    var resultIndex = expectedReplyArray.indexOf(actual);
+    if (resultIndex > -1) {
+        expected = actual;
+    }    ;
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureWillAcceptTravelToLocation.meta = { traits: ["Creature Test", "Ask Trait"], description: "Test that a player can ask a creature to go to a location." };
+
+
+exports.creatureWillNotFollowPlayerToAvoidedLocation = function (test) {
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    var atrium = m.getLocation("atrium");
+    p0.setLocation(atrium);
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: 7, canTravel: true, avoiding: ["reception"] });
+    c0.go("", atrium);
+    
+    var expected = "Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist and an office door.<br>There are exits to the East and West.<br>";
+    var actual = p0.go("", "e", m);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureWillNotFollowPlayerToAvoidedLocation.meta = { traits: ["Creature Test", "Avoid Trait", "Follow Trait"], description: "Test that a creature will not follow a player to an avoided location." };
+
+
+exports.highAffinityCreatureWillFollowPlayerToAvoidedLocation = function (test) {
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    var atrium = m.getLocation("atrium");
+    p0.setLocation(atrium);
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: 8, canTravel: true, avoiding: ["reception"] });
+    c0.go("", atrium);
+    
+    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist and an office door.<br>There are exits to the East and West.<br>";
+    var actual = p0.go("", "e", m);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.highAffinityCreatureWillFollowPlayerToAvoidedLocation.meta = { traits: ["Creature Test", "Avoid Trait", "Follow Trait"], description: "Test that a creature will not follow a player to an avoided location." };
+
+
+exports.friendlyCreatureWillFollowPlayer = function (test) {
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    var atrium = m.getLocation("atrium");
+    p0.setLocation(atrium);
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: 15, canTravel: true});
+    c0.go("", atrium);
+    
+    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, an office door and a beastie.<br>There are exits to the East and West.<br>";
+    var actual = p0.go("", "e", m);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.friendlyCreatureWillFollowPlayer.meta = { traits: ["Creature Test", "Follow Trait"], description: "Test that a creature will not follow a player to an avoided location." };
+
+
 exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharges = function (test) {
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
