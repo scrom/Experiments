@@ -343,7 +343,7 @@ exports.Action = function Action(player, map, fileManager) {
                                         "<br>To find out more about how you're doing, try <i>'stats'</i> or <i>'status'</i><br>"+  
                                         "In many cases, your positive or negative interactions within the game may impact how others respond to you, use this knowledge wisely.<br>"+
                                         "<br>You can save your progress by entering <i>'save'</i>.<br>You can return to a previously saved point from <i>this</i> session by simply typing <i>restore</i><br>You can load a previously saved game by entering '<i>load filename-x</i>' (where <i>filename-x</i> is the name of your previously saved game file.)<br>"+
-                                        "If you've really had enough of playing, you can enter <i>quit</i> to exit the game (without saving).";                             
+                                        "If you've really had enough of playing, you can enter <i>quit</i> to exit the game (without saving).<br>";                             
                         break;
                     case 'map':
                         _ticks = 0;

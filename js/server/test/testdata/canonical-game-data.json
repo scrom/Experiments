@@ -1966,7 +1966,7 @@
             "displayName": "get the party started",
             "description": "Mark wants to organise a celebration",
             "attributes": {
-              "parent": "killthespy",
+              "parent": "retrievedisk",
               "missionObject": "mark wightman",
               "static": true,
               "dialogue": [
