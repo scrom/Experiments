@@ -84,6 +84,16 @@ exports.Server = function Server(anInterpreter) {
             };
             _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
         });
+        
+        app.get('/quit/*', function (request, response) {
+            
+            request.socket.setTimeout(5);
+            var sanitisedRequestURL = sanitiseString(request.url);
+            response.writeHead(200, { 'Content-type': 'text/plain' });
+            response.write(_interpreter.translate(sanitisedRequestURL, _config));
+            response.end();
+
+        });
 
         app.get('/image/*', function (request, response) {
             request.socket.setTimeout(120);

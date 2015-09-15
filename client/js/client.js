@@ -113,6 +113,23 @@ function Client(aServerHost, aServerPort, aUi) {
             serverRequest('save/save/'+username+'/'+gameId);
         };
     };
+
+    //quit a game
+    var quitGame = function () {
+        if (!(gameId)) {
+            alert("You don't have an active game to quit.");
+            ui.setState("You've not even started yet. If you've had enough already, feel free to close your browser tab. <br>If not, please either enter your name to start a new game or <i>load</i> an existing game.");
+        } else {
+            var quit = confirm("Are you sure you want to quit this game? Any progress since you last saved will be lost.")
+            if (quit) {
+                serverRequest('quit/quit/' + username + '/' + gameId);
+                gameId = null;
+                username = "";
+            } else {
+                ui.setState("Okay, let's continue then.");
+            };
+        };
+    };
    
     //generic client request
     var request = function(someUserInput) {
@@ -126,6 +143,8 @@ function Client(aServerHost, aServerPort, aUi) {
             loadGame(fileName);            
         } else if (inputString.indexOf("save") >-1) {
             saveGame();
+        } else if (inputString.indexOf("quit") > -1) {
+            quitGame();
         } else {
             if (username == ''){
                 if (!(inputString)) {inputString = ""};

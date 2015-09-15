@@ -213,16 +213,18 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             
         };
 
-        ////not yet in use
-        self.removeGame = function(aGameId) {
-            var index = _games.indexOf(aGameId);
-            if (index > -1) {
-                _games.splice(index,1);
-                console.log(aGameId+' removed from games list');
-
+        ////used when quitting
+        self.removeGame = function (aUsername, aGameId) {
+            var description = "If you\'d like to play again, please either <i>load</i> an old game (if you have one) or type in your name to start a new one.";
+            if ((typeof _games[aGameId] != "object")) { return '{"username":"","id":-1,"description":"Sorry, this game is no longer active."}'; }            ;
+            if (_games[aGameId].checkUser(aUsername, aGameId)) {
+                _games[aGameId] = aGameId; //remove game object and replace with just ID.
+                console.log(aGameId + ' removed from games list');
+                return '{"username":"","id":-1,"description":"Thanks for playing!<br>'+description+'"}';
             } else {
-                console.log(aGameId+' not found');
+                console.log(aGameId + ' not found');
             };
+            return '{"username":"","id":-1,"description":"It looks like the game you\'re trying to quit isn\'t active anyway<br>' + description + '"}';
         };
 
         ////not yet in use

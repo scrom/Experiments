@@ -152,6 +152,11 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                     if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
                     return assembleResponse(commandJson, _gameController.userAction(username, gameId,actionString));
                     break;
+                case 'quit':
+                    console.log("user '" + username + "' requested quit game");
+                    if (!(validateUser(username))) { return assembleResponse(commandJson, "invalid user: " + username); }
+                    return assembleResponse(commandJson, _gameController.removeGame(username, gameId));
+                    break;
                 case 'save':
                     console.log("saving game");             
                     if (!(validateUser(username))) {callback(assembleResponse(commandJson,"invalid user: "+username));};
