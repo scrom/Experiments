@@ -238,7 +238,11 @@ exports.Map = function Map() {
                 };
 
                 var objectInventory = objectToModify.getInventoryObject();
-
+                //@todo: placeholder for altering attribs
+                //currentAttribs = objectToModify.getCurrentAttributes();
+                //newAttribs = modification.attributes;
+                //updatedAttribs = mask new attribs onto current ones
+                //then call objectToModify.processAttributes(updatedAttribs) 
                 //if (newDescription.length >0) { objectToModify.setDescription(newDescription);};
                 for (var v=0;v<inventory.length;v++) {
                     objectInventory.forceAdd(inventory[v]);  
