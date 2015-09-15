@@ -1272,7 +1272,7 @@ exports.highAffinityCreatureWillFollowPlayerToAvoidedLocation = function (test) 
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: 8, canTravel: true, avoiding: ["reception"] });
     c0.go("", atrium);
     
-    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist and an office door.<br>There are exits to the East and West.<br>";
+    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, an office door and a beastie.<br>There are exits to the East and West.<br>";
     var actual = p0.go("", "e", m);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
