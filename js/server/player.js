@@ -4819,6 +4819,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 status += contagionReport;
                 status += "<br>";
             };
+            
+            //check death toll:
+            var deathTollReport = map.getDeathTollReport();
+            if (deathTollReport.length > 0) {
+                status += "<i>Death Toll:</i><br>";
+                status += deathTollReport;
+                status += "<br>";
+            }            ;
 
             status += "<i>Status:</i><br>";
             if (self.isStarving()) {status+="You're starving.<br>";}

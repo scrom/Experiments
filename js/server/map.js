@@ -15,6 +15,7 @@ exports.Map = function Map() {
         var _eventCount = 0; //how many "events" are there?
         var _bookCount = 0; //how many books are there?
         var _creatureCount = 0; //how many creatures are there?
+        var _removedCreatures = []; //which creatures have been removed from the map?
 
         //consider storing all creatures and artefacts on map object (rather than in location, creature or player) 
         //this will need some major rework and tracking/linking who owns what
@@ -27,10 +28,11 @@ exports.Map = function Map() {
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
             var creatures = self.getAllCreatures();
-
+            creatures = creatures.concat(_removedCreatures);
             currentAttributes.contagion = self.gatherContagionStats(creatures);
             currentAttributes.antibodies = self.gatherAntibodyStats(creatures);
             currentAttributes.contagionDeathToll = self.gatherContagionDeathTollStats(creatures);
+            currentAttributes.deathToll = self.gatherDeathTollStats(creatures);
             return currentAttributes;
         };
 
@@ -180,7 +182,13 @@ exports.Map = function Map() {
             if (locationToRemove) {
                 var locationName = locationToRemove.getName();
                 var creatures = locationToRemove.getCreatures();
-                if (!removeCreatures) {
+                if (removeCreatures) {
+                    //kill and track removed creatures.
+                    for (var c = 0; c < creatures.length; c++) {
+                        creatures[c].kill();
+                        _removedCreatures.push(creatures[c]);
+                    };
+                } else {
                     //all creatures take the first available exit...
                     for (var c = 0; c < creatures.length; c++) {
                         var exit = locationToRemove.getRandomExit(true);
@@ -489,6 +497,20 @@ exports.Map = function Map() {
 
             return deathTollData;
         };
+        
+        self.getDeathTollReport = function () {
+            var creatures = self.getAllCreatures();
+            creatures = creatures.concat(_removedCreatures);
+            var deathTollData = self.gatherDeathTollStats(creatures);
+            
+            var deathTollReport = "";
+            
+            if (deathTollData.friendly > 0) { deathTollReport += "Friendly death toll: " + deathTollData.friendly + "<br>"; }            ;
+            if (deathTollData.hostile > 0) { deathTollReport += "Hostile death toll: " + deathTollData.hostile + "<br>"; }            ;
+            
+            //console.log(deathTollReport);
+            return deathTollReport;
+        };
 
         self.getContagionReport = function(player) {
             var creatures = self.getAllCreatures();
@@ -518,6 +540,21 @@ exports.Map = function Map() {
             return contagionReport;
         //{"contagion":contagionData, "antibodies":antibodyData, "total":creatures.length}
 
+        };
+        
+        self.gatherDeathTollStats = function (creatures) {
+            var deathTollData = { "friendly": 0, "hostile": 0 };
+            for (var c = 0; c < creatures.length; c++) {
+                if (creatures[c].isDead()) {
+                    if (creatures[c].getSubType() == "friendly") {
+                        deathTollData.friendly++;
+                    } else {
+                        deathTollData.hostile++;
+                    };
+                };
+            };
+            
+            return deathTollData;
         };
 
         self.getAllMissions = function() {

@@ -291,7 +291,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (reward.stealth) { player.setStealth(player.getStealth() + reward.stealth);};
             if (reward.hunt) { player.setHunt(player.getHunt() + reward.hunt); };
             if (reward.repairSkill) { player.addSkill(reward.repairSkill);};
-            if (reward.delivers) {resultString += player.acceptItem(reward.delivers);};
+            if (reward.delivers) { resultString += player.acceptItem(reward.delivers); };
+            //@todo if (reward.kill) { process array of creatures to be killed, may also have a location element};
 
             self.processAffinityModifiers(map, reward);
 
