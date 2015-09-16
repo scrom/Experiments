@@ -97,6 +97,7 @@
     <Compile Include="js\server\map.js" />
     <Compile Include="js\server\mapbuilder.js" />
     <Compile Include="js\server\mission.js" />
+    <Compile Include="js\server\missioncontroller.js" />
     <Compile Include="js\server\objectStub.js" />
     <Compile Include="js\server\player.js" />
     <Compile Include="js\server\server.js" />

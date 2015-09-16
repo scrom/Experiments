@@ -5,7 +5,7 @@ module.exports.ObjectStub = function ObjectStub() {
 	    var self = this; //closure so we don't lose this reference in callbacks
 
 	    var _objectName = "ObjectStub";
-        console.log(_objectName + ' created: '+_name+', '+_destinationName);
+        console.log(_objectName + ' created');
 
         ////public methods
         self.toString = function() {
