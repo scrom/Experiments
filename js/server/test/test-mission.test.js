@@ -141,6 +141,10 @@ exports.canCompleteHardDiskMissionByInstallingInServer = function (test) {
     console.log("Does server contain disk after processing reward? " + server.check("hard disk"));
     test.equal(server.check("hard disk"), false);
     
+    var cons = location.getObject("console");
+    console.log(cons.getDetailedDescription());
+    //console.log(cons.getSmell());
+    
     test.done();
 };
 

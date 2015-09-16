@@ -145,6 +145,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
              };
             return "shows";
         };
+        
+        self.updateAttributes = function (newAttributes) {
+            processAttributes(newAttributes);
+        };
 
         var processAttributes = function (artefactAttributes) {
             if (_initialDetailedDescription == "") {

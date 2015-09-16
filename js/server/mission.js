@@ -270,7 +270,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     //var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
                     //console.log("Exit added: "+exitDestination);
                 };
-            };
+            }            ;
+            //@todo - alter all of the below to work on an array of objects or locations, make them plural
             if (reward.modifyObject) { map.modifyObject(reward.modifyObject, player);};
             if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
             if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove

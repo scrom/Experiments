@@ -216,36 +216,52 @@ exports.Map = function Map() {
         self.modifyObject = function(modification, player){
             var objectName = "";
             var newDisplayName;
+            var newAttribs;
             //var newDescription;
             var inventory = [];
             if (modification) {
+
                 if (modification.name) {
+                    //only set name to value if set in modification (otherwise could be undefined)
                     objectName = modification.name;
-                };
-                //if (modification.description) {
-                //    newDescription = modification.description;
-                //};
+                    //console.log("modify object: "+ objectName);
+                };                       
+                newAttribs = modification.attributes;
+
                 if (modification.inventory) {
                     for (var i=0;i<modification.inventory.length;i++) {
                         inventory.push(modification.inventory[i]);
                     };
                 };
+
             };
             if (objectName.length >0) {
                 var objectToModify = player.getObject(objectName);
                 if (!(objectToModify)) {
                     objectToModify = self.getObject(objectName);
                 };
+                
+                //alter attribs               
+                if (newAttribs) {
+                    var currentAttribs = objectToModify.getCurrentAttributes();
+                    var updatedAttribs = currentAttribs;
+                    //mask new attribs onto current ones
+                    for (var attr in newAttribs) {
+                        //console.log("before: " + updatedAttribs[attr]);
+                        updatedAttribs[attr] = newAttribs[attr];
+                        //console.log("after: " + updatedAttribs[attr]);
+                    };
 
-                var objectInventory = objectToModify.getInventoryObject();
-                //@todo: placeholder for altering attribs
-                //currentAttribs = objectToModify.getCurrentAttributes();
-                //newAttribs = modification.attributes;
-                //updatedAttribs = mask new attribs onto current ones
-                //then call objectToModify.processAttributes(updatedAttribs) 
-                //if (newDescription.length >0) { objectToModify.setDescription(newDescription);};
-                for (var v=0;v<inventory.length;v++) {
-                    objectInventory.forceAdd(inventory[v]);  
+                    //note, processAttributes includes detailed description even though it's not officially an attr 
+                    objectToModify.updateAttributes(updatedAttribs);
+                };               
+
+                if (inventory.length > 0) {
+                    //add items to inventory
+                    var objectInventory = objectToModify.getInventoryObject();
+                    for (var v = 0; v < inventory.length; v++) {
+                        objectInventory.forceAdd(inventory[v]);
+                    };
                 };
             };
         };

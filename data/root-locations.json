@@ -5701,7 +5701,7 @@
             "description": "",
             "attributes": {
               "missionObject": "hard disk",
-			  "destination": "server",
+              "destination": "server",
               "static": true
             },
             "failAttributes": {
@@ -5714,8 +5714,14 @@
             },
             "reward": {
               "score": 10,
-			  "removeObject": "hard disk",
-              "message": "You slot the disk into the server hard drive bay. It clicks permanently into place and spins up.<br>You hear a small 'beep' from nearby. Let's find out what was on that disk."
+              "removeObject": "hard disk",
+              "message": "You slot the disk into the server hard drive bay. It clicks permanently into place and spins up.<br>You hear a small 'beep' from nearby. Let's find out what was on that disk.",
+              "modifyObject": {
+                "name": "console",
+                "attributes": {
+                  "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5%!£% 6!£¬%$@th call for¬@£^ the C~#t of !£* R£@ G~#@'... ...'book of summ!£*%+g... ...sacri+}[@: souls open %^* gate'... ...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
+                }
+              }
             }
           }
         ]
@@ -5724,7 +5730,7 @@
         "object": "artefact",
         "name": "console",
         "description": "old-fashioned VDU console",
-        "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one)<br>. The cursor flashes next to the '>' prompt awaiting input.",
+        "detailedDescription": "It's pretty old and tatty. There's no sign of life in it at the moment.",
         "attributes": {
           "weight": 25,
           "type": "computer",
@@ -10403,7 +10409,7 @@
                   "attackStrength": 5,
                   "canCollect": true,
                   "isBreakable": true,
-				  "isDamaged": true,
+                  "isDamaged": true,
                   "price": 50,
                   "componentOf": [
                     "server"
@@ -10447,7 +10453,7 @@
                   "attackStrength": 5,
                   "canCollect": true,
                   "isBreakable": true,
-				  "isDamaged": true,
+                  "isDamaged": true,
                   "price": 50,
                   "componentOf": [
                     "server"

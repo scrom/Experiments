@@ -330,7 +330,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 returnObject.modifyObject = {};
                 if (reward.modifyObject.name) {returnObject.modifyObject.name = reward.modifyObject.name};
                 if (reward.modifyObject.description) {returnObject.modifyObject.description = reward.modifyObject.description};
-
+                if (reward.modifyObject.attributes) { returnObject.modifyObject.attributes = reward.modifyObject.attributes}                ;
                 if (reward.modifyObject.inventory && reward.modifyObject.name) {
                     returnObject.modifyObject.inventory = [];
                     for (var i=0; i<reward.modifyObject.inventory.length;i++) {
