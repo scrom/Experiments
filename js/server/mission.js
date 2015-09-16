@@ -229,6 +229,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (parent == _parent) {return true};
             return false;
         };
+        
+        self.getParent = function () {
+            if (_parent) { return _parent };
+            return "none";
+        };
 
         self.hasParent = function() {
             if (_parent) {return true};

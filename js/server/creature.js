@@ -3123,7 +3123,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //consider fleeing here if not quite dead
             if (self.isDead()) {
                 resultString += self.kill();                
-            };
+            }            ;
+            
+            //update creature missions (where creature is meant to be at a location)
+            /*console.log("checking creature missions:"+ _missions.length);
+            for (var i = 0; i < _missions.length; i++) {
+                if (_missions[i].getMissionObjectName() == self.getName()) {
+                    console.log("found matching mission: "+_missions[i].getName()+" active? "+ _missions[i].isActive());
+                    if (_missions[i].isActive()) {
+                        //we have a creature mission
+                        console.log("processing creature mission");
+                        if (_missions[i].getDestination() == _currentLocation.getName()) {
+                            //creature has reached destination!
+                            var missionResult = _missions[i].checkState(player, map);
+                            if (missionResult) {
+                                var rewardString = _missions[i].processReward(map, missionResult, player);
+                                console.log(rewardString);
+                            };
+                        };
+                    };
+                };
+            };*/
+
             
             if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
             if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+tools.initCap(self.getDisplayName())+" is bleeding. ";};    

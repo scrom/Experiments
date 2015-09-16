@@ -613,9 +613,9 @@ exports.Map = function Map() {
 
             for (var i=0;i<missions.length;i++) {
                 if (missions[i].getType() != "event") {
-                    allMissions.push(missions[i].getName()+" - "+missions[i].getDisplayName());
+                    allMissions.push(missions[i].getName()+" - "+missions[i].getDisplayName() + ". Parent: " + missions[i].getParent() + ". Active? "+missions[i].isActive());
                 } else {
-                    events.push(missions[i].getName()+" - "+missions[i].getDisplayName());
+                    events.push(missions[i].getName()+" - "+missions[i].getDisplayName() + ". Parent: " + missions[i].getParent() + ". Active? " + missions[i].isActive());
                 };
             };
 
