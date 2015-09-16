@@ -318,7 +318,7 @@ exports.canGainHuntAttributeFromReadBookMission = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(book);
     p0.read("read", "battered book");
-    p0.updateMissions(1, m0);
+    m0.updateMissions(1, p0);
     var resultString = p0.getHunt() - initialValue;
 
     var expectedResult = "2";
@@ -339,7 +339,7 @@ exports.canGainStealthAttributeFromReadBookMission = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(book);
     p0.read("read", "black book");
-    p0.updateMissions(1, m0);
+    m0.updateMissions(1, p0);
     var resultString = p0.getStealth() - initialValue;
 
     var expectedResult = "4";
@@ -574,7 +574,7 @@ exports.canCompleteKillSpyMission = function (test) {
     p0.setLocation(location);
     spy.kill();
 
-    var resultString = p0.updateMissions(1, m0);
+    var resultString = m0.updateMissions(1, p0);
 
     var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
     var actualResult = resultString
@@ -614,7 +614,7 @@ exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (
     p0.setLocation(location);
     
     //var result = mission.checkState(inv, simon.getLocation(), m0);
-    var resultString = p0.updateMissions(1, m0);
+    var resultString = m0.updateMissions(1, p0);
 
     var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
     var actualResult = resultString
@@ -635,7 +635,7 @@ exports.canCompleteReadArticleMission = function (test) {
     inventory.add(book);
 
     p0.read("read", "article");
-    var resultString = p0.updateMissions(1, m0);
+    var resultString = m0.updateMissions(1, p0);
     var expectedResult = "<br>Congratulations. You've learned the basics on how to develop good software architecture.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
@@ -653,7 +653,7 @@ exports.canGainSkillsFromReadingManual = function (test) {
     inventory.add(book);
 
     p0.read("read", "manual");
-    p0.updateMissions(1, m0);
+    m0.updateMissions(1, p0);
     var resultString = p0.getSkills();
     var expectedResult = "coffee machine";
     var actualResult = resultString
@@ -684,7 +684,7 @@ exports.canGetBulbFromAmandaTalkingMission = function (test) {
     //var resultString = 
     p0.say("talk",null,"amanda");
     p0.say("talk","ok","amanda");
-    var resultString = p0.updateMissions(1, m0);
+    var resultString = m0.updateMissions(1, p0);
 
     var expectedResult = "<br>Amanda hands you a projector bulb.";
     var actualResult = resultString
@@ -716,14 +716,14 @@ exports.canRepairProjectorWithBulbAndSkills = function (test) {
     //var resultString = 
     p0.say("talk", null, "amanda");
     p0.say("talk", "ok", "amanda");
-    p0.updateMissions(1, m0);
+    m0.updateMissions(1, p0);
     
     location = m0.getLocation("poppy");
     p0.setLocation(location);
     var resultString = p0.repair('repair','projector')
     
     var expectedResult = "You fixed the projector and put the projector bulb you were carrying into it.<br><br>Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i>";
-    var actualResult = resultString + p0.updateMissions(1, m0);
+    var actualResult = resultString + m0.updateMissions(1, p0);
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -755,7 +755,7 @@ exports.bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull = function
     //var resultString = 
     p0.say("talk", null, "amanda");
     p0.say("talk", "ok", "amanda");
-    p0.updateMissions(1, m0);
+    m0.updateMissions(1, p0);
     
     var loc = p0.getCurrentLocation();
     var resultString = loc.objectExists("bulb");
@@ -793,7 +793,7 @@ exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryI
     //var resultString = 
     p0.say("talk", null, "amanda");
     p0.say("talk", "ok", "amanda");
-    var resultString = p0.updateMissions(1, m0);
+    var resultString = m0.updateMissions(1, p0);
     
     var expectedResult = "<br>Amanda hands you a projector bulb.<br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
     var actualResult = resultString

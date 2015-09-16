@@ -1358,6 +1358,9 @@ exports.Action = function Action(player, map, fileManager) {
 
             //if anything is happening in locations (includes ticks on inventory)
             processLocationTicks(_ticks, _map, _player);
+            
+            //tick missions
+            description  += map.updateMissions(_ticks, _player);
 
             //if time is passing, what additional things happen to a player?
             description += _player.tick(_ticks, _map);

@@ -600,7 +600,10 @@ exports.Map = function Map() {
         self.getMissionOwner = function (missionName) {
             return _missionController.getMissionOwner(missionName, _locations);
         };
-
+        
+        self.updateMissions = function (time, player) {
+            return _missionController.updateMissions(time, player, self);
+        };
 
         self.getCreature = function(aCreatureName) {
             //get the first creature whose name matches the name passed in
