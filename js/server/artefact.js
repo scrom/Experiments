@@ -76,6 +76,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _canDrawOn = false;
         var _drawings = [];
         var _writings = [];
+        var _typings = [];
         var _wetted = [];
         var _viewDestination;
 
@@ -296,13 +297,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };     
             if (artefactAttributes.drawings != undefined) {_drawings = artefactAttributes.drawings;};    
             if (artefactAttributes.writings != undefined) { _writings = artefactAttributes.writings; };
+            if (artefactAttributes.typings != undefined) { _typings = artefactAttributes.typings; };
 
         };
 
         processAttributes(attributes);
 
         var validateType = function(type, subType) {
-            var validobjectTypes = ["weapon","property","medical", "cure","book","junk","treasure","food","tool","door","container", "key", "bed", "light", "scenery", "writing", "vehicle"];
+            var validobjectTypes = ["weapon","property","medical", "cure","book","junk","treasure","food","tool","door","container", "key", "bed", "light", "scenery", "writing", "vehicle", "computer"];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.log(_name+' type validated: '+type);
 
@@ -557,6 +559,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.canDrawOn = _canDrawOn;
             currentAttributes.drawings = _drawings;
             currentAttributes.writings = _writings;
+            currentAttributes.typings = _typings;
             currentAttributes.viewDestination = _viewDestination;    
             
             currentAttributes.inventoryValue = _inventory.getInventoryValue();  
@@ -948,75 +951,75 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "";
         };
 
-        self.getDetailedDescription = function(playerAggression, map, minSize) {
-            if (!minSize) {minSize = -999;};
+        self.getDetailedDescription = function (playerAggression, map, minSize) {
+            if (!minSize) { minSize = -999; };
             //note we can change description based on player aggression - better for creatures but supported here too.
             var resultString = _detailedDescription; //original description
             if (_destroyed) {
                 resultString += self.describeView(_viewDestination, map);
                 return resultString;
             }; //don't go any further.
-
+            
             if (self.getType() != "book") {
                 resultString += self.describeNotes();
             };
-
+            
             if (self.getPrice() > 0) {
                 resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " worth about £" + self.getPrice().toFixed(2) + ".";
             };
-
+            
             var inventoryIsVisible = true;
-
-            if (_lockable && (_locked)) { 
-                resultString += " "+tools.initCap(_itemDescriptivePrefix)+" locked.";
+            
+            if (_lockable && (_locked)) {
+                resultString += " " + tools.initCap(_itemDescriptivePrefix) + " locked.";
                 inventoryIsVisible = false;
-            } else if (_opens && (!(_open))) { 
-                resultString += " "+tools.initCap(_itemDescriptivePrefix)+" closed.";
+            } else if (_opens && (!(_open))) {
+                resultString += " " + tools.initCap(_itemDescriptivePrefix) + " closed.";
                 inventoryIsVisible = false;
             };
-
+            
             var inventoryDescription = _inventory.describe(null, minSize)
-            if ((_inventory.size() > 0) && inventoryIsVisible && (!((inventoryDescription.substr(0,7) == "nothing") && inventoryDescription.length > 7))) {                
+            if ((_inventory.size() > 0) && inventoryIsVisible && (!((inventoryDescription.substr(0, 7) == "nothing") && inventoryDescription.length > 7))) {
                 resultString += "<br>";
-
+                
                 //inventory description may be extended...
                 //ensure we have a substitution value
                 var placeholder = _extendedInventoryDescription.indexOf("$inventory");
                 if (placeholder == -1) {
-                    _extendedInventoryDescription+="$inventory."
+                    _extendedInventoryDescription += "$inventory."
                 };
-
+                
                 //if viewing from a distance and nothing is visible, don't report it.
-                if (!(minSize >=tools.minimumSizeForDistanceViewing && inventoryDescription == "nothing")) {
+                if (!(minSize >= tools.minimumSizeForDistanceViewing && inventoryDescription == "nothing")) {
                     resultString += _extendedInventoryDescription;
                     resultString = resultString.replace("$inventory", inventoryDescription);
                 };
                 
             } else if ((_inventory.size() > 0)) {
-                var positionedItems =  _inventory.describePositionedItems(minSize);
-                if (positionedItems.length >0) {
-                    resultString += positionedItems+"."; 
-                };              
+                var positionedItems = _inventory.describePositionedItems(minSize);
+                if (positionedItems.length > 0) {
+                    resultString += positionedItems + ".";
+                };
             };
-
+            
             resultString = resultString.replace("placed on top", "on " + self.getSuffix());
             
             resultString += self.describeView(_viewDestination, map);
-
+            
             //remove original description if it's not working.
-            if (!(self.checkComponents())) { 
-                resultString += "<br>"+tools.initCap(_itemDescriptivePrefix)+" missing something.";
-                resultString = resultString.replace(_detailedDescription, "");
-            }  else if (_switched) {
+            if (_switched) {
                 if (!(self.hasPower())) {
-                    resultString += "<br>"+tools.initCap(_itemDescriptivePrefix)+" not working.";
+                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " not working.";
                     resultString = resultString.replace(_detailedDescription, "");
                 } else {
-                    if(!(self.isPoweredOn())) {
-                        resultString += "<br>"+tools.initCap(_itemDescriptivePrefix)+" switched off.";
+                    if (!(self.isPoweredOn())) {
+                        resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " switched off.";
                         resultString = resultString.replace(_detailedDescription, "");
                     };
                 };
+            } else if (!(self.checkComponents())) {
+                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " missing something.";
+                resultString = resultString.replace(_detailedDescription, "");
             } else {
                 if (_delivers.length > 0) {
                     //split delivers items into what can currently be delivered and what can't
@@ -1204,6 +1207,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getWritings = function() {
             return _writings;
         };
+        
+        self.getTypings = function () {
+            return _typings;
+        };
 
         self.canDrawOn = function() {
             return _canDrawOn;
@@ -1246,6 +1253,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             return false;
         };
+            
+        self.addTyping = function (text) {
+            if (self.getType() == "computer") {
+                _typings.push(text);
+                return true;
+            };
+            return false;
+        };
+
 
         self.removeDrawing = function(drawing) {
             var index = _drawings.indexOf(drawing);
@@ -1846,10 +1862,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 components = components.concat(someComponents);
             };
             //console.log("Required components for "+self.getName()+": " + _requiredComponentCount + " Current Components: " + components.length);
-            for (var i=0;i<components.length;i++) {
+            for (var i = 0; i < components.length; i++) {
+                if (components[i].isBroken()) { return false; };
+                if (components[i].isDamaged()) { return false; };
                 if (components[i].chargesRemaining() == 0) {return false;};
             };
-            if (components.length == _requiredComponentCount) {return true;}; //we have everything we need yet.
+            if (components.length >= _requiredComponentCount) {return true;}; //we have everything we need yet.
             return false;
         };
 

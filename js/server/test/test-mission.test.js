@@ -108,6 +108,45 @@ exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
 exports.canCompleteHardDiskMissionByGivingDiskToSimon.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
 
 
+exports.canCompleteHardDiskMissionByInstallingInServer = function (test) {
+    
+    var location = m0.getLocation("machine-room-east");
+    var disk = new artefact.Artefact("hard disk", "hard disk", "mission object", { weight: 0.75, price: 50, canCollect: true, componentOf:["server"] }, null, null);
+    location.addObject(disk);
+    var server = location.getObject("server");  
+    var mission = server.getMissions()[0];
+    mission.startTimer();
+    p0.setLocation(location);
+    //console.log(p0.breakOrDestroy("break", "hard disk"));
+    //console.log(disk.isBroken());
+    console.log(p0.put("install", "hard disk", "server"));
+    
+    console.log("Does server contain disk? " + server.check("hard disk"));
+    //check disk can fit in server
+    test.equal(server.check("hard disk"), true);
+    console.log(server.getDetailedDescription());
+
+    var result = mission.checkState(p0, m0);
+    //check reward is provided
+    console.log("result:" + result);
+    var expectedResult = true;
+    var actualResult = false
+    if (result) { actualResult = true; }    ;
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    
+    //check reward removes disk
+    mission.processReward(m0, result, p0);
+    console.log("Does server contain disk after processing reward? " + server.check("hard disk"));
+    test.equal(server.check("hard disk"), false);
+    
+    test.done();
+};
+
+exports.canCompleteHardDiskMissionByInstallingInServer.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+
 exports.testMissionDialogue = function (test) {
 
     var dialogue = [

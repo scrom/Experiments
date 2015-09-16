@@ -278,9 +278,9 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (reward.health) { player.updateHitPoints(reward.health); };
             if (reward.teleport) {
                 var newLocation = map.getLocation(reward.teleport);
-                console.log("teleporting to:" + reward.teleport);
+                //console.log("teleporting to:" + reward.teleport);
                 if (newLocation) {
-                    console.log("location found");
+                    //console.log("location found");
                     player.setLocation(newLocation);
                 };
             };
@@ -537,15 +537,20 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         self.checkForRequiredContents = function(missionObject, requiredContents) {
             var contentsCount = 0;
             var requiredContentsCount = requiredContents.length;
-            for (var i=0; i<requiredContents.length;i++) {
-                if (missionObject.getInventoryObject().check(requiredContents[i])) {contentsCount++;};
+            if (requiredContentsCount > 0) {
+                var missionObjectInventory = missionObject.getInventoryObject(); 
+                
+                for (var i = 0; i < requiredContents.length; i++) {
+                    //console.log("checking for " + requiredContents[i]);
+                    if (missionObjectInventory.check(requiredContents[i])) { contentsCount++; };
+                };
             };
+            //console.log("required condition: ("+missionObject.getName()+" - contents("+ requiredContentsCount+")) " + requiredContents + " matched: " + contentsCount + " items.");
       
             if (contentsCount == requiredContentsCount) {
-                //console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
                 return true;
             };
-
+       
             return false;
         };
 
@@ -777,7 +782,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
                 if (objectAttributes.hasOwnProperty(attr)) {
                     var keycheckName = attr;
-                    //console.log("required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
+                    //console.log("checking "+attr+": required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
                     if (typeof(attributesToCheck[attr]) == 'object') {
                         if (Object.prototype.toString.call(attributesToCheck[attr]) === '[object Array]') { 
                             checkCount += self.checkAttribute(objectAttributes[attr], attributesToCheck[attr]);
@@ -940,7 +945,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
 
             //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-            if (_conditionAttributes["contains"]) {                        
+            if (_conditionAttributes["contains"]) {
+                //console.log('checking contents...');                        
                 if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
                     successCount++;
                 } else {
@@ -950,7 +956,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-            if (_conditionAttributes["antibodies"]) {                        
+            if (_conditionAttributes["antibodies"]) {
+                //console.log('checking antibodies...');                        
                 if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
                     successCount++;
                 } else {
@@ -960,7 +967,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-            if (_conditionAttributes["contagion"]) {                        
+            if (_conditionAttributes["contagion"]) {
+                //console.log('checking contagion...');                       
                 if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
                     successCount++;
                 } else {
@@ -970,7 +978,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //checkConversation - has conversation reached required state
-            if (_conditionAttributes["conversationState"]) {                       
+            if (_conditionAttributes["conversationState"]) {
+                //console.log('checking conversationState...');                        
                 if (_conversationState >= _conditionAttributes["conversationState"]) {
                     successCount++;
                 } else {
@@ -980,6 +989,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //check the rest of the object attributes if they exist
+            //console.log('checking remaining attributes...');  
             successCount += self.checkAttributes(missionObject, _conditionAttributes);
 
 

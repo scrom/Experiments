@@ -1793,6 +1793,33 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             return resultString+".";              
         };
+        
+        self.type = function (verb, text, receiverName) {
+            if (!(self.canSee())) { return "It's too dark to " + verb + " anything here."; };
+            var receiver;
+
+            if (tools.stringIsEmpty(receiverName)) {
+                receiverName = "computer";
+                receiver = _inventory.getObjectByType(receiverName);
+                if (!(receiver)) {
+                    receiver = _currentLocation.getObjectByType(receiverName);
+                };
+            } else {
+                receiver = getObjectFromPlayerOrLocation(receiverName);
+            };
+            if (!(receiver)) {
+                return notFoundMessage(receiverName);
+            };
+
+            if (receiver.getType() != "computer") {
+                return "You can't type anything on that."
+            };
+
+            //we have a computer!
+            receiverName = receiver.getName();
+            receiver.addTyping(text);
+            return "You type '" + text + "' into the " + receiverName + ".";
+        };
 
         self.writeOrDraw = function(verb, artwork, receiverName) {
             if (!(self.canSee())) {return "It's too dark to "+verb+" anything here.";};
@@ -2190,10 +2217,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getSuffix()+". "+tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
                 
                 //we know they *can* carry it...
-                if (!(artefact.isCollectable())) {return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
-
+                if (!(artefact.isCollectable())) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
+            
+                if (artefact.isComponentOf(receiver.getName())) {
+                    //check the component isn't broken.
+                    if (!artefact.isIntact()) {
+                        return "It looks like " + artefact.getDisplayName() + " has seen a little too much action.<br>You'll need to find a way to <i>repair</i> " + artefact.getSuffix() + " before you can " + verb + " " + artefact.getSuffix() + " in there.";
+                    };
+                };
+            
+                //"collect" it from its current home.
                 var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
-                if (!(collectedArtefact)) { return  "Sorry, "+artefact.getSuffix()+" can't be picked up.";};
+                if (!(collectedArtefact)) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
 
                 //put the x in the y
                 var receiverDisplayNameString = receiver.getDisplayName();

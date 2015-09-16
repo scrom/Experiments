@@ -1572,32 +1572,32 @@
             "reward": {
               "score": -150,
               "message": "<br>Congratulations. You're doing great at getting the bus loaded. It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows. Something's wrong here.<br><br>As precious seconds pass you register what's happening and dive for cover.<br>As the bus explodes into flames before your eyes you realise you've just lured some of your colleagues to their doom.",
-			  "teleport": "office-front",
-			  "modifyLocation": {
-				"name": "office-front",
+              "teleport": "office-front",
+              "modifyLocation": {
+                "name": "office-front",
                 "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
-				"inventory": [
-					{
-					  "object": "artefact",
-					  "name": "smoke",
-					  "description": "smoke",
-					  "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-					  "attributes": {
-						"type": "scenery",
-						"smell": "It's going to linger in your nose and memories for quite some time."
-					  },
-					  "synonyms": [
-						"ash",
-						"wreckage",
-						"burning",
-						"hint of ash",
-						"debris",
-						"bodies"
-					  ]
-					}
-				]
-			  },
-                          
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "smoke",
+                    "description": "smoke",
+                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                    "attributes": {
+                      "type": "scenery",
+                      "subType": "intangible",
+                      "smell": "It's going to linger in your nose and memories for quite some time."
+                    },
+                    "synonyms": [
+                      "ash",
+                      "wreckage",
+                      "burning",
+                      "hint of ash",
+                      "debris",
+                      "bodies"
+                    ]
+                  }
+                ]
+              },
               "removeLocation": {
                 "name": "bus",
                 "removeCreatures": true
@@ -1606,31 +1606,32 @@
             "fail": {
               "score": 50,
               "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush to the front of the office to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows. Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.",
-			  "teleport": "office-front",
-			  "modifyLocation": {
-				"name": "office-front",
+              "teleport": "office-front",
+              "modifyLocation": {
+                "name": "office-front",
                 "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
-				"inventory": [
-					{
-					  "object": "artefact",
-					  "name": "smoke",
-					  "description": "smoke",
-					  "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-					  "attributes": {
-						"type": "scenery",
-						"smell": "It's going to linger in your nose and memories for quite some time."
-					  },
-					  "synonyms": [
-						"ash",
-						"wreckage",
-						"burning",
-						"hint of ash",
-						"debris",
-						"bodies"
-					  ]
-					}
-				]
-			  },
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "smoke",
+                    "description": "smoke",
+                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                    "attributes": {
+                      "type": "scenery",
+                      "subType": "intangible",
+                      "smell": "It's going to linger in your nose and memories for quite some time."
+                    },
+                    "synonyms": [
+                      "ash",
+                      "wreckage",
+                      "burning",
+                      "hint of ash",
+                      "debris",
+                      "bodies"
+                    ]
+                  }
+                ]
+              },
               "removeLocation": {
                 "name": "bus",
                 "removeCreatures": true
@@ -2382,9 +2383,9 @@
         "attributes": {
           "template": "creature-female-l3",
           "affinity": 1,
-		  "avoiding": [
-			"bus"
-		  ],
+          "avoiding": [
+            "bus"
+          ],
           "imageName": "aliceeasey.jpg"
         },
         "inventory": [
@@ -4850,7 +4851,7 @@
                   "object": "artefact",
                   "name": "wreckage",
                   "description": "wreckage",
-                  "detailedDescription": "A tangle of twisted, smouldering metal, plastic, brokenglass and bodies.",
+                  "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
                   "attributes": {
                     "type": "scenery",
                     "smell": "It's going to linger in your nose and memories for quite some time."
@@ -5016,9 +5017,9 @@
                     "destinations": [
                       "machine-room-east"
                     ],
-					"avoiding": [
-					  "bus"
-					],
+                    "avoiding": [
+                      "bus"
+                    ],
                     "destinationDelay": 15,
                     "imageName": "spy.jpg"
                   },
@@ -5663,6 +5664,80 @@
         "source": "machine-room-east",
         "destination": "machine-room-west"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "server",
+        "description": "rack-mounted blade server",
+        "detailedDescription": "The servers look like they can be accessed via a console nearby.<br>One of the servers has a bay to install extra hard drives into.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 0.1,
+          "carryWeight": 0.75,
+          "type": "container",
+          "breakable": true,
+          "canCollect": false,
+          "defaultResult": "$action install disk in server"
+        },
+        "synonyms": [
+          "rack",
+          "racks",
+          "server rack",
+          "server racks",
+          "blade",
+          "blade server",
+          "servers",
+          "computer",
+          "computers",
+          "bay",
+          "hard drive bay"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "installdisk",
+            "displayName": "install a hard disk in the machine room server",
+            "description": "",
+            "attributes": {
+              "missionObject": "hard disk",
+			  "destination": "server",
+              "static": true
+            },
+            "failAttributes": {
+              "isDestroyed": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "isBroken": false,
+              "isDamaged": false
+            },
+            "reward": {
+              "score": 10,
+			  "removeObject": "hard disk",
+              "message": "You slot the disk into the server hard drive bay. It clicks permanently into place and spins up.<br>You hear a small 'beep' from nearby. Let's find out what was on that disk."
+            }
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "console",
+        "description": "old-fashioned VDU console",
+        "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one)<br>. The cursor flashes next to the '>' prompt awaiting input.",
+        "attributes": {
+          "weight": 25,
+          "type": "computer",
+          "breakable": true,
+          "canCollect": false
+        },
+        "synonyms": [
+          "vdu",
+          "screen",
+          "old screen",
+          "old console"
+        ]
+      }
     ]
   },
   {
@@ -5687,6 +5762,25 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "hardware",
+        "description": "hardware",
+        "detailedDescription": "Most of this stuff looks old, broken or redundant.",
+        "attributes": {
+          "type": "scenery",
+          "isBroken": true,
+          "defaultResult": "There's little or nothing here of any use to you at the moment."
+        },
+        "synonyms": [
+          "cables",
+          "cable",
+          "tools",
+          "hardware",
+          "wire",
+          "wires"
+        ]
+      },
       {
         "object": "artefact",
         "name": "screwdriver",
@@ -6807,11 +6901,14 @@
         "detailedDescription": "He runs the show.",
         "attributes": {
           "template": "creature-male-l5",
-          "attackStrength": 45,
+          "attackStrength": 35,
           "health": 500,
-		  "avoiding": [
-		    "bus"
-		  ],
+          "avoiding": [
+            "bus"
+          ],
+          "antibodies": [
+            "zombie"
+          ],
           "imageName": "simongalbraith.jpg"
         },
         "inventory": [
@@ -7582,7 +7679,7 @@
           {
             "object": "artefact",
             "name": "kitchen knife",
-            "description": "damaged kitchen knife",
+            "description": "old kitchen knife",
             "detailedDescription": "It's rusty and old but still extremely sharp.<br>Is that dried blood on the hilt?",
             "attributes": {
               "weight": 2,
@@ -7594,8 +7691,7 @@
             },
             "synonyms": [
               "knife",
-              "damaged knife",
-              "damaged kitchen knife",
+              "old kitchen knife",
               "old knife"
             ]
           },
@@ -10301,13 +10397,17 @@
                 "object": "artefact",
                 "name": "hard disk",
                 "description": "hard disk",
-                "detailedDescription": "Pretty sure it belongs to Red Gate.",
+                "detailedDescription": "Our IS team are pretty handy with these things.",
                 "attributes": {
-                  "weight": 3,
+                  "weight": 0.75,
                   "attackStrength": 5,
                   "canCollect": true,
                   "isBreakable": true,
-                  "price": 50
+				  "isDamaged": true,
+                  "price": 50,
+                  "componentOf": [
+                    "server"
+                  ]
                 },
                 "synonyms": [
                   "disc",
@@ -10323,12 +10423,48 @@
           },
           "score": 200,
           "maxHealth": 25,
-          "affinityModifier": 2,
-          "decreaseAffinityFor": "jordan miller",
+          "affinityModifier": 1,
+          "increaseAffinityFor": "jordan miller",
+          "decreaseAffinityFor": "simon galbraith",
           "message": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
         },
         "fail": {
-          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+          "score": -200,
+          "affinityModifier": 2,
+          "decreaseAffinityFor": "jordan miller",
+          "increaseAffinityFor": "simon galbraith",
+          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse.",
+          "modifyObject": {
+            "name": "jordan miller",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "hard disk",
+                "description": "hard disk",
+                "detailedDescription": "Our IS team are pretty handy with these things.",
+                "attributes": {
+                  "weight": 0.75,
+                  "attackStrength": 5,
+                  "canCollect": true,
+                  "isBreakable": true,
+				  "isDamaged": true,
+                  "price": 50,
+                  "componentOf": [
+                    "server"
+                  ]
+                },
+                "synonyms": [
+                  "disc",
+                  "drive",
+                  "hard drive",
+                  "disk",
+                  "hard disc",
+                  "disc drive",
+                  "disk drive"
+                ]
+              }
+            ]
+          }
         }
       }
     ]
