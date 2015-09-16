@@ -19,8 +19,12 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="data\atrium-seating.json" />
+    <Content Include="data\atrium.json" />
     <Content Include="data\basin.json" />
     <Content Include="data\batteries.json" />
+    <Content Include="data\bike-ambulance.json" />
+    <Content Include="data\buenosaires.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\fire-exit.json" />
     <Content Include="data\flipchart.json" />
