@@ -1,0 +1,261 @@
+﻿{
+    "object": "location",
+    "name": "customer-delight-west",
+    "displayName": "Customer Delight",
+    "description": "You're on the West side of the Customer Delight development area - also known as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "customer-delight-west",
+        "destination": "customer-delight-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "customer-delight-west",
+        "destination": "customer-delight-south-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
+        "attributes": {
+          "viewDestination": "west-car-park"
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "tomato plants",
+        "description": "tomato plants",
+        "detailedDescription": "They're <b>huge!</b> But they're also rather dry and starting to wilt.",
+        "attributes": {
+          "weight": 40,
+          "canCollect": true,
+          "isBreakable": true,
+          "combinesDescription": "They really need <i>water</i>",
+          "plural": true,
+          "combinesWith": [
+            "water"
+          ]
+        },
+        "synonyms": [
+          "tomato plant",
+          "plant",
+          "plants",
+          "tomato",
+          "tomatoes"
+        ],
+        "delivers": [
+          {
+            "object": "artefact",
+            "template": "healthy-tomato-plants"
+          }
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "filippa vajda",
+        "displayname": "Filippa Vajda",
+        "description": "Filippa Vajda",
+        "detailedDescription": "Roaming UX redhead.",
+        "attributes": {
+          "template": "creature-female-l3",
+          "imageName": "filippavajda.jpg"
+        },
+        "synonyms": [
+          "fil",
+          "fillippa",
+          "fillipa",
+          "filippa",
+          "filipa",
+          "philippa",
+          "phillippa",
+          "her"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "waterfilsplants",
+            "displayName": "water filippa's plants",
+            "description": "Filippa wants her tomato plants watered.",
+            "attributes": {
+              "parent": "latte",
+              "missionObject": "healthy tomato plants",
+              "destination": "customer-delight-west",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I'm running UX calls all day today. Would you be able to help me out and water my tomato plants?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Thanks $player. They're on the window ledge near my desk.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Thanks for nothing then.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'I'd really appreciate it if you can.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 99,
+                  "response": "'I know who my friends are, don't worry about me.'"
+                },
+                {
+                  "state": 3,
+                  "response": "'Have you been able to sort out my tomatoes yet?'",
+                  "nextState": 4
+                },
+                {
+                  "state": 4,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Excellent!'"
+                },
+                {
+                  "state": 4,
+                  "response": "'I won't ask again but I'd appreciate it if you can help.'"
+                }
+              ]
+            },
+            "failAttributes": {
+              "conversationState": 99
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+            "reward": {
+              "score": 50,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "filippa vajda",
+              "message": "Great job! I'm sure Filippa will be really pleased.<br>There's a chance these might be useful later."
+            },
+            "fail": {
+              "message": "I know you're busy but a little help never hurt anyone you know."
+            }
+          }
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "adam parker",
+        "displayname": "Adam Parker",
+        "description": "Adam Parker",
+        "detailedDescription": "Master of user experience and a somewhat problematic addiction to stationery.",
+        "attributes": {
+          "template": "creature-male-l4",
+          "imageName": "adamparker.jpg"
+        },
+        "synonyms": [
+          "adam",
+          "adam p",
+          "ap",
+          "parker",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "findadamstrainers",
+            "displayName": "find Adam's trainers",
+            "description": "Adam soaked his feet.",
+            "attributes": {
+              "parent": "beans",
+              "missionObject": "trainers",
+              "destination": "adam parker",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I managed to get a soaking cycling into work this morning and can't find my spare trainers.'<br>'They're usually somewhere around my desk but they could be anywhere to be honest.'<br>'Could you do track them down and bring them back to me?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Thanks $player.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Well, I'll be around if you change your mind.'",
+                  "nextState": 2
+                },
+                {
+                  "state": 1,
+                  "response": "'Keep an eye out for them if you can.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 2,
+                  "response": "'Hey $player. Any joy tracking my trainers down?'",
+                  "nextState": 3
+                },
+                {
+                  "state": 3,
+                  "response": "'Have you found my trainers yet?'",
+                  "nextState": 4
+                },
+                {
+                  "state": 4,
+                  "requestedObject": "trainers",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Excellent!'"
+                },
+                {
+                  "state": 4,
+                  "response": "'I won't ask again but I'd appreciate it if you can help.'"
+                }
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+            "reward": {
+              "score": 25,
+              "affinityModifier": 2,
+              "removeObject": "trainers",
+              "increaseAffinityFor": "adam parker",
+              "message": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'"
+            }
+          }
+        ]
+      }
+    ]
+  }

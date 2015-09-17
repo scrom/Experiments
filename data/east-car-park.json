@@ -1,0 +1,30 @@
+﻿{
+    "object": "location",
+    "name": "east-car-park",
+    "displayName": "Car park",
+    "description": "You're in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "east-car-park",
+        "destination": "office-front"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "east-car-park",
+        "destination": "east-bike-racks"
+      }
+    ]
+  }

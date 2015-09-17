@@ -1,0 +1,164 @@
+﻿{
+    "object": "location",
+    "name": "creative-agency-area",
+    "displayName": "Agency",
+    "description": "You're in the Agency Den. There's a tang of creativity (or is that printer toner?) in the air and the sound of clicks being converted to cash. ",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "creative-agency-area",
+        "destination": "people-team-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "creative-agency-area",
+        "destination": "people-team-water-cooler"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "creative-agency-area",
+        "destination": "second-floor-seating-area-west"
+      },
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "creative-agency-area",
+        "destination": "ground-floor-fire-escape",
+        "description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+        "hidden": true,
+        "requiredAction": "crawl"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "desk",
+        "description": "Dave's desk",
+        "detailedDescription": "On first glimpse, it's a standard wood-effect office desk but you feel an overwhelming urge to do a double-take.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "down",
+            "direction": "d",
+            "source": "creative-agency-area",
+            "destination": "ground-floor-fire-escape",
+            "description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+            "hidden": true,
+            "requiredAction": "crawl"
+          }
+        ],
+        "synonyms": [
+          "daves desk",
+          "dave's desk",
+          "dave desk"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "tears",
+            "description": "tear stains",
+            "detailedDescription": "<br>They're the residue of tears of frustration - probably from years of dealing with email marketing campaigns.<br>Nobody should have to work with email marketing for that long and be expected to stay entirely sane.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "plural": true,
+              "position": "on",
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "Trust me, you <i>don't</i> want them.",
+              "smell": "You vaguely sense a tang of salt and blood around them.",
+              "sound": "Wow, that's disturbing. It takes quite a spiritual imprint to leave the <i>sound</i> of tears."
+            },
+            "synonyms": [
+              "frustration",
+              "stains",
+              "tearstains",
+              "tear stains",
+              "daves tears",
+              "dave's tears",
+              "dave tears"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "spam",
+            "description": "tin of Spam",
+            "detailedDescription": "It's a leftover from a training course a few years ago. It says 'best before end: November 2015.<br>I thought this stuff lasted forever!",
+            "attributes": {
+              "weight": 1,
+              "type": "food",
+              "canCollect": true,
+              "charges": 3,
+              "chargeUnit": "portion",
+              "chargesDescription": "There's about $charges $chargeUnit left",
+              "canOpen": true,
+              "isEdible": true,
+              "nutrition": -15,
+              "position": "on",
+              "smell": "You wonder to yourself if cats like Spam."
+            },
+            "synonyms": [
+              "tin",
+              "tin of spam",
+              "tin spam",
+              "spam tin"
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "air",
+        "description": "tang of creativity",
+        "detailedDescription": "There's something uplifting about it.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's just a smell, not something you can keep - except in your memory and imagination.",
+          "smell": "Sharpies. You can smell sharpies.<br>Sharpies smell of ideas!",
+          "sound": "Clickety click, click, kerching!"
+        },
+        "synonyms": [
+          "toner",
+          "creativitiy",
+          "tang"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "clicks",
+        "description": "hum of busy marketers",
+        "detailedDescription": "Even when there's nobody here the clicks keep coming.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "If you <i>listen</i>, you might just get it.",
+          "sound": "Clickety click, click, kerching!"
+        },
+        "synonyms": [
+          "click",
+          "cash"
+        ]
+      }
+    ]
+  }

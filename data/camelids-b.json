@@ -1,0 +1,47 @@
+﻿{
+    "object": "location",
+    "name": "camelids-b",
+    "displayName": "Camelids-B meeting room",
+    "description": "When not in use for small meetings, this room doubles as an in-office hairdressing salon.<br>The carpet in here feels strange underfoot.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "camelids-b",
+        "destination": "second-floor-north-west-corridor-north-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "floor",
+        "description": "office carpet",
+        "detailedDescription": "On the surface it's just a plain office carpet but it's a bit prickly.",
+        "synonyms": [
+          "ground",
+          "carpet"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "hair",
+            "description": "hair clippings",
+            "detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
+            "attributes": {
+              "plural": true,
+              "hidden": true,
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "They're too fine and embedded into the carpet to collect."
+            },
+            "synonyms": [
+              "hair clippings",
+              "clippings"
+            ]
+          }
+        ]
+      }
+    ]
+  }

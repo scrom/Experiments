@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "east-corridor-ground-floor",
+    "displayName": "East corridor ground floor",
+    "description": "You're in the East corridor of the ground floor.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "east-corridor-ground-floor",
+        "destination": "east-south-end-corridor-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "east-corridor-ground-floor",
+        "destination": "east-corridor-ground-floor-north-east"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-corridor-ground-floor",
+        "destination": "signpost"
+      }
+    ]
+  }

@@ -1,0 +1,84 @@
+﻿{
+    "object": "location",
+    "name": "east-bike-racks",
+    "displayName": "Bike racks (East side)",
+    "description": "You're standing at the South-East corner of the the office building.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "east-bike-racks",
+        "destination": "east-car-park"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-bike-racks",
+        "destination": "waste-area"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "east-bike-racks",
+        "destination": "smoking-area"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "bike racks",
+        "description": "bike racks",
+        "detailedDescription": "There's dozens of bikes here. Are you looking for any in particular?",
+        "attributes": {
+          "weight": 45,
+          "carryWeight": 15,
+          "isBreakable": true,
+          "plural": true
+        },
+        "synonyms": [
+          "rack",
+          "racks",
+          "cycle rack",
+          "cycle racks",
+          "bike rack"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "bike",
+            "description": "shiny new bike",
+            "detailedDescription": "It looks like Chris' new bike.",
+            "attributes": {
+              "defaultAction": "ride",
+              "weight": 15,
+              "type": "vehicle",
+              "subType": "bike",
+              "isBreakable": true,
+              "lockable": true,
+              "locked": true,
+              "price": 25,
+              "hidden": true,
+              "customAction": [
+                "cycle"
+              ],
+              "defaultResult": "$action ride"
+            },
+            "synonyms": [
+              "bicycle",
+              "cycle",
+              "chris bike"
+            ]
+          }
+        ]
+      }
+    ]
+  }

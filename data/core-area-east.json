@@ -1,0 +1,159 @@
+﻿{
+    "object": "location",
+    "name": "core-area-east",
+    "displayName": "Core area - DevOps corner",
+    "description": "You're in the CORE (DevOps) area. From a quick scan of the walls and monitors it looks like things are running well here at the moment.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "core-area-east",
+        "destination": "incidentals-blinkpipe"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "core-area-east",
+        "destination": "core-area-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "walls",
+        "description": "wall full of assorted project and team status information",
+        "detailedDescription": "There's a bunch of graphs that go up and to the right. Everything must be great.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "plural": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "wall",
+          "graphs",
+          "stats"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "monitor",
+        "template": "flat-screen",
+        "detailedDescription": "It's cycling through web site statistics and error logs.",
+        "attributes": {
+          "type": "scenery",
+          "isBreakable": false
+        }
+      },
+      {
+        "object": "creature",
+        "name": "zara sheldrake",
+        "displayname": "Zara Sheldrake",
+        "description": "Zara Sheldrake",
+        "detailedDescription": "Our one and only business analyst. She mostly works with the core team but is also one of our first-aiders.",
+        "attributes": {
+          "template": "creature-female-l3",
+          "imageName": "zarasheldrake.jpg"
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "template": "first-aid-kit"
+          }
+        ],
+        "synonyms": [
+          "zara",
+          "sheldrake",
+          "zs",
+          "her"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "dene boulton",
+        "displayname": "Dene Boulton",
+        "description": "Dene Boulton",
+        "detailedDescription": "CORE team tester and specialist in the art of looking grumpy and happy at the same time.",
+        "attributes": {
+          "template": "creature-male-l3",
+          "imageName": "deneboulton.jpg"
+        },
+        "synonyms": [
+          "dene",
+          "dean",
+          "boulton",
+          "db",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "getchocolatefordene",
+            "displayName": "get Dene's chocolate",
+            "description": "Dene's wants to warm up some chocolate.",
+            "attributes": {
+              "parent": "latte",
+              "missionObject": "chocolate",
+              "destination": "dene boulton",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I'm flat-out on the Salesforce project and will need to skip lunch.'<br>'You don't have any chocolate you can spare do you?'",
+                {
+                  "state": 1,
+                  "requestedObject": "chocolate",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Thanks $player.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "response": "'No worries. I'd really appreciate it if you could find some though.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 3,
+                  "response": "'Any joy finding that chocolate?'",
+                  "nextState": 4
+                },
+                {
+                  "state": 4,
+                  "requestedObject": "chocolate",
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Excellent!'"
+                },
+                {
+                  "state": 4,
+                  "response": "'I won't ask again but I'd still appreciate some if you find any.'"
+                }
+              ]
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+            "reward": {
+              "score": 25,
+              "removeObject": "chocolate",
+              "affinityModifier": 2,
+              "increaseAffinityFor": "dene boulton",
+              "message": "Dene tucks the bar of chocolate into the back pocket of his trousers and pats it happily.<br>'Ass warming!' he says and smiles. 'I hate cold chocolate.'<br>'Anyway, thanks $player. Much appreciated.'"
+            },
+            "fail": {
+              "message": "Dene wanted some chocolate :("
+            }
+          }
+        ]
+      }
+    ]
+  }

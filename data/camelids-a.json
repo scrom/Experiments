@@ -1,0 +1,76 @@
+﻿{
+    "object": "location",
+    "name": "camelids-a",
+    "displayName": "Camelids-A meeting room",
+    "description": "You're in Camelids-A. The UX team have filled the walls with post-it notes.<br>The table feels slightly too large for the room and it's a bit cramped in here.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "camelids-a",
+        "destination": "second-floor-north-west-corridor-central"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "table",
+        "description": "large boardroom style table",
+        "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
+        "attributes": {
+          "type": "scenery",
+          "isBreakable": false
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "notes",
+        "description": "post-its",
+        "detailedDescription": "You skim the dozens of post-its on the walls. Most contain phrases that are meaningless to you such as 'user journey', 'top of funnel analysis' etc.",
+        "attributes": {
+          "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular <i>affinity</i> for.",
+          "type": "scenery",
+          "plural": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "stickies",
+          "sticky notes",
+          "post its",
+          "postits",
+          "post it notes",
+          "post-it notes",
+          "postit notes",
+          "post-its",
+          "wall",
+          "walls"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "post-it",
+            "description": "single post-it note",
+            "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
+            "attributes": {
+              "type": "book",
+              "canCollect": true,
+              "affinityModifier": 2,
+              "imageName": "sticky-finger.jpg",
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "sticky",
+              "sticky note",
+              "post it",
+              "postit",
+              "post it note",
+              "post-it note",
+              "postit note",
+              "note"
+            ]
+          }
+        ]
+      }
+    ]
+  }

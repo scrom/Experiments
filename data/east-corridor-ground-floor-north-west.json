@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "east-corridor-ground-floor-north-west",
+    "displayName": "East corridor ground floor",
+    "description": "You're standing in a short corridor just outside the post room.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "reception"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "post-room"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-corridor-ground-floor-north-west",
+        "destination": "east-corridor-ground-floor-north-east"
+      }
+    ]
+  }

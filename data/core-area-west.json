@@ -1,0 +1,55 @@
+﻿{
+    "object": "location",
+    "name": "core-area-west",
+    "displayName": "Core area - PM territory",
+    "description": "You're in the CORE Project Management zone. The team have been battling the backlog of business requests and working their way to Cloud glory.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "core-area-west",
+        "destination": "is-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "core-area-west",
+        "destination": "mercedes"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "core-area-west",
+        "destination": "core-area-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "backlog",
+        "description": "scattering of analysis documentation but nothing interesting",
+        "detailedDescription": "You pick through the few pieces of paperwork you can see lying around but there's nothing that particularly interests you.",
+        "attributes": {
+          "type": "scenery",
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "I think Brian, Ben and Zara need those, sorry."
+        },
+        "synonyms": [
+          "paperwork",
+          "analysis",
+          "documentation",
+          "cloud",
+          "requests",
+          "business",
+          "business requests",
+          "request backlog"
+        ]
+      }
+    ]
+  }

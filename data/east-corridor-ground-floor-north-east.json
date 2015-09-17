@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "east-corridor-ground-floor-north-east",
+    "displayName": "East corridor ground floor",
+    "description": "You're at the North end of the ground floor East corridor.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "east-corridor-ground-floor-north-east",
+        "destination": "east-corridor-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "east-corridor-ground-floor-north-east",
+        "destination": "buenosaires"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "east-corridor-ground-floor-north-east",
+        "destination": "east-corridor-ground-floor-north-west"
+      }
+    ]
+  }

@@ -1,0 +1,25 @@
+﻿{
+    "object": "location",
+    "name": "enterprise-meeting-room",
+    "displayName": "Enterpri(z)e meeting room",
+    "description": "You're in the Enterprise meeting room. You peer through the window at the people coming and going from the office.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "enterprise-meeting-room",
+        "destination": "support-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "It's a long way down.",
+        "attributes": {
+          "viewDestination": "office-front"
+        }
+      }
+    ]
+  }
