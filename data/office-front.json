@@ -1,0 +1,133 @@
+﻿{
+    "object": "location",
+    "name": "office-front",
+    "displayName": "Office front",
+    "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "office-front",
+        "destination": "atrium"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "office-front",
+        "destination": "east-car-park"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "office-front",
+        "destination": "west-car-park"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "ice cream man",
+        "displayname": "the ice cream man",
+        "description": "ice cream man",
+        "detailedDescription": "A random guy who occasionally has ice cream for sale.",
+        "attributes": {
+          "template": "creature-male-l3",
+          "canTravel": false,
+          "traveller": false,
+          "imageName": "icecreamman.jpg"
+        },
+        "sells": [
+          {
+            "object": "artefact",
+            "template": "ice-cream",
+            "attributes": {
+              "weight": 15,
+              "charges": 15
+            }
+          }
+        ],
+        "synonyms": [
+          "man",
+          "icecream man",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "freeicecream",
+            "displayName": "get a free ice cream",
+            "description": "The Ice cream man wants to give you a free sample.",
+            "attributes": {
+              "missionObject": "ice cream man",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'Would you like an ice cream?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Here you go!'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no"
+                  ],
+                  "response": "'Never mind.'",
+                  "nextState": 4
+                },
+                {
+                  "state": 1,
+                  "response": "'Maybe later then?'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'How about that ice cream now?'",
+                  "nextState": 1
+                }
+              ]
+            },
+            "failAttributes": {
+              "conversationState": 4
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 3
+            },
+            "reward": {
+              "delivers": {
+                "object": "artefact",
+                "template": "ice-cream",
+                "attributes": {
+                  "price": 3
+                }
+              },
+              "score": 5,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "ice cream man",
+              "message": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy."
+            },
+            "fail": {
+              "message": "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work."
+            }
+          }
+        ]
+      }
+    ]
+  }

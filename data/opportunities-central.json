@@ -1,0 +1,54 @@
+﻿{
+    "object": "location",
+    "name": "opportunities-central",
+    "displayName": "Opportunities",
+    "description": "You're standing next to a large floor-to-ceiling glass wall in middle of the opportunities and ventures area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-central",
+        "destination": "opportunities-east"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-central",
+        "destination": "opportunities-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-central",
+        "destination": "opportunities-north"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "opportunities-central",
+        "destination": "opportunities-south"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "glass wall",
+        "detailedDescription": "One one side this is used by the SQL Release team for planning and tracking work. On the other it's a working space for figuring 'stuff' out. (Stuff is important!)",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "glass wall",
+          "walls"
+        ]
+      }
+    ]
+  }

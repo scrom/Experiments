@@ -1,0 +1,37 @@
+﻿  {
+    "object": "location",
+    "name": "opportunities-west",
+    "displayName": "Opportunities",
+    "description": "You're standing in part of the opportunities and ventures area.<br>Peering through a window to the West you see staff wandering past on their way to and from their bikes.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-west",
+        "destination": "opportunities-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "opportunities-west",
+        "destination": "opportunities-south-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "Through the window lies the West car park. You can occasionally see people passing by with their bikes.",
+        "attributes": {
+          "viewDestination": "west-car-park"
+        },
+        "synonyms": [
+          "glass",
+          "windows",
+          "people"
+        ]
+      }
+    ]
+  }

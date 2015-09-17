@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "opportunities-north-corridor",
+    "displayName": "Opportunities",
+    "description": "You're in a corridor at the north end of the opportunities and ventures area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-north-corridor",
+        "destination": "opportunities-north"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-north-corridor",
+        "destination": "opportunities-north-east-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-north-corridor",
+        "destination": "peacock"
+      }
+    ]
+  }

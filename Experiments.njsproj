@@ -86,6 +86,17 @@
     <Content Include="data\marketing.json" />
     <Content Include="data\mercedes.json" />
     <Content Include="data\mirror.json" />
+    <Content Include="data\northwest-corridor-ground-floor.json" />
+    <Content Include="data\office-front.json" />
+    <Content Include="data\opportunities-central.json" />
+    <Content Include="data\opportunities-cubbyhole.json" />
+    <Content Include="data\opportunities-east.json" />
+    <Content Include="data\opportunities-north-corridor.json" />
+    <Content Include="data\opportunities-north-east-corridor.json" />
+    <Content Include="data\opportunities-north.json" />
+    <Content Include="data\opportunities-south-west.json" />
+    <Content Include="data\opportunities-south.json" />
+    <Content Include="data\opportunities-west.json" />
     <Content Include="data\rum-bottle.json" />
     <Content Include="data\creature-female-l2.json" />
     <Content Include="data\creature-female-l3.json" />

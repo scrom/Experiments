@@ -1,0 +1,170 @@
+﻿{
+    "object": "location",
+    "name": "opportunities-south",
+    "displayName": "Opportunities",
+    "description": "You're in south end of the opportunities and ventures area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-south",
+        "destination": "west-corridor-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-south",
+        "destination": "opportunities-south-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-south",
+        "destination": "opportunities-central"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "lucy boyes",
+        "displayname": "Lucy Boyes",
+        "description": "Lucy Boyes",
+        "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.<br>She runs a regular podcast on comics (along with Roger and Dave)",
+        "attributes": {
+          "template": "creature-female-l4",
+          "affinity": -1,
+          "destinations": [
+            "atrium",
+            "customer-delight-south",
+            "kitchen-ground-floor",
+            "atrium",
+            "opportunities-south",
+            "atrium",
+            "finance-area"
+          ],
+          "loops": 10,
+          "loopDelay": 5,
+          "destinationDelay": 2,
+          "imageName": "lucyboyes.jpg"
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "axe",
+            "description": "fire axe",
+            "detailedDescription": "I have no idea why a PA would carry such a dangerous weapon but I wouldn't mess with anyone carrying this.",
+            "attributes": {
+              "weight": 6,
+              "attackStrength": 30,
+              "type": "weapon",
+              "subType": "blunt",
+              "canCollect": true,
+              "imageName": "axe.jpg"
+            },
+            "synonyms": [
+              "axe",
+              "fireaxe"
+            ]
+          }
+        ],
+        "synonyms": [
+          "lucy",
+          "lucy b",
+          "lb",
+          "boyes",
+          "her"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "finddaveandroger",
+            "displayName": "find the rest of the podcast team.",
+            "description": "Lucy's trying to find Dave and Roger.",
+            "attributes": {
+              "parent": "latte",
+              "missionObject": "lucy boyes",
+              "initiateConversation": true,
+              "huntPlayer": true,
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'Dave and Roger are supposed to be flying back from a comic book convention today.'<br>'I don't suppose you've seen them around anywhere have you?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "y"
+                  ],
+                  "response": "'I hope they're ok. They sounded a bit rough last time I spoke to them.'",
+                  "nextState": 4
+                },
+                {
+                  "state": 1,
+                  "response": "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'<br>'Keep an eye out for them if you can.'",
+                  "nextState": 4
+                }
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 3
+            },
+            "reward": {}
+          }
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "sara stopford-pickering",
+        "displayname": "Sara Stopford-Pickering",
+        "description": "Sara Stopford-Pickering",
+        "detailedDescription": "One of our super-capable and friendly PA team.",
+        "attributes": {
+          "template": "creature-female-l2",
+          "affinity": 1,
+          "imageName": "sarastopfordpickering.jpg"
+        },
+        "synonyms": [
+          "sara",
+          "sarah",
+          "sara sp",
+          "sarah sp",
+          "ssp",
+          "sp",
+          "sarah stopford",
+          "sara stopford pickering",
+          "sara stopfordpickering",
+          "sara pickering",
+          "sarah stopford pickering",
+          "sarah stopfordpickering",
+          "sarah pickering",
+          "her"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "google glasses",
+        "description": "pair of Google glasses",
+        "detailedDescription": "These are pretty hard to get hold of!<br>Wearing these makes you an instant hipster.",
+        "attributes": {
+          "weight": 0.5,
+          "type": "treasure",
+          "canCollect": true,
+          "isBreakable": true,
+          "plural": true,
+          "price": 30,
+          "customAction": "wear",
+          "defaultResult": "Nah, they don't really suit you.<br>You take them off again and blink a few times to recover your near-field vision."
+        },
+        "synonyms": [
+          "glasses",
+          "glass",
+          "google glass",
+          "pair of google glasses"
+        ]
+      }
+    ]
+  }

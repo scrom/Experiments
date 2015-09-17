@@ -1,0 +1,22 @@
+﻿{
+    "object": "location",
+    "name": "opportunities-south-west",
+    "displayName": "Opportunities",
+    "description": "You're in South-West corner of the opportunities and ventures area.<br>All around you are new market ideas blooming into fruition.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-south-west",
+        "destination": "opportunities-south"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-south-west",
+        "destination": "opportunities-west"
+      }
+    ]
+  }

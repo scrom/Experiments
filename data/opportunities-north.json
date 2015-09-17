@@ -1,0 +1,57 @@
+﻿{
+    "object": "location",
+    "name": "opportunities-north",
+    "displayName": "Opportunities",
+    "description": "You're in north end of the opportunities and ventures area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "opportunities-north",
+        "destination": "opportunities-central"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "opportunities-north",
+        "destination": "ground-floor-back-stairs-west"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "opportunities-north",
+        "destination": "opportunities-cubbyhole"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "opportunities-north",
+        "destination": "opportunities-north-corridor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "james moore",
+        "displayname": "James Moore",
+        "description": "James Moore",
+        "detailedDescription": "He pwns the Opportunities division.",
+        "attributes": {
+          "template": "creature-male-l5",
+          "affinity": -1,
+          "traveller": false,
+          "imageName": "jamesmoore.jpg"
+        },
+        "synonyms": [
+          "james",
+          "moore",
+          "jim",
+          "him"
+        ]
+      }
+    ]
+  }
