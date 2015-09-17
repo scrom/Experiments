@@ -1009,7 +1009,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.isActive = function() {
-            if (_reward && _ticking) {return true;}; //reward has not been given/cleared ad timer is running
+            if (_reward && _ticking) {return true;}; //reward has not been given/cleared and timer is running
             return false;
         };
 
