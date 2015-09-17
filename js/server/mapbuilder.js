@@ -15,9 +15,9 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         var missionObjectModule = require('./mission.js');
 
         //source data: 
-        var data = requireDirectory(module, mapDataPath, { recurse: false });
-        //console.log(Object.keys(data));
-        var _rootLocationsJSON = data[mapDataFile];
+        var _data = requireDirectory(module, mapDataPath, { recurse: false });
+        //console.log(Object.keys(_data));
+        var _rootLocationsJSON = _data[mapDataFile];
  
 
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -31,51 +31,54 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
         console.log(_objectName + ' created');
         
-        
+        //self.addDataFromDirectory = function (directory) {
+        //    var newData = _requireDirectory(module, directory, { recurse: false });
+        //    _data = newData.splice(_data)                
+        //};
+
         self.buildFromFile = function (file, objectData) {
             if (objectData == undefined) {
                 objectData = {};  
             };
-            var data = objectData;
+
             for (var property in file) {
                 if (file.hasOwnProperty(property)) {
                     //copy in properties from file if not overridden on artefact
-                    if (!data.hasOwnProperty(property)) {
+                    if (!objectData.hasOwnProperty(property)) {
                         //copy entire property
-                        data[property] = file[property];
+                        objectData[property] = file[property];
                     } else {
-                        if (typeof data[property] == "object") {
+                        if (typeof objectData[property] == "object") {
                             //includes arrays - this can mean template arrays may be only *partially* overwritten - use caution
                             //recursively copy sub-properties
-                            data[property] = self.buildFromFile(file[property], data[property]);
+                            objectData[property] = self.buildFromFile(file[property], objectData[property]);
                         };
                     };
                 };
             };
             
-            return data;
+            return objectData;
         };
         
         
         self.buildFromTemplate = function (template, objectData) {
-            var data = objectData;
             for (var property in template) {
                 if (template.hasOwnProperty(property)) {
                     //copy in properties from template if not overridden on artefact
-                    if (!data.hasOwnProperty(property)) {
+                    if (!objectData.hasOwnProperty(property)) {
                         //copy entire property
-                        data[property] = template[property];
+                        objectData[property] = template[property];
                     } else {
-                        if (typeof data[property] == "object") {
+                        if (typeof objectData[property] == "object") {
                             //includes arrays - this can mean template arrays may be only *partially* overwritten - use caution
                             //recursively copy sub-properties
-                            data[property] = self.buildFromTemplate(template[property], data[property]);
+                            objectData[property] = self.buildFromTemplate(template[property], objectData[property]);
                         };
                     };
                 };
             };
 
-            return data;
+            return objectData;
         };
         
         //public member functions
@@ -86,7 +89,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 //start with template if defined
                 if (artefactData.template) {
                     usingTemplate = true;
-                    var template = data[artefactData.template];
+                    var template = _data[artefactData.template];
                     artefactData = self.buildFromTemplate(template, artefactData);
                 };
             };
@@ -94,7 +97,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             if (artefactData.attributes) {
                 //fill in attribute template if defined
                 if (artefactData.attributes.template) {
-                    var template = data[artefactData.attributes.template];
+                    var template = _data[artefactData.attributes.template];
                     artefactData.attributes = self.buildFromTemplate(template, artefactData.attributes);
                 };
             };
@@ -123,7 +126,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     for (var i = 0; i < artefactData.delivers.length; i++) {
                         //construct from file first if needed
                         if (artefactData.delivers[i].file) {
-                            artefactData.delivers[i] = self.buildFromFile(data[artefactData.delivers[i].file]);
+                            artefactData.delivers[i] = self.buildFromFile(_data[artefactData.delivers[i].file]);
                         };
                         delivers.push(self.buildArtefact(artefactData.delivers[i]));
                     };
@@ -137,7 +140,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     for (var i = 0; i < artefactData.inventory.length; i++) {
                         //construct from file first if needed
                         if (artefactData.inventory[i].file) {
-                            artefactData.inventory[i] = self.buildFromFile(data[artefactData.inventory[i].file]);
+                            artefactData.inventory[i] = self.buildFromFile(_data[artefactData.inventory[i].file]);
                         };
                         if (artefactData.inventory[i].object == "artefact") {
                             var position;
@@ -158,7 +161,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     for (var j = 0; j < artefactData.missions.length; j++) {
                         //construct from file first if needed
                         if (artefactData.missions[j].file) {
-                            artefactData.missions[j] = self.buildFromFile(data[artefactData.missions[j].file]);
+                            artefactData.missions[j] = self.buildFromFile(_data[artefactData.missions[j].file]);
                         };
                         artefact.addMission(self.buildMission(artefactData.missions[j]));
                     };
@@ -184,7 +187,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 //start with template if defined
                 if (creatureData.template) {
                     usingTemplate = true;
-                    var template = data[creatureData.template];
+                    var template = _data[creatureData.template];
                     creatureData = self.buildFromTemplate(template, creatureData);
                 };
             };
@@ -192,7 +195,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             if (creatureData.attributes) {
                 //fill in attribute template if defined
                 if (creatureData.attributes.template) {
-                    var template = data[creatureData.attributes.template];
+                    var template = _data[creatureData.attributes.template];
                     creatureData.attributes = self.buildFromTemplate(template, creatureData.attributes);
                 };
             };                       
@@ -231,7 +234,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     for (var i = 0; i < creatureData.inventory.length; i++) {
                         //construct from file first if needed
                         if (creatureData.inventory[i].file) {
-                            creatureData.inventory[i] = self.buildFromFile(data[creatureData.inventory[i].file]);
+                            creatureData.inventory[i] = self.buildFromFile(_data[creatureData.inventory[i].file]);
                         };
                         if (creatureData.inventory[i].object == "artefact") {
                             var position;
@@ -254,7 +257,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     for (var i = 0; i < creatureData.sells.length; i++) {
                         //construct from file first if needed
                         if (creatureData.sells[i].file) {
-                            creatureData.sells[i] = self.buildFromFile(data[creatureData.sells[i].file]);
+                            creatureData.sells[i] = self.buildFromFile(_data[creatureData.sells[i].file]);
                         };
                         if (creatureData.sells[i].object == "artefact") { salesInventory.add(self.buildArtefact(creatureData.sells[i])); };
                         //else if (creatureData.sells[i].object == "creature") {salesInventory.add(self.buildCreature(creatureData.sells[i]));}; //won't work - creatures need to "go" to a locaion at the moment
@@ -264,7 +267,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     for (var j = 0; j < creatureData.missions.length; j++) {
                         //construct from file first if needed
                         if (creatureData.missions[j].file) {
-                            creatureData.missions[j] = self.buildFromFile(data[creatureData.missions[j].file]);
+                            creatureData.missions[j] = self.buildFromFile(_data[creatureData.missions[j].file]);
                         };
                         creature.addMission(self.buildMission(creatureData.missions[j]));
                     };
@@ -299,7 +302,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         self.unpackReward = function (reward) {
             //construct from file first if needed
             if (reward.file) {
-                reward = self.buildFromFile(data[reward.file]);
+                reward = self.buildFromFile(_data[reward.file]);
             };
             //console.log("Unpacking reward: "+reward);
             var returnObject = {};
@@ -321,7 +324,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 for (var l = 0; l < reward.locations.length; l++) {
                     //construct from file first if needed
                     if (reward.locations[l].file) {
-                        reward.locations[l] = self.buildFromFile(data[reward.locations[l].file]);
+                        reward.locations[l] = self.buildFromFile(_data[reward.locations[l].file]);
                     };
                     var rewardLocation = self.buildLocation(reward.locations[l]);
                     for (var j=0; j<reward.locations[l].exits.length;j++) {
@@ -334,7 +337,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                             var inventoryData = reward.locations[l].inventory[i];
                             //construct from file first if needed
                             if (inventoryData.file) {
-                                inventoryData = self.buildFromFile(data[inventoryData.file]);
+                                inventoryData = self.buildFromFile(_data[inventoryData.file]);
                             };
                             //manually add exits from each location (linking not needed)
                             if (inventoryData.object == "artefact") {
@@ -366,7 +369,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                         var inventoryData = reward.modifyLocation.inventory[i];
                         //construct from file first if needed
                         if (inventoryData.file) {
-                            inventoryData = self.buildFromFile(data[inventoryData.file]);
+                            inventoryData = self.buildFromFile(_data[inventoryData.file]);
                         };
                         if (inventoryData.object == "artefact") {
                             returnObject.modifyLocation.inventory.push(self.buildArtefact(inventoryData));
@@ -508,7 +511,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (gameDataAsJSON[i].file) {
                     //overwrite game data element with named file
                     var fileData = gameDataAsJSON[i]
-                    var builtFile = self.buildFromFile(data[gameDataAsJSON[i].file]);
+                    var builtFile = self.buildFromFile(_data[gameDataAsJSON[i].file]);
                     gameDataAsJSON[i] = builtFile;                    
                 };
             };
@@ -548,7 +551,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                         for (var k = 0; k < locationData.inventory.length; k++) {
                             //construct from file first if needed
                             if (locationData.inventory[k].file) {
-                                locationData.inventory[k] = self.buildFromFile(data[locationData.inventory[k].file]);
+                                locationData.inventory[k] = self.buildFromFile(_data[locationData.inventory[k].file]);
                             };
                             //build artefacts or creatures
                             if (locationData.inventory[k].object == "artefact") {location.addObject(self.buildArtefact(locationData.inventory[k]));}
@@ -571,7 +574,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                         for (var l = 0; l < locationData.missions.length; l++) {
                             //construct from file first if needed
                             if (locationData.missions[l].file) {
-                                locationData.missions[l] = self.buildFromFile(data[locationData.missions[l].file]);
+                                locationData.missions[l] = self.buildFromFile(_data[locationData.missions[l].file]);
                             };
                             //add mission
                             location.addMission(self.buildMission(locationData.missions[l]));
