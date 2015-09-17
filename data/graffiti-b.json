@@ -1,0 +1,51 @@
+﻿{
+    "object": "location",
+    "name": "graffiti-b",
+    "displayName": "Graffiti B meeting room",
+    "description": "You're in the Graffiti-B meeting room. It's all bright and shiny.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "graffiti-b",
+        "destination": "west-end-south-corridor-ground-floor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "torch",
+        "description": "emergency torch",
+        "detailedDescription": "'10,000 candle power' apparently.<br>How do they calculate these things?<br>What sort of candle are they comparing it to?<br>Anyway, it's certainly bright enough to to find your way around here.",
+        "attributes": {
+          "defaultAction": "turn on",
+          "weight": 1,
+          "carryWeight": 1,
+          "attackStrength": 5,
+          "type": "light",
+          "canCollect": true,
+          "isBreakable": true,
+          "burnRate": 0.2,
+          "switched": true,
+          "requiredComponentCount": 1
+        },
+        "synonyms": [
+          "light",
+          "lamp",
+          "emergency torch",
+          "emergency lamp",
+          "emergency light"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "template": "batteries",
+            "attributes": {
+              "charges": 8
+            }
+          }
+        ]
+      }
+    ]
+  }

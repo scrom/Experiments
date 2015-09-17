@@ -1,0 +1,92 @@
+﻿{
+    "object": "location",
+    "name": "first-floor-cubicle",
+    "displayName": "Toilet cubicle",
+    "description": "You're in a first floor toilet cubicle.<br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "first-floor-cubicle",
+        "destination": "first-floor-toilet",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "floor"
+      },
+      {
+        "object": "artefact",
+        "template": "cubicle-door-out",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "out",
+            "direction": "o",
+            "source": "first-floor-cubicle",
+            "destination": "first-floor-toilet",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "toilet",
+        "attributes": {
+          "defaultResult": "You try a test-flush on the toilet before use but it just seems to be constantly refilling and not enough water for a proper flush. It's probably best to use another one."
+        }
+      },
+      {
+        "object": "artefact",
+        "template": "toilet-brush",
+        "detailedDescription": "Be nice and clean up after yourself when you're done.<br>This one looks like it's been used recently (yum!)"
+      },
+      {
+        "object": "artefact",
+        "name": "article on software security",
+        "description": "'Learn on the Loo' article",
+        "detailedDescription": "It's entitled 'Take security in your STRIDE'.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 3,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "security article",
+          "article",
+          "lotl",
+          "learn on the loo",
+          "learn on the loo article",
+          "loo article",
+          "learn article"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "lotlsecurity",
+            "displayName": "read the lotl security article",
+            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
+            "attributes": {
+              "missionObject": "article on software security",
+              "static": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "read": true
+            },
+            "reward": {
+              "score": 20,
+              "repairSkill": "security",
+              "message": "Congratulations. You've learned a basic mnemonic for considering software security."
+            }
+          }
+        ]
+      }
+    ]
+  }

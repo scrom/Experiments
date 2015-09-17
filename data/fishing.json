@@ -1,0 +1,15 @@
+﻿{
+    "object": "location",
+    "name": "fishing",
+    "displayName": "'Fishing' meeting room",
+    "description": "You're in the Fishing meeting room. Now you <i>really</i> know how a goldfish feels.<br>You feel you're being watched.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "fishing",
+        "destination": "facilities-area"
+      }
+    ]
+  }

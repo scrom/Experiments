@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "first-floor-landing-central",
+    "displayName": "First floor landing",
+    "description": "You're on the first floor landing.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "first-floor-landing-central",
+        "destination": "first-floor-landing-west"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "first-floor-landing-central",
+        "destination": "first-floor-landing-east"
+      },
+      {
+        "object": "exit",
+        "longname": "in",
+        "direction": "i",
+        "source": "first-floor-landing-central",
+        "destination": "lift-first-floor"
+      }
+    ]
+  }

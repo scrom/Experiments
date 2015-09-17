@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "first-floor-back-stairs-west",
+    "displayName": "Back stairs (West) - 1st floor",
+    "description": "You're halfway up the west fire escape staircase.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "first-floor-back-stairs-west",
+        "destination": "ground-floor-back-stairs-west"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "first-floor-back-stairs-west",
+        "destination": "second-floor-back-stairs-west"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "first-floor-back-stairs-west",
+        "destination": "customer-delight-north"
+      }
+    ]
+  }

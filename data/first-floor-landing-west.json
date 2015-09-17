@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "first-floor-landing-west",
+    "displayName": "First floor landing",
+    "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wandering about their business down below.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "first-floor-landing-west",
+        "destination": "stairs-first-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "first-floor-landing-west",
+        "destination": "first-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "first-floor-landing-west",
+        "destination": "first-floor-toilet"
+      }
+    ]
+  }

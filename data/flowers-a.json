@@ -1,0 +1,15 @@
+﻿{
+    "object": "location",
+    "name": "flowers-a",
+    "displayName": "Flowers A meeting room",
+    "description": "You're in the Flowers A meeting room. It's bright & airy in here.<br>If you want to use the AV equipment, forget it. Use the TV instead.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "flowers-a",
+        "destination": "second-floor-north-west-corridor-central"
+      }
+    ]
+  }

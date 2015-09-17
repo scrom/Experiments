@@ -1,0 +1,15 @@
+﻿{
+    "object": "location",
+    "name": "flowers-b",
+    "displayName": "Flowers B meeting room",
+    "description": "You're in the Flowers B meeting room. This is a great medium-sized room that often gets overlooked. Possibly because it's regularly closed off to be used for massages.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "flowers-b",
+        "destination": "second-floor-north-west-corridor-north-central"
+      }
+    ]
+  }

@@ -1,0 +1,48 @@
+﻿{
+    "object": "location",
+    "name": "first-floor-landing-east",
+    "displayName": "First floor landing",
+    "description": "You're at the East end of the first floor landing.<br>Through the window to the East you can often see the sales team relaxing and playing on an XBox.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "first-floor-landing-east",
+        "destination": "first-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "first-floor-landing-east",
+        "destination": "servery-back-corridor",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "If this were a house, it'd seem odd having indoor windows.",
+        "attributes": {
+          "viewDestination": "sales-seating"
+        }
+      },
+      {
+        "object": "artefact",
+        "template": "office-door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "first-floor-landing-east",
+            "destination": "servery-back-corridor",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  }
