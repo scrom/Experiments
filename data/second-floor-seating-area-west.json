@@ -1,0 +1,29 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-seating-area-west",
+    "displayName": "Rest area",
+    "description": "You're in the West end of the second floor seating area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-seating-area-west",
+        "destination": "creative-agency-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-seating-area-west",
+        "destination": "second-floor-reception"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-seating-area-west",
+        "destination": "second-floor-seating-area-east"
+      }
+    ]
+  }

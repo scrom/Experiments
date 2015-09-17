@@ -1,0 +1,47 @@
+﻿  {
+    "object": "location",
+    "name": "stairs-second-floor",
+    "displayName": "Stairs - 2nd floor",
+    "description": "You're standing at the top of the main staircase The view's great from up here.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "stairs-second-floor",
+        "destination": "stairs-first-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "stairs-second-floor",
+        "destination": "second-floor-reception",
+        "hidden": true
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "stairs-second-floor",
+        "destination": "second-floor-landing-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "office-door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "stairs-second-floor",
+            "destination": "second-floor-reception",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  }

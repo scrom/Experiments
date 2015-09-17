@@ -1,0 +1,26 @@
+﻿  {
+    "object": "location",
+    "name": "top-fire-escape",
+    "displayName": "Fire escape",
+    "description": "You're at the top of the rear fire escape. From here you have a short <i>climb up</i> to the roof.<br>It's a long way down!",
+    "attributes": {
+      "type": "outdoor"
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "top-fire-escape",
+        "destination": "second-floor-fire-escape"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "top-fire-escape",
+        "destination": "roof",
+        "requiredAction": "climb"
+      }
+    ]
+  }

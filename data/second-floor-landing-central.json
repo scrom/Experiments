@@ -1,0 +1,29 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-landing-central",
+    "displayName": "Second floor landing",
+    "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-landing-central",
+        "destination": "second-floor-landing-west"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-landing-central",
+        "destination": "second-floor-landing-east"
+      },
+      {
+        "object": "exit",
+        "longname": "in",
+        "direction": "i",
+        "source": "second-floor-landing-central",
+        "destination": "lift-second-floor"
+      }
+    ]
+  }

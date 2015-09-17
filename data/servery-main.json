@@ -1,0 +1,77 @@
+﻿  {
+    "object": "location",
+    "name": "servery-main",
+    "displayName": "Servery",
+    "description": "You're in SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "servery-main",
+        "destination": "servery-salad-bar"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "servery-main",
+        "destination": "servery-south-west"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "servery-main",
+        "destination": "first-floor-fire-escape",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "soup",
+        "description": "bowl of soup",
+        "detailedDescription": "Butternut squash and coconut.",
+        "attributes": {
+          "defaultAction": "eat",
+          "weight": 1,
+          "type": "food",
+          "requiresContainer": true,
+          "isLiquid": true,
+          "canCollect": true,
+          "charges": 1,
+          "plural": true,
+          "isEdible": true,
+          "nutrition": 15
+        },
+        "synonyms": [
+          "bowl",
+          "bowl of soup",
+          "food"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "fire-exit",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "servery-main",
+            "destination": "first-floor-fire-escape",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "first-floor-fire-escape",
+            "destination": "servery-main",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  }

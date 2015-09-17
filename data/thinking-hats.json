@@ -1,0 +1,15 @@
+﻿  {
+    "object": "location",
+    "name": "thinking-hats",
+    "displayName": "Thinking Hats meeting room",
+    "description": "You're in the Thinking Hats meeting room. The seats in here are really tricky to pick up and move and it's oddly chilly. Perhaps it's haunted?",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "thinking-hats",
+        "destination": "people-team-north-west"
+      }
+    ]
+  }

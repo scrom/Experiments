@@ -1,0 +1,36 @@
+﻿  {
+    "object": "location",
+    "name": "pioneer",
+    "displayName": "Pioneer meeting room",
+    "description": "You're in the Pioneer meeting room. The acoustics in here seem very strange.",
+    "attributes": {
+      "echo": true
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "pioneer",
+        "destination": "northwest-corridor-ground-floor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "plain key",
+        "description": "plain key",
+        "detailedDescription": "Just a plain key.",
+        "attributes": {
+          "weight": 0.1,
+          "type": "key",
+          "canCollect": true,
+          "affinityModifier": 0,
+          "unlocks": "nothing"
+        },
+        "synonyms": [
+          "key"
+        ]
+      }
+    ]
+  }

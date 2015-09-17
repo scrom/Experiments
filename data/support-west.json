@@ -1,0 +1,49 @@
+﻿  {
+    "object": "location",
+    "name": "support-west",
+    "displayName": "Support",
+    "description": "You're in the support area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "support-west",
+        "destination": "customer-delight-north"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "support-west",
+        "destination": "support-east"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "support-west",
+        "destination": "web-meeting-room"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "chris allen",
+        "displayname": "Chris Allen",
+        "description": "Chris Allen",
+        "detailedDescription": "Support and music skills. What more could you need?",
+        "attributes": {
+          "template": "creature-male-l3",
+          "imageName": "chrisallen.jpg"
+        },
+        "synonyms": [
+          "chris",
+          "chris a",
+          "ca",
+          "allen",
+          "him"
+        ]
+      }
+    ]
+  }

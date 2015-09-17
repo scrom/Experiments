@@ -1,0 +1,15 @@
+﻿  {
+    "object": "location",
+    "name": "peacock",
+    "displayName": "Peacock meeting room",
+    "description": "You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "peacock",
+        "destination": "opportunities-north-corridor"
+      }
+    ]
+  }

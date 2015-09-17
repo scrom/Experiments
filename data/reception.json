@@ -1,0 +1,300 @@
+﻿  {
+    "object": "location",
+    "name": "reception",
+    "displayName": "Reception",
+    "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "reception",
+        "destination": "atrium"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "reception",
+        "destination": "atrium-seating"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "reception",
+        "destination": "east-corridor-ground-floor-north-west",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "reception desk",
+        "description": "big red desk",
+        "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
+        "attributes": {
+          "weight": 280,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "big desk",
+          "reception",
+          "desk",
+          "red desk",
+          "big red desk"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "biro",
+            "description": "blue biro",
+            "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "writing",
+              "position": "on",
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "It's attached to the desk."
+            },
+            "synonyms": [
+              "pen",
+              "blue pen",
+              "blue biro"
+            ]
+          }
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "vic wiseman",
+        "displayname": "Vic Wiseman",
+        "description": "Vic the receptionist",
+        "detailedDescription": "Well, receptionist is an understatement.<br>As well as dealing with all visitors & parcels, she also provides customer support!",
+        "attributes": {
+          "template": "creature-female-l3",
+          "canTravel": false,
+          "traveller": false,
+          "imageName": "vicwiseman.jpg"
+        },
+        "synonyms": [
+          "receptionist",
+          "vic",
+          "vw",
+          "wiseman",
+          "vic w",
+          "heidi",
+          "her"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "talktovic",
+            "displayName": "greet vic",
+            "description": "Vic needs you to sign in.",
+            "attributes": {
+              "missionObject": "vic wiseman",
+              "static": true,
+              "dialogue": [
+                "'Good morning. You must be $player.'<br>'Welcome aboard!'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true
+            },
+            "reward": {
+              "message": "Vic Places a large visitors book on the desk.<br>'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'",
+              "modifyObject": {
+                "name": "reception desk",
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "visitors book",
+                    "description": "visitor's book",
+                    "detailedDescription": "It looks like you're the first newcomer today.",
+                    "attributes": {
+                      "weight": 1,
+                      "position": "on",
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "It needs to stay down here on reception.",
+                      "canDrawOn": true
+                    },
+                    "synonyms": [
+                      "book",
+                      "visitor book",
+                      "in"
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "object": "mission",
+            "name": "vicsbook",
+            "displayName": "give Vic something interesting to read",
+            "description": "Vic would like something interesting to read.",
+            "attributes": {
+              "parent": "keyfob",
+              "missionObject": "50 shades",
+              "destination": "vic wiseman",
+              "static": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "isBroken": false
+            },
+            "reward": {
+              "modifyLocation": {
+                "name": "post-room",
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "parcel",
+                    "description": "parcel from Co____ D____t",
+                    "detailedDescription": "The label's smudged and it's hard to tell who it's from or to.<br>With a bit of creative deciphering (clever you!) it really does look like it's addressed to '$player' but you're not expecting anything.<br>Maybe Vic had you mixed up with someone else.<br>",
+                    "attributes": {
+                      "defaultAction": "open",
+                      "weight": 2,
+                      "carryWeight": 25,
+                      "attackStrength": 2,
+                      "type": "container",
+                      "canCollect": true,
+                      "isBreakable": true,
+                      "affinityModifier": 0,
+                      "canOpen": true,
+                      "canDrawOn": true,
+                      "smell": "Mmmm it smells of fresh coffee."
+                    },
+                    "synonyms": [
+                      "package",
+                      "my parcel",
+                      "my package",
+                      "coffee parcel",
+                      "coffee package",
+                      "box"
+                    ],
+                    "inventory": [
+                      {
+                        "object": "artefact",
+                        "name": "bag",
+                        "description": "giant bag",
+                        "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
+                        "attributes": {
+                          "defaultAction": "open",
+                          "weight": 2,
+                          "carryWeight": 3,
+                          "attackStrength": 2,
+                          "type": "container",
+                          "canCollect": true,
+                          "isBreakable": true,
+                          "affinityModifier": 0,
+                          "canOpen": true,
+                          "smell": "You can almost taste the coffee beans."
+                        },
+                        "synonyms": [
+                          "bean bag",
+                          "bag of beans",
+                          "giant bag",
+                          "big bag"
+                        ],
+                        "inventory": [
+                          {
+                            "object": "artefact",
+                            "name": "beans",
+                            "description": "coffee beans",
+                            "detailedDescription": "Development fuel. Almost enough to last a day here.",
+                            "attributes": {
+                              "weight": 2,
+                              "attackStrength": 5,
+                              "requiresContainer": true,
+                              "canCollect": true,
+                              "charges": 10,
+                              "chargeUnit": "cup",
+                              "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
+                              "plural": true,
+                              "affinityModifier": 0,
+                              "smell": "They smell like pretty good quality coffee.",
+                              "componentOf": [
+                                "coffee machine"
+                              ]
+                            },
+                            "synonyms": [
+                              "coffee beans"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "removeObject": "50 shades",
+              "score": 35,
+              "increaseAffinityFor": "Vic Wiseman",
+              "message": "Congratulations. Vic likes the book!<br>'Oh, I just remembered. A parcel arrived for you a moment ago.'<br>'I've popped it in the post room'."
+            }
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "office-door",
+        "detailedDescription": "One of the main doors into the ground floor working area.",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "reception",
+            "destination": "east-corridor-ground-floor-north-west",
+            "hidden": true
+          }
+        ]
+      }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "keyfob",
+        "displayName": "get a keyfob",
+        "description": "If you haven't done so already, you'll need to <i>sign in</i> to get a keyfob for the office.",
+        "attributes": {
+          "parent": "talktovic",
+          "missionObject": "visitors book",
+          "static": true
+        },
+        "conditionAttributes": {
+          "writings": [
+            "$player"
+          ]
+        },
+        "reward": {
+          "delivers": {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          },
+          "score": 10,
+          "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'<br><br>'Whilst I think of it; things are pretty unpredictable around here so I'm not able to leave reception at the moment.'<br>'If you happen to find any interesting reading material on your travels, stop by with it if you can.'"
+        }
+      }
+    ]
+  }

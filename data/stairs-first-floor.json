@@ -1,0 +1,54 @@
+﻿  {
+    "object": "location",
+    "name": "stairs-first-floor",
+    "displayName": "Stairs - 1st floor",
+    "description": "You're halfway up the main office staircase.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "stairs-first-floor",
+        "destination": "stairs-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "stairs-first-floor",
+        "destination": "stairs-second-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "stairs-first-floor",
+        "destination": "servery-north-west",
+        "hidden": true
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "stairs-first-floor",
+        "destination": "first-floor-landing-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "office-door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "stairs-first-floor",
+            "destination": "servery-north-west",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  }

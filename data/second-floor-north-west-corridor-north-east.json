@@ -1,0 +1,36 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-north-west-corridor-north-east",
+    "displayName": "Second floor West corridor",
+    "description": "You're at a bend in a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the North and East.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "second-floor-north-west-corridor-north-central"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "camelids-b"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "snorting-horses"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-north-west-corridor-north-east",
+        "destination": "second-floor-north-west-corridor-central"
+      }
+    ]
+  }

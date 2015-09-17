@@ -1,0 +1,29 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-landing-west",
+    "displayName": "Second floor landing",
+    "description": "You're at the West end of the second floor landing. Peering over the balcony you consider throwing something down. If only there was a slide here.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-landing-west",
+        "destination": "stairs-second-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-landing-west",
+        "destination": "second-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-landing-west",
+        "destination": "second-floor-toilet"
+      }
+    ]
+  }

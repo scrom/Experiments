@@ -1,0 +1,29 @@
+﻿  {
+    "object": "location",
+    "name": "sales-break-out",
+    "displayName": "Sales area",
+    "description": "You're stood in a small break out area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "sales-break-out",
+        "destination": "sales-north"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "sales-break-out",
+        "destination": "windows-meeting-room"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "sales-break-out",
+        "destination": "sales-seating"
+      }
+    ]
+  }

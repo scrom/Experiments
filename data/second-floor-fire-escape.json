@@ -1,0 +1,33 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-fire-escape",
+    "displayName": "Fire escape",
+    "description": "You're on the second floor of the rear fire escape. It's windy up here.",
+    "attributes": {
+      "type": "outdoor"
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "second-floor-fire-escape",
+        "destination": "first-floor-fire-escape"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "second-floor-fire-escape",
+        "destination": "top-fire-escape"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-fire-escape",
+        "destination": "second-floor-seating-area-east",
+        "hidden": true
+      }
+    ]
+  }

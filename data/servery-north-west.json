@@ -1,0 +1,95 @@
+﻿  {
+    "object": "location",
+    "name": "servery-north-west",
+    "displayName": "Servery",
+    "description": "You're standing at the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "servery-north-west",
+        "destination": "stairs-first-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "servery-north-west",
+        "destination": "servery-south-west"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "servery-north-west",
+        "destination": "customer-delight-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "wall full of post cards",
+        "detailedDescription": "Poking through the cards on the wall, they generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "cards",
+          "postcards",
+          "post cards",
+          "card wall",
+          "walls"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "first-aid-kit"
+      },
+      {
+        "object": "artefact",
+        "name": "shreddies",
+        "description": "bowl of shreddies",
+        "detailedDescription": "Shreddies... 'Cereal in the daytime?!' wow, I've never had that before.",
+        "attributes": {
+          "weight": 1,
+          "type": "food",
+          "canCollect": true,
+          "charges": 1,
+          "isEdible": true,
+          "nutrition": 20
+        },
+        "synonyms": [
+          "food",
+          "cereal",
+          "bowl",
+          "bowl of shreddies"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "postcard",
+        "description": "thankyou postcard",
+        "detailedDescription": "It says thanks for being great! (there are loads of others with similar thank-yous)",
+        "attributes": {
+          "type": "book",
+          "canCollect": true,
+          "affinityModifier": 3,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "card",
+          "post-card",
+          "post card",
+          "wall",
+          "thankyou postcard",
+          "thankyou card",
+          "thank-you card",
+          "thank you card"
+        ]
+      }
+    ]
+  }

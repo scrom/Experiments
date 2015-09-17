@@ -1,0 +1,25 @@
+﻿  {
+    "object": "location",
+    "name": "spiderman",
+    "displayName": "Spiderman meeting room",
+    "description": "You're in the Spiderman meeting room. (Or is that Spider-man?) There are large windows on 2 walls.<br>You feel somewhat exposed here",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "spiderman",
+        "destination": "opportunities-north-east-corridor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "It's the usual view out of the front of the office.",
+        "attributes": {
+          "viewDestination": "office-front"
+        }
+      }
+    ]
+  }

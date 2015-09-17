@@ -1,0 +1,48 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-landing-east",
+    "displayName": "Second floor landing",
+    "description": "You're at the east end of the second floor landing. Peering through the window to the East, you can just about make out the facilities team on the other side of the glass.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-landing-east",
+        "destination": "second-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-landing-east",
+        "destination": "second-floor-east-corridor",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "Things look pretty cosy in that corner.",
+        "attributes": {
+          "viewDestination": "facilities-area"
+        }
+      },
+      {
+        "object": "artefact",
+        "template": "office-door",
+        "detailedDescription": "One of the main doors into the first floor working area.",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "second-floor-landing-east",
+            "destination": "second-floor-east-corridor",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  }

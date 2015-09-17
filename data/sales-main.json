@@ -1,0 +1,193 @@
+﻿  {
+    "object": "location",
+    "name": "sales-main",
+    "displayName": "Sales area",
+    "description": "You're in the main sales and marketing area.<br>There's a low level hum of telephone conversation.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "sales-main",
+        "destination": "servery-back-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "sales-main",
+        "destination": "sales-south"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "sales-main",
+        "destination": "sales-north"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "alex freeman",
+        "displayname": "Alex Freeman",
+        "description": "Alex Freeman",
+        "detailedDescription": "Can haz mor Accountz.",
+        "attributes": {
+          "template": "creature-male-l4",
+          "imageName": "alexfreeman.jpg"
+        },
+        "synonyms": [
+          "alex",
+          "alex f",
+          "af",
+          "freeman",
+          "al",
+          "him"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "james king",
+        "displayname": "James King",
+        "description": "James King",
+        "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
+        "attributes": {
+          "template": "creature-male-l3",
+          "imageName": "jamesking.jpg"
+        },
+        "synonyms": [
+          "james",
+          "james k",
+          "jk",
+          "king",
+          "jim",
+          "him"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "justin heron",
+        "displayname": "Justin Heron",
+        "description": "Justin Heron",
+        "detailedDescription": "He's a master of selling!",
+        "attributes": {
+          "template": "creature-male-l3",
+          "imageName": "justinheron.jpg"
+        },
+        "synonyms": [
+          "justin",
+          "jh",
+          "heron",
+          "him"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "hidejameswig",
+            "displayName": "hide James' wig",
+            "description": "Make the wig 'go away'.",
+            "attributes": {
+              "parent": "keyfob",
+              "missionObject": "wig",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'I've got a job for you if you're interested.'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'OK, here's the deal.'<br>'Earlier this year, James had all the sales managers wear fancy dress as a 'reward' for the team hitting their record numbers.'<br>'It was a great move but I swear we don't want a repeat of the horror of James in drag again.'<br>'Can you <i>hide</i> his wig for us? (preferably somewhere out of the building!)'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Meh. Just remember who keeps us in business here.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'OK. Maybe later?'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'Hi again $player.'<br>'Fancy that job now?'",
+                  "nextState": 1
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Remember. <i>hide</i> it somewhere outside if possible.'<br>'I'll leave this challenge in your capable hands.'",
+                  "nextState": 4
+                },
+                {
+                  "state": 3,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Fine, forget I asked.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 3,
+                  "response": "'Well, if you're up for it, remember to <i>hide</i> it somewhere outside if possible.'<br>'I'll leave this little challenge in your capable hands.'",
+                  "nextState": 4
+                }
+              ]
+            },
+            "failAttributes": {
+              "conversationState": 99
+            },
+            "conditionAttributes": {
+              "hidden": true
+            },
+            "reward": {
+              "score": 50,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "justin heron",
+              "decreaseAffinityFor": "james dening",
+              "removeObject": "wig",
+              "message": "Great stuff! No more managers in drag.<br>I think James might be a little disappointed with you but Justin will have appreciated it."
+            }
+          }
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "cassi roper",
+        "displayname": "Cassi Roper",
+        "description": "Cassi Roper",
+        "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
+        "attributes": {
+          "template": "creature-female-l4",
+          "imageName": "cassiroper.jpg"
+        },
+        "synonyms": [
+          "cassi",
+          "cassie",
+          "cr",
+          "roper",
+          "her"
+        ]
+      }
+    ]
+  }

@@ -1,0 +1,54 @@
+﻿  {
+    "object": "location",
+    "name": "sales-seating",
+    "displayName": "Sales area",
+    "description": "You're in a small seating area. Peering down through the windows to the West you can see the atrium. To the North is a meeting room.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "sales-seating",
+        "destination": "sales-break-out"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "sales-seating",
+        "destination": "traffic-jam-meeting-room"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "It's usually pretty busy down there.",
+        "attributes": {
+          "viewDestination": "reception"
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "xbox",
+        "description": "xbox 360",
+        "detailedDescription": "Fancy a game of Forza?",
+        "attributes": {
+          "weight": 6,
+          "type": "treasure",
+          "canCollect": true,
+          "isBreakable": true,
+          "price": 30,
+          "customAction": "play",
+          "defaultResult": "After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
+        },
+        "synonyms": [
+          "console",
+          "xbox 360",
+          "x-box",
+          "games console",
+          "game"
+        ]
+      }
+    ]
+  }

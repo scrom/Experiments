@@ -1,0 +1,139 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-printer-area",
+    "displayName": "Printer area",
+    "description": "You're in a small glass-walled corner bounded by corridors.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-printer-area",
+        "destination": "second-floor-north-west-corridor-south"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-printer-area",
+        "destination": "second-floor-west-corridor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "cupboard",
+        "description": "stationery cupboard",
+        "detailedDescription": "Can haz all ur Scrum supplies.",
+        "attributes": {
+          "extendedInventoryDescription": "Amongst the mountains of redundant folders, staplers and pen holders you find $inventory that might be useful to you.",
+          "weight": 180,
+          "carryWeight": 50,
+          "type": "container",
+          "canOpen": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "stationary",
+          "stationery",
+          "stationary cupboard",
+          "stationery cupboard",
+          "cupbaord"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "post-it pad",
+            "description": "pack of post-its",
+            "detailedDescription": "A pack of multicoloured post-it notes.",
+            "attributes": {
+              "weight": 0.5,
+              "canCollect": true,
+              "price": 2,
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "pack",
+              "stickies",
+              "sticky notes",
+              "post its",
+              "post-its",
+              "postits",
+              "post it notes",
+              "post-it notes",
+              "postit notes",
+              "notes",
+              "pack of post-its",
+              "pack of post its",
+              "pack of postits"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "notebook",
+            "description": "black and red notebook",
+            "detailedDescription": "An A4 'Black and Red' brand notebook.<br> These are really useful for keeping track of tasks.<br>In case you accidentally leave it somewhere, I strongly suggest you <i>write</i> your name in it though.",
+            "attributes": {
+              "weight": 0.5,
+              "type": "book",
+              "canCollect": true,
+              "price": 3,
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "book",
+              "notebook",
+              "note book",
+              "note",
+              "black and red",
+              "blackandred"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "biro",
+            "description": "black biro",
+            "detailedDescription": "Not quite a sharpie but useful for taking notes.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "writing",
+              "canCollect": true,
+              "charges": 250,
+              "chargeUnit": "use",
+              "chargesDescription": "It's good for about $charges more $chargeUnit",
+              "price": 0.5
+            },
+            "synonyms": [
+              "pen",
+              "bic"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "sharpie",
+            "description": "sharpie permanent marker",
+            "detailedDescription": "Invaluable tool of the agilist.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "writing",
+              "canCollect": true,
+              "charges": 50,
+              "chargeUnit": "use",
+              "chargesDescription": "It's good for about $charges more $chargeUnit",
+              "price": 2
+            },
+            "synonyms": [
+              "pen",
+              "marker",
+              "permanent marker",
+              "sharpie permanent marker"
+            ]
+          },
+          {
+            "object": "artefact",
+            "template": "batteries"
+          }
+        ]
+      }
+    ]
+  }

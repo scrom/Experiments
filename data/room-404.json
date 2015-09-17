@@ -1,0 +1,33 @@
+﻿  {
+    "object": "location",
+    "name": "room-404",
+    "displayName": "Room 404",
+    "description": "You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "room-404",
+        "destination": "southeast-corridor-ground-floor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "brick",
+        "description": "brick",
+        "detailedDescription": "This would make quite a good cudgel but it's likely to break.",
+        "attributes": {
+          "weight": 1,
+          "attackStrength": 15,
+          "type": "weapon",
+          "subType": "blunt",
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0,
+          "canDrawOn": true
+        }
+      }
+    ]
+  }

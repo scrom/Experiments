@@ -1,0 +1,36 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-north-west-corridor-south",
+    "displayName": "Second floor West corridor",
+    "description": "You're at the South end of a roughly North-South running corridor in the North-West corner of the second floor.<br>There's meeting room to the West. To the east is a curved glass partition behind which are printers and a stationery cupboard.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "second-floor-north-west-corridor-central"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "war-room"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "second-floor-printer-area"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-north-west-corridor-south",
+        "destination": "people-team-water-cooler"
+      }
+    ]
+  }

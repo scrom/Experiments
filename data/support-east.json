@@ -1,0 +1,32 @@
+﻿  {
+    "object": "location",
+    "name": "support-east",
+    "displayName": "Support",
+    "description": "You're in support area.<br>From here you can make rude gestures and wave through the window at passers-by on the stairs.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "support-east",
+        "destination": "support-west"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "support-east",
+        "destination": "enterprise-meeting-room"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "Wave!",
+        "attributes": {
+          "viewDestination": "stairs-first-floor"
+        }
+      }
+    ]
+  }

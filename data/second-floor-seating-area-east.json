@@ -1,0 +1,81 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-seating-area-east",
+    "displayName": "Rest area",
+    "description": "You're in the East end of the second floor seating area.<br>You could stand here for hours reading the giant mural of post-it notes trying to spot the duplicates.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-seating-area-east",
+        "destination": "second-floor-kitchen"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-seating-area-east",
+        "destination": "second-floor-seating-area-west"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-seating-area-east",
+        "destination": "is-area"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "second-floor-seating-area-east",
+        "destination": "second-floor-fire-escape",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "wall full of post-it notes",
+        "detailedDescription": "I see it! I can see the duplicate...<br>Oh. Nope, it's not.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "mural",
+          "post-its",
+          "post it notes",
+          "notes",
+          "postits",
+          "postit notes",
+          "walls"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "fire-exit",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "second-floor-seating-area-east",
+            "destination": "second-floor-fire-escape",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-fire-escape",
+            "destination": "second-floor-seating-area-east",
+            "hidden": true
+          }
+        ]
+      }
+    ]
+  }

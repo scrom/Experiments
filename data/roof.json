@@ -1,0 +1,18 @@
+﻿  {
+    "object": "location",
+    "name": "roof",
+    "displayName": "Roof",
+    "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
+    "attributes": {
+      "type": "outdoor"
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "roof",
+        "destination": "top-fire-escape"
+      }
+    ]
+  }

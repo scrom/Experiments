@@ -1,0 +1,116 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-cubicle",
+    "displayName": "Toilet cubicle",
+    "description": "You're in a toilet cubicle. The toilet is making some unhealthy gugling noises and the smell in here is terrible.<br> I think there's a good reason this one was out of order.",
+    "attributes": {
+      "dark": true
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "second-floor-cubicle",
+        "destination": "second-floor-toilet",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "cubicle-door-out",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "out",
+            "direction": "o",
+            "source": "second-floor-cubicle",
+            "destination": "second-floor-toilet",
+            "hidden": true
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "floor"
+      },
+      {
+        "object": "artefact",
+        "template": "toilet",
+        "detailedDescription": "It looks like the maintenance team have been working on this one.",
+        "attributes": {
+          "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels.<br>When you get a chance, you might want to drop an anonymous maintenance request to the Facilities Team to sort your mess out.",
+          "imageName": "brokentoilet.jpg",
+          "smell": "I'll leave it up to your imagination."
+        }
+      },
+      {
+        "object": "artefact",
+        "template": "toilet-brush"
+      },
+      {
+        "object": "artefact",
+        "name": "guardian newspaper",
+        "description": "copy of today's Guardian newspaper",
+        "detailedDescription": "Middle class pulp propaganda trash to be honest.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 1,
+          "attackStrength": 2,
+          "type": "book",
+          "canCollect": true,
+          "defaultResult": "Blah blah government... blah scandal blah crucial blah liberal blah economics etc.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "guardian",
+          "newspaper"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "article on the boy scout principle",
+        "description": "'Learn on the Loo' article",
+        "detailedDescription": "It's entitled 'The Boy Scout Rule'.",
+        "attributes": {
+          "defaultAction": "read",
+          "weight": 3,
+          "attackStrength": 5,
+          "type": "book",
+          "canCollect": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "boy scout article",
+          "article",
+          "lotl",
+          "learn on the loo",
+          "learn on the loo article",
+          "loo article",
+          "learn article"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "lotlboyscout",
+            "displayName": "read LOTL boy scout article",
+            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+            "attributes": {
+              "missionObject": "article on the boy scout principle",
+              "static": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "read": true
+            },
+            "reward": {
+              "score": 20,
+              "repairSkill": "clean code",
+              "message": "Congratulations. You've learned a simple approach to keeping code clean."
+            }
+          }
+        ]
+      }
+    ]
+  }

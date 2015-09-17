@@ -1,0 +1,15 @@
+﻿  {
+    "object": "location",
+    "name": "signpost",
+    "displayName": "Signpost meeting room",
+    "description": "You're in the SignPost meeting room.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "signpost",
+        "destination": "east-corridor-ground-floor"
+      }
+    ]
+  }

@@ -1,0 +1,29 @@
+﻿  {
+    "object": "location",
+    "name": "second-floor-west-corridor",
+    "displayName": "Second floor South corridor",
+    "description": "You're in a short corridor that runs East-West. To the East is the second floor reception area. <br>To the north is a printer area that also houses a stationary cupboard. To the west lies the People team (and more winding corridors).",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "second-floor-west-corridor",
+        "destination": "second-floor-printer-area"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "second-floor-west-corridor",
+        "destination": "second-floor-reception"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-west-corridor",
+        "destination": "people-team-water-cooler"
+      }
+    ]
+  }

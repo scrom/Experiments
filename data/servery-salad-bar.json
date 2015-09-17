@@ -1,0 +1,51 @@
+﻿  {
+    "object": "location",
+    "name": "servery-salad-bar",
+    "displayName": "Servery",
+    "description": "You're standing by the SQL Servery salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "servery-salad-bar",
+        "destination": "servery-kitchen"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "servery-salad-bar",
+        "destination": "servery-main"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "servery-salad-bar",
+        "destination": "sales-south"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "salad",
+        "description": "plate of salad",
+        "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
+        "attributes": {
+          "defaultAction": "eat",
+          "weight": 2,
+          "type": "food",
+          "canCollect": true,
+          "charges": 1,
+          "isEdible": true,
+          "nutrition": 25
+        },
+        "synonyms": [
+          "plate of salad",
+          "plate",
+          "food"
+        ]
+      }
+    ]
+  }

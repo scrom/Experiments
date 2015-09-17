@@ -1,0 +1,25 @@
+﻿  {
+    "object": "location",
+    "name": "snorting-horses",
+    "displayName": "Snorting Horses meeting room",
+    "description": "You're in the Snorting Horses meeting room.<br>There's a great view out of the windows. The table has been rendered to look like straw, one wall is covered in rosettes whilst the other mixes acoustic treatment with some rather alarming horse-head-shaped lighting.<br>Overall there's something deeply unsettling about spending time alone in here.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "snorting-horses",
+        "destination": "second-floor-north-west-corridor-north-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "It's a long way down.",
+        "attributes": {
+          "viewDestination": "office-front"
+        }
+      }
+    ]
+  }

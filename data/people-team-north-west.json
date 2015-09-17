@@ -1,0 +1,22 @@
+﻿  {
+    "object": "location",
+    "name": "people-team-north-west",
+    "displayName": "People Team area",
+    "description": "You're in the North-West corner of the People Team area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "people-team-north-west",
+        "destination": "people-team-north"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "people-team-north-west",
+        "destination": "thinking-hats"
+      }
+    ]
+  }

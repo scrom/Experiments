@@ -1,0 +1,36 @@
+﻿  {
+    "object": "location",
+    "name": "sales-north",
+    "displayName": "Sales area",
+    "description": "You're at the North end of the sales and marketing area.<br>To the North is a door. East is the marketing area and West are some recreational spaces.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "sales-north",
+        "destination": "sales-main"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "sales-north",
+        "destination": "marketing"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "sales-north",
+        "destination": "first-floor-back-stairs-east"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "sales-north",
+        "destination": "sales-break-out"
+      }
+    ]
+  }

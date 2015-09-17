@@ -1,0 +1,22 @@
+﻿  {
+    "object": "location",
+    "name": "people-team-area",
+    "displayName": "People Team area",
+    "description": "You're in the People Team area. For such an overworked group they're always available and happy to help.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "people-team-area",
+        "destination": "creative-agency-area"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "people-team-area",
+        "destination": "people-team-north"
+      }
+    ]
+  }
