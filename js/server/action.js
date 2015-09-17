@@ -1408,7 +1408,10 @@ exports.Action = function Action(player, map, fileManager) {
                 var location = _player.getCurrentLocation();
                 try {
                     //if this fails, it's not the end of the world. Log it but continue
-                    imageName = location.getImageName();
+                    //check getImageNameFunction exists (test stub support)
+                    if (location.getImageName) {
+                        imageName = location.getImageName();
+                    };
                 } catch (err) {console.log(err.stack);};
             };
 
