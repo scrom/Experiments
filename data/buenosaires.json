@@ -1,0 +1,69 @@
+﻿{
+    "object": "location",
+    "name": "buenosaires",
+    "displayName": "Buenos Aires interview room",
+    "description": "You're in the Buenos Aires interview room.<br>Despite containing all the things you'd expect of an interview room, it still manages to feel empty and clinical.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "buenosaires",
+        "destination": "east-corridor-ground-floor-north-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "walls",
+        "detailedDescription": "Sparse, clinical and white.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "walls"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "whiteboard",
+        "detailedDescription": "Despite regular cleaning, there's still faint marks from long-disused whiteboard coding exercises and architecture diagrams.",
+        "synonyms": [
+          "board",
+          "white board",
+          "large white board",
+          "large whiteboard",
+          "whitebaord",
+          "diagram",
+          "code"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "flipchart"
+      },
+      {
+        "object": "artefact",
+        "template": "whiteboard-pen",
+        "detailedDescription": "Not great quality but it's a blue pen.",
+        "attributes": {
+          "charges": 10
+        },
+        "synonyms": [
+          "blue pen"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "table"
+      },
+      {
+        "object": "artefact",
+        "template": "chairs",
+        "description": "pair of office chairs"
+      }
+    ]
+  }

@@ -31,6 +31,32 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
         console.log(_objectName + ' created');
         
+        
+        self.buildFromFile = function (file, objectData) {
+            if (objectData == undefined) {
+                objectData = {};  
+            };
+            var data = objectData;
+            for (var property in file) {
+                if (file.hasOwnProperty(property)) {
+                    //copy in properties from file if not overridden on artefact
+                    if (!data.hasOwnProperty(property)) {
+                        //copy entire property
+                        data[property] = file[property];
+                    } else {
+                        if (typeof data[property] == "object") {
+                            //includes arrays - this can mean template arrays may be only *partially* overwritten - use caution
+                            //recursively copy sub-properties
+                            data[property] = self.buildFromFile(file[property], data[property]);
+                        };
+                    };
+                };
+            };
+            
+            return data;
+        };
+        
+        
         self.buildFromTemplate = function (template, objectData) {
             var data = objectData;
             for (var property in template) {
@@ -436,7 +462,19 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         };
 
         self.buildGameObjects = function(gameDataAsJSON) {
-
+            //build from files
+            console.log("Building main data...");
+            for (var i = 0; i < gameDataAsJSON.length; i++) {
+                if (gameDataAsJSON[i].file) {
+                    //overwrite game data element with named file
+                    var fileData = gameDataAsJSON[i]
+                    var builtFile = self.buildFromFile(data[gameDataAsJSON[i].file]);
+                    gameDataAsJSON[i] = builtFile;                    
+                };
+            };
+            console.log("Main data built.");
+            
+            ///////////////
             //locations and links
             console.log("Building locations...");
             for (var i=0; i<gameDataAsJSON.length;i++) {

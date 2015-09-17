@@ -1,0 +1,561 @@
+﻿  {
+    "object": "location",
+    "name": "atrium",
+    "displayName": "Atrium",
+    "description": "You're standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
+    "attributes": {
+      "start": true
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "atrium",
+        "destination": "reception"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "atrium",
+        "destination": "ground-floor-toilet"
+      },
+      {
+        "object": "exit",
+        "longname": "in",
+        "direction": "i",
+        "source": "atrium",
+        "destination": "lift-ground-floor",
+        "hidden": true
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "atrium",
+        "destination": "stairs-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "atrium",
+        "destination": "office-front"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "smell of coffee",
+        "description": "coffee",
+        "detailedDescription": "You'll need to head to the kitchen.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
+          "smell": "Yup, smells like coffee here.<br>Good coffee at that."
+        },
+        "synonyms": [
+          "latte",
+          "coffee"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "air",
+        "description": "smell of smart people and coffee",
+        "detailedDescription": "As I said - smart people and coffee.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "The place is full of 'em. Go explore!",
+          "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
+        },
+        "synonyms": [
+          "smart",
+          "smart people",
+          "people",
+          "graduates"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "button",
+        "description": "lift call button",
+        "detailedDescription": "If you <i>push</i> the button, perhaps a lift may come.",
+        "attributes": {
+          "defaultAction": "press",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "customAction": "call",
+          "defaultResult": "$action press"
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "in",
+            "direction": "i",
+            "source": "atrium",
+            "destination": "lift-ground-floor",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lift",
+          "lift call",
+          "lift button",
+          "lift call button",
+          "door"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "screen",
+        "template": "flat-screen",
+        "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
+        "attributes": {
+          "imageName": "screen.jpg"
+        },
+        "missions": [
+          {
+            "object": "mission",
+            "name": "destroyscreen",
+            "displayName": "destroy the screen",
+            "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
+            "attributes": {
+              "missionObject": "screen",
+              "static": true
+            },
+            "failAttributes": {
+              "time": 10
+            },
+            "conditionAttributes": {
+              "isDestroyed": true
+            },
+            "reward": {
+              "score": -25,
+              "health": -15,
+              "message": "Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen."
+            },
+            "fail": {
+              "message": "You didn't manage to destroy the screen quickly enough.<br>Never mind, it's probably better left alone anyway."
+            }
+          }
+        ]
+      }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "awaitvanarrival",
+        "displayName": "steal some valuables",
+        "attributes": {
+          "type": "event",
+          "parent": "stealsketchbook"
+        },
+        "conditionAttributes": {
+          "time": "25"
+        },
+        "reward": {
+          "message": "You've probably kept out of the way long enough to go and chat to Jordan again without suspicion if you feel like taking on another 'job'."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "boring",
+        "displayName": "wait 25 times",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "waitCount": 25
+        },
+        "reward": {
+          "score": 5,
+          "message": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "explorer",
+        "displayName": "find every location",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "locationsToFind": 0
+        },
+        "reward": {
+          "score": 100,
+          "message": "<br>You're quite the explorer!<br>Congratulations, you've found every location."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "adventurer",
+        "displayName": "find 100 locations",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "locationsFound": 100
+        },
+        "reward": {
+          "score": 50,
+          "message": "<br>Hey, that's some impressive adventuring!<br>You've found 100 locations."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "psycho",
+        "displayName": "build aggression up to 25",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "maxAggression": 25
+        },
+        "reward": {
+          "score": -25,
+          "message": "<br>Whoa, you're out of control. You need to seriously work on your anger management."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "liability",
+        "displayName": "destroy 15 items",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "destroyedObjectsCount": 15
+        },
+        "reward": {
+          "score": -15,
+          "message": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe?"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "thief",
+        "displayName": "steal 5 objects",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "stolenObjectsCount": 5
+        },
+        "reward": {
+          "score": -35,
+          "message": "<br>Stealing may be one way of achieving your goals but it really doesn't fit in with our values."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "bookworm",
+        "displayName": "read nearly all the things",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "booksToRead": 5
+        },
+        "reward": {
+          "score": 50,
+          "message": "<br>I like your attitude to learning, keep it up<br>Only three more items left to read!"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "scholar",
+        "displayName": "read all the things",
+        "attributes": {
+          "parent": "bookworm",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "booksToRead": 0
+        },
+        "reward": {
+          "score": 25,
+          "message": "<br>You read 'all the things'!"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "chatterbox",
+        "displayName": "talk to 15 people",
+        "attributes": {
+          "parent": "keyfob",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "creaturesToSpeakTo": 15
+        },
+        "reward": {
+          "score": 25,
+          "message": "<br>You're quite a chatterbox. We like people who talk and collaborate."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "networker",
+        "displayName": "talk to every character possible",
+        "attributes": {
+          "parent": "chatterbox",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "creaturesToSpeakTo": 0
+        },
+        "reward": {
+          "score": 50,
+          "message": "<br>Wow, you spoke to <i>everyone</i>. That's quite a network you're building up."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "bff",
+        "displayName": "gain affinity from one character up to level 12",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "maxAffinity": 12
+        },
+        "reward": {
+          "score": 50,
+          "message": "<br>You're making a real effort here. Looks like you've almost got a best friend forever!"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "first-aider",
+        "displayName": "heal 5 times",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "healCount": 5
+        },
+        "reward": {
+          "score": 25,
+          "message": "<br>We could do with someone like you on the first-aid team. You've got quite the healing skills."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "doctor",
+        "displayName": "heal more than 8 times",
+        "attributes": {
+          "parent": "first-aider",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "healCount": 9
+        },
+        "reward": {
+          "score": 50,
+          "message": "<br>You've really 'got it' with the healing activities.<br>(Although where that level of repeated injury in an office environment came from is somewhat worrying.)"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "asshole",
+        "displayName": "really upset a lot of people",
+        "attributes": {
+          "parent": "thinice",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "popularity": "<-24"
+        },
+        "reward": {
+          "score": -100,
+          "message": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "lovedbyall",
+        "displayName": "make yourself popular with nearly everyone",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "popularity": ">95"
+        },
+        "reward": {
+          "score": 100,
+          "message": "<br>Wow. You're winning in the popularity stakes!"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "thinice",
+        "displayName": "upset a few people",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "popularity": "<-5"
+        },
+        "reward": {
+          "score": 5,
+          "message": "<br>You're treading a fine line here.<br>Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br><br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "artist",
+        "displayName": "draw lots of pictures",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "drawingCount": ">5"
+        },
+        "reward": {
+          "score": 5,
+          "message": "<br>You're think you're quite the artist, don't you."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "author",
+        "displayName": "write lots of notes",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "writingCount": ">10"
+        },
+        "reward": {
+          "score": 10,
+          "message": "<br>You seem to be writing quite a few notes.<br>Anyone would think you're destined for management."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "junioroccultist",
+        "displayName": "draw a pentagram on a floor",
+        "attributes": {
+          "missionObject": "floor"
+        },
+        "conditionAttributes": {
+          "drawings": [
+            "pentagram"
+          ]
+        },
+        "reward": {
+          "score": 5,
+          "message": "<br>Hmm. It seems we have a budding occultist here.<br>You might be getting ahead of yourself a bit."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "scaryoccultist",
+        "displayName": "draw a pentagram on a floor and add blood to it",
+        "attributes": {
+          "missionObject": "floor"
+        },
+        "conditionAttributes": {
+          "drawings": [
+            "pentagram"
+          ],
+          "wetted": [
+            "blood"
+          ]
+        },
+        "reward": {
+          "score": 5,
+          "message": "<br>I'm really not comfortable with your behaviour.<br>Blood and pentagrams are a bit of a worrying mix for an office environment."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "spendthrift",
+        "displayName": "spend more than &pound;100",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "cashSpent": ">100"
+        },
+        "reward": {
+          "score": 5,
+          "message": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to &pound;100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "moneymaker",
+        "displayName": "gain more than &pound;100",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "cashGained": ">100"
+        },
+        "reward": {
+          "score": 50,
+          "message": "<br>You've made quite a bit of money there, great job!<br>We hope you didn't come about it through foul means though."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "collector",
+        "displayName": "collect and carry more than &pound;100 worth of valuables",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "inventoryValue": ">100"
+        },
+        "reward": {
+          "score": 35,
+          "message": "<br>You've collected quite a lot of valuable stuff there!<br>Have you considered <i>sell</i>ing any of it?"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "pickpocket",
+        "displayName": "steal more than &pound;50 worth of valuables",
+        "attributes": {
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "stolenCash": ">50"
+        },
+        "reward": {
+          "score": -150,
+          "message": "<br>Yeah...<br>...about all that money you've made.<br>That level of dishonesty will get you fired pretty much immediately."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "latte",
+        "displayName": "get yourself a latte",
+        "description": "It's your first day in the office. Check in with Vic at reception and then head to the kitchen and get yourself off to a decent start with a nice latte.",
+        "attributes": {
+          "missionObject": "latte",
+          "destination": "player"
+        },
+        "conditionAttributes": {
+          "isDestroyed": false
+        },
+        "reward": {
+          "score": 75,
+          "message": "<br>Congratulations, you managed to get your latte.<br><br>Drink up, wake up and start doing a bit more to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
+        }
+      }
+    ]
+  }

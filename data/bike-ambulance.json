@@ -1,0 +1,82 @@
+﻿{
+    "object": "location",
+    "name": "bike-ambulance",
+    "displayName": "Bike ambulance",
+    "description": "You're in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "bike-ambulance",
+        "destination": "west-bike-racks"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "bike ambulance",
+        "description": "bike ambulance",
+        "detailedDescription": "It's an old converted NHS ambulance. It's pretty beaten-up but looks functional.",
+        "attributes": {
+          "weight": 3500,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ambulance"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "rick",
+        "displayname": "Rick",
+        "description": "Rick the bike ambulance guy",
+        "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
+        "attributes": {
+          "template": "creature-male-l4",
+          "canTravel": false,
+          "traveller": false,
+          "repairSkills": [
+            "bike"
+          ]
+        },
+        "synonyms": [
+          "bike guy",
+          "ric",
+          "him",
+          "rik"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "collectchrisbike",
+            "displayName": "collect Chris' bike",
+            "description": "Chris booked his bike in for repairs, you'll need to <i>give</i> Chris' bike to Rick.",
+            "attributes": {
+              "parent": "fixchrisbike",
+              "missionObject": "bike",
+              "destination": "rick",
+              "static": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false
+            },
+            "reward": {
+              "score": 50,
+              "affinityModifier": 2,
+              "increaseAffinityFor": "chris moore",
+              "removeObject": "bike",
+              "message": "You hand Chris' bike over to Rick.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it."
+            }
+          }
+        ]
+      }
+    ]
+  }
