@@ -1,0 +1,76 @@
+﻿{
+    "object": "location",
+    "name": "lift-ground-floor",
+    "displayName": "Lift",
+    "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "lift-ground-floor",
+        "destination": "atrium",
+        "hidden": true
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "lift-ground-floor",
+        "destination": "lift-first-floor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "alarm button",
+        "description": "alarm button",
+        "detailedDescription": "It doesn't look like it's been used in quite some time.",
+        "attributes": {
+          "type": "scenery",
+          "isBroken": true,
+          "customAction": [
+            "press",
+            "push",
+            "shove",
+            "hold"
+          ],
+          "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+        },
+        "synonyms": [
+          "alarm"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "exit button",
+        "description": "exit button",
+        "detailedDescription": "If you push the exit, you should be able to get out again.",
+        "attributes": {
+          "defaultAction": "press",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "out",
+            "direction": "o",
+            "source": "lift-ground-floor",
+            "destination": "atrium",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lift",
+          "lift call",
+          "lift button",
+          "lift call button",
+          "door",
+          "exit",
+          "button"
+        ]
+      }
+    ]
+  }

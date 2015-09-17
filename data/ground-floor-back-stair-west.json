@@ -1,0 +1,47 @@
+﻿{
+    "object": "location",
+    "name": "ground-floor-back-stairs-west",
+    "displayName": "Back stairs (West) - Ground floor",
+    "description": "You're in the bottom of the west fire escape stairs.",
+    "attributes": {
+      "dark": true
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "ground-floor-back-stairs-west",
+        "destination": "opportunities-north"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "ground-floor-back-stairs-west",
+        "destination": "first-floor-back-stairs-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "key",
+        "description": "coffee machine key",
+        "detailedDescription": "It unlocks coffee machines.",
+        "attributes": {
+          "weight": 0.1,
+          "type": "key",
+          "canCollect": true,
+          "affinityModifier": 0,
+          "unlocks": "coffee machine"
+        },
+        "synonyms": [
+          "vending key",
+          "machine key",
+          "vending machine key",
+          "coffee machine key",
+          "coffee key"
+        ]
+      }
+    ]
+  }

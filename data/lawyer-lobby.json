@@ -1,0 +1,15 @@
+﻿{
+    "object": "location",
+    "name": "lawyer-lobby",
+    "displayName": "Lawyer's lobby",
+    "description": "You're in the lobby of the resident law firm.<br>There's an air of bureaucracy, suits and books to the place.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "lawyer-lobby",
+        "destination": "atrium-seating"
+      }
+    ]
+  }

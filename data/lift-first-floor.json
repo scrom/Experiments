@@ -1,0 +1,29 @@
+﻿{
+    "object": "location",
+    "name": "lift-first-floor",
+    "displayName": "Lift",
+    "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "lift-first-floor",
+        "destination": "first-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "lift-first-floor",
+        "destination": "lift-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "lift-first-floor",
+        "destination": "lift-second-floor"
+      }
+    ]
+  }

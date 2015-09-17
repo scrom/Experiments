@@ -1,0 +1,65 @@
+﻿{
+    "object": "location",
+    "name": "machine-room-west",
+    "displayName": "Machine room",
+    "description": "You're in the IS storage area.<br>You're not meant to be in here unaccompanied I think. There are cables, wires, tools and spare pieces of hardware arrayed around you.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "machine-room-west",
+        "destination": "second-floor-east-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "machine-room-west",
+        "destination": "machine-room-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "hardware",
+        "description": "hardware",
+        "detailedDescription": "Most of this stuff looks old, broken or redundant.",
+        "attributes": {
+          "type": "scenery",
+          "isBroken": true,
+          "defaultResult": "There's little or nothing here of any use to you at the moment."
+        },
+        "synonyms": [
+          "cables",
+          "cable",
+          "tools",
+          "hardware",
+          "wire",
+          "wires"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "screwdriver",
+        "description": "large flat-headed screwdriver",
+        "detailedDescription": "Not much use for working on electronics but I'm sure it has other uses.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 0.1,
+          "attackStrength": 15,
+          "type": "tool",
+          "subType": "sharp",
+          "canCollect": true,
+          "affinityModifier": 2,
+          "unlocks": "cubicle door"
+        },
+        "synonyms": [
+          "flat scredriver",
+          "large screwdriver",
+          "large flat-head screwdriver",
+          "flat-head screwdriver"
+        ]
+      }
+    ]
+  }

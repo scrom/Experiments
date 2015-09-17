@@ -1,0 +1,15 @@
+﻿{
+    "object": "location",
+    "name": "mercedes",
+    "displayName": "Mercedes meeting room",
+    "description": "You're in the Mercedes meeting room. An odd-shaped room that's rarely used by any but the locals.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "mercedes",
+        "destination": "core-area-west"
+      }
+    ]
+  }

@@ -1,0 +1,15 @@
+﻿{
+    "object": "location",
+    "name": "ground-floor-back-stair-east",
+    "displayName": "Back stairs (East) - Ground floor",
+    "description": "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here. People don't come down here very often unless they're lost.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "ground-floor-back-stair-east",
+        "destination": "first-floor-back-stairs-east"
+      }
+    ]
+  }

@@ -1,0 +1,25 @@
+﻿{
+    "object": "location",
+    "name": "jellyfish-meeting-room",
+    "displayName": "Jellyfish meeting room",
+    "description": "You're in Jellyfish meeting room. The carpet in here is a rather vivid green.<br>Through the window to the north you can see the main office stairs I wonder who's trying not to spill their coffee today.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "jellyfish-meeting-room",
+        "destination": "customer-delight-management-area"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "window",
+        "detailedDescription": "It's not the greatest view you could get from a meeting room.",
+        "attributes": {
+          "viewDestination": "stairs-first-floor"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,15 @@
+﻿{
+    "object": "location",
+    "name": "marketing",
+    "displayName": "Marketing area",
+    "description": "You're in the Marketing area.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "marketing",
+        "destination": "sales-north"
+      }
+    ]
+  }

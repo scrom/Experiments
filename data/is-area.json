@@ -1,0 +1,142 @@
+﻿{
+    "object": "location",
+    "name": "is-area",
+    "displayName": "IS team area",
+    "description": "You're in the IS area. The team here keep this show on the road. Anything you need, they can usually get it or fix it for you.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "is-area",
+        "destination": "second-floor-seating-area-east"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "is-area",
+        "destination": "second-floor-east-corridor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "is-area",
+        "destination": "core-area-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "amanda mansfield",
+        "displayname": "Amanda Mansfield",
+        "description": "Amanda from IS",
+        "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
+        "attributes": {
+          "template": "creature-female-l2",
+          "imageName": "amandamansfield.jpg",
+          "repairSkills": [
+            "projector",
+            "hard disk"
+          ]
+        },
+        "synonyms": [
+          "amanda",
+          "mandy",
+          "manda",
+          "mansfield",
+          "her"
+        ],
+        "dislikes": [
+          "james moore",
+          "jordan miller"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "teachprojectorrepair",
+            "displayName": "learn projector repair from Amanda",
+            "description": "Amanda knows how to fix stuff.",
+            "attributes": {
+              "parent": "keyfob",
+              "missionObject": "amanda mansfield",
+              "static": true,
+              "dialogue": [
+                "'Hi $player.'<br>'Would you be willing to help me out with a simple maintenance job?'",
+                {
+                  "state": 1,
+                  "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                  ],
+                  "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in Poppy for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.'",
+                  "nextState": 3
+                },
+                {
+                  "state": 1,
+                  "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                  ],
+                  "response": "'Thanks for nothing.'<br>'Let's hope you don't need anything from me in future.'",
+                  "nextState": 99
+                },
+                {
+                  "state": 1,
+                  "response": "'OK. Maybe later?'",
+                  "nextState": 2
+                },
+                {
+                  "state": 2,
+                  "response": "'Hi again $player.'<br>'Any chance you could help me out now?'",
+                  "nextState": 1
+                }
+              ]
+            },
+            "failAttributes": {
+              "conversationState": 99
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 3
+            },
+            "reward": {
+              "delivers": {
+                "object": "artefact",
+                "name": "bulb",
+                "description": "projector bulb",
+                "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
+                "attributes": {
+                  "weight": 0.1,
+                  "attackStrength": 5,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "affinityModifier": 0,
+                  "componentOf": [
+                    "projector"
+                  ]
+                },
+                "synonyms": [
+                  "lightbulb",
+                  "light bulb",
+                  "projector bulb"
+                ]
+              },
+              "repairSkill": "projector",
+              "message": "Amanda hands you a projector bulb."
+            },
+            "fail": {
+              "message": "I bet you're always the first to make a fuss if things don't work when <i>you</i> need them.",
+              "affinityModifier": 1,
+              "decreaseAffinityFor": "amanda mansfield"
+            }
+          }
+        ]
+      }
+    ]
+  }

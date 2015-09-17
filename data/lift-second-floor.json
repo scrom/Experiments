@@ -1,0 +1,22 @@
+﻿{
+    "object": "location",
+    "name": "lift-second-floor",
+    "displayName": "Lift",
+    "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "out",
+        "direction": "o",
+        "source": "lift-second-floor",
+        "destination": "second-floor-landing-central"
+      },
+      {
+        "object": "exit",
+        "longname": "down",
+        "direction": "d",
+        "source": "lift-second-floor",
+        "destination": "lift-first-floor"
+      }
+    ]
+  }
