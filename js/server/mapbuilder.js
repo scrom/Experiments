@@ -121,6 +121,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
                 if (artefactData.delivers) {
                     for (var i = 0; i < artefactData.delivers.length; i++) {
+                        //construct from file first if needed
+                        if (artefactData.delivers[i].file) {
+                            artefactData.delivers[i] = self.buildFromFile(data[artefactData.delivers[i].file]);
+                        };
                         delivers.push(self.buildArtefact(artefactData.delivers[i]));
                     };
                 };
@@ -130,7 +134,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (artefactData.inventory) {
                     //add items directly to inventory
                     inventory = artefact.getInventoryObject();
-                    for (var i=0; i<artefactData.inventory.length; i++) {
+                    for (var i = 0; i < artefactData.inventory.length; i++) {
+                        //construct from file first if needed
+                        if (artefactData.inventory[i].file) {
+                            artefactData.inventory[i] = self.buildFromFile(data[artefactData.inventory[i].file]);
+                        };
                         if (artefactData.inventory[i].object == "artefact") {
                             var position;
                             if (artefactData.inventory[i].attributes) {
@@ -147,7 +155,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
 
                 if (artefactData.missions) {
-                    for (var j=0; j<artefactData.missions.length; j++) {
+                    for (var j = 0; j < artefactData.missions.length; j++) {
+                        //construct from file first if needed
+                        if (artefactData.missions[j].file) {
+                            artefactData.missions[j] = self.buildFromFile(data[artefactData.missions[j].file]);
+                        };
                         artefact.addMission(self.buildMission(artefactData.missions[j]));
                     };
                 };
@@ -216,7 +228,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (creatureData.inventory) {
                     //add items directly to inventory
                     inventory = creature.getInventoryObject();
-                    for (var i=0; i<creatureData.inventory.length; i++) {
+                    for (var i = 0; i < creatureData.inventory.length; i++) {
+                        //construct from file first if needed
+                        if (creatureData.inventory[i].file) {
+                            creatureData.inventory[i] = self.buildFromFile(data[creatureData.inventory[i].file]);
+                        };
                         if (creatureData.inventory[i].object == "artefact") {
                             var position;
                             if (creatureData.inventory[i].attributes) {
@@ -236,12 +252,20 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     //add items directly to inventory
                     salesInventory = creature.getSalesInventoryObject();
                     for (var i = 0; i < creatureData.sells.length; i++) {
+                        //construct from file first if needed
+                        if (creatureData.sells[i].file) {
+                            creatureData.sells[i] = self.buildFromFile(data[creatureData.sells[i].file]);
+                        };
                         if (creatureData.sells[i].object == "artefact") { salesInventory.add(self.buildArtefact(creatureData.sells[i])); };
                         //else if (creatureData.sells[i].object == "creature") {salesInventory.add(self.buildCreature(creatureData.sells[i]));}; //won't work - creatures need to "go" to a locaion at the moment
                     };
                 };
                 if (creatureData.missions) {
-                    for (var j=0; j<creatureData.missions.length; j++) {
+                    for (var j = 0; j < creatureData.missions.length; j++) {
+                        //construct from file first if needed
+                        if (creatureData.missions[j].file) {
+                            creatureData.missions[j] = self.buildFromFile(data[creatureData.missions[j].file]);
+                        };
                         creature.addMission(self.buildMission(creatureData.missions[j]));
                     };
                 };
@@ -272,7 +296,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             return returnObject;
         };
 
-        self.unpackReward = function(reward) {
+        self.unpackReward = function (reward) {
+            //construct from file first if needed
+            if (reward.file) {
+                reward = self.buildFromFile(data[reward.file]);
+            };
             //console.log("Unpacking reward: "+reward);
             var returnObject = {};
             //set maximum possible game score...
@@ -290,7 +318,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             };
             if (reward.locations) {
                 returnObject.locations = [];
-                for (var l=0; l<reward.locations.length;l++) {
+                for (var l = 0; l < reward.locations.length; l++) {
+                    //construct from file first if needed
+                    if (reward.locations[l].file) {
+                        reward.locations[l] = self.buildFromFile(data[reward.locations[l].file]);
+                    };
                     var rewardLocation = self.buildLocation(reward.locations[l]);
                     for (var j=0; j<reward.locations[l].exits.length;j++) {
                         var exitData = reward.locations[l].exits[j];
@@ -300,6 +332,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     if (reward.locations[l].inventory) {
                         for (var i=0; i<reward.locations[l].inventory.length;i++) {
                             var inventoryData = reward.locations[l].inventory[i];
+                            //construct from file first if needed
+                            if (inventoryData.file) {
+                                inventoryData = self.buildFromFile(data[inventoryData.file]);
+                            };
                             //manually add exits from each location (linking not needed)
                             if (inventoryData.object == "artefact") {
                                 rewardLocation.addObject(self.buildArtefact(inventoryData));
@@ -328,6 +364,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     returnObject.modifyLocation.inventory = [];
                     for (var i=0; i<reward.modifyLocation.inventory.length;i++) {
                         var inventoryData = reward.modifyLocation.inventory[i];
+                        //construct from file first if needed
+                        if (inventoryData.file) {
+                            inventoryData = self.buildFromFile(data[inventoryData.file]);
+                        };
                         if (inventoryData.object == "artefact") {
                             returnObject.modifyLocation.inventory.push(self.buildArtefact(inventoryData));
                         } else if (inventoryData.object == "creature") {
@@ -505,7 +545,12 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 
                     //add objects and creatures to locations (this includes their child, deliver and mission objects!)
                     if (locationData.inventory) {
-                        for (var k=0; k<locationData.inventory.length; k++) {
+                        for (var k = 0; k < locationData.inventory.length; k++) {
+                            //construct from file first if needed
+                            if (locationData.inventory[k].file) {
+                                locationData.inventory[k] = self.buildFromFile(data[locationData.inventory[k].file]);
+                            };
+                            //build artefacts or creatures
                             if (locationData.inventory[k].object == "artefact") {location.addObject(self.buildArtefact(locationData.inventory[k]));}
                             else if (locationData.inventory[k].object == "creature") {
                                 var creature = self.buildCreature(locationData.inventory[k])
@@ -523,7 +568,12 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
                     //add missions to locations
                     if (locationData.missions) {
-                        for (var l=0; l<locationData.missions.length; l++) {
+                        for (var l = 0; l < locationData.missions.length; l++) {
+                            //construct from file first if needed
+                            if (locationData.missions[l].file) {
+                                locationData.missions[l] = self.buildFromFile(data[locationData.missions[l].file]);
+                            };
+                            //add mission
                             location.addMission(self.buildMission(locationData.missions[l]));
                         };
                     };
