@@ -1,0 +1,29 @@
+﻿  {
+    "object": "location",
+    "name": "west-end-south-corridor-ground-floor",
+    "displayName": "South corridor ground floor",
+    "description": "You're near the West end of the South corridor on the ground floor.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "west-end-south-corridor-ground-floor",
+        "destination": "southwest-corridor-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "west-end-south-corridor-ground-floor",
+        "destination": "east-end-south-corridor-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "west-end-south-corridor-ground-floor",
+        "destination": "graffiti-b"
+      }
+    ]
+  }

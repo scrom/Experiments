@@ -1,0 +1,32 @@
+﻿  {
+    "object": "location",
+    "name": "a14-roundabout-south",
+    "displayName": "Milton roundabout",
+    "description": "You're on the Milton roundabout.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Left",
+        "direction": "l",
+        "source": "a14-roundabout-south",
+        "destination": "milton-road-north-end",
+        "requiredAction": "drive"
+      },
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "a14-roundabout-south",
+        "destination": "a14-roundabout-south-west",
+        "requiredAction": "drive"
+      }
+    ]
+  }

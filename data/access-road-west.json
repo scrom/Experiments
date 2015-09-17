@@ -1,0 +1,24 @@
+﻿  {
+    "object": "location",
+    "name": "access-road-west",
+    "displayName": "Business park access road",
+    "description": "You're driving West along the East/West access road for the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "access-road-west",
+        "destination": "access-road-junction",
+        "requiredAction": "drive"
+      }
+    ]
+  }

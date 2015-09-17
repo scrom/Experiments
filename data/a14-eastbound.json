@@ -1,0 +1,14 @@
+﻿  {
+    "object": "location",
+    "name": "a14-eastbound",
+    "displayName": "A14 Eastbound",
+    "description": "You're driving East along the A14. On the opposite side of the road you see a stationary line of cars stretching beyond the horizon.<br>I bet you're glad you didn't head west!",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    }
+  }

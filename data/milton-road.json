@@ -1,0 +1,24 @@
+﻿  {
+    "object": "location",
+    "name": "milton-road",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading into Cambridge.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "milton-road",
+        "destination": "golden-hind-junction",
+        "requiredAction": "drive"
+      }
+    ]
+  }

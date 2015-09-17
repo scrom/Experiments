@@ -19,6 +19,18 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="data\a14-eastbound.json" />
+    <Content Include="data\a14-roundabout-east.json" />
+    <Content Include="data\a14-roundabout-entrance.json" />
+    <Content Include="data\a14-roundabout-north-east.json" />
+    <Content Include="data\a14-roundabout-south-west.json" />
+    <Content Include="data\a14-roundabout-south.json" />
+    <Content Include="data\a14-roundabout.json" />
+    <Content Include="data\a14-westbound.json" />
+    <Content Include="data\access-road-central.json" />
+    <Content Include="data\access-road-east.json" />
+    <Content Include="data\access-road-junction.json" />
+    <Content Include="data\access-road-west.json" />
     <Content Include="data\atrium-seating.json" />
     <Content Include="data\atrium.json" />
     <Content Include="data\basin.json" />
@@ -85,6 +97,8 @@
     <Content Include="data\machine-room-west.json" />
     <Content Include="data\marketing.json" />
     <Content Include="data\mercedes.json" />
+    <Content Include="data\milton-road-north-end.json" />
+    <Content Include="data\milton-road.json" />
     <Content Include="data\mirror.json" />
     <Content Include="data\northwest-corridor-ground-floor.json" />
     <Content Include="data\office-front.json" />
@@ -185,12 +199,21 @@
     <Content Include="data\toilet-brush.json" />
     <Content Include="data\toilet.json" />
     <Content Include="data\top-fire-escape.json" />
+    <Content Include="data\traffic-jam-meeting-room.json" />
+    <Content Include="data\war-room.json" />
+    <Content Include="data\waste-area.json" />
     <Content Include="data\water.json" />
+    <Content Include="data\web-meeting-room.json" />
+    <Content Include="data\west-bike-racks.json" />
+    <Content Include="data\west-car-park.json" />
+    <Content Include="data\west-corridor-ground-floor.json" />
+    <Content Include="data\west-end-south-corridor-ground-floor.json" />
     <Content Include="data\white-coffee.json" />
     <Content Include="data\whiteboard-pen.json" />
     <Content Include="data\whiteboard.json" />
     <Content Include="data\window.json" />
     <Content Include="client\index.html" />
+    <Content Include="data\windows-meeting-room.json" />
     <Content Include="js\server\test\testdata\canonical-game-data.json" />
     <Content Include="js\server\test\testdata\savegame-0.json" />
     <Content Include="package.json" />

@@ -1,0 +1,15 @@
+﻿  {
+    "object": "location",
+    "name": "web-meeting-room",
+    "displayName": "Web meeting room",
+    "description": "You're in the Web meeting room.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "web-meeting-room",
+        "destination": "support-west"
+      }
+    ]
+  }

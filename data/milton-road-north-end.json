@@ -1,0 +1,24 @@
+﻿  {
+    "object": "location",
+    "name": "milton-road-north-end",
+    "displayName": "Milton Road",
+    "description": "You're driving south along Milton road heading towards the business park.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "Continue",
+        "direction": "c",
+        "source": "milton-road-north-end",
+        "destination": "milton-road",
+        "requiredAction": "drive"
+      }
+    ]
+  }

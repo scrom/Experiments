@@ -1,0 +1,129 @@
+﻿  {
+    "object": "location",
+    "name": "west-car-park",
+    "displayName": "Car park (West)",
+    "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+    "attributes": {
+      "type": "outdoor",
+      "vehiclesAllowed": [
+        "bike",
+        "car",
+        "van"
+      ]
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "west-car-park",
+        "destination": "office-front"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "west-car-park",
+        "destination": "west-bike-racks"
+      }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "saveredgate",
+        "displayName": "save Red Gate from the zombie contagion",
+        "description": "The scene of devastation nearby looks very bad...<br>You need to help all the Red Gate staff survive the zombie apocalypse. Act quickly!",
+        "attributes": {
+          "parent": "planecrash"
+        },
+        "failAttributes": {
+          "contagionDeathToll": {
+            "friendly": ">0"
+          }
+        },
+        "conditionAttributes": {
+          "contagion": [],
+          "contagionDeathToll": {
+            "friendly": 0
+          }
+        },
+        "reward": {
+          "modifyObject": {
+            "name": "jordan miller",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "hard disk",
+                "description": "hard disk",
+                "detailedDescription": "Our IS team are pretty handy with these things.",
+                "attributes": {
+                  "weight": 0.75,
+                  "attackStrength": 5,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "isDamaged": true,
+                  "price": 50,
+                  "componentOf": [
+                    "server"
+                  ]
+                },
+                "synonyms": [
+                  "disc",
+                  "drive",
+                  "hard drive",
+                  "disk",
+                  "hard disc",
+                  "disc drive",
+                  "disk drive"
+                ]
+              }
+            ]
+          },
+          "score": 200,
+          "maxHealth": 25,
+          "affinityModifier": 1,
+          "increaseAffinityFor": "jordan miller",
+          "decreaseAffinityFor": "simon galbraith",
+          "message": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
+        },
+        "fail": {
+          "score": -200,
+          "affinityModifier": 2,
+          "decreaseAffinityFor": "jordan miller",
+          "increaseAffinityFor": "simon galbraith",
+          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse.",
+          "modifyObject": {
+            "name": "jordan miller",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "hard disk",
+                "description": "hard disk",
+                "detailedDescription": "Our IS team are pretty handy with these things.",
+                "attributes": {
+                  "weight": 0.75,
+                  "attackStrength": 5,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "isDamaged": true,
+                  "price": 50,
+                  "componentOf": [
+                    "server"
+                  ]
+                },
+                "synonyms": [
+                  "disc",
+                  "drive",
+                  "hard drive",
+                  "disk",
+                  "hard disc",
+                  "disc drive",
+                  "disk drive"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
