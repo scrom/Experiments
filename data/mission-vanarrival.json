@@ -1,0 +1,33 @@
+﻿                    {
+                      "object": "mission",
+                      "name": "vanarrival",
+                      "displayName": "fill the van",
+                      "description": "Steal &pound;100 worth of valuables from the company.",
+                      "attributes": {
+                        "parent": "awaitvanarrival",
+                        "missionObject": "jordan miller",
+                        "initiateConversation": true,
+                        "huntPlayer": true,
+                        "static": true,
+                        "dialogue": [
+                          "'I knew I could rely on you.'<br>'I've parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
+                        ]
+                      },
+                      "conditionAttributes": {
+                        "alive": true
+                      },
+                      "reward": {
+                        "locations": [
+                          {"file": "east-car-park-corner"}
+                        ],
+                        "exits": [
+                          {
+                            "object": "exit",
+                            "longname": "North",
+                            "direction": "n",
+                            "source": "waste-area",
+                            "destination": "east-car-park-corner"
+                          }
+                        ]
+                      }
+                    }

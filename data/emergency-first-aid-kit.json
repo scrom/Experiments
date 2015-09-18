@@ -1,0 +1,19 @@
+﻿{
+    "object": "artefact",
+    "template": "first-aid-kit",
+    "name": "emergency first aid kit",
+    "description": "single-use first aid kit",
+    "detailedDescription": "A one-off emergency first-aid kit.",
+    "attributes": {
+        "charges": 1
+    },
+    "synonyms": [
+        "first aid",
+        "kit",
+        "emergency",
+        "emergency kit",
+        "firstaid kit",
+        "first-aid kit",
+        "first-aid"
+    ]
+}

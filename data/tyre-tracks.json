@@ -1,0 +1,17 @@
+﻿                            {
+                                "object": "artefact",
+                                "name": "tyre tracks",
+                                "description": "tyre tracks",
+                                "detailedDescription": "They're too scuffed to see any clear tread marks but they're wide enough to be consistent with a medium-sized goods vehicle.",
+                                "attributes": {
+                                    "type": "scenery",
+                                    "subType": "intangible",
+                                    "plural": true
+                                },
+                                "synonyms": [
+                                    "tyre",
+                                    "tyres",
+                                    "track",
+                                    "tracks"
+                                ]
+                            }

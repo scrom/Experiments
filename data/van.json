@@ -1,0 +1,44 @@
+﻿{
+    "object": "artefact",
+    "name": "van",
+    "description": "white van",
+    "detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
+    "attributes": {
+        "defaultAction": "drive",
+        "weight": 3000,
+        "carryWeight": 500,
+        "burnRate": 0.1,
+        "switched": true,
+        "type": "vehicle",
+        "subType": "van",
+        "canDrawOn": true,
+        "requiredComponentCount": 1,
+        "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first."
+    },
+    "synonyms": [
+        "white van"
+    ],
+    "inventory": [
+        {
+            "object": "artefact",
+            "name": "petrol",
+            "description": "fuel",
+            "detailedDescription": "It looks like there's only a few pounds worth left.",
+            "attributes": {
+                "weight": 10,
+                "isLiquid": true,
+                "charges": 2,
+                "plural": true,
+                "chargeUnit": "gallon",
+                "chargesDescription": "There's about $charges $chargeUnit in the tank",
+                "affinityModifier": 0,
+                "componentOf": [
+                    "van"
+                ]
+            },
+            "synonyms": [
+                "fuel"
+            ]
+        }
+    ]
+}
