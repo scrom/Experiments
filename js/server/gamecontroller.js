@@ -114,7 +114,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             if (filename) {
                 resultString+= "<br>Fortunately we were able to save it for you!<br>You can recover your game by loading the game file "+filename+".<br>Oh, by the way - thanks for coming back :D";
             } else {
-               resultString+= "<br>Unfortunately we weren't able to save your game this time - sorry about that.<br>Hopefully you're still willing to give it another shot.<br>If you'd like to give it another go, please reload this page in your browser."; 
+               resultString+= "<br>Unfortunately we weren't able to save your game this time - sorry about that.<br>Hopefully you're still willing to give it another shot.<br>If you'd like to play again, please reload this page in your browser."; 
             };
             return '{"username":"","id":'+gameId+',"description":"'+resultString+'"}';
         };
