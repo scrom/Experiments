@@ -886,7 +886,7 @@
         "object": "mission",
         "name": "latte",
         "displayName": "get yourself a latte",
-        "description": "It's your first day in the office. Check in with Vic at reception and then head to the kitchen and get yourself off to a decent start with a nice latte.",
+        "description": "It's your first day in the office. Check in with Vic at reception and then head to the kitchen to get yourself fuelled up for the day with a latte.",
         "attributes": {
           "missionObject": "latte",
           "destination": "player"
@@ -896,7 +896,7 @@
         },
         "reward": {
           "score": 75,
-          "message": "<br>Congratulations, you managed to get your latte.<br><br>Drink up, wake up and start doing a bit more to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
+          "message": "<br>Congratulations, you managed to get your latte. That was somewhat more effort than expected though.<br><br>Still, no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
         }
       }
     ]
@@ -8816,7 +8816,7 @@
         "name": "vic wiseman",
         "displayname": "Vic Wiseman",
         "description": "Vic the receptionist",
-        "detailedDescription": "Well, receptionist is an understatement.<br>As well as dealing with all visitors & parcels, she also provides customer support!",
+        "detailedDescription": "Vic's one of our support team. To be honest, 'receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
         "attributes": {
           "weight": 105,
           "money": 20,
@@ -8833,7 +8833,6 @@
           "vw",
           "wiseman",
           "vic w",
-          "heidi",
           "her"
         ],
         "missions": [
@@ -9024,7 +9023,7 @@
         "object": "mission",
         "name": "keyfob",
         "displayName": "get a keyfob",
-        "description": "If you haven't done so already, you'll need to <i>sign in</i> to get a keyfob for the office.",
+        "description": "(You need to <i>sign in</i> to get a keyfob for the office.)",
         "attributes": {
           "parent": "talktovic",
           "missionObject": "visitors book",

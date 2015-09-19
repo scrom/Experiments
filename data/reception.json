@@ -72,7 +72,7 @@
         "name": "vic wiseman",
         "displayname": "Vic Wiseman",
         "description": "Vic the receptionist",
-        "detailedDescription": "Well, receptionist is an understatement.<br>As well as dealing with all visitors & parcels, she also provides customer support!",
+        "detailedDescription": "Vic's one of our support team. To be honest, 'receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
         "attributes": {
           "template": "creature-female-l3",
           "canTravel": false,
@@ -85,7 +85,6 @@
           "vw",
           "wiseman",
           "vic w",
-          "heidi",
           "her"
         ],
         "missions": [
@@ -262,7 +261,7 @@
         "object": "mission",
         "name": "keyfob",
         "displayName": "get a keyfob",
-        "description": "If you haven't done so already, you'll need to <i>sign in</i> to get a keyfob for the office.",
+        "description": "(You need to <i>sign in</i> to get a keyfob for the office.)",
         "attributes": {
           "parent": "talktovic",
           "missionObject": "visitors book",
