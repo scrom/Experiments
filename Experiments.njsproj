@@ -54,12 +54,14 @@
     <Content Include="data\customer-delight-west.json" />
     <Content Include="data\darth-vader.json" />
     <Content Include="data\east-bike-racks.json" />
+    <Content Include="data\east-car-park-corner.json" />
     <Content Include="data\east-car-park.json" />
     <Content Include="data\east-corridor-ground-floor-north-east.json" />
     <Content Include="data\east-corridor-ground-floor-north-west.json" />
     <Content Include="data\east-corridor-ground-floor.json" />
     <Content Include="data\east-end-south-corridor-ground-floor.json" />
     <Content Include="data\east-south-end-corridor-ground-floor.json" />
+    <Content Include="data\emergency-first-aid-kit.json" />
     <Content Include="data\enterprise-meeting-room.json" />
     <Content Include="data\facilities-area.json" />
     <Content Include="data\finance-area.json" />
