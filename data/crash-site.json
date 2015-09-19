@@ -1,0 +1,517 @@
+﻿{
+    "object": "location",
+    "name": "crash-site",
+    "displayName": "Disaster scene",
+    "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
+    "attributes": {
+    "type": "outdoor",
+    "vehiclesAllowed": [
+        "bike"
+    ]
+    },
+    "exits": [
+    {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "crash-site",
+        "destination": "west-car-park"
+    }
+    ],
+    "inventory": [
+    {
+        "object": "artefact",
+        "name": "wreckage",
+        "description": "wreckage",
+        "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
+        "attributes": {
+        "type": "scenery",
+        "smell": "It's going to linger in your nose and memories for quite some time."
+        },
+        "synonyms": [
+        "plastic",
+        "burning",
+        "burning plastic",
+        "debris",
+        "plane",
+        "bodies"
+        ]
+    },
+    {
+        "object": "artefact",
+        "name": "pool",
+        "description": "pool of zombie venom antibodies",
+        "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
+        "attributes": {
+        "defaultAction": "drink",
+        "weight": 1,
+        "requiresContainer": true,
+        "isLiquid": true,
+        "canCollect": true,
+        "charges": 3,
+        "plural": true,
+        "affinityModifier": 0,
+        "isEdible": true,
+        "antibodies": [
+            "zombie"
+        ]
+        },
+        "synonyms": [
+        "antivenom",
+        "antibodies",
+        "zombie venom",
+        "zombie venom antibodies",
+        "zombie antibodies",
+        "venom",
+        "sample",
+        "zombie"
+        ]
+    },
+    {
+        "object": "artefact",
+        "name": "charred book",
+        "description": "book with charred pages",
+        "detailedDescription": "It looks like the tattered and charred remnants of a very rare graphic novel.<br>It could be a clue.",
+        "attributes": {
+        "defaultAction": "read",
+        "weight": 1,
+        "type": "book",
+        "canCollect": true,
+        "affinityModifier": 0,
+        "price": 15,
+        "defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something.",
+        "canDrawOn": true
+        },
+        "synonyms": [
+        "book",
+        "burned book",
+        "charred book",
+        "burned comic",
+        "charred comic",
+        "comic book",
+        "graphic",
+        "graphic novel",
+        "rare graphic novel"
+        ]
+    },
+    {
+        "object": "creature",
+        "name": "dave convery",
+        "displayname": "Dave Convery",
+        "description": "Dave Convery",
+        "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
+        "attributes": {
+        "template": "creature-male-l4",
+        "destinations": [
+            "atrium-seating",
+            "kitchen-ground-floor",
+            "creative-agency-area"
+        ],
+        "loopDelay": 3,
+        "destinationDelay": 3,
+        "imageName": "daveconvery.jpg",
+        "contagion": [
+            {
+            "object": "Contagion",
+            "name": "zombie",
+            "displayName": "zombie",
+            "attributes": {
+                "incubationPeriod": 10,
+                "communicability": 0.5,
+                "symptoms": [
+                {
+                    "action": "bite",
+                    "frequency": 0.33,
+                    "escalation": 0
+                }
+                ]
+            }
+            }
+        ],
+        "homeLocationName": "creative-agency-area"
+        },
+        "synonyms": [
+        "dave",
+        "convery",
+        "him"
+        ]
+    },
+    {
+        "object": "creature",
+        "name": "roger hart",
+        "displayname": "Roger Hart",
+        "description": "Roger Hart",
+        "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.<br>He runs a regular podcast on comics (along with Dave and Lucy)",
+        "attributes": {
+        "template": "creature-male-l3",
+        "destinations": [
+            "east-bike-racks"
+        ],
+        "destinationDelay": 2,
+        "imageName": "rogerhart.jpg",
+        "contagion": [
+            {
+            "object": "Contagion",
+            "name": "zombie",
+            "displayName": "zombie",
+            "attributes": {
+                "incubationPeriod": 6,
+                "communicability": 0.5,
+                "symptoms": [
+                {
+                    "action": "bite",
+                    "frequency": 0.33,
+                    "escalation": 0
+                }
+                ]
+            }
+            }
+        ],
+        "homeLocationName": "marketing"
+        },
+        "synonyms": [
+        "roger",
+        "hart",
+        "him"
+        ]
+    },
+    {
+        "object": "creature",
+        "name": "jordan miller",
+        "displayname": "Jordan Miller",
+        "description": "Jordan Miller",
+        "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
+        "attributes": {
+        "template": "creature-male-l4",
+        "attackStrength": 12,
+        "type": "creature",
+        "affinity": -1,
+        "destinations": [
+            "machine-room-east"
+        ],
+        "avoiding": [
+            "bus"
+        ],
+        "destinationDelay": 15,
+        "imageName": "spy.jpg"
+        },
+        "inventory": [
+        {
+            "object": "artefact",
+            "template": "first-aid-kit",
+            "name": "emergency first aid kit",
+            "description": "single-use first aid kit",
+            "detailedDescription": "A one-off emergency first-aid kit.",
+            "attributes": {
+            "charges": 1
+            },
+            "synonyms": [
+            "first aid",
+            "kit",
+            "emergency",
+            "emergency kit",
+            "firstaid kit",
+            "first-aid kit",
+            "first-aid"
+            ]
+        }
+        ],
+        "synonyms": [
+        "spy",
+        "jordan",
+        "miller",
+        "jm",
+        "him"
+        ],
+        "missions": [
+        {
+            "object": "mission",
+            "name": "killthespy",
+            "displayName": "kill the spy",
+            "description": "I'm sure he wasn't around before the crash!",
+            "attributes": {
+            "parent": "saveredgate",
+            "missionObject": "jordan miller"
+            },
+            "conditionAttributes": {
+            "dead": true
+            },
+            "reward": {
+            "score": 50,
+            "message": "Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
+            }
+        },
+        {
+            "object": "mission",
+            "name": "stealsketchbook",
+            "displayName": "steal Simon's sketch book",
+            "description": "Steal Simon Galbraith's A3 sketchbook.",
+            "attributes": {
+            "missionObject": "sketchbook",
+            "destination": "jordan miller",
+            "static": true,
+            "dialogue": [
+                "'Psst!'<br>'I've got some covert jobs if you're interested. Are you up for it?'",
+                {
+                "state": 1,
+                "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                ],
+                "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+                "nextState": 3
+                },
+                {
+                "state": 1,
+                "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                ],
+                "response": "'Never mind, your loss. You won't get another chance",
+                "nextState": 99
+                },
+                {
+                "state": 1,
+                "response": "'Whatever. Check in later if you think you're up to the job.'",
+                "nextState": 3
+                },
+                {
+                "state": 3,
+                "keywords": [
+                    "ok"
+                ],
+                "response": "'Come back when you've got what I'm after.'",
+                "nextState": 3
+                },
+                {
+                "state": 3,
+                "response": "'Have you got it?'",
+                "nextState": 4
+                },
+                {
+                "state": 4,
+                "requestedObject": "sketchbook",
+                "keywords": [
+                    "yes",
+                    "ok",
+                    "yup",
+                    "y"
+                ],
+                "response": "'Excellent!'",
+                "nextState": 3
+                },
+                {
+                "state": 4,
+                "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                ],
+                "response": "'Come back when you've got what I'm after.'",
+                "nextState": 3
+                },
+                {
+                "state": 4,
+                "response": "'I won't ask again but as i said before, I'll make it worth your while.'"
+                }
+            ]
+            },
+            "failAttributes": {
+            "isDestroyed": true,
+            "conversationState": 99
+            },
+            "conditionAttributes": {
+            "isDestroyed": false
+            },
+            "reward": {
+            "affinityModifier": 2,
+            "decreaseAffinityFor": "simon galbraith",
+            "increaseAffinityFor": "jordan miller",
+            "removeObject": "sketchbook",
+            "money": 50,
+            "message": "Jordan says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
+            }
+        },
+        {
+            "object": "mission",
+            "name": "vanarrival",
+            "displayName": "fill the van",
+            "description": "Steal &pound;100 worth of valuables from the company.",
+            "attributes": {
+            "parent": "awaitvanarrival",
+            "missionObject": "jordan miller",
+            "initiateConversation": true,
+            "huntPlayer": true,
+            "static": true,
+            "dialogue": [
+                "'I knew I could rely on you.'<br>'I've parked a van around the side of the office.'<br>'If you can load it up with over &pound;100 worth of valuables, I'll double your money.'"
+            ]
+            },
+            "conditionAttributes": {
+            "alive": true
+            },
+            "reward": {
+            "locations": [
+                {
+                "object": "location",
+                "name": "east-car-park-corner",
+                "displayName": "Car park (East)",
+                "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
+                "attributes": {
+                    "type": "outdoor",
+                    "vehiclesAllowed": [
+                    "bike",
+                    "van"
+                    ]
+                },
+                "exits": [
+                    {
+                    "object": "exit",
+                    "longname": "North",
+                    "direction": "n",
+                    "source": "east-car-park-corner",
+                    "destination": "access-road-east",
+                    "requiredAction": "drive"
+                    },
+                    {
+                    "object": "exit",
+                    "longname": "South",
+                    "direction": "s",
+                    "source": "east-car-park-corner",
+                    "destination": "waste-area"
+                    }
+                ],
+                "inventory": [
+                    {
+                    "object": "artefact",
+                    "name": "van",
+                    "description": "white van",
+                    "detailedDescription": "It's a generic tatty old white van. It's had quite a few knocks and scrapes in its time.",
+                    "attributes": {
+                        "defaultAction": "drive",
+                        "weight": 3000,
+                        "carryWeight": 500,
+                        "burnRate": 0.1,
+                        "switched": true,
+                        "type": "vehicle",
+                        "subType": "van",
+                        "canDrawOn": true,
+                        "requiredComponentCount": 1,
+                        "defaultResult": "You'll need to <i>get in</i> and <i>start</i> it first."
+                    },
+                    "synonyms": [
+                        "white van"
+                    ],
+                    "inventory": [
+                        {
+                        "object": "artefact",
+                        "name": "petrol",
+                        "description": "fuel",
+                        "detailedDescription": "It looks like there's only a few pounds worth left.",
+                        "attributes": {
+                            "weight": 10,
+                            "isLiquid": true,
+                            "charges": 2,
+                            "plural": true,
+                            "chargeUnit": "gallon",
+                            "chargesDescription": "There's about $charges $chargeUnit in the tank",
+                            "affinityModifier": 0,
+                            "componentOf": [
+                            "van"
+                            ]
+                        },
+                        "synonyms": [
+                            "fuel"
+                        ]
+                        }
+                    ]
+                    }
+                ]
+                }
+            ],
+            "exits": [
+                {
+                "object": "exit",
+                "longname": "North",
+                "direction": "n",
+                "source": "waste-area",
+                "destination": "east-car-park-corner"
+                }
+            ]
+            }
+        },
+        {
+            "object": "mission",
+            "name": "stealvaluables",
+            "displayName": "steal some valuables",
+            "description": "Steal &pound;100 worth of valuables from the company.",
+            "attributes": {
+            "parent": "vanarrival",
+            "missionObject": "van"
+            },
+            "conditionAttributes": {
+            "inventoryValue": ">100"
+            },
+            "reward": {
+            "modifyLocation": {
+                "name": "east-car-park-corner",
+                "description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you.",
+                "inventory": [
+                {
+                    "object": "artefact",
+                    "name": "tyre tracks",
+                    "description": "tyre tracks",
+                    "detailedDescription": "They're too scuffed to see any clear tread marks but they're wide enough to be consistent with a medium-sized goods vehicle.",
+                    "attributes": {
+                    "type": "scenery",
+                    "subType": "intangible",
+                    "plural": true
+                    },
+                    "synonyms": [
+                    "tyre",
+                    "tyres",
+                    "track",
+                    "tracks"
+                    ]
+                },
+                {
+                    "object": "creature",
+                    "name": "mouse",
+                    "displayname": "the mouse",
+                    "description": "small grey mouse",
+                    "detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
+                    "attributes": {
+                    "weight": 1,
+                    "type": "animal",
+                    "health": 10,
+                    "affinity": -1,
+                    "canTravel": true,
+                    "traveller": true
+                    },
+                    "synonyms": [
+                    "it",
+                    "animal"
+                    ]
+                }
+                ]
+            },
+            "affinityModifier": 2,
+            "decreaseAffinityFor": "everyone",
+            "increaseAffinityFor": "jordan miller",
+            "removeObject": "van",
+            "removeLocation": {
+                "name": "east-car-park-corner"
+            },
+            "money": 200,
+            "message": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
+            }
+        }
+        ]
+    }
+    ]
+}

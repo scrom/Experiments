@@ -42,6 +42,7 @@
     <Content Include="data\chairs.json" />
     <Content Include="data\core-area-east.json" />
     <Content Include="data\core-area-west.json" />
+    <Content Include="data\crash-site.json" />
     <Content Include="data\creative-agency-area.json" />
     <Content Include="data\customer-delight-central.json" />
     <Content Include="data\customer-delight-east.json" />
