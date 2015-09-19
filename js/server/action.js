@@ -383,6 +383,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'show':
                     case 'look':
+                    case 'check':
                         //trap a few junk words - will return "look" with no object. 
                         var junkWords = ["exits", "objects", "artefacts", "creatures", "artifacts"]
                         if (junkWords.indexOf(_object0) > -1) {_object0 = null;};
