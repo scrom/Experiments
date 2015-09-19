@@ -99,6 +99,7 @@ module.exports.MissionController = function MissionController() {
                 
             //mission is either completed or failed...
             if (missionReward.message) {
+                //console.log(missionReward.message);
                 resultString += "<br>" + missionReward.message;
             };
                 
@@ -155,6 +156,7 @@ module.exports.MissionController = function MissionController() {
             
             //check player mission status
             for (var i = 0; i < playerMissions.length; i++) {
+                //console.log(playerMissions[i].getName()+ playerMissions[i].isFailedOrComplete());
                 processedMissions.push(playerMissions[i].getName());
                 resultString += self.processMissionState(playerMissions[i], map, player, player, newlyCompletedMissions);
             };

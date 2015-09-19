@@ -366,13 +366,19 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "time": 52,
+          "time": 72,
           "missionsCompletedCount": ">9"
         },
         "reward": {
-          "locations": [
-            {"file": "crash-site"}
-          ],
+            "locations": [
+                { "file": "crash-site" }
+            ],
+            "modifyObject": {
+                "name": "simon galbraith",
+                "attributes": {
+                    "antibodies": ["zombie"]
+                }
+              },
           "exits": [
             {
               "object": "exit",

@@ -83,6 +83,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             return (_hitPoints/_maxHitPoints)*100;
         };
+        
+        self.updateAttributes = function (newAttributes) {
+            processAttributes(newAttributes);
+        };
 
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
