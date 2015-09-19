@@ -102,6 +102,12 @@
     <Content Include="data\milton-road-north-end.json" />
     <Content Include="data\milton-road.json" />
     <Content Include="data\mirror.json" />
+    <Content Include="data\mission-killthespy.json" />
+    <Content Include="data\mission-latte.json" />
+    <Content Include="data\mission-stealsketchbook.json" />
+    <Content Include="data\mission-stealvaluables.json" />
+    <Content Include="data\mission-vanarrival.json" />
+    <Content Include="data\mouse.json" />
     <Content Include="data\northwest-corridor-ground-floor.json" />
     <Content Include="data\office-front.json" />
     <Content Include="data\opportunities-central.json" />
@@ -202,6 +208,8 @@
     <Content Include="data\toilet.json" />
     <Content Include="data\top-fire-escape.json" />
     <Content Include="data\traffic-jam-meeting-room.json" />
+    <Content Include="data\tyre-tracks.json" />
+    <Content Include="data\van.json" />
     <Content Include="data\war-room.json" />
     <Content Include="data\waste-area.json" />
     <Content Include="data\water.json" />

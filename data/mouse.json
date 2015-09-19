@@ -1,0 +1,19 @@
+﻿{
+                              "object": "creature",
+                              "name": "mouse",
+                              "displayname": "the mouse",
+                              "description": "small grey mouse",
+                              "detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
+                              "attributes": {
+                                "weight": 1,
+                                "type": "animal",
+                                "health": 10,
+                                "affinity": -1,
+                                "canTravel": true,
+                                "traveller": true
+                              },
+                              "synonyms": [
+                                "it",
+                                "animal"
+                              ]
+                            }

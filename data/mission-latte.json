@@ -1,0 +1,17 @@
+﻿      {
+        "object": "mission",
+        "name": "latte",
+        "displayName": "get yourself a latte",
+        "description": "It's your first day in the office. Check in with Vic at reception and then head to the kitchen and get yourself off to a decent start with a nice latte.",
+        "attributes": {
+          "missionObject": "latte",
+          "destination": "player"
+        },
+        "conditionAttributes": {
+          "isDestroyed": false
+        },
+        "reward": {
+          "score": 75,
+          "message": "<br>Congratulations, you managed to get your latte.<br><br>Drink up, wake up and start doing a bit more to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
+        }
+      }

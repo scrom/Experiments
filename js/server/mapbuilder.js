@@ -108,7 +108,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     if (usingTemplate) {
                         templated = " (templated)"
                     };
-                    console.log("usability warning: duplicate artefact name/synonym '" + artefactData.name + "'"+templated+".");
+                    //console.log("usability warning: duplicate artefact name/synonym '" + artefactData.name + "'"+templated+".");
                 };
                 var artefact;
                 var inventory;
@@ -206,7 +206,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     if (usingTemplate) {
                         templated = " (templated)"
                     };
-                    console.log("usability warning: duplicate creature name/synonym '" + creatureData.name + "'" + templated + ".");
+                    //console.log("usability warning: duplicate creature name/synonym '" + creatureData.name + "'" + templated + ".");
                 };
                 
                 var creature;

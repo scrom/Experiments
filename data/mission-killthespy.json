@@ -1,0 +1,17 @@
+﻿{
+    "object": "mission",
+    "name": "killthespy",
+    "displayName": "kill the spy",
+    "description": "I'm sure he wasn't around before the crash!",
+    "attributes": {
+        "parent": "saveredgate",
+        "missionObject": "jordan miller"
+    },
+    "conditionAttributes": {
+        "dead": true
+    },
+    "reward": {
+        "score": 50,
+        "message": "Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
+    }
+}

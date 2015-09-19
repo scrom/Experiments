@@ -1,0 +1,37 @@
+﻿{
+    "object": "creature",
+    "name": "jordan miller",
+    "displayname": "Jordan Miller",
+    "description": "Jordan Miller",
+    "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
+    "attributes": {
+    "template": "creature-male-l4",
+    "attackStrength": 12,
+    "type": "creature",
+    "affinity": -1,
+    "destinations": [
+        "machine-room-east"
+    ],
+    "avoiding": [
+        "bus"
+    ],
+    "destinationDelay": 15,
+    "imageName": "spy.jpg"
+    },
+    "inventory": [
+        {"file": "emergency-first-aid-kit"}
+    ],
+    "synonyms": [
+        "spy",
+        "jordan",
+        "miller",
+        "jm",
+        "him"
+    ],
+    "missions": [
+        {"file": "mission-killthespy"},
+        {"file": "mission-stealsketchbook"},
+        {"file": "mission-vanarrival"},
+        {"file": "mission-stealvaluables"}                   
+    ]
+}
