@@ -51,7 +51,11 @@
           "canCollect": true,
           "isBreakable": true,
           "price": 5,
-          "canDrawOn": true
+          "canDrawOn": true,
+          "customAction": [
+            "play"
+          ],
+          "defaultResult": "You briefly consider a game of chess with youself but decide there's more productive things you should be doing with your time."
         },
         "synonyms": [
           "board",

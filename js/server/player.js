@@ -2521,7 +2521,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if buyerName is a creature - sell
             //if buyerName is not a creature - can't sell.
             var buyer = getObjectFromPlayerOrLocation(buyerName);
-            if (!(buyer)) { return "There's no " + buyerName + " here."; };
+            if (!(buyer)) { return "There's nobody called " + buyerName + " nearby."; };
 
             //@todo - find an alternative for creature displayName on this response
             if (buyer.getType() != 'creature') { return buyer.getDisplayName() + " can't buy anything." };

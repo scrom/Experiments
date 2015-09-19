@@ -210,7 +210,7 @@
     "object": "location",
     "name": "a14-westbound",
     "displayName": "A14 Westbound",
-    "description": "You're stationary on the sliproad of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>To be honest you might as well just give up now.",
+    "description": "You're stationary on the slip road of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>You might as well just <i>quit</i> now.",
     "attributes": {
       "type": "outdoor",
       "vehiclesAllowed": [
@@ -954,6 +954,10 @@
           "canCollect": true,
           "isBreakable": true,
           "price": 5,
+          "customAction": [
+            "play"
+          ],
+          "defaultResult": "You briefly consider a game of chess with youself but decide there's more productive things you should be doing with your time.",
           "canDrawOn": true
         },
         "synonyms": [
@@ -6886,7 +6890,7 @@
               "attackStrength": 5,
               "type": "book",
               "canCollect": true,
-              "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff to be honest.",
+              "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff.",
               "canDrawOn": true
             },
             "synonyms": [
@@ -7517,8 +7521,7 @@
                   "saleUnit": 1,
                   "affinityModifier": 5,
                   "isEdible": true,
-                  "nutrition": 15,
-                  "price": 3
+                  "nutrition": 15
                 },
                 "synonyms": [
                   "ice",
@@ -8816,7 +8819,7 @@
         "name": "vic wiseman",
         "displayname": "Vic Wiseman",
         "description": "Vic the receptionist",
-        "detailedDescription": "Vic's one of our support team. To be honest, 'receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
+        "detailedDescription": "Vic's one of our support team. 'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
         "attributes": {
           "weight": 105,
           "money": 20,
@@ -9947,7 +9950,7 @@
         "object": "artefact",
         "name": "guardian newspaper",
         "description": "copy of today's Guardian newspaper",
-        "detailedDescription": "Middle class pulp propaganda trash to be honest.",
+        "detailedDescription": "Middle class pulp propaganda trash.",
         "attributes": {
           "defaultAction": "read",
           "weight": 1,

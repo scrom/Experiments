@@ -115,7 +115,7 @@
                 "object": "artefact",
                 "template": "ice-cream",
                 "attributes": {
-                  "price": 3
+                  "price": 0
                 }
               },
               "score": 5,

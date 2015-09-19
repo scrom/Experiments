@@ -53,7 +53,7 @@
         "object": "artefact",
         "name": "guardian newspaper",
         "description": "copy of today's Guardian newspaper",
-        "detailedDescription": "Middle class pulp propaganda trash to be honest.",
+        "detailedDescription": "Middle class pulp propaganda trash.",
         "attributes": {
           "defaultAction": "read",
           "weight": 1,
