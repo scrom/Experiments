@@ -104,6 +104,7 @@
     <Content Include="data\milton-road-north-end.json" />
     <Content Include="data\milton-road.json" />
     <Content Include="data\mirror.json" />
+    <Content Include="data\mission-jordanreachesmachineroom.json" />
     <Content Include="data\mission-killthespy.json" />
     <Content Include="data\mission-latte.json" />
     <Content Include="data\mission-stealsketchbook.json" />

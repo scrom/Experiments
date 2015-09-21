@@ -243,19 +243,9 @@ exports.Map = function Map() {
                     objectToModify = self.getObject(objectName);
                 };
                 
-                //alter attribs               
+                //alter attribs - note we only need to pass "new" attributes, existing ones should not be altered.               
                 if (newAttribs) {
-                    var currentAttribs = objectToModify.getCurrentAttributes();
-                    var updatedAttribs = currentAttribs;
-                    //mask new attribs onto current ones
-                    for (var attr in newAttribs) {
-                        //console.log("before: " + updatedAttribs[attr]);
-                        updatedAttribs[attr] = newAttribs[attr];
-                        //console.log("after: " + updatedAttribs[attr]);
-                    };
-
-                    //note, processAttributes includes detailed description even though it's not officially an attr 
-                    objectToModify.updateAttributes(updatedAttribs);
+                    objectToModify.updateAttributes(newAttribs);
                 };               
 
                 if (inventory.length > 0) {

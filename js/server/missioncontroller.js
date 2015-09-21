@@ -94,7 +94,7 @@ module.exports.MissionController = function MissionController() {
             var resultString = "";
             var initialScore = player.getScore();
             var missionName = mission.getName();
-            var missionReward = mission.checkState(player, map);
+            var missionReward = mission.checkState(player, map, missionOwner);
             if (!(missionReward)) { return ""; };
                 
             //mission is either completed or failed...
@@ -103,7 +103,7 @@ module.exports.MissionController = function MissionController() {
                 resultString += "<br>" + missionReward.message;
             };
                 
-            //note, if the mission failed, the "fail" object will be passdd as missionReward
+            //note, if the mission failed, the "fail" object will be passed as missionReward
             var rewardString = mission.processReward(map, missionReward, player);
             if (rewardString.length > 0) {
                 resultString += "<br>" + rewardString
@@ -219,17 +219,17 @@ module.exports.MissionController = function MissionController() {
                 };
                 
                 //check status of any creature-owned/event missions
-                /*var missionOwner = map.getMissionOwner(allMissions[i].getName()); //we'll use this twice later
+                var missionOwner = map.getMissionOwner(allMissions[i].getName()); //we'll use this twice later
                 var missionOwnerName;
                 if (missionOwner) {
                     missionOwnerName = missionOwner.getName();
                 };
 
                 if (allMissions[i].isActive()) {
-                    if (allMissions[i].getMissionObjectName() == missionOwnerName || allMissions[i].getType() == "event") {
+                    if (allMissions[i].getMissionObjectName() == missionOwnerName && allMissions[i].getType() == "event") {
                         self.processMissionState(allMissions[i], map, player, missionOwner, newlyCompletedMissions);
                     };
-                };*/
+                };
 
                 //clear parents from any child missions (from newly completed missions) to make them accessible
                 //and initiate those local to the player
@@ -240,9 +240,10 @@ module.exports.MissionController = function MissionController() {
                         allMissions[i].clearParent();
                         
                         //initiate any creature-only missions or events that we've just cleared the parent of
-                        //if (allMissions[i].getMissionObjectName() == missionOwnerName || allMissions[i].getType() == "event") {
-                        //    allMissions[i].startTimer();
-                        //};
+                        if (allMissions[i].getMissionObjectName() == missionOwnerName && allMissions[i].getType() == "event") {
+                            //console.log("starting mission: " + allMissions[i].getName());
+                            allMissions[i].startTimer();
+                        };
                         
                         //duplicated code from location examine - initiate any location-based missions.
                         var newMissions = playerLocation.getMissions();

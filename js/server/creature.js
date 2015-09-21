@@ -146,7 +146,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.gender != undefined) {_gender = creatureAttributes.gender;};
             if (creatureAttributes.destinations != undefined) {
                 //copy array contents, don't copy reference to original.
-                for (var i=0;i<creatureAttributes.destinations.length;i++) {
+                var destinationCount = creatureAttributes.destinations.length;
+                for (var i=0;i< destinationCount;i++) {
                     _destinations.push(creatureAttributes.destinations[i]);
                 };
             };
@@ -163,13 +164,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.smell != undefined) {_smell = creatureAttributes.smell;};                
             if (creatureAttributes.sound != undefined) {_sound = creatureAttributes.sound;};                
             if (creatureAttributes.contagion != undefined) {
-                for (var i=0;i<creatureAttributes.contagion.length;i++) {
+                var contagionCount = creatureAttributes.contagion.length;
+                for (var i=0;i< contagionCount;i++) {
                     _contagion.push(new contagionObjectModule.Contagion(creatureAttributes.contagion[i].name, creatureAttributes.contagion[i].displayName, creatureAttributes.contagion[i].attributes));
                 };
             };                
-            if (creatureAttributes.antibodies != undefined) {_antibodies = creatureAttributes.antibodies;};    
+            if (creatureAttributes.antibodies != undefined) {
+                //we use a function rather than just setting the attribute as this ensures contagion is properly cleared.
+                var antibodyCount = creatureAttributes.antibodies.length;
+                for (var a = 0; a < antibodyCount; a++) {
+                    self.setAntibody(creatureAttributes.antibodies[a]);
+                };
+            };    
             if (creatureAttributes.repairSkills != undefined) {
-                for(var i=0; i<creatureAttributes.repairSkills.length;i++) {
+                var repairSkillsCount = creatureAttributes.repairSkills.length;
+                for(var i=0; i< repairSkillsCount;i++) {
                     _repairSkills.push(creatureAttributes.repairSkills[i]);
                 };
             };
@@ -708,7 +717,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getMissions = function(includeChildren) {
             var missions = [];
-            for (var i=0; i < _missions.length; i++) {
+            //console.log("creature missions for: " + self.getName());
+            for (var i = 0; i < _missions.length; i++) {
                 if ((!(_missions[i].hasParent()))||includeChildren == true) {
                     missions.push(_missions[i]);
                 };

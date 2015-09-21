@@ -48,37 +48,6 @@
           }
         },
         "reward": {
-          "modifyObject": {
-            "name": "jordan miller",
-            "inventory": [
-              {
-                "object": "artefact",
-                "name": "hard disk",
-                "description": "hard disk",
-                "detailedDescription": "Our IS team are pretty handy with these things.",
-                "attributes": {
-                  "weight": 0.75,
-                  "attackStrength": 5,
-                  "canCollect": true,
-                  "isBreakable": true,
-                  "isDamaged": true,
-                  "price": 50,
-                  "componentOf": [
-                    "server"
-                  ]
-                },
-                "synonyms": [
-                  "disc",
-                  "drive",
-                  "hard drive",
-                  "disk",
-                  "hard disc",
-                  "disc drive",
-                  "disk drive"
-                ]
-              }
-            ]
-          },
           "score": 200,
           "maxHealth": 25,
           "affinityModifier": 1,
@@ -91,38 +60,7 @@
           "affinityModifier": 2,
           "decreaseAffinityFor": "jordan miller",
           "increaseAffinityFor": "simon galbraith",
-          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse.",
-          "modifyObject": {
-            "name": "jordan miller",
-            "inventory": [
-              {
-                "object": "artefact",
-                "name": "hard disk",
-                "description": "hard disk",
-                "detailedDescription": "Our IS team are pretty handy with these things.",
-                "attributes": {
-                  "weight": 0.75,
-                  "attackStrength": 5,
-                  "canCollect": true,
-                  "isBreakable": true,
-                  "isDamaged": true,
-                  "price": 50,
-                  "componentOf": [
-                    "server"
-                  ]
-                },
-                "synonyms": [
-                  "disc",
-                  "drive",
-                  "hard drive",
-                  "disk",
-                  "hard disc",
-                  "disc drive",
-                  "disk drive"
-                ]
-              }
-            ]
-          }
+          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
         }
       }
     ]

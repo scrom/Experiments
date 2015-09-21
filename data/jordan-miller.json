@@ -29,9 +29,10 @@
         "him"
     ],
     "missions": [
+        {"file": "mission-jordanreachesmachineroom"},
         {"file": "mission-killthespy"},
         {"file": "mission-stealsketchbook"},
         {"file": "mission-vanarrival"},
-        {"file": "mission-stealvaluables"}                   
+        {"file": "mission-stealvaluables"}             
     ]
 }

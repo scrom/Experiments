@@ -820,7 +820,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return checkCount;
         };
 
-        self.checkState = function (player, map) {
+        self.checkState = function (player, map, missionOwner) {
 
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
@@ -888,9 +888,35 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     //console.log('mission item source destroyed');
                     return self.fail("destroyedSource", source);
                 };
-                //if not, there's nothing else we can do for now.
-                //console.log("mission not yet complete");
-                return null;
+
+                //if not, one last check...
+                //if this is a creature-owned event, use the supplied mission owner - if available.
+                if (self.getType() == "event" && missionOwner) {
+                    //does the object we have support the "getName" method?
+                    if (missionOwner.getName) {
+                        if (missionOwner.getName() == _missionObject) {
+                            //does owner support "getCurrentLocation" method?
+                            if (missionOwner.getCurrentLocation) {
+                                var ownerLocation = missionOwner.getCurrentLocation();
+                                if (ownerLocation) {
+                                    //can we get the name of the retrieved object?
+                                    if (ownerLocation.getName) {
+                                        //if object is in destination, return object...
+                                        if (_destination == ownerLocation.getName()) {
+                                            missionObject = missionOwner;
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                };
+                
+                if (!(missionObject)) {
+                    //there's nothing else we can do for now.
+                    //console.log("mission not yet complete");
+                    return null;
+                };
             };   
                        
             //check/fail if the mission object shouldn't be destroyed!

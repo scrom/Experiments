@@ -68,9 +68,12 @@
           "template": "creature-male-l5",
           "attackStrength": 35,
           "health": 500,
-          "avoiding": [
-            "bus"
-          ],
+            "avoiding": [
+                "bus"
+            ],
+            "dislikes": [
+              "jordan miller"
+            ],
           "imageName": "simongalbraith.jpg"
         },
         "inventory": [
