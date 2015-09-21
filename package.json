@@ -22,7 +22,7 @@
     "express": "^4.13.3",
     "iced-coffee-script": "^1.8.0-e",
     "jsonfile": "^2.2.2",
-    "mocha": "^2.3.2",
+    "mocha": "^2.3.3",
     "morgan": "^1.6.1",
     "nodeunit": "^0.9.1",
     "redis": "^0.12.1",
