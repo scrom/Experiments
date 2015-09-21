@@ -2660,6 +2660,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //find the strongest non-breakable key or tool the player is carrying.
             var keys = inventoryObject.getAllObjectsOfType('key');
             keys = keys.concat(inventoryObject.getAllObjectsOfType('tool'));
+            //try any keys that are part of this object itself
+            keys = keys.concat(_inventory.getAllObjectsOfType('key'));
+            keys = keys.concat(_inventory.getAllObjectsOfType('tool'));
             for(var index = 0; index < keys.length; index++) {
                 //player must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
                 if (((!(keys[index].isBreakable()))||verb == "pick"||verb == "dismantle")) {

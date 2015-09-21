@@ -68,7 +68,7 @@ exports.canFindSide2CorrespondingDoorFromMap = function (test) {
 
     var source = "first-floor-cubicle";
     var destination = "first-floor-toilet";
-    var expectedResult = "When you're finished... It's closed.";
+    var expectedResult = "When you're finished... It's closed.<br>There's a thumb latch on it.";
     var actualResult = m0.getDoorFor(source, destination).getDetailedDescription();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -86,7 +86,7 @@ exports.cangetLinkedDoor = function (test) {
     var linkedDoors = door1.getLinkedDoors(m0, currentLocationName);
     console.log("Found "+linkedDoors.length+" linked doors.");
 
-    var expectedResult = "When you're finished... It's closed."; //door from inside cubicle to outside.
+    var expectedResult = "When you're finished... It's closed.<br>There's a thumb latch on it."; //door from inside cubicle to outside.
     var actualResult = linkedDoors[0].getDetailedDescription();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

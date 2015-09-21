@@ -1672,6 +1672,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //we unlocked it
                 if (artefact.getInventoryObject().hasPositionedObjects()) {
                     var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
+                    //remove things returned list that should always be attached ("on" and not collectable)
+                    for (var p = 0; p < positionedItems.length; p++) {
+                        if (positionedItems[p].getPosition() == "on") {
+                            if (!(positionedItems[p].isCollectable())) {
+                                positionedItems.splice(p, 1);
+                            };
+                        };
+                    };
                     if (positionedItems.length >0) {
                         resultString += "<br>It looks like "+artefact.getDisplayName()+" was hiding something. It's worth taking another look around here."
                     };
@@ -3265,6 +3273,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.getType() != "door" || (artefact.getType() == "door" && (!artefact.isLocked()))) {
                 if (artefact.getInventoryObject().hasPositionedObjects()) {
                     var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
+                    //remove things returned list that should always be attached ("on" and not collectable)
+                    for (var p = 0; p < positionedItems.length; p++) {
+                        if (positionedItems[p].getPosition() == "on") {
+                            if (!(positionedItems[p].isCollectable())) {
+                                positionedItems.splice(p, 1);
+                            };
+                        };
+                    };
                     var fallenItems = 0;
                     for (var i=0;i<positionedItems.length;i++) {
 
@@ -3313,6 +3329,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (artefact.getType() == "door") {
                     if (artefact.getInventoryObject().hasPositionedObjects()) {
                         var positionedItems = artefact.getInventoryObject().getPositionedObjects(true);
+                        //remove things returned list that should always be attached ("on" and not collectable)
+                        for (var p = 0; p < positionedItems.length; p++) {
+                            if (positionedItems[p].getPosition() == "on") {
+                                if (!(positionedItems[p].isCollectable())) {
+                                    positionedItems.splice(p, 1);
+                                };
+                            };
+                        };
                         var fallenItems = 0;
                         for (var i=0;i<positionedItems.length;i++) {
                             if (positionedItems[i].getPosition() == "on") {

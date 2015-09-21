@@ -1,20 +1,44 @@
 ﻿{
-"object": "artefact",
-"name": "cubicle door",
-"description": "cubicle door",
-"detailedDescription": "When you're finished...",
-"attributes": {
-    "defaultAction": "open",
-    "weight": 200,
-    "type": "door",
-    "canOpen": true,
-    "lockable": true,
-    "hasLinkedDoor": true,
-    "canDrawOn": true
-},
-"synonyms": [
-    "cubicle",
-    "toilet door",
-    "door"
-]
+    "object": "artefact",
+    "name": "cubicle door",
+    "description": "cubicle door",
+    "detailedDescription": "When you're finished...",
+    "attributes": {
+        "defaultAction": "open",
+        "weight": 200,
+        "type": "door",
+        "canOpen": true,
+        "lockable": true,
+        "hasLinkedDoor": true,
+        "canDrawOn": true
+    },
+    "synonyms": [
+        "cubicle",
+        "toilet door",
+        "door"
+    ],
+    "inventory": [
+        { 
+        "object":"artefact",
+        "name":"latch",
+        "description": "thumb latch",
+        "detailedDescription": "It's useful to lock the door when you need a little extra privacy.",
+        "attributes":
+        {
+            "weight": 0.1,
+            "type": "key",
+            "canCollect": false,
+            "position": "on",
+            "customAction": [
+                "get"
+            ],
+            "defaultResult": "It's attached to the door. There's no obvious way to remove it.",
+            "unlocks": "cubicle door"
+        },
+        "synonyms":
+        [
+            "thumb latch",
+            "lock"
+        ]
+}]
 }

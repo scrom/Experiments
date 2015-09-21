@@ -555,9 +555,14 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         self.getPositionedObjects = function(showHiddenObjects, minSize) {
             var itemsToReturn = [];
+            if (minSize == undefined) {
+                minSize = 0;
+            };
             for (var i=0;i<_items.length;i++) {
                 if (_items[i].getWeight() >= minSize) {
-                    if (((!_items[i].isHidden())||showHiddenObjects) && (_items[i].getPosition())) {itemsToReturn.push(_items[i])};
+                    if (((!_items[i].isHidden()) || showHiddenObjects) && (_items[i].getPosition())) {
+                        itemsToReturn.push(_items[i])
+                    };
                 };
             };
             return itemsToReturn;
