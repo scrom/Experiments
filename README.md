@@ -158,21 +158,21 @@ Module Dependencies
 The game is designed to run on Node version 0.10.33 (this is the latest version that is also available on Windows) but runs fine on 0.10.34 on Linux too.
 
 Node Module dependencies are defined in \IF-Node\package.json
-As of 18th December 2014 they are...
+As of 21st September 2015 they are...
 
 For the server:
--     "express": "^4.10.6",
--     "body-parser": "^1.10.0",
--     "morgan": "^1.5.0"
--     "jsonfile": "^2.0.0",
+-     "express": "^4.13.3",
+-     "body-parser": "^1.14.0",
+-     "morgan": "^1.6.1"
+-     "jsonfile": "^2.2.2",
 -     "redis": "^0.12.1"
--     "require-directory": "^2.0.0"
+-     "require-directory": "^2.1.1"
 
 For running NodeUnit:
--     "nodeunit": "^0.9.0",
--     "coffee-script": "^1.8.0",
--     "iced-coffee-script": "^1.8.0-c",
--     "streamline": "^0.10.16"
+-     "nodeunit": "^0.9.1",
+-     "coffee-script": "^1.10.0",
+-     "iced-coffee-script": "^1.8.0-e",
+-     "streamline": "^0.10.17"
 
 
 End. Thanks for reading! ;)
