@@ -286,18 +286,25 @@ exports.completingAnEventCanCreateANewLocationAndCreature = function (test) {
 exports.completingAnEventCanCreateANewLocationAndCreature.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
 
 
-exports.completingSaveRedGateMissionDeliversHardDiskToSpy = function (test) {
+exports.spyReachingMachineRoomDeliversHardDiskToSpy = function (test) {
+    
+    //trigger outcome of planecrash event (generates spy)
     var kitchen = m0.getLocation("kitchen-ground-floor");
     var planeCrash = kitchen.getMissions(true)[0];
     var crashReward = planeCrash.event();
     planeCrash.processReward(m0, crashReward, p0);
-
-    var westcarpark = m0.getLocation("west-car-park");
-    var saveredgate = westcarpark.getMissions(true)[0];
-    var saveredgatereward = saveredgate.success();
-    saveredgate.processReward(m0, saveredgatereward, p0);
-
+    
+    //start post-plane-crash event from spy manually
     var spy = m0.getCreature('spy');
+    var event = spy.getMissions(true)[0];
+    event.clearParent();
+    event.startTimer();
+    
+    //complete spy destination event
+    var destination = m0.getLocation('machine-room-east');
+    spy.go(null, destination);
+    m0.updateMissions(1, p0);
+
     var disk = spy.getObject("hard disk");
 
     var expectedResult = "hard disk";
@@ -309,7 +316,7 @@ exports.completingSaveRedGateMissionDeliversHardDiskToSpy = function (test) {
     test.done();
 };
 
-exports.completingSaveRedGateMissionDeliversHardDiskToSpy.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+exports.spyReachingMachineRoomDeliversHardDiskToSpy.meta = { traits: ["Mission Test", "Mission Completion Trait", "Event Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
 
 
 exports.canGainHuntAttributeFromReadBookMission = function (test) {
