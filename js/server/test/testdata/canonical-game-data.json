@@ -6240,7 +6240,7 @@
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "time": 52,
+          "time": 72,
           "missionsCompletedCount": ">9"
         },
         "reward": {
@@ -6800,6 +6800,14 @@
               "destination": "crash-site"
             }
           ],
+          "modifyObject": {
+            "name": "simon galbraith",
+            "attributes": {
+              "antibodies": [
+                "zombie"
+              ]
+            }
+          },
           "message": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!<br>Now's probably a good time to <i>save</i> your game again if you haven't done so recently."
         }
       }
@@ -8550,10 +8558,7 @@
           "avoiding": [
             "bus"
           ],
-          "imageName": "simongalbraith.jpg",
-          "antibodies": [
-            "zombie"
-          ]
+          "imageName": "simongalbraith.jpg"
         },
         "inventory": [
           {
