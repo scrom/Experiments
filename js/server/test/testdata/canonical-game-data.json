@@ -1540,6 +1540,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -1585,6 +1586,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -1978,6 +1980,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -2024,6 +2027,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -2234,6 +2238,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -2280,6 +2285,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -2506,6 +2512,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -2632,6 +2639,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -2724,6 +2732,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -2923,6 +2932,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -3131,6 +3141,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -3183,6 +3194,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -3353,6 +3365,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -3628,6 +3641,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -3759,6 +3773,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -5951,6 +5966,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -6790,6 +6806,7 @@
                         "weight": 0.1,
                         "type": "key",
                         "canCollect": true,
+                        "affinityModifier": 3,
                         "unlocks": "office door"
                       },
                       "synonyms": [
@@ -6857,6 +6874,7 @@
                         "weight": 0.1,
                         "type": "key",
                         "canCollect": true,
+                        "affinityModifier": 3,
                         "unlocks": "office door"
                       },
                       "synonyms": [
@@ -8259,6 +8277,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -8427,6 +8446,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -8567,6 +8587,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -8670,6 +8691,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -9174,6 +9196,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -9677,6 +9700,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": -1,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -10130,6 +10154,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -10177,6 +10202,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -10224,6 +10250,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -10358,6 +10385,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -12183,6 +12211,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -13102,6 +13131,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [
@@ -13262,6 +13292,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
+              "affinityModifier": 3,
               "unlocks": "office door"
             },
             "synonyms": [

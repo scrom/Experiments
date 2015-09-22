@@ -576,6 +576,10 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'pull':
                     case 'open': 
                         description = _player.open(_verb, _object0);
+                        //don't consume time if already open
+                        if (description.indexOf("already") > -1) {
+                            _ticks = 0;
+                        };
                         break;
                     case 'shut':
                     case 'close':

@@ -2275,7 +2275,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             if (verb == 'open') {
-                if (_opens && (_open)){return tools.initCap(_itemDescriptivePrefix)+" already open.";};               
+                if (_opens && (_open)) {
+                    if (_autoLock >= 0) {
+                        _lockInMoves = _autoLock;
+                        //console.log("resetting autolock to "+ _lockInMoves)
+                        //reset auto-lock timer
+                    };
+                    return tools.initCap(_itemDescriptivePrefix) + " already open.";
+                };               
                 return _itemPrefix+" "+doesPlural()+" open.";
             };
             if (verb == 'unlock') { return "You "+verb+" "+self.getDisplayName()+"."};
