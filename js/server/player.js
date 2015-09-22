@@ -1941,7 +1941,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "I think "+receiver.getPrefix().toLowerCase()+" can do that "+receiver.getSuffix()+"self.";
             };
 
-            //@todo - ensure we have a tool with a subtype of "clean" or "buff" - otherwise we can't clean things.
+            //Ensure we have a tool with a subtype of "clean" or "buff" - otherwise we can't clean things.
             var cleanItem = _inventory.getObjectBySubType("clean");
             if (!cleanItem) {
                 cleanItem = _currentLocation.getInventoryObject().getObjectBySubType("clean");
@@ -4051,6 +4051,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //80% strength
                 pointsToRemove = pointsToRemove*0.8
             };
+
+            //occasionally miss
+            var randomInt = Math.floor(Math.random() * 5);
+            if (randomInt == 0) {
+                pointsToRemove = 0;
+            };  
 
             var tempResult = receiver.hurt(Math.floor(pointsToRemove), self);
             if (verb == "throw") {

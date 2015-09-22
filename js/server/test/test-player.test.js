@@ -556,6 +556,7 @@ exports.playerCanHitAndKillACreature = function (test) {
     p0.hit('hit', c0.getName());
     p0.hit('hit', c0.getName());
     p0.hit('hit', c0.getName());
+    p0.hit('hit', c0.getName());
     var expectedResult = "He's dead.";
     var actualResult = c0.health();
     console.log("Expected: " + expectedResult);

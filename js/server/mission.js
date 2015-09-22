@@ -276,7 +276,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     //console.log("Exit added: "+exitDestination);
                 };
             }            ;
-            //@todo - alter all of the below to work on an array of objects or locations, make them plural
+            //@todo issue #348 - alter all of the below to work on an array of objects or locations, make them plural
             if (reward.modifyObject) { map.modifyObject(reward.modifyObject, player);};
             if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
             if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
@@ -298,7 +298,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (reward.hunt) { player.setHunt(player.getHunt() + reward.hunt); };
             if (reward.repairSkill) { player.addSkill(reward.repairSkill);};
             if (reward.delivers) { resultString += player.acceptItem(reward.delivers); };
-            //@todo if (reward.kill) { process array of creatures to be killed, may also have a location element};
+            //@todo - issue #358 if (reward.kill) { process array of creatures to be killed, may also have a location element};
 
             self.processAffinityModifiers(map, reward);
 

@@ -1174,7 +1174,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             } else if (_bleeding) {
                 //80% strength
                 currentAttackStrength = currentAttackStrength*0.8
-           };
+            };
+            
+            //occasionally miss
+            var randomInt = Math.floor(Math.random() * 5);
+            if (randomInt == 0) {
+                currentAttackStrength = 0;
+            };  
 
             return Math.floor(currentAttackStrength);
         };
@@ -1744,7 +1750,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             //@todo do something here around aggression or dislike/affinity for the thing they're hitting
-
+                    
             //hurt thing
             return receiver.hurt(Math.floor(self.getAttackStrength()*damageModifier));
         };
@@ -1965,7 +1971,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (!(attacker)) {
                     resultString += "There's no sign of any physical harm done.";  
                 } else if (attacker.getType() == "player")  { 
-                   resultString += "You do no visible damage."; 
+                   resultString += "You missed!"; 
                 } else {
                    resultString += "There's no sign of any physical harm done.";  
                 };
@@ -1973,7 +1979,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             return resultString;
 
-            //add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
+            //@todo add random retaliation here (50/50 chance of a hit and then randomised damage based on attack strength)
         };
 
         self.recover = function(pointsToAdd) {
