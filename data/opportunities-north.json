@@ -41,11 +41,14 @@
         "description": "James Moore",
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
-          "template": "creature-male-l5",
-          "affinity": -1,
-          "traveller": false,
-          "imageName": "jamesmoore.jpg"
+            "template": "creature-male-l5",
+            "affinity": -1,
+            "traveller": false,
+            "imageName": "jamesmoore.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "james",
           "moore",

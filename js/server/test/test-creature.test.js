@@ -1045,7 +1045,6 @@ exports.creatureCanFindBestPathToGoal.meta = { traits: ["Creature Test", "Huntin
 
 
 exports.creatureCantFindDirectPathToGoalThroughAOneWayDoor = function (test) {
-
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
     var destination = 'ground-floor-fire-escape';
@@ -1087,6 +1086,146 @@ exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
 exports.creatureCanFindDirectPathToGoalThroughADoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait"], description: "Test that a creature can identify a path to a location." };
 
 
+exports.creatureWithKeyCanFindDirectPathToGoalThroughALockedDoor = function (test) {
+    var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true }, [keyfob]);
+    var m = mb.buildMap();
+    //removeAllDoorsInMap(m);
+    var destination = 'machine-room-west';
+    c0.go(null, m.getLocation('second-floor-landing-east'));
+    
+    var path = c0.findBestPath(destination, m);
+    var targetLength = 2;
+    var expected = true;
+    var actual = false;
+    if (path.length == targetLength) { actual = true };
+    console.log("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.ok(actual);
+    test.done();
+};
+exports.creatureWithKeyCanFindDirectPathToGoalThroughALockedDoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature can identify a path to a location through a locked door when they have a matching key." };
+
+
+exports.creatureWithoutKeyCanFindDirectPathToGoalThroughALockedDoor = function (test) {
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true });
+    var m = mb.buildMap();
+    //removeAllDoorsInMap(m);
+    var destination = 'machine-room-west';
+    c0.go(null, m.getLocation('second-floor-landing-east'));
+    
+    var path = c0.findBestPath(destination, m);
+    var targetLength = 1;
+    var expected = true;
+    var actual = false;
+    if (path.length <= targetLength) { actual = true };
+    console.log("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.ok(actual);
+    test.done();
+};
+exports.creatureWithoutKeyCanFindDirectPathToGoalThroughALockedDoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature can identify a path to a location." };
+
+
+exports.creatureWithKeyWillRelockLinkedDoor = function (test) {
+    var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
+    var destination = 'machine-room-west';    
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { destinations:[destination], weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true }, [keyfob]);
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    //removeAllDoorsInMap(m);
+    var landing = m.getLocation('second-floor-landing-east');
+    var corridor = m.getLocation('second-floor-east-corridor');
+    
+    var doorOut = corridor.getAllObjectsOfType("door")[0];
+    var doorIn = landing.getAllObjectsOfType("door")[0];
+    //disable auto-locks
+    doorOut.setAutoLock(-1);
+    doorIn.setAutoLock(-1);
+
+    c0.go(null, landing);
+    console.log("Creature is before door");
+    console.log("Door out is locked? " + doorOut.isLocked());
+    console.log("Door in is locked? " + doorIn.isLocked());
+
+    c0.tick(1, m, p0);
+    console.log("Creature is at: " + c0.getCurrentLocation().getName());
+    console.log("Door out is locked? " + doorOut.isLocked());
+    console.log("Door in is locked? " + doorIn.isLocked());
+    
+    c0.tick(1, m, p0);
+    console.log("Creature is at: " + c0.getCurrentLocation().getName());
+    console.log("Door out is locked? " + doorOut.isLocked());
+    console.log("Door in is locked? " + doorIn.isLocked());
+  
+    var expected = true;
+    var actual = doorOut.isLocked() && doorIn.isLocked();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.ok(actual);
+    test.done();
+};
+exports.creatureWithKeyWillRelockLinkedDoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature traversing a locked door with matching key will lock it behind them afterward." };
+
+
+exports.unlockedTimedDoorWillRelockAfterTicks = function (test) {
+    var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    //removeAllDoorsInMap(m);
+    var corridor = m.getLocation('second-floor-east-corridor');
+    
+    var doorOut = corridor.getAllObjectsOfType("door")[0];
+    
+    doorOut.unlock(keyfob, corridor.getName());
+    
+    console.log("Door is locked? " + doorOut.isLocked());
+    
+    console.log("Environment ticks");
+    corridor.tick(2, m, p0);
+
+    console.log("Door is locked? " + doorOut.isLocked());
+    
+    var expected = true;
+    var actual = doorOut.isLocked();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.ok(actual);
+    test.done();
+};
+exports.unlockedTimedDoorWillRelockAfterTicks.meta = { traits: ["Door Trait", "Lock Trait"], description: "Test that a time lock door locks on its own after specified time." };
+
+
+exports.unlockedTimedDoorWillStayOpenFor1Tick = function (test) {
+    var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    //removeAllDoorsInMap(m);
+    var corridor = m.getLocation('second-floor-east-corridor');
+    
+    var doorOut = corridor.getAllObjectsOfType("door")[0];
+    
+    doorOut.unlock(keyfob, corridor.getName());
+    
+    console.log("Door is locked? " + doorOut.isLocked());
+    
+    console.log("Environment ticks");
+    corridor.tick(1, m, p0);
+    
+    console.log("Door is locked? " + doorOut.isLocked());
+    
+    var expected = false;
+    var actual = doorOut.isLocked();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.ok(actual == expected);
+    test.done();
+};
+exports.unlockedTimedDoorWillStayOpenFor1Tick.meta = { traits: ["Door Trait", "Lock Trait"], description: "Test that a time lock door locks on its own after specified time." };
+
+
 exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = function (test) {
 
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
@@ -1104,6 +1243,43 @@ exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = functi
     test.done();
 };
 exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit.meta = { traits: ["Creature Test", "Avoid Trait", "Tick Trait"], description: "Test that a creature doesn't get stuck with avoiding locations." };
+
+exports.creatureWithKeyWillNotRelockLinkedDoorIfAutoLock = function (test) {
+    var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
+    var destination = 'machine-room-west';
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { destinations: [destination], weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true }, [keyfob]);
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    //removeAllDoorsInMap(m);
+    var landing = m.getLocation('second-floor-landing-east');
+    var corridor = m.getLocation('second-floor-east-corridor');
+    
+    var doorOut = corridor.getAllObjectsOfType("door")[0];
+    var doorIn = landing.getAllObjectsOfType("door")[0];
+    
+    c0.go(null, landing);
+    console.log("Creature is before door");
+    console.log("Door out is locked? " + doorOut.isLocked());
+    console.log("Door in is locked? " + doorIn.isLocked());
+    
+    c0.tick(1, m, p0);
+    console.log("Creature is at: " + c0.getCurrentLocation().getName());
+    console.log("Door out is locked? " + doorOut.isLocked());
+    console.log("Door in is locked? " + doorIn.isLocked());
+    
+    c0.tick(1, m, p0);
+    console.log("Creature is at: " + c0.getCurrentLocation().getName());
+    console.log("Door out is locked? " + doorOut.isLocked());
+    console.log("Door in is locked? " + doorIn.isLocked());
+    
+    var expected = false;
+    var actual = doorOut.isLocked() && doorIn.isLocked();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.ok(actual == expected);
+    test.done();
+};
+exports.creatureWithKeyWillNotRelockLinkedDoorIfAutoLock.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature traversing a locked door with matching key will lock it behind them afterward." };
 
 
 exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome = function (test) {

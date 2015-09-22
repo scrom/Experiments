@@ -64,9 +64,12 @@
         "description": "Chris George",
         "detailedDescription": "Chris is our resident head of Test.<br>He's becoming pretty famous in the testing world and has even had people ask for his autograph.",
         "attributes": {
-          "template": "creature-male-l3",
-          "imageName": "chrisgeorge.jpg"
+            "template": "creature-male-l3",
+            "imageName": "chrisgeorge.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "chris",
           "chris g",
@@ -82,9 +85,12 @@
         "description": "Mark Wightman",
         "detailedDescription": "Mark's our head of Development.",
         "attributes": {
-          "template": "creature-male-l3",
-          "imageName": "markwightman.jpg"
+            "template": "creature-male-l3",
+            "imageName": "markwightman.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "mark",
           "mark w",
@@ -264,9 +270,12 @@
         "description": "Jeff Foster",
         "detailedDescription": "Jeff is our head of Software Engineering.",
         "attributes": {
-          "template": "creature-male-l3",
-          "imageName": "jefffoster.jpg"
+            "template": "creature-male-l3",
+            "imageName": "jefffoster.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "jeff",
           "jeff f",
@@ -282,9 +291,12 @@
         "description": "Simon Cromarty",
         "detailedDescription": "He's our head of Project Management (or a pirate if you give him enough rum).",
         "attributes": {
-          "template": "creature-male-l3",
-          "imageName": "simoncromarty.jpg"
+            "template": "creature-male-l3",
+            "imageName": "simoncromarty.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "simon",
           "simon c",

@@ -2855,17 +2855,27 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString += _inventory.tick();
 
                 //did we open a door on the last move?
+                //close it again befor echanging location
                 if (_openedDoor) {
                     _openedDoor = false;
                     var returnDoor = _currentLocation.getDoorForExit(self.getReturnDirection());
                     if (returnDoor) {
+                        //retrieve key only if door does not auto-lock;
+                        var key;
+                        if (!(returnDoor.hasAutoLock())) {
+                            key = returnDoor.getMatchingKey("lock", _inventory);
+                        };
                         var linkedDoors = returnDoor.getLinkedDoors(map, _currentLocation.getName());
                         for (var l = 0; l < linkedDoors.length; l++) {
-                            linkedDoors[l].close("close", _currentLocation.getName());
+                            //if we have a key and door does not auto-lock, lock the original door behind us
+                            if (key) {
+                                linkedDoors[l].lock(key, _currentLocation.getName());
+                            } else {
+                                linkedDoors[l].close("close", _currentLocation.getName());
+                            };
                         };
                         
-                        //if we have a key, lock the door behind us (from this new side)
-                        var key = returnDoor.getMatchingKey("lock", _inventory);
+                        //lock the new side we're on as well if the same key fits
                         if (key) {
                             returnDoor.lock(key, _currentLocation.getName());
                         } else {
@@ -2940,7 +2950,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                     //hunting player?
                     if (self.isHuntingPlayer()) {                        
-                        exit = _currentLocation.getExitWithBestTrace('player',map);
+                        exit = _currentLocation.getExitWithBestTrace('player',map, _inventory);
                     } else if (_destinations.length > 0) {
                         //or has destinations?
                         //is creature in "current" destination?
@@ -3006,10 +3016,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                         if (linkedExits[l].getSourceName()==_currentLocation.getName()) {
                                             if (linkedExits[l].getDirection() == exit.getDirection()) {
                                                 //we have a matching door
-                                                //we only unlock 1 side to go through (in case it independently locks on both sides)
+                                                //we unlock both sides to go through if the key is the same. We'll re-lock it on both sides afterward.
                                                 var linkedDoors = doors[d].getLinkedDoors(map, _currentLocation.getName());
                                                 for (var l = 0; l < linkedDoors.length; l++) {
-                                                    linkedDoors[l].moveOrOpen("open", _currentLocation.getName());
+                                                    if (key) {
+                                                        linkedDoors[l].unlock(key, _currentLocation.getName());
+                                                    } else {
+                                                        linkedDoors[l].moveOrOpen("open", _currentLocation.getName());
+                                                    };
+                                                    
                                                 };
                                                 if (key) {
                                                     doors[d].unlock(key, _currentLocation.getName());
@@ -3455,7 +3470,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return [];
              };       
 
-            var exits = currentLocation.getAvailableExits(true);
+            var exits = currentLocation.getAvailableExits(true, _inventory);
             if (exits.length == 1 && currentLocation.getName() != homeLocation.getName()) {return null;};
 
             if (randomiseSearch) {

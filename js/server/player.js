@@ -3141,7 +3141,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var exit;
             if (_hunt >= 1) {
-                exit = _currentLocation.getExitWithBestTrace(creatureName,map);
+                exit = _currentLocation.getExitWithBestTrace(creatureName,map, _inventory);
             };
             //@todo - find an alternative for creature displayName on this response
             if (!(exit)) {return "There's no sign that "+creature.getDisplayName()+" has been near here recently.";};

@@ -2666,6 +2666,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.opens = function() {
             return _opens;
         };
+        
+        self.setAutoLock = function (duration) {
+            _autoLock = duration;
+        };
+        
+        self.hasAutoLock = function () {
+            if (_autoLock >= 0) { return true; };
+            return false;
+        };
 
         self.isLocked = function() {
             if (self.isDestroyed()) {return false;};
@@ -2751,7 +2760,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.tick = function () {
             //if autolock enabled - tick down lock timer and lock (and reset timer) if expired.
-            if (_autoLock >= 0 && (!(isLocked()))) {
+            if (_autoLock >= 0 && (!(self.isLocked()))) {
                 if (_lockInMoves <= 0) {
                     _locked = true;  //force lock - even without key. 
                     _lockInMoves = _autoLock; //reset lockInMoves for next time.

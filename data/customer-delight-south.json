@@ -40,19 +40,22 @@
         "description": "Chris Whitworth",
         "detailedDescription": "Great developer, exceptional musician. Part of our customer delight development team.",
         "attributes": {
-          "template": "creature-male-l1",
-          "destinations": [
-            "customer-delight-south",
-            "kitchen-ground-floor",
-            "customer-delight-south",
-            "second-floor-cubicle",
-            "graffiti-a"
-          ],
-          "loops": 12,
-          "loopDelay": 5,
-          "destinationDelay": 4,
-          "imageName": "chriswhitworth.jpg"
+            "template": "creature-male-l1",
+            "destinations": [
+                "customer-delight-south",
+                "kitchen-ground-floor",
+                "customer-delight-south",
+                "second-floor-cubicle",
+                "graffiti-a"
+            ],
+            "loops": 12,
+            "loopDelay": 5,
+            "destinationDelay": 4,
+            "imageName": "chriswhitworth.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "chris",
           "chris w",

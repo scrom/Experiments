@@ -4,33 +4,51 @@
     "displayName": "West corridor ground floor",
     "description": "You're in the West corridor of the ground floor.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "northwest-corridor-ground-floor",
-        "destination": "stairs-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "northwest-corridor-ground-floor",
-        "destination": "pioneer"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "northwest-corridor-ground-floor",
-        "destination": "shower-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "northwest-corridor-ground-floor",
-        "destination": "west-corridor-ground-floor"
-      }
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "northwest-corridor-ground-floor",
+            "destination": "stairs-ground-floor",
+            "hidden": true
+        },
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "northwest-corridor-ground-floor",
+            "destination": "pioneer"
+        },
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "northwest-corridor-ground-floor",
+            "destination": "shower-ground-floor"
+        },
+        {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "northwest-corridor-ground-floor",
+            "destination": "west-corridor-ground-floor"
+        }
+    ],
+    "inventory": [ 
+        {
+            "object": "artefact",
+            "template": "office-door",
+            "detailedDescription": "It leads out to the atrium area.",
+            "linkedexits": [
+                {
+                    "object": "exit",
+                    "longname": "North",
+                    "direction": "n",
+                    "source": "northwest-corridor-ground-floor",
+                    "destination": "stairs-ground-floor",
+                    "hidden": true
+                }
+            ]
+        }
     ]
   }

@@ -4,26 +4,44 @@
     "displayName": "Servery back corridor",
     "description": "You're in the back corridor of the SQL Servery. There's a slight smell of industrial kitchens here.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "servery-back-corridor",
-        "destination": "first-floor-landing-east"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "servery-back-corridor",
-        "destination": "sales-main"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "servery-back-corridor",
-        "destination": "servery-kitchen"
-      }
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "servery-back-corridor",
+            "destination": "first-floor-landing-east",
+            "hidden": true
+        },
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "servery-back-corridor",
+            "destination": "sales-main"
+        },
+        {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "servery-back-corridor",
+            "destination": "servery-kitchen"
+        }
+    ],
+    "inventory": [ 
+       {
+            "object": "artefact",
+            "template": "office-door",
+            "detailedDescription": "It leads out to the first floor landing.",
+            "linkedexits": [
+                {
+                    "object": "exit",
+                    "longname": "North",
+                    "direction": "n",
+                    "source": "servery-back-corridor",
+                    "destination": "first-floor-landing-east",
+                    "hidden": true
+                }
+            ]
+        }
     ]
   }

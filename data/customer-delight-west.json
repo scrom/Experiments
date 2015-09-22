@@ -64,9 +64,12 @@
         "description": "Filippa Vajda",
         "detailedDescription": "Roaming UX redhead.",
         "attributes": {
-          "template": "creature-female-l3",
-          "imageName": "filippavajda.jpg"
+            "template": "creature-female-l3",
+            "imageName": "filippavajda.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "fil",
           "fillippa",
@@ -167,9 +170,12 @@
         "description": "Adam Parker",
         "detailedDescription": "Master of user experience and a somewhat problematic addiction to stationery.",
         "attributes": {
-          "template": "creature-male-l4",
-          "imageName": "adamparker.jpg"
+            "template": "creature-male-l4",
+            "imageName": "adamparker.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "adam",
           "adam p",

@@ -232,19 +232,22 @@
         "description": "Wayne Stanford",
         "detailedDescription": "Chef Wayne, master of the Red Gate dessert!",
         "attributes": {
-          "template": "creature-male-l3",
-          "destinations": [
-            "servery-kitchen",
-            "smoking-area"
-          ],
-          "avoiding": [
-            "first-floor-fire-escape"
-          ],
-          "loops": -1,
-          "loopDelay": 5,
-          "destinationDelay": 1,
-          "imageName": "waynestanford.jpg"
+            "template": "creature-male-l3",
+            "destinations": [
+                "servery-kitchen",
+                "smoking-area"
+            ],
+            "avoiding": [
+                "first-floor-fire-escape"
+            ],
+            "loops": -1,
+            "loopDelay": 5,
+            "destinationDelay": 1,
+            "imageName": "waynestanford.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "wayne",
           "ws",

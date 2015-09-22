@@ -9,7 +9,8 @@
     "canOpen": true,
     "lockable": true,
     "locked": true,
-    "autoLock": 0,
+    "autoLock": 1,
+    "hasLinkedDoor":  true,
     "canDrawOn": true
 },
 "synonyms": [

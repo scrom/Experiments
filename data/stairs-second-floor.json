@@ -31,7 +31,7 @@
       {
         "object": "artefact",
         "template": "office-door",
-        "detailedDescription": "One of the main doors into the first floor working area.",
+        "detailedDescription": "One of the main doors into the second floor working area.",
         "linkedexits": [
           {
             "object": "exit",

@@ -34,9 +34,12 @@
         "description": "Chris Allen",
         "detailedDescription": "Support and music skills. What more could you need?",
         "attributes": {
-          "template": "creature-male-l3",
-          "imageName": "chrisallen.jpg"
+            "template": "creature-male-l3",
+            "imageName": "chrisallen.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "chris",
           "chris a",

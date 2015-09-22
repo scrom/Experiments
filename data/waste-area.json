@@ -51,7 +51,7 @@
             },
             "inventory": [
                 
-            {"file": "keyfob"},
+                {"file": "keyfob"},
                 {
                     "object": "artefact",
                     "name": "gate key",

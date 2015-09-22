@@ -345,8 +345,8 @@ exports.Location = function Location(name, displayName, description, attributes)
             return exitArray;
         };
 
-        self.getExitWithBestTrace = function(creatureName, map) {
-            var exits = self.getAvailableExits(true);
+        self.getExitWithBestTrace = function(creatureName, map, callerInventory) {
+            var exits = self.getAvailableExits(true, callerInventory);
             var bestTraceStrength = 0;
             var bestTraceExit;
             for (var e=0;e<exits.length;e++) {

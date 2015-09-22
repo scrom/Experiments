@@ -34,13 +34,16 @@
         "description": "Amanda from IS",
         "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
         "attributes": {
-          "template": "creature-female-l2",
-          "imageName": "amandamansfield.jpg",
-          "repairSkills": [
-            "projector",
-            "hard disk"
-          ]
+            "template": "creature-female-l2",
+            "imageName": "amandamansfield.jpg",
+            "repairSkills": [
+                "projector",
+                "hard disk"
+            ]
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "amanda",
           "mandy",

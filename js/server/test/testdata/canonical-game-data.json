@@ -1530,6 +1530,24 @@
               "first-aid kit",
               "first-aid"
             ]
+          },
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
           }
         ],
         "synonyms": [
@@ -1557,6 +1575,26 @@
           "traveller": true,
           "imageName": "deneboulton.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "dene",
           "dean",
@@ -1930,6 +1968,26 @@
           "traveller": true,
           "imageName": "chrisgeorge.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "chris",
           "chris g",
@@ -1956,6 +2014,26 @@
           "traveller": true,
           "imageName": "markwightman.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "mark",
           "mark w",
@@ -2146,6 +2224,26 @@
           "traveller": true,
           "imageName": "jefffoster.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "jeff",
           "jeff f",
@@ -2172,6 +2270,26 @@
           "traveller": true,
           "imageName": "simoncromarty.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "simon",
           "simon c",
@@ -2378,6 +2496,26 @@
           "traveller": true,
           "imageName": "brianharris.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "brian",
           "brian h",
@@ -2487,6 +2625,24 @@
         "inventory": [
           {
             "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          },
+          {
+            "object": "artefact",
             "name": "wig",
             "description": "blonde wig",
             "detailedDescription": "A disturbing remnant from the sales team beating their records and making their management team wear fancy dress.",
@@ -2558,6 +2714,26 @@
           "traveller": true,
           "imageName": "alanplatt.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "alan",
           "alan p",
@@ -2737,6 +2913,26 @@
           "destinationDelay": 4,
           "imageName": "chriswhitworth.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "chris",
           "chris w",
@@ -2925,6 +3121,26 @@
           "traveller": true,
           "imageName": "jonathanwatts.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "jonathan",
           "jon",
@@ -2958,6 +3174,24 @@
           "imageName": "aliceeasey.jpg"
         },
         "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          },
           {
             "object": "artefact",
             "name": "vial",
@@ -3109,6 +3343,26 @@
           "destinationDelay": 3,
           "imageName": "chrismoore.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "chris",
           "chris m",
@@ -3364,6 +3618,26 @@
           "traveller": true,
           "imageName": "filippavajda.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "fil",
           "fillippa",
@@ -3475,6 +3749,26 @@
           "traveller": true,
           "imageName": "adamparker.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "adam",
           "adam p",
@@ -3852,7 +4146,8 @@
         "longname": "North",
         "direction": "n",
         "source": "east-corridor-ground-floor-north-west",
-        "destination": "reception"
+        "destination": "reception",
+        "hidden": true
       },
       {
         "object": "exit",
@@ -3867,6 +4162,40 @@
         "direction": "e",
         "source": "east-corridor-ground-floor-north-west",
         "destination": "east-corridor-ground-floor-north-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "It leads out to the reception area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "east-corridor-ground-floor-north-west",
+            "destination": "reception",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
       }
     ]
   },
@@ -4547,6 +4876,9 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -5609,6 +5941,26 @@
             "hard disk"
           ]
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "amanda",
           "mandy",
@@ -6428,6 +6780,26 @@
                     ],
                     "homeLocationName": "creative-agency-area"
                   },
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "keyfob",
+                      "description": "key fob",
+                      "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+                      "attributes": {
+                        "weight": 0.1,
+                        "type": "key",
+                        "canCollect": true,
+                        "unlocks": "office door"
+                      },
+                      "synonyms": [
+                        "key fob",
+                        "fob",
+                        "keyring",
+                        "key ring"
+                      ]
+                    }
+                  ],
                   "synonyms": [
                     "dave",
                     "convery",
@@ -6475,6 +6847,26 @@
                     ],
                     "homeLocationName": "marketing"
                   },
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "keyfob",
+                      "description": "key fob",
+                      "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+                      "attributes": {
+                        "weight": 0.1,
+                        "type": "key",
+                        "canCollect": true,
+                        "unlocks": "office door"
+                      },
+                      "synonyms": [
+                        "key fob",
+                        "fob",
+                        "keyring",
+                        "key ring"
+                      ]
+                    }
+                  ],
                   "synonyms": [
                     "roger",
                     "hart",
@@ -7451,7 +7843,8 @@
         "longname": "North",
         "direction": "n",
         "source": "northwest-corridor-ground-floor",
-        "destination": "stairs-ground-floor"
+        "destination": "stairs-ground-floor",
+        "hidden": true
       },
       {
         "object": "exit",
@@ -7473,6 +7866,40 @@
         "direction": "s",
         "source": "northwest-corridor-ground-floor",
         "destination": "west-corridor-ground-floor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "It leads out to the atrium area.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "northwest-corridor-ground-floor",
+            "destination": "stairs-ground-floor",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
       }
     ]
   },
@@ -7822,6 +8249,26 @@
           "traveller": true,
           "imageName": "chrissmith.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "chris",
           "smithy",
@@ -7970,6 +8417,26 @@
           "canTravel": true,
           "imageName": "jamesmoore.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "james",
           "moore",
@@ -8093,6 +8560,24 @@
         "inventory": [
           {
             "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          },
+          {
+            "object": "artefact",
             "name": "axe",
             "description": "fire axe",
             "detailedDescription": "I have no idea why a PA would carry such a dangerous weapon but I wouldn't mess with anyone carrying this.",
@@ -8175,6 +8660,26 @@
           "traveller": true,
           "imageName": "sarastopfordpickering.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "sara",
           "sarah",
@@ -8662,6 +9167,24 @@
         "inventory": [
           {
             "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          },
+          {
+            "object": "artefact",
             "name": "sketchbook",
             "description": "A3 sketch book",
             "detailedDescription": "It looks like it contains all Simon's plans.",
@@ -9107,6 +9630,9 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -9594,6 +10120,26 @@
           "traveller": true,
           "imageName": "alexfreeman.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "alex",
           "alex f",
@@ -9621,6 +10167,26 @@
           "traveller": true,
           "imageName": "jamesking.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "james",
           "james k",
@@ -9648,6 +10214,26 @@
           "traveller": true,
           "imageName": "justinheron.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "justin",
           "jh",
@@ -9762,6 +10348,26 @@
           "traveller": true,
           "imageName": "cassiroper.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "cassi",
           "cassie",
@@ -10162,7 +10768,42 @@
         "longname": "North",
         "direction": "n",
         "source": "second-floor-east-corridor",
-        "destination": "second-floor-landing-east"
+        "destination": "second-floor-landing-east",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "It leads out to the second floor landing.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-east-corridor",
+            "destination": "second-floor-landing-east",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
       }
     ]
   },
@@ -10373,7 +11014,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the first floor working area.",
+        "detailedDescription": "One of the main doors into the second floor working area.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -10381,6 +11022,9 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -10763,7 +11407,8 @@
         "longname": "North",
         "direction": "n",
         "source": "second-floor-reception",
-        "destination": "stairs-second-floor"
+        "destination": "stairs-second-floor",
+        "hidden": true
       },
       {
         "object": "exit",
@@ -10771,6 +11416,40 @@
         "direction": "s",
         "source": "second-floor-reception",
         "destination": "second-floor-seating-area-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "It leads out to the second floor stairs.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-reception",
+            "destination": "stairs-second-floor",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
       }
     ]
   },
@@ -11162,7 +11841,8 @@
         "longname": "North",
         "direction": "n",
         "source": "servery-back-corridor",
-        "destination": "first-floor-landing-east"
+        "destination": "first-floor-landing-east",
+        "hidden": true
       },
       {
         "object": "exit",
@@ -11177,6 +11857,40 @@
         "direction": "s",
         "source": "servery-back-corridor",
         "destination": "servery-kitchen"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "It leads out to the first floor landing.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "servery-back-corridor",
+            "destination": "first-floor-landing-east",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
       }
     ]
   },
@@ -11459,6 +12173,26 @@
           "destinationDelay": 1,
           "imageName": "waynestanford.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "wayne",
           "ws",
@@ -11571,7 +12305,8 @@
         "longname": "North",
         "direction": "n",
         "source": "servery-north-west",
-        "destination": "stairs-first-floor"
+        "destination": "stairs-first-floor",
+        "hidden": true
       },
       {
         "object": "exit",
@@ -11589,6 +12324,38 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "office door",
+        "description": "office door",
+        "detailedDescription": "It leads out to the second floor landing.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "servery-north-west",
+            "destination": "stairs-first-floor",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "office",
+          "door"
+        ]
+      },
       {
         "object": "artefact",
         "name": "wall",
@@ -12073,6 +12840,9 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -12148,6 +12918,9 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -12201,7 +12974,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the first floor working area.",
+        "detailedDescription": "One of the main doors into the second floor working area.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -12209,6 +12982,9 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -12316,6 +13092,26 @@
           "traveller": true,
           "imageName": "chrisallen.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "chris",
           "chris a",
@@ -12457,6 +13253,24 @@
           "imageName": "paweljonczak.jpg"
         },
         "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          },
           {
             "object": "artefact",
             "name": "gate key",

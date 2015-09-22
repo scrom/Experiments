@@ -281,6 +281,7 @@
             "attributes": {
               "weight": 0.1,
               "type": "key",
+              "affinityModifier": -1,
               "canCollect": true,
               "unlocks": "office door"
             },

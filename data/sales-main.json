@@ -34,9 +34,12 @@
         "description": "Alex Freeman",
         "detailedDescription": "Can haz mor Accountz.",
         "attributes": {
-          "template": "creature-male-l4",
-          "imageName": "alexfreeman.jpg"
+            "template": "creature-male-l4",
+            "imageName": "alexfreeman.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "alex",
           "alex f",
@@ -53,9 +56,12 @@
         "description": "James King",
         "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
         "attributes": {
-          "template": "creature-male-l3",
-          "imageName": "jamesking.jpg"
+            "template": "creature-male-l3",
+            "imageName": "jamesking.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "james",
           "james k",
@@ -72,9 +78,12 @@
         "description": "Justin Heron",
         "detailedDescription": "He's a master of selling!",
         "attributes": {
-          "template": "creature-male-l3",
-          "imageName": "justinheron.jpg"
+            "template": "creature-male-l3",
+            "imageName": "justinheron.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "justin",
           "jh",
@@ -178,9 +187,12 @@
         "description": "Cassi Roper",
         "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
         "attributes": {
-          "template": "creature-female-l4",
-          "imageName": "cassiroper.jpg"
+            "template": "creature-female-l4",
+            "imageName": "cassiroper.jpg"
         },
+        "inventory": [
+            {"file": "keyfob"}
+        ],
         "synonyms": [
           "cassi",
           "cassie",
