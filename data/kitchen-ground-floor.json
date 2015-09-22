@@ -362,11 +362,11 @@
         "displayName": "there's been a plane crash",
         "attributes": {
           "type": "event",
-          "parent": "latte",
+          "parent": "finddaveandroger",
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "time": 72,
+          "time": 62,
           "missionsCompletedCount": ">9"
         },
         "reward": {
