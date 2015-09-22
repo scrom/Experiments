@@ -87,6 +87,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.updateAttributes = function (newAttributes) {
             processAttributes(newAttributes);
         };
+        
+        self.removeContagion = function (contagionName) {
+            var contagionToKeep = [];
+            for (var i = 0; i < _contagion.length; i++) {
+                if (!(_contagion[i].getName() == contagionName)) {
+                    contagionToKeep.push(_contagion[i]);
+                };
+            };
+            _contagion = contagionToKeep;
+        };        
+        
+        self.setAntibody = function (antibodyName) {
+            //if not already carrying
+            if (_antibodies.indexOf(antibodyName) == -1) {
+                _antibodies.push(antibodyName);
+                self.removeContagion(antibodyName);
+            };
+        };
 
         var processAttributes = function(creatureAttributes) {
             if (!creatureAttributes) {return null;}; //leave defaults preset
@@ -800,24 +818,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     _contagion.push(contagion);
                 };
             };
-        };
-
-        self.setAntibody = function(antibodyName) {
-            //if not already carrying
-            if (_antibodies.indexOf(antibodyName) == -1) {
-                _antibodies.push(antibodyName);
-                self.removeContagion(antibodyName);
-            };
-        };
-
-        self.removeContagion = function(contagionName) {
-            var contagionToKeep = [];
-            for (var i=0;i<_contagion.length;i++) {
-                if (!(_contagion[i].getName() == contagionName)) {
-                    contagionToKeep.push(_contagion[i]);
-                };
-            };
-            _contagion = contagionToKeep;
         };
 
         self.transmitAntibodies = function(receiver, transmissionMethod) {
