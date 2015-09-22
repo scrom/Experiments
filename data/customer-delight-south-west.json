@@ -198,12 +198,14 @@
           "imageName": "chrismoore.jpg"
         },
         "synonyms": [
-          "chris",
-          "chris m",
-          "cm",
-          "moore",
-          "him"
+            "chris",
+            "chris m",
+            "cm",
+            "moore",
+            "him"
         ],
+        "inventory": [
+            {"file": "keyfob"}],
         "missions": [
           {
             "object": "mission",

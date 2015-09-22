@@ -1,0 +1,18 @@
+﻿{
+    "object": "artefact",
+    "name": "keyfob",
+    "description": "key fob",
+    "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+    "attributes": {
+        "weight": 0.1,
+        "type": "key",
+        "canCollect": true,
+        "unlocks": "office door"
+    },
+    "synonyms": [
+        "key fob",
+        "fob",
+        "keyring",
+        "key ring"
+    ]
+}

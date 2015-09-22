@@ -307,16 +307,22 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
 
-        self.getAvailableExits = function(includeUnlockedDoors) {
+        self.getAvailableExits = function (includeUnlockedDoors, callerInventory) {
             var exitArray = [];
             for(var i = 0; i < _exits.length; i++) {
                 if (typeof _exits[i] == "object") {
                     if (_exits[i].isVisible()){exitArray.push(_exits[i]);}
-                    else {
+                    else { //exit is not visible
                         if (includeUnlockedDoors) {
                             var doors = self.getAllObjectsOfType("door");
-                            for (var d=0;d<doors.length;d++) {
-                                if (!(doors[d].isLocked())) {
+                            for (var d = 0; d < doors.length; d++) {
+                                var key;
+                                if (doors[d].isLocked()) {
+                                    key = doors[d].getMatchingKey("unlock", callerInventory);
+                                };
+                                
+                                //doore is either unlocked or we have a key
+                                if ((!(doors[d].isLocked())) || key) {
                                     //console.log(doors[d].getName());
                                     var linkedExits = doors[d].getLinkedExits();
                                     if (linkedExits.length == 0) {continue;};
@@ -356,9 +362,9 @@ exports.Location = function Location(name, displayName, description, attributes)
             return bestTraceExit;
         };
 
-        self.getRandomExit = function(includeUnlockedDoors, avoidLocations) {
+        self.getRandomExit = function(includeUnlockedDoors, avoidLocations, callerInventory) {
             if (!(avoidLocations)) {avoidLocations = [];};
-            var allAvailableExits = self.getAvailableExits(includeUnlockedDoors);
+            var allAvailableExits = self.getAvailableExits(includeUnlockedDoors, callerInventory);
             var availableExits = [];
 
             //filter out avoid locations...

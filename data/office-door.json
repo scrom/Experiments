@@ -9,6 +9,7 @@
     "canOpen": true,
     "lockable": true,
     "locked": true,
+    "autoLock": 0,
     "canDrawOn": true
 },
 "synonyms": [

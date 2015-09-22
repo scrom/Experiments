@@ -4,108 +4,110 @@
     "displayName": "Waste area",
     "description": "You're by a locked gate. On the far side are a series of waste containers full of carboard boxes, broken furniture and kitchen leftovers.",
     "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike"
-      ]
+        "type": "outdoor",
+        "vehiclesAllowed": [
+            "bike"
+        ]
     },
     "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "waste-area",
-        "destination": "east-bike-racks"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "waste-area",
-        "destination": "rubbish-bins",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "creature",
-        "name": "pawel jonczak",
-        "displayname": "Pawel Jonczak",
-        "description": "Pawel Jonczak",
-        "detailedDescription": "One of the hidden heroes of our catering team.",
-        "attributes": {
-          "template": "creature-male-l3",
-          "destinations": [
-            "servery-kitchen",
-            "waste-area",
-            "servery-kitchen",
-            "smoking-area"
-          ],
-          "avoiding": [
-            "first-floor-fire-escape"
-          ],
-          "loops": -1,
-          "loopDelay": 5,
-          "destinationDelay": 1,
-          "imageName": "paweljonczak.jpg"
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "waste-area",
+            "destination": "east-bike-racks"
         },
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "gate key",
-            "description": "gate key",
-            "detailedDescription": "This looks like the key to the waste area gate.",
-            "attributes": {
-              "defaultAction": "open",
-              "weight": 0.1,
-              "type": "key",
-              "canCollect": true,
-              "affinityModifier": 2,
-              "unlocks": "waste gate"
-            },
-            "synonyms": [
-              "waste key",
-              "key"
-            ]
-          }
-        ],
-        "synonyms": [
-          "pawel",
-          "pavel",
-          "pj",
-          "jonczak",
-          "pawel j"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "waste gate",
-        "description": "large gate",
-        "detailedDescription": "You've always been curious what interesting things get thrown in here.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "canOpen": true,
-          "lockable": true,
-          "locked": true
-        },
-        "linkedexits": [
-          {
+        {
             "object": "exit",
             "longname": "East",
             "direction": "e",
             "source": "waste-area",
             "destination": "rubbish-bins",
             "hidden": true
-          }
-        ],
-        "synonyms": [
-          "waste",
-          "gate",
-          "large gate",
-          "door"
-        ]
-      }
+        }
+    ],
+    "inventory": [
+        {
+            "object": "creature",
+            "name": "pawel jonczak",
+            "displayname": "Pawel Jonczak",
+            "description": "Pawel Jonczak",
+            "detailedDescription": "One of the hidden heroes of our catering team.",
+            "attributes": {
+                "template": "creature-male-l3",
+                "destinations": [
+                    "servery-kitchen",
+                    "waste-area",
+                    "servery-kitchen",
+                    "smoking-area"
+                ],
+                "avoiding": [
+                    "first-floor-fire-escape"
+                ],
+                "loops": -1,
+                "loopDelay": 5,
+                "destinationDelay": 1,
+                "imageName": "paweljonczak.jpg"
+            },
+            "inventory": [
+                
+            {"file": "keyfob"},
+                {
+                    "object": "artefact",
+                    "name": "gate key",
+                    "description": "gate key",
+                    "detailedDescription": "This looks like the key to the waste area gate.",
+                    "attributes": {
+                        "defaultAction": "open",
+                        "weight": 0.1,
+                        "type": "key",
+                        "canCollect": true,
+                        "affinityModifier": 2,
+                        "unlocks": "waste gate"
+                    },
+                    "synonyms": [
+                        "waste key",
+                        "key"
+                    ]
+                }
+            ],
+            "synonyms": [
+                "pawel",
+                "pavel",
+                "pj",
+                "jonczak",
+                "pawel j"
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "waste gate",
+            "description": "large gate",
+            "detailedDescription": "You've always been curious what interesting things get thrown in here.",
+            "attributes": {
+                "defaultAction": "open",
+                "weight": 200,
+                "type": "door",
+                "canOpen": true,
+                "lockable": true,
+                "locked": true
+            },
+            "linkedexits": [
+                {
+                    "object": "exit",
+                    "longname": "East",
+                    "direction": "e",
+                    "source": "waste-area",
+                    "destination": "rubbish-bins",
+                    "hidden": true
+                }
+            ],
+            "synonyms": [
+                "waste",
+                "gate",
+                "large gate",
+                "door"
+            ]
+        }
     ]
   }

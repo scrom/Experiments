@@ -54,6 +54,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _destroyed = false; //broken beyond repair
         var _locked = false;
         var _lockable = false;
+        var _autoLock = -1;
+        var _lockInMoves = -1;
         var _unlocks = ""; //unique name of the object that it unlocks. 
         var _componentOf = []; //unique names of the object this is a component of.
         var _combinesWith = ""; //unique name of the object this can combine with.
@@ -195,6 +197,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.lockable != undefined) {
                 if (artefactAttributes.lockable== true || artefactAttributes.lockable == "true") { _lockable = true;};
             };
+            if (artefactAttributes.lockInMoves != undefined) {
+                if (artefactAttributes.lockInMoves >= 0) { _lockInMoves = artefactAttributes.lockInMoves; };
+            };               
+            if (artefactAttributes.autoLock != undefined) {
+                if (artefactAttributes.autoLock >= 0) {
+                    _autoLock = artefactAttributes.autoLock;
+                    if (_lockInMoves < 0) {_lockInMoves = _autoLock };
+                };
+            };
+     
+
             if (artefactAttributes.locked != undefined) {
                 if (artefactAttributes.locked== true || artefactAttributes.locked == "true") { _locked = true;};
             };
@@ -513,6 +526,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.extendedInventoryDescription = _extendedInventoryDescription;
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.lockable = _lockable;
+            currentAttributes.autoLock = _autoLock;
+            currentAttributes.lockInMoves = _lockInMoves; 
             currentAttributes.locked = _locked;
             currentAttributes.canCollect = _collectable;
             currentAttributes.read = _read;
@@ -614,7 +629,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.canOpen) { saveAttributes.canOpen = true;};                    
             if (artefactAttributes.isOpen) { saveAttributes.isOpen = true;};
             if (artefactAttributes.lockable) { saveAttributes.lockable = true;};
-            if (artefactAttributes.locked) {saveAttributes.locked = true;};
+            if (artefactAttributes.locked) { saveAttributes.locked = true; };
+            if (artefactAttributes.autoLock >=0) { saveAttributes.autoLock = artefactAttributes.autoLock; };
+            if (artefactAttributes.lockInMoves >= 0) { saveAttributes.lockInMoves = artefactAttributes.lockInMoves; };
             if (artefactAttributes.isEdible) {saveAttributes.isEdible = true;};
             if (artefactAttributes.nutrition != 0) { saveAttributes.nutrition = artefactAttributes.nutrition; };
             if (artefactAttributes.sharpened != 0) { saveAttributes.sharpened = artefactAttributes.sharpened; };
@@ -2732,7 +2749,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory;
         };
 
-        self.tick = function() {
+        self.tick = function () {
+            //if autolock enabled - tick down lock timer and lock (and reset timer) if expired.
+            if (_autoLock >= 0 && (!(isLocked()))) {
+                if (_lockInMoves <= 0) {
+                    _locked = true;  //force lock - even without key. 
+                    _lockInMoves = _autoLock; //reset lockInMoves for next time.
+                } else {
+                    _lockInMoves--;
+                };
+            };
+
             //if turned on and "burnRate" set, decrement charges on self and/or contents.
             //for those turned on (or ticking), decrement relevant stats
             //not implemented yet

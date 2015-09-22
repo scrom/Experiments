@@ -91,6 +91,7 @@
     <Content Include="data\is-area.json" />
     <Content Include="data\jellyfish-meeting-room.json" />
     <Content Include="data\jordan-miller.json" />
+    <Content Include="data\keyfob.json" />
     <Content Include="data\kitchen-ground-floor.json" />
     <Content Include="data\lawyer-lobby.json" />
     <Content Include="data\library.json" />

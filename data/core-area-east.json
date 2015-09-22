@@ -58,10 +58,8 @@
           "imageName": "zarasheldrake.jpg"
         },
         "inventory": [
-          {
-            "object": "artefact",
-            "template": "first-aid-kit"
-          }
+            { "file": "first-aid-kit" },
+            {"file": "keyfob"}
         ],
         "synonyms": [
           "zara",
@@ -81,12 +79,13 @@
           "imageName": "deneboulton.jpg"
         },
         "synonyms": [
-          "dene",
-          "dean",
-          "boulton",
-          "db",
-          "him"
+            "dene",
+            "dean",
+            "boulton",
+            "db",
+            "him"
         ],
+        "inventory": [{"file": "keyfob"}],
         "missions": [
           {
             "object": "mission",
