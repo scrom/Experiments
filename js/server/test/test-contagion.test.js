@@ -5,7 +5,8 @@ var player = require('../player.js');
 var map = require('../map.js');
 var location = require('../location.js');
 var creature = require('../creature.js');
-
+var artefact = require('../artefact.js');
+var mapBuilder = require('../mapbuilder.js');
 //var sf = new stubFactory.StubFactory();
 
 exports.setUp = function (callback) {
@@ -30,6 +31,67 @@ exports.toStringForContagionDeliversExpectedJSONStringResult = function (test) {
 };
 
 exports.toStringForContagionDeliversExpectedJSONStringResult.meta = { traits: ["Contagion Test", "ToString Trait"], description: "Test that a contagion object correctly converts to string." };
+
+
+exports.consumingItemWithAntibodiesProvidesImmunity = function (test) {
+    var c = new contagion.Contagion("zombie", "zombieism", { "incubationPeriod": 10, "communicability": 0.5, "transmission": "bite", "symptoms": [{ "action": "bite", "frequency": 0.3, "escalation": 0 }], "duration": -1 });
+    var a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
+    var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+    
+    var playerAttributes = { "username": "player"};
+    var m0 = mb.buildMap();
+    var p0 = new player.Player(playerAttributes, m0, mb);
+    var inv = p0.getInventoryObject();
+    inv.add(a);
+
+    p0.drink("drink", "venom");
+    
+    console.log("Player has contagion before: " + p0.hasContagion("zombie"));
+    
+    p0.setContagion(c);
+    
+    console.log("Player has contagion after: " + p0.hasContagion("zombie"));
+    
+    var expectedResult = false;
+    var actualResult = p0.hasContagion("zombie");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.consumingItemWithAntibodiesProvidesImmunity.meta = { traits: ["Contagion Test", "Antibody Trait"], description: "Test contagion antibodies behave." };
+
+
+exports.consumingItemWithAntibodiesCuresContagion = function (test) {
+    var c = new contagion.Contagion("zombie", "zombieism", { "incubationPeriod": 10, "communicability": 0.5, "transmission": "bite", "symptoms": [{ "action": "bite", "frequency": 0.3, "escalation": 0 }], "duration": -1 });
+    var a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
+    var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+    
+    var playerAttributes = { "username": "player", "contagion": [{ "object": "Contagion", "name": "zombie", "displayName": "zombieism", "attributes": { "incubationPeriod": 10, "communicability": 0.5, "symptoms": [{ "action": "bite", "frequency": 0.3, "escalation": 0 }] } }] };
+    var m0 = mb.buildMap();
+    var p0 = new player.Player(playerAttributes, m0, mb);
+    var inv = p0.getInventoryObject();
+    inv.add(a);
+    
+    console.log("Player has contagion before: " + p0.hasContagion("zombie"));
+    
+    p0.drink("drink", "venom");
+    
+    console.log("Player has contagion after: " + p0.hasContagion("zombie"));
+    
+    var expectedResult = false;
+    var actualResult = p0.hasContagion("zombie");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+
+};
+
+exports.consumingItemWithAntibodiesCuresContagion.meta = { traits: ["Contagion Test", "Antibody Trait"], description: "Test contagion antibodies behave." };
+
 
 exports.checkContagionEscalationOccurs = function (test) {
 
