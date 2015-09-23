@@ -443,8 +443,31 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString;
 
             if (!self.isDead()) {
-                self.decreaseAffinity(1, false);
-                resultString = "I don't think "+self.getPrefix().toLowerCase()+" appreciated being sniffed.<br>I'd not do that too often if I were you.";
+                //random chance of impacting affinity
+                var affinityImpact = Math.floor(Math.random() * 1.5);
+                self.decreaseAffinity(affinityImpact, false);
+
+                var randomReplies = ["I don't think " + self.getPrefix().toLowerCase() + " appreciated being sniffed.<br>I'd not do that too often if I were you.", "I'd be careful doing that kind of thing around here."];
+                if (self.getSubType() != "animal") {
+                    randomReplies.push(self.getPrefix() + " says 'Will you stop that please.'");
+                    randomReplies.push(self.getPrefix() + " says 'HEY!'");
+                    randomReplies.push(self.getPrefix() + " says 'Back... ...off.'");
+                } else {
+                    randomReplies.push(self.getPrefix() + " growls a warning to you.");
+                    randomReplies.push(self.getPrefix() + " shrinks away from you making small whimpering noises.");
+                };
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                
+                resultString = randomReplies[randomIndex];
+
+                if (affinityImpact > 0) {
+                    if (_affinity == 0) {
+                        resultString += "<br>You're not doing yourself any favours in the popularity stakes here.";
+                    } else if (_affinity == -2) {
+                        resultString += "<br>I have to warn you. If you carry on this course of action you'll be seriously diminishing your overall chances of success."
+                    };
+                };
+
             };
 
             if (resultString) {
