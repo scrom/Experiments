@@ -435,6 +435,13 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 returnObject.modifyObject = self.unpackModifyObject(reward.modifyObject);
             };
 
+            if (reward.modifyObjects) {
+                returnObject.modifyObjects = [];
+                for (var m = 0; m < reward.modifyObjects.length; m++) {
+                    returnObject.modifyObjects.push(self.unpackModifyObject(reward.modifyObjects[m]));
+                };
+            };
+
             //add other attributes back in
             for (var attr in reward) {
                 if (reward.hasOwnProperty(attr)) {

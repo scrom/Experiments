@@ -83,15 +83,21 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
                resultString += '"'+key+'":';
                var obj = literal[key];
-               //console.log("LiteralConversion: "+typeof(obj)+":"+obj.toString());
+               //console.log("LiteralConversion for "+key+": "+typeof(obj)+":"+obj.toString());
 
                  if (typeof(obj) == 'object') {
-                     if (Object.prototype.toString.call(obj) === '[object Array]') {
+                    if (Object.prototype.toString.call(obj) === '[object Array]') {
+                        //console.log("Extracting Array...");
                         resultString += '[';
                         for (var j=0;j<obj.length;j++) {
                             if (j>0) {resultString += ",";};
-                            if (typeof(obj[j]) == 'object') {
-                                resultString += obj[j].toString();
+                            if (typeof (obj[j]) == 'object') {
+                                if (obj[j].toString() === '[object Object]') {
+                                    //we have a simple literal object
+                                    resultString += self.literalToString(obj[j]);
+                                } else {
+                                    resultString += obj[j].toString();
+                                };
                             } else {
                                 resultString += '"'+obj[j]+'"';
                             };
@@ -277,7 +283,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
             }            ;
             //@todo issue #348 - alter all of the below to work on an array of objects or locations, make them plural
-            if (reward.modifyObject) { map.modifyObject(reward.modifyObject, player);};
+            if (reward.modifyObject) { map.modifyObject(reward.modifyObject, player); };
+            if (reward.modifyObjects) {
+                for (var m = 0; m < reward.modifyObjects.length; m++) {
+                    map.modifyObject(reward.modifyObjects[m], player);
+                };
+            };
             if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
             if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
             if (reward.removeLocation) { map.removeLocation(reward.removeLocation);};

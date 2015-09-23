@@ -4,92 +4,94 @@
     "displayName": "Machine room",
     "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "machine-room-east",
-        "destination": "machine-room-west"
-      }
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "machine-room-east",
+            "destination": "machine-room-west"
+        }
     ],
     "inventory": [
-      {
-        "object": "artefact",
-        "name": "server",
-        "description": "rack-mounted blade server",
-        "detailedDescription": "The servers look like they can be accessed via a console nearby.<br>One of the servers has a bay to install extra hard drives into.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 0.1,
-          "carryWeight": 0.75,
-          "type": "container",
-          "breakable": true,
-          "canCollect": false,
-          "defaultResult": "$action install disk in server"
-        },
-        "synonyms": [
-          "rack",
-          "racks",
-          "server rack",
-          "server racks",
-          "blade",
-          "blade server",
-          "servers",
-          "computer",
-          "computers",
-          "bay",
-          "hard drive bay"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "installdisk",
-            "displayName": "install a hard disk in the machine room server",
-            "description": "",
+        {
+            "object": "artefact",
+            "name": "server",
+            "description": "rack-mounted blade server",
+            "detailedDescription": "The servers look like they can be accessed via a console nearby.<br>One of the servers has a bay to install extra hard drives into.",
             "attributes": {
-              "missionObject": "hard disk",
-              "destination": "server",
-              "static": true
+                "defaultAction": "open",
+                "weight": 0.1,
+                "carryWeight": 0.75,
+                "type": "container",
+                "breakable": true,
+                "canCollect": false,
+                "defaultResult": "$action install disk in server"
             },
-            "failAttributes": {
-              "isDestroyed": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": false,
-              "isBroken": false,
-              "isDamaged": false
-            },
-            "reward": {
-              "score": 10,
-              "removeObject": "hard disk",
-              "message": "You slot the disk into the server hard drive bay. It clicks permanently into place and spins up.<br>You hear a small 'beep' from nearby. Let's find out what was on that disk.",
-              "modifyObject": {
-                "name": "console",
-                "attributes": {
-                  "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'... ...'book of summ!£*_+g... ...sacri+}[@: souls open _^* gate'... ...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
+            "synonyms": [
+                "rack",
+                "racks",
+                "server rack",
+                "server racks",
+                "blade",
+                "blade server",
+                "servers",
+                "computer",
+                "computers",
+                "bay",
+                "hard drive bay"
+            ],
+            "missions": [
+                {
+                    "object": "mission",
+                    "name": "installdisk",
+                    "displayName": "install a hard disk in the machine room server",
+                    "description": "",
+                    "attributes": {
+                        "missionObject": "hard disk",
+                        "destination": "server",
+                        "static": true
+                    },
+                    "failAttributes": {
+                        "isDestroyed": true
+                    },
+                    "conditionAttributes": {
+                        "isDestroyed": false,
+                        "isBroken": false,
+                        "isDamaged": false
+                    },
+                    "reward": {
+                        "score": 10,
+                        "removeObject": "hard disk",
+                        "message": "You slot the disk into the server hard drive bay. It clicks permanently into place and spins up.<br>You hear a small 'beep' from nearby. Let's find out what was on that disk.",
+                        "modifyObjects": [
+                            {
+                                "name": "console",
+                                "attributes": {
+                                    "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'... ...'book of summ!£*_+g... ...sacri+}[@: souls open _^* gate'... ...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
+                                }
+                            }
+                        ]
+                    }
                 }
-              }
-            }
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "console",
-        "description": "old-fashioned VDU console",
-        "detailedDescription": "It's pretty old and tatty. There's no sign of life in it at the moment.",
-        "attributes": {
-          "weight": 25,
-          "type": "computer",
-          "breakable": true,
-          "canCollect": false
+            ]
         },
-        "synonyms": [
-          "vdu",
-          "screen",
-          "old screen",
-          "old console"
-        ]
-      }
+        {
+            "object": "artefact",
+            "name": "console",
+            "description": "old-fashioned VDU console",
+            "detailedDescription": "It's pretty old and tatty. There's no sign of life in it at the moment.",
+            "attributes": {
+                "weight": 25,
+                "type": "computer",
+                "breakable": true,
+                "canCollect": false
+            },
+            "synonyms": [
+                "vdu",
+                "screen",
+                "old screen",
+                "old console"
+            ]
+        }
     ]
   }
