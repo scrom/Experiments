@@ -5953,7 +5953,8 @@
           "imageName": "amandamansfield.jpg",
           "repairSkills": [
             "projector",
-            "hard disk"
+            "hard disk",
+            "server"
           ]
         },
         "inventory": [
@@ -6647,11 +6648,11 @@
         "displayName": "there's been a plane crash",
         "attributes": {
           "type": "event",
-          "parent": "latte",
+          "parent": "finddaveandroger",
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "time": 72,
+          "time": 62,
           "missionsCompletedCount": ">9"
         },
         "reward": {
@@ -7678,7 +7679,7 @@
               "modifyObject": {
                 "name": "console",
                 "attributes": {
-                  "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5%!£% 6!£¬%$@th call for¬@£^ the C~#t of !£* R£@ G~#@'... ...'book of summ!£*%+g... ...sacri+}[@: souls open %^* gate'... ...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
+                  "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'... ...'book of summ!£*_+g... ...sacri+}[@: souls open _^* gate'... ...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
                 }
               },
               "score": 10,
@@ -9209,12 +9210,13 @@
           {
             "object": "artefact",
             "name": "sketchbook",
-            "description": "A3 sketch book",
+            "description": "Simon's A3 sketch book",
             "detailedDescription": "It looks like it contains all Simon's plans.",
             "attributes": {
+              "defaultAction": "read",
               "weight": 5,
               "attackStrength": 5,
-              "type": "treasure",
+              "type": "book",
               "canCollect": true,
               "isBreakable": true,
               "affinityModifier": 5,
@@ -9226,6 +9228,26 @@
               "a3 sketch book",
               "a3 sketchbook",
               "sketch book"
+            ],
+            "missions": [
+              {
+                "object": "mission",
+                "name": "readsimonsplans",
+                "displayName": "read simon's sketchbook",
+                "description": "After thumbing through a few pages of revenue and budget forecasts you stumble onto something odd.<br><br>There's a sketch of the building's floorplan but the rear fire escape area doesn't quite look right.<br>Significantly more disturbing are the annotations.<br>You can easily distinguish a series of ornate pentagrams marked on one location but can't decipher the handwriting alongside them.<br>You manage to make out a few letters at best... 'R_t___ o_ __mmo_in_'.<br><br>This can't be good.",
+                "attributes": {
+                  "missionObject": "sketchbook",
+                  "static": true
+                },
+                "conditionAttributes": {
+                  "isDestroyed": false,
+                  "read": true
+                },
+                "reward": {
+                  "score": 40,
+                  "message": "It looks like Simon's company expansion plans aren't within normal company health parameters."
+                }
+              }
             ]
           }
         ],

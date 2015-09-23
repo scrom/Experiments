@@ -77,29 +77,8 @@
                 "imageName": "simongalbraith.jpg"
             },
             "inventory": [
-                {"file": "keyfob"},
-                {
-                    "object": "artefact",
-                    "name": "sketchbook",
-                    "description": "A3 sketch book",
-                    "detailedDescription": "It looks like it contains all Simon's plans.",
-                    "attributes": {
-                        "weight": 5,
-                        "attackStrength": 5,
-                        "type": "treasure",
-                        "canCollect": true,
-                        "isBreakable": true,
-                        "affinityModifier": 5,
-                        "canDrawOn": true
-                    },
-                    "synonyms": [
-                        "book",
-                        "a3",
-                        "a3 sketch book",
-                        "a3 sketchbook",
-                        "sketch book"
-                    ]
-                }
+                { "file": "keyfob" },
+                { "file": "sketchbook" }
             ],
             "synonyms": [
                 "boss",
@@ -110,93 +89,7 @@
                 "him"
             ],
             "missions": [
-                {
-                    "object": "mission",
-                    "name": "retrievedisk",
-                    "displayName": "retrieve the stolen hard disk",
-                    "description": "Retrieve a stolen hard drive.",
-                    "attributes": {
-                        "parent": "saveredgate",
-                        "missionObject": "hard disk",
-                        "destination": "simon galbraith",
-                        "initiateConversation": true,
-                        "static": true,
-                        "dialogue": [
-                            "'Hi $player, thanks for the amazing job saving us from disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
-                            {
-                                "state": 1,
-                                "keywords": [
-                                    "yes",
-                                    "ok",
-                                    "yup",
-                                    "y"
-                                ],
-                                "response": "'Thanks $player. I think there's a spy somewhere in the building.'<br>'Track them down and investivate the situation.'",
-                                "nextState": 3
-                            },
-                            {
-                                "state": 1,
-                                "keywords": [
-                                    "n",
-                                    "no",
-                                    "not",
-                                    "not yet"
-                                ],
-                                "response": "Refusing a polite but important request from your CEO probably isn't wise.<br>'Well, when you're ready to do something useful, you know where I am.'",
-                                "nextState": 2
-                            },
-                            {
-                                "state": 1,
-                                "response": "'Keep an eye out for suspicious activity and if you track down anything, I'm sure we can make it worth your while.'",
-                                "nextState": 3
-                            },
-                            {
-                                "state": 2,
-                                "response": "'About that missing data...'",
-                                "nextState": 3
-                            },
-                            {
-                                "state": 3,
-                                "response": "'Have you found my missing data yet?'",
-                                "nextState": 4
-                            },
-                            {
-                                "state": 4,
-                                "requestedObject": "hard disk",
-                                "keywords": [
-                                    "yes",
-                                    "ok",
-                                    "yup",
-                                    "y"
-                                ],
-                                "response": "'Excellent, hand it over please.'"
-                            },
-                            {
-                                "state": 4,
-                                "response": "'Fine. I won't ask you again but the request still stands.'"
-                            }
-                        ]
-                    },
-                    "failAttributes": {
-                        "isDestroyed": true
-                    },
-                    "conditionAttributes": {
-                        "isDestroyed": false,
-                        "isBroken": false,
-                        "isDamaged": false
-                    },
-                    "reward": {
-                        "affinityModifier": 2,
-                        "increaseAffinityFor": "simon galbraith",
-                        "score": 50,
-                        "money": 25,
-                        "removeObject": "hard disk",
-                        "message": "Simon says 'Amaaazing!' and waves his arms in a CEO-like gesture.<br>Congratulations. You retrieved the stolen hard drive! Have a cash bonus.<br>'If you've not done so already, I think you should double-check to ensure our problematic friend gives us no more trouble. (if you get my gist).'"
-                    },
-                    "fail": {
-                        "message": "That was foolish. The hard disk was worth a lot in the right hands.<br>Well. Best you move on and see if you can redeem yourself elsewhere."
-                    }
-                }
+                {"file": "mission-retrievedisk"}                
             ]
         }
     ]
