@@ -509,8 +509,14 @@ exports.canHitCreatureWithInventoryWeapon.meta = { traits: ["Player Test", "Inve
 exports.hittingCreatureWhenPlayerIsHealthyDoesFullDamage = function (test) {
     p0.get('get', weapon.getName());
     p0.hurt(49);
-    p0.hit('hit',c0.getName());
-    p0.hit('hit',c0.getName());
+    var hitcount = 0;
+    while (hitcount < 2) {
+        var result = p0.hit('hit', c0.getName());
+        if (!(result == "You missed!")) {
+            hitcount++;
+        };
+    };
+
     var expectedResult = "He's really not in good shape.";
     var actualResult = c0.health();
     console.log("Expected: "+expectedResult);
@@ -556,7 +562,10 @@ exports.playerCanHitAndKillACreature = function (test) {
     p0.hit('hit', c0.getName());
     p0.hit('hit', c0.getName());
     p0.hit('hit', c0.getName());
+    //we need a few extra hits as player has a 20% chance of missing each hit.
     p0.hit('hit', c0.getName());
+    p0.hit('hit', c0.getName());
+    p0.hit('hit', c0.getName()); 
     var expectedResult = "He's dead.";
     var actualResult = c0.health();
     console.log("Expected: " + expectedResult);
@@ -593,8 +602,8 @@ exports.canTurnFriendlyCreatureToFightableByHitting3Times = function (test) {
     p0.hit('hit',friendlyCreature.getName());
     p0.hit('hit',friendlyCreature.getName());
 
-    var expectedResult = "You're obviously determined to fight him. Fair enough, on your head be it.<br>The friend is hurt. He's not happy.";
-    var actualResult = p0.hit('hit',friendlyCreature.getName());
+    var expectedResult = "You're obviously determined to fight him. Fair enough, on your head be it.";
+    var actualResult = p0.hit('hit',friendlyCreature.getName()).substr(0,74); //note, we substring to ignore if player missed.
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
