@@ -7130,12 +7130,12 @@
                         "isDestroyed": false
                       },
                       "reward": {
-                        "affinityModifier": 2,
+                        "affinityModifier": 1,
                         "decreaseAffinityFor": "simon galbraith",
                         "increaseAffinityFor": "jordan miller",
                         "removeObject": "sketchbook",
-                        "money": 50,
-                        "message": "Jordan says 'Nice work!'<br>'Here's &pound;50.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
+                        "money": 20,
+                        "message": "Jordan says 'Nice work!'<br>'Here's &pound;20.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
                       }
                     },
                     {
@@ -7302,7 +7302,7 @@
                             }
                           ]
                         },
-                        "affinityModifier": 2,
+                        "affinityModifier": 1,
                         "decreaseAffinityFor": "everyone",
                         "increaseAffinityFor": "jordan miller",
                         "removeObject": "van",

@@ -996,7 +996,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(self.canTravel())) { return false;} 
             if (self.isHostile(playerAggression)) {return true;};
             if (self.isFriendly(playerAggression)) {
-                if (_affinity < 2 ) {return false;}; //affinity needs to be a little higher.
+                if (_affinity <= 2 ) {return false;}; //affinity needs to be a little higher.
                 //act based on other creatures present...
                 var creatures = _currentLocation.getCreatures();
                 for (var i=0;i<creatures.length;i++) {

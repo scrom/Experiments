@@ -19,7 +19,7 @@
         {"file": "mouse"}                           
         ]
     },
-    "affinityModifier": 2,
+    "affinityModifier": 1,
     "decreaseAffinityFor": "everyone",
     "increaseAffinityFor": "jordan miller",
     "removeObject": "van",
