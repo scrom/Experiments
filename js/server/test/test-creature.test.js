@@ -1665,7 +1665,13 @@ exports.healthyCreatureDoesFullDamageWhenHittingOthers = function (test) {
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
 
-    console.log(c0.hit(p0, 1));
+    var hitcount = 0;
+    while (hitcount < 1) {
+        var actualResult = c0.hit(p0, 1);
+        if (!(actualResult == "")) { //"" means creature missed.
+            hitcount++;
+        };
+    };  
 
     var expected = "You're really not in good shape. It looks like you're bleeding. You might want to get that seen to.";
     var actual = p0.health();
@@ -1676,13 +1682,52 @@ exports.healthyCreatureDoesFullDamageWhenHittingOthers = function (test) {
 };
 exports.healthyCreatureDoesFullDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a healthy (injured but not bleeding) creature creature does full 'hit' damage." };
 
+
+exports.creatureOccasionallyMissesPlayerWhenHitting = function (test) {
+    
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 78, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    
+    var misscount = 0;
+    var attempts = 0;
+    while (misscount < 1 && attempts <25) {
+        attempts++;
+        var actualResult = c0.hit(p0, 1);
+        if (actualResult == "") { //"" means creature missed.
+            misscount++;
+        };
+    };
+    
+    var expected = 25;
+    var actual = attempts;
+    var success = false;
+    var achieved = expected - actual;
+    //console.log(achieved);
+    if (achieved >= 0) {
+        success = true;
+    };
+    console.log("expected: <25");
+    console.log("actual:" + actual + " success? "+success);
+    test.ok(success);
+    test.done();
+};
+exports.creatureOccasionallyMissesPlayerWhenHitting.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a healthy (injured but not bleeding) creature creature does full 'hit' damage." };
+
+
 exports.bleedingCreatureDoesReducedDamageWhenHittingOthers = function (test) {
 
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 73, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
 
-    console.log(c0.hit(p0, 1));
+    var hitcount = 0;
+    while (hitcount < 1) {
+        var actualResult = c0.hit(p0, 1);
+        if (!(actualResult == "")) { //"" means creature missed.
+            hitcount++;
+        };
+    };  
 
     var expected = "You've taken a fair beating.";
     var actual = p0.health();
@@ -1698,9 +1743,15 @@ exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers = function (test) {
 
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
     var m = mb.buildMap();
-    var p0 = new player.Player({username:"player"}, m);
+    var p0 = new player.Player({ username: "player" }, m);
 
-    console.log(c0.hit(p0, 1));
+    var hitcount = 0;
+    while (hitcount < 1) {
+        var actualResult = c0.hit(p0, 1);
+        if (!(actualResult == "")) { //"" means creature missed.
+            hitcount++;
+        };
+    };  
 
     var expected = "You're almost dead. It looks like you're bleeding. You might want to get that seen to.";
     var actual = p0.health();
