@@ -496,7 +496,13 @@ exports.canStealObjectFromCreature.meta = { traits: ["Player Test", "Inventory T
 exports.canHitCreatureWithInventoryWeapon = function (test) {
     p0.get('get', weapon.getName());
     var expectedResult = "The creature is hurt. He's taken a fair beating.";
-    var actualResult = p0.hit('hit',c0.getName());
+    var hitcount = 0;
+    while (hitcount < 1) {
+        var actualResult = p0.hit('hit', c0.getName());
+        if (!(actualResult == "You missed!")) {
+            hitcount++;
+        };
+    };
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -558,14 +564,15 @@ exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage.meta = { traits: ["Pla
 
 exports.playerCanHitAndKillACreature = function (test) {
     p0.get('get', weapon.getName());
-    p0.hit('hit', c0.getName());
-    p0.hit('hit', c0.getName());
-    p0.hit('hit', c0.getName());
-    p0.hit('hit', c0.getName());
-    //we need a few extra hits as player has a 20% chance of missing each hit.
-    p0.hit('hit', c0.getName());
-    p0.hit('hit', c0.getName());
-    p0.hit('hit', c0.getName()); 
+    var hitcount = 0;
+    //we need 5 successful hits as player has a 20% chance of missing each hit.
+    while (hitcount < 5) {
+        var result = p0.hit('hit', c0.getName());
+        //console.log(result)
+        if (!(result == "You missed!")) {
+            hitcount++;
+        };
+    }; 
     var expectedResult = "He's dead.";
     var actualResult = c0.health();
     console.log("Expected: " + expectedResult);
@@ -580,8 +587,15 @@ exports.playerCanHitAndKillACreature.meta = { traits: ["Player Test", "Bleed Tra
 exports.hittingCreatureWhenPlayerIsNearlyDeadDoesDoubleDamage = function (test) {
     p0.get('get', weapon.getName());
     p0.hurt(96);
-    p0.hit('hit',c0.getName());
-    p0.hit('hit',c0.getName());
+    //we need 2 successful "critical" hits as player has a 20% chance of missing each hit.
+    var hitcount = 0;
+    while (hitcount < 2) {
+        var result = p0.hit('hit', c0.getName());
+        //console.log(result)
+        if (!(result == "You missed!")) {
+            hitcount++;
+        };
+    };
     var expectedResult = "He's dead.";
     var actualResult = c0.health();
     console.log("Expected: "+expectedResult);
