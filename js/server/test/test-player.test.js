@@ -550,7 +550,14 @@ exports.hittingCreatureWhenBleedingDoesLessDamage.meta = { traits: ["Player Test
 exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage = function (test) {
     p0.get('get', weapon.getName());
     p0.hurt(91);
-    p0.hit('hit',c0.getName());
+    var hitcount = 0;
+    while (hitcount < 1) {
+        var result = p0.hit('hit', c0.getName());
+        console.log(actualResult)
+        if (!(actualResult == "You missed!")) {
+            hitcount++;
+        };
+    }; 
     var expectedResult = "He's not happy.";
     var actualResult = c0.health();
     console.log("Expected: "+expectedResult);
@@ -652,9 +659,14 @@ exports.canRevertPreviouslyFriendlyCreatureBack = function (test) {
     friendlyCreature.go(null,l0); 
     p0.get('get', weapon.getName());
     
-    p0.hit('hit',friendlyCreature.getName());
-    p0.hit('hit',friendlyCreature.getName());
-    p0.hit('hit',friendlyCreature.getName());
+    var hitcount = 0;
+    while (hitcount < 3) {
+        var result = p0.hit('hit', friendlyCreature.getName());
+        //console.log(actualResult)
+        if (!(actualResult == "You missed!")) {
+            hitcount++;
+        };
+    }; 
 
     console.log(friendlyCreature.receive(iceCream));
 
@@ -673,9 +685,14 @@ exports.cannotRevertPreviouslyFriendlyCreatureBackWithInsufficientBribe = functi
     friendlyCreature.go(null,l0); 
     p0.get('get', weapon.getName());
     
-    p0.hit('hit',friendlyCreature.getName());
-    p0.hit('hit',friendlyCreature.getName());
-    p0.hit('hit',friendlyCreature.getName());
+    var hitcount = 0;
+    while (hitcount < 3) {
+        var result = p0.hit('hit', friendlyCreature.getName());
+        //console.log(actualResult)
+        if (!(actualResult == "You missed!")) {
+            hitcount++;
+        };
+    }; 
 
     console.log(friendlyCreature.receive(food));
 
@@ -690,16 +707,30 @@ exports.cannotRevertPreviouslyFriendlyCreatureBackWithInsufficientBribe = functi
 exports.cannotRevertPreviouslyFriendlyCreatureBackWithInsufficientBribe.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Creature Trait", "Weapon Trait", "Hit Trait"], description: "Test that a previously turned friendly creature cannot be recovered without a decent bribe." };
 
 
-exports.hittingCreatureWhenUnarmedDamagesPlayer = function (test) {
+exports.hittingCreatureWhenUnarmedUsuallyDamagesPlayer = function (test) {
     var expectedResult = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. You feel weaker. ";
-    var actualResult = p0.hit('hit',c0.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
+    var expectedResult2 = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage. ";
+    var hitcount = 0;
+    var actualResult;
+    while (hitcount < 1) {
+        actualResult = p0.hit('hit', c0.getName());
+        //console.log(actualResult)
+        if (!(actualResult == "You missed!")) {
+            hitcount++;
+        };
+    };    
+    console.log("Actual  : " + actualResult);
+    if (actualResult == expectedResult2) {
+        console.log("Expected: " + expectedResult2);
+        test.equal(actualResult, expectedResult2);
+    } else {
+        console.log("Expected: " + expectedResult);
+        test.equal(actualResult, expectedResult);
+    };
     test.done();
 };
 
-exports.hittingCreatureWhenUnarmedDamagesPlayer.meta = { traits: ["Player Test", "Action Trait", "Creature Trait", "Hit Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
+exports.hittingCreatureWhenUnarmedUsuallyDamagesPlayer.meta = { traits: ["Player Test", "Action Trait", "Creature Trait", "Hit Trait"], description: "Test that a player can hit a creature with a weapon they're carrying." };
 
 exports.hittingArtefactWhenUnarmedDamagesPlayer = function (test) {
     l0.addObject(a1);
@@ -905,8 +936,13 @@ exports.hittingContainerArtefactTwiceWhenArmedDestroysContainerAndScattersConten
 exports.hittingContainerArtefactTwiceWhenArmedUsuallyDamagesContents = function (test) {
     container.receive(breakable);
     p0.get('get', weapon.getName());
-    p0.hit('hit',container.getName());
-    p0.hit('hit',container.getName());
+    var hitcount = 0;
+    while (hitcount < 2) {
+        var actualResult = p0.hit('hit', container.getName());
+        if (!(actualResult == "You missed!")) {
+            hitcount++;
+        };
+    };
     var expectedResult;
     var expectedResult1 = "It's broken";
     var expectedResult2 = "a somewhat fragile drinking vessel It shows signs of being dropped or abused.";

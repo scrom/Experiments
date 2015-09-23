@@ -3973,8 +3973,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (receiver.getSubType() == "friendly") {
                         return receiver.hurt(0, self);
                     } else {
-                        resultString += "You do no visible damage and end up coming worse-off. ";
-                        resultString += receiver.hit(self);
+                        resultString += "You do no visible damage";
+                        var tempResult = receiver.hit(self);
+                        if (tempResult.length > 0) {
+                            resultString += " and end up coming worse-off. " + tempResult;
+                        } else {
+                            resultString += ". ";
+                        };
                     };
                 } else { //artefact
                         resultString += "That hurt.";
