@@ -4090,6 +4090,23 @@
         "source": "east-car-park",
         "destination": "east-bike-racks"
       }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "laylow",
+        "displayName": "lay low for a while",
+        "attributes": {
+          "type": "event",
+          "parent": "stealvaluables"
+        },
+        "conditionAttributes": {
+          "time": "37"
+        },
+        "reward": {
+          "message": ""
+        }
+      }
     ]
   },
   {
@@ -6648,11 +6665,11 @@
         "displayName": "there's been a plane crash",
         "attributes": {
           "type": "event",
-          "parent": "finddaveandroger",
+          "parent": "latte",
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "time": 62,
+          "time": 82,
           "missionsCompletedCount": ">9"
         },
         "reward": {
@@ -7294,6 +7311,29 @@
                         },
                         "money": 200,
                         "message": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
+                      }
+                    },
+                    {
+                      "object": "mission",
+                      "name": "givetrusttokentoplayer",
+                      "displayName": "receive a token of trust",
+                      "attributes": {
+                        "parent": "laylow",
+                        "missionObject": "jordan miller",
+                        "initiateConversation": true,
+                        "huntPlayer": true,
+                        "static": true,
+                        "dialogue": [
+                          "'$player. It's good to see you again.'<br>'Listen. I hope I can trust you on this. To be honest I don't have much choice - or time. I need your help. It's vital you pay closer attention to what's going on...'"
+                        ]
+                      },
+                      "conditionAttributes": {
+                        "alive": true,
+                        "conversationState": 1
+                      },
+                      "reward": {
+                        "message": "Jordan pushes a small coin or medal into your hand.<br>'Here take this.'<br>'It's a symbol of trust for the group I work for.' 'It's extremely old, fragile and can only be given willingly.'<br>'Others in our circle of trust will imediately know you have it.'<br><br>As you close your hand on the coin you feel a short searing pain. Your mind fogs over and you feel the world shift beneath your feet.<br>You open your hand and discover nothing but grains of sand.<br>You brush the sand away and notice a sideways '8' symbol burned into your palm.<br>As the mental fog starts to clear to have a strong feeling of vertigo.",
+                        "teleport": "roof"
                       }
                     }
                   ]
