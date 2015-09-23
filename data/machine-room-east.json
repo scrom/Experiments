@@ -24,6 +24,7 @@
                 "carryWeight": 0.75,
                 "type": "container",
                 "breakable": true,
+                "broken":  true,
                 "canCollect": false,
                 "defaultResult": "$action install disk in server"
             },

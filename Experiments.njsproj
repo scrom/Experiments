@@ -106,9 +106,13 @@
     <Content Include="data\milton-road.json" />
     <Content Include="data\mirror.json" />
     <Content Include="data\mission-awaitvanarrival.json" />
+    <Content Include="data\mission-finddaveandroger.json" />
+    <Content Include="data\mission-givetrusttokentoplayer.json" />
     <Content Include="data\mission-jordanreachesmachineroom.json" />
     <Content Include="data\mission-killthespy.json" />
     <Content Include="data\mission-latte.json" />
+    <Content Include="data\mission-laylow.json" />
+    <Content Include="data\mission-planecrash.json" />
     <Content Include="data\mission-retrievedisk.json" />
     <Content Include="data\mission-stealsketchbook.json" />
     <Content Include="data\mission-stealvaluables.json" />

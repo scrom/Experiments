@@ -79,42 +79,7 @@
                 "her"
             ],
             "missions": [
-                {
-                    "object": "mission",
-                    "name": "finddaveandroger",
-                    "displayName": "find the rest of the podcast team.",
-                    "description": "Lucy's trying to find Dave and Roger.",
-                    "attributes": {
-                        "parent": "latte",
-                        "missionObject": "lucy boyes",
-                        "initiateConversation": true,
-                        "huntPlayer": true,
-                        "static": true,
-                        "dialogue": [
-                            "'Hi $player.'<br>'Dave and Roger are supposed to be flying back from a comic book convention today.'<br>'I don't suppose you've seen them around anywhere have you?'",
-                            {
-                                "state": 1,
-                                "keywords": [
-                                    "yes",
-                                    "ok",
-                                    "y"
-                                ],
-                                "response": "'I hope they're ok. They sounded a bit rough last time I spoke to them.'",
-                                "nextState": 4
-                            },
-                            {
-                                "state": 1,
-                                "response": "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'<br>'Keep an eye out for them if you can.'",
-                                "nextState": 4
-                            }
-                        ]
-                    },
-                    "conditionAttributes": {
-                        "alive": true,
-                        "conversationState": 3
-                    },
-                    "reward": { }
-                }
+                {"file": "mission-finddaveandroger"}
             ]
         },
         {

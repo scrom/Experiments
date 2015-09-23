@@ -1,0 +1,15 @@
+﻿{
+    "object": "mission",
+    "name": "laylow",
+    "displayName": "lay low for a while",
+    "attributes": {
+        "type": "event",
+        "parent": "stealvaluables"
+    },
+    "conditionAttributes": {
+        "time": "37"
+    },
+    "reward": {
+        "message": ""
+    }
+}

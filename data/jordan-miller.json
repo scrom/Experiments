@@ -33,6 +33,7 @@
         {"file": "mission-killthespy"},
         {"file": "mission-stealsketchbook"},
         {"file": "mission-vanarrival"},
-        {"file": "mission-stealvaluables"}             
+        {"file": "mission-stealvaluables"},
+        {"file": "mission-givetrusttokentoplayer"} 
     ]
 }

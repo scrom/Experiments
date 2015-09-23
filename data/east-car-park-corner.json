@@ -28,6 +28,6 @@
         }
     ],
     "inventory": [
-        {"file": "van"}        
+        { "file": "van" }
     ]
 }

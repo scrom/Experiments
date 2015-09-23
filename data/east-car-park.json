@@ -12,19 +12,22 @@
       ]
     },
     "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "east-car-park",
-        "destination": "office-front"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "east-car-park",
-        "destination": "east-bike-racks"
-      }
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "east-car-park",
+            "destination": "office-front"
+        },
+        {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "east-car-park",
+            "destination": "east-bike-racks"
+        }
+    ],
+    "missions": [        
+        { "file": "mission-laylow" }
     ]
   }

@@ -4,392 +4,358 @@
     "displayName": "Atrium kitchen",
     "description": "You're in the atrium kitchen.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "kitchen-ground-floor",
-        "destination": "stairs-ground-floor"
-      }
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "kitchen-ground-floor",
+            "destination": "stairs-ground-floor"
+        }
     ],
     "inventory": [
-      {
-        "object": "artefact",
-        "name": "milk bottle",
-        "description": "bottle",
-        "detailedDescription": "A large milk bottle",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 1,
-          "carryWeight": 3,
-          "attackStrength": 1,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0
-        },
-        "synonyms": [
-          "bottle",
-          "milkbottle",
-          "bottle of milk"
-        ],
-        "inventory": [
-          {
+        {
             "object": "artefact",
-            "name": "milk",
-            "description": "milk",
-            "detailedDescription": "Enough for a few lattes.",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "A large milk bottle",
             "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "canCollect": true,
-              "charges": 5,
-              "chargeUnit": "cup",
-              "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 5,
-              "componentOf": [
-                "latte",
-                "mocha"
-              ],
-              "combinesWith": [
-                "coffee"
-              ]
+                "extendedInventoryDescription": "There's $inventory in it.",
+                "weight": 1,
+                "carryWeight": 3,
+                "attackStrength": 1,
+                "type": "container",
+                "holdsLiquid": true,
+                "canCollect": true,
+                "isBreakable": true,
+                "affinityModifier": 0
             },
             "synonyms": [
-              "cow juice"
+                "bottle",
+                "milkbottle",
+                "bottle of milk"
             ],
-            "delivers": [
-              {
-                "object": "artefact",
-                "template": "white-coffee"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "glass jar",
-        "description": "jar",
-        "detailedDescription": "It's a pretty standard storage jar.",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 2,
-          "carryWeight": 1.1,
-          "attackStrength": 2,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "jar",
-          "sugar jar",
-          "storage jar"
-        ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "sugar",
-            "description": "sugar",
-            "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
-            "attributes": {
-              "weight": 0.1,
-              "type": "food",
-              "requiresContainer": true,
-              "isPowder": true,
-              "canCollect": true,
-              "charges": 3,
-              "chargeUnit": "spoonfull",
-              "chargesDescription": "There's about $charges $chargeUnit left",
-              "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
-              "plural": true,
-              "affinityModifier": 0,
-              "isEdible": true,
-              "nutrition": 5,
-              "combinesWith": [
-                "coffee",
-                "latte",
-                "mocha"
-              ]
-            },
-            "delivers": [
-              {
-                "object": "artefact",
-                "template": "sweet-coffee"
-              },
-              {
-                "object": "artefact",
-                "template": "sweet-latte"
-              },
-              {
-                "object": "artefact",
-                "template": "sweet-mocha"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "cup",
-        "description": "cup",
-        "detailedDescription": "Just the right size for a decent brew.",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 2,
-          "carryWeight": 1.1,
-          "attackStrength": 2,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "imageName": "mug.jpg",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "mug",
-          "coffee cup",
-          "coffee mug"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "coco pops",
-        "description": "bowl of coco pops",
-        "detailedDescription": "They're going a bit soggy but still tasty.",
-        "attributes": {
-          "weight": 1,
-          "type": "food",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 1,
-          "isEdible": true,
-          "nutrition": 20
-        },
-        "synonyms": [
-          "food",
-          "cereal",
-          "bowl",
-          "pops",
-          "coco",
-          "bowl of coco pops"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "coffee machine",
-        "description": "coffee vending machine",
-        "detailedDescription": "Given the right ingredients it makes a variety of coffees.",
-        "attributes": {
-          "defaultAction": "get coffee from machine",
-          "extendedInventoryDescription": "It's fully loaded with ",
-          "weight": 151,
-          "carryWeight": 25,
-          "holdsLiquid": true,
-          "isBreakable": true,
-          "canOpen": true,
-          "lockable": true,
-          "locked": true,
-          "requiredComponentCount": 1,
-          "imageName": "coffeemachine.jpg",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "machine",
-          "vending",
-          "vending machine",
-          "coffee vending machine"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "name": "latte",
-            "description": "latte",
-            "detailedDescription": "Development fuel for former hipsters.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "affinityModifier": 2,
-              "isEdible": true,
-              "nutrition": 12,
-              "combinesWith": "sugar",
-              "requiredComponentCount": 1
-            },
-            "synonyms": [
-              "brew",
-              "drink"
-            ],
-            "delivers": [
-              {
-                "object": "artefact",
-                "template": "sweet-latte"
-              }
-            ]
-          },
-          {
-            "object": "artefact",
-            "name": "mocha",
-            "description": "mocha coffee",
-            "detailedDescription": "Coffee <i>and</i> chocolate. What a combination!",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "affinityModifier": 2,
-              "isEdible": true,
-              "nutrition": 35,
-              "combinesWith": "sugar",
-              "requiredComponentCount": 2
-            },
-            "synonyms": [
-              "brew",
-              "drink"
-            ],
-            "delivers": [
-              {
-                "object": "artefact",
-                "template": "sweet-mocha"
-              }
-            ]
-          },
-          {
-            "object": "artefact",
-            "name": "coffee",
-            "description": "coffee",
-            "detailedDescription": "Development fuel.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 0.5,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "cup",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 8,
-              "combinesWith": [
-                "milk",
-                "sugar"
-              ]
-            },
-            "synonyms": [
-              "brew",
-              "drink"
-            ],
-            "delivers": [
-              {
-                "object": "artefact",
-                "template": "sweet-coffee"
-              },
-              {
-                "object": "artefact",
-                "template": "white-coffee"
-              }
-            ]
-          }
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "destroycoffeemachine",
-            "displayName": "destroy the coffee machine",
-            "attributes": {
-              "missionObject": "coffee machine",
-              "static": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": true
-            },
-            "reward": {
-              "score": -100,
-              "affinityModifier": 2,
-              "decreaseAffinityFor": "everyone",
-              "message": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>Good luck getting help from anyone now!"
-            }
-          },
-          {
-            "object": "mission",
-            "name": "beans",
-            "displayName": "get the coffee machine working",
-            "description": "Before you can get any coffee, this machine needs beans.",
-            "attributes": {
-              "missionObject": "coffee machine",
-              "static": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": false,
-              "isBroken": false,
-              "checkComponents": true,
-              "contains": [
-                "beans"
-              ]
-            },
-            "reward": {
-              "score": 50,
-              "message": "Congratulations, you got the coffee machine working!"
-            }
-          }
-        ]
-      }
-    ],
-    "missions": [
-      {
-        "object": "mission",
-        "name": "planecrash",
-        "displayName": "there's been a plane crash",
-        "attributes": {
-          "type": "event",
-          "parent": "finddaveandroger",
-          "missionObject": "player"
-        },
-        "conditionAttributes": {
-          "time": 62,
-          "missionsCompletedCount": ">9"
-        },
-        "reward": {
-            "locations": [
-                { "file": "crash-site" }
-            ],
-            "modifyObject": {
-                "name": "simon galbraith",
-                "attributes": {
-                    "antibodies": ["zombie"]
+            "inventory": [
+                {
+                    "object": "artefact",
+                    "name": "milk",
+                    "description": "milk",
+                    "detailedDescription": "Enough for a few lattes.",
+                    "attributes": {
+                        "defaultAction": "drink",
+                        "weight": 1,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "isLiquid": true,
+                        "canCollect": true,
+                        "charges": 5,
+                        "chargeUnit": "cup",
+                        "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                        "plural": true,
+                        "isEdible": true,
+                        "nutrition": 5,
+                        "componentOf": [
+                            "latte",
+                            "mocha"
+                        ],
+                        "combinesWith": [
+                            "coffee"
+                        ]
+                    },
+                    "synonyms": [
+                        "cow juice"
+                    ],
+                    "delivers": [
+                        {
+                            "object": "artefact",
+                            "template": "white-coffee"
+                        }
+                    ]
                 }
-              },
-          "exits": [
-            {
-              "object": "exit",
-              "longname": "North",
-              "direction": "n",
-              "source": "west-car-park",
-              "destination": "crash-site"
-            }
-          ],
-          "message": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!<br>Now's probably a good time to <i>save</i> your game again if you haven't done so recently."
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "glass jar",
+            "description": "jar",
+            "detailedDescription": "It's a pretty standard storage jar.",
+            "attributes": {
+                "extendedInventoryDescription": "There's $inventory in it.",
+                "weight": 2,
+                "carryWeight": 1.1,
+                "attackStrength": 2,
+                "type": "container",
+                "holdsLiquid": true,
+                "canCollect": true,
+                "isBreakable": true,
+                "canDrawOn": true
+            },
+            "synonyms": [
+                "jar",
+                "sugar jar",
+                "storage jar"
+            ],
+            "inventory": [
+                {
+                    "object": "artefact",
+                    "name": "sugar",
+                    "description": "sugar",
+                    "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
+                    "attributes": {
+                        "weight": 0.1,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "isPowder": true,
+                        "canCollect": true,
+                        "charges": 3,
+                        "chargeUnit": "spoonfull",
+                        "chargesDescription": "There's about $charges $chargeUnit left",
+                        "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
+                        "plural": true,
+                        "affinityModifier": 0,
+                        "isEdible": true,
+                        "nutrition": 5,
+                        "combinesWith": [
+                            "coffee",
+                            "latte",
+                            "mocha"
+                        ]
+                    },
+                    "delivers": [
+                        {
+                            "object": "artefact",
+                            "template": "sweet-coffee"
+                        },
+                        {
+                            "object": "artefact",
+                            "template": "sweet-latte"
+                        },
+                        {
+                            "object": "artefact",
+                            "template": "sweet-mocha"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "cup",
+            "description": "cup",
+            "detailedDescription": "Just the right size for a decent brew.",
+            "attributes": {
+                "extendedInventoryDescription": "There's $inventory in it.",
+                "weight": 2,
+                "carryWeight": 1.1,
+                "attackStrength": 2,
+                "type": "container",
+                "holdsLiquid": true,
+                "canCollect": true,
+                "isBreakable": true,
+                "imageName": "mug.jpg",
+                "canDrawOn": true
+            },
+            "synonyms": [
+                "mug",
+                "coffee cup",
+                "coffee mug"
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "coco pops",
+            "description": "bowl of coco pops",
+            "detailedDescription": "They're going a bit soggy but still tasty.",
+            "attributes": {
+                "weight": 1,
+                "type": "food",
+                "canCollect": true,
+                "isBreakable": true,
+                "charges": 1,
+                "isEdible": true,
+                "nutrition": 20
+            },
+            "synonyms": [
+                "food",
+                "cereal",
+                "bowl",
+                "pops",
+                "coco",
+                "bowl of coco pops"
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "coffee machine",
+            "description": "coffee vending machine",
+            "detailedDescription": "Given the right ingredients it makes a variety of coffees.",
+            "attributes": {
+                "defaultAction": "get coffee from machine",
+                "extendedInventoryDescription": "It's fully loaded with ",
+                "weight": 151,
+                "carryWeight": 25,
+                "holdsLiquid": true,
+                "isBreakable": true,
+                "canOpen": true,
+                "lockable": true,
+                "locked": true,
+                "requiredComponentCount": 1,
+                "imageName": "coffeemachine.jpg",
+                "canDrawOn": true
+            },
+            "synonyms": [
+                "machine",
+                "vending",
+                "vending machine",
+                "coffee vending machine"
+            ],
+            "delivers": [
+                {
+                    "object": "artefact",
+                    "name": "latte",
+                    "description": "latte",
+                    "detailedDescription": "Development fuel for former hipsters.",
+                    "attributes": {
+                        "defaultAction": "drink",
+                        "weight": 1,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "isLiquid": true,
+                        "requiredContainer": "cup",
+                        "canCollect": true,
+                        "charges": 1,
+                        "plural": true,
+                        "affinityModifier": 2,
+                        "isEdible": true,
+                        "nutrition": 12,
+                        "combinesWith": "sugar",
+                        "requiredComponentCount": 1
+                    },
+                    "synonyms": [
+                        "brew",
+                        "drink"
+                    ],
+                    "delivers": [
+                        {
+                            "object": "artefact",
+                            "template": "sweet-latte"
+                        }
+                    ]
+                },
+                {
+                    "object": "artefact",
+                    "name": "mocha",
+                    "description": "mocha coffee",
+                    "detailedDescription": "Coffee <i>and</i> chocolate. What a combination!",
+                    "attributes": {
+                        "defaultAction": "drink",
+                        "weight": 1,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "isLiquid": true,
+                        "requiredContainer": "cup",
+                        "canCollect": true,
+                        "charges": 1,
+                        "plural": true,
+                        "affinityModifier": 2,
+                        "isEdible": true,
+                        "nutrition": 35,
+                        "combinesWith": "sugar",
+                        "requiredComponentCount": 2
+                    },
+                    "synonyms": [
+                        "brew",
+                        "drink"
+                    ],
+                    "delivers": [
+                        {
+                            "object": "artefact",
+                            "template": "sweet-mocha"
+                        }
+                    ]
+                },
+                {
+                    "object": "artefact",
+                    "name": "coffee",
+                    "description": "coffee",
+                    "detailedDescription": "Development fuel.",
+                    "attributes": {
+                        "defaultAction": "drink",
+                        "weight": 0.5,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "isLiquid": true,
+                        "requiredContainer": "cup",
+                        "canCollect": true,
+                        "charges": 1,
+                        "plural": true,
+                        "isEdible": true,
+                        "nutrition": 8,
+                        "combinesWith": [
+                            "milk",
+                            "sugar"
+                        ]
+                    },
+                    "synonyms": [
+                        "brew",
+                        "drink"
+                    ],
+                    "delivers": [
+                        {
+                            "object": "artefact",
+                            "template": "sweet-coffee"
+                        },
+                        {
+                            "object": "artefact",
+                            "template": "white-coffee"
+                        }
+                    ]
+                }
+            ],
+            "missions": [
+                {
+                    "object": "mission",
+                    "name": "destroycoffeemachine",
+                    "displayName": "destroy the coffee machine",
+                    "attributes": {
+                        "missionObject": "coffee machine",
+                        "static": true
+                    },
+                    "conditionAttributes": {
+                        "isDestroyed": true
+                    },
+                    "reward": {
+                        "score": -100,
+                        "affinityModifier": 2,
+                        "decreaseAffinityFor": "everyone",
+                        "message": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>Good luck getting help from anyone now!"
+                    }
+                },
+                {
+                    "object": "mission",
+                    "name": "beans",
+                    "displayName": "get the coffee machine working",
+                    "description": "Before you can get any coffee, this machine needs beans.",
+                    "attributes": {
+                        "missionObject": "coffee machine",
+                        "static": true
+                    },
+                    "conditionAttributes": {
+                        "isDestroyed": false,
+                        "isBroken": false,
+                        "checkComponents": true,
+                        "contains": [
+                            "beans"
+                        ]
+                    },
+                    "reward": {
+                        "score": 50,
+                        "message": "Congratulations, you got the coffee machine working!"
+                    }
+                }
+            ]
         }
-      }
+    ],
+    "missions": [ 
+        {"file": "mission-planecrash"}
     ]
   }
