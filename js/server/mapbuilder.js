@@ -298,6 +298,42 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             //console.log("Unpacked condition attributes");
             return returnObject;
         };
+        
+        self.unpackModifyObject = function (modification) {
+            var resultObject = {};
+            if (modification.name) { resultObject.name = modification.name };
+            if (modification.description) { resultObject.description = modification.description };
+            if (modification.attributes) { resultObject.attributes = modification.attributes }                ;
+            if (modification.inventory && modification.name) {
+                resultObject.inventory = [];
+                for (var i = 0; i < modification.inventory.length; i++) {
+                    var inventoryData = modification.inventory[i];
+                    if (inventoryData.object == "artefact") {
+                        resultObject.inventory.push(self.buildArtefact(inventoryData));
+                    } else if (inventoryData.object == "creature") {
+                        var creature = self.buildCreature(inventoryData)
+                        if (inventoryData.attributes) {
+                            if (inventoryData.attributes.homeLocationName) {
+                                var homeLocation = _map.getLocation(inventoryData.attributes.homeLocationName);
+                                creature.setHomeLocation(homeLocation);
+                            };
+                        };
+                        resultObject.inventory.push(creature);
+                    };
+                };
+            };
+            
+            //add other attributes back in if we missed them
+            for (var attr in modification) {
+                if (modification.hasOwnProperty(attr)) {
+                    if (!(resultObject.hasOwnProperty(attr))) {
+                        resultObject[attr] = modification[attr];
+                    };
+                };
+            };
+
+            return resultObject;
+        };
 
         self.unpackReward = function (reward) {
             //construct from file first if needed
@@ -396,28 +432,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             };
 
             if (reward.modifyObject) {
-                returnObject.modifyObject = {};
-                if (reward.modifyObject.name) {returnObject.modifyObject.name = reward.modifyObject.name};
-                if (reward.modifyObject.description) {returnObject.modifyObject.description = reward.modifyObject.description};
-                if (reward.modifyObject.attributes) { returnObject.modifyObject.attributes = reward.modifyObject.attributes}                ;
-                if (reward.modifyObject.inventory && reward.modifyObject.name) {
-                    returnObject.modifyObject.inventory = [];
-                    for (var i=0; i<reward.modifyObject.inventory.length;i++) {
-                        var inventoryData = reward.modifyObject.inventory[i];
-                        if (inventoryData.object == "artefact") {
-                            returnObject.modifyObject.inventory.push(self.buildArtefact(inventoryData));
-                        } else if (inventoryData.object == "creature") {
-                            var creature = self.buildCreature(inventoryData)
-                            if (inventoryData.attributes) {
-                                if (inventoryData.attributes.homeLocationName) {
-                                    var homeLocation = _map.getLocation(inventoryData.attributes.homeLocationName);
-                                    creature.setHomeLocation(homeLocation);
-                                };
-                            };
-                            returnObject.modifyObject.inventory.push(creature);                   
-                        };                        
-                    }; 
-                };
+                returnObject.modifyObject = self.unpackModifyObject(reward.modifyObject);
             };
 
             //add other attributes back in
