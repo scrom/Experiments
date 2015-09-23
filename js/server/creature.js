@@ -1154,15 +1154,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.setAttackStrength = function(attackStrength) {
             _attackStrength = attackStrength;
         };
-
-        self.getAttackStrength = function() {
-            //console.log('Creature attack strength = '+_attackStrength);
-            if (self.isDead()) {return 0;};
+        
+        self.getBaseAttackStrength = function () {
+            if (self.isDead()) { return 0; };
             var weapon = self.getWeapon();
             var weaponStrength = 0;
-            if (weapon) {weaponStrength = weapon.getAttackStrength();};
-            var currentAttackStrength =_attackStrength;
+            if (weapon) { weaponStrength = weapon.getAttackStrength(); };
+            var currentAttackStrength = _attackStrength;
             if (weaponStrength > currentAttackStrength) { currentAttackStrength = weaponStrength; };
+            return currentAttackStrength;
+        }; 
+
+        self.getAttackStrength = function() {
+            var currentAttackStrength = self.getBaseAttackStrength();
 
             //alter strength if bleeding or nearly dying.
             if (healthPercent() <=5) {
@@ -2798,8 +2802,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
            // console.log("attempting to collect weapon");
             //collect the strongest non-breakable weapon.
             if (self.getSubType() == "animal") {return "";};
-            var resultString = "";
-            var selectedWeaponStrength = self.getAttackStrength(); //creatures have a base attack strength but if carrying a weapon, use that as a baseline.
+            var resultString = "";            
+            var selectedWeaponStrength = self.getBaseAttackStrength(); //creatures have a base attack strength but if carrying a weapon, use that as a baseline.            
             var currentWeapon = self.getWeapon();
             var selectedWeapon = null;
             var weapons = _currentLocation.getAllObjectsOfType('weapon')
