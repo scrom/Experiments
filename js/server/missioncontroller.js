@@ -34,6 +34,13 @@ module.exports.MissionController = function MissionController() {
             };
         };
         
+        self.activateNamedMission = function (missionName, locations) {
+            var mission = self.getNamedMission(missionName, locations);
+            mission.clearParent();
+            mission.startTimer();
+            return "Mission: '" + mission.getName() + "' force-activated.";
+        };
+
         self.listAllMissions = function (player, locations) {
             //loop through each location, location inventory. 
             //Get all missions

@@ -583,6 +583,10 @@ exports.Map = function Map() {
             return _missionController.getNamedMission(missionName, _locations);
         };
         
+        self.activateNamedMission = function (missionName) {
+            return _missionController.activateNamedMission(missionName, _locations);
+        };
+        
         self.listAllMissions = function (player) {
             return _missionController.listAllMissions(player, _locations);
         };

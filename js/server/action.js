@@ -1186,7 +1186,10 @@ exports.Action = function Action(player, map, fileManager) {
             return "";
         };
 
-        self.performPlayerCheatAction = function() {          
+        self.performPlayerCheatAction = function () {
+            //Cheating!
+            _player.incrementCheatCount();
+               
             if (_verb == '+aggression') {
                 return "Player Aggression set: "+_player.setAggression(parseInt(_object0));
             };
@@ -1254,6 +1257,10 @@ exports.Action = function Action(player, map, fileManager) {
 
             if (_verb == '+missions') {
                 return _map.listAllMissions(_player);
+            };
+            
+            if (_verb == '+activate') {
+                return _map.activateNamedMission(_object0);
             };
 
             if (_verb == '+destination') {

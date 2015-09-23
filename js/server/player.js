@@ -55,6 +55,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _creaturesSpokenTo = 0;
         var _saveCount = 0;
         var _loadCount = 0;
+        var _cheatCount = 0;
         var _cashSpent = 0;
         var _cashGained = 0;
         var _healCount = 0;
@@ -294,7 +295,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerAttributes.returnDirection != undefined) {_returnDirection = playerAttributes.returnDirection;};
             
             
-            if (playerAttributes.saveCount != undefined) {_saveCount = parseInt(playerAttributes.saveCount);};
+            if (playerAttributes.saveCount != undefined) { _saveCount = parseInt(playerAttributes.saveCount); };
+            if (playerAttributes.cheatCount != undefined) { _cheatCount = parseInt(playerAttributes.cheatCount); };
 
             //increment loads
             if (playerAttributes.loadCount != undefined) {
@@ -528,7 +530,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_lastCreatureSpokenTo) {resultString += ',"lastCreatureSpokenTo":"'+_lastCreatureSpokenTo+'"';};
             if (_lastVerbUsed) {resultString += ',"lastVerbUsed":"'+_lastVerbUsed+'"';};
             if (_riding) {resultString += ',"riding":'+_riding.toString();};
-            if (_saveCount > 0) {resultString += ',"saveCount":'+_saveCount;};
+            if (_saveCount > 0) { resultString += ',"saveCount":' + _saveCount; };
+            if (_cheatCount > 0) { resultString += ',"cheatCount":' + _cheatCount; };
             if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
             if (_timeSinceEating > 0) {resultString += ',"timeSinceEating":'+_timeSinceEating;};
             if (_maxMovesUntilHungry != 65) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
@@ -606,6 +609,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.riding = _riding;           
 
             currentAttributes.saveCount = _saveCount;
+            currentAttributes.cheatCount = _cheatCount;
             currentAttributes.loadCount = _loadCount;
             currentAttributes.timeSinceEating = _timeSinceEating;
             currentAttributes.maxMovesUntilHungry = _maxMovesUntilHungry;
@@ -727,6 +731,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.incrementSaveCount = function() {
             _saveCount++;
+        };
+        
+        self.incrementCheatCount = function () {
+            _cheatCount++;
         };
 
         self.incrementWaitCount = function(incrementBy) {
@@ -4656,8 +4664,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             status += "<i>Statistics for $player:</i><br>";
             status += "Your score is "+_score+" out of "+maxScore+"<br>";
-            if (_killedCount > 0) { status += "You have been killed "+pluralise(_killedCount, "time")+".<br>"};
-            if (_saveCount > 0) { status += "You have saved your progress "+pluralise(_saveCount, "time")+".<br>"};
+            if (_killedCount > 0) { status += "You have been killed " + temporise(_killedCount) + ".<br>" };
+            if (_cheatCount > 0) { status += "You have cheated (or tried to cheat) " + temporise(_cheatCount) + ".<br>" };
+            if (_saveCount > 0) { status += "You have saved your progress "+ temporise(_saveCount)+".<br>"};
             if (_loadCount > 0) { status += "You have loaded "+pluralise(_loadCount, "saved game")+".<br>"};
             status += "You have taken "+pluralise(_stepsTaken,"step")+".<br>"; 
             status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" locations.<br>";
@@ -4690,7 +4699,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if (maxMinAffinity.max > 0) {status += "Your maximum character affinity so far is "+maxMinAffinity.max+".<br>";};
             //if (maxMinAffinity.min < 0) {status += "Your minimum character affinity so far is "+maxMinAffinity.min+".<br>";};
             
-            if (_injuriesReceived > 0) {status += "You have been injured "+pluralise(_injuriesReceived,"time")+".<br>";};
+            if (_injuriesReceived > 0) {status += "You have been injured "+ temporise(_injuriesReceived)+".<br>";};
             if (_totalDamageReceived > 0) {status += "You have received "+_totalDamageReceived+" points of damage (in total) during this game.<br>";};
             //if (_objectsChewed > 0) status += "You have chewed "+_objectsChewed+" objects.<br>";
 
