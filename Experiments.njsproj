@@ -90,6 +90,7 @@
     <Content Include="data\incidentals-blinkpipe.json" />
     <Content Include="data\is-area.json" />
     <Content Include="data\jellyfish-meeting-room.json" />
+    <Content Include="data\john-bowles.json" />
     <Content Include="data\jordan-miller.json" />
     <Content Include="data\keyfob.json" />
     <Content Include="data\kitchen-ground-floor.json" />
@@ -136,6 +137,7 @@
     <Content Include="data\people-team-north.json" />
     <Content Include="data\people-team-water-cooler.json" />
     <Content Include="data\pioneer.json" />
+    <Content Include="data\plant-room.json" />
     <Content Include="data\poppy.json" />
     <Content Include="data\post-room.json" />
     <Content Include="data\punts.json" />

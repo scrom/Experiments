@@ -1,0 +1,118 @@
+﻿  {
+    "object": "location",
+    "name": "plant-room",
+    "displayName": "Plant Room",
+    "description": "You're in the plant room. The metaphorical engine for the building.<br>There's a strong metallic tang in the air and the hum of heavy machinery sings in your ears.",
+    "exits": [
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "plant-room",
+            "destination": "roof",
+            "hidden": true
+        }
+    ],
+    "inventory": [
+        {
+            "object": "artefact",
+            "name": "plant room door",
+            "description": "steel door",
+            "detailedDescription": "It leads back out onto the roof.",
+            "attributes": {
+                "defaultAction": "open",
+                "weight": 200,
+                "type": "door",
+                "canOpen": true,
+                "lockable": true,
+                "locked": true,
+                "hasLinkedDoor": true
+            },
+            "linkedexits": [
+                {
+                    "object": "exit",
+                    "longname": "East",
+                    "direction": "e",
+                    "source": "roof",
+                    "destination": "plant-room",
+                    "hidden": true
+                }
+            ],
+            "synonyms": [
+                "plant door",
+                "steel door",
+                "plant",
+                "door"
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "air",
+            "description": "smell of oil, cogs, generators, and boilers",
+            "detailedDescription": "It's kind of what you'd expect for a plant room.",
+            "attributes": {
+                "type": "scenery",
+                "subType": "intangible",
+                "smell": "It's a sharp, oily, metallic smell. Like being in a garage or workshop.",
+                "sound": "You hear a mix of occasional clanking, a low level generator hum, and the odd burst of a boiler firing up.",
+                "customAction": [
+                    "get"
+                ],
+                "defaultResult": "It's all fixed in place."
+            },
+            "synonyms": [
+                "tang",
+                "metallic tang",
+                "hum",
+                "cogs",
+                "machinery",
+                "generator",
+                "generators",
+                "boiler",
+                "boilers",
+                "clanking",
+                "oil",
+                "engine",
+                "plant room"
+            ]
+        },
+        {
+        "object": "artefact",
+        "name": "whetstone",
+        "description": "whetstone",
+        "detailedDescription": "Every text adventure needs a whetstone right?",
+        "attributes": {
+          "weight": 0.5,
+          "type": "tool",
+          "subType": "sharpen",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 10,
+          "chargeUnit": "item",
+          "chargesDescription": "It's pretty worn out. There's enough of it left to sharpen about $charges $chargeUnit"
+        },
+        "synonyms": [
+          "stone",
+          "whet"
+        ]
+      },
+        {
+        "object": "artefact",
+        "name": "rag",
+        "description": "dirty rag",
+        "detailedDescription": "It's slightly damp but handling it makes your hands feel oddly dry.",
+        "attributes": {
+          "weight": 0.5,
+          "type": "tool",
+          "subType": "buff",
+          "canCollect": true,
+          "smell": "It smells of polish and solvents."
+        },
+        "synonyms": [
+          "dirty rag",
+          "cleaning rag",
+          "duster"
+        ]
+      }
+    ]
+  }

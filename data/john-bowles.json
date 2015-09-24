@@ -1,0 +1,47 @@
+﻿{
+    "object": "creature",
+    "name": "john bowles",
+    "displayname": "John Bowles",
+    "description": "John Bowles",
+    "detailedDescription": "He's like a short, stocky version of Brian Blessed.<br>He's in charge of what he describes as 'hard services' - the physical aspects of the building.",
+    "attributes": {
+        "template": "creature-male-l4",
+        "destinations": [
+            "plant-room",
+            "facilities-area",
+            "smoking-area"
+        ],
+        "loops": -1,
+        "loopDelay": 5,
+        "destinationDelay": 1,
+        "imageName": "johnbowles.jpg"
+    },
+    "inventory": [               
+        {"file": "keyfob"},
+        {
+            "object": "artefact",
+            "name": "plant room key",
+            "description": "door key",
+            "detailedDescription": "It's a heavy, industrial-looking key.",
+            "attributes": {
+                "defaultAction": "open",
+                "weight": 0.1,
+                "type": "key",
+                "canCollect": true,
+                "affinityModifier": 2,
+                "unlocks": "plant room door"
+            },
+            "synonyms": [
+                "plant key",
+                "heavy key",
+                "key"
+            ]
+        }
+    ],
+    "synonyms": [
+        "john",
+        "jb",
+        "bowles",
+        "john b"
+    ]
+}

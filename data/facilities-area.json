@@ -4,26 +4,27 @@
     "displayName": "Facilities team area",
     "description": "You're in the Facilities team area. They work tirelessly to keep the building running, clean, safe and maintained. Just don't annoy them, you'll regret it.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "facilities-area",
-        "destination": "finance-area"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "facilities-area",
-        "destination": "darth-vader"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "facilities-area",
-        "destination": "fishing"
-      }
-    ]
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "facilities-area",
+            "destination": "finance-area"
+        },
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "facilities-area",
+            "destination": "darth-vader"
+        },
+        {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "facilities-area",
+            "destination": "fishing"
+        }
+    ],
+    "inventory": [{"file": "john-bowles"}]
   }
