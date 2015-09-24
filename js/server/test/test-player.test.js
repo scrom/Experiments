@@ -1616,7 +1616,7 @@ exports.cannotEatLiveCreature = function (test) {
     p0.increaseTimeSinceEating(25);
     p0.reduceHitPoints(6);
 
-    var expectedResult = 'You try biting the creature but he dodges out of the way and bites you back.';
+    var expectedResult = 'You try biting the creature but he dodges out of your way and bites you back.';
     var actualResult = p0.eat('eat','creature');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

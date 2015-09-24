@@ -4346,7 +4346,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return notFoundMessage(artefactName);
             }; 
 
-            if (artefact.isLiquid()) {
+            if (artefact.isLiquid() && verb != "lick" && verb != "taste") {
+                //some laziness here. "lick" and "taste" are handled by "eat" - even for liquids.
                 return self.drink('drink',artefactName);
             };
 
@@ -4363,7 +4364,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
             self.transmit(artefact, "bite");
-            var resultString = artefact.eat(self); //trying to eat some things give interesting results.
+            var resultString = artefact.eat(verb, self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it
                 if (artefact.chargesRemaining() == 0) {

@@ -73,6 +73,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _imageName;
         var _smell;
         var _sound;
+        var _taste
         var _contagion = [];
         var _antibodies = [];
         var _canDrawOn = false;
@@ -300,7 +301,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (artefactAttributes.imageName != undefined) {_imageName = artefactAttributes.imageName;};
             if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
-            if (artefactAttributes.sound != undefined) {_sound = artefactAttributes.sound;};     
+            if (artefactAttributes.sound != undefined) { _sound = artefactAttributes.sound; };
+            if (artefactAttributes.taste != undefined) { _taste = artefactAttributes.taste; };  
             if (artefactAttributes.wetted != undefined) {_wetted = artefactAttributes.wetted;};     
             if (artefactAttributes.viewDestination != undefined) {_viewDestination = artefactAttributes.viewDestination;};     
             
@@ -507,6 +509,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.setSound = function(sound) {
             _sound = sound;
         };
+        
+        
+        self.getTaste = function () {
+            return _taste;
+        };
+        
+        self.setTaste = function (taste) {
+            _taste = taste;
+        };
 
         self.getDefaultAction = function() {
             return _defaultAction;
@@ -574,6 +585,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.imageName = _imageName;
             currentAttributes.smell = _smell;
             currentAttributes.sound = _sound;
+            currentAttributes.taste = _taste;
             currentAttributes.wetted = _wetted;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;
@@ -652,7 +664,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.hasLinkedDoor) { saveAttributes.hasLinkedDoor = true;};
             if (artefactAttributes.imageName != undefined) {saveAttributes.imageName = artefactAttributes.imageName;};  
             if (artefactAttributes.smell != undefined) {saveAttributes.smell = artefactAttributes.smell;};                
-            if (artefactAttributes.sound != undefined) {saveAttributes.sound = artefactAttributes.sound;};   
+            if (artefactAttributes.sound != undefined) { saveAttributes.sound = artefactAttributes.sound; };
+            if (artefactAttributes.taste != undefined) { saveAttributes.taste = artefactAttributes.taste; };  
             if (artefactAttributes.wetted.length >0) {saveAttributes.wetted = artefactAttributes.wetted;};           
             if (artefactAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
@@ -2365,11 +2378,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _itemPrefix+"'d get stuck in your throat if you tried."
         };
 
-        self.eat = function(consumer) {
+        self.eat = function (verb, consumer) {
             var s = "";
             if (consumer.getType() != "player") {
                 s = "s";
             };
+
+            if (verb == "lick" || verb == "taste") {
+                var taste = self.getTaste();
+                if (taste) { return taste;}
+                if (self.getType() == "food") {
+                    if (_nutrition < 0) {return "Not so good. I'd avoid that if I were you."};
+                    return "Tastes like " + self.getName()+".";
+                };                
+            };            
+
             if (self.getSubType() == "intangible") {return "Nope, that's not going to work for "+consumer.getSuffix()+".";}
             if ((!self.isOpen()) && self.opens()) {return tools.initCap(consumer.getPrefix())+"'ll need to open "+self.getSuffix()+" up first";};
             if (self.isDestroyed()) {return "There's nothing left to chew on.";};

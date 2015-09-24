@@ -189,7 +189,7 @@ exports.canChewAnItemAndRetrieveCorrectDescription = function (test) {
     var p0 = new player.Player({carryWeight:25},null,null);
     var _inventory = p0.getInventoryObject();
     _inventory.add(wood);
-    wood.eat(p0);
+    wood.eat("eat", p0);
     var expectedResult = "some chewed wood";
     //artefact object is created in setUp
     var actualResult = wood.getDescription();

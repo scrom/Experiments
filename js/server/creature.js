@@ -67,6 +67,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _imageName;
         var _smell;
         var _sound;
+        var _taste;
         var _contagion = [];
         var _antibodies = [];
         var _repairSkills = [];
@@ -181,7 +182,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
             if (creatureAttributes.smell != undefined) {_smell = creatureAttributes.smell;};                
-            if (creatureAttributes.sound != undefined) {_sound = creatureAttributes.sound;};                
+            if (creatureAttributes.sound != undefined) { _sound = creatureAttributes.sound; };
+            if (creatureAttributes.taste != undefined) { _taste = creatureAttributes.taste; }; 
             if (creatureAttributes.contagion != undefined) {
                 var contagionCount = creatureAttributes.contagion.length;
                 for (var i=0;i< contagionCount;i++) {
@@ -491,6 +493,51 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.setSound = function(sound) {
             _sound = sound;
         };
+        
+        self.getTaste = function () {
+            var resultString;
+            
+            if (!self.isDead()) {
+                //random chance of impacting affinity
+                var affinityImpact = Math.floor(Math.random() * 2);
+                self.decreaseAffinity(affinityImpact, false);
+                
+                var randomReplies = ["You're likely to cause an HR incident with behaviour like that.", "I don't think " + self.getPrefix().toLowerCase() + " appreciated being licked.<br>I'd not do that too often if I were you.", "I'd be careful doing that kind of thing around here."];
+                if (self.getSubType() != "animal") {
+                    randomReplies.push(self.getPrefix() + " says 'Will you stop that please.'");
+                    randomReplies.push(self.getPrefix() + " says 'HEY!'");
+                    randomReplies.push(self.getPrefix() + " says 'Back... ...off.'");
+                    randomReplies.push(self.getPrefix() + " says 'Ewwwww.'");
+                } else {
+                    randomReplies.push(self.getPrefix() + " growls a warning to you.");
+                    randomReplies.push(self.getPrefix() + " shrinks away from you making small whimpering noises.");
+                };
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                
+                resultString = randomReplies[randomIndex];
+                
+                if (affinityImpact > 0) {
+                    if (_affinity == 0) {
+                        resultString += "<br>You're not doing yourself any favours in the popularity stakes here.";
+                    } else if (_affinity == -2) {
+                        resultString += "<br>I have to warn you. If you carry on this course of action you'll be seriously diminishing your overall chances of success."
+                    };
+                };
+
+            };
+            
+            if (resultString) {
+                if (_taste) { resultString = _taste + "<br>" + resultString; };
+                return resultString; //may be undefined
+            };
+            
+            return _taste;
+            
+        };
+        
+        self.setTaste = function (taste) {
+            _taste = taste;
+        };
 
         self.getCurrentLocation = function() {
             return _currentLocation;
@@ -580,7 +627,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.returnDirection = _returnDirection;  
             currentAttributes.imageName = _imageName;  
             currentAttributes.smell = _smell;  
-            currentAttributes.sound = _sound;  
+            currentAttributes.sound = _sound;
+            currentAttributes.taste = _taste; 
                
             currentAttributes.contagion = _contagion;                     
             currentAttributes.antibodies = _antibodies;  
@@ -639,7 +687,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
             if (creatureAttributes.smell != undefined) {saveAttributes.smell = creatureAttributes.smell;};
-            if (creatureAttributes.sound != undefined) {saveAttributes.sound = creatureAttributes.sound;};
+            if (creatureAttributes.sound != undefined) { saveAttributes.sound = creatureAttributes.sound; };
+            if (creatureAttributes.taste != undefined) { saveAttributes.taste = creatureAttributes.taste; };
             if (creatureAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
                 for (var c=0;c<creatureAttributes.contagion.length;c++) {
@@ -1405,7 +1454,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (nutrition > 0 && self.isHungry()) {
                         self.increaseAffinity(anObject.getAffinityModifier());
                         var originalObjectWeight = anObject.getWeight();
-                        anObject.eat(self);
+                        anObject.eat("eat", self);
                         _timeSinceEating = 0;
                         if (originalObjectWeight <= self.getWeight()) {
                             return tools.initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
@@ -1446,7 +1495,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };   
                 
                 if (!(isMissionObject)) {                        
-                    var eat = anObject.eat(self);
+                    var eat = anObject.eat("eat", self);
                     _timeSinceEating = 0;    
                     var leftovers = ""; 
                     if (anObject.chargesRemaining() != 0) {
@@ -2120,7 +2169,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString+"<br>";
         };
 
-        self.eat = function(player) {
+        self.eat = function (verb, player) {
+            
+            if (verb == "lick" || verb == "taste") {
+                var taste = self.getTaste();
+                if (taste) { return taste; }
+                if (self.isEdible()) {
+                    return "Tastes like " + self.getName() +".";
+                };
+            }; 
+
             var resultString = "";
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
@@ -2134,7 +2192,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 var playerContagion = player.getContagion();
                 var playerAntibodies = player.getAntibodies();
                 if (playerContagion.length==0 && playerAntibodies.length == 0) {
-                    resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of the way and bites you back.";
+                    resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of your way and bites you back.";
                 } else {
                     resultString = "You sink your teeth into "+self.getDisplayName()+". "+_genderPrefix+" struggles free and bites you back.";
                     resultString += "<br>"+self.hurt(10); //player injures creature.
@@ -2227,6 +2285,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _bleeding = false;
             _smell = _genderPrefix+"'s not smelling so great. A bit like a cross between rotting meat and festival toilets.";
             _sound = "There's nothing quite like the silence of the dead.";
+            _taste = "Slightly meaty and musty. Not so great."
             _collectable = true; 
             _detailedDescription = _genderPrefix+"'s dead.";
             _description = 'dead '+self.getDisplayName().replace("the ","");

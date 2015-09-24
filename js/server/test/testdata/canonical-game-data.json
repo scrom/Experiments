@@ -374,6 +374,27 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "vic",
+        "description": "vic",
+        "detailedDescription": "She's usually at reception.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get",
+            "find",
+            "where is",
+            "where"
+          ],
+          "defaultResult": "You'll need to learn to fend for yourself eventually.<br>Try heading <i>East</i> from here."
+        },
+        "synonyms": [
+          "reception",
+          "vic"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "smell of coffee",
         "description": "coffee",
         "detailedDescription": "You'll need to head to the kitchen.",
@@ -381,7 +402,10 @@
           "type": "scenery",
           "subType": "intangible",
           "customAction": [
-            "get"
+            "get",
+            "find",
+            "where is",
+            "where"
           ],
           "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
           "smell": "Yup, smells like coffee here.<br>Good coffee at that."
