@@ -38,7 +38,7 @@
         {
             "object": "artefact",
             "template": "office-door",
-            "detailedDescription": "It leads out to the atrium area.",
+            "detailedDescription": "It leads out to the atrium area.<br>Like most modern office building doors it closes automatically.",
             "linkedexits": [
                 {
                     "object": "exit",

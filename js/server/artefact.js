@@ -197,6 +197,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.lockable != undefined) {
                 if (artefactAttributes.lockable== true || artefactAttributes.lockable == "true") { _lockable = true;};
             };
+            
+            //note, if autolock is set but object isn't "Lockable", it'll just auto-close
             if (artefactAttributes.lockInMoves != undefined) {
                 if (artefactAttributes.lockInMoves >= 0) { _lockInMoves = artefactAttributes.lockInMoves; };
             };               
@@ -2766,14 +2768,19 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.tick = function () {
-            //if autolock enabled - tick down lock timer and lock (and reset timer) if expired.
-            if (_autoLock >= 0 && (!(self.isLocked()))) {
-                if (_lockInMoves <= 0) {
-                    _open = false;  //close it. 
-                    _locked = true;  //force lock - even without key. 
-                    _lockInMoves = _autoLock; //reset lockInMoves for next time.
-                } else {
-                    _lockInMoves--;
+            //if autolock enabled - tick down lock timer,  lock/close (and reset timer) if expired.
+            if (_autoLock >= 0) {
+                if ((_lockable && (!(self.isLocked()))) || (!(_lockable) && self.isOpen())) {
+                    if (_lockInMoves <= 0) {
+                        self.close("close","");  //close it.                        
+                        if (_lockable) {
+                            //note, if autolock is set but object isn't "Lockable", it'll just auto-close
+                            _locked = true;  //force lock - even without key. 
+                        };
+                        _lockInMoves = _autoLock; //reset lockInMoves for next time.
+                    } else {
+                        _lockInMoves--;
+                    };
                 };
             };
 
