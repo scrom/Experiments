@@ -35,7 +35,7 @@ exports.toStringForContagionDeliversExpectedJSONStringResult.meta = { traits: ["
 
 exports.consumingItemWithAntibodiesProvidesImmunity = function (test) {
     var c = new contagion.Contagion("zombie", "zombieism", { "incubationPeriod": 10, "communicability": 0.5, "transmission": "bite", "symptoms": [{ "action": "bite", "frequency": 0.3, "escalation": 0 }], "duration": -1 });
-    var a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
+    var a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, charges: 3, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
     var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
     
     var playerAttributes = { "username": "player"};
@@ -44,6 +44,9 @@ exports.consumingItemWithAntibodiesProvidesImmunity = function (test) {
     var inv = p0.getInventoryObject();
     inv.add(a);
 
+    //try 3 times as it randomly doesnt take (deliberate)
+    p0.drink("drink", "venom");
+    p0.drink("drink", "venom");
     p0.drink("drink", "venom");
     
     console.log("Player has contagion before: " + p0.hasContagion("zombie"));
@@ -66,7 +69,7 @@ exports.consumingItemWithAntibodiesProvidesImmunity.meta = { traits: ["Contagion
 
 exports.consumingItemWithAntibodiesCuresContagion = function (test) {
     var c = new contagion.Contagion("zombie", "zombieism", { "incubationPeriod": 10, "communicability": 0.5, "transmission": "bite", "symptoms": [{ "action": "bite", "frequency": 0.3, "escalation": 0 }], "duration": -1 });
-    var a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
+    var a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, charges: 3, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
     var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
     
     var playerAttributes = { "username": "player", "contagion": [{ "object": "Contagion", "name": "zombie", "displayName": "zombieism", "attributes": { "incubationPeriod": 10, "communicability": 0.5, "symptoms": [{ "action": "bite", "frequency": 0.3, "escalation": 0 }] } }] };
@@ -77,6 +80,9 @@ exports.consumingItemWithAntibodiesCuresContagion = function (test) {
     
     console.log("Player has contagion before: " + p0.hasContagion("zombie"));
     
+    //try 3 times as it randomly doesnt take (deliberate)
+    p0.drink("drink", "venom");
+    p0.drink("drink", "venom");
     p0.drink("drink", "venom");
     
     console.log("Player has contagion after: " + p0.hasContagion("zombie"));
