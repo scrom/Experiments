@@ -147,7 +147,7 @@ var self = module.exports = {
                 return 'c'; 
                 break;  
         }; 
-        return null;       
+        return '';       
     }
 
 };

@@ -362,7 +362,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             return bestTraceExit;
         };
 
-        self.getRandomExit = function(includeUnlockedDoors, avoidLocations, callerInventory) {
+        self.getRandomExit = function(includeUnlockedDoors, avoidLocations, callerInventory, lastDirection) {
             if (!(avoidLocations)) {avoidLocations = [];};
             var allAvailableExits = self.getAvailableExits(includeUnlockedDoors, callerInventory);
             var availableExits = [];
@@ -370,8 +370,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             //filter out avoid locations...
             for (var e=0;e<allAvailableExits.length;e++) {
                 if (avoidLocations.indexOf(allAvailableExits[e].getDestinationName()) == -1) {
-                    //not an avoid location, free to use it...
-                    availableExits.push(allAvailableExits[e]);
+                    //not an avoid location. So now ensure it's not where we just came from
+                    if (allAvailableExits[e].getDirection() != tools.oppositeOf(lastDirection)) {
+                        availableExits.push(allAvailableExits[e]);
+                    };
                 };
             };
 

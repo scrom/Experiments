@@ -45,6 +45,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _homeLocation;
         var _currentLocation;
+        var _lastDirection;
         var _moves = 0; //only incremented when moving between locations but not yet used elsewhere Starts at 0
         var _timeSinceEating = 0;
         var _returnHomeIn = -1 //set when first not at home and reset when home.
@@ -569,6 +570,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.destinations = _destinations;
             currentAttributes.clearedDestinations = _clearedDestinations;
             currentAttributes.avoiding = _avoiding;
+            currentAttributes.lastDirection = _lastDirection;
             currentAttributes.loops = _loops;
             currentAttributes.loopCount = _loopCount;
             currentAttributes.loopDelay = _loopDelay;
@@ -626,8 +628,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.huntingPlayer) {saveAttributes.huntingPlayer = true;};            
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
             if (creatureAttributes.clearedDestinations.length >0) {saveAttributes.clearedDestinations = creatureAttributes.clearedDestinations;};
-            if (creatureAttributes.avoiding.length >0) {saveAttributes.avoiding = creatureAttributes.avoiding;};
-
+            if (creatureAttributes.avoiding.length > 0) { saveAttributes.avoiding = creatureAttributes.avoiding; };
+            if (creatureAttributes.lastDirection != undefined) { saveAttributes.lastDirection = creatureAttributes.lastDirection; };
             if (creatureAttributes.loops !=0) {saveAttributes.loops = creatureAttributes.loops;};
             if (creatureAttributes.loopCount != 0) {saveAttributes.loopCount = creatureAttributes.loopCount;};
             if (creatureAttributes.loopDelay >0) {saveAttributes.loopDelay = creatureAttributes.loopDelay;};
@@ -3021,13 +3023,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //this stops creatures getting stuck behind "avoided" locations.
                     if (!(exit)) {
                         //console.log("getting random exit");
-                        exit = _currentLocation.getRandomExit(true, _avoiding, _inventory);
+                        exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection);
                     };
                         
-                    //if only one exit, random exit won't work so get the only one we can...
+                    //if only one exit, random exit won't work so either get the only one we can or hang around a moment...
                     if (!(exit)) {
                         //console.log("getting first available exit");
-                        exit = _currentLocation.getAvailableExits(true, _inventory)[0];
+                        //give them a 50% chance of using the only available exit
+                        randomInt = Math.floor(Math.random() * 2);
+                        if (randomInt != 0) {
+                            exit = _currentLocation.getAvailableExits(true, _inventory)[0];
+                        };
+                        
                     };
 
                     if (exit) {
@@ -3102,6 +3109,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (canUseExit) {                                
                                 exposedItems = self.exposePositionedItems();
                                 self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                                _lastDirection = exit.getDirection();
                             };
                             newLocationName = _currentLocation.getName();
                         };
