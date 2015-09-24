@@ -2769,7 +2769,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //if autolock enabled - tick down lock timer and lock (and reset timer) if expired.
             if (_autoLock >= 0 && (!(self.isLocked()))) {
                 if (_lockInMoves <= 0) {
-                    _closed = true;  //close it. 
+                    _open = false;  //close it. 
                     _locked = true;  //force lock - even without key. 
                     _lockInMoves = _autoLock; //reset lockInMoves for next time.
                 } else {
