@@ -37,7 +37,7 @@
                 "template": "creature-male-l3",
                 "destinations": [
                     "servery-kitchen",
-                    "waste-area",
+                    "rubbish-bins",
                     "servery-kitchen",
                     "smoking-area"
                 ],
@@ -90,7 +90,8 @@
                 "type": "door",
                 "canOpen": true,
                 "lockable": true,
-                "locked": true
+                "locked": true,
+                "hasLinkedDoor":  true
             },
             "linkedexits": [
                 {
