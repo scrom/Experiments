@@ -111,7 +111,7 @@
             "attributes": {
                 "defaultAction": "press",
                 "weight": 200,
-                "type": "door",
+                "type": "tool",
                 "canOpen": true,
                 "customAction": "call",
                 "defaultResult": "$action press"
