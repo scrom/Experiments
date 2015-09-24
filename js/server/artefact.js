@@ -2768,25 +2768,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.tick = function () {
-            //if autolock enabled - tick down lock timer,  lock/close (and reset timer) if expired.
-            if (_autoLock >= 0) {
-                if ((_lockable && (!(self.isLocked()))) || (!(_lockable) && self.isOpen())) {
-                    if (_lockInMoves <= 0) {
-                        self.close("close","");  //close it.                        
-                        if (_lockable) {
-                            //note, if autolock is set but object isn't "Lockable", it'll just auto-close
-                            _locked = true;  //force lock - even without key. 
-                        };
-                        _lockInMoves = _autoLock; //reset lockInMoves for next time.
-                    } else {
-                        _lockInMoves--;
-                    };
-                };
-            };
-
             //if turned on and "burnRate" set, decrement charges on self and/or contents.
             //for those turned on (or ticking), decrement relevant stats
             //not implemented yet
+            var resultString = "";
             var usedItem; 
             if (_on) {
                 if (_burnRate >0) {
@@ -2809,10 +2794,30 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     _on = false;
                     var usedItemString = usedItem.getName();
                     if (usedItemString != self.getName()) {usedItemString = self.getName()+" "+usedItem.getName();};
-                    return "Your "+usedItemString+" "+usedItem.hasPlural()+" run out."
+                    resultString += "Your "+usedItemString+" "+usedItem.hasPlural()+" run out.<br>"
                 };
             };
-            return "";
+            
+            //if autolock enabled - tick down lock timer,  lock/close (and reset timer) if expired.
+            if (_autoLock >= 0 && !_broken && !_destroyed) {
+                if ((_lockable && (!(self.isLocked()))) || (!(_lockable) && self.isOpen())) {
+                    if (_lockInMoves <= 0) {
+                        self.close("close", "");  //close it.                        
+                        if (_lockable) {
+                            //note, if autolock is set but object isn't "Lockable", it'll just auto-close
+                            _locked = true;  //force lock - even without key. 
+                        };
+                        _lockInMoves = _autoLock; //reset lockInMoves for next time.
+
+                        resultString += tools.initCap(self.getDisplayName())+" closes.<br>"
+
+                    } else {
+                        _lockInMoves--;
+                    };
+                };
+            };
+
+            return resultString;
         };
 
         //end public member functions

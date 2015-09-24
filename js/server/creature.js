@@ -3133,13 +3133,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 var movementVerb = "wanders";
                                 if (_bleeding) {movementVerb = "stumbles";};
                                 if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += movementVerb+" in"+slipString;  
+                                resultString += movementVerb + " in";
+                                if (openedDoor) {
+                                    resultString += " through " + openedDoor.getDisplayName();
+                                };
+                                resultString += slipString;
                             } else {
+                                if (openedDoor) {
+                                    resultString += "opens " + openedDoor.getDisplayName() + " and ";
+                                };
                                 var movementVerb = "heads";
                                 if (_bleeding) {movementVerb = "limps";};
                                 if (exit.getLongName() == "in") {movementVerb = "goes";};
                                 if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += movementVerb+" "+exit.getLongName()+"."; 
+                                resultString += movementVerb + " " + exit.getLongName();
+                                resultString += "."; 
                                 if (showMoveToPlayer) {
                                     partialResultString += resultString+exposedItems;
                                 };

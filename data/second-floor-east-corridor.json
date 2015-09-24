@@ -31,7 +31,7 @@
         {
             "object": "artefact",
             "template": "office-door",
-            "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes automatically.",
+            "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
             "linkedexits": [
                 {
                     "object": "exit",

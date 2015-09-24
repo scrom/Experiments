@@ -751,12 +751,25 @@ exports.Location = function Location(name, displayName, description, attributes)
                     delete _creatureTraces[key];
                 };
             };
-
+            
+            var resultString = "";
             for (var t = 0; t < time; t++) {
                 //decrease blood in location (if any there)
                 self.reduceBlood();
-                _inventory.tick();
+                
+                //tick inventory items
+                resultString += _inventory.tick();
             };
+            
+            if (player) {
+                var playerLocation = player.getCurrentLocation();
+                var playerLocationName = playerLocation.getName();
+                if (self.getName() == playerLocationName) {
+                    return resultString;
+                };
+            };
+
+            return "";
         };
 
         //end public member functions

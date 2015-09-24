@@ -4201,7 +4201,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "It leads out to the reception area.",
+        "detailedDescription": "It leads out to the reception area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -4975,7 +4975,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the first floor working area.",
+        "detailedDescription": "One of the main doors into the first floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -5675,12 +5675,14 @@
         "object": "artefact",
         "name": "door",
         "description": "steel gate",
-        "detailedDescription": "It only opens from this side. This has the potential to be a useful short-cut.",
+        "detailedDescription": "It only opens from this side (and closes again behind automatically). This has the potential to be a useful short-cut.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
           "type": "door",
-          "canOpen": true
+          "canOpen": true,
+          "autoLock": 2,
+          "lockInMoves": 2
         },
         "linkedexits": [
           {
@@ -7971,7 +7973,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "It leads out to the atrium area.",
+        "detailedDescription": "It leads out to the atrium area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -9864,7 +9866,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the ground floor working area.",
+        "detailedDescription": "One of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -11097,7 +11099,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "It leads out to the second floor landing.",
+        "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -11334,7 +11336,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the second floor working area.",
+        "detailedDescription": "One of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -11743,7 +11745,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "It leads out to the second floor stairs.",
+        "detailedDescription": "It leads out to the second floor stairs.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -12184,7 +12186,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "It leads out to the first floor landing.",
+        "detailedDescription": "It leads out to the first floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -12649,7 +12651,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "It leads out to the second floor landing.",
+        "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -13153,7 +13155,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the first floor working area.",
+        "detailedDescription": "One of the main doors into the first floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -13231,7 +13233,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the ground floor working area.",
+        "detailedDescription": "One of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -13295,7 +13297,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the second floor working area.",
+        "detailedDescription": "One of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,

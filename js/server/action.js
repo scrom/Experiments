@@ -1369,7 +1369,7 @@ exports.Action = function Action(player, map, fileManager) {
             description += processCreatureTicks(_ticks, _map, _player);
 
             //if anything is happening in locations (includes ticks on inventory)
-            processLocationTicks(_ticks, _map, _player);
+            description += processLocationTicks(_ticks, _map, _player);
             
             //tick missions
             description  += map.updateMissions(_ticks, _player);
