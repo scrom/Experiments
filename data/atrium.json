@@ -56,7 +56,7 @@
           "customAction": [
             "get", "find", "where is", "where"
           ],
-          "defaultResult": "She's usually at reception. Try heading <i>East</i> from here."
+          "defaultResult": "You'll need to learn to fend for yourself eventually.<br>Try heading <i>East</i> from here."
         },
         "synonyms": [
           "reception",
