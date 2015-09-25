@@ -2525,6 +2525,19 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (delivering && !(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" "+doesPlural()+" seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong.";};
+            
+            if (!(objectToGive.isCollectable())) {
+                if (objectToGive.checkCustomAction("get")) {
+                    var resultString = objectToGive.getDefaultResult();
+                    
+                    if (!(resultString.indexOf("$action") > -1)) {
+                        //if we're *not* redirecting to an alternate verb
+                        resultString += "$result";
+                    };
+                    return resultString;
+                };
+                return "I'm not quite sure what you're trying to do with "+self.getDisplayName() + ". Whatever it is, it's not going to happen.";
+            };
 
             var requiresContainer = objectToGive.requiresContainer();
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);

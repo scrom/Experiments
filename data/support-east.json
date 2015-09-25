@@ -31,11 +31,26 @@
                 ],
                 "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish."
             },
-            "synonyms":  [
-                "v sign",
-                "rude sign",
-                "gesture",
-                "rude gesture"
+            "inventory": [
+                    {
+                "object": "artefact",
+                "name": "gesture",
+                "description": "rude gesture",
+                "detailedDescription": "You flap your arms and prance about staring at yourself.",
+                "attributes": {
+                    "type": "scenery",
+                    "subType": "intangible",
+                    "customAction": [
+                                "get", "make"
+                            ],
+                    "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish."
+                        },
+                        "synonyms": [
+                            "v sign",
+                            "rude sign",
+                            "rude gesture"
+                        ]
+                    }
             ]
         }
     ]
