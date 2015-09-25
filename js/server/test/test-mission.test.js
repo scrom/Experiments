@@ -583,7 +583,7 @@ exports.canCompleteKillSpyMission = function (test) {
 
     var resultString = m0.updateMissions(1, p0);
 
-    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
+    var expectedResult = "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -623,7 +623,7 @@ exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (
     //var result = mission.checkState(inv, simon.getLocation(), m0);
     var resultString = m0.updateMissions(1, p0);
 
-    var expectedResult = "<br>Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
+    var expectedResult = "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);

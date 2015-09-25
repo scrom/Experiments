@@ -1005,7 +1005,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       },
       {
@@ -2080,7 +2081,7 @@
               "missionObject": "mark wightman",
               "static": true,
               "dialogue": [
-                "'Hi $player. That's quite a first day you've had so far!'<br>'I think it's time to celebrate. When you're ready, come and talk to me again and we'll get something organised.'",
+                "'Hi $player. That's quite a first day you've had so far!'<br>'I think it's time to take a break. When you're ready, come and talk to me again and we'll get something organised.'",
                 "Are you ready to go?",
                 {
                   "state": 2,
@@ -3191,7 +3192,7 @@
         "name": "alice easey",
         "displayname": "Alice Easey",
         "description": "Alice Easey",
-        "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best best for survival in a zombie apocalypse.",
+        "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best bet for survival in a zombie apocalypse.",
         "attributes": {
           "weight": 105,
           "money": 20,
@@ -3567,7 +3568,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       },
       {
@@ -4389,7 +4391,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       }
     ]
@@ -4992,7 +4995,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       },
       {
@@ -5055,6 +5059,23 @@
         "direction": "s",
         "source": "first-floor-landing-west",
         "destination": "first-floor-toilet"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "balcony",
+        "description": "balcony",
+        "detailedDescription": "You peer over the balcony and look down to the atrium below.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "viewDestination": "atrium"
+        },
+        "synonyms": [
+          "ledge",
+          "edge"
+        ]
       }
     ]
   },
@@ -6185,7 +6206,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       }
     ]
@@ -7102,7 +7124,7 @@
                       },
                       "reward": {
                         "score": 50,
-                        "message": "Congratulations. Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
+                        "message": "Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
                       }
                     },
                     {
@@ -7521,7 +7543,9 @@
               "smell sell",
               "sell smell",
               "smell of sell",
-              "the smell of sell"
+              "the smell of sell",
+              "smell",
+              "sell"
             ]
           },
           {
@@ -9244,10 +9268,10 @@
         "linkedexits": [
           {
             "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "roof",
-            "destination": "plant-room",
+            "longname": "West",
+            "direction": "w",
+            "source": "plant-room",
+            "destination": "roof",
             "hidden": true
           }
         ],
@@ -9495,7 +9519,7 @@
               "initiateConversation": true,
               "static": true,
               "dialogue": [
-                "'Hi $player, thanks for the amazing job saving us from disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
+                "'Hi $player, I'm glad we all managed to survive the disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
                 {
                   "state": 1,
                   "keywords": [
@@ -9714,7 +9738,7 @@
         "name": "vic wiseman",
         "displayname": "Vic Wiseman",
         "description": "Vic the receptionist",
-        "detailedDescription": "Vic's one of our support team. 'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
+        "detailedDescription": "Vic's one of our support team on the customer-facing front line.<br>'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
         "attributes": {
           "weight": 105,
           "money": 20,
@@ -10796,7 +10820,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       },
       {
@@ -11314,6 +11339,59 @@
         "source": "second-floor-landing-central",
         "destination": "lift-second-floor"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "autonomy",
+        "description": "autonomy",
+        "detailedDescription": "You see little people in suits scurrying back and forth.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "find",
+            "where is",
+            "where"
+          ],
+          "defaultResult": "It's the big office building over the road."
+        },
+        "synonyms": [
+          "ant",
+          "farm",
+          "ant farm",
+          "autonomy ant farm",
+          "road",
+          "office",
+          "office building",
+          "big office building",
+          "big office"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "people",
+            "description": "little people",
+            "detailedDescription": "I think you made the right choice coming here.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "customAction": [
+                "get",
+                "find",
+                "where is",
+                "where"
+              ],
+              "defaultResult": "You can't reach them from here."
+            },
+            "synonyms": [
+              "little people",
+              "suits",
+              "little people in suits"
+            ]
+          }
+        ]
+      }
     ]
   },
   {
@@ -11353,7 +11431,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       },
       {
@@ -11416,6 +11495,23 @@
         "direction": "s",
         "source": "second-floor-landing-west",
         "destination": "second-floor-toilet"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "balcony",
+        "description": "balcony",
+        "detailedDescription": "You peer over the balcony and look down to the atrium below.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "viewDestination": "atrium"
+        },
+        "synonyms": [
+          "ledge",
+          "edge"
+        ]
       }
     ]
   },
@@ -13041,7 +13137,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       }
     ]
@@ -13133,7 +13230,8 @@
         },
         "synonyms": [
           "glass",
-          "windows"
+          "windows",
+          "outside"
         ]
       }
     ]
@@ -13382,12 +13480,18 @@
           "weight": 280,
           "type": "scenery",
           "isBreakable": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish.",
           "canDrawOn": true,
           "viewDestination": "stairs-first-floor"
         },
         "synonyms": [
-          "glass",
-          "windows"
+          "v sign",
+          "rude sign",
+          "gesture",
+          "rude gesture"
         ]
       }
     ]
@@ -13816,7 +13920,7 @@
         "object": "mission",
         "name": "saveredgate",
         "displayName": "save Red Gate from the zombie contagion",
-        "description": "The scene of devastation nearby looks very bad...<br>You need to help all the Red Gate staff survive the zombie apocalypse. Act quickly!",
+        "description": "The scene of devastation nearby looks very bad - almost like the Zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
         "attributes": {
           "parent": "planecrash"
         },

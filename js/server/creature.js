@@ -3156,10 +3156,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (exit) {
                             var canUseExit = true;
                             exitAction = exit.getRequiredAction();
-
-                            if (_bleeding && (exitAction == "run"||exitAction=="climb")) {
-                                //can only run/climb if not bleeding.
-                                canUseExit = false;
+                            
+                            if (exitAction == "run" || exitAction == "climb") {
+                                if (_destinations.length == 0 || !(self.isHuntingPlayer()) || self.getSubType() == "animal") {
+                                    //will only run/climb if has a reason to be there (or is an animal)
+                                    canUseExit =  false;
+                                };
+                                if (_bleeding) {
+                                    //can only run/climb if not bleeding.
+                                    canUseExit =  false;
+                                };                            
                             } else if (exitAction == "drive" || exitAction == "fly" || exitAction == "sail" || exitAction == "ride") {
                                 //cant use vehicles (for now)
                                 canUseExit = false;
