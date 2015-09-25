@@ -1,0 +1,13 @@
+﻿{
+    "object": "artefact",
+    "name": "balcony",
+    "description": "balcony",
+    "attributes": {
+        "weight": 280,
+        "type": "scenery"
+    },
+    "synonyms": [
+        "ledge",
+        "edge"
+    ]
+}

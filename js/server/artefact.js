@@ -980,7 +980,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (destination) {
                     var objectList = destination.listObjects(2);
                     if (objectList.length > 1) {
-                        return "<br>Through " + self.getDisplayName() + " you can see " + destination.listObjects(2) + ".";
+                        return "<br>From " + self.getDisplayName() + " you can see " + destination.listObjects(2) + ".";
                     };
                 };
             };

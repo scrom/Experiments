@@ -4,26 +4,36 @@
     "displayName": "First floor landing",
     "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wandering about their business down below.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "first-floor-landing-west",
-        "destination": "stairs-first-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "first-floor-landing-west",
-        "destination": "first-floor-landing-central"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "first-floor-landing-west",
-        "destination": "first-floor-toilet"
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "first-floor-landing-west",
+            "destination": "stairs-first-floor"
+        },
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "first-floor-landing-west",
+            "destination": "first-floor-landing-central"
+        },
+        {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "first-floor-landing-west",
+            "destination": "first-floor-toilet"
+        }
+    ],
+    "inventory": [ 
+              {
+        "object": "artefact",
+        "template": "balcony",
+        "detailedDescription": "You peer over the balcony and look down to the atrium below.",
+        "attributes": {
+          "viewDestination": "atrium"
+        }
       }
     ]
   }

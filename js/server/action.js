@@ -395,8 +395,13 @@ exports.Action = function Action(player, map, fileManager) {
                             if ((positionIndex > -1) ||(_adverb == "closely" || _adverb == "carefully")) {
                                 //support "look under", "look behind" and "look in" etc.
                                 if (_adverb) {_verb = _verb+" "+_adverb;};
-                                if (positionIndex == -1) {_ticks = 3;}; //full search takes longer
-                                description = _player.search(_verb, _object1, _splitWord, tools.positions);
+                                if (positionIndex == -1) { _ticks = 3; }; //full search takes longer
+                                
+                                if ((_verb == "look" || _verb == "peer") && _splitWord == "over") {
+                                    description = _player.examine(_verb + " " + _splitWord, _object1, _map);
+                                } else {
+                                    description = _player.search(_verb, _object1, _splitWord, tools.positions);
+                                };
                             } else {
                                 description = _player.examine(_verb+" "+_splitWord,_object1, _map);
                             };
