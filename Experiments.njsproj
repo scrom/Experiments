@@ -33,6 +33,7 @@
     <Content Include="data\access-road-west.json" />
     <Content Include="data\atrium-seating.json" />
     <Content Include="data\atrium.json" />
+    <Content Include="data\balcony.json" />
     <Content Include="data\basin.json" />
     <Content Include="data\batteries.json" />
     <Content Include="data\bike-ambulance.json" />

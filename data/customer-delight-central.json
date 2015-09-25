@@ -109,7 +109,7 @@
               "missionObject": "mark wightman",
               "static": true,
               "dialogue": [
-                "'Hi $player. That's quite a first day you've had so far!'<br>'I think it's time to celebrate. When you're ready, come and talk to me again and we'll get something organised.'",
+                "'Hi $player. That's quite a first day you've had so far!'<br>'I think it's time to take a break. When you're ready, come and talk to me again and we'll get something organised.'",
                 "Are you ready to go?",
                 {
                   "state": 2,

@@ -32,7 +32,7 @@
         "object": "mission",
         "name": "saveredgate",
         "displayName": "save Red Gate from the zombie contagion",
-        "description": "The scene of devastation nearby looks very bad...<br>You need to help all the Red Gate staff survive the zombie apocalypse. Act quickly!",
+        "description": "The scene of devastation nearby looks very bad - almost like the Zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
         "attributes": {
           "parent": "planecrash"
         },

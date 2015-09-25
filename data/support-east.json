@@ -4,29 +4,39 @@
     "displayName": "Support",
     "description": "You're in support area.<br>From here you can make rude gestures and wave through the window at passers-by on the stairs.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "support-east",
-        "destination": "support-west"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "support-east",
-        "destination": "enterprise-meeting-room"
-      }
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "support-east",
+            "destination": "support-west"
+        },
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "support-east",
+            "destination": "enterprise-meeting-room"
+        }
     ],
     "inventory": [
-      {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "Wave!",
-        "attributes": {
-          "viewDestination": "stairs-first-floor"
+        {
+            "object": "artefact",
+            "template": "window",
+            "detailedDescription": "Wave!",
+            "attributes": {
+                "viewDestination": "stairs-first-floor",
+                "customAction": [
+                    "get"
+                ],
+                "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish."
+            },
+            "synonyms":  [
+                "v sign",
+                "rude sign",
+                "gesture",
+                "rude gesture"
+            ]
         }
-      }
     ]
   }

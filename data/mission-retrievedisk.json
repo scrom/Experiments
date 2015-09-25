@@ -10,7 +10,7 @@
         "initiateConversation": true,
         "static": true,
         "dialogue": [
-            "'Hi $player, thanks for the amazing job saving us from disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
+            "'Hi $player, I'm glad we all managed to survive the disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
             {
                 "state": 1,
                 "keywords": [

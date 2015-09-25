@@ -72,7 +72,7 @@
         "name": "vic wiseman",
         "displayname": "Vic Wiseman",
         "description": "Vic the receptionist",
-        "detailedDescription": "Vic's one of our support team. 'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
+        "detailedDescription": "Vic's one of our support team on the customer-facing front line.<br>'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
         "attributes": {
           "template": "creature-female-l3",
           "canTravel": false,
