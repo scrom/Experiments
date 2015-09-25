@@ -608,6 +608,8 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'attack':
                     case 'smash':
                     case 'bash':
+                    case 'shake':
+                    case 'rattle':
                     case 'stab':
                     case 'hurt':
                     case 'hit':
@@ -924,6 +926,10 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'force':
                         _object0 = " "+_object0+" ";
                         _object0 = _object0.replace(" open ", "").trim();
+                        _object0 = _object0.replace(" into ", "").trim();
+                        if (tools.stringIsEmpty(_object0)) {
+                            _object0 = _object1;
+                        };
                         description = _player.breakOrDestroy(_verb, _object0);
                         break;
                     case 'kill':

@@ -2,7 +2,10 @@
     "object": "location",
     "name": "ground-floor-back-stair-east",
     "displayName": "Back stairs (East) - Ground floor",
-    "description": "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here. People don't come down here very often unless they're lost.",
+    "description": "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here and in the past this area has been prone to flooding.<br>People don't come down here very often unless they're lost.",
+    "attributes": {
+      "dark": true
+    },
     "exits": [
       {
         "object": "exit",
@@ -10,6 +13,28 @@
         "direction": "u",
         "source": "ground-floor-back-stair-east",
         "destination": "first-floor-back-stairs-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "key",
+        "description": "coffee machine key",
+        "detailedDescription": "It unlocks coffee machines.",
+        "attributes": {
+          "weight": 0.1,
+          "type": "key",
+          "canCollect": true,
+          "affinityModifier": 0,
+          "unlocks": "coffee machine"
+        },
+        "synonyms": [
+          "vending key",
+          "machine key",
+          "vending machine key",
+          "coffee machine key",
+          "coffee key"
+        ]
       }
     ]
   }

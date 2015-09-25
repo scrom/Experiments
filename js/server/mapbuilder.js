@@ -471,8 +471,17 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (missionData.failAttributes) {
                     failAttr = self.unpackConditionAttributes(missionData.failAttributes);
                 };
+                
+                var rewardData;
+                if (missionData.reward) {
+                    rewardData = self.unpackReward(missionData.reward);
+                } else {
+                    //reward is generally mandatory - even if it's just an empty object.
+                    //this section is here just to keep logs clear on what's wrong without blowing up.
+                    console.log("ERROR: No reward object found for mission: " + missionData.name);
+                    rewardData = {}; 
+                };              
 
-                var rewardData = self.unpackReward(missionData.reward);
                 var failData;
                 if (missionData.fail) { 
                     failData = self.unpackReward(missionData.fail); 

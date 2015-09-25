@@ -195,6 +195,7 @@
                 "carryWeight": 25,
                 "holdsLiquid": true,
                 "isBreakable": true,
+                "isBroken": true,
                 "canOpen": true,
                 "lockable": true,
                 "locked": true,
@@ -312,6 +313,24 @@
                 }
             ],
             "missions": [
+                {
+                    "object": "mission",
+                    "name": "repaircoffeemachine",
+                    "displayName": "repair the coffee machine",
+                    "attributes": {
+                        "missionObject": "coffee machine",
+                        "static": true
+                    },
+                    "conditionAttributes": {
+                      "isDestroyed": false,
+                      "isBroken": false,
+                      "isDamaged": false
+                    },
+                    "reward": {
+                        "score": 25,
+                        "message": "That's a start at least. You still need to get your latte though.<br>(It has to be a latte! Coffee just won't do.)"
+                    }
+                },
                 {
                     "object": "mission",
                     "name": "destroycoffeemachine",

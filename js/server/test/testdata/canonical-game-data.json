@@ -4497,6 +4497,115 @@
           "jb",
           "bowles",
           "john b"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "beansinthepostroom",
+            "displayName": "John's got beans for the coffee machine",
+            "description": "John has a coffee bean delivery.",
+            "attributes": {
+              "parent": "repaircoffeemachine",
+              "missionObject": "john bowles",
+              "initiateConversation": true,
+              "huntPlayer": true,
+              "static": true,
+              "dialogue": [
+                "'Hey $player.'<br>'A parcel arrived a moment ago with the facilities team. It's been through the wars a bit but we think might be for you.'<br>'I've popped it in the post room.'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 1
+            },
+            "reward": {
+              "modifyLocation": {
+                "name": "post-room",
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "parcel",
+                    "description": "parcel from Co____ D____t",
+                    "detailedDescription": "The label's smudged and it's hard to tell who it's from or to.<br>With a bit of creative deciphering (clever you!) it really does look like it's addressed to '$player' but you're not expecting anything.<br>Maybe John had you mixed up with someone else.<br>",
+                    "attributes": {
+                      "defaultAction": "open",
+                      "weight": 2,
+                      "carryWeight": 25,
+                      "attackStrength": 2,
+                      "type": "container",
+                      "canCollect": true,
+                      "isBreakable": true,
+                      "isDamaged": true,
+                      "affinityModifier": 0,
+                      "canOpen": true,
+                      "smell": "Mmmm it smells of fresh coffee.",
+                      "canDrawOn": true
+                    },
+                    "synonyms": [
+                      "package",
+                      "my parcel",
+                      "my package",
+                      "coffee parcel",
+                      "coffee package",
+                      "box"
+                    ],
+                    "inventory": [
+                      {
+                        "object": "artefact",
+                        "name": "bag",
+                        "description": "giant bag",
+                        "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
+                        "attributes": {
+                          "defaultAction": "open",
+                          "weight": 2,
+                          "carryWeight": 3,
+                          "attackStrength": 2,
+                          "type": "container",
+                          "canCollect": true,
+                          "isBreakable": true,
+                          "affinityModifier": 0,
+                          "canOpen": true,
+                          "smell": "You can almost taste the coffee beans."
+                        },
+                        "synonyms": [
+                          "bean bag",
+                          "bag of beans",
+                          "giant bag",
+                          "big bag"
+                        ],
+                        "inventory": [
+                          {
+                            "object": "artefact",
+                            "name": "beans",
+                            "description": "coffee beans",
+                            "detailedDescription": "Development fuel. Almost enough to last a day here.",
+                            "attributes": {
+                              "weight": 2,
+                              "attackStrength": 5,
+                              "requiresContainer": true,
+                              "canCollect": true,
+                              "charges": 10,
+                              "chargeUnit": "cup",
+                              "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
+                              "plural": true,
+                              "affinityModifier": 0,
+                              "componentOf": [
+                                "coffee machine"
+                              ],
+                              "smell": "They smell like pretty good quality coffee."
+                            },
+                            "synonyms": [
+                              "coffee beans"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
         ]
       }
     ]
@@ -5434,7 +5543,10 @@
     "object": "location",
     "name": "ground-floor-back-stair-east",
     "displayName": "Back stairs (East) - Ground floor",
-    "description": "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here. People don't come down here very often unless they're lost.",
+    "description": "You're standing at the bottom of the north-east staircase.<br>There's an air of foreboding down here and in the past this area has been prone to flooding.<br>People don't come down here very often unless they're lost.",
+    "attributes": {
+      "dark": true
+    },
     "exits": [
       {
         "object": "exit",
@@ -5442,31 +5554,6 @@
         "direction": "u",
         "source": "ground-floor-back-stair-east",
         "destination": "first-floor-back-stairs-east"
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "ground-floor-back-stairs-west",
-    "displayName": "Back stairs (West) - Ground floor",
-    "description": "You're in the bottom of the west fire escape stairs.",
-    "attributes": {
-      "dark": true
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "ground-floor-back-stairs-west",
-        "destination": "opportunities-north"
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "ground-floor-back-stairs-west",
-        "destination": "first-floor-back-stairs-west"
       }
     ],
     "inventory": [
@@ -5489,6 +5576,31 @@
           "coffee machine key",
           "coffee key"
         ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "ground-floor-back-stairs-west",
+    "displayName": "Back stairs (West) - Ground floor",
+    "description": "You're in the bottom of the west 'back' stairs (despite it being at the front of the building).",
+    "attributes": {
+      "dark": true
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "ground-floor-back-stairs-west",
+        "destination": "opportunities-north"
+      },
+      {
+        "object": "exit",
+        "longname": "up",
+        "direction": "u",
+        "source": "ground-floor-back-stairs-west",
+        "destination": "first-floor-back-stairs-west"
       }
     ]
   },
@@ -6496,6 +6608,7 @@
           "carryWeight": 25,
           "holdsLiquid": true,
           "isBreakable": true,
+          "isBroken": true,
           "canOpen": true,
           "lockable": true,
           "locked": true,
@@ -6700,6 +6813,24 @@
           }
         ],
         "missions": [
+          {
+            "object": "mission",
+            "name": "repaircoffeemachine",
+            "displayName": "repair the coffee machine",
+            "attributes": {
+              "missionObject": "coffee machine",
+              "static": true
+            },
+            "conditionAttributes": {
+              "isDestroyed": false,
+              "isBroken": false,
+              "isDamaged": false
+            },
+            "reward": {
+              "score": 25,
+              "message": "That's a start at least. You still need to get your latte though.<br>(It has to be a latte! Coffee just won't do.)"
+            }
+          },
           {
             "object": "mission",
             "name": "destroycoffeemachine",
@@ -9838,94 +9969,11 @@
               "isBroken": false
             },
             "reward": {
-              "modifyLocation": {
-                "name": "post-room",
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "parcel",
-                    "description": "parcel from Co____ D____t",
-                    "detailedDescription": "The label's smudged and it's hard to tell who it's from or to.<br>With a bit of creative deciphering (clever you!) it really does look like it's addressed to '$player' but you're not expecting anything.<br>Maybe Vic had you mixed up with someone else.<br>",
-                    "attributes": {
-                      "defaultAction": "open",
-                      "weight": 2,
-                      "carryWeight": 25,
-                      "attackStrength": 2,
-                      "type": "container",
-                      "canCollect": true,
-                      "isBreakable": true,
-                      "affinityModifier": 0,
-                      "canOpen": true,
-                      "smell": "Mmmm it smells of fresh coffee.",
-                      "canDrawOn": true
-                    },
-                    "synonyms": [
-                      "package",
-                      "my parcel",
-                      "my package",
-                      "coffee parcel",
-                      "coffee package",
-                      "box"
-                    ],
-                    "inventory": [
-                      {
-                        "object": "artefact",
-                        "name": "bag",
-                        "description": "giant bag",
-                        "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
-                        "attributes": {
-                          "defaultAction": "open",
-                          "weight": 2,
-                          "carryWeight": 3,
-                          "attackStrength": 2,
-                          "type": "container",
-                          "canCollect": true,
-                          "isBreakable": true,
-                          "affinityModifier": 0,
-                          "canOpen": true,
-                          "smell": "You can almost taste the coffee beans."
-                        },
-                        "synonyms": [
-                          "bean bag",
-                          "bag of beans",
-                          "giant bag",
-                          "big bag"
-                        ],
-                        "inventory": [
-                          {
-                            "object": "artefact",
-                            "name": "beans",
-                            "description": "coffee beans",
-                            "detailedDescription": "Development fuel. Almost enough to last a day here.",
-                            "attributes": {
-                              "weight": 2,
-                              "attackStrength": 5,
-                              "requiresContainer": true,
-                              "canCollect": true,
-                              "charges": 10,
-                              "chargeUnit": "cup",
-                              "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
-                              "plural": true,
-                              "affinityModifier": 0,
-                              "componentOf": [
-                                "coffee machine"
-                              ],
-                              "smell": "They smell like pretty good quality coffee."
-                            },
-                            "synonyms": [
-                              "coffee beans"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
               "removeObject": "50 shades",
               "score": 35,
+              "affinityModifier": 2,
               "increaseAffinityFor": "Vic Wiseman",
-              "message": "Congratulations. Vic likes the book!<br>'Oh, I just remembered. A parcel arrived for you a moment ago.'<br>'I've popped it in the post room'."
+              "message": "<br>Congratulations. Vic likes the book.<br><br>'Thanks $player!'<br>'If you ever need help tracking anything down, just pop down and <i>ask</i> me and I'll see what I can do.'"
             }
           }
         ]
@@ -10000,7 +10048,7 @@
             ]
           },
           "score": 10,
-          "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'<br><br>'Whilst I think of it; things are pretty unpredictable around here so I'm not able to leave reception at the moment.'<br>'If you happen to find any interesting reading material on your travels, stop by with it if you can.'"
+          "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
         }
       }
     ]
@@ -10097,9 +10145,9 @@
             "missions": [
               {
                 "object": "mission",
-                "name": "repaircoffeemachine",
+                "name": "learntorepaircoffeemachine",
                 "displayName": "repair the coffee machine",
-                "description": "Blah blah blah wiring blah locks blah coffee blah beans blah milk blah.<br>Did you know you can use the verbs <i>repair</i> and <i>break</i>?<br> If something is broken try repairing it. A combination of the two actions may sometimes be a faster route to some of your goals.<br>Try this out on the coffee machine. (Just don't get caught breaking stuff deliberately).",
+                "description": "Blah blah blah wiring blah <i>lock</i>s blah coffee blah <i>beans</i> blah <i>milk</i> blah.<br><br> If something is broken and you have the right tools and/or skills you can try <i>repair</i>ing it.<br>Just don't go overboard and <i>destroy</i> anything you need and don't get caught <i>break</i>ing stuff deliberately.",
                 "attributes": {
                   "missionObject": "coffee machine manual",
                   "static": true
@@ -10110,7 +10158,7 @@
                 },
                 "reward": {
                   "repairSkill": "coffee machine",
-                  "message": "Congratulations. You've learned how to repair a coffee machine."
+                  "message": "<br>You've learned how to repair a coffee machine. That might be handy."
                 }
               }
             ]

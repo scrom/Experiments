@@ -150,95 +150,12 @@
               "isDestroyed": false,
               "isBroken": false
             },
-            "reward": {
-              "modifyLocation": {
-                "name": "post-room",
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "parcel",
-                    "description": "parcel from Co____ D____t",
-                    "detailedDescription": "The label's smudged and it's hard to tell who it's from or to.<br>With a bit of creative deciphering (clever you!) it really does look like it's addressed to '$player' but you're not expecting anything.<br>Maybe Vic had you mixed up with someone else.<br>",
-                    "attributes": {
-                      "defaultAction": "open",
-                      "weight": 2,
-                      "carryWeight": 25,
-                      "attackStrength": 2,
-                      "type": "container",
-                      "canCollect": true,
-                      "isBreakable": true,
-                      "affinityModifier": 0,
-                      "canOpen": true,
-                      "canDrawOn": true,
-                      "smell": "Mmmm it smells of fresh coffee."
-                    },
-                    "synonyms": [
-                      "package",
-                      "my parcel",
-                      "my package",
-                      "coffee parcel",
-                      "coffee package",
-                      "box"
-                    ],
-                    "inventory": [
-                      {
-                        "object": "artefact",
-                        "name": "bag",
-                        "description": "giant bag",
-                        "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
-                        "attributes": {
-                          "defaultAction": "open",
-                          "weight": 2,
-                          "carryWeight": 3,
-                          "attackStrength": 2,
-                          "type": "container",
-                          "canCollect": true,
-                          "isBreakable": true,
-                          "affinityModifier": 0,
-                          "canOpen": true,
-                          "smell": "You can almost taste the coffee beans."
-                        },
-                        "synonyms": [
-                          "bean bag",
-                          "bag of beans",
-                          "giant bag",
-                          "big bag"
-                        ],
-                        "inventory": [
-                          {
-                            "object": "artefact",
-                            "name": "beans",
-                            "description": "coffee beans",
-                            "detailedDescription": "Development fuel. Almost enough to last a day here.",
-                            "attributes": {
-                              "weight": 2,
-                              "attackStrength": 5,
-                              "requiresContainer": true,
-                              "canCollect": true,
-                              "charges": 10,
-                              "chargeUnit": "cup",
-                              "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
-                              "plural": true,
-                              "affinityModifier": 0,
-                              "smell": "They smell like pretty good quality coffee.",
-                              "componentOf": [
-                                "coffee machine"
-                              ]
-                            },
-                            "synonyms": [
-                              "coffee beans"
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
+            "reward": {              
               "removeObject": "50 shades",
               "score": 35,
+              "affinityModifier": 2,
               "increaseAffinityFor": "Vic Wiseman",
-              "message": "Congratulations. Vic likes the book!<br>'Oh, I just remembered. A parcel arrived for you a moment ago.'<br>'I've popped it in the post room'."
+              "message": "<br>Congratulations. Vic likes the book.<br><br>'Thanks $player!'<br>'If you ever need help tracking anything down, just pop down and <i>ask</i> me and I'll see what I can do.'"
             }
           }
         ]
@@ -296,7 +213,7 @@
             ]
           },
           "score": 10,
-          "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'<br><br>'Whilst I think of it; things are pretty unpredictable around here so I'm not able to leave reception at the moment.'<br>'If you happen to find any interesting reading material on your travels, stop by with it if you can.'"
+          "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
         }
       }
     ]

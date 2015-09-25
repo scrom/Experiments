@@ -16,8 +16,8 @@
         "destinationDelay": 1,
         "imageName": "johnbowles.jpg"
     },
-    "inventory": [               
-        {"file": "keyfob"},
+    "inventory": [
+        { "file": "keyfob" },
         {
             "object": "artefact",
             "name": "plant room key",
@@ -43,5 +43,6 @@
         "jb",
         "bowles",
         "john b"
-    ]
+    ],
+    "missions": [ {"file": "mission-beansinthepostroom"}]
 }
