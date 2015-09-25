@@ -2072,8 +2072,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         
         self.heal = function(medicalArtefact, healer) {
-            if (_hitPoints >= _maxHitPoints-1) { return tools.initCap(self.getDisplayName())+" doesn't need healing.";};
-            if (self.isDead()) {return tools.initCap(self.getDisplayName())+"'s dead, healing won't help "+_genderSuffix+" any more.";};
+            if (_hitPoints >= _maxHitPoints-1) { return tools.initCap(self.getPrefix())+" doesn't need healing.";};
+            if (self.isDead()) {return tools.initCap(self.getPrefix())+"'s dead, healing won't help "+_genderSuffix+" any more.";};
 
             //heal self...
             var pointsToAdd = 0;
