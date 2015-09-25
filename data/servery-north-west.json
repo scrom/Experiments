@@ -89,12 +89,14 @@
             "object": "artefact",
             "name": "postcard",
             "description": "thankyou postcard",
-            "detailedDescription": "It says thanks for being great! (there are loads of others with similar thank-yous)",
+            "detailedDescription": "Someone's written a message on it.",
             "attributes": {
+                "defaultAction": "read",
                 "type": "book",
                 "canCollect": true,
                 "affinityModifier": 3,
-                "canDrawOn": true
+                "canDrawOn": true,
+                "defaultResult": "It says thanks for being great! (there are loads of others with similar thank-yous).<br>I reckon you could <i>give</i> this to someone and make their day."
             },
             "synonyms": [
                 "card",
