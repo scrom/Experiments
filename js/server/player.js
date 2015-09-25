@@ -4374,7 +4374,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                     _consumedObjects.push(artefact);
                 };
-                _timeSinceEating = 0;
+
+                if (verb != "lick" && verb != "taste") {
+                    //only resolve hunger if actually eating thing.
+                    _timeSinceEating = 0;
+                };
                 //console.log('player eats some food.');
             };
 
