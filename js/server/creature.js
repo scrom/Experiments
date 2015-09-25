@@ -2409,7 +2409,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        self.find = function(artefactName, playerAggression, map) {
+        self.find = function(objectName, playerAggression, map) {
             var willFindArtefacts = false;
             if (self.isDead()) {return _genderPrefix+"'s dead. I don't think "+_genderSuffix+" can help you."}; 
             if (_affinity <0) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
@@ -2420,7 +2420,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             //turn on delay
             _currentDelay = 0;
-            return _genderPrefix+" says '"+map.find(artefactName, willFindArtefacts)+"'"
+            var locationName = map.getInternalLocationName(objectName);
+            if (locationName) {
+                var path = self.findBestPath(locationName, map);
+                if (path.length > 0) {
+                    var direction = path.pop();
+                    var directionIndex = tools.directions.indexOf(direction);
+                    var directionName = tools.directions[directionIndex + 1];
+                    if (directionName) {
+                        if (direction == 'n' || direction == 's' || direction == 'e' || direction == 'w') {
+                            directionName = tools.initCap(directionName);
+                        };
+                        return _genderPrefix + " says 'You'll need to start by heading <i>" + directionName + "</i> from here.'";
+                    };
+                } else {
+                    return _genderPrefix + " says 'Sorry $player. I don't know where it is either.'";
+                };
+            };
+            return _genderPrefix + " says '" + map.find(objectName, willFindArtefacts) + "'";
         };
 
         self.initialReplyString = function(playerAggression) {

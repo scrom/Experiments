@@ -419,6 +419,19 @@ exports.Map = function Map() {
             };
             return false;
         };
+        
+        self.getInternalLocationName = function (locationName) {
+            //note, this *won't* find objects delivered by a mission or delivered by another object.
+            //it *will* find creatures
+            
+            //loop through each location
+            //Get object (by synonym)
+            //return when found
+            for (var i = 0; i < _locations.length; i++) {
+                if (_locations[i].getDisplayName().toLowerCase() == locationName.toLowerCase()) { return _locations[i].getName()};
+            };
+            return false;
+        };
 
         self.getObject = function(objectName) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.

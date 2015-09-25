@@ -80,12 +80,15 @@
           "imageName": "vicwiseman.jpg"
         },
         "synonyms": [
-          "receptionist",
-          "vic",
-          "vw",
-          "wiseman",
-          "vic w",
-          "her"
+            "receptionist",
+            "vic",
+            "vw",
+            "wiseman",
+            "vic w",
+            "her"
+        ],
+        "inventory": [
+            {"file": "keyfob"}
         ],
         "missions": [
           {
