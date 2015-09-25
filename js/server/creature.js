@@ -3158,7 +3158,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             exitAction = exit.getRequiredAction();
                             
                             if (exitAction == "run" || exitAction == "climb") {
-                                if (_destinations.length == 0 || !(self.isHuntingPlayer()) || self.getSubType() == "animal") {
+                                if (_destinations.length == 0 && !(self.isHuntingPlayer()) && !(self.getSubType() == "animal")) {
                                     //will only run/climb if has a reason to be there (or is an animal)
                                     canUseExit =  false;
                                 };
