@@ -9309,8 +9309,7 @@
           "boilers",
           "clanking",
           "oil",
-          "engine",
-          "plant room"
+          "engine"
         ]
       },
       {
@@ -9749,6 +9748,27 @@
           "health": 130,
           "imageName": "vicwiseman.jpg"
         },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "keyfob",
+            "description": "key fob",
+            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 3,
+              "unlocks": "office door"
+            },
+            "synonyms": [
+              "key fob",
+              "fob",
+              "keyring",
+              "key ring"
+            ]
+          }
+        ],
         "synonyms": [
           "receptionist",
           "vic",
@@ -12863,11 +12883,13 @@
         "object": "artefact",
         "name": "postcard",
         "description": "thankyou postcard",
-        "detailedDescription": "It says thanks for being great! (there are loads of others with similar thank-yous)",
+        "detailedDescription": "Someone's written a message on it.",
         "attributes": {
+          "defaultAction": "read",
           "type": "book",
           "canCollect": true,
           "affinityModifier": 3,
+          "defaultResult": "It says thanks for being great! (there are loads of others with similar thank-yous).<br>I reckon you could <i>give</i> this to someone and make their day.",
           "canDrawOn": true
         },
         "synonyms": [
@@ -13488,10 +13510,31 @@
           "viewDestination": "stairs-first-floor"
         },
         "synonyms": [
-          "v sign",
-          "rude sign",
-          "gesture",
-          "rude gesture"
+          "glass",
+          "windows",
+          "outside"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "gesture",
+            "description": "rude gesture",
+            "detailedDescription": "You flap your arms and prance about staring at yourself.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "customAction": [
+                "get",
+                "make"
+              ],
+              "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish."
+            },
+            "synonyms": [
+              "v sign",
+              "rude sign",
+              "rude gesture"
+            ]
+          }
         ]
       }
     ]
