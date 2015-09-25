@@ -30,12 +30,12 @@
             },
             "linkedexits": [
                 {
-                    "object": "exit",
-                    "longname": "East",
-                    "direction": "e",
-                    "source": "roof",
-                    "destination": "plant-room",
-                    "hidden": true
+                "object": "exit",
+                "longname": "West",
+                "direction": "w",
+                "source": "plant-room",
+                "destination": "roof",
+                "hidden": true
                 }
             ],
             "synonyms": [
