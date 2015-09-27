@@ -3192,7 +3192,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (tools.stringIsEmpty(artefactName)){ return verb+" what?"};
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {
+                if (artefactName == "books") {
+                    return "You'll need to be more specific that that.";
+                };
+                return notFoundMessage(artefactName);
+            };
 
             var writings = artefact.getWritings();
             var drawings = artefact.getDrawings();
