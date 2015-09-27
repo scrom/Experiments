@@ -1740,7 +1740,7 @@ exports.playerCannotHealADeadCreature = function (test) {
     var c3 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:1, maxHealth:150, affinity:-2, canTravel:true});
     c3.go('n',l0);
     c3.kill();
-    var expected = "The creature 3's dead, healing won't help it any more.";
+    var expected = "It's dead, healing won't help it any more.";
     var actual = p0.healCharacter('creature 3');
     console.log("Expected: "+expected);
     console.log("Actual:"+actual);
@@ -1759,7 +1759,7 @@ exports.playerCannotHealAHealthyCreature = function (test) {
     var creatureName = 'creature 3';
     var c3 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:149, maxHealth:150, affinity:-2, canTravel:true});
     c3.go('n',l0);
-    var expected = "The creature 3 doesn't need healing.";
+    var expected = "It doesn't need healing.";
     var actual = p0.healCharacter('creature 3');
     console.log("Expected: "+expected);
     console.log("Actual:"+actual);
