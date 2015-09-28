@@ -1007,10 +1007,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var inventoryIsVisible = true;
             
             if (_lockable && (_locked)) {
-                resultString += " " + tools.initCap(_itemDescriptivePrefix) + " locked.";
+                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " locked.";
                 inventoryIsVisible = false;
             } else if (_opens && (!(_open))) {
-                resultString += " " + tools.initCap(_itemDescriptivePrefix) + " closed.";
+                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " closed.";
                 inventoryIsVisible = false;
             };
             
