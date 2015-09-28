@@ -14073,7 +14073,7 @@
           "affinityModifier": 1,
           "increaseAffinityFor": "jordan miller",
           "decreaseAffinityFor": "simon galbraith",
-          "message": "<br>Congratulations. You saved Red Gate from the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
+          "message": "<br>Congratulations. You and the rest of Red Gate survived the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
         },
         "fail": {
           "score": -200,
