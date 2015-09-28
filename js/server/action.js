@@ -899,6 +899,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'run':
                     case 'crawl':
                     case 'climb':
+                    case 'head':
                     case 'go':
                         //translate to "go north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
