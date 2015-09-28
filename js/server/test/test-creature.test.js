@@ -715,14 +715,33 @@ exports.neutralCreatureWillNotFindForPlayer = function (test) {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = "When was the last time you did something for it?<br>It pays to be nice to others.";
     var playerAggression = 0;
-    var actual = c0.find("simon g", playerAggression, m);
+    var findResult = c0.find("simon g", playerAggression, m)
+    var actual = findResult.substr(findResult.indexOf("<br>")+4); //exclude initial random reply
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);
     test.done();
 };
 
-exports.neutralCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
+exports.neutralCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a neutral creature will not find for player" };
+
+
+exports.neutralCreatureWillNotFindForPlayerAndGivesRandomReply = function (test) {
+    var m = mb.buildMap();
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName, 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, affinity: 0 });
+    var expected = ["Sorry $player, I don't have time to help you right now.", "I'm too busy at the moment.", "I've got more important things to do right now."];
+    var playerAggression = 0;
+    var findResult = c0.find("simon g", playerAggression, m)
+    var actual = findResult.substr(9,findResult.indexOf("'<br>")-9); //include initial random reply only
+    console.log("expected: " + expected);
+    console.log("actual: " + actual);
+    test.ok(expected.indexOf(actual) > -1);
+    test.done();
+};
+
+exports.neutralCreatureWillNotFindForPlayerAndGivesRandomReply.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a neutral creature will not find for player" };
+
 
 exports.deadCreatureWillNotFindForPlayer = function (test) {
     var m = mb.buildMap();
