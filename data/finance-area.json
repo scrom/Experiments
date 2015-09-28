@@ -67,7 +67,7 @@
             "reward": {
               "repairSkill": "theft",
               "stealth": 4,
-              "message": "Interesting. You've learned some new stealth skills. Best use them wisely."
+              "message": "You've learned some new <i>steal</i>th skills. Best use them wisely."
             }
           }
         ]

@@ -4679,7 +4679,7 @@
             "reward": {
               "repairSkill": "theft",
               "stealth": 4,
-              "message": "Interesting. You've learned some new stealth skills. Best use them wisely."
+              "message": "You've learned some new <i>steal</i>th skills. Best use them wisely."
             }
           }
         ]
@@ -4986,7 +4986,7 @@
             "object": "mission",
             "name": "lotlsecurity",
             "displayName": "read the lotl security article",
-            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
+            "description": "<a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
             "attributes": {
               "missionObject": "article on software security",
               "static": true
@@ -5761,7 +5761,7 @@
             "object": "mission",
             "name": "lotlsolid",
             "displayName": "read the lotl SOLID article",
-            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
+            "description": "<a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
             "attributes": {
               "missionObject": "article on solid design principles",
               "static": true
@@ -10498,7 +10498,7 @@
                 "object": "mission",
                 "name": "hunthumans",
                 "displayName": "learn how to hunt humans",
-                "description": "... 'In s&nbsp; king nd tr&nbsp; k ng your qu&nbsp;&nbsp; y, it s &nbsp;mp rt nt to be aw re  &nbsp;f scent.<br>&nbsp;he &nbsp;atura&nbsp; t ail &nbsp;f ph rom nes, decays over time.<br> Where a sc&nbsp; t is suf&nbsp; cien &nbsp;y fr&nbsp; h, on&nbsp; may <i>h nt</i> &nbsp;r <i>f nd</i> the b st dir ctio&nbsp;&nbsp; n wh ch to fo lo '...<br>Wow, this is really badly degraded. I'm sure there's something really useful hiding in here if you can just figure it out.",
+                "description": "... 'In s&nbsp; king nd tr&nbsp; k ng your qu&nbsp;&nbsp; y, it s &nbsp;mp rt nt to be aw re  &nbsp;f scent.<br>&nbsp;he &nbsp;atura&nbsp; t ail &nbsp;f ph rom nes, decays over time.<br> Where a sc&nbsp; t is suf&nbsp; cien &nbsp;y fr&nbsp; h, on&nbsp; may <i>h#nt</i> &nbsp;r <i>f$nd</i> the b st dir ctio&nbsp;&nbsp; n wh ch to fo lo '...<br><br>Wow, this is really badly degraded. I'm sure there's something really useful hiding in here if you can just figure it out.",
                 "attributes": {
                   "missionObject": "battered book",
                   "static": true
@@ -10510,7 +10510,7 @@
                 "reward": {
                   "repairSkill": "hunt",
                   "hunt": 2,
-                  "message": "Interesting. You feel like you've learned something important but will need to figure out exactly what it is."
+                  "message": "<br>You feel like you've learned something really valuable but still need to work out exactly how to use the skills you've just gained."
                 }
               }
             ]
@@ -11204,7 +11204,7 @@
             "object": "mission",
             "name": "lotlboyscout",
             "displayName": "read LOTL boy scout article",
-            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+            "description": "<a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
             "attributes": {
               "missionObject": "article on the boy scout principle",
               "static": true
@@ -13887,7 +13887,7 @@
         "object": "artefact",
         "name": "waste gate",
         "description": "large gate",
-        "detailedDescription": "You've always been curious what interesting things get thrown in here.",
+        "detailedDescription": "You've always been curious about what interesting things get thrown in here.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,

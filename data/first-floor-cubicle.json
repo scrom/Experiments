@@ -71,7 +71,7 @@
             "object": "mission",
             "name": "lotlsecurity",
             "displayName": "read the lotl security article",
-            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
+            "description": "<a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
             "attributes": {
               "missionObject": "article on software security",
               "static": true

@@ -95,7 +95,7 @@
             "object": "mission",
             "name": "lotlboyscout",
             "displayName": "read LOTL boy scout article",
-            "description": "Hmmm Interesting. <a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+            "description": "<a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
             "attributes": {
               "missionObject": "article on the boy scout principle",
               "static": true

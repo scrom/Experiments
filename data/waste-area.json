@@ -83,7 +83,7 @@
             "object": "artefact",
             "name": "waste gate",
             "description": "large gate",
-            "detailedDescription": "You've always been curious what interesting things get thrown in here.",
+            "detailedDescription": "You've always been curious about what interesting things get thrown in here.",
             "attributes": {
                 "defaultAction": "open",
                 "weight": 200,
