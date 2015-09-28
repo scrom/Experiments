@@ -12,6 +12,7 @@ var junkAttributes;
 var breakableJunkAttributes;
 var weaponAttributes;
 var foodAttributes;
+var bedAttributes
 var iceCreamAttributes;
 var containerAttributes;
 var playerName;
@@ -25,13 +26,16 @@ var c1; //creature object
 var m0; //map object
 var weapon; //weapon object
 var food; //food object
+var bed; //chair object
 var iceCream; //a bribe
 var container; //container object
 var breakable; //breakable object
 
 exports.setUp = function (callback) {
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
-    food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
+    food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom', foodAttributes, null);
+    bedAttributes = { weight: 10, carryWeight: 0, attackStrength: 0, type: "bed", canCollect: true};
+    bed = new artefact.Artefact('bed', 'somewhere to rest', 'rest rest rest', bedAttributes, null);
     playerName = 'player';
     playerAttributes = {"username":playerName, "consumedObjects":[JSON.parse(food.toString())]};
     m0 = mb.buildMap();
@@ -204,9 +208,309 @@ exports.cannotEatNonFoodItemEvenWhenHungry = function (test) {
 exports.cannotEatNonFoodItemEvenWhenHungry.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Eat Trait"], description: "Test that a player can eat food when hungry." };
 
 
+exports.cannotRestWhenNotTired = function (test) {
+    l0.addObject(bed);
+    p0.increaseTimeSinceResting(14);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "You're not tired at the moment.";
+    var actualResult = p0.rest('rest', 1, m0)//.substring(0, 16);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotRestWhenNotTired.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait"], description: "Test that a player cannot rest when not tired." };
+
+exports.cannotRestWithoutBed = function (test) {
+    p0.increaseTimeSinceResting(55);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "There's nothing to rest on here.";
+    var actualResult = p0.rest('rest', 1, m0)//.substring(0, 16);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotRestWithoutBed.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait"], description: "Test that a player cannot rest without a bed." };
+
+exports.canRestWhenTired = function (test) {
+    l0.addObject(bed);
+    p0.increaseTimeSinceResting(55);
+    //p0.reduceHitPoints(6);
+    var expectedResult = 'You rest for a while.<br>';
+    var actualResult = p0.rest('rest', 1, m0)//.substring(0, 16);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canRestWhenTired.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait"], description: "Test that a player can rest when tired." };
+
+exports.canRestWhenInjuredEvenIfNotTired = function (test) {
+    l0.addObject(bed);
+    p0.reduceHitPoints(10); //need to be at 90% or lower health
+    var expectedResult = 'You rest for a while.<br> You feel better in many ways for taking some time out.';
+    var actualResult = p0.rest('rest', 1, m0)//.substring(0, 16);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canRestWhenInjuredEvenIfNotTired.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait"], description: "Test that a player can rest when tired." };
+
+
+exports.RestPartiallyResetsTimeSinceResting = function (test) {
+    l0.addObject(bed);
+    var baselineTime = p0.increaseTimeSinceResting(55);
+    //p0.reduceHitPoints(6);
+    var expectedResult = Math.floor(baselineTime / 5);
+    p0.rest('rest', 1, m0);
+    var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.RestPartiallyResetsTimeSinceResting.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait"], description: "Test that time since resting is not completely reset." };
+
+exports.SleepCompletelyResetsTimeSinceResting = function (test) {
+    l0.addObject(bed);
+    var baselineTime = p0.increaseTimeSinceResting(55);
+    //p0.reduceHitPoints(6);
+    var expectedResult = 0;
+    p0.rest('sleep', 1, m0);
+    var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.SleepCompletelyResetsTimeSinceResting.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Sleep Trait"], description: "Test that time since resting is completely reset." };
+
+
+exports.movingWhenVeryTiredTakesTwiceAsLong = function (test) {
+    p0.increaseTimeSinceResting(138);
+    //p0.reduceHitPoints(6);
+    var expectedResult = 158;
+    
+    var ticks = p0.calculateTicks(1);
+    
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    
+    var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.movingWhenVeryTiredTakesTwiceAsLong.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Exhaustion Trait"], description: "Test that moving when exhausted costs 2 ticks." };
+
+
+exports.movingWhenExhaustedTakesThreeTimesAsLong = function (test) {
+    p0.increaseTimeSinceResting(150);
+    //p0.reduceHitPoints(6);
+    var expectedResult = 170;
+    
+    var ticks = p0.calculateTicks(1);
+    
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+
+    var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.movingWhenExhaustedTakesThreeTimesAsLong.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Exhaustion Trait"], description: "Test that moving when exhausted costs 2 ticks." };
+
+exports.movingWhenExhaustedTellsPlayer = function (test) {
+    p0.increaseTimeSinceResting(150);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "<br>You're exhausted.<br>You feel weaker. ";
+    
+    var ticks = p0.calculateTicks(1);
+    var actualResult = p0.tick(ticks, m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.movingWhenExhaustedTellsPlayer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Exhaustion Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+
+exports.cannotClimbWhenExhausted = function (test) {
+    p0.setLocation(m0.getLocation("roof"));
+    p0.increaseTimeSinceResting(150);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "You try to climb but you're so exhausted that your limbs give out on you.";
+    var actualResult = p0.go("climb", "down", m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotClimbWhenExhausted.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Climb Trait", "Exhaustion Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+
+exports.canStillClimbWhentired = function (test) {
+    p0.setLocation(m0.getLocation("roof"));
+    p0.increaseTimeSinceResting(125);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "You climb down...";
+    var actualResult = p0.go("climb", "down", m0).substr(0, 17);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canStillClimbWhentired.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Run Trait", "Exhaustion Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+exports.canNormallyRunThroughARequiredRunExit = function (test) {
+    var atrium = m0.getLocation("atrium");
+    var runExit = atrium.getExit("north");
+    runExit.setRequiredAction("run"); //make it necessary to "run" out only.
+    p0.setLocation(atrium);
+    p0.increaseTimeSinceResting(125);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "You're too tired to make it through quickly enough.";
+    var actualResult = p0.go("run", "n", m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canNormallyRunThroughARequiredRunExit.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Run Trait"], description: "Test that player can run properly." };
+
+
+exports.cannotRunWhentired = function (test) {
+    var atrium = m0.getLocation("atrium");
+    var runExit = atrium.getExit("north");
+    runExit.setRequiredAction("run"); //make it necessary to "run" out only.
+    p0.setLocation(atrium);
+    p0.increaseTimeSinceResting(125);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "You're too tired to make it through quickly enough.";
+    var actualResult = p0.go("run", "n", m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotRunWhentired.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Run Trait", "Exhaustion Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+
+exports.cannotClimbWhenBleeding = function (test) {
+    p0.hurt(51); //past bleeding threshold
+    p0.setLocation(m0.getLocation("roof"))
+    var expectedResult = "You're too weak to make the climb. You need to get your injuries seen to first.";
+    var actualResult = p0.go("climb", "down", m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotClimbWhenBleeding.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Climb Trait", "Bleed Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+
+exports.canClimbWhenNeeded = function (test) {
+    p0.setLocation(m0.getLocation("roof"));
+    var expectedResult = "You climb down...";
+    var actualResult = p0.go("climb", "down", m0).substr(0,17);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canClimbWhenNeeded.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Climb Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+
+exports.movingWhenVeryTiredWarnsPlayer = function (test) {
+    p0.get('get', bed.getName());
+    p0.increaseTimeSinceResting(136);
+    //p0.reduceHitPoints(6);
+    var expectedResult = "<br>You need to <i>rest</i>. You're struggling to keep up with those around you. ";
+    var actualResult = p0.tick(1, m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.movingWhenVeryTiredWarnsPlayer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Exhaustion Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+
+exports.movingWhenAlmostTiredOccasionallyWarnsPlayer = function (test) {
+    p0.get('get', bed.getName());
+    p0.increaseTimeSinceResting(121);
+    var expectedResult = "<br>You've been on your feet quite a while. You could do with taking a break. ";
+    var attempts = 0;
+    var actualResult = "";
+    //randomly happens roughly 1 in 4 times
+    while (actualResult != expectedResult && attempts < 10) {
+        actualResult = p0.tick(1, m0);
+        p0.increaseTimeSinceResting(-1); //hack!
+        console.log(actualResult);
+        attempts++;
+    };
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.movingWhenAlmostTiredOccasionallyWarnsPlayer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Exhaustion Trait"], description: "Test that moving when exhausted gives correct feedback." };
+
+
+exports.movingWhenExhaustedDoesDamage = function (test) {
+    p0.get('get', bed.getName());
+    p0.increaseTimeSinceResting(150);
+    
+    var ticks = p0.calculateTicks(1);
+
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+    console.log(p0.tick(ticks, m0));
+
+    var expectedResult = 51;
+    var actualResult = p0.getHitPoints();    
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.movingWhenExhaustedDoesDamage.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Exhaustion Trait"], description: "Test that moving when exhausted costs damage." };
+
+
+
 exports.canEatFoodWhenHungry = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(54);
+    p0.increaseTimeSinceEating(55);
     //p0.reduceHitPoints(6);
     var expectedResult = 'You eat the slab';
     var actualResult = p0.eat('eat','cake').substring(0,16);
@@ -221,7 +525,7 @@ exports.canEatFoodWhenHungry.meta = { traits: ["Player Test", "Inventory Trait",
 
 exports.canEatFoodWhenHungryTestBoundaryCase = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(50);
+    p0.increaseTimeSinceEating(55);
     var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat','cake').substring(0,16);
     console.log("Expected: "+expectedResult);
@@ -263,7 +567,7 @@ exports.cannotEatFoodWhenNotHungryEvenIfInjured.meta = { traits: ["Player Test",
 
 exports.canEatFoodWhenMoreHungryAndModeratelyInjured = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(32);
+    p0.increaseTimeSinceEating(35);
     p0.reduceHitPoints(6); //test boundary
     var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat','cake').substring(0,16);
@@ -395,7 +699,15 @@ exports.creatureRetaliationCanKillPlayer = function (test) {
     c0.setAttackStrength(104);
     p0.setLocation(l0);
     var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There are no visible exits.<br>";
-    var actual = p0.hit('hit',c0.getName());
+    
+    //handle the fact that player may occasionally miss (or not get retaliation).
+    var missed = "You attempt a bare - knuckle fight with the creature.<br>You do no visible damage. ";
+    var actual = missed;
+    var attempts = 0;
+    while (actual == missed && attempts < 25) {
+        actual = p0.hit('hit', c0.getName());
+        attempts++;
+    };
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);
@@ -536,7 +848,14 @@ exports.hittingCreatureWhenPlayerIsHealthyDoesFullDamage.meta = { traits: ["Play
 exports.hittingCreatureWhenBleedingDoesLessDamage = function (test) {
     p0.get('get', weapon.getName());
     p0.hurt(51);
-    p0.hit('hit',c0.getName());
+
+    var hitcount = 0;
+    while (hitcount < 1) {
+        var result = p0.hit('hit', c0.getName());
+        if (!(result == "You missed!")) {
+            hitcount++;
+        };
+    };
     var expectedResult = "He's taken a fair beating.";
     var actualResult = c0.health();
     console.log("Expected: "+expectedResult);
@@ -1433,7 +1752,7 @@ exports.canEatDeadCreatureFromLocation = function (test) {
     deadCreature.go(null,l0); 
     p0.setLocation(l0);
     //p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(32);
+    p0.increaseTimeSinceEating(35);
     p0.reduceHitPoints(6);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';
@@ -1451,7 +1770,7 @@ exports.canEatDeadCreatureFromInventory = function (test) {
     var deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'creature', carryWeight:51, health:0, affinity:5, canTravel:true});
     deadCreature.go(null,l0); 
     p0.get('get','dead creature');
-    p0.increaseTimeSinceEating(32);
+    p0.increaseTimeSinceEating(35);
     p0.reduceHitPoints(6);
 
     var expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';

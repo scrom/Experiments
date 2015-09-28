@@ -10294,7 +10294,8 @@
         "longname": "down",
         "direction": "d",
         "source": "roof",
-        "destination": "top-fire-escape"
+        "destination": "top-fire-escape",
+        "requiredAction": "climb"
       },
       {
         "object": "exit",

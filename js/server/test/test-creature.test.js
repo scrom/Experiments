@@ -1232,10 +1232,18 @@ exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = functi
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
     c0.go(null, m.getLocation('machine-room-east'));
-    c0.tick(1, m, p0);
 
     var expected = 'machine-room-west';
-    var actual = c0.getCurrentLocation().getName()
+    var actual = "";
+    var attempts = 0;
+    while (actual != expected && attempts < 25) {
+        //as creature may occasionally hang around in a dead-end (deliberate) keep trying
+        c0.tick(1, m, p0);
+        attempts++;
+        actual = c0.getCurrentLocation().getName();
+    };
+
+    console.log("Total ticks: " + attempts);
     //var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:" + expected);
     console.log("actual:" + actual);
@@ -1847,18 +1855,20 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
     l0.addLiquid("liquid9");
     l0.addLiquid("liquid10");
 
-    console.log(p0.examine("look"));
+    //console.log(p0.examine("look"));
     //console.log(c0.tick(15, m1, p0));
 
     //*note* - occasionaly - even with this much liquid, they might still not slip.
     //this matches player behaviour for fairness.
     var expectedResult = "<br>A beastie wanders in and slips on the wet floor.<br><br><br><br><br>The creature is dead. Now you can steal all its stuff.";
     var actualResult = c0.tick(5, m1, p0);
-    if (actualResult != expectedResult) {
+    var attempts = 1;
+    while (actualResult != expectedResult && attempts < 5) {
         //a 0 from the random slip algorithm will still not slip so try again
-        console.log("Fail: slip did not occur - attempting second try...");
+        console.log("Fail: slip did not occur - attempting try# "+attempts+"...");
         c0.go("n", l1);
         actualResult = c0.tick(5, m1, p0);
+        attempts++;
     };
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

@@ -73,6 +73,12 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, a
         self.isVisible = function() {
             return (!(_hidden));
         };
+        
+        
+        self.setRequiredAction = function (action) {
+            //used for test support only
+            _requiredAction = action;
+        };        
 
         self.getRequiredAction = function() {
             return _requiredAction;

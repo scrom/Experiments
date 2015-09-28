@@ -456,6 +456,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.rest(_verb, 4, _map);
                         break;
                     case 'sleep':
+                    case 'nap':
                     case 'zzz':
                         _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
                         description = _player.rest(_verb, 9, _map);
@@ -464,6 +465,17 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'z':
                         description = _player.wait(1, map);
                         break;
+                    case 'have':
+                        if (_object0 == "break" || _object0 == "rest") {
+                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("rest", 4, _map);
+                            break;
+                        } else if (_object0 == "nap" || _object0 == "power nap" || _object0 == "sleep") {
+                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("sleep", 9, _map);
+                            break;
+                        };
+                        break; //don't handle any other "have" actions for now.
                     case 'put':
                         //special case for "put down"
                         var originalObject0 = _object0;
@@ -674,10 +686,19 @@ exports.Action = function Action(player, map, fileManager) {
                             break;
                         };
                     case 'take':
-                        if (_object0.substr(0,6) == "apart ") {
-                            description = _player.dismantle(_verb+" apart",_object0.replace("apart ",""));
+                        if (_object0.substr(0, 6) == "apart ") {
+                            description = _player.dismantle(_verb + " apart", _object0.replace("apart ", ""));
                             break;
+                        } else if (_object0 == "break" || _object0 == "rest") {
+                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("rest", 4, _map);
+                            break;                            
+                        } else if (_object0 == "nap" || _object0 == "power nap" || _object0 == "sleep") {
+                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("sleep", 9, _map);
+                            break;                              
                         };
+                        //fall through to other "take" actions
                     case 'grab':
                     case 'collect':
                     case 'remove':
@@ -820,6 +841,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'tal':
                     case 'tak':
                     case 'takl':
+                    case 'tslk':
                         //we assume "talk to x" - it "to" is missing, handle speech anyway.
                         if (tools.stringIsEmpty(_object1) && (!(tools.stringIsEmpty(_object0)))) {
                             _object1 = _object0;
@@ -1374,21 +1396,24 @@ exports.Action = function Action(player, map, fileManager) {
         self.act = function(anActionString) {
             var description = "";
             var imageName;
+            
+            //work out how many ticks will actually occur
+            var actualTicks = _player.calculateTicks(_ticks);
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);
 
             //perform creature actions.
-            description += processCreatureTicks(_ticks, _map, _player);
+            description += processCreatureTicks(actualTicks, _map, _player);
 
             //if anything is happening in locations (includes ticks on inventory)
-            description += processLocationTicks(_ticks, _map, _player);
+            description += processLocationTicks(actualTicks, _map, _player);
             
             //tick missions
-            description  += map.updateMissions(_ticks, _player);
+            description  += map.updateMissions(actualTicks, _player);
 
             //if time is passing, what additional things happen to a player?
-            description += _player.tick(_ticks, _map);
+            description += _player.tick(actualTicks, _map);
 
             //replace any player substitution variables
             while (description.indexOf("$player") > -1) {

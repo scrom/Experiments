@@ -34,7 +34,7 @@ exports.testStubAction = function (test) {
     var mapStub = sf.generateStubClass(m);
     var a = new action.Action(playerStub, mapStub);
 
-    var expectedResult = '{"verb":"ask","object0":"vic","object1":"simon g","description":"function: ask, args[0]:find, args[1]:vic, args[2]:simon g, args[3]:<Object>function: updateMissions, args[0]:1, args[1]:<Object>function: tick, args[0]:1, args[1]:<Object>","attributes":function: getClientAttributesString}';
+    var expectedResult = '{"verb":"ask","object0":"vic","object1":"simon g","description":"function: ask, args[0]:find, args[1]:vic, args[2]:simon g, args[3]:<Object>function: updateMissions, args[0]:function: calculateTicks, args[0]:1, args[1]:<Object>function: tick, args[0]:function: calculateTicks, args[0]:1, args[1]:<Object>","attributes":function: getClientAttributesString}';
     var actualResult = a.act("ask vic to find simon g");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
