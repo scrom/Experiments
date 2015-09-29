@@ -286,6 +286,10 @@
     <Compile Include="js\server\test\test-creature.test.js" />
     <Compile Include="js\server\test\test-exit.test.js" />
     <Compile Include="js\server\test\test-filemanager.test.js" />
+    <Compile Include="js\server\test\test-map.js">
+      <SubType>Code</SubType>
+      <TestFramework>Mocha</TestFramework>
+    </Compile>
     <Compile Include="js\server\test\test-saveload.test.js" />
     <Compile Include="js\server\test\test-inventory.test.js" />
     <Compile Include="js\server\test\test-location.test.js" />
