@@ -211,6 +211,12 @@ exports.Map = function Map() {
                     _locations[l].removeExit(locationName);
                     //console.log("exit removed from "+_locations[l].getName());
                 };
+
+                //remove *all* stored creature destinations referencing this location so they don't get stuck!
+                var allCreatures = self.getAllCreatures();
+                for (var c = 0; c < allCreatures.length; c++) {
+                    allCreatures[c].removeDestination(locationName);
+                };
             };
         };
 
