@@ -562,7 +562,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                         for (var j=0; j<locationData.exits.length;j++) {
                             var exitData = locationData.exits[j];
                             //manually add exits from each location (linking not needed)
-                            newLocation.addExit(exitData.direction, locationData.name, exitData.destination, exitData.description, exitData.hidden, exitData.requiredAction);
+                            if (!exitData.source) {
+                                exitData.source = locationData.name;
+                            };
+                            newLocation.addExit(exitData.direction, exitData.source, exitData.destination, exitData.description, exitData.hidden, exitData.requiredAction);
                         };
                     };
                 }; 
