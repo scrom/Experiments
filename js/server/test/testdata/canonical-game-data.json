@@ -4450,7 +4450,12 @@
           "loops": -1,
           "loopDelay": 5,
           "destinationDelay": 1,
-          "imageName": "johnbowles.jpg"
+          "imageName": "johnbowles.jpg",
+          "repairSkills": [
+            "coffee machine",
+            "plumbing",
+            "heating"
+          ]
         },
         "inventory": [
           {
