@@ -1,0 +1,440 @@
+[
+  {
+    "object": "location",
+    "name": "artefact-room",
+    "displayName": "Artefact Room",
+    "description": "A room that has artefacts in it.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "artefact-room",
+        "destination": "empty-room"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "artefact-room",
+        "destination": "creature-room"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "autolock-room",
+    "displayName": "Autolock Room",
+    "description": "A room that has an autolock door.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "autolock-room",
+        "destination": "home",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "autolock door",
+        "description": "autolock door",
+        "detailedDescription": "It leads back out.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "autolock-room",
+            "destination": "home",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lockable door",
+          "door"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "creature-room",
+    "displayName": "Creature Room",
+    "description": "A room that contains creatures.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "creature-room",
+        "destination": "artefact-room"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "creature",
+        "name": "destination creature",
+        "displayname": "Destination Creature",
+        "description": "Destination Creature",
+        "detailedDescription": "A creature that has a series of destinations.",
+        "attributes": {
+          "weight": 100,
+          "money": 50,
+          "attackStrength": 10,
+          "gender": "female",
+          "type": "friendly",
+          "carryWeight": 14,
+          "health": 125,
+          "canTravel": true,
+          "traveller": true,
+          "destinations": [
+            "home",
+            "empty-room",
+            "locked-room"
+          ],
+          "loops": -1,
+          "loopDelay": 5,
+          "destinationDelay": 1
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "autolock key",
+            "description": "key for autolock doors",
+            "detailedDescription": "It opens autolock doors.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 3,
+              "unlocks": "autolock door"
+            },
+            "synonyms": [
+              "auto key"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "door key",
+            "description": "key for normal doors",
+            "detailedDescription": "It opens normal doors.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 3,
+              "unlocks": "lockable door"
+            },
+            "synonyms": [
+              "auto key"
+            ]
+          }
+        ],
+        "synonyms": [
+          "destination",
+          "dc"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "wandering creature",
+        "displayname": "Wandering Creature",
+        "description": "Wandering Creature",
+        "detailedDescription": "A creature that wanders randomly.",
+        "attributes": {
+          "weight": 140,
+          "money": 50,
+          "attackStrength": 20,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 18,
+          "health": 225,
+          "canTravel": true,
+          "traveller": true
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "autolock key",
+            "description": "key for autolock doors",
+            "detailedDescription": "It opens autolock doors.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 3,
+              "unlocks": "autolock door"
+            },
+            "synonyms": [
+              "auto key"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "door key",
+            "description": "key for normal doors",
+            "detailedDescription": "It opens normal doors.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 3,
+              "unlocks": "lockable door"
+            },
+            "synonyms": [
+              "auto key"
+            ]
+          }
+        ],
+        "synonyms": [
+          "wandering",
+          "wc"
+        ]
+      },
+      {
+        "object": "creature",
+        "name": "loop destination creature",
+        "displayname": "Loop Destination Creature",
+        "description": "Loop Destination Creature",
+        "detailedDescription": "A creature that has a series of destinations that it plays in a loop.",
+        "attributes": {
+          "weight": 140,
+          "money": 50,
+          "attackStrength": 20,
+          "gender": "male",
+          "type": "friendly",
+          "carryWeight": 18,
+          "health": 225,
+          "canTravel": true,
+          "traveller": true,
+          "destinations": [
+            "home",
+            "artefact-room",
+            "locked-room"
+          ],
+          "loops": -1,
+          "loopDelay": 5,
+          "destinationDelay": 1
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "autolock key",
+            "description": "key for autolock doors",
+            "detailedDescription": "It opens autolock doors.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 3,
+              "unlocks": "autolock door"
+            },
+            "synonyms": [
+              "auto key"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "door key",
+            "description": "key for normal doors",
+            "detailedDescription": "It opens normal doors.",
+            "attributes": {
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 3,
+              "unlocks": "lockable door"
+            },
+            "synonyms": [
+              "auto key"
+            ]
+          }
+        ],
+        "synonyms": [
+          "loop",
+          "lc"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "empty-room",
+    "displayName": "Empty Room",
+    "description": "A room that has nothing of interest in it.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "empty-room",
+        "destination": "home"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "empty-room",
+        "destination": "artefact-room"
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "home",
+    "displayName": "Home",
+    "description": "A home room.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "home",
+        "destination": "empty-room"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "home",
+        "destination": "autolock-room",
+        "hidden": true
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "home",
+        "destination": "locked-room",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "autolock door",
+        "description": "autolock door",
+        "detailedDescription": "It leads to the autolock room.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "home",
+            "destination": "autolock-room",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lockable door",
+          "door"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "lockable door",
+        "description": "lockable door",
+        "detailedDescription": "It leads back out.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "home",
+            "destination": "locked-room",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lockable door",
+          "door"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
+    "name": "locked-room",
+    "displayName": "Locked Room",
+    "description": "A room that has a lockable door.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "locked-room",
+        "destination": "home",
+        "hidden": true
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "lockable door",
+        "description": "lockable door",
+        "detailedDescription": "It leads back out.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "locked-room",
+            "destination": "home",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lockable door",
+          "door"
+        ]
+      }
+    ]
+  }
+]

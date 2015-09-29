@@ -1,0 +1,8 @@
+﻿[
+  {"file": "home"},
+  {"file": "creature-room"},
+  {"file": "artefact-room"},
+  {"file": "empty-room" },
+  {"file": "autolock-room"},
+  {"file": "locked-room"}
+]

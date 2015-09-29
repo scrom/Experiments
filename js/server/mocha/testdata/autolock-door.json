@@ -1,0 +1,20 @@
+﻿{
+"object": "artefact",
+"name": "autolock door",
+"description": "autolock door",
+"attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "lockable": true,
+    "locked": true,
+    "autoLock": 1,
+    "hasLinkedDoor":  true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "autolock",
+    "door"
+]
+}

@@ -1,0 +1,19 @@
+﻿  {
+    "object": "location",
+    "name": "creature-room",
+    "displayName": "Creature Room",
+    "description": "A room that contains creatures.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "destination": "artefact-room"
+      }
+    ],
+    "inventory": [
+      { "file": "destination-creature" },
+      { "file": "wandering-creature" },
+      { "file": "loop-destination-creature" }
+    ]
+  }

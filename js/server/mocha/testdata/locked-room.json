@@ -1,0 +1,37 @@
+﻿  {
+    "object": "location",
+    "name": "locked-room",
+    "displayName": "Locked Room",
+    "description": "A room that has a lockable door.",
+    "exits": [
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "destination": "home",
+            "hidden": true
+        }
+    ],
+    "inventory": [
+        {
+            "object": "artefact",
+            "template": "lockable-door",
+            "description": "lockable door",
+            "detailedDescription": "It leads back out.",
+            "linkedexits": [
+                {
+                "object": "exit",
+                "longname": "West",
+                "direction": "w",
+                "source": "locked-room",
+                "destination": "home",
+                "hidden": true
+                }
+            ],
+            "synonyms": [
+                "lockable door",
+                "door"
+            ]
+        }
+    ]
+  }

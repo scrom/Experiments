@@ -1,0 +1,16 @@
+﻿{
+    "object": "artefact",
+    "name": "door key",
+    "description": "key for normal doors",
+    "detailedDescription": "It opens normal doors.",
+    "attributes": {
+        "weight": 0.1,
+        "type": "key",
+        "canCollect": true,
+        "affinityModifier": 3,
+        "unlocks": "lockable door"
+    },
+    "synonyms": [
+        "auto key"
+    ]
+}

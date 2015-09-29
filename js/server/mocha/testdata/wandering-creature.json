@@ -1,0 +1,18 @@
+﻿{
+    "object": "creature",
+    "name": "wandering creature",
+    "displayname": "Wandering Creature",
+    "description": "Wandering Creature",
+    "detailedDescription": "A creature that wanders randomly.",
+    "attributes": {
+        "template": "creature-male-neutral"
+    },
+    "inventory": [
+        { "file": "autolock-key" },
+        { "file": "door-key" }
+    ],
+    "synonyms": [
+        "wandering",
+        "wc"
+    ]
+}

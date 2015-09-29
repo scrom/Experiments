@@ -1,0 +1,26 @@
+﻿{
+    "object": "creature",
+    "name": "loop destination creature",
+    "displayname": "Loop Destination Creature",
+    "description": "Loop Destination Creature",
+    "detailedDescription": "A creature that has a series of destinations that it plays in a loop.",
+    "attributes": {
+        "template": "creature-male-neutral",
+        "destinations": [
+            "home",
+            "artefact-room",
+            "locked-room"
+        ],
+        "loops": -1,
+        "loopDelay": 5,
+        "destinationDelay": 1
+    },
+    "inventory": [
+        { "file": "autolock-key" },
+        { "file": "door-key" }
+    ],
+    "synonyms": [
+        "loop",
+        "lc"
+    ]
+}

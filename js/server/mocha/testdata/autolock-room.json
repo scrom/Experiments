@@ -1,0 +1,37 @@
+﻿  {
+    "object": "location",
+    "name": "autolock-room",
+    "displayName": "Autolock Room",
+    "description": "A room that has an autolock door.",
+    "exits": [
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "destination": "home",
+            "hidden": true
+        }
+    ],
+    "inventory": [
+        {
+            "object": "artefact",
+            "template": "autolock-door",
+            "description": "autolock door",
+            "detailedDescription": "It leads back out.",
+            "linkedexits": [
+                {
+                  "object": "exit",
+                  "longname": "East",
+                  "direction": "e",
+                  "source": "autolock-room",
+                  "destination": "home",
+                  "hidden": true
+                }
+            ],
+            "synonyms": [
+                "lockable door",
+                "door"
+            ]
+        }
+    ]
+  }

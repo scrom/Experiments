@@ -240,6 +240,23 @@
     <Content Include="client\index.html" />
     <Content Include="data\windows-meeting-room.json" />
     <Content Include="js\server\test\testdata\canonical-game-data.json" />
+    <Content Include="js\server\mocha\testdata\creature-room.json" />
+    <Content Include="js\server\mocha\testdata\artefact-room.json" />
+    <Content Include="js\server\mocha\testdata\home.json" />
+    <Content Include="js\server\mocha\testdata\empty-room.json" />
+    <Content Include="js\server\mocha\testdata\creature-female-neutral.json" />
+    <Content Include="js\server\mocha\testdata\creature-male-neutral.json" />
+    <Content Include="js\server\mocha\testdata\autolock-room.json" />
+    <Content Include="js\server\mocha\testdata\loop-destination-creature.json" />
+    <Content Include="js\server\mocha\testdata\door-key.json" />
+    <Content Include="js\server\mocha\testdata\destination-creature.json" />
+    <Content Include="js\server\mocha\testdata\locked-room.json" />
+    <Content Include="js\server\mocha\testdata\test-canonical.json" />
+    <Content Include="js\server\mocha\testdata\wandering-creature.json" />
+    <Content Include="js\server\mocha\testdata\lockable-door.json" />
+    <Content Include="js\server\mocha\testdata\autolock-door.json" />
+    <Content Include="js\server\mocha\testdata\autolock-key.json" />
+    <Content Include="js\server\mocha\testdata\test-root-locations.json" />
     <Content Include="js\server\test\testdata\savegame-0.json" />
     <Content Include="package.json" />
     <Content Include="Procfile" />
@@ -284,9 +301,13 @@
     <Compile Include="js\server\test\test-artefact.test.js" />
     <Compile Include="js\server\test\test-contagion.test.js" />
     <Compile Include="js\server\test\test-creature.test.js" />
+    <Compile Include="js\server\mocha\test\test-destinations.js">
+      <SubType>Code</SubType>
+      <TestFramework>Mocha</TestFramework>
+    </Compile>
     <Compile Include="js\server\test\test-exit.test.js" />
     <Compile Include="js\server\test\test-filemanager.test.js" />
-    <Compile Include="js\server\test\test-map.js">
+    <Compile Include="js\server\mocha\test\test-map.js">
       <SubType>Code</SubType>
       <TestFramework>Mocha</TestFramework>
     </Compile>
@@ -311,6 +332,9 @@
     <Folder Include="client\" />
     <Folder Include="js\server" />
     <Folder Include="client\thirdparty\" />
+    <Folder Include="js\server\mocha\" />
+    <Folder Include="js\server\mocha\testdata\" />
+    <Folder Include="js\server\mocha\test\" />
     <Folder Include="js\server\test" />
     <Folder Include="js\server\test\testdata\" />
     <Folder Include="js\server\test\stubs" />

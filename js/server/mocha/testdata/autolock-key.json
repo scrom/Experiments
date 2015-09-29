@@ -1,0 +1,16 @@
+﻿{
+    "object": "artefact",
+    "name": "autolock key",
+    "description": "key for autolock doors",
+    "detailedDescription": "It opens autolock doors.",
+    "attributes": {
+        "weight": 0.1,
+        "type": "key",
+        "canCollect": true,
+        "affinityModifier": 3,
+        "unlocks": "autolock door"
+    },
+    "synonyms": [
+        "auto key"
+    ]
+}

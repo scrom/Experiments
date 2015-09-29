@@ -1,0 +1,20 @@
+﻿  {
+    "object": "location",
+    "name": "empty-room",
+    "displayName": "Empty Room",
+    "description": "A room that has nothing of interest in it.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "destination": "home"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "destination": "artefact-room"
+      }
+    ]
+  }

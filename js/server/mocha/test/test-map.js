@@ -1,9 +1,9 @@
 ﻿var assert = require('assert');
-var mapBuilder = require('../mapbuilder.js');
+var mapBuilder = require('../../mapbuilder.js');
 var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
-var filemanager = require('../filemanager.js');
+var filemanager = require('../../filemanager.js');
 var fm = new filemanager.FileManager(true, "./test/testdata/");
-var canonicalData = require("./testdata/canonical-game-data.json");
+var canonicalData = require("../../test/testdata/canonical-game-data.json");
 
 
 describe('Map:', function () {

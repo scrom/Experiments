@@ -1,0 +1,19 @@
+﻿{
+"object": "artefact",
+"name": "lockable door",
+"description": "lockable door",
+"attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "lockable": true,
+    "locked": true,
+    "hasLinkedDoor":  true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "lockable",
+    "door"
+]
+}

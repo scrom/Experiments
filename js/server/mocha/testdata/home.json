@@ -1,0 +1,73 @@
+﻿  {
+    "object": "location",
+    "name": "home",
+    "displayName": "Home",
+    "description": "A home room.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "destination": "empty-room",
+        "source": "home"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "destination": "autolock-room",
+        "source": "home",
+        "hidden": true
+      },
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "destination": "locked-room",
+            "source": "home",
+            "hidden": true
+        }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "autolock-door",
+        "description": "autolock door",
+        "detailedDescription": "It leads to the autolock room.",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "destination": "autolock-room",
+            "source": "home",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lockable door",
+          "door"
+        ]
+      },
+      {
+            "object": "artefact",
+            "template": "lockable-door",
+            "description": "lockable door",
+            "detailedDescription": "It leads back out.",
+            "linkedexits": [
+                {
+                "object": "exit",
+                "longname": "East",
+                "direction": "e",
+                "destination": "locked-room",
+                "source": "home",
+                "hidden": true
+                }
+            ],
+            "synonyms": [
+                "lockable door",
+                "door"
+            ]
+        }
+    ]
+  }
