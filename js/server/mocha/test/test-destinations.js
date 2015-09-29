@@ -26,5 +26,60 @@ describe('Destinations', function() {
         })
     })
 
+    it("destination-bound creature should shift 'locked-room' to previous destination", function () {
+        var m0 = mb.buildMap();
+        var playerAttributes = { "username": "player" };
+        p0 = new player.Player(playerAttributes, m0, mb);
+        //var home = m0.getLocation("home");
+        //p0.setStartLocation(home);
+        //p0.setLocation(home);
+        var autoLock = m0.getLocation("autolock-room");
+        p0.setStartLocation(autoLock);
+        p0.setLocation(autoLock);
+        
+        var destinationCreature = m0.getCreature("destination creature");
+        //destinationCreature should take 4 ticks to reach first destination.
+        console.log("Destinations: " + destinationCreature.getDestinations());
+        console.log(destinationCreature.tick(5, m0, p0));
+        console.log("Prev:"+destinationCreature.getPreviousDestination());
+        console.log("Next:" + destinationCreature.getNextDestination());
+
+        var expectedResult = "locked-room"
+        var actualResult = destinationCreature.getPreviousDestination();
+        console.log("Expected: " + expectedResult);
+        console.log("Actual  : " + actualResult);
+
+        assert.equal(actualResult, expectedResult, "Previous destinaition is not set to 'locked-room'");
+
+    })
+
+    
+    it("destination-bound creature should shift wander, return home and then restart even without loop", function () {
+        var m0 = mb.buildMap();
+        var playerAttributes = { "username": "player" };
+        p0 = new player.Player(playerAttributes, m0, mb);
+        //var home = m0.getLocation("home");
+        //p0.setStartLocation(home);
+        //p0.setLocation(home);
+        var autoLock = m0.getLocation("autolock-room");
+        p0.setStartLocation(autoLock);
+        p0.setLocation(autoLock);
+        
+        var destinationCreature = m0.getCreature("destination creature");
+        //destinationCreature should take 4 ticks to reach first destination.
+        console.log("Destinations-before: " + destinationCreature.getDestinations());
+        console.log(destinationCreature.tick(350, m0, p0));
+        console.log("Prev:" + destinationCreature.getPreviousDestination());
+        console.log("Next:" + destinationCreature.getNextDestination());
+        console.log("Destinations-after: " + destinationCreature.getDestinations());
+
+        var expectedResult = "XXX"
+        var actualResult = destinationCreature.getPreviousDestination();
+        console.log("Expected: " + expectedResult);
+        console.log("Actual  : " + actualResult);
+        
+        assert.equal(actualResult, expectedResult, "Previous destinaition is not set to 'locked-room'");
+
+    })
 
 })

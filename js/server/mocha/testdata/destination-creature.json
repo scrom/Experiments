@@ -11,8 +11,6 @@
             "empty-room",
             "locked-room"
         ],
-        "loops": -1,
-        "loopDelay": 5,
         "destinationDelay": 1
     },
     "inventory": [
