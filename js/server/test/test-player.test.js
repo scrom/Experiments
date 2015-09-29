@@ -40,7 +40,8 @@ exports.setUp = function (callback) {
     playerAttributes = {"username":playerName, "consumedObjects":[JSON.parse(food.toString())]};
     m0 = mb.buildMap();
     p0 = new player.Player(playerAttributes, m0, mb);
-    l0 = new location.Location('home','home','a home location');
+    l0 = new location.Location('home', 'home', 'a home location');
+    l0.addExit("S", "home", "new");
     p0.setStartLocation(l0);
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
