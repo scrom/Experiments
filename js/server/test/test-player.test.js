@@ -294,7 +294,6 @@ exports.SleepCompletelyResetsTimeSinceResting = function (test) {
 
 exports.SleepCompletelyResetsTimeSinceResting.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Sleep Trait"], description: "Test that time since resting is completely reset." };
 
-
 exports.movingWhenVeryTiredTakesTwiceAsLong = function (test) {
     p0.increaseTimeSinceResting(138);
     //p0.reduceHitPoints(6);

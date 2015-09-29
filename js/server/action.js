@@ -1414,6 +1414,7 @@ exports.Action = function Action(player, map, fileManager) {
             description  += map.updateMissions(actualTicks, _player);
 
             //if time is passing, what additional things happen to a player?
+            //note - player ticks happen last so that we can adjust responses based on current state
             description += _player.tick(actualTicks, _map);
 
             //replace any player substitution variables
