@@ -30,6 +30,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _currentLocation;
         var _timeSinceEating = 0;
         var _timeSinceResting = 0;
+        var _timeTrapped = 0;
         var _maxMovesUntilHungry = 70;
         var _additionalMovesUntilStarving = 15;
         var _maxMovesUntilTired = 125;
@@ -309,6 +310,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             }; 
             if (playerAttributes.timeSinceEating != undefined) { _timeSinceEating = playerAttributes.timeSinceEating; };
             if (playerAttributes.timeSinceResting != undefined) { _timeSinceResting = playerAttributes.timeSinceResting; };
+            if (playerAttributes.timeTrapped != undefined) { _timeTrapped = playerAttributes.timeTrapped; };
             if (playerAttributes.maxMovesUntilHungry != undefined) {_maxMovesUntilHungry = playerAttributes.maxMovesUntilHungry;};
             if (playerAttributes.additionalMovesUntilStarving != undefined) {_additionalMovesUntilStarving = playerAttributes.additionalMovesUntilStarving;};
             if (playerAttributes.maxMovesUntilTired != undefined) { _maxMovesUntilTired = playerAttributes.maxMovesUntilTired; };
@@ -540,7 +542,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_cheatCount > 0) { resultString += ',"cheatCount":' + _cheatCount; };
             if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
             if (_timeSinceEating > 0) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
-            if (_timeSinceResting > 0) { resultString += ',"timeSinceResting":' + _timeSinceting; };
+            if (_timeSinceResting > 0) { resultString += ',"timeSinceResting":' + _timeSinceResting; };
+            if (_timeTrapped > 0) { resultString += ',"timeTrapped":' + _timeTrapped; };
             if (_maxMovesUntilHungry != 70) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
             if (_additionalMovesUntilStarving != 15) { resultString += ',"additionalMovesUntilStarving":' + _additionalMovesUntilStarving; };
             if (_maxMovesUntilTired != 125) { resultString += ',"maxMovesUntilTired":' + _maxMovesUntilTired; };
@@ -622,6 +625,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.loadCount = _loadCount;
             currentAttributes.timeSinceEating = _timeSinceEating;
             currentAttributes.timeSinceResting = _timeSinceResting;
+            currentAttributes.timeTrapped = _timeTrapped;
             currentAttributes.maxMovesUntilHungry = _maxMovesUntilHungry;
             currentAttributes.additionalMovesUntilStarving = _additionalMovesUntilStarving;
             currentAttributes.maxMovesUntilTired = _maxMovesUntilTired;
@@ -773,6 +777,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.increaseTimeSinceResting = function (changeValue) {
             _timeSinceResting += changeValue;
             return _timeSinceResting;
+        };
+        
+        self.increaseTimeTrapped = function (changeValue) {
+            _timeTrapped += changeValue;
+            return _timeTrapped;
         };
 
         self.hasContagion = function(contagionName) {
@@ -4581,7 +4590,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
         
-        self.calculateTicks = function (time) {
+        self.calculateTicks = function (verb, time) {
+            //trap the subset of verbs that would give confusing reults.
+            var ignoreList = ["rest", "sit", "zz", "sleep", "nap", "have", "zzz", "+wait"];
+            if (ignoreList.indexOf(verb > -1)) {
+                return time;
+            };
             //how many ticks will be required - depends on player status
             //actions take twice as long if very tired
             if (self.isTired()) {
@@ -4631,14 +4645,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 //feed?
-                self.increaseTimeSinceEating(time);
+                self.increaseTimeSinceEating(1); //we loop on this for time variable
                 if (_timeSinceEating > _maxMovesUntilHungry + _additionalMovesUntilStarving) {
                     //gets worse the longer it's left.
                     damage += Math.floor((_timeSinceEating - (_maxMovesUntilHungry + _additionalMovesUntilStarving)) / 1.5);
                 }; 
 
                 //rest?
-                self.increaseTimeSinceResting(time);
+                self.increaseTimeSinceResting(1); //we loop on this for time variable
                 if (_timeSinceResting > _maxMovesUntilTired + _additionalMovesUntilExhausted) {
                     //gets worse the longer it's left - less damage than eating as we're more likely to have time = 2
                     damage += Math.floor((_timeSinceResting - (_maxMovesUntilTired + _additionalMovesUntilExhausted)) / 1.8);
@@ -4671,7 +4685,80 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_bleeding) {resultString+="<br>You're bleeding. ";};           
 
             if (healPoints>0 && (_hitPoints < _maxHitPoints)) {self.recover(healPoints);};   //heal before damage - just in case it's enough to not get killed.
-            if (damage>0) {resultString+= self.hurt(damage);};        
+            if (damage > 0) { resultString += self.hurt(damage); };
+            
+            //is player trapped?
+            var exits = _currentLocation.getAvailableExits(true, _inventory);
+            if (exits.length == 0) {
+                self.increaseTimeTrapped(time);
+                
+                //identify if there's any help come (and whether player tailgated someone to get here).
+                var creaturesRecentlyLeft = 0;
+                var creatureStillOutside = false;
+                var creatureArrivedOutside = false;
+                var creaturesComingSooner = 0;
+                var creaturesComingLater = 0;
+                var allCreatures = map.getAllCreatures();
+                var currentLocationName = _currentLocation.getName()
+                
+                for (var c=0;c<allCreatures.length; c++) {
+                    if (allCreatures[c].checkDestinationAndHistory(currentLocationName)) {
+                        //creature is either due here or has been here
+                        if (allCreatures[c].getNextDestination() == currentLocationName) {
+                            creaturesComingSooner++;
+                            //are they just outside?
+                            if (allCreatures[c].getCurrentLocationName == currentLocationName) {
+                                creatureArrivedOutside = true;
+                            };
+                        } else if (allCreatures[c].getPreviousDestination() == currentLocationName) {
+                            creaturesRecentlyLeft++;
+                            //are they still outside?
+                            if (allCreatures[c].getCurrentLocationName == currentLocationName) {
+                                creatureStillOutside = true;
+                            };
+                        } else {
+                            creaturesComingLater++;
+                        };
+                    };
+                };                              
+
+                if (_timeTrapped - time <= 0) {
+                    //freshly locked in
+                    //check here if any creatures have this place as a recently cleared destination - this allows us to be more intelligent about whethe rthe player was tailgating.
+                    //(use the code from listening at doors)
+                    resultString += "<br>It looks like you're locked in here without a key.";
+                    if (creaturesRecentlyLeft > 0) {
+                        resultString += "<br>Assuming you followed someone in here you'll have to hold out for a while and hope they come back.";
+                    };
+                } else if (_timeTrapped == 10) {                    
+                    resultString += "You're still trapped.<br>You'll either need to <i>wait</i> for help, find an ingenious way out of here, or give up, curl up, and die.<br>(Or of course you can <i>quit</i> and restart or re<i>load</i> your game).";
+                } else if (_timeTrapped > 100) {
+                    //check here if *any* creatures have this place as a destination / cleared destination on a loop.
+                    if (creaturesComingSooner == 0) {
+                        //no help due soon
+                        resultString += "<br>Your chances of rescue are looking very slim from here. It's probably time to <i>quit</i> or re<i>load</i> a previous saved game).<br>You're wlecome to keep trying but I felt it only fair to let you know my assessment of your situation.";
+                    };
+                } else {
+                    //is there help nearby?
+                    if (creatureArrivedOutside) {
+                        resultString += "<br>You hear sounds outside. Perhaps help is on the way!";
+                    };  //else if (creaturesComingSooner) {
+                        //resultString += "<br>You continue to hope for someone to come and save you";
+                        //};
+                };
+            } else {
+                //we have exits!
+                if (_timeTrapped - time > 0) { //was previously trapped
+                    var finallyWord = " ";
+                    if (_timeTrapped > 10) {
+                        finallyWord = " finally ";
+                    };
+                    _timeTrapped = 0; //player is no longer trapped                 
+                    resultString += "<br><br>That was fortunate. It looks like you"+finallyWord+"have a way out after all.<br>Hurry and get out of here whilst you still can!";
+                };
+            };
+            
+
 
             _currentLocation.setPlayerTrace(Math.floor(map.getLocationCount()/5));
             return resultString;

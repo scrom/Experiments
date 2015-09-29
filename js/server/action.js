@@ -1396,13 +1396,13 @@ exports.Action = function Action(player, map, fileManager) {
   
         self.act = function(anActionString) {
             var description = "";
-            var imageName;
-            
-            //work out how many ticks will actually occur
-            var actualTicks = _player.calculateTicks(_ticks);
+            var imageName;          
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);
+            
+            //work out how many ticks will actually occur against rest of game...
+            var actualTicks = _player.calculateTicks(_verb, _ticks);
 
             //perform creature actions.
             description += processCreatureTicks(actualTicks, _map, _player);
@@ -1414,7 +1414,9 @@ exports.Action = function Action(player, map, fileManager) {
             description  += map.updateMissions(actualTicks, _player);
 
             //if time is passing, what additional things happen to a player?
-            description += _player.tick(actualTicks, _map);
+            //note - player ticks happen last so that we can adjust responses based on current state
+            //we also only use "original" ticks here as any extras (wait/sleep) are explicitly covered elsewhere
+            description += _player.tick(_ticks, _map);
 
             //replace any player substitution variables
             while (description.indexOf("$player") > -1) {

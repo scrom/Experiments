@@ -542,6 +542,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getCurrentLocation = function() {
             return _currentLocation;
         };
+        
+        self.getCurrentLocationName = function () {
+            if (_currentLocation) {
+                return _currentLocation.getName();
+            };
+        };
 
         self.checkCustomAction = function(verb) {
             return false; 
@@ -2047,7 +2053,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
             } else {
                 if (!(attacker)) {
-                    resultString += "There's no sign of any physical harm done.";  
+                   resultString += "There's no sign of any physical harm done.";  
                 } else if (attacker.getType() == "player")  { 
                    resultString += "You missed!"; 
                 } else {
@@ -3001,6 +3007,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //lock the new side we're on as well if the same key fits
                         if (key) {
                             returnDoor.lock(key, _currentLocation.getName());
+                            if (returnDoor.isLocked()) {
+                                resultString += "<br>"+self.getDisplayName() + " locks " + returnDoor.getDisplayName() + ".<br>";
+                            };
                         } else {
                             returnDoor.close("close", _currentLocation.getName());
                         };
@@ -3499,6 +3508,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _destinations[_destinations.length-1];
         };
 
+        self.getPreviousDestination = function () {
+            if (_clearedDestinations.length > 0) {
+                return _clearedDestinations[0];
+            };
+            return "";
+        };
+
+        self.checkDestinationAndHistory = function (destinationName) {
+            if (_destinations.indexOf(destinationName) >= 0) {
+                return true;
+            };
+            if (_clearedDestinations.indexOf(destinationName) >= 0) {
+                return true;
+            };
+            return false;
+        };
+
         self.setAvoiding = function(locationNameToAvoid) {
             //if not already avoiding
             if (_avoiding.indexOf(locationNameToAvoid) == -1) {
@@ -3536,12 +3562,44 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
         };
+        
+        self.removeDestination = function (destinationName) {
+            var destinationIndex = _destinations.indexOf(destinationName);
+            var clearedDestinationIndex = _clearedDestinations.indexOf(destinationName);
+
+            //clear all instances of destination name
+            while (destinationIndex > -1) {
+                _destinations.splice(destinationIndex, 1);
+                destinationIndex = _destinations.indexOf(destinationName);
+            };
+            while (clearedDestinationIndex > -1) {
+                _clearedDestinations.splice(clearedDestinationIndex, 1);
+                clearedDestinationIndex = _clearedDestinations.indexOf(destinationName);
+            };
+
+        };
 
         self.clearDestination = function() {
             //console.log(self.getDisplayName()+" destination cleared");
-            var clearedDestination = _destinations.pop()           
-            if (_loops != 0) { _clearedDestinations.unshift(clearedDestination);}; 
+            var clearedDestination = _destinations.pop();
+            
+            //do we have existing cleared destinations?
+            var endIndex = _clearedDestinations.length - 1;
+            var duplicate = false;
+            if (endIndex > -1) {
+                //if this is a duplicate destination (related to wanderers having destination set to "home")
+                if (clearedDestination == _clearedDestinations[endIndex]) {
+                    duplicate = true;
+                };
+            };
 
+            //store cleared destination.
+            if (!duplicate) {
+                _clearedDestinations.unshift(clearedDestination);
+            };
+                               
+            //Still has loops to complete but no remaining destinations.
+            //restart loop
             if (_loops != 0 && _destinations.length == 0) {
 
                 if (_loopCount < _loops || _loops == -1) {
@@ -3557,6 +3615,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (_loopDelay > 0||_destinationDelay>0||_waitDelay>0) {
                 _currentDelay = 0; //activate delay
+            };
+
+            if (_loops == 0 && duplicate && _clearedDestinations.length > 1 && _destinations.length == 0) {
+                //this is someone who's not on a loop any more, has returned home for a second time.
+                //Had an original set of more than 1 preprogrammed set of destinations and has no further destinations set.
+                //this is likely (but not guaranteed) someone who's been wandering for a while - so restart their original set of destinations.
+                //this partially ensures is a player tailgated a character who has completed their destinations
+                //that they might eventually come back.
+                _destinations = _destinations.concat(_clearedDestinations);
             };
         };
 

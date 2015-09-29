@@ -40,7 +40,8 @@ exports.setUp = function (callback) {
     playerAttributes = {"username":playerName, "consumedObjects":[JSON.parse(food.toString())]};
     m0 = mb.buildMap();
     p0 = new player.Player(playerAttributes, m0, mb);
-    l0 = new location.Location('home','home','a home location');
+    l0 = new location.Location('home', 'home', 'a home location');
+    l0.addExit("S", "home", "new");
     p0.setStartLocation(l0);
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
@@ -292,7 +293,6 @@ exports.SleepCompletelyResetsTimeSinceResting = function (test) {
 };
 
 exports.SleepCompletelyResetsTimeSinceResting.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Sleep Trait"], description: "Test that time since resting is completely reset." };
-
 
 exports.movingWhenVeryTiredTakesTwiceAsLong = function (test) {
     p0.increaseTimeSinceResting(138);
@@ -872,8 +872,8 @@ exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage = function (test) {
     var hitcount = 0;
     while (hitcount < 1) {
         var result = p0.hit('hit', c0.getName());
-        console.log(actualResult)
-        if (!(actualResult == "You missed!")) {
+        console.log(result)
+        if (!(result == "You missed!")) {
             hitcount++;
         };
     }; 
