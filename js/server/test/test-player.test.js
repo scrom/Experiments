@@ -872,8 +872,8 @@ exports.hittingCreatureWhenBadlyInjuredDoesEvenLessDamage = function (test) {
     var hitcount = 0;
     while (hitcount < 1) {
         var result = p0.hit('hit', c0.getName());
-        console.log(actualResult)
-        if (!(actualResult == "You missed!")) {
+        console.log(result)
+        if (!(result == "You missed!")) {
             hitcount++;
         };
     }; 
