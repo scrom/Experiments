@@ -1396,13 +1396,13 @@ exports.Action = function Action(player, map, fileManager) {
   
         self.act = function(anActionString) {
             var description = "";
-            var imageName;
-            
-            //work out how many ticks will actually occur
-            var actualTicks = _player.calculateTicks(_ticks);
+            var imageName;          
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);
+            
+            //work out how many ticks will actually occur against rest of game...
+            var actualTicks = _player.calculateTicks(_ticks);
 
             //perform creature actions.
             description += processCreatureTicks(actualTicks, _map, _player);
