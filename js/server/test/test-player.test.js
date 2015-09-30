@@ -41,7 +41,7 @@ exports.setUp = function (callback) {
     m0 = mb.buildMap();
     p0 = new player.Player(playerAttributes, m0, mb);
     l0 = new location.Location('home', 'home', 'a home location');
-    l0.addExit("S", "home", "new");
+    l0.addExit("s", "home", "new");
     p0.setStartLocation(l0);
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
@@ -297,9 +297,10 @@ exports.SleepCompletelyResetsTimeSinceResting.meta = { traits: ["Player Test", "
 exports.movingWhenVeryTiredTakesTwiceAsLong = function (test) {
     p0.increaseTimeSinceResting(138);
     //p0.reduceHitPoints(6);
-    var expectedResult = 158;
+    var expectedResult = 148;
     
     var ticks = p0.calculateTicks(1);
+    console.log("ticks:" + ticks);
     
     console.log(p0.tick(ticks, m0));
     console.log(p0.tick(ticks, m0));
@@ -320,9 +321,10 @@ exports.movingWhenVeryTiredTakesTwiceAsLong.meta = { traits: ["Player Test", "In
 exports.movingWhenExhaustedTakesThreeTimesAsLong = function (test) {
     p0.increaseTimeSinceResting(150);
     //p0.reduceHitPoints(6);
-    var expectedResult = 170;
+    var expectedResult = 165;
     
     var ticks = p0.calculateTicks(1);
+    console.log("ticks:" + ticks);
     
     console.log(p0.tick(ticks, m0));
     console.log(p0.tick(ticks, m0));
@@ -489,7 +491,7 @@ exports.movingWhenExhaustedDoesDamage = function (test) {
     p0.increaseTimeSinceResting(150);
     
     var ticks = p0.calculateTicks(1);
-
+    console.log("ticks:"+ticks)
     console.log(p0.tick(ticks, m0));
     console.log(p0.tick(ticks, m0));
     console.log(p0.tick(ticks, m0));
@@ -685,7 +687,7 @@ exports.canBeKilledAndDropInventory = function (test) {
 exports.canBeKilledAndDropInventory.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Kill Trait"], description: "Test that a killed player drops inventory." };
 
 exports.killPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There are no visible exits.<br>";
+    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There is a single exit to the South.<br>";
     var actualResult = p0.kill();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -698,7 +700,7 @@ exports.killPlayerReturnsExpectedStringResult.meta = { traits: ["Player Test", "
 exports.creatureRetaliationCanKillPlayer = function (test) {
     c0.setAttackStrength(104);
     p0.setLocation(l0);
-    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There are no visible exits.<br>";
+    var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There is a single exit to the South.<br>";
     
     //handle the fact that player may occasionally miss (or not get retaliation).
     var missed = "You attempt a bare - knuckle fight with the creature.<br>You do no visible damage. ";
@@ -720,7 +722,7 @@ exports.creatureAttackCanKillPlayer = function (test) {
     l0.removeObject(c0.getName());
     var c2 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:104, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-15});
     c2.go(null, l0);
-    var expected = "<br>The creature attacks you. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container and a beastie.<br>There are no visible exits.<br>";
+    var expected = "<br>The creature attacks you. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container and a beastie.<br>There is a single exit to the South.<br>";
     var actual = c2.fightOrFlight(null,p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -731,7 +733,7 @@ exports.creatureAttackCanKillPlayer.meta = { traits: ["Player Test", "Affinity T
 
 
 exports.hitAndKillPlayerReturnsExpectedStringResult = function (test) {   
-    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There are no visible exits.<br>";
+    var expectedResult = "<br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness and a container.<br>There is a single exit to the South.<br>";
     var actualResult = p0.hurt(101);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

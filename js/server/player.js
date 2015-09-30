@@ -4590,21 +4590,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
         
-        self.calculateTicks = function (verb, time) {
+        self.calculateTicks = function (time, verb) {
             //trap the subset of verbs that would give confusing reults.
+            //console.log("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
             var ignoreList = ["rest", "sit", "zz", "sleep", "nap", "have", "zzz", "+wait"];
-            if (ignoreList.indexOf(verb > -1)) {
+            if (ignoreList.indexOf(verb) > -1) {
                 return time;
             };
             //how many ticks will be required - depends on player status
             //actions take twice as long if very tired
-            if (self.isTired()) {
+            if (self.isExhausted()) {
+                //actions take 3 times as long if exhausted
+                return time * 3;
+            } else if (self.isTired()) {
                 if (_timeSinceResting > (_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2))) {
                     return time * 2;
                 };
-            } else if (self.isExhausted()) {
-                //actions take 3 times as long if exhausted
-                return time * 3;
             };
             return time;
         };
