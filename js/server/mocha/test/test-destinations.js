@@ -68,10 +68,74 @@ describe('Destinations', function() {
         var destinationCreature = m0.getCreature("destination creature");
         //destinationCreature should take 4 ticks to reach first destination.
         console.log("Destinations-before: " + destinationCreature.getDestinations());
-        console.log(destinationCreature.tick(350, m0, p0));
-        console.log("Prev:" + destinationCreature.getPreviousDestination());
-        console.log("Next:" + destinationCreature.getNextDestination());
-        console.log("Destinations-after: " + destinationCreature.getDestinations());
+        
+        var destinationLoop = function () {
+            
+            var destinations = destinationCreature.getDestinations();
+            var loops = 0;
+            while (destinations.length > 0 && loops < 75) {
+                destinationCreature.setPath(destinationCreature.findBestPath(destinations[destinations.length - 1], m0, 25));
+                var pathLength = destinationCreature.getPath().length;
+                console.log("pathlength=" + pathLength);
+                if (pathLength == 0) {
+                    pathLength = 1; //ensure we tick without a path
+                };
+                console.log(destinationCreature.tick(pathLength, m0, p0));
+                console.log("Current loc: " + destinationCreature.getCurrentLocationName());
+                console.log("Prev:" + destinationCreature.getPreviousDestination());
+                console.log("Next:" + destinationCreature.getNextDestination());
+                console.log("Destinations-after: " + destinationCreature.getDestinations());
+                destinations = destinationCreature.getDestinations();
+                loops++;
+            };
+        };
+        
+        console.log("=================Clearing destinations 1");
+        //clear initial set of destinations
+        destinationLoop();
+        console.log("=================Awaiting home call 1");
+
+        //wait until time to head "home"
+        var wait = 0;
+        var destinations = destinationCreature.getDestinations();
+        while (wait < 150 && destinations.length == 0) {
+            console.log(destinationCreature.tick(1, m0, p0));
+            wait++
+        };
+        console.log("waited " + wait + " ticks");
+        
+        console.log("=================Clearing Destinations 2 (heading home)");
+        //run destinationLoop again to get home
+        destinationLoop();
+        console.log("================= Awaiting home call 2");
+                
+        //then wait again
+        var wait = 0;
+        var destinations = destinationCreature.getDestinations();
+        while (wait < 150 && destinations.length == 0) {
+            console.log(destinationCreature.tick(1, m0, p0));
+            wait++
+        };
+        console.log("waited " + wait + " ticks");
+        
+        console.log("=================Clearing Destinations 3 (heading home again)");
+        
+        //then run destinationLoop again. This time when creature reaches home, destinations should rebuild
+        destinationLoop();
+        
+        console.log("================= Awaiting regeneration");
+        var wait = 0;
+        var destinations = destinationCreature.getDestinations();
+        while (wait < 150 && destinations.length == 0) {
+            console.log(destinationCreature.tick(1, m0, p0));
+            wait++
+        };
+        console.log("waited " + wait + " ticks");
+        
+        console.log("=================Clearing Destinations 4 (regenerating)");
+        
+        //then run destinationLoop again. This time when creature reaches home, destinations should rebuild
+        destinationLoop();
 
         var expectedResult = "XXX"
         var actualResult = destinationCreature.getPreviousDestination();

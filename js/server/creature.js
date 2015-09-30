@@ -3582,13 +3582,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.clearDestination = function() {
             //console.log(self.getDisplayName()+" destination cleared");
             var clearedDestination = _destinations.pop();
-            
+            //console.log("clearing: " + clearedDestination);
             //do we have existing cleared destinations?
-            var endIndex = _clearedDestinations.length - 1;
             var duplicate = false;
-            if (endIndex > -1) {
+            if (_clearedDestinations.length > 0) {
                 //if this is a duplicate destination (related to wanderers having destination set to "home")
-                if (clearedDestination == _clearedDestinations[endIndex]) {
+                if (clearedDestination == _clearedDestinations[0]) {
+                    //console.log("<-----duplicate");
                     duplicate = true;
                 };
             };
@@ -3596,6 +3596,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //store cleared destination.
             if (!duplicate) {
                 _clearedDestinations.unshift(clearedDestination);
+                //console.log("<-----not duplicate"+ _clearedDestinations);
             };
                                
             //Still has loops to complete but no remaining destinations.
@@ -3618,11 +3619,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (_loops == 0 && duplicate && _clearedDestinations.length > 1 && _destinations.length == 0) {
+                //console.log("<-----regenerating");
                 //this is someone who's not on a loop any more, has returned home for a second time.
                 //Had an original set of more than 1 preprogrammed set of destinations and has no further destinations set.
                 //this is likely (but not guaranteed) someone who's been wandering for a while - so restart their original set of destinations.
                 //this partially ensures is a player tailgated a character who has completed their destinations
                 //that they might eventually come back.
+                _clearedDestinations.splice(0, 1);  //remove home location from list
                 _destinations = _destinations.concat(_clearedDestinations);
             };
         };
@@ -3630,6 +3633,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.setPath = function(path) {
             //console.log(self.getDisplayName()+" path set to "+path+"(will reach "+_destination+" in "+path.length+" moves)");
             _path = path;
+        };
+        
+        self.getPath = function () {
+            return _path;
         };
 
         self.clearPath = function() {
