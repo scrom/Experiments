@@ -26,7 +26,7 @@ describe('Destinations', function() {
         })
     })
 
-    it("destination-bound creature should shift 'locked-room' to previous destination", function () {
+    it("destination-bound creature should shift 'locked-room' destination to previous destination upon reaching it", function () {
         var m0 = mb.buildMap();
         var playerAttributes = { "username": "player" };
         p0 = new player.Player(playerAttributes, m0, mb);
@@ -52,8 +52,76 @@ describe('Destinations', function() {
         assert.equal(actualResult, expectedResult, "Previous destinaition is not set to 'locked-room'");
 
     })
+    
+    it("destination-bound creature should shift 'locked-room' destination to previous destination if it cannot reach it after 15 moves", function () {
+        var m0 = mb.buildMap();
+        var playerAttributes = { "username": "player" };
+        p0 = new player.Player(playerAttributes, m0, mb);
+        //var home = m0.getLocation("home");
+        //p0.setStartLocation(home);
+        //p0.setLocation(home);
+        var autoLock = m0.getLocation("autolock-room");
+        p0.setStartLocation(autoLock);
+        p0.setLocation(autoLock);
+        
+        var destinationCreature = m0.getCreature("destination creature");
+        destinationCreature.getInventoryObject().remove("door key");
+
+        //destinationCreature should take 4 ticks to reach first destination.
+        console.log("Destinations: " + destinationCreature.getDestinations());
+        console.log(destinationCreature.tick(15, m0, p0));
+        console.log("Prev:" + destinationCreature.getPreviousDestination());
+        console.log("Next:" + destinationCreature.getNextDestination());
+        
+        var expectedResult = "locked-room"
+        var actualResult = destinationCreature.getPreviousDestination();
+        console.log("Expected: " + expectedResult);
+        console.log("Actual  : " + actualResult);
+        
+        assert.equal(actualResult, expectedResult, "Previous destinaition is not set to 'locked-room'");
+
+    })
 
     
+    it("destination-bound creature should still have target as 'locked-room' if it cannot reach it after 15 moves and part-way through, the location is accessible again ", function () {
+        var m0 = mb.buildMap();
+        var playerAttributes = { "username": "player" };
+        p0 = new player.Player(playerAttributes, m0, mb);
+        //var home = m0.getLocation("home");
+        //p0.setStartLocation(home);
+        //p0.setLocation(home);
+        var autoLock = m0.getLocation("autolock-room");
+        var lockedRoom = m0.getLocation("locked-room");
+        var door = lockedRoom.getObject("door");
+        p0.setStartLocation(autoLock);
+        p0.setLocation(autoLock);
+        
+        var destinationCreature = m0.getCreature("destination creature");
+        var key = destinationCreature.getInventoryObject().remove("door key");
+        
+        //destinationCreature should take 4 ticks to reach first destination.
+        console.log("Destinations: " + destinationCreature.getDestinations());
+        console.log("Next:" + destinationCreature.getNextDestination());
+        console.log(destinationCreature.tick(10, m0, p0));
+        console.log("Next:" + destinationCreature.getNextDestination());
+        door.unlock(key, "locked-room");
+        console.log(destinationCreature.tick(1, m0, p0));
+        console.log("Next:" + destinationCreature.getNextDestination());
+        door.lock(key, "locked-room");
+        console.log(destinationCreature.tick(1, m0, p0)); //this should clear path
+        console.log(destinationCreature.tick(10, m0, p0));
+        console.log("Next:" + destinationCreature.getNextDestination());
+        
+        var expectedResult = "locked-room"
+        var actualResult = destinationCreature.getNextDestination();
+        console.log("Expected: " + expectedResult);
+        console.log("Actual  : " + actualResult);
+        
+        assert.equal(actualResult, expectedResult, "Next destination is not set to 'locked-room'");
+
+    })
+    
+   
     it("destination-bound creature should shift wander, return home and then restart even without loop", function () {
         var m0 = mb.buildMap();
         var playerAttributes = { "username": "player" };

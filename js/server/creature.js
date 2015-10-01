@@ -55,6 +55,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _destinations = [];
         var _clearedDestinations = [];
         var _avoiding = [];
+        var _destinationBlockedCount = 0; //how long has creature been blocked getting to destination?
         var _loops = 0;
         var _loopCount = 0;
         var _loopDelay = 0;
@@ -172,7 +173,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if (creatureAttributes.clearedDestinations != undefined) {_clearedDestinations = creatureAttributes.clearedDestinations;};
-            if (creatureAttributes.avoiding != undefined) {_avoiding = creatureAttributes.avoiding;};
+            if (creatureAttributes.avoiding != undefined) { _avoiding = creatureAttributes.avoiding; };
+            if (creatureAttributes.destinationBlockedCount != undefined) { _destinationBlockedCount = creatureAttributes.destinationBlockedCount; };
             if (creatureAttributes.loops != undefined) {_loops = creatureAttributes.loops;};
             if (creatureAttributes.loopCount != undefined) {_loopCount = creatureAttributes.loopCount;};
             if (creatureAttributes.loopDelay != undefined) {_loopDelay = creatureAttributes.loopDelay;};
@@ -623,6 +625,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.destinations = _destinations;
             currentAttributes.clearedDestinations = _clearedDestinations;
             currentAttributes.avoiding = _avoiding;
+            currentAttributes.destinationBlockedCount = _destinationBlockedCount;
             currentAttributes.lastDirection = _lastDirection;
             currentAttributes.loops = _loops;
             currentAttributes.loopCount = _loopCount;
@@ -683,6 +686,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.destinations.length >0) {saveAttributes.destinations = creatureAttributes.destinations;};
             if (creatureAttributes.clearedDestinations.length >0) {saveAttributes.clearedDestinations = creatureAttributes.clearedDestinations;};
             if (creatureAttributes.avoiding.length > 0) { saveAttributes.avoiding = creatureAttributes.avoiding; };
+            if (creatureAttributes.destinationBlockedCount > 0) { saveAttributes.destinationBlockedCount = creatureAttributes.destinationBlockedCount; };            
             if (creatureAttributes.lastDirection != undefined) { saveAttributes.lastDirection = creatureAttributes.lastDirection; };
             if (creatureAttributes.loops !=0) {saveAttributes.loops = creatureAttributes.loops;};
             if (creatureAttributes.loopCount != 0) {saveAttributes.loopCount = creatureAttributes.loopCount;};
@@ -3081,7 +3085,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     var exit;
 
                     //hunting player?
-                    if (self.isHuntingPlayer()) {                        
+                    if (self.isHuntingPlayer()) {
+                        _destinationBlockedCount = 0;                    
                         exit = _currentLocation.getExitWithBestTrace('player',map, _inventory);
                     } else if (_destinations.length > 0) {
                         //or has destinations?
@@ -3090,6 +3095,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //console.log(self.getDisplayName()+" reached destination.");
                             self.clearPath();
                             self.clearDestination();
+                            _destinationBlockedCount = 0;
                             //if creature is in home location, stay there a short while.
                             if (_currentLocation.getName() == _homeLocation.getName()) {
                                 var randomWait = Math.floor(Math.random() * 7);
@@ -3102,8 +3108,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 self.setPath(self.findBestPath(_destinations[_destinations.length-1], map, 25));
                             };
 
-                            if (_path.length >0) {
+                            if (_path.length > 0) {
                                 //we have a path now
+                                _destinationBlockedCount = 0;
                                 var direction = _path.pop();
                                 if (!(direction)) {
                                     self.clearPath(); //we'll try again next time.
@@ -3111,6 +3118,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     exit = _currentLocation.getExit(direction);
                                     //console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
                                 };
+                            } else {
+                                //could not find path this time around.
+                                _destinationBlockedCount++;
+                                if (_destinationBlockedCount >= 15) {
+                                    //cannot reach destination at the moment. Give up and try again later
+                                    self.clearDestination();
+                                };   
                             };
                         }; 
                     }; //end destinations         
