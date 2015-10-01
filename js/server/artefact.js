@@ -2699,18 +2699,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             } else if (anObject.isLiquid()) {
                 //temporarily remove new liquid to ensure we don't have anything else.
+                //we'll only add it back if it should be there.
                 _inventory.remove(anObject.getName());
                 var inventoryLiquid = _inventory.getLiquid();
                 if (inventoryLiquid) {
                     if (inventoryLiquid.getName() != anObject.getName()) {
                         //we're mixing 2 liquids that shouldn't combine.
-                        _inventory.remove(anObject.getName());
-                        //_inventory.add(//new object of type "nasty goop")  //<-----------------------------------------------------Working here
                         resultString = "$fail$You attempt to add " + anObject.getDisplayName() + " to " + self.getDisplayName();
                         return resultString + " but realise it really won't mix well with " + inventoryLiquid.getDisplayName() + " that's already in there.";
                     };
                 };
-                //re-add liquid 
+                //re-add liquid - it's fine to leave in :)
                 _inventory.add(anObject);
             };
 
