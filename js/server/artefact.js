@@ -2491,7 +2491,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return tools.initCap(consumer.getPrefix())+" just can't seem to keep "+_itemSuffix+" in "+consumer.getPossessiveSuffix()+" mouth without causing an injury."
                 };
             } else {
-                return tools.initCap(_itemDescriptivePrefix)+" really not worth "+consumer.getSuffix()+" trying to eat it again."
+                return "It's really not worth " + consumer.getSuffix() + " trying to eat "+_itemPrefix.toLowerCase()+" again."; 
             };
         };
 
@@ -2768,7 +2768,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (inventoryLiquid.getName() != anObject.getName()) {
                         //we're mixing 2 liquids that shouldn't combine.
                         resultString = "$fail$You attempt to add " + anObject.getDisplayName() + " to " + self.getDisplayName();
-                        return resultString + " but realise it really won't mix well with " + inventoryLiquid.getDisplayName() + " that's already in there.";
+                        return resultString + " but realise "+self.getPrefix().toLowerCase()+" really won't mix well with " + inventoryLiquid.getDisplayName() + " that's already in there.";
                     } else {
                         //this is a liquid with the same name - is is comparable
                         if (self.compareLiquid(anObject, inventoryLiquid)) {

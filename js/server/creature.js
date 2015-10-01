@@ -1467,10 +1467,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         anObject.eat("eat", self);
                         _timeSinceEating = 0;
                         if (originalObjectWeight <= self.getWeight()) {
-                            return tools.initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
+                            return tools.initCap(self.getDisplayName())+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did "+anObject.getPrefix().toLowerCase()+" all go?";
                         } else if (originalObjectWeight < 5) {
                             if (anObject.chargesRemaining() >0) {_currentLocation.addObject(anObject);};
-                            return tools.initCap(self.getDisplayName())+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at it.";
+                            return tools.initCap(self.getDisplayName())+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at " + anObject.getSuffix()+ ".";
 
                         } else {
                             //food is bigger than "5" and bigger than them...
@@ -1528,7 +1528,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (!anObject.isBroken()) {
                     brokenString = "pretty tatty"; //damaged or chewed
                 };
-                resultString +="<br>"+self.getPrefix()+" says '"+anObject.getPrefix()+" looks "+brokenString+", would you like me to fix it up for you?'";
+                resultString +="<br>"+self.getPrefix()+" says '"+anObject.getPrefix()+" looks "+brokenString+", would you like me to fix " + anObject.getPrefix().toLowerCase() + " up for you?'";
                 self.setNextAction(false, "That's fine, feel free to <i>ask</i> me later if you change your mind."); 
                 self.setNextAction(true, "$action ask "+self.getName()+" to repair "+anObject.getName()); 
                 player.setLastCreatureSpokenTo(self.getName());

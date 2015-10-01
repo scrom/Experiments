@@ -2398,7 +2398,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 //still locked? - fail.
                 if (sourceObject.isLocked()) {
-                    tempString = tempString.replace("unlock", "open it up");
+                    tempString = tempString.replace("unlock", "open "+sourceObject.getPrefix().toLowerCase()+" up");
                     return tempString;
                 };
 
@@ -3609,7 +3609,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefact.canCarry(self, "on")) {
                         return "You "+verb+" up onto "+artefact.getDisplayName()+" and peer around.<br>Other than a mild rush of vertigo, being up here offers no benefit so you climb back down again."
                     } else {
-                        var resultString = "You clamber onto "+artefact.getDisplayName()+" but it can't hold your weight. ";
+                        var resultString = "You clamber onto "+artefact.getDisplayName()+" but "+ artefact.getPrefix().toLowerCase()+" can't hold your weight. ";
                         resultString += artefact.break();
                         resultString += "<br>You tumble to the floor and twist your ankle. Ouch!<br>";
                         resultString += self.hurt(8);
@@ -4120,7 +4120,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     resultString = "You try to "+verb+" "+receiver.getDisplayName()+". Unfortunately your "+weapon.getName()+" jammed.";
                     var newRandomInt = Math.floor(Math.random() * 10);
                     if (newRandomInt == 0 && weapon.isBreakable()) { //further 10% chance of worse!
-                        resultString +="<br>In attempting to clear the jam, it looks like you've damaged the firing mechanism.<br>You'll need to get it fixed if you want to use it again.";
+                        resultString +="<br>In attempting to clear the jam, it looks like you've damaged the firing mechanism.<br>You'll need to get "+ weapon.getPrefix().toLowerCase()+" fixed if you want to use it again.";
                         weapon.break();
                     } else {
                         resultString +="<br>You manage to clear the jam but lost valuable time in doing so.";
