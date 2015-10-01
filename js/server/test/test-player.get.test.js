@@ -395,7 +395,7 @@ exports.canGetTwoOfThreeHiddenObjectsBySearchingWhenInventoryIsNearlyFull = func
     container.receive(a3);
     a3.hide();
 
-    var expectedResult = "You search the container and discover a box, a box two and a box three.<br>You collect the box and a box two.<br>Unfortunately you can't carry everything right now.<br>You might want to come back for the box three later or <i>drop</i> something else you're carrying.";
+    var expectedResult = "You search the container and discover a box, a box two, and a box three.<br>You collect the box and a box two.<br>Unfortunately you can't carry everything right now.<br>You might want to come back for the box three later or <i>drop</i> something else you're carrying.";
     var actualResult = p0.search('search', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -428,7 +428,7 @@ exports.canGetTwoOfFourHiddenObjectsBySearchingWhenInventoryIsNearlyFull = funct
     container.receive(a4);
     a4.hide();
 
-    var expectedResult = "You search the container and discover a box, a box two, a box three and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
+    var expectedResult = "You search the container and discover a box, a box two, a box three, and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
     var actualResult = p0.search('search', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -461,7 +461,7 @@ exports.canGetTwoOfFourHiddenObjectsBySearchingWhenInventoryIsNearlyFullAndOneIt
     container.receive(a4);
     a4.hide();
 
-    var expectedResult = "You search the container and discover a box, a box two, a box three and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry everything right now.<br>You might want to come back for one more later or <i>drop</i> something else you're carrying.";
+    var expectedResult = "You search the container and discover a box, a box two, a box three, and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry everything right now.<br>You might want to come back for one more later or <i>drop</i> something else you're carrying.";
     var actualResult = p0.search('search', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -498,7 +498,7 @@ exports.canGetTwoOfFiveHiddenObjectsBySearchingWhenInventoryIsNearlyFullAndOneIt
     container.receive(a5);
     a5.hide();
 
-    var expectedResult = "You search the container and discover a box, a box two, a box three, a box four and a box five.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
+    var expectedResult = "You search the container and discover a box, a box two, a box three, a box four, and a box five.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
     var actualResult = p0.search('search', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

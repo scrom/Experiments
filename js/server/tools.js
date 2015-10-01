@@ -30,7 +30,7 @@ var self = module.exports = {
     },
 
     pluraliseDescription: function (aDescription, aCount) {
-        if (aCount < 2) { return aDescription; };
+        if (aCount == 1) { return aDescription; };
         var wordToReplace = aDescription;
         var replacement = wordToReplace;
 
@@ -50,18 +50,29 @@ var self = module.exports = {
             replacement = wordToReplace + "es";
         } else if (wordToReplace.substr(-1) == "s") {
             replacement = wordToReplace + "es";
+        } else if (wordToReplace.substr(-3) == "ing") {
+            replacement = wordToReplace;
         } else {
             replacement = wordToReplace + "s";
         };
 
-        return aCount+" "+aDescription.replace(wordToReplace, replacement);
+        var resultString = aDescription.replace(wordToReplace, replacement);
+        if (aCount) { resultString = aCount + " " + resultString;};
+
+        return resultString;
     },
 
     /* --- custom array handling ---*/
 
     listSeparator: function(listPosition, listLength) {
         if (listPosition > 0 && listPosition < listLength - 1) { return ", "; };
-        if (listPosition > 0 && listPosition == listLength - 1) { return " and "; };
+        if (listPosition > 0 && listPosition == listLength - 1) {
+            if (listLength > 2) {
+                return ", and "; //oxford comma
+            } else {
+                return " and "; 
+            };          
+        }; 
         return "";
     },
         

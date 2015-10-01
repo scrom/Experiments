@@ -1182,7 +1182,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString += "<br>" + _genderPrefix + " can repair ";
                 for (var r=0;r<_repairSkills.length;r++) {
                     resultString += tools.listSeparator(r, _repairSkills.length);
-                    resultString += _repairSkills[r]+"s"; //plural
+                    resultString += tools.pluraliseDescription(_repairSkills[r]);
                 };
                 resultString += " if you <i>ask</i> "+_genderSuffix+" nicely.<br>"; 
             };

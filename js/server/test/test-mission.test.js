@@ -490,7 +490,7 @@ exports.completingPartyBusMissionTeleportsPlayer = function (test) {
     mission.processReward(m0, reward, p0);
     var resultString = p0.examine("look", "", m0);
     
-    var expectedResult = "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.<br><br>You can see an ice cream man.<br>There are exits to the South, East and West.<br>";
+    var expectedResult = "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
     var actualResult = resultString
     
     //if (result) {actualResult = true;};
