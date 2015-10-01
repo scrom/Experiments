@@ -2281,6 +2281,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             
                 //"collect" it from its current home.
+                var objectIsInLocation = _currentLocation.objectExists(artefactName, true, false);
                 var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
                 if (!(collectedArtefact)) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
 
@@ -2306,8 +2307,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += receiverDisplayNameString+".<br>";
 
                 var receiveResult = receiver.receive(collectedArtefact, self);
-                //if receiving failed...
+                //if receiving failed (or combined with something else)...
                 if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
+                    if (receiveResult.indexOf("$fail$") > -1) {
+                        receiveResult = receiveResult.substr(6);
+                        if (objectIsInLocation) {
+                            _currentLocation.addObject(collectedArtefact);
+                        } else {
+                            _inventory.add(collectedArtefact);
+                        };
+                            return receiveResult
+                    };
+
                     resultString += receiveResult;
                 };
 

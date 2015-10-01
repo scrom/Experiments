@@ -1322,6 +1322,27 @@ exports.cantPutObjectInBrokenContainer = function (test) {
 
 exports.cantPutObjectInBrokenContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot put an item from inventory into a broken container." };
 
+exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine = function (test) {
+    var liquidAttributes = { weight: 1, type: "food", canCollect: true, isEdible: true, isLiquid: true};
+    var containerAttributes = { weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, isBreakable: true, holdsLiquid: true };
+    var rum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
+    var soup = new artefact.Artefact('soup', 'soup', 'soup', liquidAttributes, null);
+    var bottle = new artefact.Artefact('bottle', 'bottle', 'bottle', containerAttributes, null);
+    
+    l0.addObject(soup);
+    console.log(bottle.receive(rum));
+    console.log(p0.acceptItem(bottle));
+
+    var expectedResult = "You attempt to add the soup to the bottle but realise it really won't mix well with the rum that's already in there.";
+    var actualResult = p0.get('get', soup.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait", "Liquit Trait", "Get trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
+
 
 exports.canMakeSweetCoffeeByAddingSugarToCup = function (test) {
 

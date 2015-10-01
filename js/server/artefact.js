@@ -2665,38 +2665,53 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (anObject.combinesWithContentsOf(self)) {
                 var newReceiver;
                 var items = _inventory.getAllObjectsAndChildren(false);
-                for (var i=0; i<items.length;i++) {
-                    if (anObject.combinesWith(items[i],true)) {
+                for (var i = 0; i < items.length; i++) {
+                    if (anObject.combinesWith(items[i], true)) {
                         newReceiver = items[i];
                     };
                 };
-
-                var newObject = newReceiver.combineWith(anObject);  
-                var requiredContainer = newObject.getRequiredContainer(); 
+                
+                var newObject = newReceiver.combineWith(anObject);
+                var requiredContainer = newObject.getRequiredContainer();
                 if (requiredContainer) {
-                    if (requiredContainer == self.getName()) {                 
+                    if (requiredContainer == self.getName()) {
                         _inventory.remove(anObject.getName());
-                        _inventory.remove(newReceiver.getName());  
-                        _inventory.add(newObject);   
-                        resultString = "You add "+anObject.getDisplayName()+" to "+self.getDisplayName()+".<br>";
-                        return resultString+tools.initCap(self.getDisplayName())+" now contains "+newObject.getDescription()+".";   
+                        _inventory.remove(newReceiver.getName());
+                        _inventory.add(newObject);
+                        resultString = "You add " + anObject.getDisplayName() + " to " + self.getDisplayName() + ".<br>";
+                        return resultString + tools.initCap(self.getDisplayName()) + " now contains " + newObject.getDescription() + ".";
                     } else {
-                        resultString = "You attempt to make "+newObject.getDescription()+" by adding "+anObject.getDisplayName()+" to "+newReceiver.getDisplayName();
-                        resultString += " in "+self.getDisplayName()+" but you need something else to put "+newObject.getPrefix().toLowerCase()+" in.<br>"
-                    };  
-                } else  {
+                        resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getDisplayName() + " to " + newReceiver.getDisplayName();
+                        resultString += " in " + self.getDisplayName() + " but you need something else to put " + newObject.getPrefix().toLowerCase() + " in.<br>"
+                    };
+                } else {
                     if (self.canCarry(newObject)) {
                         _inventory.remove(anObject.getName());
-                        _inventory.remove(newReceiver.getName());  
-                        _inventory.add(newObject);   
-                        resultString = "You add "+anObject.getDisplayName()+" to "+self.getDisplayName()+".<br>";
-                        return resultString+self.getDisplayName()+" now contains "+newObject.getDescription()+".";
+                        _inventory.remove(newReceiver.getName());
+                        _inventory.add(newObject);
+                        resultString = "You add " + anObject.getDisplayName() + " to " + self.getDisplayName() + ".<br>";
+                        return resultString + self.getDisplayName() + " now contains " + newObject.getDescription() + ".";
                     } else {
-                        resultString = "You attempt to make "+newObject.getDescription()+" by adding "+anObject.getDisplayName()+" to "+newReceiver.getDisplayName();
-                        resultString += " in "+self.getDisplayName()+" but you need something else to put "+newObject.getPrefix().toLowerCase()+" in.<br>"
+                        resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getDisplayName() + " to " + newReceiver.getDisplayName();
+                        resultString += " in " + self.getDisplayName() + " but you need something else to put " + newObject.getPrefix().toLowerCase() + " in.<br>"
                     };
 
                 };
+            } else if (anObject.isLiquid()) {
+                //temporarily remove new liquid to ensure we don't have anything else.
+                _inventory.remove(anObject.getName());
+                var inventoryLiquid = _inventory.getLiquid();
+                if (inventoryLiquid) {
+                    if (inventoryLiquid.getName() != anObject.getName()) {
+                        //we're mixing 2 liquids that shouldn't combine.
+                        _inventory.remove(anObject.getName());
+                        //_inventory.add(//new object of type "nasty goop")  //<-----------------------------------------------------Working here
+                        resultString = "$fail$You attempt to add " + anObject.getDisplayName() + " to " + self.getDisplayName();
+                        return resultString + " but realise it really won't mix well with " + inventoryLiquid.getDisplayName() + " that's already in there.";
+                    };
+                };
+                //re-add liquid 
+                _inventory.add(anObject);
             };
 
             return resultString+self.getDisplayName()+" now contains "+anObject.getDescription();

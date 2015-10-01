@@ -217,6 +217,15 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
             return self.canCarry(anObject);
         };
+        
+        self.getLiquid = function () {
+            //as opposed to "hasLiquid".
+            //only explore items directly in this inventory, no nested items.
+            for (var i = 0; i < _items.length; i++) {
+                if (_items[i].isLiquid()) { return _items[i];};
+            };
+            return null;
+        };
 
         self.canCarry = function(anObject) {
             if (anObject == undefined) {
@@ -676,6 +685,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             //loop thru all containers
             //check canContain
             //if any one is true, add it, if not fail
+            var isLiquid = anObject.isLiquid();
             var requiresContainer = anObject.requiresContainer();
             var requiredContainer = anObject.getRequiredContainer();
             var suitableContainer;
