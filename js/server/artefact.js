@@ -73,7 +73,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _imageName;
         var _smell;
         var _sound;
-        var _taste
+        var _taste;
         var _contagion = [];
         var _antibodies = [];
         var _canDrawOn = false;
@@ -824,6 +824,66 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.isLiquid = function() {
                 return _liquid;
         };
+        
+        self.compareLiquid = function (liquid1, liquid2) {
+            //compare attributes we care about.
+            if (!liquid1.isLiquid() || !liquid2.isLiquid()) {
+                return false;
+            };
+            if (liquid1.getType() != liquid2.getType()) {
+                return false;
+            };
+            if (liquid1.getName() != liquid2.getName()) {
+                return false;
+            };
+            if (liquid1.getDisplayName() != liquid2.getDisplayName()) {
+                return false;
+            };
+            return true;
+
+        };
+        
+        self.combineLiquid = function (consume, keep) {
+            //we assume liquid has already been compared!
+            var consumeAttributes = consume.getCurrentAttributes();
+            var keepAttributes = keep.getCurrentAttributes();
+            var newAttributes = {};
+            for (var attr in keepAttributes) {
+                switch (typeof (keepAttributes[attr])) {
+                    case "number":
+                        if (keepAttributes[attr] == -1 && consumeAttributes[attr] == -1) {
+                            newAttributes[attr] = keepAttributes[attr];
+                        } else {
+                            newAttributes[attr] = keepAttributes[attr] + consumeAttributes[attr];
+                        };
+                        break;
+                    case "string":
+                        newAttributes[attr] = keepAttributes[attr];
+                        break;
+                    case "boolean":
+                        if (keepAttributes[attr] || consumeAttributes[attr]) {
+                            newAttributes[attr] = true;
+                        } else {
+                            newAttributes[attr] = false;
+                        };
+                        break;
+                    case "object":
+                        if (Object.prototype.toString.call(keepAttributes[attr]) === '[object Array]') {
+                            newAttributes[attr] = keepAttributes[attr].concat(consumeAttributes[attr]);
+                        } else {
+                            newAttributes[attr] = keepAttributes[attr]; //just keep the original (@todo - handle this better)
+                        };
+                        break;
+                    default:
+                        newAttributes[attr] = keepAttributes[attr];
+                        break;
+                };
+            };
+            
+            //note we only preserve linked exits and delivery items from the destination item - beware differing objects here!
+            return new Artefact(keep.getName(), keep.getRawDescription(), keep.getRawDetailedDescription(), newAttributes, keep.getLinkedExits(), keep.getDeliveryItems());
+            
+        };
 
         self.isPowder = function() {
                 return _powder;
@@ -893,6 +953,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getRawDescription = function() {
             return _description;
+        };
+        
+        self.getRawDetailedDescription = function () {
+            return _detailedDescription;
         };
 
         self.getPrefix = function() {
@@ -1514,7 +1578,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.combinesWith = function(anObject, crossCheck) {
             if (self.isDestroyed()) {return false;};
             var combinesWithResultArray = self.getCombinesWith();
-            var combinesWithResult
+            var combinesWithResult;
 
             if (Object.prototype.toString.call(combinesWithResultArray) === '[object Array]') {
                     var index = combinesWithResultArray.indexOf(anObject.getName());
@@ -2657,9 +2721,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.getType() == "container" && self.isBroken()) {return tools.initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (self.isDestroyed()) {return tools.initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
             if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked.";};
-            var resultString = "";
-
-            _inventory.add(anObject);
+            var resultString = "";           
 
             //if object combines with something in contents...
             if (anObject.combinesWithContentsOf(self)) {
@@ -2675,7 +2737,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 var requiredContainer = newObject.getRequiredContainer();
                 if (requiredContainer) {
                     if (requiredContainer == self.getName()) {
-                        _inventory.remove(anObject.getName());
                         _inventory.remove(newReceiver.getName());
                         _inventory.add(newObject);
                         resultString = "You add " + anObject.getDisplayName() + " to " + self.getDisplayName() + ".<br>";
@@ -2686,7 +2747,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
                 } else {
                     if (self.canCarry(newObject)) {
-                        _inventory.remove(anObject.getName());
                         _inventory.remove(newReceiver.getName());
                         _inventory.add(newObject);
                         resultString = "You add " + anObject.getDisplayName() + " to " + self.getDisplayName() + ".<br>";
@@ -2697,23 +2757,34 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
 
                 };
+                
+                //return result
+                return resultString + tools.initCap(self.getDisplayName()) + " now contains " + anObject.getDescription() + ".";
+
             } else if (anObject.isLiquid()) {
-                //temporarily remove new liquid to ensure we don't have anything else.
-                //we'll only add it back if it should be there.
-                _inventory.remove(anObject.getName());
+                //console.log("liquid handling");
                 var inventoryLiquid = _inventory.getLiquid();
                 if (inventoryLiquid) {
                     if (inventoryLiquid.getName() != anObject.getName()) {
                         //we're mixing 2 liquids that shouldn't combine.
                         resultString = "$fail$You attempt to add " + anObject.getDisplayName() + " to " + self.getDisplayName();
                         return resultString + " but realise it really won't mix well with " + inventoryLiquid.getDisplayName() + " that's already in there.";
+                    } else {
+                        //this is a liquid with the same name - is is comparable
+                        if (self.compareLiquid(anObject, inventoryLiquid)) {
+                            var combinedLiquid = self.combineLiquid(anObject, inventoryLiquid);
+                            _inventory.remove(inventoryLiquid.getName());
+                            _inventory.add(combinedLiquid);
+                            //increase attributes of existing inventory object from attributes of the one we're adding
+                            return resultString + self.getPrefix() + " now contains even more " + combinedLiquid.getName() + ".";
+                        };
                     };
                 };
-                //re-add liquid - it's fine to leave in :)
-                _inventory.add(anObject);
             };
-
-            return resultString+self.getDisplayName()+" now contains "+anObject.getDescription();
+            
+            //item didn't combine - add it to inventory
+            _inventory.add(anObject);
+            return "";
         };
 
         self.isOpen = function() {

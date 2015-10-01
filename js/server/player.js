@@ -1223,6 +1223,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var requiresContainer = artefact.requiresContainer();
             if (requiresContainer) {
+                //@todo -  handling of suitable containers here needs some better handling
                 var suitableContainer = _inventory.getSuitableContainer(artefact);
     
                 if (!suitableContainer) { return "Sorry. You can't collect "+artefact.getDisplayName()+" without something suitable to carry "+artefact.getSuffix()+" in.";};
@@ -1232,7 +1233,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
         
             var collectedArtefact = removeObjectFromLocation(artefactName);
-            if (!(collectedArtefact)) { return  "Sorry, it can't be picked up.";}; //just in case it fails for any other reason.
+            //note collectedArtefact and artefact are the same thing.
+            if (!(collectedArtefact)) { return  "Sorry, "+artefact.getPrefix().toLowerCase+" can't be picked up.";}; //just in case it fails for any other reason.
         
             _inventory.add(collectedArtefact);
             return "You "+verb+" "+collectedArtefact.getDisplayName()+".";          
@@ -2168,177 +2170,211 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
         /*Allow player to put something in an object */
-        self.put = function(verb, artefactName, receiverName, requiredContainer){
-                var resultString = "";
+    self.put = function(verb, artefactName, receiverName, requiredContainer){
+            var resultString = "";
 
-                if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
-                if (tools.stringIsEmpty(receiverName)){ return verb+" "+artefactName+" where?";};
-                if (artefactName == "all") {return "Sorry, you'll need to be more specific.";};
+            if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
+            if (tools.stringIsEmpty(receiverName)){ return verb+" "+artefactName+" where?";};
+            if (artefactName == "all") {return "Sorry, you'll need to be more specific.";};
 
-                var artefact = getObjectFromPlayerOrLocation(artefactName);
-                if (!(artefact)) {return notFoundMessage(artefactName);};
-
-                //replace requested artefact name with real name...
-                artefactName = artefact.getName();
-
-                //get receiver if it exists
-                var receiver = getObjectFromPlayerOrLocation(receiverName);
-                if (!(receiver)) {
-                    if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry "+artefact.getDisplayName()+".";};
-                    return notFoundMessage(receiverName);
-                };
-
-                //validate if it's a container
-                if (receiver.getType() == "creature") {
-                    if (receiver.isDead()) {
-                       return  "You're not really qualified as a taxidermist are you? Please stop interfering with corpses.";  
-                    } else {
-                       return  "It's probably better to 'give' "+artefact.getDisplayName()+" to "+receiver.getSuffix()+"."; 
-                    };
-                };
-
-                if (verb == "hide" && _currentLocation.liveCreaturesExist()) { return "You're being watched. Try again when it's a bit quieter around here.";};
-                if (verb == "hide" && receiver.getType() == "container") { return "That's a bit obvious. You'll need to hide "+artefact.getSuffix()+" somewhere else.";};
-
-                //if objects combine together...
-                if (artefact.combinesWith(receiver, true)) {
-                    return self.combine(artefact, receiver)                   
-                };
-                //if object combines with something in contents...
-                if (artefact.combinesWithContentsOf(receiver)) {
-                    var combinesWithResult = artefact.getCombinesWith();
-                    var newReceiver;
-                    //do we have one or more combinesWith items?
-                    if (Object.prototype.toString.call(combinesWithResult) === '[object Array]') {
-                        for (var i=0;i<combinesWithResult.length;i++) {
-                            newReceiver = receiver.getObject(combinesWithResult[i]);
-                            if (newReceiver) {break;};
-                        };
-                    } else {
-                        newReceiver = receiver.getObject(combinesWithResult);
-                    };
-                    return self.combine(artefact, newReceiver)                   
-                } else {
-                    if (verb == "combine") {return "Combining "+artefactName+" and "+receiver.getName()+" doesn't make anything new.";};
-                };
-                
-                //check receiver can carry item (container or not)
-                //@todo - ensure artefact weight doesn't include positioned items
-                if (!(receiver.canContain(artefact))) {
-                    if (receiver.isBroken()){return receiver.getDescriptivePrefix()+" broken. You'll need to fix "+receiver.getSuffix()+" first.";};
-
-                    //is it already there?
-                    if (receiver.getObject(artefactName)) {
-                        if (verb == "hide") {
-                            if (!(artefact.isHidden())) {
-                                artefact.hide();
-                                return "You "+verb+" "+artefact.getDisplayName()+" in "+receiver.getDisplayName()+".";
-                            } else {
-                                return artefact.getDescriptivePrefix()+" already hidden.";
-                            };
-                        } else {
-                            return artefact.getDescriptivePrefix()+" already in "+receiver.getDisplayName()+".";
-                        };
-                    }; 
-                    
-                    if (artefact.isLiquid()||artefact.isPowder()) {
-                        //@todo - should really trap if the liquid/powder was *not* in a container prior to this
-                        var artefactChargesRemaining = artefact.consume();
-                        if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                        if (artefact.isLiquid()) { //not a creature by this point
-                        if (receiver.syn("floor")) {
-                            _currentLocation.addLiquid(artefactName)
-                        } else {
-                            receiver.addLiquid(artefactName);
-                        };
-
-                        if (artefactName == "blood") {
-                            return "Hmm. You're a bit sick aren't you.<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
-                        } else{
-                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
-                        };
-                        };
-                    };                   
-                    
-                    return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 
-                };
-
-
-                //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
-                if (receiver.isLocked()) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" locked.";};
-                if (!(receiver.isOpen())) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" closed.";};
-                //@todo - ensure artefact weight doesn't include positioned items
-                if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getSuffix()+". "+tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
-                
-                //we know they *can* carry it...
-                if (!(artefact.isCollectable())) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
-            
-                if (artefact.isComponentOf(receiver.getName())) {
-                    //check the component isn't broken.
-                    if (!artefact.isIntact()) {
-                        return "It looks like " + artefact.getDisplayName() + " has seen a little too much action.<br>You'll need to find a way to <i>repair</i> " + artefact.getSuffix() + " before you can " + verb + " " + artefact.getSuffix() + " in there.";
-                    };
-                };
-            
-                //"collect" it from its current home.
-                var objectIsInLocation = _currentLocation.objectExists(artefactName, true, false);
-                var collectedArtefact = removeObjectFromPlayerOrLocation(artefactName);
-                if (!(collectedArtefact)) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
-
-                //put the x in the y
-                var receiverDisplayNameString = receiver.getDisplayName();
-                if (_inventory.check(receiver.getName())) {receiverDisplayNameString = "your "+receiver.getName();};
-
-                var artefactDisplayNameString = collectedArtefact.getDisplayName();
-                if (_inventory.check(collectedArtefact.getName())) {artefactDisplayNameString = "your "+collectedArtefact.getName();};
-
-                resultString = "You "+verb+" "+artefactDisplayNameString;
-                if (verb == "attach" || verb == "stick" || verb == "join" || verb == "add") {
-                    if (receiver.getCarryWeight() == 0 || verb == "add") {
-                        resultString += " to "; 
-                    } else {
-                        resultString += " in "; 
-                    };
-                } else if (verb == "collect" ||verb == "pour" || verb == "install" || verb == "insert"){
-                    resultString += " into "; 
-                } else {
-                    resultString += " in ";    
-                };               
-                resultString += receiverDisplayNameString+".<br>";
-
-                var receiveResult = receiver.receive(collectedArtefact, self);
-                //if receiving failed (or combined with something else)...
-                if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
-                    if (receiveResult.indexOf("$fail$") > -1) {
-                        receiveResult = receiveResult.substr(6);
-                        if (objectIsInLocation) {
-                            _currentLocation.addObject(collectedArtefact);
-                        } else {
-                            _inventory.add(collectedArtefact);
-                        };
-                            return receiveResult
-                    };
-
-                    resultString += receiveResult;
-                };
-
-                //did we just add a missing component?
-                if (collectedArtefact.isComponentOf(receiver.getName())) {
-                    //if we have all components and it needs reparing...
-                    if (receiver.checkComponents()) {
-                        resultString += "<br>That's all the missing ingredients in place.";
-                        //would like to attempt an auto-repair here
-                        if (receiver.isBroken()) {     
-                            resultString += "<br>"+receiver.repair(self);                 
-                        };
-                    };
-                } else if (verb == "hide") { //can only hide if not a component
-                    collectedArtefact.hide();
-                };
-
-                return resultString;
-
+            var artefact;
+            if (verb == "collect") {
+                //try location first
+                artefact = getObjectFromLocation(artefactName);
             };
+            if (!(artefact)) {
+                artefact = getObjectFromPlayerOrLocation(artefactName);
+            };
+            
+
+            if (!(artefact)) {return notFoundMessage(artefactName);};
+
+            //replace requested artefact name with real name...
+            artefactName = artefact.getName();
+
+            //get receiver if it exists
+            var receiver = getObjectFromPlayerOrLocation(receiverName);
+            if (!(receiver)) {
+                if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry "+artefact.getDisplayName()+".";};
+                return notFoundMessage(receiverName);
+            };
+
+            //validate if it's a container
+            if (receiver.getType() == "creature") {
+                if (receiver.isDead()) {
+                    return  "You're not really qualified as a taxidermist are you? Please stop interfering with corpses.";  
+                } else {
+                    return  "It's probably better to 'give' "+artefact.getDisplayName()+" to "+receiver.getSuffix()+"."; 
+                };
+            };
+
+            if (verb == "hide" && _currentLocation.liveCreaturesExist()) { return "You're being watched. Try again when it's a bit quieter around here.";};
+            if (verb == "hide" && receiver.getType() == "container") { return "That's a bit obvious. You'll need to hide "+artefact.getSuffix()+" somewhere else.";};
+
+            //if objects combine together...
+            if (artefact.combinesWith(receiver, true)) {
+                return self.combine(artefact, receiver)                   
+            };
+            //if object combines with something in contents...
+            if (artefact.combinesWithContentsOf(receiver)) {
+                var combinesWithResult = artefact.getCombinesWith();
+                var newReceiver;
+                //do we have one or more combinesWith items?
+                if (Object.prototype.toString.call(combinesWithResult) === '[object Array]') {
+                    for (var i=0;i<combinesWithResult.length;i++) {
+                        newReceiver = receiver.getObject(combinesWithResult[i]);
+                        if (newReceiver) {break;};
+                    };
+                } else {
+                    newReceiver = receiver.getObject(combinesWithResult);
+                };
+                return self.combine(artefact, newReceiver)                   
+            } else {
+                if (verb == "combine") {return "Combining "+artefactName+" and "+receiver.getName()+" doesn't make anything new.";};
+            };
+                
+            //check receiver can carry item (container or not)
+            //@todo - ensure artefact weight doesn't include positioned items
+            if (!(receiver.canContain(artefact))) {
+                if (receiver.isBroken()){return receiver.getDescriptivePrefix()+" broken. You'll need to fix "+receiver.getSuffix()+" first.";};
+
+                //is it already there?
+                if (receiver.getObject(artefactName)) {
+                    if (verb == "hide") {
+                        if (!(artefact.isHidden())) {
+                            artefact.hide();
+                            return "You "+verb+" "+artefact.getDisplayName()+" in "+receiver.getDisplayName()+".";
+                        } else {
+                            return artefact.getDescriptivePrefix()+" already hidden.";
+                        };
+                    } else {
+                        return artefact.getDescriptivePrefix()+" already in "+receiver.getDisplayName()+".";
+                    };
+                }; 
+                    
+                if (artefact.isLiquid()||artefact.isPowder()) {
+                    //@todo - should really trap if the liquid/powder was *not* in a container prior to this
+                    var artefactChargesRemaining = artefact.consume();
+                    if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
+                    if (artefact.isLiquid()) { //not a creature by this point
+                    if (receiver.syn("floor")) {
+                        _currentLocation.addLiquid(artefactName)
+                    } else {
+                        receiver.addLiquid(artefactName);
+                    };
+
+                    if (artefactName == "blood") {
+                        return "Hmm. You're a bit sick aren't you.<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
+                    } else{
+                        return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
+                    };
+                    };
+                };                   
+                    
+                return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 
+            };
+
+
+            //we'll only get this far if there is an object to give and a valid receiver - note the object *could* be a live creature!
+            if (receiver.isLocked()) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" locked.";};
+            if (!(receiver.isOpen())) { return  "Sorry, "+receiver.getDescriptivePrefix().toLowerCase()+" closed.";};
+            //@todo - ensure artefact weight doesn't include positioned items
+            if (!(receiver.canCarry(artefact))) { return  "Sorry, "+receiver.getDisplayName()+" can't carry "+artefact.getSuffix()+". "+tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment.";};
+                
+            //we know they *can* carry it...
+            if (!(artefact.isCollectable())) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
+            
+            if (artefact.isComponentOf(receiver.getName())) {
+                //check the component isn't broken.
+                if (!artefact.isIntact()) {
+                    return "It looks like " + artefact.getDisplayName() + " has seen a little too much action.<br>You'll need to find a way to <i>repair</i> " + artefact.getSuffix() + " before you can " + verb + " " + artefact.getSuffix() + " in there.";
+                };
+            };
+            
+            //"collect" it from its current home.
+            var objectIsInLocation = _currentLocation.objectExists(artefactName, true, false);
+            var collectedArtefact;
+            if (objectIsInLocation) {
+                //console.log("collecting from location");
+                //try location first
+                collectedArtefact = getObjectFromLocation(artefactName);
+            };
+            if (!(collectedArtefact)) {
+                collectedArtefact = getObjectFromPlayerOrLocation(artefactName);
+            };
+            if (!(collectedArtefact)) { return "XXSorry, " + artefact.getSuffix() + " can't be picked up."; };
+
+            //put the x in the y
+            var receiverDisplayNameString = receiver.getDisplayName();
+            if (_inventory.check(receiver.getName())) {receiverDisplayNameString = "your "+receiver.getName();};
+
+            var artefactDisplayNameString = collectedArtefact.getDisplayName();
+            if (!objectIsInLocation) {artefactDisplayNameString = "your "+collectedArtefact.getName();};
+
+            resultString = "You "+verb+" "+artefactDisplayNameString;
+            if (verb == "attach" || verb == "stick" || verb == "join" || verb == "add") {
+                if (receiver.getCarryWeight() == 0 || verb == "add") {
+                    resultString += " to "; 
+                } else {
+                    resultString += " in "; 
+                };
+            } else if (verb == "collect" ||verb == "pour" || verb == "install" || verb == "insert"){
+                resultString += " into "; 
+            } else {
+                resultString += " in ";    
+            };               
+            resultString += receiverDisplayNameString+".<br>";
+            
+            var collectedArtefactWeight = collectedArtefact.getWeight();
+            var receiveResult = receiver.receive(collectedArtefact, self);
+
+            //if receiving failed (or combined with something else)...
+            if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
+                if (receiveResult.indexOf("$fail$") > -1) {
+                    receiveResult = receiveResult.substr(6);
+                    if (objectIsInLocation) {
+                        _currentLocation.addObject(collectedArtefact);
+                    } else {
+                        _inventory.add(collectedArtefact);
+                    };
+                    
+                    //just return what happened in "receive"
+                    return receiveResult
+                };
+                
+                //build full string
+                resultString += receiveResult;
+            
+            };
+            
+            //did the collected artefact combine with anything?
+            var newObjectWeight = receiver.getInventoryObject().getObject(collectedArtefact.getName());
+            if (collectedArtefactWeight != newObjectWeight) {
+                if (_inventory.check(receiver.getName()) && receiveResult.indexOf(" now contains ") > -1) {
+                    var trimLocation = receiveResult.indexOf(" now contains ") + 14;
+                    receiveResult = "You now have " + receiveResult.substr(trimLocation);
+                };
+                resultString += receiveResult;
+                return resultString;
+            };
+
+            //did we just add a missing component?
+            if (collectedArtefact.isComponentOf(receiver.getName())) {
+                //if we have all components and it needs reparing...
+                if (receiver.checkComponents()) {
+                    resultString += "<br>That's all the missing ingredients in place."; //@todo - improve the wording of this
+                    //would like to attempt an auto-repair here
+                    if (receiver.isBroken()) {     
+                        resultString += "<br>"+receiver.repair(self);                 
+                    };
+                };
+            } else if (verb == "hide") { //can only hide if not a component
+                collectedArtefact.hide();
+            };
+
+            return resultString;
+
+        };
 
 
         self.dismantle = function(verb, artefactName) {

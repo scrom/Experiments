@@ -1296,7 +1296,6 @@ exports.cannotPutObjectInClosedContainer.meta = { traits: ["Player Test", "Inven
 
 
 exports.canPutObjectInOpenContainer = function (test) {
-    p0.get('get', food.getName());
     var expectedResult = "You put the slab of sugary goodness in the container.<br>";
     p0.open('open','container');
     var actualResult = p0.put('put','cake', 'container');
@@ -1342,6 +1341,32 @@ exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine = f
 };
 
 exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait", "Liquit Trait", "Get trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
+
+
+exports.adding2IdenticalLiquidsResultsInMoreLiquid = function (test) {
+    var liquidAttributes = { weight: 1, type: "food", canCollect: true, isEdible: true, isLiquid: true };
+    var containerAttributes = { weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, isBreakable: true, holdsLiquid: true };
+    var rum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
+    var moreRum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
+    var bottle = new artefact.Artefact('bottle', 'bottle', 'bottle', containerAttributes, null);
+    
+    l0.addObject(moreRum);
+    console.log(bottle.receive(rum));
+    console.log(bottle.descriptionWithCorrectPrefix());
+    console.log("before accept: " +bottle.getDetailedDescription());
+    console.log(p0.acceptItem(bottle));
+    console.log("after accept: "+bottle.getDetailedDescription());
+    
+    var expectedResult = "You collect the rum into your bottle.<br>You now have even more rum.";
+    var actualResult = p0.get('get', moreRum.getName());
+    console.log(bottle.getDetailedDescription());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.adding2IdenticalLiquidsResultsInMoreLiquid.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait", "Liquit Trait", "Get trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
 
 
 exports.canMakeSweetCoffeeByAddingSugarToCup = function (test) {
@@ -1409,7 +1434,7 @@ exports.cantPutObjectInItemThatDoesntExist.meta = { traits: ["Player Test", "Inv
 
 
 exports.canPutObjectInNonContainerItemWithCarryWeight = function (test) {
-    p0.get('get', food.getName());
+    //p0.get('get', food.getName());
     var expectedResult = "You put the slab of sugary goodness in the artefact of little consequence.<br>";
     var actualResult = p0.put('put','cake', 'artefact');
     console.log("Expected: "+expectedResult);
@@ -1423,7 +1448,7 @@ exports.canPutObjectInNonContainerItemWithCarryWeight.meta = { traits: ["Player 
 exports.canPutObjectInBrokenNonContainerItemWithCarryWeight = function (test) {
     p0.get('get', food.getName());
     p0.breakOrDestroy('break','glass');
-    var expectedResult = "You put the slab of sugary goodness in the drinking glass.<br>";
+    var expectedResult = "You put your cake in the drinking glass.<br>";
     var actualResult = p0.put('put','cake', 'glass');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
