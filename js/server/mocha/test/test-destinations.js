@@ -72,7 +72,6 @@ describe('Destinations', function() {
         console.log(destinationCreature.tick(15, m0, p0));
         console.log("Prev:" + destinationCreature.getPreviousDestination());
         console.log("Next:" + destinationCreature.getNextDestination());
-        
         var expectedResult = "locked-room"
         var actualResult = destinationCreature.getPreviousDestination();
         console.log("Expected: " + expectedResult);
@@ -111,7 +110,7 @@ describe('Destinations', function() {
         console.log(destinationCreature.tick(1, m0, p0)); //this should clear path
         console.log(destinationCreature.tick(10, m0, p0));
         console.log("Next:" + destinationCreature.getNextDestination());
-        
+        console.log("Current Location: " + destinationCreature.getCurrentLocationName());
         var expectedResult = "locked-room"
         var actualResult = destinationCreature.getNextDestination();
         console.log("Expected: " + expectedResult);

@@ -493,6 +493,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             return false;
         };
+        
+        self.getCustomActionResult = function (verb) {
+            //at the moment we only suppport "defaultResult" - so we don't use "verb"
+            var resultString = self.getDefaultResult();
+            if (resultString) {
+                if (!(resultString.indexOf("$action") > -1)) {
+                    //if we're *not* redirecting to an alternate verb
+                    resultString += "$result";
+                };
+            } else {
+                resultString = ""; 
+            };
+            return resultString;
+
+        };
 
         self.getSmell = function() {
             return _smell;
@@ -2361,8 +2376,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         //reset auto-lock timer
                     };
                     return tools.initCap(_itemDescriptivePrefix) + " already open.";
-                };               
-                return _itemPrefix+" "+doesPlural()+" open.";
+                };
+                if (self.checkCustomAction(verb)) {
+                    return self.getCustomActionResult(verb);
+                } else {
+                    return _itemPrefix + " " + doesPlural() + " open.";
+                };
             };
             if (verb == 'unlock') { return "You "+verb+" "+self.getDisplayName()+"."};
 

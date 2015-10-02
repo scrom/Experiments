@@ -1048,13 +1048,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName, verb);
             if (!(artefact)) {return null;}; //treat this as not understood too
             if (artefact.checkCustomAction(verb)) {
-                var resultString = artefact.getDefaultResult();
-
-                if (!(resultString.indexOf("$action") >-1)) {
-                    //if we're *not* redirecting to an alternate verb
-                    resultString += "$result";
-                };
-                return resultString;
+                return artefact.getCustomActionResult(verb);
             };
 
             return null;              
@@ -1074,8 +1068,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if we define a custom result, return that. Otherwise perform default action.
             var action = artefact.getDefaultAction();
             if (action !="read") { //@todo hack - this needs a proper test to decide what order default actions and results are handled when both are set.
-                var result = artefact.getDefaultResult();
-                if (result) {return result+"$result";};
+                var result = artefact.getCustomActionResult(action);
+                if (result) {return result;};
             };            
             return artefact.getDefaultAction();
         };
@@ -3279,8 +3273,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.getType() != "book" && noteCount == 0) {
                 var result;
                 if (artefact.getDefaultAction() == "read") {
-                    result = artefact.getDefaultResult();
-                    if (result) {return result+"$result";};
+                    result = artefact.getCustomActionResult("read");
+                    if (result) {return result;};
                 };
                 return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";
             };
@@ -3304,8 +3298,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 var result;
                 if (artefact.getDefaultAction() == "read") {
-                    result = artefact.getDefaultResult();
-                    if (result) {resultString += "<br>"+result+"$result";};
+                    result = artefact.getCustomActionResult("read");
+                    if (result) {resultString += "<br>"+result;};
                 };
                 if (!result && newMissions.length == 0 && noteCount == 0) {
                     resultString += "<br>" + artefact.getDescriptivePrefix() + " mildly interesting but you learn nothing new.";

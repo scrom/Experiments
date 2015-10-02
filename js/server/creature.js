@@ -555,8 +555,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false; 
         };
 
+        self.getCustomActionResult = function (verb) {
+            return null;
+        };
+
         self.getDefaultAction = function() {
-            return 'examine';
+            return "examine";
         };
 
         self.getDefaultResult = function() {
@@ -1993,7 +1997,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (_returnHomeIn == 0) {self.setDestination(_homeLocation.getName());}; 
 
                         if (_returnHomeIn <=0) {
-                            _returnHomeIn = 20+Math.floor(Math.random() * 40);
+                            _returnHomeIn = 20+Math.floor(Math.random() * 40); //@todo I'd like the "20" in this to be replaced with game locationCount / 10 so that it varise by game size
                         } else {
                             _returnHomeIn--;   
                         };        
