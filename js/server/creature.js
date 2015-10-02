@@ -1762,8 +1762,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             //turn on delay
             _currentDelay = 0;
+            
+            //@todo - add a random response here.
                 
-            return tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
+            return "'Sure. Here you you.'<br>"+tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
         };
 
         self.sell = function (anObjectName, player) {
@@ -3239,8 +3241,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 canUseExit = false;
                             };
 
-                            if (canUseExit) {                                
+                            if (canUseExit) {
                                 exposedItems = self.exposePositionedItems();
+                                self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                            } else {
+                                //need another exit - otherwise they may be trapped!
+                                var failedExit = exit;
+                                var count = 0;
+                                //take a few attempts to find an alternative
+                                while (exit.getDirection() == failedExitDirection() && count < 5) {
+                                    count++;
+                                    exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null); //be willing to double-back.
+                                };
+                                if (!exit) {
+                                    //one more chance
+                                    //accept places they may avoid *and* be willing to double-back and accept exits that may involve exitActions
+                                    exit = _currentLocation.getRandomExit(true, null, _inventory, null); 
+                                };
                                 self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
                             };
                             newLocationName = _currentLocation.getName();
