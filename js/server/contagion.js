@@ -96,6 +96,12 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                 if (_originalDuration > -1) {//if duration is permanent, don't alter it
                     cloneAttributes.duration = Math.round(Math.random() * (_originalDuration * 2)); //between 0 and 2*original
                 };
+                //randomly continue or stop mutating (50% chance)
+                var randomInt = Math.floor(Math.random() * 2);
+                if (randomInt == 0) {
+                    cloneAttributes.mutate = true;
+                };
+                
 
             } else {
                 cloneAttributes.incubationPeriod = _originalIncubationPeriod;

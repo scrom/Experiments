@@ -49,6 +49,7 @@
         "isLiquid": true,
         "canCollect": true,
         "charges": 3,
+        "chargeUnit": "dose",
         "plural": true,
         "affinityModifier": 0,
         "isEdible": true,
@@ -121,11 +122,12 @@
                     "attributes": {
                         "incubationPeriod": 10,
                         "communicability": 0.5,
+                        "mutate": true,
                         "symptoms": [
                             {
                                 "action": "bite",
                                 "frequency": 0.33,
-                                "escalation": 0
+                                "escalation": 0.1
                             }
                         ]
                     }
@@ -166,15 +168,16 @@
                     "attributes": {
                         "incubationPeriod": 6,
                         "communicability": 0.5,
+                        "mutate": true,
                         "symptoms": [
                             {
                                 "action": "bite",
                                 "frequency": 0.33,
-                                "escalation": 0
+                                "escalation": 0.1
                             },
                             {
                                 "action": "hurt",
-                                "health": 3,
+                                "health": 1,
                                 "frequency": 0.1,
                                 "escalation": 0.1
                             }
