@@ -171,6 +171,12 @@
                                 "action": "bite",
                                 "frequency": 0.33,
                                 "escalation": 0
+                            },
+                            {
+                                "action": "hurt",
+                                "health": 3,
+                                "frequency": 0.1,
+                                "escalation": 0.1
                             }
                         ]
                     }
