@@ -1050,7 +1050,7 @@ exports.creatureCanFindBestPathToGoal = function (test) {
     c0.go(null, m.getLocation('atrium'));
 
     var path = c0.findBestPath(destination, m, 100);
-    var targetLength = 10;
+    var targetLength = 11;
     var expected = true;
     var actual = false;
     if (path.length <= targetLength) {actual = true};

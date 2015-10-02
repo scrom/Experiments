@@ -703,7 +703,7 @@ exports.creatureRetaliationCanKillPlayer = function (test) {
     var expected = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage and end up coming worse-off. <br><br>Well that was foolish. You really should look after yourself better. Fortunately, we currently have a special on infinite reincarnation. It'll cost you 100 points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     
     //handle the fact that player may occasionally miss (or not get retaliation).
-    var missed = "You attempt a bare - knuckle fight with the creature.<br>You do no visible damage. ";
+    var missed = "You attempt a bare-knuckle fight with the creature.<br>You do no visible damage. ";
     var actual = missed;
     var attempts = 0;
     while (actual == missed && attempts < 25) {
