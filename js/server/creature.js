@@ -3249,7 +3249,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 var failedExit = exit;
                                 var count = 0;
                                 //take a few attempts to find an alternative
-                                while (exit.getDirection() == failedExitDirection() && count < 5) {
+                                while (exit.getDirection() == failedExit.getDirection() && count < 5) {
                                     count++;
                                     exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null); //be willing to double-back.
                                 };
