@@ -4,98 +4,120 @@
     "displayName": "Smoking area",
     "description": "You're outside the back of the office under the fire escape.",
     "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike"
-      ]
+        "type": "outdoor",
+        "vehiclesAllowed": [
+            "bike"
+        ]
     },
     "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "smoking-area",
-        "destination": "east-end-south-corridor-ground-floor",
-        "hidden": true
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "smoking-area",
-        "destination": "east-bike-racks"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "smoking-area",
-        "destination": "west-bike-racks"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "smoking-area",
-        "destination": "ground-floor-fire-escape",
-        "hidden": true
-      }
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "smoking-area",
+            "destination": "east-end-south-corridor-ground-floor",
+            "hidden": true
+        },
+        {
+            "object": "exit",
+            "longname": "East",
+            "direction": "e",
+            "source": "smoking-area",
+            "destination": "east-bike-racks"
+        },
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "smoking-area",
+            "destination": "west-bike-racks"
+        },
+        {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "smoking-area",
+            "destination": "ground-floor-fire-escape",
+            "hidden": true
+        }
     ],
     "inventory": [
-      {
-        "object": "creature",
-        "name": "cat",
-        "displayname": "the cat",
-        "description": "small tabby cat",
-        "detailedDescription": "It looks like a stray. I think it's hungry.",
-        "attributes": {
-          "weight": 3,
-          "attackStrength": 6,
-          "type": "animal",
-          "health": 25,
-          "affinity": -1,
-          "canTravel": true,
-          "traveller": true,
-          "avoiding": [
-            "office-front",
-            "atrium",
-            "east-end-south-corridor-ground-floor",
-            "first-floor-fire-escape"
-          ],
-          "smell": "As you bend down and sniff the cat, it lashes out at you.",
-          "sound": "Meow."
-        },
-        "synonyms": [
-          "it",
-          "stray",
-          "tabby",
-          "small tabby cat",
-          "small cat",
-          "small tabby",
-          "tabby cat",
-          "stray cat",
-          "kitty",
-          "kitteh",
-          "animal"
+        {
+        "object": "artefact",
+        "template": "fire-door-exterior",
+        "linkedexits": [
+            {
+                "object": "exit",
+                "longname": "North",
+                "direction": "n",
+                "source": "smoking-area",
+                "destination": "east-end-south-corridor-ground-floor",
+                "hidden": true
+            },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "east-end-south-corridor-ground-floor",
+            "destination": "smoking-area",
+            "hidden": true
+          }
         ]
       },
-      {
-        "object": "artefact",
-        "name": "bench",
-        "description": "wooden bench",
-        "detailedDescription": "A comfortable spot to sit and rest for a while.",
-        "attributes": {
-          "defaultAction": "rest",
-          "weight": 80,
-          "carryWeight": 0.1,
-          "type": "bed",
-          "isBreakable": true,
-          "canDrawOn": true
+        {
+            "object": "creature",
+            "name": "cat",
+            "displayname": "the cat",
+            "description": "small tabby cat",
+            "detailedDescription": "It looks like a stray. I think it's hungry.",
+            "attributes": {
+                "weight": 3,
+                "attackStrength": 6,
+                "type": "animal",
+                "health": 25,
+                "affinity": -1,
+                "canTravel": true,
+                "traveller": true,
+                "avoiding": [
+                    "office-front",
+                    "atrium",
+                    "east-end-south-corridor-ground-floor",
+                    "first-floor-fire-escape"
+                ],
+                "smell": "As you bend down and sniff the cat, it lashes out at you.",
+                "sound": "Meow."
+            },
+            "synonyms": [
+                "it",
+                "stray",
+                "tabby",
+                "small tabby cat",
+                "small cat",
+                "small tabby",
+                "tabby cat",
+                "stray cat",
+                "kitty",
+                "kitteh",
+                "animal"
+            ]
         },
-        "synonyms": [
-          "wooden bench",
-          "chair"
-        ]
-      }
+        {
+            "object": "artefact",
+            "name": "bench",
+            "description": "wooden bench",
+            "detailedDescription": "A comfortable spot to sit and rest for a while.",
+            "attributes": {
+                "defaultAction": "rest",
+                "weight": 80,
+                "carryWeight": 0.1,
+                "type": "bed",
+                "isBreakable": true,
+                "canDrawOn": true
+            },
+            "synonyms": [
+                "wooden bench",
+                "chair"
+            ]
+        }
     ]
   }

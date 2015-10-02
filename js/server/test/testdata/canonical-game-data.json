@@ -3622,6 +3622,7 @@
                   "weight": 3,
                   "type": "food",
                   "canCollect": true,
+                  "charges": 1,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 15,
@@ -4304,6 +4305,9 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -5041,6 +5045,49 @@
         "source": "first-floor-fire-escape",
         "destination": "second-floor-fire-escape"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "fire door",
+        "description": "fire door",
+        "detailedDescription": "It's a secure door. These kinds of doors usually only open from the inside.",
+        "attributes": {
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "first-floor-fire-escape",
+            "destination": "servery-main",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "servery-main",
+            "destination": "first-floor-fire-escape",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "door",
+          "fire exit",
+          "exit",
+          "secure door"
+        ]
+      }
     ]
   },
   {
@@ -5394,6 +5441,7 @@
                       "weight": 3,
                       "type": "food",
                       "canCollect": true,
+                      "charges": 1,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 15,
@@ -6073,6 +6121,7 @@
                       "weight": 3,
                       "type": "food",
                       "canCollect": true,
+                      "charges": 1,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 15,
@@ -6439,6 +6488,7 @@
           "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true,
+          "affinityModifier": 0,
           "canDrawOn": true
         },
         "synonyms": [
@@ -6580,25 +6630,46 @@
       },
       {
         "object": "artefact",
-        "name": "coco pops",
-        "description": "bowl of coco pops",
-        "detailedDescription": "They're going a bit soggy but still tasty.",
+        "name": "bowl",
+        "description": "bowl",
+        "detailedDescription": "It's a round, china cereal bowl.",
         "attributes": {
-          "weight": 1,
-          "type": "food",
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
           "canCollect": true,
           "isBreakable": true,
-          "charges": 1,
-          "isEdible": true,
-          "nutrition": 20
+          "affinityModifier": 0
         },
         "synonyms": [
-          "food",
-          "cereal",
-          "bowl",
-          "pops",
-          "coco",
-          "bowl of coco pops"
+          "cereal bowl"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "coco pops",
+            "description": "coco pops",
+            "detailedDescription": "They're going a bit soggy but still tasty.",
+            "attributes": {
+              "weight": 0.5,
+              "type": "food",
+              "requiresContainer": true,
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 20
+            },
+            "synonyms": [
+              "food",
+              "cereal",
+              "pops",
+              "coco"
+            ]
+          }
         ]
       },
       {
@@ -9355,6 +9426,7 @@
                       "weight": 3,
                       "type": "food",
                       "canCollect": true,
+                      "charges": 1,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 15,
@@ -9799,11 +9871,20 @@
           "canCollect": true,
           "isBreakable": true,
           "plural": true,
-          "customAction": "get",
+          "customAction": [
+            "get",
+            "open"
+          ],
           "defaultResult": "These ones aren't yours!"
         },
         "synonyms": [
-          "parcel"
+          "parcel",
+          "amazon parcel",
+          "amazon parcels",
+          "christmas parcel",
+          "christmas parcels",
+          "christmas",
+          "amazon"
         ]
       },
       {
@@ -9820,7 +9901,28 @@
           "post pigeon holes",
           "pigeon holes",
           "pigeon",
-          "holes"
+          "holes",
+          "post holes"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "shelves",
+        "description": "set of suspended shelves",
+        "detailedDescription": "They're plain cheap melamine shelves screwed to the wall.",
+        "attributes": {
+          "extendedInventoryDescription": "Thumbing through the piles of uncollected letters and parcels, you find $inventory.",
+          "carryWeight": 3,
+          "type": "scenery",
+          "plural": true
+        },
+        "synonyms": [
+          "shelf",
+          "melamine",
+          "melamine shelf",
+          "melamine shelves",
+          "parcel shelf",
+          "parcel shelves"
         ]
       }
     ]
@@ -11324,6 +11426,49 @@
         "destination": "second-floor-seating-area-east",
         "hidden": true
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "fire door",
+        "description": "fire door",
+        "detailedDescription": "It's a secure door. These kinds of doors usually only open from the inside.",
+        "attributes": {
+          "weight": 201,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-fire-escape",
+            "destination": "second-floor-seating-area-east",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "second-floor-seating-area-east",
+            "destination": "second-floor-fire-escape",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "door",
+          "fire exit",
+          "exit",
+          "secure door"
+        ]
+      }
     ]
   },
   {
@@ -12077,6 +12222,9 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -12337,6 +12485,7 @@
                       "weight": 3,
                       "type": "food",
                       "canCollect": true,
+                      "charges": 1,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 15,
@@ -12521,22 +12670,47 @@
       },
       {
         "object": "artefact",
-        "name": "marmite",
-        "description": "jar of marmite",
-        "detailedDescription": "Love it or hate it - your choice, but it <i>is</i> full of b-vitamins",
+        "name": "jar",
+        "description": "jar",
+        "detailedDescription": "It's a brown plastic jar (they used to be glass once upon a time).",
         "attributes": {
-          "defaultAction": "eat",
-          "weight": 1,
-          "type": "food",
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 2,
+          "carryWeight": 1,
+          "type": "container",
+          "holdsLiquid": true,
           "canCollect": true,
-          "charges": 2,
-          "isEdible": true,
-          "nutrition": 35
+          "affinityModifier": 0,
+          "canDrawOn": true
         },
         "synonyms": [
           "jar",
           "marmite jar",
-          "food"
+          "plastic jar"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "marmite",
+            "description": "marmite",
+            "detailedDescription": "Love it or hate it - your choice, but it <i>is</i> full of b-vitamins",
+            "attributes": {
+              "defaultAction": "eat",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "canCollect": true,
+              "charges": 2,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 35
+            },
+            "synonyms": [
+              "jar",
+              "marmite jar",
+              "food"
+            ]
+          }
         ]
       },
       {
@@ -12613,6 +12787,7 @@
                   "weight": 1,
                   "type": "food",
                   "canCollect": true,
+                  "charges": 1,
                   "isEdible": true,
                   "nutrition": 45
                 },
@@ -12823,6 +12998,9 @@
           "weight": 200,
           "type": "door",
           "canOpen": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
           "canDrawOn": true
         },
         "linkedexits": [
@@ -12956,22 +13134,45 @@
       },
       {
         "object": "artefact",
-        "name": "shreddies",
-        "description": "bowl of shreddies",
-        "detailedDescription": "Shreddies... 'Cereal in the daytime?!' wow, I've never had that before.",
+        "name": "bowl",
+        "description": "bowl",
+        "detailedDescription": "It's a round, china cereal bowl.",
         "attributes": {
-          "weight": 1,
-          "type": "food",
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
           "canCollect": true,
-          "charges": 1,
-          "isEdible": true,
-          "nutrition": 20
+          "isBreakable": true,
+          "affinityModifier": 0
         },
         "synonyms": [
-          "food",
-          "cereal",
-          "bowl",
-          "bowl of shreddies"
+          "cereal bowl"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "shreddies",
+            "description": "shreddies",
+            "detailedDescription": "Shreddies... 'Cereal in the daytime?!' wow, I've never had that before.",
+            "attributes": {
+              "weight": 0.5,
+              "type": "food",
+              "requiresContainer": true,
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 20
+            },
+            "synonyms": [
+              "food",
+              "cereal",
+              "shreddies"
+            ]
+          }
         ]
       },
       {
@@ -13168,6 +13369,47 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "fire door",
+        "description": "fire door",
+        "detailedDescription": "It's a secure door. These kinds of doors usually only open from the inside.",
+        "attributes": {
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 1,
+          "lockInMoves": 1,
+          "hasLinkedDoor": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "smoking-area",
+            "destination": "east-end-south-corridor-ground-floor",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "east-end-south-corridor-ground-floor",
+            "destination": "smoking-area",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "door",
+          "fire exit",
+          "exit",
+          "secure door"
+        ]
+      },
       {
         "object": "creature",
         "name": "cat",

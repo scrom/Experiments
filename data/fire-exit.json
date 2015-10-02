@@ -7,7 +7,9 @@
     "defaultAction": "open",
     "weight": 200,
     "type": "door",
+    "autoLock": 1,
     "canOpen": true,
+    "hasLinkedDoor":  true,
     "canDrawOn": true
 },
 "synonyms": [

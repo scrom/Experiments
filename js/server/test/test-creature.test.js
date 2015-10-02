@@ -1217,6 +1217,32 @@ exports.unlockedTimedDoorWillRelockAfterTicks = function (test) {
 exports.unlockedTimedDoorWillRelockAfterTicks.meta = { traits: ["Door Trait", "Lock Trait"], description: "Test that a time lock door locks on its own after specified time." };
 
 
+exports.unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage = function (test) {
+    var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    //removeAllDoorsInMap(m);
+    var corridor = m.getLocation('second-floor-east-corridor');
+    p0.setLocation(corridor);
+    
+    var doorOut = corridor.getAllObjectsOfType("door")[0];
+    
+    doorOut.unlock(keyfob, corridor.getName());
+    
+    console.log("Door is locked? " + doorOut.isLocked());
+    
+    console.log("Environment ticks");
+    
+    var expected = "<br>The office door closes and locks shut.<br>";
+    var actual = corridor.tick(2, m, p0);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(expected, actual);
+    test.done();
+};
+exports.unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage.meta = { traits: ["Door Trait", "Lock Trait"], description: "Test that a time lock door locks on its own after specified time." };
+
+
 exports.unlockedTimedDoorWillStayOpenFor1Tick = function (test) {
     var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
     var m = mb.buildMap();

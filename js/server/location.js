@@ -763,7 +763,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                 resultString += _inventory.tick();
             };
             
-            if (player) {
+            if (player && resultString.length > 0) {
                 var playerLocation = player.getCurrentLocation();
                 var playerLocationName = playerLocation.getName();
                 if (self.getName() == playerLocationName) {

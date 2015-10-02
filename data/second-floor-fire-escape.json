@@ -7,27 +7,52 @@
       "type": "outdoor"
     },
     "exits": [
-      {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "second-floor-fire-escape",
-        "destination": "first-floor-fire-escape"
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "second-floor-fire-escape",
-        "destination": "top-fire-escape"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "second-floor-fire-escape",
-        "destination": "second-floor-seating-area-east",
-        "hidden": true
+        {
+            "object": "exit",
+            "longname": "down",
+            "direction": "d",
+            "source": "second-floor-fire-escape",
+            "destination": "first-floor-fire-escape"
+        },
+        {
+            "object": "exit",
+            "longname": "up",
+            "direction": "u",
+            "source": "second-floor-fire-escape",
+            "destination": "top-fire-escape"
+        },
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-fire-escape",
+            "destination": "second-floor-seating-area-east",
+            "hidden": true
+        }
+    ],
+    "inventory": [
+        {
+        "object": "artefact",
+            "template": "fire-door-exterior",
+            "attributes": {"weight": 201},
+        "linkedexits": [
+            {
+                "object": "exit",
+                "longname": "North",
+                "direction": "n",
+                "source": "second-floor-fire-escape",
+                "destination": "second-floor-seating-area-east",
+                "hidden": true
+            },
+            {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "second-floor-seating-area-east",
+            "destination": "second-floor-fire-escape",
+            "hidden": true
+          }
+        ]
       }
     ]
   }

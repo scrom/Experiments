@@ -1,0 +1,22 @@
+﻿{
+"object": "artefact",
+"name": "fire door",
+"description": "fire door",
+"detailedDescription": "It's a secure door. These kinds of doors usually only open from the inside.",
+"attributes": {
+    "weight": 200,
+    "type": "door",
+    "autoLock": 1,
+    "lockable": true,
+    "locked":  true,
+    "canOpen": true,
+    "hasLinkedDoor":  true,
+    "canDrawOn": true
+},
+"synonyms": [
+    "door",
+    "fire exit",
+    "exit",
+    "secure door"
+]
+}

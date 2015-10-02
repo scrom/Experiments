@@ -2945,7 +2945,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
             //if autolock enabled - tick down lock timer,  lock/close (and reset timer) if expired.
             if (_autoLock >= 0 && !_broken && !_destroyed) {
-                if ((_lockable && (!(self.isLocked()))) || (!(_lockable) && self.isOpen())) {
+                if ((_lockable && (!(self.isLocked()))) || self.isOpen()) {
+                    var wasOpen = self.isOpen();
+                    var wasUnLocked = (_lockable && !(self.isLocked()));
                     if (_lockInMoves <= 0) {
                         self.close("close", "");  //close it.                        
                         if (_lockable) {
@@ -2953,15 +2955,25 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             _locked = true;  //force lock - even without key. 
                         };
                         _lockInMoves = _autoLock; //reset lockInMoves for next time.
-
-                        resultString += tools.initCap(self.getDisplayName())+" closes.<br>"
+                        var closeAndLock = "";
+                        if (wasOpen && wasUnLocked) {
+                            closeAndLock += " closes and locks shut";
+                        } else if (wasUnLocked) {
+                            closeAndLock += " locks shut";
+                        } else {
+                            closeAndLock += " closes";
+                        };
+                        closeAndLock += ".<br>";
+                        resultString += tools.initCap(self.getDisplayName()) + closeAndLock;
+                        if (self.getName() == "fire door") {
+                            console.log("debug me");
+                        };
 
                     } else {
                         _lockInMoves--;
                     };
                 };
             };
-
             return resultString;
         };
 

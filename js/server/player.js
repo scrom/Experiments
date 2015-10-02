@@ -3406,7 +3406,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             } else {
 
                 var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
-                for (var l=0;l<linkedDoors.length;l++) {
+                for (var l = 0; l < linkedDoors.length; l++) {                    
+                    if (!(artefact.isLocked()) && linkedDoors[l].isLocked()) {
+                        //issue #371 need to unlock linked doors (even without a key) if successfully opened main door.
+                        var skeletonKeyJSON = {
+                            "object": "artefact",
+                            "name": "skeleton key",
+                            "description": "skeleton key",
+                            "detailedDescription": "This key unlocks everything.",
+                            "attributes": {
+                                "type": "key",
+                                "unlocks": "everything"
+                            }
+                        };
+                        var skeletonKey = _mapBuilder.buildArtefact(skeletonKeyJSON);
+                        linkedDoors[l].unlock(skeletonKey, _currentLocation.getName())
+                    };
                     linkedDoors[l].moveOrOpen(verb, _currentLocation.getName());
                 };
                 resultString += artefact.moveOrOpen(verb, _currentLocation.getName());

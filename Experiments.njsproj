@@ -67,6 +67,7 @@
     <Content Include="data\enterprise-meeting-room.json" />
     <Content Include="data\facilities-area.json" />
     <Content Include="data\finance-area.json" />
+    <Content Include="data\fire-door-exterior.json" />
     <Content Include="data\fire-exit.json" />
     <Content Include="data\first-floor-back-stairs-east.json" />
     <Content Include="data\first-floor-back-stairs-west.json" />

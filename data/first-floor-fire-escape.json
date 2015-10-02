@@ -4,30 +4,54 @@
     "displayName": "Fire escape",
     "description": "You're standing on the first floor of the rear fire escape. You probably shouldn't be here without a good reason.<br>The wind howls across the steel deck. Peering cautiously down over the railings you can see the smoking area and bike racks.",
     "attributes": {
-      "type": "outdoor"
+        "type": "outdoor"
     },
     "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "first-floor-fire-escape",
-        "destination": "servery-main",
-        "hidden": true
-      },
-      {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "first-floor-fire-escape",
-        "destination": "ground-floor-fire-escape"
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "first-floor-fire-escape",
-        "destination": "second-floor-fire-escape"
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "first-floor-fire-escape",
+            "destination": "servery-main",
+            "hidden": true
+        },
+        {
+            "object": "exit",
+            "longname": "down",
+            "direction": "d",
+            "source": "first-floor-fire-escape",
+            "destination": "ground-floor-fire-escape"
+        },
+        {
+            "object": "exit",
+            "longname": "up",
+            "direction": "u",
+            "source": "first-floor-fire-escape",
+            "destination": "second-floor-fire-escape"
+        }
+    ],
+    "inventory": [
+        {
+        "object": "artefact",
+        "template": "fire-door-exterior",
+        "linkedexits": [
+            {
+                "object": "exit",
+                "longname": "North",
+                "direction": "n",
+                "source": "first-floor-fire-escape",
+                "destination": "servery-main",
+                "hidden": true
+            },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "servery-main",
+            "destination": "first-floor-fire-escape",
+            "hidden": true
+          }
+        ]
       }
     ]
   }

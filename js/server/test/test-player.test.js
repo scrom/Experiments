@@ -2604,7 +2604,7 @@ exports.PlayerCanSlipOnWetFloor = function (test) {
     l0.addLiquid("liquid10");
 
     var expectedResult = "<br>As you enter, you slip on the wet floor and injure yourself.<br>You feel weaker. ";
-    var alternateResult = "e are no visible exits.<br><br>You might want to mind out, the floor's slippery here."; //not reliable
+    var alternateResult = "ngle exit to the South.<br><br>You might want to mind out, the floor's slippery here."; //not reliable
     var actualResult = p0.go("n","n", m1).substr(-85);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
