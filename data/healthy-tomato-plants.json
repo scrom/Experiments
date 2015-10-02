@@ -26,7 +26,8 @@
 			"type": "food",
 			"canCollect": true,
 			"plural": true,
-			"isEdible": true,
+            "isEdible": true,
+            "charges": 1,
 			"nutrition": 15,
 			"customAction": [
 			"get"

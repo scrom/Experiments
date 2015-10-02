@@ -49,25 +49,50 @@
         ]
       },
       {
-        "object": "artefact",
-        "name": "marmite",
-        "description": "jar of marmite",
-        "detailedDescription": "Love it or hate it - your choice, but it <i>is</i> full of b-vitamins",
-        "attributes": {
-          "defaultAction": "eat",
-          "weight": 1,
-          "type": "food",
-          "canCollect": true,
-          "charges": 2,
-          "isEdible": true,
-          "nutrition": 35
-        },
-        "synonyms": [
-          "jar",
-          "marmite jar",
-          "food"
-        ]
+  "object": "artefact",
+  "name": "jar",
+  "description": "jar",
+  "detailedDescription": "It's a brown plastic jar (they used to be glass once upon a time).",
+  "attributes": {
+    "extendedInventoryDescription": "There's $inventory in it.",
+    "weight": 2,
+    "carryWeight": 1,
+    "type": "container",
+    "holdsLiquid": true,
+    "canCollect": true,
+    "canDrawOn": true,
+    "affinityModifier": 0
+  },
+  "synonyms": [
+    "jar",
+    "marmite jar",
+    "plastic jar"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "marmite",
+      "description": "marmite",
+      "detailedDescription": "Love it or hate it - your choice, but it <i>is</i> full of b-vitamins",
+      "attributes": {
+        "defaultAction": "eat",
+        "weight": 1,
+        "type": "food",
+        "plural": true,
+        "canCollect": true,
+        "requiresContainer": true,
+        "charges": 2,
+        "isEdible": true,
+        "nutrition": 35
       },
+      "synonyms": [
+        "jar",
+        "marmite jar",
+        "food"
+      ]
+    }
+  ]
+},
       {
         "object": "creature",
         "name": "margaret sexton",
@@ -135,6 +160,7 @@
                   "defaultAction": "eat",
                   "weight": 1,
                   "type": "food",
+                  "charges": 1,
                   "canCollect": true,
                   "isEdible": true,
                   "nutrition": 45

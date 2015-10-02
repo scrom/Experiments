@@ -379,7 +379,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //} else if (self.isDamaged()) {
                 //    state = " damaged ";   
                 } else if (self.isChewed()) {
-                    state = " chewed ";   
+                    if (self.chargesRemaining() > 0) {
+                        //a portion of the item has been eaten, it's not the same as actually chewed
+                        state = " ";
+                    } else {
+                        state = " chewed ";
+                    };  
                 };
 
             };
