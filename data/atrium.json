@@ -187,19 +187,35 @@
           "message": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
         }
       },
+        {
+            "object": "mission",
+            "name": "explorer",
+            "displayName": "find every location",
+            "attributes": {
+                "missionObject": "player"
+            },
+            "conditionAttributes": {
+                "locationsToFind": 0
+            },
+            "reward": {
+                "score": 100,
+                "message": "<br>You're quite the explorer!<br>Congratulations, you've found every location."
+            }
+        },
       {
         "object": "mission",
-        "name": "explorer",
-        "displayName": "find every location",
+        "name": "hunter",
+        "displayName": "successfully hunt 15 times",
         "attributes": {
           "missionObject": "player"
         },
         "conditionAttributes": {
-          "locationsToFind": 0
+          "huntCount": 10
         },
         "reward": {
-          "score": 100,
-          "message": "<br>You're quite the explorer!<br>Congratulations, you've found every location."
+          "score": 50,
+          "hunt": 1,
+          "message": "You're getting pretty slick at this hunting thing. If you're trying to track others down you can probably speed things up by <i>follow</i>ing them from now on."
         }
       },
       {

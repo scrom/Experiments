@@ -421,7 +421,11 @@ exports.Action = function Action(player, map, fileManager) {
                             //"find" is a cheat - disable it for now
                             //if player enters "search for x", we'll have an object 1 (but no object 0).
                         };
-                        break;  
+                        break;
+                    case 'follow':
+                        if (!(_object0)) { _object0 = _object1 };
+                        description = _player.follow(_verb, _object0, map);
+                        break;
                     case 'inspect': 
                     case 'search':  
                         _ticks = 3; //random searching takes a while! - look under/behind x is faster

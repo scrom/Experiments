@@ -570,12 +570,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getReturnDirection = function() {
             return _returnDirection;
         };
+        
+        self.getLastDirection = function () {
+            return _lastDirection;
+        };
 
         self.setReturnDirection = function(direction) {
             if (direction) { 
                 _returnDirection = direction;
             };
             return _returnDirection;
+        };
+        
+        self.setLastDirection = function (direction) {
+            if (direction) {
+                _lastDirection = direction;
+            };
+            return _lastDirection;
         };
 
 
@@ -1953,6 +1964,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             self.setReturnDirection(tools.oppositeOf(direction));
+            self.setLastDirection(direction);
 
             //slowly erode friendly attack count
             if (_friendlyAttackCount >0) {
@@ -3230,7 +3242,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             if (canUseExit) {                                
                                 exposedItems = self.exposePositionedItems();
                                 self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
-                                _lastDirection = exit.getDirection();
                             };
                             newLocationName = _currentLocation.getName();
                         };

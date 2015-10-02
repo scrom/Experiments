@@ -222,7 +222,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.getCreatureTrace = function(creatureName) {
-            if (creatureName == "player") {return self.getPlayerTrace;};
+            if (creatureName == "player") {return self.getPlayerTrace();};
             return _creatureTraces[creatureName];
         };
 
@@ -344,6 +344,40 @@ exports.Location = function Location(name, displayName, description, attributes)
             exitArray.sort(tools.compassSort);
             return exitArray;
         };
+        
+        self.getExitWithNamedCreature = function (creatureName, map, callerInventory) {
+            var exits = self.getAvailableExits(true, callerInventory);
+            for (var e = 0; e < exits.length; e++) {
+                var destinationName = exits[e].getDestinationName();
+                var loc = map.getLocation(destinationName);
+                var creature = loc.getObject(creatureName);
+                if (creature) {
+                    if (creature.getType() != "creature") {
+                        creature = null;
+                    };
+                };
+                var returnExit;
+                if (creature) {
+                    if (creature.getLastDirection() == exits[e].getDirection()) {
+                        //they most likely came from here - but how long ago?
+                        var newTrace = loc.getCreatureTrace(creature.getName());
+                        var compare = Math.floor(map.getLocationCount() / 5)
+                        if (newTrace == compare-1) {
+                            if (returnExit) {
+                                //we already found one creature with the same name who went somewhere at the same time
+                                //so we don't know which way to go 
+                                return null;
+                            };
+                            returnExit = exits[e];
+                        };
+                    };
+
+                };
+            };
+            
+            //we either found 1 or no creatures.
+            return returnExit;
+        };        
 
         self.getExitWithBestTrace = function(creatureName, map, callerInventory) {
             var exits = self.getAvailableExits(true, callerInventory);

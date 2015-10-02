@@ -22,6 +22,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _aggression = 0;
         var _stealth = 1;
         var _hunt = 0;
+        var _huntCount = 0;
         var _killedCount = 0;
         var _bleeding = false;
         var _bleedingHealthThreshold = 50; //health needs to be at 50% or lower to be bleeding.
@@ -282,7 +283,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             if (playerAttributes.aggression != undefined) {_aggression = playerAttributes.aggression;};
             if (playerAttributes.stealth != undefined) {_stealth = playerAttributes.stealth;};
-            if (playerAttributes.hunt != undefined) {_hunt = playerAttributes.hunt;};
+            if (playerAttributes.hunt != undefined) { _hunt = playerAttributes.hunt; };
+            if (playerAttributes.huntCount != undefined) { _huntCount = playerAttributes.huntCount; };
             if (playerAttributes.money != undefined) {_inventory.setCashBalance(playerAttributes.money);};
             if (playerAttributes.carryWeight != undefined) {_inventory.setCarryWeight(playerAttributes.carryWeight);};
             if (playerAttributes.health != undefined) {
@@ -429,7 +431,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_maxHitPoints != 100) {resultString += ',"maxHealth":'+_maxHitPoints;};
             if (_aggression != 0) {resultString += ',"aggression":'+_aggression;};
             if (_stealth != 1) {resultString += ',"stealth":'+_stealth;};
-            if (_hunt != 0) {resultString += ',"hunt":'+_hunt};
+            if (_hunt != 0) { resultString += ',"hunt":' + _hunt };
+            if (_huntCount != 0) { resultString += ',"huntCount":' + _huntCount };
                
             resultString += ',"money":'+_inventory.getCashBalance();
             resultString += ',"carryWeight":'+_inventory.getCarryWeight();
@@ -608,6 +611,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.aggression = _aggression;
             currentAttributes.stealth = _stealth;
             currentAttributes.hunt = _hunt;
+            currentAttributes.huntCount = _huntCount;
             currentAttributes.money = _inventory.getCashBalance();
             currentAttributes.carryWeight = _inventory.getCarryWeight();
             currentAttributes.health = _hitPoints;
@@ -927,6 +931,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //skill used for hunting
             if (_hunt <0) {return 0;}; // safetynet to avoid divide by zero or odd results from caller
             return _hunt;
+        };
+        
+        self.increaseHuntCount = function(increaseBy) {
+            _huntCount += increaseBy;
+        };
+
+        self.getHuntCount = function () {
+            if (_huntCount < 0) { return 0; }; // safetynet to avoid divide by zero or odd results from caller
+            return _huntCount;
         };
 
         self.updateCarryWeight = function (changeBy) {
@@ -3200,7 +3213,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             //are we handling this case explicitly?
             var tempResult = self.customAction(verb, creatureName);
-            if (tempResult) { return tempResult; };          
+            if (tempResult) { return tempResult; };
+            
+            //are they right here?
+            var creature = _currentLocation.getObject(creatureName);
+            if (creature) {
+                if (creature.getType() != "creature") {
+                    creature = null;
+                };
+            };
+            if (creature) {
+                return tools.initCap(creature.getDescriptivePrefix()) + " right here."
+            };                      
 
             if (_hunt <1) {
                 return "Nice try $player. It was worth a shot...<br>You don't have the skills needed to instantly "+verb+" everything that easily.<br>You could <i>ask</i> someone else to <i>find</i> out for you though.";
@@ -3224,8 +3248,48 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 exit = _currentLocation.getExitWithBestTrace(creatureName,map, _inventory);
             };
             //@todo - find an alternative for creature displayName on this response
-            if (!(exit)) {return "There's no sign that "+creature.getDisplayName()+" has been near here recently.";};
-            return "After thorough investigation, you determine your best bet is to try <i>"+exit.getLongName()+"</i> from here.";
+            if (!(exit)) { return "There's no sign that " + creature.getDisplayName() + " has been near here recently."; };
+            self.increaseHuntCount(1);
+            var resultString = "After thorough investigation, you determine your best bet is to try <i>" + exit.getLongName() + "</i> from here.";
+            return resultString;
+        };
+        
+        self.follow = function (verb, creatureName, map) {
+            //are we following a creature that just left?
+            var exit = _currentLocation.getExitWithNamedCreature(creatureName, map, _inventory);
+            if (exit) {
+                return self.go("head", exit.getDirection(), map);
+            };
+            
+            //are they right here?
+            var creature = _currentLocation.getObject(creatureName);
+            if (creature) {
+                if (creature.getType() != "creature") {
+                    creature = null;
+                };
+            };
+            if (creature) {
+                return tools.initCap(creature.getDescriptivePrefix())+" right here."
+            };      
+            
+            //track them down
+            if (_hunt <= 2) {
+                return "You'll need to <i>hunt</i> for them at the moment.";
+            } else {
+                //haz the hunting skillz
+                creature = map.getObject(creatureName);
+                if (creature) {
+                    if (creature.getType() == "creature") {
+                        creatureName = creature.getName();
+                    };
+                };
+
+                exit = _currentLocation.getExitWithBestTrace(creatureName, map, _inventory);
+                if (exit) {
+                    return self.go("head", exit.getDirection(), map);
+                };
+                return "You can't tell which way is the best to follow.";
+            };
         };
 
         self.canRepair = function(anArtefact) {
