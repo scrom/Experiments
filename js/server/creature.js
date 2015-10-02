@@ -3521,6 +3521,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getDestinations = function() {
             return _destinations;
         };
+        
+        self.getClearedDestinations = function () {
+            return _clearedDestinations;
+        };
 
         self.getNextDestination = function() {
             return _destinations[_destinations.length-1];
@@ -3645,6 +3649,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //that they might eventually come back.
                 _clearedDestinations.splice(0, 1);  //remove home location from list
                 _destinations = _destinations.concat(_clearedDestinations);
+                _clearedDestinations = [];
             };
         };
 
