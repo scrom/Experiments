@@ -3249,16 +3249,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 var failedExit = exit;
                                 var count = 0;
                                 //take a few attempts to find an alternative
-                                while (exit.getDirection() == failedExit.getDirection() && count < 5) {
+                                while (!exit && count < 5) {
                                     count++;
                                     exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null); //be willing to double-back.
+                                    if (exit) {
+                                        if (exit.getDirection() == failedExit.getDirection()) {
+                                            exit = null;
+                                        };
+                                    };                                    
                                 };
                                 if (!exit) {
                                     //one more chance
                                     //accept places they may avoid *and* be willing to double-back and accept exits that may involve exitActions
                                     exit = _currentLocation.getRandomExit(true, null, _inventory, null); 
                                 };
-                                self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                                if (exit) {
+                                    self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                                } else {
+                                    console.log("Warning: Creature'" + self.getName() + "' stuck in location '" + _currentLocation.getName());
+                                };
                             };
                             newLocationName = _currentLocation.getName();
                         };
