@@ -37,6 +37,7 @@
     <Content Include="data\basin.json" />
     <Content Include="data\batteries.json" />
     <Content Include="data\bike-ambulance.json" />
+    <Content Include="data\bowl.json" />
     <Content Include="data\buenosaires.json" />
     <Content Include="data\camelids-a.json" />
     <Content Include="data\camelids-b.json" />

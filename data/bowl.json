@@ -1,0 +1,17 @@
+﻿{
+    "object": "artefact",
+    "name": "bowl",
+    "description": "bowl",
+    "detailedDescription": "A round bowl",
+    "attributes": {
+        "extendedInventoryDescription": "There's $inventory in it.",
+        "weight": 0.5,
+        "carryWeight": 0.5,
+        "attackStrength": 1,
+        "type": "container",
+        "holdsLiquid": true,
+        "canCollect": true,
+        "isBreakable": true,
+        "affinityModifier": 0
+    }
+}

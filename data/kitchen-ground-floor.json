@@ -87,7 +87,8 @@
                 "holdsLiquid": true,
                 "canCollect": true,
                 "isBreakable": true,
-                "canDrawOn": true
+                "canDrawOn": true,
+                "affinityModifier": 0
             },
             "synonyms": [
                 "jar",
@@ -160,16 +161,25 @@
                 "coffee mug"
             ]
         },
-        {
+              {
+        "object": "artefact",
+        "template": "bowl",
+        "detailedDescription": "It's a round, china cereal bowl.",
+        "synonyms": [
+          "cereal bowl"
+        ],
+        "inventory":[
+          {
             "object": "artefact",
             "name": "coco pops",
-            "description": "bowl of coco pops",
+            "description": "coco pops",
             "detailedDescription": "They're going a bit soggy but still tasty.",
             "attributes": {
-                "weight": 1,
+                "weight": 0.5,
                 "type": "food",
+                "plural": true,
                 "canCollect": true,
-                "isBreakable": true,
+                "requiresContainer": true,
                 "charges": 1,
                 "isEdible": true,
                 "nutrition": 20
@@ -177,12 +187,12 @@
             "synonyms": [
                 "food",
                 "cereal",
-                "bowl",
                 "pops",
-                "coco",
-                "bowl of coco pops"
+                "coco"
             ]
-        },
+        }
+        ]
+      },
         {
             "object": "artefact",
             "name": "coffee machine",
