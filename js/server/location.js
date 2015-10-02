@@ -307,7 +307,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
 
-        self.getAvailableExits = function (includeUnlockedDoors, callerInventory) {
+        self.getAvailableExits = function (includeUnlockedDoors, callerInventory, useEmergencyDoors) {
             var exitArray = [];
             for(var i = 0; i < _exits.length; i++) {
                 if (typeof _exits[i] == "object") {
@@ -320,15 +320,16 @@ exports.Location = function Location(name, displayName, description, attributes)
                                 if (doors[d].isLocked()) {
                                     key = doors[d].getMatchingKey("unlock", callerInventory);
                                 };
-                                
-                                //doore is either unlocked or we have a key
+                                                                
+                                if (doors[d].getSubType() != "emergency" || useEmergencyDoors) {
+                                //door is either unlocked or we have a key
                                 if ((!(doors[d].isLocked())) || key) {
                                     //console.log(doors[d].getName());
                                     var linkedExits = doors[d].getLinkedExits();
-                                    if (linkedExits.length == 0) {continue;};
-                                    for (var l=0;l<linkedExits.length;l++) {
+                                    if (linkedExits.length == 0) { continue; };
+                                    for (var l = 0; l < linkedExits.length; l++) {
                                         //console.log(linkedExits[l].toString());
-                                        if (linkedExits[l].getSourceName()==self.getName()) {
+                                        if (linkedExits[l].getSourceName() == self.getName()) {
                                             if (linkedExits[l].getDirection() == _exits[i].getDirection()) {
                                                 //we have a matching exit with a door
                                                 exitArray.push(_exits[i]);
@@ -336,6 +337,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                                         };
                                     };
                                 };
+                            };
                             };
                         };
                     };
@@ -396,9 +398,9 @@ exports.Location = function Location(name, displayName, description, attributes)
             return bestTraceExit;
         };
 
-        self.getRandomExit = function(includeUnlockedDoors, avoidLocations, callerInventory, lastDirection) {
+        self.getRandomExit = function(includeUnlockedDoors, avoidLocations, callerInventory, lastDirection, useEmergencyDoors) {
             if (!(avoidLocations)) {avoidLocations = [];};
-            var allAvailableExits = self.getAvailableExits(includeUnlockedDoors, callerInventory);
+            var allAvailableExits = self.getAvailableExits(includeUnlockedDoors, callerInventory, useEmergencyDoors);
             var availableExits = [];
 
             //filter out avoid locations...

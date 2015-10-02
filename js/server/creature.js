@@ -3152,7 +3152,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //this stops creatures getting stuck behind "avoided" locations.
                     if (!(exit)) {
                         //console.log("getting random exit");
-                        exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection);
+                        exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection, true);
                     };
                         
                     //if only one exit, random exit won't work so either get the only one we can or hang around a moment...
@@ -3251,7 +3251,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 //take a few attempts to find an alternative
                                 while (!exit && count < 5) {
                                     count++;
-                                    exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null); //be willing to double-back.
+                                    exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null, false); //be willing to double-back.
                                     if (exit) {
                                         if (exit.getDirection() == failedExit.getDirection()) {
                                             exit = null;
@@ -3261,7 +3261,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 if (!exit) {
                                     //one more chance
                                     //accept places they may avoid *and* be willing to double-back and accept exits that may involve exitActions
-                                    exit = _currentLocation.getRandomExit(true, null, _inventory, null); 
+                                    exit = _currentLocation.getRandomExit(true, null, _inventory, null, false); 
                                 };
                                 if (exit) {
                                     self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));

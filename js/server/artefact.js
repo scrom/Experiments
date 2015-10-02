@@ -328,6 +328,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var validobjectTypes = ["weapon","property","medical", "cure","book","junk","treasure","food","tool","door","container", "key", "bed", "light", "scenery", "writing", "vehicle", "computer"];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.log(_name+' type validated: '+type);
+            if (type == "door") {
+                var validDoorSubTypes = ["", "emergency"];
+                if (validDoorSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
+                //console.log(_name+' subtype validated: '+subType);
+            };
 
             if (type == "weapon") {
                 var validWeaponSubTypes = ["","blunt","sharp","projectile"];
