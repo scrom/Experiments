@@ -1340,7 +1340,7 @@ exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine = f
     test.done();
 };
 
-exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait", "Liquit Trait", "Get trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
+exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait", "Liquid Trait", "Get trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
 
 
 exports.adding2IdenticalLiquidsResultsInMoreLiquid = function (test) {
@@ -1366,7 +1366,34 @@ exports.adding2IdenticalLiquidsResultsInMoreLiquid = function (test) {
     test.done();
 };
 
-exports.adding2IdenticalLiquidsResultsInMoreLiquid.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait", "Liquit Trait", "Get trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
+exports.adding2IdenticalLiquidsResultsInMoreLiquid.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Container Trait", "Liquid Trait", "Get trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
+
+exports.adding2IdenticalLiquidsModifiesRemainderAttributes = function (test) {
+    var liquidAttributes = { weight: 1, type: "food", canCollect: true, isEdible: true, isLiquid: true };
+    var containerAttributes = { weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, isBreakable: true, holdsLiquid: true };
+    var rum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
+    var moreRum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
+    var bottle = new artefact.Artefact('bottle', 'bottle', 'bottle', containerAttributes, null);
+    
+    l0.addObject(moreRum);
+    console.log(bottle.receive(rum));
+    console.log(bottle.descriptionWithCorrectPrefix());
+    console.log("before accept: " + bottle.getDetailedDescription());
+    console.log(p0.acceptItem(bottle));
+    console.log("after accept: " + bottle.getDetailedDescription());
+    p0.get('get', moreRum.getName());
+    
+    var combinedRum = bottle.getObject("rum");
+    var expectedResult = '{"object":"artefact","name":"rum","description":"rum","detailedDescription":"rum","attributes":{"weight":2,"type":"food","requiresContainer":true,"isLiquid":true,"canCollect":true,"plural":true,"affinityModifier":2,"isEdible":true}}';
+    var actualResult = combinedRum.toString();
+    console.log(bottle.getDetailedDescription());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.adding2IdenticalLiquidsModifiesRemainderAttributes.meta = { traits: ["Player Test", "Container Trait", "Liquid Trait", "Combine Trait"], description: "Test that a player cannot collect a liquid into a container that already contains a liquid that won't combine." };
 
 
 exports.canMakeSweetCoffeeByAddingSugarToCup = function (test) {
