@@ -27,7 +27,13 @@
                 "defaultResult": "These ones aren't yours!"
             },
             "synonyms": [
-                "parcel"
+                "parcel",
+                "amazon parcel",
+                "amazon parcels",
+                "christmas parcel",
+                "christmas parcels",
+                "christmas",
+                "amazon"
             ]
         },
         {
@@ -44,7 +50,28 @@
                 "post pigeon holes",
                 "pigeon holes",
                 "pigeon",
-                "holes"
+                "holes",
+                "post holes"
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "shelves",
+            "description": "set of suspended shelves",
+            "detailedDescription": "They're plain cheap melamine shelves screwed to the wall.",
+            "attributes": {
+                "type": "scenery",
+                "extendedInventoryDescription": "Thumbing through the piles of uncollected letters and parcels, you find $inventory.",
+                "carryWeight": 3,
+                "plural": true
+            },
+            "synonyms": [
+                "shelf",
+                "melamine",
+                "melamine shelf",
+                "melamine shelves",
+                "parcel shelf",
+                "parcel shelves"
             ]
         }
     ]
