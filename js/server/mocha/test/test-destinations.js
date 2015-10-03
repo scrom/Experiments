@@ -91,7 +91,9 @@ describe('Destinations', function() {
         //p0.setLocation(home);
         var autoLock = m0.getLocation("autolock-room");
         var lockedRoom = m0.getLocation("locked-room");
+        var home = m0.getLocation("home");
         var door = lockedRoom.getObject("door");
+        var outerDoor = home.getObject("lockable door");
         p0.setStartLocation(autoLock);
         p0.setLocation(autoLock);
         
@@ -99,17 +101,29 @@ describe('Destinations', function() {
         var key = destinationCreature.getInventoryObject().remove("door key");
         
         //destinationCreature should take 4 ticks to reach first destination.
+        console.log("<----starting test proper")
         console.log("Destinations: " + destinationCreature.getDestinations());
-        console.log("Next:" + destinationCreature.getNextDestination());
+        console.log("Next Destination at start:" + destinationCreature.getNextDestination());
         console.log(destinationCreature.tick(10, m0, p0));
-        console.log("Next:" + destinationCreature.getNextDestination());
+        console.log("Next Destination after 10 ticks:" + destinationCreature.getNextDestination());
         door.unlock(key, "locked-room");
+        outerDoor.unlock(key, "home");
+        console.log("room unlocked (at 10 ticks) - timer should reset");
         console.log(destinationCreature.tick(1, m0, p0));
-        console.log("Next:" + destinationCreature.getNextDestination());
+        console.log("Next Destination after 1 tick:" + destinationCreature.getNextDestination());
+        console.log("Current Location: " + destinationCreature.getCurrentLocationName());
+        console.log("Path? "+ destinationCreature.getPath());
+        door.close("close", "locked-room");
         door.lock(key, "locked-room");
-        console.log(destinationCreature.tick(1, m0, p0)); //this should clear path
-        console.log(destinationCreature.tick(10, m0, p0));
-        console.log("Next:" + destinationCreature.getNextDestination());
+        outerDoor.close("close", "home");
+        outerDoor.lock(key, "home");
+        console.log("room locked at 11 ticks");
+        console.log(destinationCreature.tick(3, m0, p0)); //this should clear path
+        console.log("Next Destination after 14 ticks:" + destinationCreature.getNextDestination());
+        console.log(destinationCreature.tick(1, m0, p0));
+        console.log("Next Destination after 15 ticks:" + destinationCreature.getNextDestination());
+        console.log(destinationCreature.tick(3, m0, p0));
+        console.log("Next Destination after 18 ticks:" + destinationCreature.getNextDestination());
         console.log("Current Location: " + destinationCreature.getCurrentLocationName());
         var expectedResult = "locked-room"
         var actualResult = destinationCreature.getNextDestination();

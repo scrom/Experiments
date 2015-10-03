@@ -289,10 +289,10 @@ exports.Location = function Location(name, displayName, description, attributes)
             };  
         };
 
-        self.getDoorForExit = function(direction) {
+        self.getDoorForExit = function(direction, includeLockedDoors) {
             var doors = self.getAllObjectsOfType("door");
             for (var d=0;d<doors.length;d++) {
-                if (!(doors[d].isLocked())) {
+                if ((!(doors[d].isLocked())) || includeLockedDoors) {
                     var linkedExits = doors[d].getLinkedExits();
                     for (var l=0;l<linkedExits.length;l++) {
                         if (linkedExits[l].getSourceName()==self.getName()) {
@@ -307,45 +307,93 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
 
-        self.getAvailableExits = function (includeUnlockedDoors, callerInventory, useEmergencyDoors) {
+        self.getAvailableExits = function (includeUsableDoors, callerInventory, useEmergencyDoors) {
             var exitArray = [];
-            for(var i = 0; i < _exits.length; i++) {
-                if (typeof _exits[i] == "object") {
-                    if (_exits[i].isVisible()){exitArray.push(_exits[i]);}
-                    else { //exit is not visible
-                        if (includeUnlockedDoors) {
-                            var doors = self.getAllObjectsOfType("door");
-                            for (var d = 0; d < doors.length; d++) {
-                                var key;
-                                if (doors[d].isLocked()) {
-                                    key = doors[d].getMatchingKey("unlock", callerInventory);
-                                };
-                                                                
-                                if (doors[d].getSubType() != "emergency" || useEmergencyDoors) {
-                                //door is either unlocked or we have a key
-                                if ((!(doors[d].isLocked())) || key) {
-                                    //console.log(doors[d].getName());
-                                    var linkedExits = doors[d].getLinkedExits();
-                                    if (linkedExits.length == 0) { continue; };
-                                    for (var l = 0; l < linkedExits.length; l++) {
-                                        //console.log(linkedExits[l].toString());
-                                        if (linkedExits[l].getSourceName() == self.getName()) {
-                                            if (linkedExits[l].getDirection() == _exits[i].getDirection()) {
-                                                //we have a matching exit with a door
-                                                exitArray.push(_exits[i]);
-                                            };
-                                        };
-                                    };
-                                };
-                            };
-                            };
-                        };
-                    };
+            for (var i = 0; i < _exits.length; i++) {
+                if (typeof _exits[i] != "object") {
+                    //no, not usable - probably bad data
+                    continue;
                 };
+                if (_exits[i].isVisible()) {
+                    //yes, this one's usable
+                    exitArray.push(_exits[i]);
+                    continue;
+                }
+                //exit is not visible
+                if (!includeUsableDoors) {
+                    //no, this one's not usable
+                    continue;
+                };
+                
+                //find maching door
+                var door = self.getDoorForExit(_exits[i].getDirection(), true);
+                if (!door) {
+                    //no door available
+                    continue;
+                };
+                if (door.getSubType() == "emergency" && !useEmergencyDoors) {
+                    //no, caller has asked not to use an emergency door
+                    continue;
+                };
+
+                if (!door.isLocked()) {
+                    //yes, this one's usable - it's not locked
+                    exitArray.push(_exits[i]);
+                    continue;
+                };
+                
+                var key = door.getMatchingKey("unlock", callerInventory);
+                if (key) {
+                    //yes, we have a key that'll work
+                    exitArray.push(_exits[i]);
+                    continue;
+                };
+
             };
             exitArray.sort(tools.compassSort);
             return exitArray;
         };
+
+        self.getRandomExit = function(includeUsableDoors, avoidLocations, callerInventory, lastDirection, useEmergencyDoors, useExitActions) {
+            if (!(avoidLocations)) {avoidLocations = [];};
+            var allAvailableExits = self.getAvailableExits(includeUsableDoors, callerInventory, useEmergencyDoors);
+            var availableExits = [];
+
+            //filter out locations to try and avoid...
+            for (var e = 0; e < allAvailableExits.length; e++) {
+                if (lastDirection) {
+                    if (allAvailableExits[e].getDirection() == tools.oppositeOf(lastDirection)) {
+                        //doubling back - don't use this exit
+                        continue;
+                    };
+                };
+                if (avoidLocations.indexOf(allAvailableExits[e].getDestinationName()) > -1) {
+                    //avoid - don't use this exit
+                    continue;
+                };
+                
+                var exitAction = allAvailableExits[e].getRequiredAction();
+                if (exitAction == "drive" || exitAction == "fly" || exitAction == "sail" || exitAction == "ride") {
+                    //can't do these things at the moment
+                    continue;
+                };
+                if (exitAction) {
+                    if (!(useExitActions || exitAction == "")) {
+                        //can't use if not using exit actions and exit action is set to a real value
+                        continue;
+                    };
+                };
+                                              
+                //use this one
+                availableExits.push(allAvailableExits[e]);
+
+            };
+
+            var randomInt = Math.floor(Math.random() * (availableExits.length));
+            //console.log('Random exit selected: '+availableExits[randomInt].getDirection());
+            return availableExits[randomInt];
+        };
+        
         
         self.getExitWithNamedCreature = function (creatureName, map, callerInventory) {
             var exits = self.getAvailableExits(true, callerInventory);
@@ -364,7 +412,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                         //they most likely came from here - but how long ago?
                         var newTrace = loc.getCreatureTrace(creature.getName());
                         var compare = Math.floor(map.getLocationCount() / 5)
-                        if (newTrace == compare-1) {
+                        if (newTrace == compare - 1) {
                             if (returnExit) {
                                 //we already found one creature with the same name who went somewhere at the same time
                                 //so we don't know which way to go 
@@ -379,13 +427,13 @@ exports.Location = function Location(name, displayName, description, attributes)
             
             //we either found 1 or no creatures.
             return returnExit;
-        };        
-
-        self.getExitWithBestTrace = function(creatureName, map, callerInventory) {
+        };
+        
+        self.getExitWithBestTrace = function (creatureName, map, callerInventory) {
             var exits = self.getAvailableExits(true, callerInventory);
             var bestTraceStrength = 0;
             var bestTraceExit;
-            for (var e=0;e<exits.length;e++) {
+            for (var e = 0; e < exits.length; e++) {
                 var destinationName = exits[e].getDestinationName();
                 var loc = map.getLocation(destinationName);
                 var newTrace = loc.getCreatureTrace(creatureName);
@@ -394,50 +442,10 @@ exports.Location = function Location(name, displayName, description, attributes)
                     bestTraceStrength = newTrace;
                 };
             };
-
+            
             return bestTraceExit;
         };
 
-        self.getRandomExit = function(includeUnlockedDoors, avoidLocations, callerInventory, lastDirection, useEmergencyDoors) {
-            if (!(avoidLocations)) {avoidLocations = [];};
-            var allAvailableExits = self.getAvailableExits(includeUnlockedDoors, callerInventory, useEmergencyDoors);
-            var availableExits = [];
-
-            //filter out avoid locations...
-            for (var e=0;e<allAvailableExits.length;e++) {
-                if (avoidLocations.indexOf(allAvailableExits[e].getDestinationName()) == -1) {
-                    //not an avoid location. So now ensure it's not where we just came from
-                    if (allAvailableExits[e].getDirection() != tools.oppositeOf(lastDirection)) {
-                        availableExits.push(allAvailableExits[e]);
-                    };
-                };
-            };
-
-            //if there's nowhere else go go *except* an avoided location, then it's an option they have to take...
-            if (availableExits.length == 0) {
-                availableExits = allAvailableExits;
-            };
-
-            var randomInt = 0;
-            if (availableExits.length <= 1) {
-                //give them a 50% chance of being able to use the only available exit
-                randomInt = Math.floor(Math.random() * 2);
-                if (randomInt != 0) {
-                    return null;
-                };
-            } else {
-                //(slightly rebalance trying to catch up with wandering/escaping creatures).
-                //if there's more than 1 exit, 1 in 3 chance of staying where they are 
-                randomInt = Math.floor(Math.random() * 3);
-                if (randomInt == 0) {
-                    return null;
-                };
-            };
-
-            randomInt = Math.floor(Math.random() * (availableExits.length));
-            //console.log('Random exit selected: '+availableExits[randomInt].getDirection());
-            return availableExits[randomInt];
-        };
 
         self.allowsVehicle = function(vehicle) {
             if (!vehicle) {return true;};

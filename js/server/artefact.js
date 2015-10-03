@@ -2849,7 +2849,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             keys = keys.concat(_inventory.getAllObjectsOfType('key'));
             keys = keys.concat(_inventory.getAllObjectsOfType('tool'));
             for(var index = 0; index < keys.length; index++) {
-                //player must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
+                //caller must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
                 if (((!(keys[index].isBreakable()))||verb == "pick"||verb == "dismantle")) {
                     if (keys[index].keyTo(self)) {
                         //console.log('Key found for: '+self.getName());

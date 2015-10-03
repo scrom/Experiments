@@ -1902,7 +1902,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 var retryCount = 0;
                 _avoiding.push(playerLocation.getName()); //avoid player location             
                 for (var i=0; i<fearLevel; i++) {
-                    var exit = _currentLocation.getRandomExit(false, _avoiding, _inventory);
+                    var exit = _currentLocation.getRandomExit(false, _avoiding, _inventory, null, true, true);
                     if (exit) {
                         if (!(fled)) {
                             var movementVerb = "flees";
@@ -2984,6 +2984,131 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             return resultString;
         };
+        
+        var closePreviouslyOpenedDoors = function (map) {
+            //did we open a door on the last move?
+            //close it again before changing location
+            if (_openedDoor) {
+                _openedDoor = false;
+                var returnDoor = _currentLocation.getDoorForExit(self.getReturnDirection(), false);
+                if (returnDoor) {
+                    //retrieve key only if door does not auto-lock;
+                    var key;
+                    if (!(returnDoor.hasAutoLock())) {
+                        key = returnDoor.getMatchingKey("lock", _inventory);
+                    };
+                    var linkedDoors = returnDoor.getLinkedDoors(map, _currentLocation.getName());
+                    for (var l = 0; l < linkedDoors.length; l++) {
+                        //if we have a key and door does not auto-lock, lock the original door behind us
+                        if (key) {
+                            linkedDoors[l].lock(key, _currentLocation.getName());
+                        } else {
+                            linkedDoors[l].close("close", _currentLocation.getName());
+                        };
+                    };
+                    
+                    //lock the new side we're on as well if the same key fits
+                    if (key) {
+                        returnDoor.lock(key, _currentLocation.getName());
+                        if (returnDoor.isLocked()) {
+                            return "<br>" + self.getDisplayName() + " locks " + returnDoor.getDisplayName() + ".<br>";
+                        };
+                    } else {
+                        //console.log(self.getName()+" closed the door behind them.");
+                        return returnDoor.close("close", _currentLocation.getName());
+                    };
+                        
+                };
+            };
+            return "";
+        };
+        
+        var attemptToTraverseDoorsIfNeeded = function (exit, map) {
+            if (exit.isVisible()) {
+                return exit;
+            };
+
+            //we have a door to traverse
+            //note "animals" can't open doors
+            var doors = _currentLocation.getAllObjectsOfType("door");
+            var key;
+            
+            //find correct matching door
+            var selectedDoor = _currentLocation.getDoorForExit(exit.getDirection(), true);
+            
+            if (!selectedDoor) {
+                //couldn't find a door for this hidden exit
+                return null;
+            };
+                
+            if (selectedDoor.isLocked()) {
+                //try to get key from own inventory (getMatchingKey will also try the door itself.)
+                key = selectedDoor.getMatchingKey("unlock", _inventory);
+                if (!key) {
+                    //is there an accessible key in this location?
+                    key = selectedDoor.getMatchingKey("unlock", _currentLocation.getInventoryObject());
+                };
+                if (!key) {
+                    //can't get through this door.
+                    if (_destinations.length > 0) {
+                        //try to recalculate path
+                        self.setPath(self.findBestPath(_destinations[_destinations.length - 1], map, 25));
+                        if (_path.length == 0) {
+                            //can't find path - we're blocked
+                            _destinationBlockedCount++;
+                        };
+                    };
+
+                    //can't make it this time.
+                    console.log("<--- "+self.getName()+" Possibly stuck - selected exit was a locked door.");
+                    return null;
+                };
+
+            //we have a key by this point - which also means the door is locked.
+            };
+                    
+            //open door (and related linked doors).
+            //if locked, we unlock both sides to go through if the key matches - and re-lock it on both sides afterward.
+            if (key) {
+                selectedDoor.unlock(key, _currentLocation.getName()); //unlock autmatically calls "moveOrOpen" when successful
+            } else {
+                selectedDoor.moveOrOpen("open", _currentLocation.getName());
+            };
+
+            //open linked doors
+            var linkedDoors = selectedDoor.getLinkedDoors(map, _currentLocation.getName());
+            for (var l = 0; l < linkedDoors.length; l++) {
+                if (key) {
+                    linkedDoors[l].unlock(key, _currentLocation.getName()); //unlock autmatically calls "moveOrOpen" when successful
+                } else {
+                    linkedDoors[l].moveOrOpen("open", _currentLocation.getName());
+                };
+                                                    
+            };
+            
+            if (selectedDoor.isOpen()) {
+                //success - this exit works!
+                _openedDoor = true;
+                return exit;
+            };
+            
+            //fail if we got this far.
+            return null;
+        };
+        
+        var enactContagion = function (playerLocation) {
+            var resultString = "";
+            if (_contagion.length > 0) {
+                for (var c = 0; c < _contagion.length; c++) {
+                    var playerToInfect;
+                    if (playerLocation == _currentLocation.getName()) {
+                        playerToInfect = player;
+                    };
+                    resultString += _contagion[c].enactSymptoms(self, _currentLocation, playerToInfect);
+                };
+            };
+            return resultString;
+        };
 
         self.tick = function(time, map, player) {
             //important note. If the player is not in the same room as the creature at the end of the creature tick
@@ -3005,40 +3130,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //console.log("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick();
 
-                //did we open a door on the last move?
-                //close it again befor echanging location
-                if (_openedDoor) {
-                    _openedDoor = false;
-                    var returnDoor = _currentLocation.getDoorForExit(self.getReturnDirection());
-                    if (returnDoor) {
-                        //retrieve key only if door does not auto-lock;
-                        var key;
-                        if (!(returnDoor.hasAutoLock())) {
-                            key = returnDoor.getMatchingKey("lock", _inventory);
-                        };
-                        var linkedDoors = returnDoor.getLinkedDoors(map, _currentLocation.getName());
-                        for (var l = 0; l < linkedDoors.length; l++) {
-                            //if we have a key and door does not auto-lock, lock the original door behind us
-                            if (key) {
-                                linkedDoors[l].lock(key, _currentLocation.getName());
-                            } else {
-                                linkedDoors[l].close("close", _currentLocation.getName());
-                            };
-                        };
-                        
-                        //lock the new side we're on as well if the same key fits
-                        if (key) {
-                            returnDoor.lock(key, _currentLocation.getName());
-                            if (returnDoor.isLocked()) {
-                                resultString += "<br>"+self.getDisplayName() + " locks " + returnDoor.getDisplayName() + ".<br>";
-                            };
-                        } else {
-                            returnDoor.close("close", _currentLocation.getName());
-                        };
-                        
-                        //console.log(self.getName()+" closed the door behind them.");
-                    };
-                };
+                resultString += closePreviouslyOpenedDoors(map);
 
                 //if creature is hostile, collect available weapons
                 if (self.isHostile(playerAggression)) {
@@ -3098,8 +3190,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //is a traveller, not delayed, not following player, not already acted...
                 if (((_traveller || (_canTravel && _destinations.length>0)) && (_currentDelay == -1)) && (!self.willFollow(playerAggression)) && (partialResultString.length ==0)) { 
                     var showMoveToPlayer = false;
-                    if (playerLocation == _currentLocation.getName()) {showMoveToPlayer = true;};
-
+                    if (playerLocation == _currentLocation.getName()) {showMoveToPlayer = true;};                   
+                    
+                    //start of creature moving
                     var exit;
 
                     //hunting player?
@@ -3151,127 +3244,84 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //if they have a destination but no path by this point, they'll wander somewhere else and try to build a path again next time.
                     //this stops creatures getting stuck behind "avoided" locations.
                     if (!(exit)) {
-                        //console.log("getting random exit");
-                        exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection, true);
-                    };
+                        var wait = false;
+                        var exits = _currentLocation.getAvailableExits(true, _inventory);
+                        if (exits.length <= 1) {
+                            //if we only have 1 or 0 exits...
+                            if (exits[0]) {
+                                //there is an exit available - 50% chance of using the only available exit this time
+                                var randomInt = Math.floor(Math.random() * 2);
+                                if (randomInt > 0) {
+                                    exit = exits[0];
+                                };
+
+                            } else {
+                                console.log("<--- " + self.getName() + " has no exits from " + _currentLocation.getName());
+                            };
+                        } else {
+                            //if there's *more than 1 exit*, 1 in 4 chance of staying where they are 
+                            if (exits.length > 1) {
+                                var randomInt = Math.floor(Math.random() * 4);
+                                if (randomInt == 0) {
+                                    wait = true;
+                                };
+                            };
+                        };
                         
-                    //if only one exit, random exit won't work so either get the only one we can or hang around a moment...
-                    if (!(exit)) {
-                        //console.log("getting first available exit");
-                        //give them a 50% chance of using the only available exit
-                        randomInt = Math.floor(Math.random() * 2);
-                        if (randomInt != 0) {
-                            exit = _currentLocation.getAvailableExits(true, _inventory)[0];
+                        if (!wait) {
+                            //console.log("getting random exit");
+                            //don't double-back, don't use "avoid" locations, emergency exits, don't climb, run or crawl.
+                            var useExitActions = false;
+                            if (!exit) {
+                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection, false, useExitActions);
+                            };
+                            
+                            if (!exit) {
+                                //allow possible use of extra actions                     
+                                if (!_bleeding && (self.getSubType() != "animal")) {
+                                    useExitActions = true;
+                                };
+                                
+                                //try again - allow climbing/running/crawling
+                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection, false, useExitActions);
+                            };
+                            if (!exit) {
+                                //try again - also allow backtracking
+                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null, false, useExitActions);
+                            };
+                            if (!exit) {
+                                //try again - also allow emergency exits
+                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null, true, useExitActions);
+                            };
+                            if (!exit) {
+                                //try again - also allow "avoid" locations
+                                exit = _currentLocation.getRandomExit(true, null, _inventory, null, true, useExitActions);
+                            };
                         };
                         
                     };
 
                     if (exit) {
-                        if (!(exit.isVisible())) {
-                            //we have a door - we'll only get here if following a path (otherwise the random selected exit won't include a door)
-                            //note "animals" can't open doors
-                            //want to support npcs with keys at this point.
-                            var doors = _currentLocation.getAllObjectsOfType("door");
-                            var openedDoor;
-                            var key;
-                            for (var d = 0; d < doors.length; d++) {
-                                //try to get key
-                                key = doors[d].getMatchingKey("unlock", _inventory);
-
-                                if ((!(doors[d].isLocked())) ||self.getSubType() != "animal" || key) {
-                                    var linkedExits = doors[d].getLinkedExits();
-
-                                    for (var l=0;l<linkedExits.length;l++) {
-                                        if (linkedExits[l].getSourceName()==_currentLocation.getName()) {
-                                            if (linkedExits[l].getDirection() == exit.getDirection()) {
-                                                //we have a matching door
-                                                //we unlock both sides to go through if the key is the same. We'll re-lock it on both sides afterward.
-                                                var linkedDoors = doors[d].getLinkedDoors(map, _currentLocation.getName());
-                                                for (var l = 0; l < linkedDoors.length; l++) {
-                                                    if (key) {
-                                                        linkedDoors[l].unlock(key, _currentLocation.getName());
-                                                    } else {
-                                                        linkedDoors[l].moveOrOpen("open", _currentLocation.getName());
-                                                    };
-                                                    
-                                                };
-                                                if (key) {
-                                                    doors[d].unlock(key, _currentLocation.getName());
-                                                } else {
-                                                    doors[d].moveOrOpen("open", _currentLocation.getName());
-                                                };
-                                                openedDoor = doors[d];
-                                                break;
-                                            };
-                                        };
-                                    }; //end linkedexit loop
-
-                                } else {
-                                    //the door got locked at some point on the path, recalculate path and try again next turn.
-                                    self.setPath(self.findBestPath(_destinations[_destinations.length-1], map, 25));
-                                    exit = null;
-                                };
-                                if (openedDoor) {break;};
-                            };
+                        exit = attemptToTraverseDoorsIfNeeded(exit, map);
+                        //exit will be blanked if door isn't usable.
+                    };
+                    
+                    
+                    if (exit) {
+                        var openedDoor;
+                        if (_openedDoor) {
+                            openedDoor = _currentLocation.getDoorForExit(exit.getDirection(), true);
                         };
 
-                        if (openedDoor) {
-                            _openedDoor = true;
-                        };
-
-                        var exposedItems = "";
-                        var exitAction;
+                        var exitAction = exit.getRequiredAction(); //we use this later
                         var originalLocationName = _currentLocation.getName();
                         var newLocationName = originalLocationName;
-                        if (exit) {
-                            var canUseExit = true;
-                            exitAction = exit.getRequiredAction();
-                            
-                            if (exitAction == "run" || exitAction == "climb") {
-                                if (_destinations.length == 0 && !(self.isHuntingPlayer()) && !(self.getSubType() == "animal")) {
-                                    //will only run/climb if has a reason to be there (or is an animal)
-                                    canUseExit =  false;
-                                };
-                                if (_bleeding) {
-                                    //can only run/climb if not bleeding.
-                                    canUseExit =  false;
-                                };                            
-                            } else if (exitAction == "drive" || exitAction == "fly" || exitAction == "sail" || exitAction == "ride") {
-                                //cant use vehicles (for now)
-                                canUseExit = false;
-                            };
 
-                            if (canUseExit) {
-                                exposedItems = self.exposePositionedItems();
-                                self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
-                            } else {
-                                //need another exit - otherwise they may be trapped!
-                                var failedExit = exit;
-                                var count = 0;
-                                //take a few attempts to find an alternative
-                                while (!exit && count < 5) {
-                                    count++;
-                                    exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null, false); //be willing to double-back.
-                                    if (exit) {
-                                        if (exit.getDirection() == failedExit.getDirection()) {
-                                            exit = null;
-                                        };
-                                    };                                    
-                                };
-                                if (!exit) {
-                                    //one more chance
-                                    //accept places they may avoid *and* be willing to double-back and accept exits that may involve exitActions
-                                    exit = _currentLocation.getRandomExit(true, null, _inventory, null, false); 
-                                };
-                                if (exit) {
-                                    self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
-                                } else {
-                                    console.log("Warning: Creature'" + self.getName() + "' stuck in location '" + _currentLocation.getName());
-                                };
-                            };
-                            newLocationName = _currentLocation.getName();
-                        };
-                        //should really close the door behind us here but we do it on the next cycle. This has the added benefit of a player being able to slip through
+                        var exposedItems = self.exposePositionedItems();
+                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                        newLocationName = _currentLocation.getName();
+
+                        //should really close the door behind us here but we do it on the next cycle. This has the added benefit of a player being able to slip through                        
 
                         if (newLocationName != originalLocationName) { //move was successful
                             resultString += "<br>"+tools.initCap(self.getDescription())+" ";
@@ -3301,7 +3351,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 if (exitAction) {movementVerb = exitAction+"s";};
                                 resultString += movementVerb + " in";
                                 if (openedDoor) {
-                                    resultString += " through " + openedDoor.getDisplayName();
+                                    resultString += " through " + openedDoor.getDisplayName();  //@todo - bug - this is actually the door/name from the other side!
                                 };
                                 resultString += slipString;
                             } else {
@@ -3326,15 +3376,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount()/5));
 
                 //contagion?
-                if (_contagion.length >0) {
-                    for (var c=0; c<_contagion.length;c++) {
-                        var playerToInfect;
-                        if (playerLocation == _currentLocation.getName()) {
-                            playerToInfect=player;
-                        };
-                        resultString += _contagion[c].enactSymptoms(self, _currentLocation, playerToInfect);
-                    };
-                };
+                resultString += enactContagion(playerLocation);
 
                 //bleed?
                 if (_bleeding) {
@@ -3381,29 +3423,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //consider fleeing here if not quite dead
             if (self.isDead()) {
                 resultString += self.kill();                
-            }            ;
-            
-            //update creature missions (where creature is meant to be at a location)
-            /*console.log("checking creature missions:"+ _missions.length);
-            for (var i = 0; i < _missions.length; i++) {
-                if (_missions[i].getMissionObjectName() == self.getName()) {
-                    console.log("found matching mission: "+_missions[i].getName()+" active? "+ _missions[i].isActive());
-                    if (_missions[i].isActive()) {
-                        //we have a creature mission
-                        console.log("processing creature mission");
-                        if (_missions[i].getDestination() == _currentLocation.getName()) {
-                            //creature has reached destination!
-                            var missionResult = _missions[i].checkState(player, map);
-                            if (missionResult) {
-                                var rewardString = _missions[i].processReward(map, missionResult, player);
-                                console.log(rewardString);
-                            };
-                        };
-                    };
-                };
-            };*/
-
-            
+            } ;
+                        
             if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
             if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+tools.initCap(self.getDisplayName())+" is bleeding. ";};    
 
@@ -3705,7 +3726,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.findBestPath = function(destinationName, map, attempts) {
-            if (!(attempts)){attempts = 25};
+            if (!(attempts)) { attempts = 25 };
+            if (isNaN(attempts)) { attempts = 25 };
             var bestPathLength = 1/0; //infinity
             var path;
             var duplicateCount = 0;
@@ -3747,7 +3769,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return [];
              };       
 
-            var exits = currentLocation.getAvailableExits(true, _inventory);
+            var exits = currentLocation.getAvailableExits(true, _inventory, false); //don't use emergency exits!
             if (exits.length == 1 && currentLocation.getName() != homeLocation.getName()) {return null;};
 
             if (randomiseSearch) {

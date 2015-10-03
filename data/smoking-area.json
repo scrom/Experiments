@@ -42,18 +42,18 @@
         }
     ],
     "inventory": [
-        {
+      {
         "object": "artefact",
         "template": "fire-door-exterior",
         "linkedexits": [
-            {
-                "object": "exit",
-                "longname": "North",
-                "direction": "n",
-                "source": "smoking-area",
-                "destination": "east-end-south-corridor-ground-floor",
-                "hidden": true
-            },
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "smoking-area",
+            "destination": "east-end-south-corridor-ground-floor",
+            "hidden": true
+          },
           {
             "object": "exit",
             "longname": "South",
@@ -62,6 +62,45 @@
             "destination": "smoking-area",
             "hidden": true
           }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "steel gate",
+        "description": "steel gate",
+        "detailedDescription": "It leads to the rear fire escape.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "autoLock": 2,
+          "lockable": true,
+          "locked": true,
+          "canOpen": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "ground-floor-fire-escape",
+            "destination": "smoking-area",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "smoking-area",
+            "destination": "ground-floor-fire-escape",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "door",
+          "gate",
+          "steel door",
+          "steel"
         ]
       },
         {

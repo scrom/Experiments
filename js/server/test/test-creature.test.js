@@ -1063,24 +1063,67 @@ exports.creatureCanFindBestPathToGoal = function (test) {
 exports.creatureCanFindBestPathToGoal.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
 
 
-exports.creatureCantFindDirectPathToGoalThroughAOneWayDoor = function (test) {
+exports.creatureWillAvoidEmergencyExitsWhenSeekingDestination = function (test) {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
-    var destination = 'ground-floor-fire-escape';
+    var destination = 'smoking-area';
+    
+    var keyfob = mb.buildArtefact({ object: "artefact", name: "keyfob", template: "keyfob" });
+    console.log(c0.receive(keyfob));
     c0.go(null, m.getLocation('east-end-south-corridor-ground-floor')); 
 
     var path = c0.findBestPath(destination, m);
     var targetLength = 2;
     var expected = true;
     var actual = false;
-    if (path.length > targetLength) {actual = true};
-    console.log("Avoid path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    if (path.length > targetLength) { actual = true };
+    console.log("Path: " + path);
+    console.log("Avoid path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
+    console.log("Avoiding door, path length should ="+targetLength+". Selected path length="+path.length+". Path: "+path);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.ok(actual);
     test.done();
 };
-exports.creatureCantFindDirectPathToGoalThroughAOneWayDoor.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+exports.creatureWillAvoidEmergencyExitsWhenSeekingDestination.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
+
+exports.johnCanFindPathToMachineRoom = function (test) {
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    var peacock = m.getLocation("peacock");
+    p0.setLocation(peacock, true); //move player out of the way
+    var john = m.getCreature("John Bowles");
+    john.clearDestination();
+    john.clearDestination();
+    var destinations = john.getDestinations();
+    console.log(destinations);
+    
+    var path = john.findBestPath(john.getNextDestination(), m);
+    console.log("Selected path length=" + path.length + ". Path: " + path);
+    var pathLength = path.length;
+    john.tick(pathLength, m, p0);
+    console.log("Loc = " + john.getCurrentLocationName());
+    path = john.getPath();
+    console.log("Selected path length=" + path.length + ". Path: " + path);
+    pathLength = path.length;
+    john.tick(pathLength, m, p0);
+    console.log("Loc = " + john.getCurrentLocationName());
+    path = john.getPath();
+    console.log("Selected path length=" + path.length + ". Path: " + path);
+    pathLength = path.length;
+    john.tick(pathLength, m, p0);
+    var expected = "plant-room";
+    var actual = john.getCurrentLocationName();
+    console.log("Selected path length=" + path.length + ". Path: " + path);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    destinations = john.getDestinations();
+    console.log(destinations);
+    console.log(john.getPath());
+    test.equal(expected, actual);
+    test.done();
+};
+exports.johnCanFindPathToMachineRoom.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
 
 
 exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
@@ -1846,7 +1889,7 @@ exports.CreatureCanSlipOnWetFloor = function (test) {
     p0.setLocation(l0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0, canTravel: true, traveller: true, homeLocation: l0});
-    c0.go("n", l1);
+    console.log(c0.go("n", l1));
 
     //add enough liquids to guarantee slipping...
     l0.addLiquid("blood");

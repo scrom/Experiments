@@ -48,9 +48,9 @@
       },
       {
         "object": "artefact",
-        "name": "door",
+        "name": "steel gate",
         "description": "steel gate",
-        "detailedDescription": "It only opens from this side (and closes again behind automatically). This has the potential to be a useful short-cut.",
+        "detailedDescription": "This has the potential to be a useful short-cut.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
