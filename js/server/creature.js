@@ -3029,7 +3029,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             //we have a door to traverse
-            //note "animals" can't open doors
+            if (self.getSubType() == "animal") {
+                //"animals" can't open doors
+                return null;
+            };
+
             var doors = _currentLocation.getAllObjectsOfType("door");
             var key;
             
@@ -3255,8 +3259,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     exit = exits[0];
                                 };
 
-                            } else {
-                                console.log("<--- " + self.getName() + " has no exits from " + _currentLocation.getName());
+                            //} else {
+                            //    console.log("<--- " + self.getName() + " has no exits from " + _currentLocation.getName());
                             };
                         } else {
                             //if there's *more than 1 exit*, 1 in 4 chance of staying where they are 
