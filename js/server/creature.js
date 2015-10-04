@@ -3249,7 +3249,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //this stops creatures getting stuck behind "avoided" locations.
                     if (!(exit)) {
                         var wait = false;
-                        var exits = _currentLocation.getAvailableExits(true, _inventory);
+                        var useDoors = true;
+                        if (self.getSubType() == "animal") {
+                            useDoors = false;
+                        };
+
+                        var exits = _currentLocation.getAvailableExits(useDoors, _inventory);
                         if (exits.length <= 1) {
                             //if we only have 1 or 0 exits...
                             if (exits[0]) {
@@ -3277,7 +3282,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //don't double-back, don't use "avoid" locations, emergency exits, don't climb, run or crawl.
                             var useExitActions = false;
                             if (!exit) {
-                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection, false, useExitActions);
+                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, _lastDirection, false, useExitActions);
                             };
                             
                             if (!exit) {
@@ -3287,19 +3292,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 };
                                 
                                 //try again - allow climbing/running/crawling
-                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, _lastDirection, false, useExitActions);
+                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, _lastDirection, false, useExitActions);
                             };
                             if (!exit) {
                                 //try again - also allow backtracking
-                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null, false, useExitActions);
+                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, null, false, useExitActions);
                             };
                             if (!exit) {
                                 //try again - also allow emergency exits
-                                exit = _currentLocation.getRandomExit(true, _avoiding, _inventory, null, true, useExitActions);
+                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, null, true, useExitActions);
                             };
                             if (!exit) {
                                 //try again - also allow "avoid" locations
-                                exit = _currentLocation.getRandomExit(true, null, _inventory, null, true, useExitActions);
+                                exit = _currentLocation.getRandomExit(useDoors, null, _inventory, null, true, useExitActions);
                             };
                         };
                         
