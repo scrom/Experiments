@@ -378,7 +378,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                     continue;
                 };
                 if (exitAction) {
-                    if (!(useExitActions || exitAction == "")) {
+                    if (!(useExitActions || exitAction != "")) {
                         //can't use if not using exit actions and exit action is set to a real value
                         continue;
                     };
