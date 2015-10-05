@@ -1103,11 +1103,13 @@ exports.johnCanFindPathToMachineRoom = function (test) {
     var pathLength = path.length;
     john.tick(pathLength, m, p0);
     console.log("Loc = " + john.getCurrentLocationName());
+    console.log("Dest: "+destinations);
     path = john.getPath();
     console.log("Selected path length=" + path.length + ". Path: " + path);
     pathLength = path.length;
     john.tick(pathLength, m, p0);
     console.log("Loc = " + john.getCurrentLocationName());
+    console.log("Dest: " + destinations);
     path = john.getPath();
     console.log("Selected path length=" + path.length + ". Path: " + path);
     pathLength = path.length;

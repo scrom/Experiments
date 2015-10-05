@@ -43,9 +43,6 @@
             "source": "home",
             "hidden": true
           }
-        ],
-        "synonyms": [
-          "door"
         ]
       },
       {
@@ -64,8 +61,7 @@
                 }
             ],
             "synonyms": [
-                "lockable door",
-                "door"
+                "lockable door"
             ]
         }
     ]
