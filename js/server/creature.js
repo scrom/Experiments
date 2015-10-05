@@ -3100,7 +3100,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
         
-        var enactContagion = function (playerLocation) {
+        var enactContagion = function (player, playerLocation) {
             var resultString = "";
             if (_contagion.length > 0) {
                 for (var c = 0; c < _contagion.length; c++) {
@@ -3385,7 +3385,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount()/5));
 
                 //contagion?
-                resultString += enactContagion(playerLocation);
+                resultString += enactContagion(player, playerLocation);
 
                 //bleed?
                 if (_bleeding) {
