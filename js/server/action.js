@@ -1194,159 +1194,174 @@ exports.Action = function Action(player, map, fileManager) {
         };
 
         self.performPlayerNavigation = function () {
+            try {
 
-            //if direction not yet set...
-            var index = tools.directions.indexOf(_verb);
-            if ((!_direction || _direction == "") && tools.directions.indexOf(_verb)>-1) {
-                _direction = _verb;
-                _verb = "go";
-            }; 
+                //if direction not yet set...
+                var index = tools.directions.indexOf(_verb);
+                if ((!_direction || _direction == "") && tools.directions.indexOf(_verb)>-1) {
+                    _direction = _verb;
+                    _verb = "go";
+                }; 
             
-            //if still no direction, player s doing something else.
-            if (!_direction) {
-              return "";  
-            };
-
-            if (!(_direction == 'i' && _object0.length>1)){// trap sentences starting with "i" e.g. i need help
-
-                //use whole word direction.
-                if (_direction.length == 1) {
-                    var index = tools.directions.indexOf(_direction);
-                    if (index > -1) {
-                        _direction = tools.directions[index+1]; 
-                    };
+                //if still no direction, player s doing something else.
+                if (!_direction) {
+                  return "";  
                 };
 
-                _ticks = 1;
-                if (_verb == "crawl" || _verb == "climb") {_ticks = 2};
-                return _player.go(_verb, _direction, _map);
-            };
+                if (!(_direction == 'i' && _object0.length>1)){// trap sentences starting with "i" e.g. i need help
 
-            //catch-all
-            return "";
+                    //use whole word direction.
+                    if (_direction.length == 1) {
+                        var index = tools.directions.indexOf(_direction);
+                        if (index > -1) {
+                            _direction = tools.directions[index+1]; 
+                        };
+                    };
+
+                    _ticks = 1;
+                    if (_verb == "crawl" || _verb == "climb") {_ticks = 2};
+                    return _player.go(_verb, _direction, _map);
+                };
+
+                //catch-all
+                return "";
+            } catch (err) {
+                description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
+                console.log('ERROR! During Player Navigation: "' + _actionString + '". Error message/stack: ' + err.stack);
+            };	
         };
 
         self.performPlayerCheatAction = function () {
-            //Cheating!
-            _player.incrementCheatCount();
+            try {
+                //Cheating!
+                _player.incrementCheatCount();
                
-            if (_verb == '+aggression') {
-                return "Player Aggression set: "+_player.setAggression(parseInt(_object0));
-            };
+                if (_verb == '+aggression') {
+                    return "Player Aggression set: "+_player.setAggression(parseInt(_object0));
+                };
 
-            if (_verb == '+stealth') {
-                return "Player Stealth set: "+_player.setStealth(parseInt(_object0));
-            };
+                if (_verb == '+stealth') {
+                    return "Player Stealth set: "+_player.setStealth(parseInt(_object0));
+                };
 
-            if (_verb == '+heal') {
-                return "Player Health set: "+_player.recover(parseInt(_object0));
-            };
+                if (_verb == '+heal') {
+                    return "Player Health set: "+_player.recover(parseInt(_object0));
+                };
 
-            if (_verb == '+kill') {
-                var creature = _map.getObject(_object0);
-                if (creature) {
-                    if (creature.getType() == "creature") {
-                        return "Killing "+creature.getName()+":<br>"+creature.kill();
+                if (_verb == '+kill') {
+                    var creature = _map.getObject(_object0);
+                    if (creature) {
+                        if (creature.getType() == "creature") {
+                            return "Killing "+creature.getName()+":<br>"+creature.kill();
+                        };
+                    };
+                    return "cannot kill "+_object0;               
+                };
+
+                if (_verb == '+attrib') {
+                    var item;
+                    if (!_object0) {
+                        item = _player.getCurrentLocation();
+                    };
+                    if (!(item)) {
+                        item = _player.getObject(_object0);
+                    };
+                    if (!(item)) {
+                        var loc = _player.getCurrentLocation();
+                        if (loc) {
+                            item = loc.getObject(_object0);
+                        };
+                    };
+                    if (!(item)) {
+                        item = _map.getObject(_object0);
+                    };
+                    if (item) {
+                        var itemString = item.toString();
+                        return itemString.replace(/"/g, '\\"');
+                    };
+                    return "cannot find " + _object0;
+                };
+
+                if (_verb == '+wait') {
+                    _ticks = parseInt(_object0);
+                    return "Waiting "+_object0+" ticks..."+_player.incrementWaitCount(_ticks);       
+                };
+
+                if (_verb == '+go') {
+                    var location = _map.getLocation(_object0);
+                    if (location) {
+                        return "Player teleported:<br> "+_player.setLocation(location);
+                    } else {
+                        return "location '"+_object0+"' not found.";
                     };
                 };
-                return "cannot kill "+_object0;               
-            };
 
-            if (_verb == '+attrib') {
-                var item;
-                if (!_object0) {
-                    item = _player.getCurrentLocation();
+                if (_verb == '+find'||_verb == '+where') {
+                    if(_object1) { return _map.find(_object1, true, true);}
+                    else { return _map.find(_object0, true, true); };
                 };
-                if (!(item)) {
-                    item = _player.getObject(_object0);
-                };
-                if (!(item)) {
-                    var loc = _player.getCurrentLocation();
-                    if (loc) {
-                        item = loc.getObject(_object0);
-                    };
-                };
-                if (!(item)) {
-                    item = _map.getObject(_object0);
-                };
-                if (item) {
-                    var itemString = item.toString();
-                    return itemString.replace(/"/g, '\\"');
-                };
-                return "cannot find " + _object0;
-            };
 
-            if (_verb == '+wait') {
-                _ticks = parseInt(_object0);
-                return "Waiting "+_object0+" ticks..."+_player.incrementWaitCount(_ticks);       
-            };
-
-            if (_verb == '+go') {
-                var location = _map.getLocation(_object0);
-                if (location) {
-                    return "Player teleported:<br> "+_player.setLocation(location);
-                } else {
-                    return "location '"+_object0+"' not found.";
+                if (_verb == '+missions') {
+                    return _map.listAllMissions(_player);
                 };
-            };
-
-            if (_verb == '+find'||_verb == '+where') {
-                if(_object1) { return _map.find(_object1, true, true);}
-                else { return _map.find(_object0, true, true); };
-            };
-
-            if (_verb == '+missions') {
-                return _map.listAllMissions(_player);
-            };
             
-            if (_verb == '+activate') {
-                return _map.activateNamedMission(_object0);
-            };
-
-            if (_verb == '+destination') {
-                var creatures = _map.getAllCreatures();
-                var resultString = "";
-                for (var c=0;c<creatures.length;c++) {
-                    creatures[c].clearPath();
-                    resultString+=creatures[c].goTo(_object0, 0, _map)+"<br>";
+                if (_verb == '+activate') {
+                    return _map.activateNamedMission(_object0);
                 };
-                return resultString;
-            };
 
-            if (_verb == '+affinity') {
-                var creatures = _map.getAllCreatures();
-                for (var c=0;c<creatures.length;c++) {
-                    creatures[c].increaseAffinity(parseInt(_object0))+"<br>";
+                if (_verb == '+destination') {
+                    var creatures = _map.getAllCreatures();
+                    var resultString = "";
+                    for (var c=0;c<creatures.length;c++) {
+                        creatures[c].clearPath();
+                        resultString+=creatures[c].goTo(_object0, 0, _map)+"<br>";
+                    };
+                    return resultString;
                 };
-                return "Global creature affinity increased by "+_object0;
-            };
 
-            if (_verb == '+cash' || _verb == '+money') {
-                _player.updateCash(_object0);
-                return "Player cash balance changed by "+_object0;
-            };
+                if (_verb == '+affinity') {
+                    var creatures = _map.getAllCreatures();
+                    for (var c=0;c<creatures.length;c++) {
+                        creatures[c].increaseAffinity(parseInt(_object0))+"<br>";
+                    };
+                    return "Global creature affinity increased by "+_object0;
+                };
+
+                if (_verb == '+cash' || _verb == '+money') {
+                    _player.updateCash(_object0);
+                    return "Player cash balance changed by "+_object0;
+                };
+            } catch (err) {
+                description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
+                console.log('ERROR! During Player Cheat Action: "' + _actionString + '". Error message/stack: ' + err.stack);
+            };	
         };
 
-        self.catchPlayerNotUnderstood = function() {
-            if (_inConversationWith) {
-                _player.setLastVerbUsed('say');
-                return _player.say('say', _actionString,_inConversationWith, _map);
-            };
+        self.catchPlayerNotUnderstood = function () {
+            try {
+                if (_inConversationWith) {
+                    _player.setLastVerbUsed('say');
+                    return _player.say('say', _actionString,_inConversationWith, _map);
+                };
 
-            _ticks = 0;
-            _failCount ++;
-            //console.log("fail count: "+_failCount);
-            if (_failCount >3) {
-                _verb = "help";
-                return self.performPlayerAction();
-            };
-            if (_failCount >1) {
-                return "It looks like you're struggling to be understood.<br>If you need some assistance, try typing <i>help</i>.";
-            };
+                _ticks = 0;
+                _failCount ++;
+                //console.log("fail count: "+_failCount);
+                if (_failCount >3) {
+                    _verb = "help";
+                    return self.performPlayerAction();
+                };
+                if (_failCount >1) {
+                    return "It looks like you're struggling to be understood.<br>If you need some assistance, try typing <i>help</i>.";
+                };
 
-            var randomReplies = ["Sorry, I didn't understand you. Can you try rephrasing that?", "Can you try rephrasing that?", "I'm struggling to understand you. Can you try something else?", "I'm only a simple game. I'm afraid you'll need to try a different verb to get through to me."];
-            var randomIndex = Math.floor(Math.random() * randomReplies.length);
-            return randomReplies[randomIndex];
+                var randomReplies = ["Sorry, I didn't understand you. Can you try rephrasing that?", "Can you try rephrasing that?", "I'm struggling to understand you. Can you try something else?", "I'm only a simple game. I'm afraid you'll need to try a different verb to get through to me."];
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                return randomReplies[randomIndex];
+            } catch (err) {
+                description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
+                console.log('ERROR! During PlayerNotUnderstood: "' + _actionString + '". Error message/stack: ' + err.stack);
+            };	
 
         };
 
@@ -1404,23 +1419,28 @@ exports.Action = function Action(player, map, fileManager) {
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);
+            try {
+                //work out how many ticks will actually occur against rest of game...
+                var actualTicks = _player.calculateTicks(_ticks, _verb);
+
+                //perform creature actions.
+                description += processCreatureTicks(actualTicks, _map, _player);
+
+                //if anything is happening in locations (includes ticks on inventory)
+                description += processLocationTicks(actualTicks, _map, _player);
             
-            //work out how many ticks will actually occur against rest of game...
-            var actualTicks = _player.calculateTicks(_ticks, _verb);
+                //tick missions
+                description  += map.updateMissions(actualTicks, _player);
 
-            //perform creature actions.
-            description += processCreatureTicks(actualTicks, _map, _player);
-
-            //if anything is happening in locations (includes ticks on inventory)
-            description += processLocationTicks(actualTicks, _map, _player);
+                //if time is passing, what additional things happen to a player?
+                //note - player ticks happen last so that we can adjust responses based on current state
+                //we also only use "original" ticks here as any extras (wait/sleep) are explicitly covered elsewhere
+                description += _player.tick(_ticks, _map);
             
-            //tick missions
-            description  += map.updateMissions(actualTicks, _player);
-
-            //if time is passing, what additional things happen to a player?
-            //note - player ticks happen last so that we can adjust responses based on current state
-            //we also only use "original" ticks here as any extras (wait/sleep) are explicitly covered elsewhere
-            description += _player.tick(_ticks, _map);
+            } catch (err) {
+                description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
+                console.log('ERROR! During game tick. (Useraction: "' + _actionString + '"). Error message/stack: ' + err.stack);
+            };	
 
             //replace any player substitution variables
             while (description.indexOf("$player") > -1) {
