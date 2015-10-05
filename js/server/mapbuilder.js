@@ -133,6 +133,9 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
 
                 artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);
+                if (!artefact) {
+                    console.log("ERROR: Artefact data. Failed to build" + artefactData + ".");
+                };
                 if (artefactData.synonyms) {artefact.addSyns(artefactData.synonyms);};
                 if (artefactData.inventory) {
                     //add items directly to inventory
@@ -147,10 +150,18 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                             if (artefactData.inventory[i].attributes) {
                                 position = artefactData.inventory[i].attributes.position;
                             }
+
+                            var childArtefact = self.buildArtefact(artefactData.inventory[i]);
+
                             if (position) {
-                                inventory.position(self.buildArtefact(artefactData.inventory[i]), position); 
+                                inventory.position(childArtefact, position);
                             } else {
-                                inventory.add(self.buildArtefact(artefactData.inventory[i]));
+
+                                if (inventory.canCarry(childArtefact)) {
+                                    inventory.add(childArtefact);
+                                } else {
+                                    console.log("ERROR: Artefact data : " + childArtefact.getName() + " will not fit in " + artefact.getName() + ".");
+                                };
                             };
                         };
                         //else if (artefactData.inventory[i].object == "creature") {inventory.add(self.buildCreature(artefactData.inventory[i]));};  //won't work - creatures need to "go" to a locaion at the moment
@@ -226,7 +237,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 }; //creature name is a proper noun
 
                 creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
-                if (creatureData.synonyms) {creature.addSyns(creatureData.synonyms);};
+                if (!creature) {
+                    console.log("ERROR: Creature data. Failed to build" + creatureData + ".");
+                };                
+                if (creatureData.synonyms) { creature.addSyns(creatureData.synonyms); };
                 if (creatureData.dislikes) {creature.addDislikes(creatureData.dislikes);};
                 if (creatureData.inventory) {
                     //add items directly to inventory
