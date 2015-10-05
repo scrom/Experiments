@@ -55,6 +55,7 @@
     <Content Include="data\customer-delight-south.json" />
     <Content Include="data\customer-delight-west.json" />
     <Content Include="data\darth-vader.json" />
+    <Content Include="data\daves-desk.json" />
     <Content Include="data\east-bike-racks.json" />
     <Content Include="data\east-car-park-corner.json" />
     <Content Include="data\east-car-park.json" />
@@ -221,6 +222,7 @@
     <Content Include="data\sweet-mocha.json" />
     <Content Include="data\table.json" />
     <Content Include="data\thinking-hats.json" />
+    <Content Include="data\tin-of-spam.json" />
     <Content Include="data\toilet-brush.json" />
     <Content Include="data\toilet.json" />
     <Content Include="data\top-fire-escape.json" />

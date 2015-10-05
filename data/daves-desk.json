@@ -1,0 +1,58 @@
+﻿{
+        "object": "artefact",
+        "name": "desk",
+        "description": "Dave's desk",
+        "detailedDescription": "On first glimpse, it's a standard wood-effect office desk but you feel an overwhelming urge to do a double-take.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "down",
+            "direction": "d",
+            "source": "creative-agency-area",
+            "destination": "ground-floor-fire-escape",
+            "description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+            "hidden": true,
+            "requiredAction": "crawl"
+          }
+        ],
+        "synonyms": [
+          "daves desk",
+          "dave's desk",
+          "dave desk"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "tears",
+            "description": "tear stains",
+            "detailedDescription": "<br>They're the residue of tears of frustration - probably from years of dealing with email marketing campaigns.<br>Nobody should have to work with email marketing for that long and be expected to stay entirely sane.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "plural": true,
+              "position": "on",
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "Trust me, you <i>don't</i> want them.",
+              "smell": "You vaguely sense a tang of salt and blood around them.",
+              "sound": "Wow, that's disturbing. It takes quite a spiritual imprint to leave the <i>sound</i> of tears."
+            },
+            "synonyms": [
+              "frustration",
+              "stains",
+              "tearstains",
+              "tear stains",
+              "daves tears",
+              "dave's tears",
+              "dave tears"
+            ]
+          },
+          {"file": "tin-of-spam"}
+        ]
+      }

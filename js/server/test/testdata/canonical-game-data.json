@@ -1866,27 +1866,46 @@
           },
           {
             "object": "artefact",
-            "name": "spam",
-            "description": "tin of Spam",
-            "detailedDescription": "It's a leftover from a training course a few years ago. It says 'best before end: November 2015.<br>I thought this stuff lasted forever!",
+            "name": "tin",
+            "description": "tin",
+            "detailedDescription": "'SPAM!'<br>It's an easy-open canned meat container - a leftover from an email marketing training course a few years ago.<br>It says 'best before end: November 2015.'<br>I thought this stuff lasted forever!",
             "attributes": {
-              "weight": 1,
-              "type": "food",
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 0.5,
+              "carryWeight": 0.5,
+              "attackStrength": 5,
+              "type": "container",
+              "holdsLiquid": true,
               "canCollect": true,
-              "charges": 3,
-              "chargeUnit": "portion",
-              "chargesDescription": "There's about $charges $chargeUnit left",
-              "canOpen": true,
-              "isEdible": true,
-              "nutrition": -15,
-              "position": "on",
-              "smell": "You wonder to yourself if cats like Spam."
+              "affinityModifier": 0,
+              "position": "on"
             },
             "synonyms": [
-              "tin",
               "tin of spam",
               "tin spam",
               "spam tin"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "spam",
+                "description": "Spam",
+                "detailedDescription": "Processed meat. How bad can it be? Right?",
+                "attributes": {
+                  "weight": 1,
+                  "type": "food",
+                  "canCollect": true,
+                  "charges": 3,
+                  "chargeUnit": "portion",
+                  "chargesDescription": "There's about $charges $chargeUnit left",
+                  "canOpen": true,
+                  "isEdible": true,
+                  "nutrition": -15,
+                  "position": "on",
+                  "smell": "It reminds you of something.<br>You wonder to yourself if cats like Spam.",
+                  "taste": "It tastes a lot like it <i>smell</i>s."
+                }
+              }
             ]
           }
         ]
@@ -4320,6 +4339,7 @@
           "defaultAction": "open",
           "weight": 200,
           "type": "door",
+          "subType": "emergency",
           "canOpen": true,
           "autoLock": 1,
           "lockInMoves": 1,
@@ -4500,7 +4520,7 @@
           {
             "object": "artefact",
             "name": "plant room key",
-            "description": "door key",
+            "description": "heavy industrial-looking key",
             "detailedDescription": "It's a heavy, industrial-looking key.",
             "attributes": {
               "defaultAction": "open",
@@ -4512,6 +4532,26 @@
             },
             "synonyms": [
               "plant key",
+              "heavy key",
+              "key"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "gate key",
+            "description": "steel key",
+            "detailedDescription": "It's a heavy, industrial-looking key.",
+            "attributes": {
+              "defaultAction": "open",
+              "weight": 0.1,
+              "type": "key",
+              "canCollect": true,
+              "affinityModifier": 2,
+              "unlocks": "steel gate"
+            },
+            "synonyms": [
+              "steel gate key",
+              "steel key",
               "heavy key",
               "key"
             ]
@@ -5899,9 +5939,9 @@
       },
       {
         "object": "artefact",
-        "name": "door",
+        "name": "steel gate",
         "description": "steel gate",
-        "detailedDescription": "It only opens from this side (and closes again behind automatically). This has the potential to be a useful short-cut.",
+        "detailedDescription": "This has the potential to be a useful short-cut.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -7033,6 +7073,7 @@
                     "isLiquid": true,
                     "canCollect": true,
                     "charges": 3,
+                    "chargeUnit": "dose",
                     "plural": true,
                     "affinityModifier": 0,
                     "isEdible": true,
@@ -7110,11 +7151,12 @@
                         "attributes": {
                           "incubationPeriod": 10,
                           "communicability": 0.5,
+                          "mutate": true,
                           "symptoms": [
                             {
                               "action": "bite",
                               "frequency": 0.33,
-                              "escalation": 0
+                              "escalation": 0.1
                             }
                           ]
                         }
@@ -7178,17 +7220,18 @@
                         "attributes": {
                           "incubationPeriod": 6,
                           "communicability": 0.5,
+                          "mutate": true,
                           "symptoms": [
                             {
                               "action": "bite",
                               "frequency": 0.33,
-                              "escalation": 0
+                              "escalation": 0.1
                             },
                             {
                               "action": "hurt",
-                              "health": 3,
+                              "health": 0.5,
                               "frequency": 0.1,
-                              "escalation": 0.1
+                              "escalation": 0.05
                             }
                           ]
                         }
@@ -12243,6 +12286,7 @@
           "defaultAction": "open",
           "weight": 200,
           "type": "door",
+          "subType": "emergency",
           "canOpen": true,
           "autoLock": 1,
           "lockInMoves": 1,
@@ -13019,6 +13063,7 @@
           "defaultAction": "open",
           "weight": 200,
           "type": "door",
+          "subType": "emergency",
           "canOpen": true,
           "autoLock": 1,
           "lockInMoves": 1,
@@ -13430,6 +13475,46 @@
           "fire exit",
           "exit",
           "secure door"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "steel gate",
+        "description": "steel gate",
+        "detailedDescription": "It leads to the rear fire escape.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 200,
+          "type": "door",
+          "canOpen": true,
+          "lockable": true,
+          "locked": true,
+          "autoLock": 2,
+          "lockInMoves": 2
+        },
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "ground-floor-fire-escape",
+            "destination": "smoking-area",
+            "hidden": true
+          },
+          {
+            "object": "exit",
+            "longname": "South",
+            "direction": "s",
+            "source": "smoking-area",
+            "destination": "ground-floor-fire-escape",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "door",
+          "gate",
+          "steel door",
+          "steel"
         ]
       },
       {
