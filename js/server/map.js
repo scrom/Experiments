@@ -377,12 +377,13 @@ exports.Map = function Map() {
 
         self.find = function(objectName, includeArtefacts,returnInternalLocationName) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
+            //it also deliberately does not find intangibles/scenery
 
             //loop through each location and location inventory. 
             //Get object (by synonym)
             //return location name when found
             for (var i=0;i<_locations.length;i++) {
-                if (_locations[i].objectExists(objectName)) {
+                if (_locations[i].objectExists(objectName, false, false, true)) {
                     var foundLocationName;
                     if (returnInternalLocationName) {
                         foundLocationName = _locations[i].getName();

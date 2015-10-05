@@ -478,9 +478,9 @@ exports.Location = function Location(name, displayName, description, attributes)
             return _inventory.remove(anObjectName, searchCreatures);
         };
 
-        self.objectExists = function(anObjectName, ignoreSynonyms, searchCreatures) {
+        self.objectExists = function(anObjectName, ignoreSynonyms, searchCreatures, ignoreScenery) {
             //check if passed in object is in location
-            return _inventory.check(anObjectName, ignoreSynonyms, searchCreatures);
+            return _inventory.check(anObjectName, ignoreSynonyms, searchCreatures, ignoreScenery);
         };
 
         self.spilledLiquidExists = function(liquidName) {

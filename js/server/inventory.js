@@ -319,9 +319,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 return null;
         };
     
-        self.check = function(anObjectName, ignoreSynonyms, searchCreatures) {
+        self.check = function(anObjectName, ignoreSynonyms, searchCreatures, ignoreScenery) {
             //check if passed in object name is in inventory
-            if (self.getObject(anObjectName, ignoreSynonyms, searchCreatures)){return true;};
+            if (self.getObject(anObjectName, ignoreSynonyms, searchCreatures, null, ignoreScenery)){return true;};
             return false;
         };
 
@@ -405,7 +405,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
         //recursively gets objects in other objects
         //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
-        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, customAction) {
+        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery) {
             for(var index = _items.length-1; index >= 0; index--) {
                 if (ignoreSynonyms) {
                     if( _items[index].getName() == anObjectName ) {
