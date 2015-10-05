@@ -2292,10 +2292,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.break = function(verb, deliberateAction) {
             self.decreaseAffinity(1);  
-            if (verb == "force") {
+            if (verb == "force" || verb == "smash" || verb == "bash" || verb == "shake" || verb == "rattle") {
                 return "That's not a reasonable thing to do to "+_genderSuffix+" is it?";
             };
-            return "The level of physical and emotional torment needed to 'break' someone requires sustained abuse. "+_genderPrefix+" pretends to ignore you but really isn't impressed.";          
+            return "The level of physical and emotional torment needed to '"+verb+"' someone requires sustained abuse. "+_genderPrefix+" pretends to ignore you but really isn't impressed.";          
         };
 
         self.destroy = function(deliberateAction) {

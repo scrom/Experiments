@@ -1214,9 +1214,9 @@ exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents = function (test) {
     mug.receive(coffee);
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
-    p0.get('get', weapon.getName());
-    p0.hit('hit',weapon.getName(), mug.getName());
-    var expectedResult = "Ding! You repeatedly hit the mighty sword with the coffee mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the coffee mug.<br>The coffee that was in the coffee mug slowly trickles away.";
+    console.log(p0.get('get', weapon.getName()));
+    console.log(p0.hit('hit',weapon.getName(), mug.getName()));
+    var expectedResult = "You repeatedly hit the mighty sword with the coffee mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the coffee mug.<br>The coffee that was in the coffee mug slowly trickles away.";
     var actualResult = p0.hit('hit',weapon.getName(), mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1224,12 +1224,34 @@ exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents = function (test) {
     test.done();
 };
 
-exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Weapon Trait", "Liquid Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
+
+exports.SmashLiquidContainerLosesContents = function (test) {
+    var drinkAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    l0.removeObject("sword");
+    console.log(p0.examine("examine", "mug"));
+    var expectedResult = "You repeatedly smash the coffee mug against the floor.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke It.<br>The coffee that was in the coffee mug slowly trickles away.";
+    var actualResult = p0.hit('smash', mug.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.SmashLiquidContainerLosesContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Smash Trait", "Liquid Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
+
 
 
 exports.hittingUnbreakableArtefactReturnsSensibleMessage = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "Ding! You repeatedly hit the artefact of little consequence with the mighty sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
+    var expectedResult = "You repeatedly hit the artefact of little consequence with the mighty sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
     var actualResult = p0.hit('hit',a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

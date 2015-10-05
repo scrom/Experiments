@@ -633,6 +633,11 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'smack':
                     case 'punch':
                     case 'kick':
+                        if (_object0 && _splitWord == "on" && _object1) {
+                            //smash bottle on floor
+                            description = _player.hit(_verb, _object1, _object0);
+                            break;
+                        };
                         description = _player.hit(_verb, _object0, _object1);
                         break;
                     case 'pay':

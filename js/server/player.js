@@ -4242,11 +4242,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
                 if (verb == "throw") {
-                    resultString +=  "Ding! You "+verb+" "+weapon.getDisplayName()+" at "+receiver.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                    resultString +=  "You "+verb+" "+weapon.getDisplayName()+" at "+receiver.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 } else {
                     weapon.consume(2); //use up multiple charges!
                     weapon.consumeComponents(2);
-                    resultString +=  "Ding! You repeatedly "+verb+" "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                    resultString +=  "You repeatedly "+verb+" "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 };
             }; 
 
