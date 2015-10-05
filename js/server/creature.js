@@ -2992,11 +2992,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _openedDoor = false;
                 var returnDoor = _currentLocation.getDoorForExit(self.getReturnDirection(), false);
                 if (returnDoor) {
-                    //retrieve key only if door does not auto-lock;
-                    var key;
-                    if (!(returnDoor.hasAutoLock())) {
-                        key = returnDoor.getMatchingKey("lock", _inventory);
+                    //ignore if door is an autolock door (it'll close itself).
+                    if (returnDoor.hasAutoLock()) {
+                        return "";
                     };
+                    //retrieve key only if door does not auto-lock;
+                    var key = returnDoor.getMatchingKey("lock", _inventory);
                     var linkedDoors = returnDoor.getLinkedDoors(map, _currentLocation.getName());
                     for (var l = 0; l < linkedDoors.length; l++) {
                         //if we have a key and door does not auto-lock, lock the original door behind us
