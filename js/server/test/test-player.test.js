@@ -117,10 +117,24 @@ exports.canGetUsername = function (test) {
 
 exports.canGetUsername.meta = { traits: ["Player Test", "Attribute Trait"], description: "Test that a creature object can be created." };
 
+
 exports.canGetAndDropObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     p0.get('get', a0.getName());
-    var expectedResult = "You throw the artefact of little consequence. ";
+    var expectedResult = "You drop the artefact of little consequence. ";
+    var actualResult = p0.drop('drop', a0.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetAndDropObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Drop Trait"], description: "Test that a player can drop an object." };
+
+exports.canGetAndThrowObject = function (test) {
+    var artefactDescription = 'an artefact of little consequence';
+    p0.get('get', a0.getName());
+    var expectedResult = "You throw the artefact of little consequence. You do a little damage but try as you might, you can't seem to destroy it.";
     var actualResult = p0.drop('throw', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -128,7 +142,7 @@ exports.canGetAndDropObject = function (test) {
     test.done();
 };
 
-exports.canGetAndDropObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can drop an object." };
+exports.canGetAndThrowObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Drop Trait", "Throw Trait"], description: "Test that a player can drop an object." };
 
 exports.canGetAndThrowBreakableObject = function (test) {
     var artefactDescription = breakable.getDescription();
@@ -142,7 +156,7 @@ exports.canGetAndThrowBreakableObject = function (test) {
     test.done();
 };
 
-exports.canGetAndThrowBreakableObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can drop an object." };
+exports.canGetAndThrowBreakableObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Throw Trait", "Drop Trait"], description: "Test that a player can drop an object." };
 
 exports.canWaveObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
@@ -156,7 +170,7 @@ exports.canWaveObject = function (test) {
     test.done();
 };
 
-exports.canWaveObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can wave an object." };
+exports.canWaveObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Wave Trait"], description: "Test that a player can wave an object." };
 
 exports.canExamineObject = function (test) {
     p0.get('get', a0.getName());
@@ -169,6 +183,81 @@ exports.canExamineObject = function (test) {
 };
 
 exports.canExamineObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Examine Trait"], description: "Test that a player can examine an object." };
+
+
+exports.canShakeBreakableContainer = function (test) {
+    var artefactDescription = 'an artefact of little consequence';
+    var artefactName = 'artefact of little consequence'
+    p0.get('get', a0.getName());
+    var expectedResult = "XXX";
+    var actualResult = p0.shake('shake', container.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canShakeBreakableContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
+
+
+exports.canShakeContainerWithLiquid = function (test) {
+    var artefactDescription = 'an artefact of little consequence';
+    var artefactName = 'artefact of little consequence'
+    p0.get('get', a0.getName());
+    var expectedResult = "XXX";
+    var actualResult = p0.shake('shake', container.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canShakeContainerWithLiquid.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
+
+
+exports.canShakeObjectWithCustomAction = function (test) {
+    var artefactDescription = 'an artefact of little consequence';
+    var artefactName = 'artefact of little consequence'
+    p0.get('get', a0.getName());
+    var expectedResult = "XXX";
+    var actualResult = p0.shake('shake', container.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canShakeObjectWithCustomAction.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
+
+
+exports.canShakeObject = function (test) {
+    var artefactDescription = 'an artefact of little consequence';
+    var artefactName = 'artefact of little consequence'
+    p0.get('get', a0.getName());
+    var expectedResult = "You shake the artefact of little consequence. Rattle rattle rattle... ...Nothing happens.";
+    var actualResult = p0.shake('shake', a0.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canShakeObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
+
+
+exports.shakingCreatureMakesThemUnhappy = function (test) {
+    p0.setLocation(l0);
+    var expectedResult = "You shake the creature. He really doesn't appreciate it. I recommend you stop now.";
+    var actualResult = p0.shake('shake', c0.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.shakingCreatureMakesThemUnhappy.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
+
+
 
 exports.canVerifyIsArmed = function (test) {
     p0.get('get', weapon.getName());

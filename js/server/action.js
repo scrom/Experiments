@@ -619,13 +619,15 @@ exports.Action = function Action(player, map, fileManager) {
                         if (_object1) {description = _player.eat(_verb+" "+_splitWord,_object1);}
                         else {description = _player.eat(_verb, _object0);};
                         break;
+                    case 'shake':
+                    case 'rattle':
+                        description = _player.shake(_verb, _object0);
+                        break;
                     case 'nerf':
                     case 'shoot':
                     case 'attack':
                     case 'smash':
                     case 'bash':
-                    case 'shake':
-                    case 'rattle':
                     case 'stab':
                     case 'hurt':
                     case 'hit':

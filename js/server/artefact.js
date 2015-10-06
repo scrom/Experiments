@@ -1815,6 +1815,24 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             return "Nothing happens.";
         };
+        
+        self.shake = function (verb) {
+            if (self.isDestroyed()) { return "There's nothing left of " + _itemSuffix + "."; };
+            
+            if (self.checkCustomAction(verb)) {
+                return self.getCustomActionResult(verb);
+            };
+
+            if (_inventory.hasLiquid()) {
+                return "You hear a sloshing sound from inside " + self.getSuffix() + ".";
+            };
+            if (_inventory.size(true) > 0) {
+                var bashResult = self.bash();
+                return "Rattle rattle rattle... ...kerchink!<br>your fingers slip briefly from " + self.getName() + " before you recover your composure. "+bashResult;
+            };
+            
+            return "Rattle rattle rattle... ...Nothing happens.";
+        };        
 
         self.chargesRemaining = function() {
             if (self.isDestroyed()) {return 0;};

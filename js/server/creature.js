@@ -1389,6 +1389,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
         };
+        
+        self.shake = function (verb) {
+            if (self.isDead()) { return _genderPrefix + "'s dead. All the shaking in the world won't rouse "+_genderSuffix+"." };
+            if (self.getSubType() != "animal") {
+                if (_affinity >= -1) {
+                    self.decreaseAffinity(1);
+                    return _genderPrefix + " really doesn't appreciate it. I recommend you stop now.";
+                } else {
+                    self.decreaseAffinity(1);
+                    return "Seriously. Stop that!";
+                };
+            };
+            //only get here if an animal
+            self.decreaseAffinity(_affinity - 1);
+            return "I'm pretty sure that counts as animal cruelty. "+_genderDescriptivePrefix + " growls and lashes out at you.";
+
+        };
 
         self.bash = function() {
             //no damage - it's a creature
@@ -2292,7 +2309,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.break = function(verb, deliberateAction) {
             self.decreaseAffinity(1);  
-            if (verb == "force" || verb == "smash" || verb == "bash" || verb == "shake" || verb == "rattle") {
+            if (verb == "force" || verb == "smash" || verb == "bash") {
                 return "That's not a reasonable thing to do to "+_genderSuffix+" is it?";
             };
             return "The level of physical and emotional torment needed to '"+verb+"' someone requires sustained abuse. "+_genderPrefix+" pretends to ignore you but really isn't impressed.";          

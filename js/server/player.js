@@ -1592,7 +1592,33 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString;
         };
 
-        /*Allow player to wave an object - potentially at another*/
+        /*Allow player to shake an object*/
+        self.shake = function (verb, artefactName) {
+            //trap when object or creature don't exist
+            var resultString = 'You ' + verb;
+            if (tools.stringIsEmpty(artefactName)) { return resultString + "." };
+            
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) { return notFoundMessage(artefactName); };
+            
+            if (artefact.getSubType() == "intangible") {
+                resultString = tools.initCap(artefact.getName()) + " isn't really something you can " + verb + ".";
+                resultString += "<br>You try anyway. After a while, your arms get tired and you feel slightly awkward.";
+            };
+            
+            //build return string
+            resultString += " " + artefact.getDisplayName()+ ". ";
+            
+            var shakeResult = artefact.shake(verb);
+            if (shakeResult == "") {
+                resultString += "<br>Your arms get tired and you feel slightly awkward.";
+            };
+            
+            return resultString + shakeResult;
+        };
+
+        
+        /*Allow player to rub an object - potentially with another*/
         self.rub = function(verb, splitWord, firstArtefactName, secondArtefactName) {
 
             if (secondArtefactName && splitWord != "with" && splitWord != "on") {splitWord = "on"};
@@ -4157,7 +4183,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //try to get whatever the player might be armed with instead.
-            if (!(weapon) && verb != "punch" && verb != "kick" && verb != "slap" && verb != "smack" && verb != "shake" && verb != "rattle"){
+            if (!(weapon) && verb != "punch" && verb != "kick" && verb != "slap" && verb != "smack"){
                 if (self.isArmed()) {
                     weapon = self.getWeapon(verb);
                 };
