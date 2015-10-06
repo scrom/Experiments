@@ -402,79 +402,101 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
             return null;
         };
+        
+        //internal function (used twice in getObject)
+        var getMatchedItemForGetObject = function (item, anObjectName, ignoreSynonyms, customAction, ignoreScenery) {
+            var foundItem = false;
+            //name/syn match
+            if (ignoreSynonyms && (item.getName() == anObjectName)) {
+                foundItem = true;
+            } else if (!ignoreSynonyms && item.syn(anObjectName)) {
+                foundItem = true;
+            };
+            
+            if (ignoreScenery) {
+                if (item.getType() == "scenery" || item.getSubType() == "intangible") {
+                    if (customAction != "hunt" && customAction != "follow" && customAction != "find") {
+                        foundItem = false;
+                    };
+                };
+            };
+            
+            if (foundItem) {
+                if (customAction) {
+                    //we have a name match, do we have an action match?
+                    if (item.checkCustomAction(customAction)) {
+                        return item;
+                    };
+                } else {
+                    //important - only return if not checking custom action.
+                    //we found the item.
+                    return item;
+                };
+                
+                //we didn't find what we're looking for yet.
+                return false; //different return type!
+            };
+        };
 
         //recursively gets objects in other objects
         //this will also get hidden objects (assume if player knows object name that they're shortcutting search.
-        self.getObject = function(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery) {
-            for(var index = _items.length-1; index >= 0; index--) {
-                if (ignoreSynonyms) {
-                    if( _items[index].getName() == anObjectName ) {
-                        //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
-                        if (!(customAction)) {
-                            return _items[index];
+        self.getObject = function (anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery) {
+            //work backwards from most recently added item
+            for (var index = _items.length - 1; index >= 0; index--) {
+                var matchedItem = getMatchedItemForGetObject(_items[index], anObjectName, ignoreSynonyms, customAction, ignoreScenery);
+                if (matchedItem) {
+                    return matchedItem;
+                };
+
+                ////
+                if (_items[index].isLocked()) {
+                    //just retrieve positioned objects from locked items
+                    //doesn't retrieve items hidden by creatures
+                    //this section doesn't check custom actions at the moment - pretty sure that's a bug.
+                    var objects = _items[index].getInventoryObject().getPositionedObjects(false);
+                    //work backwards again
+                    for (var o = objects.length-1; o >= 0; o--) {
+                        matchedItem = getMatchedItemForGetObject(objects[o], anObjectName, ignoreSynonyms, customAction, ignoreScenery);
+                        if (matchedItem) {
+                            return matchedItem;
                         };
 
-                        //we have a name match, do we have an action match?
-                        if (_items[index].checkCustomAction(customAction)) {
-                            return _items[index];
-                        };
                     };
-                } else {
-                    if(_items[index].syn(anObjectName) ) {
-                        //console.log(_ownerName+" inventory item found: "+anObjectName+" index: "+index);
-                        if (!(customAction)) {
-                            return _items[index];
-                        };
+                };
+               
+                ////                
+                if (_items[index].getType() == 'creature' && !searchCreatures) {
+                    //if we won't search creatures
+                    continue;
+                };
 
-                        //we have a name match, do we have an action match?
-                        if (_items[index].checkCustomAction(customAction)) {
-                            return _items[index];
+                if (_items[index].getType() != 'creature' &&_items[index].isLocked() ) {
+                    //if we've got this far we can't look in locked artefacts
+                    continue;
+                };
+                
+                //we're searching creatures - check creature sales inventory
+                if (_items[index].getType() == 'creature') {
+                    var salesInventory = _items[index].getSalesInventoryObject();
+                    if (salesInventory) {
+                        var salesObject = salesInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
+                        if (salesObject) {
+                            return salesObject;
                         };
                     };
                 };
-                if(((_items[index].getType() != 'creature') || searchCreatures) && (!(_items[index].isLocked()))) {
-                    if (_items[index].isOpen()) {
+                
+                ////
+                //search creatures and unlocked artefacts...
+                //only confirm items from open, unlocked containers - this way we know the player has discovered them
+                //@bug ? @todo -@see issue#356 positioned items will only be revealed to "locked" and "open" objects - this seems odd.
+                if (_items[index].isOpen()) {
                     //    console.log(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
-                    //only confirm item from open, unlocked containers - this way we know the player has discovered them
-                        var object = _items[index].getInventoryObject().getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction);
-                        if (object) {
-                            //object.show();.
-                            if (!(customAction)) {
-                                return object;
-                            };
-                            //we have a name match, do we have an action match?
-                            if (object.checkCustomAction(customAction)) {
-                                    return object;
-                            };
-                        };
-                        
-                        if (_items[index].getType() == 'creature') {
-                            object = _items[index].getSalesInventoryObject().getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction);
-                            if (object) {
-                                //object.show();
-                                if (!(customAction)) {
-                                    return object;
-                                };
-                                //we have a name match, do we have an action match?
-                                if (object.checkCustomAction(customAction)) {
-                                        return object;
-                                };
-                            };
-                        };
-                    };
-                } else if (_items[index].isLocked()) {
-                    var objects = _items[index].getInventoryObject().getPositionedObjects(false);
-                    for (var o=0;o<objects.length;o++) {
-                        if (ignoreSynonyms) {
-                            if (objects[o].getName() == anObjectName) {
-                                return objects[o];
-                            };
-                        } else {
-                            if (objects[o].syn(anObjectName)) {
-                                return objects[o];
-                            };
-                        };
-                    };
+                    var itemInventory = _items[index].getInventoryObject();
+                    var heldObject = itemInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
+                    if (heldObject) {                        
+                        return heldObject;
+                    };                     
                 };
            };
            return null;
