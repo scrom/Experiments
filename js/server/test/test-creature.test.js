@@ -1087,7 +1087,7 @@ exports.creatureWillAvoidEmergencyExitsWhenSeekingDestination = function (test) 
 };
 exports.creatureWillAvoidEmergencyExitsWhenSeekingDestination.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
 
-exports.johnCanFindPathToMachineRoom = function (test) {
+exports.johnCanFindPathToPlantRoom = function (test) {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var peacock = m.getLocation("peacock");
@@ -1125,7 +1125,45 @@ exports.johnCanFindPathToMachineRoom = function (test) {
     test.equal(expected, actual);
     test.done();
 };
-exports.johnCanFindPathToMachineRoom.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
+exports.johnCanFindPathToPlantRoom.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
+
+
+exports.animalCannotFindPathToPlantRoomDueToDoors = function (test) {
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    var peacock = m.getLocation("peacock");
+    p0.setLocation(peacock, true); //move player out of the way
+    var cat = m.getCreature("cat");
+    cat.setDestination("plant room");
+    var destinations = cat.getDestinations();
+    console.log("Destinations:"+destinations);
+    
+    var path = cat.findBestPath(cat.getNextDestination(), m);
+    console.log("Selected path length=" + path.length + ". Path: " + path);
+    var pathLength = path.length;
+    cat.tick(pathLength, m, p0);
+    console.log("Loc = " + cat.getCurrentLocationName());
+    console.log("Dest: " + destinations);
+    console.log("Wander for 12 ticks ");
+    cat.tick(12, m, p0);
+    console.log("Loc = " + cat.getCurrentLocationName());
+    console.log("Dest: " + destinations);
+    path = cat.getPath();
+    console.log("Selected path length=" + path.length + ". Path: " + path);
+    pathLength = path.length;
+    cat.tick(pathLength, m, p0);
+    var expected = "plant-room";
+    var actual = cat.getCurrentLocationName();
+    console.log("Selected path length=" + path.length + ". Path: " + path);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    destinations = cat.getDestinations();
+    console.log(destinations);
+    console.log(cat.getPath());
+    test.ok(actual != expected);
+    test.done();
+};
+exports.animalCannotFindPathToPlantRoomDueToDoors.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
 
 
 exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
