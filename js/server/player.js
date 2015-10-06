@@ -3106,7 +3106,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             };
 
-            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            var playerArtefact = getObjectFromPlayer(artefactName);
+            var locationArtefact = getObjectFromLocation(artefactName);
+            
+            if (playerArtefact && locationArtefact) {
+                return "There's more than one " + artefactName + " available to you here. You'll need to be more specific.";
+            };
+            
+            var artefact;
+            if (playerArtefact) {
+                artefact = playerArtefact;
+            } else {
+                artefact = locationArtefact
+            };
+
             if (!(artefact)) {
                 if (artefactName == "around") {return _currentLocation.describe();};
                 var directionIndex = tools.directions.indexOf(artefactName);
@@ -3337,7 +3350,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
             if (tools.stringIsEmpty(artefactName)){ return verb+" what?"};
 
-            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            var playerArtefact = getObjectFromPlayer(artefactName);
+            var locationArtefact = getObjectFromLocation(artefactName);
+            
+            if (playerArtefact && locationArtefact) {
+                return "There's more than one " + artefactName + " available to you here. You'll need to be more specific.";
+            };
+
+            var artefact;
+            if (playerArtefact) {
+                artefact = playerArtefact;
+            } else {
+                artefact = locationArtefact
+            };
+
             if (!(artefact)) {
                 if (artefactName == "books") {
                     return "You'll need to be more specific that that.";
