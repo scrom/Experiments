@@ -103,7 +103,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             return requestedObject;
         };
-        var getObjectFromLocation = function(objectName, verb){
+        var getObjectFromLocation = function (objectName, verb){
+            if (!_currentLocation) { return null;};
             return _currentLocation.getObject(objectName, false, false, verb);
         };
         var getObjectFromPlayerOrLocation = function(objectName, verb){
@@ -1422,7 +1423,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "You "+verb+" "+artefact.getDisplayName()+"."+resultString;
         };
 
-        self.dropAll = function(verb, objectNames) {
+        self.dropAll = function(verb, objectNames, map) {
             if (verb == "throw" || verb == "put down") { return "You'll need to " + verb + " things one at a time."; };
             
             var inventoryContents;
@@ -1435,7 +1436,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             if (inventoryContents.length == 0) {return "You're not carrying anything.";};
             if (inventoryContents.length == 1) {
-                return self.drop(verb, inventoryContents[0].getName());
+                return self.drop(verb, inventoryContents[0].getName(), map);
             };
 
             var droppedItemCount = 0;
@@ -1473,18 +1474,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         /*allow player to drop an object*/
-        self.drop = function(verb, artefactName) {
+        self.drop = function(verb, artefactName, map) {
             if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
 
             if (artefactName == "all" || artefactName == "everything") {
-                return self.dropAll(verb);
+                return self.dropAll(verb, "", map);
             };
+            var direction;
+            var directionString = "";
             var artefact = getObjectFromPlayer(artefactName);
             if (!(artefact)) {
-                var firstWord = artefactName.split(" ", 1)[0];
+                var splitName = artefactName.split(" ");
+                var firstWord = splitName[0];
                 if (firstWord == "all") {
-                    return self.dropAll(verb, artefactName.replace("all ", ""));  
+                    return self.dropAll(verb, artefactName.replace("all ", "", map));  
                 };
+   
+                direction = splitName.pop();
+                if (tools.directions.indexOf(direction) > -1) {
+                    artefactName = splitName.join(" ");
+                    artefact = getObjectFromPlayer(artefactName);
+                };
+            };
+            
+            if (!(artefact)) {
                 return "You're not carrying any " + artefactName + ".";
             };
 
@@ -1492,7 +1505,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb != "put down") {
                 //should be careful dropping things
                 if (verb == "throw") {
-                    artefactDamage = artefact.break(verb, false);
+                    artefactDamage = artefact.break(verb, true);
                     self.increaseAggression(1); //grrrr
                     _currentLocation.reduceLocalFriendlyCreatureAffinity(1, artefact.getName());
                 }
@@ -1503,28 +1516,46 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //not destroyed (yet)... 
             var droppedObject = removeObjectFromPlayer(artefactName);
+            
+            var locationToDropIn = _currentLocation;
+            if (direction) {
+                var exit = _currentLocation.getExit(direction);
+                if (exit) {
+                    if (exit.isVisible()) {
+                        locationToDropIn = map.getLocation(exit.getDestinationName());
+                        if (direction.length == 1) {
+                            var directionIndex = tools.directions.indexOf(direction) + 1;
+                            direction = tools.directions[directionIndex];
+                            if (directionIndex < 8) {
+                                direction = tools.initCap(direction);
+                            };
+                        };
+                        directionString = " " + direction;
+                    };
+                };
+            };
 
             //destroyed it!
             if (droppedObject.isDestroyed()) { 
                 _destroyedObjects.push(droppedObject);
                 
                 //temporarily add item to location so that contents can be emptied.                
-                _currentLocation.addObject(droppedObject); 
+                locationToDropIn.addObject(droppedObject); 
                 var tempResult = emptyContentsOfContainer(droppedObject.getName()); 
                 //then remove it again.
                 removeObjectFromLocation(artefactName);
                 return "Oops. "+artefactDamage+ tempResult;
             } else if (droppedObject.isBroken()) {
-                artefactDamage += droppedObject.drain(_currentLocation);   
+                artefactDamage += droppedObject.drain(locationToDropIn);   
             }; 
 
             //needs a container
             if (droppedObject.requiresContainer()) { return "Oops. You empty "+droppedObject.getDisplayName()+" all over the floor. Let's hope there's more somewhere.";}; 
 
             //not destroyed
-            _currentLocation.addObject(droppedObject);
+            locationToDropIn.addObject(droppedObject);
  
-            return "You "+verb+" "+droppedObject.getDisplayName()+". "+artefactDamage;
+            return "You "+verb+" "+droppedObject.getDisplayName()+directionString+". "+artefactDamage;
         };
 
         /*Allow player to wave an object - potentially at another*/
@@ -4126,7 +4157,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //try to get whatever the player might be armed with instead.
-            if (!(weapon) && verb != "punch" && verb != "kick" && verb != "slap" && verb != "smack"){
+            if (!(weapon) && verb != "punch" && verb != "kick" && verb != "slap" && verb != "smack" && verb != "shake" && verb != "rattle"){
                 if (self.isArmed()) {
                     weapon = self.getWeapon(verb);
                 };

@@ -488,7 +488,7 @@ exports.Action = function Action(player, map, fileManager) {
 
                         if (originalObject0 != _object0) {
                             _verb = 'put down';
-                            description = _player.drop(_verb, _object0);
+                            description = _player.drop(_verb, _object0, _map);
                             break;
                         };
 
@@ -554,7 +554,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 break;
                             } else { _object0 = _object0+" "+_splitWord+" "+_object1;};
                         };
-                        description = _player.drop(_verb, _object0);
+                        description = _player.drop(_verb, _object0, _map);
                         //we're throwing the object *at* something. Use it as a weapon.
                         //this needs work
                         //if ((_verb == 'throw') && _object1) {
