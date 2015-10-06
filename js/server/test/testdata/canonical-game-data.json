@@ -1028,7 +1028,7 @@
       {
         "object": "artefact",
         "name": "lawyer door",
-        "description": "door heading south",
+        "description": "door leading south",
         "detailedDescription": "Peering through the window you see serious people in suits looking busy and important.",
         "attributes": {
           "defaultAction": "open",
@@ -5220,7 +5220,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the first floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+        "detailedDescription": "It's one of the main doors into the first floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -10215,7 +10215,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+        "detailedDescription": "It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -11784,7 +11784,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+        "detailedDescription": "It's one of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -13763,7 +13763,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the first floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+        "detailedDescription": "It's one of the main doors into the first floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -13841,7 +13841,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+        "detailedDescription": "It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -13905,7 +13905,7 @@
         "object": "artefact",
         "name": "office door",
         "description": "office door",
-        "detailedDescription": "One of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+        "detailedDescription": "It's one of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "attributes": {
           "defaultAction": "open",
           "weight": 200,
@@ -14207,7 +14207,7 @@
         "name": "pawel jonczak",
         "displayname": "Pawel Jonczak",
         "description": "Pawel Jonczak",
-        "detailedDescription": "One of the hidden heroes of our catering team.",
+        "detailedDescription": "He's one of the hidden heroes of our catering team.",
         "attributes": {
           "weight": 120,
           "money": 20,

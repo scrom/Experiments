@@ -289,14 +289,18 @@ exports.Location = function Location(name, displayName, description, attributes)
             };  
         };
 
-        self.getDoorForExit = function(direction, includeLockedDoors) {
+        self.getDoorForExit = function (direction, includeLockedDoors) {
+            if (direction.length > 1) {
+                direction = direction.substr(0, 1);
+            };
             var doors = self.getAllObjectsOfType("door");
             for (var d=0;d<doors.length;d++) {
                 if ((!(doors[d].isLocked())) || includeLockedDoors) {
                     var linkedExits = doors[d].getLinkedExits();
                     for (var l=0;l<linkedExits.length;l++) {
-                        if (linkedExits[l].getSourceName()==self.getName()) {
-                            if (linkedExits[l].getDirection() == direction) {
+                        if (linkedExits[l].getSourceName() == self.getName()) {
+                            //console.log("getDoorForExit: direction - " + direction + " : " + linkedExits[l].toString());
+                            if (linkedExits[l].getDirection() == direction) {                                
                                 //we have a matching exit with a door
                                 return doors[d];
                             };

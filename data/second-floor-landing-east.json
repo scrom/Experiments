@@ -32,7 +32,7 @@
       {
         "object": "artefact",
         "template": "office-door",
-        "detailedDescription": "One of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+        "detailedDescription": "It's one of the main doors into the second floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
         "linkedexits": [
           {
             "object": "exit",

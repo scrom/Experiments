@@ -3114,15 +3114,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefactName.length == 1) {
                         artefactName = tools.directions[directionIndex+1];
                     };
+
                     var destinationName = _currentLocation.getExitDestination(artefactName);
                     var destination = map.getLocation(destinationName);
                     if (destination) {
                         resultString = destination.getDisplayName();
                     };
                     if (resultString == _currentLocation.getDisplayName() || resultString.length == 0) {
-                        return "You peer "+artefactName+" but there's nothing else to see there.";
+                        return "You peer " + artefactName + " but there's nothing else to see there.";
                     } else {
-                        return tools.initCap(artefactName)+" leads to '"+resultString+"'.";
+                        var exit = _currentLocation.getExit(artefactName);
+                        if (!exit) {
+                          //no exit after all for some reason - we shouldn't normally get here
+                          return "You peer " + artefactName + " but there's nothing else to see there.";  
+                        };
+                        if (exit.isVisible()) {
+                            return tools.initCap(artefactName) + " leads to '" + resultString + "'.";
+                        } else {
+                            var door = _currentLocation.getDoorForExit(artefactName, true);
+                            if (door) {
+                                var resultString = "You see " + door.getDescription()+".<br>"
+                                return resultString+self.examine(verb, door.getName(), map);
+                            };
+                            return "You peer " + artefactName + " but can't see through that way at the moment.";
+                        };
                     };
                 };
 
@@ -3546,7 +3561,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         //mainly used for setting initial location but could also be used for warping even if no exit/direction
         //param is a location object, not a name.
-        self.setLocation = function(location, hideLocationName) { 
+        self.setLocation = function (location, hideLocationName) {
+            if (!location) {
+                return "";
+            };
             //fire "leave" trigger for current location (if location is set and player not dead)
             var resultString = "";
 

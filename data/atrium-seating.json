@@ -75,7 +75,7 @@
       {
         "object": "artefact",
         "name": "lawyer door",
-        "description": "door heading south",
+        "description": "door leading south",
         "detailedDescription": "Peering through the window you see serious people in suits looking busy and important.",
         "attributes": {
           "defaultAction": "open",

@@ -168,7 +168,7 @@ exports.canExamineObject = function (test) {
     test.done();
 };
 
-exports.canExamineObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can examine an object." };
+exports.canExamineObject.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Examine Trait"], description: "Test that a player can examine an object." };
 
 exports.canVerifyIsArmed = function (test) {
     p0.get('get', weapon.getName());
@@ -1549,8 +1549,60 @@ exports.canExamineContainer = function (test) {
     test.done();
 };
 
-exports.canExamineContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait"], description: "Test that a player can examine an object." };
+exports.canExamineContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Examine Trait"], description: "Test that a player can examine an object." };
 
+
+exports.canLookInDirectionAndSeeDestination = function (test) {
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "West leads to 'Reception'.";
+    var actualResult = p0.examine('look', 'w', m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canLookInDirectionAndSeeDestination.meta = { traits: ["Player Test", "Action Trait", "Examine Trait"], description: "Test that a player can look in a direction and see destination." };
+
+
+exports.canLookInDirectionWithNoExitAndSeeNothing = function (test) {
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "You peer north but there's nothing else to see there.";
+    var actualResult = p0.examine('look', 'n', m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canLookInDirectionWithNoExitAndSeeNothing.meta = { traits: ["Player Test", "Action Trait", "Examine Trait"], description: "Test that a player can look in a direction and see destination." };
+
+exports.canLookInDirectionWithClosedDoorWithWindowAndSeeThroughDoor = function (test) {
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "You see a door leading south.<br>Peering through the window you see serious people in suits looking busy and important.<br>It's locked.";
+    var actualResult = p0.examine('look', 's', m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canLookInDirectionWithClosedDoorWithWindowAndSeeThroughDoor.meta = { traits: ["Player Test", "Action Trait", "Examine Trait", "Window Trait"], description: "Test that a player can look in a direction and see destination." };
+
+exports.canLookInDirectionWithClosedDoorAndSeeDoor = function (test) {
+    var reception = m0.getLocation("reception");
+    p0.setLocation(reception);
+    var expectedResult = "You see an office door.<br>It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.<br>It's locked.";
+    var actualResult = p0.examine('look', 's', m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+exports.canLookInDirectionWithClosedDoorAndSeeDoor.meta = { traits: ["Player Test", "Action Trait", "Examine Trait"], description: "Test that a player can look in a direction and see destination." };
 
 exports.playerCanMakeSweetCoffeeByAddingSugarToCoffeeWhenCupIsInInventory = function (test) {
 

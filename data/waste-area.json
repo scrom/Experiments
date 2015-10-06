@@ -32,7 +32,7 @@
             "name": "pawel jonczak",
             "displayname": "Pawel Jonczak",
             "description": "Pawel Jonczak",
-            "detailedDescription": "One of the hidden heroes of our catering team.",
+            "detailedDescription": "He's one of the hidden heroes of our catering team.",
             "attributes": {
                 "template": "creature-male-l3",
                 "destinations": [
