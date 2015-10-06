@@ -9322,6 +9322,26 @@
         "source": "peacock",
         "destination": "opportunities-north-corridor"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "You peer out of the window and look out to the office entrance.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "isBreakable": true,
+          "canDrawOn": true,
+          "viewDestination": "office-front"
+        },
+        "synonyms": [
+          "glass",
+          "windows",
+          "outside"
+        ]
+      }
     ]
   },
   {
@@ -14115,6 +14135,27 @@
         "source": "traffic-jam-meeting-room",
         "destination": "sales-seating"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "You peer out of the window and look down to the office entrance.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "isBreakable": true,
+          "canDrawOn": true,
+          "viewDestination": "office-front"
+        },
+        "synonyms": [
+          "glass",
+          "windows",
+          "outside",
+          "view"
+        ]
+      }
     ]
   },
   {
@@ -14513,6 +14554,24 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "You peer out of the window and look down to the office entrance.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "isBreakable": true,
+          "canDrawOn": true,
+          "viewDestination": "office-front"
+        },
+        "synonyms": [
+          "glass",
+          "windows",
+          "outside"
+        ]
+      },
       {
         "object": "artefact",
         "name": "wall",
