@@ -1822,9 +1822,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.checkCustomAction(verb)) {
                 return self.getCustomActionResult(verb);
             };
-
-            if (_inventory.hasLiquid()) {
-                return "You hear a sloshing sound from inside " + self.getSuffix() + ".";
+            
+            var liquid = _inventory.getLiquid();
+            if (liquid) {
+                if (self.isOpen()) {
+                    return tools.initCap(liquid.getName())+" sloshes around inside " + self.getSuffix() + " but you manage not to spill any.";
+                } else {
+                    return "You hear a sloshing sound from inside " + self.getSuffix() + ".";
+                };
             };
             if (_inventory.size(true) > 0) {
                 var bashResult = self.bash();

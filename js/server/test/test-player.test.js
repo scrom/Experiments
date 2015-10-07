@@ -186,11 +186,15 @@ exports.canExamineObject.meta = { traits: ["Player Test", "Inventory Trait", "Ac
 
 
 exports.canShakeBreakableContainer = function (test) {
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact of little consequence'
-    p0.get('get', a0.getName());
-    var expectedResult = "XXX";
-    var actualResult = p0.shake('shake', container.getName());
+  
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 5, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true };
+    var box = new artefact.Artefact('box', 'box', "it's a box.", openBreakableContainerAttributes, null)
+    box.receive(a0);
+    box.receive(a1);
+    l0.addObject(box);
+    p0.get('get', box.getName());
+    var expectedResult = "You shake the box. Rattle rattle rattle... ...kerchink!<br>your fingers slip briefly from box before you recover your composure. ";
+    var actualResult = p0.shake('shake', box.getName());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -200,27 +204,56 @@ exports.canShakeBreakableContainer = function (test) {
 exports.canShakeBreakableContainer.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
 
 
-exports.canShakeContainerWithLiquid = function (test) {
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact of little consequence'
-    p0.get('get', a0.getName());
-    var expectedResult = "XXX";
-    var actualResult = p0.shake('shake', container.getName());
+exports.canShakeOpenContainerWithLiquid = function (test) {
+    var drinkAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(coffee);
+    l0.addObject(mug);
+    p0.get('get', mug.getName());
+    var expectedResult = "You shake the coffee mug. Coffee sloshes around inside it but you manage not to spill any.";
+    var actualResult = p0.shake('shake', mug.getName());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.canShakeContainerWithLiquid.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
+exports.canShakeOpenContainerWithLiquid.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
+
+
+exports.canShakeClosedContainerWithLiquid = function (test) {
+    var drinkAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: true, isEdible: false, isBreakable: true };
+    var flask = new artefact.Artefact('flask', 'flask', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    flask.receive(coffee);
+    l0.addObject(flask);
+    p0.get('get', flask.getName());
+    var expectedResult = "You shake the flask. You hear a sloshing sound from inside it.";
+    var actualResult = p0.shake('shake', flask.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canShakeClosedContainerWithLiquid.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Shake Trait"], description: "Test that a player can shake an object." };
 
 
 exports.canShakeObjectWithCustomAction = function (test) {
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact of little consequence'
-    p0.get('get', a0.getName());
-    var expectedResult = "XXX";
-    var actualResult = p0.shake('shake', container.getName());
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 5, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true, customAction:["shake"], defaultResult: "The box emits a strange groaning noise" };
+    var box = new artefact.Artefact('box', 'box', "it's a box.", openBreakableContainerAttributes, null)
+    box.receive(a0);
+    box.receive(a1);
+    l0.addObject(box);
+    p0.get('get', box.getName());
+    var expectedResult = "You shake the box. The box emits a strange groaning noise$result";
+    var actualResult = p0.shake('shake', box.getName());
+
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
