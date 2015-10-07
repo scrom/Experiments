@@ -4936,8 +4936,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //just got killed.
                     return damageString;
                 } else {
-                    resultString += afflictionString+damageString;
+                    resultString += afflictionString + damageString;
                 };
+            } else {
+                resultString += afflictionString;
             };
             
             //is player trapped?
