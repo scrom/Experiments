@@ -4734,7 +4734,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //reduce score
             var minusPoints = 100;
             _score -= minusPoints;
-            if (_score <-1000) {_score = -1000;}; //can't score less than -1000 (seriously!)
+            if (_score < -1000) { _score = -1000; }; //can't score less than -1000 (seriously!)
+            
+            var reasonForDeath = "You're dead. You really should try to stay out of trouble and look after yourself better.";
+            if (_contagion.length > 0) {
+                reasonForDeath = "You collapse in a pool of weeping pus.<br>That was unfortunate. It looks like you were overcome by the "+_contagion[0].getName()+" contagion or something equally nasty."
+            } else if (self.isStarving()) {
+                if (_timeSinceEating - (_maxMovesUntilHungry + _additionalMovesUntilStarving) > 10) {
+                    reasonForDeath = "You're dead. You really do need to keep your energy up if you're going to survive in this environment.";
+                };
+            } else if (self.isExhausted()) {
+                if (_timeSinceResting - (_maxMovesUntilTired + _additionalMovesUntilExhausted) > 12) {
+                    reasonForDeath = "You stagger onward with the pains of exhuastion setting in. After a few steps you collapse and curl into a ball to die.<br>We're all about sustainable pace here!<br>Killing yourself from exhaustion isn't really something we condone.";
+                };
+                
+            };
 
             //reset aggression
             self.setAggression(0);
@@ -4756,8 +4770,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             _bleeding = false;
             self.recover(_maxHitPoints);
 
-            resultString += "<br><br>Well that was foolish. You really should look after yourself better. "+
-                   "Fortunately, we currently have a special on infinite reincarnation. "+
+            resultString += "<br><br>";
+            resultString += reasonForDeath;
+
+            resultString += " Fortunately, we currently have a special on infinite reincarnation. "+
                    "It'll cost you "+minusPoints+" points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" 
 
             var newLocationDescription = self.setLocation(_startLocation);
@@ -4847,17 +4863,23 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //time passing
             for (var t=0; t < time; t++) {
                 //console.log("tick...");
+                //has player been killed?
+                var originalDeathCount = _killedCount;
 
                 //inventory tick
-                resultString+=_inventory.tick();
+                resultString+=_inventory.tick();                               
 
                 //contagion?
                 if (_contagion.length >0) {
                     for (var c=0; c<_contagion.length;c++) {
                         resultString += _contagion[c].enactSymptoms(self, _currentLocation);
+                        if (originalDeathCount < _killedCount) {
+                            //player was killed by contagion
+                            return resultString;
+                        };
                     };
                 };
-
+                
                 //bleed?
                 if (_bleeding) {
                     damage+=2*time; //if you rest or sleep whilst bleeding, this will be very bad
@@ -4880,34 +4902,43 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     damage += Math.floor((_timeSinceResting - (_maxMovesUntilTired + _additionalMovesUntilExhausted)) / 1.8);
                 }; 
             };
-
-            if (self.isStarving()) {resultString+="<br>You're starving. ";}
-            else if (self.isHungry()) {resultString+="<br>You're hungry.";}
-            else if (_timeSinceEating == _maxMovesUntilHungry-(Math.floor(Math.random() * 5))) {resultString+="<br>Your stomach just growled.";};
+            
+            var afflictionString = "";
+            if (self.isStarving()) { afflictionString+="<br>You're starving. ";}
+            else if (self.isHungry()) { afflictionString+="<br>You're hungry.";}
+            else if (_timeSinceEating == _maxMovesUntilHungry-(Math.floor(Math.random() * 5))) { afflictionString+="<br>Your stomach just growled.";};
             
             if (self.isExhausted()) {
                 if (_timeSinceResting == _maxMovesUntilTired + _additionalMovesUntilExhausted) {
-                    resultString += "<br>You're exhausted. You urgently need to find somewhere to <i>rest</i> or <i>sleep</i>.<br>";
+                    afflictionString += "<br>You're exhausted. You urgently need to find somewhere to <i>rest</i> or <i>sleep</i>.<br>";
                 } else {
-                    resultString += "<br>You're exhausted.<br>";
+                    afflictionString += "<br>You're exhausted.<br>";
                 };
             } 
             else if (self.isTired()) {
                 //@todo make this more varied
-                resultString += "<br>You need to <i>rest</i>. ";
+                afflictionString += "<br>You need to <i>rest</i>. ";
                 //console.log("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
                 if (_timeSinceResting == Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2))) {
-                    resultString += "You're struggling to keep up with those around you. ";
+                    afflictionString += "You're struggling to keep up with those around you. ";
                 };
 
             } 
-            else if (_timeSinceResting == _maxMovesUntilTired - (Math.floor(Math.random() * 4))) { resultString += "<br>You've been on your feet quite a while. You could do with taking a break. "; }; //@todo make this more varied
+            else if (_timeSinceResting == _maxMovesUntilTired - (Math.floor(Math.random() * 4))) { afflictionString += "<br>You've been on your feet quite a while. You could do with taking a break. "; }; //@todo make this more varied
             
 
-            if (_bleeding) {resultString+="<br>You're bleeding. ";};           
+            if (_bleeding) { afflictionString+="<br>You're bleeding. ";};           
 
             if (healPoints>0 && (_hitPoints < _maxHitPoints)) {self.recover(healPoints);};   //heal before damage - just in case it's enough to not get killed.
-            if (damage > 0) { resultString += self.hurt(damage); };
+            if (damage > 0) {
+                var damageString = self.hurt(damage);
+                if (originalDeathCount < _killedCount) {
+                    //just got killed.
+                    return damageString;
+                } else {
+                    resultString += afflictionString+damageString;
+                };
+            };
             
             //is player trapped?
             var exits = _currentLocation.getAvailableExits(true, _inventory);
