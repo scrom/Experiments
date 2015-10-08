@@ -714,6 +714,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.syn = function (synonym) {
+            if (!synonym) {
+                return false;
+            };
             //match by name first
             if (synonym == _name) {
                 return true; 
@@ -736,7 +739,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //if (synonym == self.getDescription()) { 
             if (" "+self.getDescription()+" ".indexOf(" "+synonym+" ") >-1) { 
                 return true; 
-            }; 
+            };
+            
+            if (synonym == "monitors") {
+                var debug = synonym.substr(synonym.length - 1);
+                var search = synonym.substr(0, synonym.length - 1);
+            };
+            
+            if (synonym.substr(synonym.length-1) == "s") {
+                return self.syn(synonym.substr(0, synonym.length - 1));
+            };
 
             return false;
         };

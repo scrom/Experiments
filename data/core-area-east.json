@@ -41,7 +41,7 @@
         "object": "artefact",
         "name": "monitor",
         "template": "flat-screen",
-        "detailedDescription": "It's cycling through web site statistics and error logs.",
+        "detailedDescription": "They're all cycling through web site statistics and error logs.",
         "attributes": {
           "type": "scenery",
           "isBreakable": false
