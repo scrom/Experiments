@@ -57,47 +57,47 @@
                 "shelves"
             ],
             "inventory": [
-          {
-            "object": "artefact",
-            "name": "book of red gate",
-            "description": "'The Book of Red Gate'",
-            "detailedDescription": "It attempts to describe the essence of what makes ths place tick.",
-            "attributes": {
-              "defaultAction": "read",
-              "weight": 1,
-              "attackStrength": 5,
-              "type": "book",
-              "canCollect": true,
-              "canDrawOn": true
-            },
-            "synonyms": [
-                "book",
-                "red book",
-                "red gate book",
-                "book red gate",
-                "borg"
-            ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "borgassimilation",
-            "displayName": "read the BoRG, be assimilated",
-            "description": "It offers a window into the inner workings of the company.<br>New starters are usually given one before they join. (Did you forget your copy today?)",
-            "attributes": {
-              "missionObject": "book of red gate",
-              "static": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": false,
-              "read": true
-            },
-            "reward": {
-              "score": 20,
-              "message": "<br>Amongst the whimsy and nonsense it describes <i>13</i> company values. Number 4 is generally one of the most popular.<br>There's a complete PDF version <a href=https://www.red-gate.com/assets/our-company/about/assets/book-of-red-gate-2012.pdf target=_blank>online</a> as well.<br><br>I hope you read the whole thing and paid particular attention to page 44."
-            }
-          }
-        ]
-          },
+                {
+                    "object": "artefact",
+                    "name": "book of red gate",
+                    "description": "'The Book of Red Gate'",
+                    "detailedDescription": "It attempts to describe the essence of what makes ths place tick.",
+                    "attributes": {
+                        "defaultAction": "read",
+                        "weight": 1,
+                        "attackStrength": 5,
+                        "type": "book",
+                        "canCollect": true,
+                        "canDrawOn": true
+                    },
+                    "synonyms": [
+                        "book",
+                        "red book",
+                        "red gate book",
+                        "book red gate",
+                        "borg"
+                    ],
+                    "missions": [
+                        {
+                            "object": "mission",
+                            "name": "borgassimilation",
+                            "displayName": "read the BoRG, be assimilated",
+                            "description": "It offers a window into the inner workings of the company.<br>New starters are usually given one before they join. (Did you forget your copy today?)",
+                            "attributes": {
+                                "missionObject": "book of red gate",
+                                "static": true
+                            },
+                            "conditionAttributes": {
+                                "isDestroyed": false,
+                                "read": true
+                            },
+                            "reward": {
+                                "score": 20,
+                                "message": "<br>Amongst the whimsy and nonsense it describes <i>13</i> company values. Number 4 is generally one of the most popular.<br>There's a complete PDF version <a href=https://www.red-gate.com/assets/our-company/about/assets/book-of-red-gate-2012.pdf target=_blank>online</a> as well.<br><br>I hope you read the whole thing and paid particular attention to page 44."
+                            }
+                        }
+                    ]
+                },
                 {
                     "object": "artefact",
                     "name": "sales book",
@@ -178,6 +178,7 @@
                 "canCollect": true,
                 "isBreakable": true,
                 "price": 10,
+                "requiredComponentCount": 1,
                 "customAction": [
                     "play",
                     "strum"
@@ -185,10 +186,31 @@
                 "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte.",
                 "imageName": "guitar.jpg"
             },
+            "inventory": [
+                {
+                    "object": "artefact",
+                    "name": "strings",
+                    "description": "guitar strings",
+                    "detailedDescription": "They're tatty but functional nylon/wound spanish guitar strings.",
+                    "attributes": {
+                        "type": "scenery",
+                        "weight": 0,
+                        "canCollect": false,
+                        "isBreakable": true,
+                        "plural": true,
+                        "affinityModifier": 0,
+                        "componentOf": [ "guitar" ],
+                        "customAction": [
+                            "get"
+                        ],
+                        "defaultResult": "They look pretty worn out. It's best to leave them alone."
+                    }
+                }
+            ],
             "synonyms": [
                 "spanish",
                 "spanish guitar"
             ]
         }
     ]
-  }
+        }

@@ -7915,6 +7915,7 @@
           "canCollect": true,
           "isBreakable": true,
           "price": 10,
+          "requiredComponentCount": 1,
           "customAction": [
             "play",
             "strum"
@@ -7925,6 +7926,27 @@
         "synonyms": [
           "spanish",
           "spanish guitar"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "strings",
+            "description": "guitar strings",
+            "detailedDescription": "They're tatty but functional nylon/wound spanish guitar strings.",
+            "attributes": {
+              "type": "scenery",
+              "isBreakable": true,
+              "plural": true,
+              "affinityModifier": 0,
+              "componentOf": [
+                "guitar"
+              ],
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "They look pretty worn out. It's best to leave them alone."
+            }
+          }
         ]
       }
     ]
@@ -11138,14 +11160,16 @@
           "isBreakable": true,
           "price": 30,
           "customAction": "play",
-          "defaultResult": "After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
+          "defaultResult": "Brum. Bruuuum. BRRRRUUUUUUM!<br>After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
         },
         "synonyms": [
           "console",
           "xbox 360",
           "x-box",
           "games console",
-          "game"
+          "game",
+          "forza",
+          "game of forza"
         ]
       }
     ]
