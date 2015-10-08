@@ -1512,7 +1512,7 @@
         "object": "artefact",
         "name": "monitor",
         "description": "flat-panel screen",
-        "detailedDescription": "It's cycling through web site statistics and error logs.",
+        "detailedDescription": "They're all cycling through web site statistics and error logs.",
         "attributes": {
           "weight": 51,
           "type": "scenery",
@@ -12397,7 +12397,7 @@
     "object": "location",
     "name": "second-floor-toilet",
     "displayName": "Second floor toilet",
-    "description": "You're in a bathroom. You can't quite remember what floor you're on.<br>Do those soap dispensers look different to you?<br>A sign on the toilet cubicle door says 'Temporarily out of order'",
+    "description": "You're in a bathroom. You can't quite remember what floor you're on.<br>Do those soap dispensers look different to you?<br>There's a tatty-looking sign on the toilet cubicle door.",
     "exits": [
       {
         "object": "exit",
@@ -12524,6 +12524,26 @@
           "cubicle",
           "toilet door",
           "door"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "sign",
+            "description": "out of order sign",
+            "detailedDescription": "It says 'Temporarily out of order'.",
+            "attributes": {
+              "type": "scenery",
+              "position": "on",
+              "customAction": [
+                "read"
+              ],
+              "defaultResult": "It says: 'Due to a series of blockages and poor plumbing, this cubicle is currently out of order'.",
+              "canDrawOn": true
+            },
+            "synonyms": [
+              "tatty sign"
+            ]
+          }
         ]
       },
       {
