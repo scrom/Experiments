@@ -7763,6 +7763,23 @@
         "synonyms": [
           "glass",
           "glass table"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "plaque",
+            "description": "a shiny gold plaque.",
+            "detailedDescription": "Somebody has some strange ideas here.<br>It's worth a read for the sheer oddness of the writing in a modern software company.",
+            "attributes": {
+              "defaultAction": "read",
+              "type": "scenery",
+              "customAction": [
+                "read"
+              ],
+              "defaultResult": "It says 'Whosoever contributeth most to our billion-dollar revenue is rightwise born to pull out this sword of this stone and table.'",
+              "imageName": "plaque.jpg"
+            }
+          }
         ]
       },
       {
@@ -8007,6 +8024,75 @@
         "source": "lift-first-floor",
         "destination": "lift-second-floor"
       }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "alarm button",
+        "description": "alarm button",
+        "detailedDescription": "It doesn't look like it's been used in quite some time.",
+        "attributes": {
+          "type": "scenery",
+          "isBroken": true,
+          "customAction": [
+            "press",
+            "push",
+            "shove",
+            "hold"
+          ],
+          "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+        },
+        "synonyms": [
+          "alarm"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "led",
+        "description": "led lights",
+        "detailedDescription": "They're a kind of baleful blueish white.",
+        "attributes": {
+          "type": "scenery"
+        },
+        "synonyms": [
+          "light",
+          "lights",
+          "leds",
+          "led lights",
+          "lighting",
+          "led lighting",
+          "white",
+          "blue",
+          "blueish",
+          "dark led",
+          "dark led lights"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "lift doors",
+        "detailedDescription": "They're just plain metal lift doors.",
+        "attributes": {
+          "type": "scenery",
+          "plural": true
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "mirror",
+        "description": "bathroom mirror",
+        "detailedDescription": "With the white/blue-ish dark LED light, the full-length view of yourself and the enclosed space the view is making you uncomfortable.<br>This mirror seems to shed pounds from you leaving you looking gaunt, aging and unwell.",
+        "attributes": {
+          "type": "scenery"
+        },
+        "synonyms": [
+          "lift mirror",
+          "self",
+          "yourself",
+          "full mirror"
+        ]
+      }
     ]
   },
   {
@@ -8082,6 +8168,44 @@
           "exit",
           "button"
         ]
+      },
+      {
+        "object": "artefact",
+        "name": "led",
+        "description": "led lights",
+        "detailedDescription": "They're blueish white low-energy replacement bulbs.",
+        "attributes": {
+          "type": "scenery"
+        },
+        "synonyms": [
+          "light",
+          "lights",
+          "leds",
+          "led lights",
+          "lighting",
+          "led lighting",
+          "white",
+          "blue",
+          "blueish",
+          "dark led",
+          "dark led lights"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "mirror",
+        "description": "bathroom mirror",
+        "detailedDescription": "Something about this view toubles you.",
+        "attributes": {
+          "type": "scenery"
+        },
+        "synonyms": [
+          "lift mirror",
+          "self",
+          "yourself",
+          "full mirror",
+          "view"
+        ]
       }
     ]
   },
@@ -8104,6 +8228,89 @@
         "direction": "d",
         "source": "lift-second-floor",
         "destination": "lift-first-floor"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "alarm button",
+        "description": "alarm button",
+        "detailedDescription": "It doesn't look like it's been used in quite some time.",
+        "attributes": {
+          "type": "scenery",
+          "isBroken": true,
+          "customAction": [
+            "press",
+            "push",
+            "shove",
+            "hold"
+          ],
+          "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+        },
+        "synonyms": [
+          "alarm"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "led",
+        "description": "led lights",
+        "detailedDescription": "They're a kind of baleful blueish white.<br>Some years ago the original lights were stolen. (What a thing to steal from an office!)<br>These are low-energy replacements but they remind you of the lights used in the toilets of seedier pubs and clubs to prevent unsavoury activities.",
+        "attributes": {
+          "type": "scenery"
+        },
+        "synonyms": [
+          "light",
+          "lights",
+          "leds",
+          "led lights",
+          "lighting",
+          "led lighting",
+          "white",
+          "blue",
+          "blueish",
+          "dark led",
+          "dark led lights"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "door",
+        "description": "lift doors",
+        "detailedDescription": "They're just plain metal lift doors.",
+        "attributes": {
+          "type": "scenery",
+          "plural": true
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "mirror",
+        "description": "bathroom mirror",
+        "detailedDescription": "With the white/blue-ish dark LED light, the full-length view of yourself and the enclosed space the view is making you uncomfortable.<br>This mirror seems to shed pounds from you leaving you looking gaunt, aging and unwell.<br><br>Hang on! Is that your eyes playing tricks on you or did the mirror just shimmer and your reflection move on its own?",
+        "attributes": {
+          "type": "scenery"
+        },
+        "synonyms": [
+          "lift mirror",
+          "self",
+          "yourself",
+          "full mirror"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "reflection",
+            "description": "reflection",
+            "detailedDescription": "You stare deeply into your reflection and shudder to yourself.<br>You're just imagining things.",
+            "attributes": {
+              "type": "scenery"
+            },
+            "synonyms": [
+              "shimmer"
+            ]
+          }
+        ]
       }
     ]
   },

@@ -1,0 +1,20 @@
+﻿{
+"object": "artefact",
+"name": "alarm button",
+"description": "alarm button",
+"detailedDescription": "It doesn't look like it's been used in quite some time.",
+"attributes": {
+    "type": "scenery",
+    "isBroken": true,
+    "customAction": [
+    "press",
+    "push",
+    "shove",
+    "hold"
+    ],
+    "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+},
+"synonyms": [
+    "alarm"
+]
+}

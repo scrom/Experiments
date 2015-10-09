@@ -21,56 +21,71 @@
       }
     ],
     "inventory": [
-      {
-        "object": "artefact",
-        "name": "alarm button",
-        "description": "alarm button",
-        "detailedDescription": "It doesn't look like it's been used in quite some time.",
-        "attributes": {
-          "type": "scenery",
-          "isBroken": true,
-          "customAction": [
-            "press",
-            "push",
-            "shove",
-            "hold"
-          ],
-          "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+        {"file": "alarm-button"},
+        {
+            "object": "artefact",
+            "name": "exit button",
+            "description": "exit button",
+            "detailedDescription": "If you push the exit, you should be able to get out again.",
+            "attributes": {
+                "defaultAction": "press",
+                "weight": 200,
+                "type": "tool",
+                "canOpen": true
+            },
+            "linkedexits": [
+                {
+                    "object": "exit",
+                    "longname": "out",
+                    "direction": "o",
+                    "source": "lift-ground-floor",
+                    "destination": "atrium",
+                    "hidden": true
+                }
+            ],
+            "synonyms": [
+                "lift",
+                "lift call",
+                "lift button",
+                "lift call button",
+                "door",
+                "exit",
+                "button"
+            ]
         },
-        "synonyms": [
-          "alarm"
-        ]
-      },
-      {
+        {
         "object": "artefact",
-        "name": "exit button",
-        "description": "exit button",
-        "detailedDescription": "If you push the exit, you should be able to get out again.",
-        "attributes": {
-          "defaultAction": "press",
-          "weight": 200,
-          "type": "tool",
-          "canOpen": true
+        "name": "led",
+        "description": "led lights",
+        "detailedDescription": "They're blueish white low-energy replacement bulbs.",
+            "attributes": {
+                "type": "scenery"
+            },
+            "synonyms": [
+                "light",
+                "lights",
+                "leds",
+                "led lights",
+                "lighting",
+                "led lighting",
+                "white",
+                "blue",
+                "blueish",
+                "dark led",
+                "dark led lights"
+            ]
         },
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "out",
-            "direction": "o",
-            "source": "lift-ground-floor",
-            "destination": "atrium",
-            "hidden": true
-          }
-        ],
-        "synonyms": [
-          "lift",
-          "lift call",
-          "lift button",
-          "lift call button",
-          "door",
-          "exit",
-          "button"
-        ]
-      }
+        {
+            "object": "artefact",
+            "template": "mirror",
+            "detailedDescription": "Something about this view toubles you.",
+            "synonyms": [
+                "lift mirror",
+                "self",
+                "yourself",
+                "full mirror",
+                "view"
+            ]
+        }
     ]
   }

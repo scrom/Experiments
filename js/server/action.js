@@ -383,6 +383,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'show':
                     case 'look':
+                    case 'stare':
                     case 'check':                       
                     case 'peer':
                         //trap a few junk words - will return "look" with no object. 
@@ -397,7 +398,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 if (_adverb) {_verb = _verb+" "+_adverb;};
                                 if (positionIndex == -1) { _ticks = 3; }; //full search takes longer
                                 
-                                if ((_verb == "look" || _verb == "peer") && _splitWord == "over") {
+                                if ((_verb == "stare" ||_verb == "look" || _verb == "peer") && _splitWord == "over") {
                                     description = _player.examine(_verb + " " + _splitWord, _object1, _map);
                                 } else {
                                     description = _player.search(_verb, _object1, _splitWord, tools.positions);
