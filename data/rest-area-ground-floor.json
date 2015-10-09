@@ -4,183 +4,206 @@
     "displayName": "Rest area",
     "description": "You're in the ground floor rest area.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "rest-area-ground-floor",
-        "destination": "east-south-end-corridor-ground-floor"
-      }
+        {
+            "object": "exit",
+            "longname": "West",
+            "direction": "w",
+            "source": "rest-area-ground-floor",
+            "destination": "east-south-end-corridor-ground-floor"
+        }
     ],
     "inventory": [
-      {
-        "object": "artefact",
-        "name": "hammock",
-        "description": "comfy-looking hammock",
-        "detailedDescription": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
-        "attributes": {
-          "defaultAction": "rest",
-          "weight": 80,
-          "type": "bed",
-          "isBreakable": true
-        },
-        "synonyms": [
-          "bed",
-          "comfy hammock",
-          "comfy-looking hammock",
-          "comfy looking hammock"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "bookshelf",
-        "description": "set of bookshelves",
-        "detailedDescription": "These bookshelves contain all the old, unwanted and duplicate books. They're 'free to a good home'.",
-        "attributes": {
-          "extendedInventoryDescription": "Amongst the dozens of out of date SQL Server and HTML guides you find $inventory.",
-          "weight": 80,
-          "carryWeight": 8,
-          "type": "container",
-          "plural": true,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "library",
-          "bookcase",
-          "bookcases",
-          "bookshelves",
-          "book case",
-          "book cases",
-          "book shelf",
-          "book shelves",
-          "case",
-          "shelf",
-          "cases",
-          "shelves"
-        ],
-        "inventory": [
-          {
+        {
             "object": "artefact",
-            "name": "coffee machine manual",
-            "description": "maintenance manual for the coffee machines",
-            "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
+            "name": "hammock",
+            "description": "comfy-looking hammock",
+            "detailedDescription": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
             "attributes": {
-              "defaultAction": "read",
-              "weight": 2,
-              "attackStrength": 5,
-              "type": "book",
-              "canCollect": true,
-              "affinityModifier": 0,
-              "canDrawOn": true
+                "defaultAction": "rest",
+                "weight": 80,
+                "type": "bed",
+                "isBreakable": true
             },
             "synonyms": [
-              "manual",
-              "book",
-              "repair book",
-              "maintenance book",
-              "repair manual",
-              "maintenance manual",
-              "machine manual",
-              "coffee machine book",
-              "coffee machine repair manual",
-              "coffee machine maintenance manual",
-              "machine maintenance manual"
+                "bed",
+                "comfy hammock",
+                "comfy-looking hammock",
+                "comfy looking hammock"
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "bookshelf",
+            "description": "set of bookshelves",
+            "detailedDescription": "These bookshelves contain all the old, unwanted and duplicate books. They're 'free to a good home'.",
+            "attributes": {
+                "extendedInventoryDescription": "Amongst the dozens of out of date SQL Server and HTML guides you find $inventory.",
+                "weight": 80,
+                "carryWeight": 8,
+                "type": "container",
+                "plural": true,
+                "isBreakable": true,
+                "canDrawOn": true
+            },
+            "synonyms": [
+                "library",
+                "bookcase",
+                "bookcases",
+                "bookshelves",
+                "book case",
+                "book cases",
+                "book shelf",
+                "book shelves",
+                "case",
+                "shelf",
+                "cases",
+                "shelves"
             ],
-            "missions": [
-              {
-                "object": "mission",
-                "name": "learntorepaircoffeemachine",
-                "displayName": "repair the coffee machine",
-                "description": "Blah blah blah wiring blah <i>lock</i>s blah coffee blah <i>beans</i> blah <i>milk</i> blah.<br><br> If something is broken and you have the right tools and/or skills you can try <i>repair</i>ing it.<br>Just don't go overboard and <i>destroy</i> anything you need and don't get caught <i>break</i>ing stuff deliberately.",
-                "attributes": {
-                  "missionObject": "coffee machine manual",
-                  "static": true
+            "inventory": [
+                {
+                    "object": "artefact",
+                    "name": "unwanted books",
+                    "description": "not really interesting.",
+                    "detailedDescription": "They're not really of interest to you.",
+                    "attributes": {
+                        "defaultAction": "read",
+                        "weight": 0,
+                        "type": "scenery",
+                        "customAction": ["get", "read"],
+                        "defaultResult": "These books are unwanted for a reason - usually out of date and irrelevant.<br>Don't bother."
+                    },
+                    "synonyms": [
+                        "unwanted",
+                        "sql",
+                        "sql book",
+                        "sql server book",
+                        "sql server",
+                        "html",
+                        "html book",
+                        "html guide"
+                    ]
                 },
-                "conditionAttributes": {
-                  "isDestroyed": false,
-                  "read": true
-                },
-                "reward": {
-                  "repairSkill": "coffee machine",
-                  "message": "<br>You've learned how to repair a coffee machine. That might be handy."
+                {
+                    "object": "artefact",
+                    "name": "coffee machine manual",
+                    "description": "maintenance manual for the coffee machines",
+                    "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
+                    "attributes": {
+                        "defaultAction": "read",
+                        "weight": 2,
+                        "attackStrength": 5,
+                        "type": "book",
+                        "canCollect": true,
+                        "affinityModifier": 0,
+                        "canDrawOn": true
+                    },
+                    "synonyms": [
+                        "manual",
+                        "book",
+                        "repair book",
+                        "maintenance book",
+                        "repair manual",
+                        "maintenance manual",
+                        "machine manual",
+                        "coffee machine book",
+                        "coffee machine repair manual",
+                        "coffee machine maintenance manual",
+                        "machine maintenance manual"
+                    ],
+                    "missions": [
+                        {
+                            "object": "mission",
+                            "name": "learntorepaircoffeemachine",
+                            "displayName": "repair the coffee machine",
+                            "description": "Blah blah blah wiring blah <i>lock</i>s blah coffee blah <i>beans</i> blah <i>milk</i> blah.<br><br> If something is broken and you have the right tools and/or skills you can try <i>repair</i>ing it.<br>Just don't go overboard and <i>destroy</i> anything you need and don't get caught <i>break</i>ing stuff deliberately.",
+                            "attributes": {
+                                "missionObject": "coffee machine manual",
+                                "static": true
+                            },
+                            "conditionAttributes": {
+                                "isDestroyed": false,
+                                "read": true
+                            },
+                            "reward": {
+                                "repairSkill": "coffee machine",
+                                "message": "<br>You've learned how to repair a coffee machine. That might be handy."
+                            }
+                        }
+                    ]
                 }
-              }
             ]
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "snack machine",
-        "description": "snack vending machine",
-        "detailedDescription": "An almost endless supply of snacks and treats!",
-        "attributes": {
-          "weight": 151,
-          "carryWeight": 25,
-          "isBreakable": true,
-          "canDrawOn": true
         },
-        "synonyms": [
-          "machine",
-          "vending",
-          "vending machine"
-        ],
-        "delivers": [
-          {
+        {
             "object": "artefact",
-            "name": "chocolate",
-            "description": "bar of chocolate",
-            "detailedDescription": "Mmmm tasty and loaded with calories.",
+            "name": "snack machine",
+            "description": "snack vending machine",
+            "detailedDescription": "An almost endless supply of snacks and treats!",
             "attributes": {
-              "defaultAction": "eat",
-              "weight": 1,
-              "type": "food",
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "bar",
-              "chargesDescription": "$charges $chargeUnit",
-              "saleUnit": 1,
-              "isEdible": true,
-              "nutrition": 25,
-              "price": 0.5,
-              "componentOf": [
-                "mocha"
-              ]
+                "weight": 151,
+                "carryWeight": 25,
+                "isBreakable": true,
+                "canDrawOn": true
             },
             "synonyms": [
-              "bar",
-              "bar of chocolate",
-              "chocolate bar",
-              "food"
+                "machine",
+                "vending",
+                "vending machine"
+            ],
+            "delivers": [
+                {
+                    "object": "artefact",
+                    "name": "chocolate",
+                    "description": "bar of chocolate",
+                    "detailedDescription": "Mmmm tasty and loaded with calories.",
+                    "attributes": {
+                        "defaultAction": "eat",
+                        "weight": 1,
+                        "type": "food",
+                        "canCollect": true,
+                        "charges": 1,
+                        "chargeUnit": "bar",
+                        "chargesDescription": "$charges $chargeUnit",
+                        "saleUnit": 1,
+                        "isEdible": true,
+                        "nutrition": 25,
+                        "price": 0.5,
+                        "componentOf": [
+                            "mocha"
+                        ]
+                    },
+                    "synonyms": [
+                        "bar",
+                        "bar of chocolate",
+                        "chocolate bar",
+                        "food"
+                    ]
+                },
+                {
+                    "object": "artefact",
+                    "name": "crisps",
+                    "description": "packet of crisps",
+                    "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
+                    "attributes": {
+                        "defaultAction": "eat",
+                        "weight": 1,
+                        "type": "food",
+                        "canCollect": true,
+                        "charges": 1,
+                        "chargeUnit": "packet",
+                        "chargesDescription": "$charges $chargeUnit",
+                        "saleUnit": 1,
+                        "isEdible": true,
+                        "nutrition": 25,
+                        "price": 0.5
+                    },
+                    "synonyms": [
+                        "packet",
+                        "crisp packet",
+                        "packet of crisps",
+                        "food"
+                    ]
+                }
             ]
-          },
-          {
-            "object": "artefact",
-            "name": "crisps",
-            "description": "packet of crisps",
-            "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
-            "attributes": {
-              "defaultAction": "eat",
-              "weight": 1,
-              "type": "food",
-              "canCollect": true,
-              "charges": 1,
-              "chargeUnit": "packet",
-              "chargesDescription": "$charges $chargeUnit",
-              "saleUnit": 1,
-              "isEdible": true,
-              "nutrition": 25,
-              "price": 0.5
-            },
-            "synonyms": [
-              "packet",
-              "crisp packet",
-              "packet of crisps",
-              "food"
-            ]
-          }
-        ]
-      }
+        }
     ]
   }

@@ -59,6 +59,31 @@
             "inventory": [
                 {
                     "object": "artefact",
+                    "name": "other books",
+                    "description": "not really interesting.",
+                    "detailedDescription": "They're not really of interest to you.",
+                    "attributes": {
+                        "defaultAction": "read",
+                        "weight": 0,
+                        "type": "scenery",
+                        "customAction": ["get", "read"],
+                        "defaultResult": "It's not really relevant to you at the moment."
+                    },
+                    "synonyms": [
+                        "c",
+                        "c#",
+                        "c book",
+                        "c# book",
+                        "travel",
+                        "travel book",
+                        "sql",
+                        "sql book",
+                        "sql server book",
+                        "sql server"
+                    ]
+                },
+                {
+                    "object": "artefact",
                     "name": "book of red gate",
                     "description": "'The Book of Red Gate'",
                     "detailedDescription": "It attempts to describe the essence of what makes ths place tick.",
@@ -121,7 +146,9 @@
                         "smell of sell",
                         "the smell of sell",
                         "smell",
-                        "sell"
+                        "sell",
+                        "sales",
+                        "sales book"
                     ]
                 },
                 {
