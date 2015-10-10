@@ -2847,8 +2847,11 @@ exports.PlayerCanSlipOnWetFloor = function (test) {
     var alternateResult = "ngle exit to the South.<br><br>You might want to mind out, the floor's slippery here."; //not reliable
     var actualResult = p0.go("n","n", m1).substr(-85);
     console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult||alternateResult);
+    console.log("Actual  : " + actualResult);
+    if (actualResult == alternateResult) {
+        expectedResult = alternateResult;
+    };    
+    test.equal(actualResult, expectedResult);
     test.done();
 };
 
