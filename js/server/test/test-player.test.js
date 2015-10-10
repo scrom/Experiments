@@ -1403,7 +1403,7 @@ exports.SmashLiquidContainerLosesContents = function (test) {
     l0.addObject(mug);
     l0.removeObject("sword");
     console.log(p0.examine("examine", "mug"));
-    var expectedResult = "You repeatedly smash the coffee mug against the floor.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke It.<br>The coffee that was in the coffee mug slowly trickles away.";
+    var expectedResult = "You repeatedly beat the coffee mug against the floor and manage to smash it along with spilling its contents.<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('smash', mug.getName());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
