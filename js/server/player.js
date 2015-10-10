@@ -4440,7 +4440,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var initialHP = _hitPoints;
 
             //time passes *before* any healing benefits are in place (other than resetting rest time)
-            if (verb == "sleep" || verb == "zzz") {
+            if (verb == "sleep") {
                 _timeSinceResting = 0;
             } else {
                 //probably "rest", "sit", "zz" 

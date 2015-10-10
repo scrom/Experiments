@@ -458,13 +458,13 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'sit':
                     case 'zz':
                         _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                        description = _player.rest(_verb, 4, _map);
+                        description = _player.rest("rest", 4, _map);
                         break;
                     case 'sleep':
                     case 'nap':
                     case 'zzz':
                         _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                        description = _player.rest(_verb, 9, _map);
+                        description = _player.rest("sleep", 9, _map);
                         break;
                     case 'wait':
                     case 'z':
