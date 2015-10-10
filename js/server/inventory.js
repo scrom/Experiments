@@ -449,11 +449,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 };
 
                 ////
-                if (_items[index].isLocked()) {
-                    //just retrieve positioned objects from locked items
+                if (_items[index].getType() != 'creature') {
+                    //just retrieve positioned objects from artefacts
                     //doesn't retrieve items hidden by creatures
                     //this section doesn't check custom actions at the moment - pretty sure that's a bug.
-                    var objects = _items[index].getInventoryObject().getPositionedObjects(false);
+                    //include hidden "positioned" items here as we've explicitly names what we're after and it might be scenery
+                    //possibly a bit wrong though.
+                    var objects = _items[index].getInventoryObject().getPositionedObjects(false, 0, true); 
                     //work backwards again
                     for (var o = objects.length-1; o >= 0; o--) {
                         matchedItem = getMatchedItemForGetObject(objects[o], anObjectName, ignoreSynonyms, customAction, ignoreScenery);
@@ -584,14 +586,14 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return false;
         };
 
-        self.getPositionedObjects = function(showHiddenObjects, minSize) {
+        self.getPositionedObjects = function(showHiddenObjects, minSize, includeScenery) {
             var itemsToReturn = [];
             if (minSize == undefined) {
                 minSize = 0;
             };
             for (var i=0;i<_items.length;i++) {
                 if (_items[i].getWeight() >= minSize) {
-                    if (((!_items[i].isHidden()) || showHiddenObjects) && (_items[i].getPosition())) {
+                    if (((!_items[i].isHidden()) || showHiddenObjects ||(_items[i].getType() == "scenery" && includeScenery)) && (_items[i].getPosition())) {
                         itemsToReturn.push(_items[i])
                     };
                 };

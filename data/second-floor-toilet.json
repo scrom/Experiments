@@ -2,68 +2,92 @@
     "object": "location",
     "name": "second-floor-toilet",
     "displayName": "Second floor toilet",
-    "description": "You're in a bathroom. You can't quite remember what floor you're on.<br>Do those soap dispensers look different to you?<br>A sign on the toilet cubicle door says 'Temporarily out of order'",
+    "description": "You're in a bathroom. You can't quite remember what floor you're on.<br>Do those soap dispensers look different to you?<br>There's a tatty-looking sign on the toilet cubicle door.",
     "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "second-floor-toilet",
-        "destination": "second-floor-landing-west"
-      },
-      {
-        "object": "exit",
-        "longname": "in",
-        "direction": "i",
-        "source": "second-floor-toilet",
-        "destination": "second-floor-cubicle",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "floor"
-      },
-      {
-        "object": "artefact",
-        "template": "mirror"
-      },
-      {
-        "object": "artefact",
-        "template": "hand-dryer",
-        "attributes": {
-          "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
-          "smell": "It has that reassuring, safe smell of ozone and burned electrics."
-        }
-      },
-      {
-        "object": "artefact",
-        "template": "soap",
-        "detailedDescription": "Your mind must be playing tricks on you, it's just the same as all the others."
-      },
-      {
-        "object": "artefact",
-        "template": "cubicle-door-in",
-        "detailedDescription": "The lock on the door has a slot to allow turning from the outside with a suitable tool.",
-        "attributes": {
-          "lockable": true,
-          "locked": true
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-toilet",
+            "destination": "second-floor-landing-west"
         },
-        "linkedexits": [
-          {
+        {
             "object": "exit",
             "longname": "in",
             "direction": "i",
             "source": "second-floor-toilet",
             "destination": "second-floor-cubicle",
             "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "basin"
-      }
+        }
+    ],
+    "inventory": [
+        {
+            "object": "artefact",
+            "template": "floor"
+        },
+        {
+            "object": "artefact",
+            "template": "mirror",
+            "synonyms": [
+                "bathroom mirror"
+            ]
+        },
+        {
+            "object": "artefact",
+            "template": "hand-dryer",
+            "attributes": {
+                "defaultResult": "You wave your hands under the dryer. Annoyingly it cuts out too early.<br>It smells like it might be overheating.",
+                "smell": "It has that reassuring, safe smell of ozone and burned electrics."
+            }
+        },
+        {
+            "object": "artefact",
+            "template": "soap",
+            "detailedDescription": "Your mind must be playing tricks on you, it's just the same as all the others."
+        },
+        {
+            "object": "artefact",
+            "template": "cubicle-door-in",
+            "detailedDescription": "The lock on the door has a slot to allow turning from the outside with a suitable tool.",
+            "attributes": {
+                "lockable": true,
+                "locked": true
+            },
+            "inventory": [
+                {
+                    "object": "artefact",
+                    "name": "sign",
+                    "description": "out of order sign",
+                    "detailedDescription": "It says 'Temporarily out of order'.",
+                    "attributes": {
+                        "weight": 0,
+                        "position": "on",
+                        "type": "scenery",
+                        "canDrawOn": true,
+                        "customAction": [
+                            "read"
+                        ],
+                        "defaultResult": "It says: 'Due to a series of blockages and poor plumbing, this cubicle is currently out of order'."
+                    },
+                    "synonyms": [
+                        "tatty sign"
+                    ]
+                }
+            ],
+            "linkedexits": [
+                {
+                    "object": "exit",
+                    "longname": "in",
+                    "direction": "i",
+                    "source": "second-floor-toilet",
+                    "destination": "second-floor-cubicle",
+                    "hidden": true
+                }
+            ]
+        },
+        {
+            "object": "artefact",
+            "template": "basin"
+        }
     ]
   }

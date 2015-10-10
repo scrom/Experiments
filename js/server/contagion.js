@@ -90,7 +90,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
         self.getCloneAttributes = function () {
             var cloneAttributes = {};
             if (_mutate) { 
-                cloneAttributes.incubationPeriod = Math.round((Math.random() * _originalIncubationPeriod)); //something similar to or shorter than original
+                cloneAttributes.incubationPeriod = Math.round((Math.random() * _originalIncubationPeriod+1)); //something similar to or shorter than original
                 cloneAttributes.communicability = Math.round(Math.random()*100)/100 //somewhere between 0 and 1
                 cloneAttributes.symptoms = _symptoms; //use current symptoms rather than original (means may already be fully escalated                
                 if (_originalDuration > -1) {//if duration is permanent, don't alter it
