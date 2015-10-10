@@ -1256,7 +1256,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_wetted.length > 0) {resultString += " on "+self.getSuffix()+".";};
 
             
-            if ((_inventory.size() != _inventory.size(true))) {
+            if ((_inventory.size() != _inventory.size(true)) && self.getType() != "scenery") {
                 if ( inventoryIsVisible || (_inventory.getPositionedObjects(true).length > 0)) {
                     //something is hidden here
                     //50% chance of spotting something amiss
