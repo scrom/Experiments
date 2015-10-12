@@ -1326,6 +1326,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.increaseCash = function (amount) {
             _inventory.increaseCash(amount);
         };
+        
+        self.updateCash = function (amountToChange) {
+            amountToChange = Math.round(parseFloat(amountToChange) * 100) / 100;
+            if (amountToChange < 0) {
+                self.reduceCash(amountToChange * -1);
+            } else {
+                self.increaseCash(amountToChange);
+            };
+        };
 
         self.getCarryWeight = function() {
             if (self.isDead()) {return -1;};
@@ -1436,6 +1445,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             return resultString+self.repair(artefactName, player, true);
+        };
+        
+        self.addSkill = function (skill) {
+            if (_repairSkills.indexOf(skill) < 0) {
+                _repairSkills.push(skill);
+            };
+        };
+               
+        self.getSkills = function () {
+            return _repairSkills;
         };
 
         self.canRepair = function(anArtefact) {
@@ -2048,7 +2067,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getLocation = function() {
             return _currentLocation;
-        };	
+        };
+        
+        self.updateCarryWeight = function (changeBy) {
+            _inventory.updateCarryWeight(changeBy);
+        };
 
         self.hurt = function(pointsToRemove, attacker) {
             if (self.isDead()) {return self.getDisplayName()+"'s dead already. Attacking corpses is probably crossing a line somewhere.";};
@@ -2113,6 +2136,39 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //console.log('Creature health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
             };
+        };
+        
+        self.updateMaxHitPoints = function (changeBy) {
+            var newMaxHP = _maxHitPoints + changeBy;
+            if (newMaxHP < 10) { newMaxHP = 10; };
+            _maxHitPoints = newMaxHP;
+        };
+        
+        self.updateHitPointsByPercent = function (changeBy) {
+            if (changeBy == 0) {
+                return true;
+            };
+            
+            //this is a +ve or -ve multiplier
+            changeBy = _hitPoints * changeBy;
+            self.updateHitPoints(changeBy);
+
+        };        
+        
+        self.updateHitPoints = function (changeBy) {
+            if (changeBy > 0) {
+                _hitPoints += changeBy;
+                if (_hitPoints > _maxHitPoints) { _hitPoints = _maxHitPoints; };
+            };
+            if (changeBy < 0) {
+                self.reduceHitPoints(changeBy * -1);
+                //note - if hp ends up <=0, creature tick will kill creature.
+            };
+        };
+        
+        self.reduceHitPoints = function (pointsToRemove) {
+            _hitPoints -= pointsToRemove;
+            return _hitPoints;
         };
 
         

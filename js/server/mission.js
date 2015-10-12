@@ -289,6 +289,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     map.modifyObject(reward.modifyObjects[m], player);
                 };
             };
+            if (reward.modifyLocationCreatures) { map.modifyLocationCreatures(reward.modifyLocationCreatures); }; //important! modify before remove
             if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
             if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
             if (reward.removeLocation) { map.removeLocation(reward.removeLocation);};

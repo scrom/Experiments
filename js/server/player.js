@@ -1032,8 +1032,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _destroyedObjects;
         };
 
-        self.addSkill = function(skill) {
-            _repairSkills.push(skill);
+        self.addSkill = function (skill) {
+            if (_repairSkills.indexOf(skill) < 0) {
+                _repairSkills.push(skill);
+            };
         };
 
         self.getSkills = function() {

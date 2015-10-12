@@ -39,7 +39,7 @@ exports.rewardToStringReturnsValidJSON = function (test) {
     test.done();
 };
 
-exports.rewardToStringReturnsValidJSON.meta = { traits: ["Mission Test", "JSON Trait", "Mission Trait"], description: "Test that a mission object converts to valid JSON via toString." };
+exports.rewardToStringReturnsValidJSON.meta = { traits: ["Mission Test", "JSON Trait", "Mission Trait", "Reward Trait"], description: "Test that a mission object converts to valid JSON via toString." };
 
 
 exports.rewardPositivelyModifiesCreatureAffinity = function (test) {
@@ -56,7 +56,74 @@ exports.rewardPositivelyModifiesCreatureAffinity = function (test) {
     test.done();
 };
 
-exports.rewardPositivelyModifiesCreatureAffinity.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+exports.rewardPositivelyModifiesCreatureAffinity.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait", "Reward Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+
+exports.rewardModifyLocationCreaturesAltersCreatureHealth = function (test) {
+    var reward = { "modifyLocationCreatures": {"name":"poppy", "health": -350} };
+    var simon = m0.getCreature('simon galbraith');
+    
+    var m = new mission.Mission('mission');
+    m.processReward(m0, reward, p0);
+    var expectedResult = "He's really not in good shape.";
+    var actualResult = simon.health();
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.rewardModifyLocationCreaturesAltersCreatureHealth.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait", "Reward Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+
+
+exports.rewardModifyLocationCreaturesAltersCreatureHealthByPercent = function (test) {
+    var reward = { "modifyLocationCreatures": { "name": "poppy", "health": -0.9 } };
+    var simon = m0.getCreature('simon galbraith');
+    
+    var m = new mission.Mission('mission');
+    m.processReward(m0, reward, p0);
+    var expectedResult = "He's almost dead.";
+    var actualResult = simon.health();
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.rewardModifyLocationCreaturesAltersCreatureHealthByPercent.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait", "Reward Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+
+
+exports.rewardModifyLocationCreaturesGivesMultipleRepairSkills = function (test) {
+    var reward = { "modifyLocationCreatures": { "name": "poppy", "repairSkills": ["strategy", "management", "faux-pas"] } };
+    var simon = m0.getCreature('simon galbraith');
+    
+    var m = new mission.Mission('mission');
+    m.processReward(m0, reward, p0);
+    var expectedResult = "strategy,management,faux-pas";
+    var actualResult = simon.getSkills();
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.rewardModifyLocationCreaturesGivesMultipleRepairSkills.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait", "Reward Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+
+
+exports.rewardModifyLocationCreaturesModifiesCash = function (test) {
+    var reward = { "modifyLocationCreatures": { "name": "poppy", "money": -50 } };
+    var simon = m0.getCreature('simon galbraith');
+    
+    var m = new mission.Mission('mission');
+    m.processReward(m0, reward, p0);
+    var expectedResult = false;
+    var actualResult = simon.canAfford(31); //should only have 30 left after removing 50
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.rewardModifyLocationCreaturesModifiesCash.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait", "Reward Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
 
 
 exports.rewardNegativelyModifiesCreatureAffinity = function (test) {
@@ -73,7 +140,7 @@ exports.rewardNegativelyModifiesCreatureAffinity = function (test) {
     test.done();
 };
 
-exports.rewardNegativelyModifiesCreatureAffinity.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
+exports.rewardNegativelyModifiesCreatureAffinity.meta = { traits: ["Mission Test", "Affinity Trait", "Mission Trait", "Reward Trait"], description: "Test that a mission reward will correctly modify creature affinity." };
 
 exports.canCompleteHardDiskMissionByGivingDiskToSimon = function (test) {
     var simon = m0.getCreature('simon galbraith');

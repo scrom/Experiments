@@ -219,7 +219,92 @@ exports.Map = function Map() {
                 };
             };
         };
+        
+        self.modifyLocationCreatures = function (modification) {
+            //want to add affinity modification into this list
+            var location;
+            if (modification) {
+                if (modification.name) {
+                    location = self.getLocation(modification.name);
+                };
+            };
 
+            if (!location) {
+                return true;
+            };
+            
+            var creatures = location.getCreatures();
+            if (creatures.length == 0) {
+                return true;
+            };
+            
+            var healthChange;
+            var healthMultiplier;
+            if (modification.health) {
+                if (Math.floor(modification.health) < modification.health) {
+                    healthMultiplier = modification.health;
+                } else {
+                    healthChange = modification.health;
+                };
+            };
+
+            var newLocation;
+            if (modification.teleport) {
+                var newLocation = map.getLocation(modification.teleport);
+            };
+
+            for (var c = 0; c < creatures.length; c++) {
+                if (healthChange) {
+                    creatures[c].updateHitPoints(healthChange);
+                };
+                if (healthMultiplier) {
+                    creatures[c].updateHitPointsByPercent(healthMultiplier);
+                };
+                if (newLocation) {
+                    creatures[c].go(null, newLocation);
+                };
+                if (modification.maxHealth) {
+                    creatures[c].updateMaxHitPoints(modification.maxHealth);
+                };
+                if (modification.carryWeight) {
+                    creatures[c].updateCarryWeight(modification.carryWeight);
+                };
+                if (modification.money) {
+                    creatures[c].updateCash(modification.money);
+                };
+                if (modification.repairSkills) {
+                    if (Object.prototype.toString.call(modification.repairSkills) === '[object Array]') {
+                        for (var r = 0; r < modification.repairSkills.length; r++) {
+                            creatures[c].addSkill(modification.repairSkills[r]);
+                        };
+                    } else {
+                        creatures[c].addSkill(modification.repairSkills);
+                    };
+                };
+                if (modification.repairSkill) {
+                    creatures[c].addSkill(modification.repairSkill);
+                };
+                if (modification.inventory) {
+                    var inventory = creatures[c].getInventoryObject();
+                    if (inventory) {
+                        for (var i = 0; i < modification.inventory.length; i++) {
+                            inventory.push(modification.inventory[i]);
+                        };
+                    };
+                };
+                if (modification.contagion) {
+                    if (Object.prototype.toString.call(modification.contagion) === '[object Array]') {
+                        for (var co = 0; co < modification.contagion.length; co++) {
+                            creatures[c].setContagion(modification.contagion[co]);
+                        };
+                    } else {
+                        creatures[c].setContagion(modification.contagion);
+                    };                   
+                };
+
+            };
+
+        };
 
         self.modifyObject = function(modification, player){
             var objectName = "";
