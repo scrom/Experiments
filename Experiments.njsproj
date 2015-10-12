@@ -119,6 +119,8 @@
     <Content Include="data\mission-killthespy.json" />
     <Content Include="data\mission-latte.json" />
     <Content Include="data\mission-laylow.json" />
+    <Content Include="data\mission-partybus.json" />
+    <Content Include="data\mission-partytime.json" />
     <Content Include="data\mission-planecrash.json" />
     <Content Include="data\mission-retrievedisk.json" />
     <Content Include="data\mission-stealsketchbook.json" />

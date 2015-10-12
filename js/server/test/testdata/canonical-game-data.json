@@ -2193,11 +2193,10 @@
               ]
             },
             "failAttributes": {
-              "time": 250
+              "friendlyCreatureCount": ">7"
             },
             "conditionAttributes": {
-              "friendlyCreatureCount": ">7",
-              "time": 150
+              "time": 250
             },
             "reward": {
               "modifyLocation": {
@@ -2225,12 +2224,16 @@
                   }
                 ]
               },
-              "score": -150,
-              "message": "<br>Congratulations. You're doing great at getting the bus loaded. It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows. Something's wrong here.<br><br>As precious seconds pass you register what's happening and dive for cover.<br>As the bus explodes into flames before your eyes you realise you've just lured some of your colleagues to their doom.",
+              "score": 50,
+              "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush out to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows.<br>Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!",
               "teleport": "office-front",
+              "modifyLocationCreatures": {
+                "name": "bus",
+                "health": -0.51
+              },
               "removeLocation": {
                 "name": "bus",
-                "removeCreatures": true
+                "removeCreatures": false
               }
             },
             "fail": {
@@ -2259,8 +2262,8 @@
                   }
                 ]
               },
-              "score": 50,
-              "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush to the front of the office to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows. Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.",
+              "score": -150,
+              "message": "<br>Congratulations, you're doing great at getting the bus loaded.<br>It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows.<br>Something's wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.",
               "teleport": "office-front",
               "removeLocation": {
                 "name": "bus",

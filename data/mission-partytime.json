@@ -1,0 +1,72 @@
+﻿{
+    "object": "mission",
+    "name": "partytime",
+    "displayName": "get the party started",
+    "description": "Mark wants to organise a celebration",
+    "attributes": {
+        "parent": "saveredgate",
+        "missionObject": "mark wightman",
+        "static": true,
+        "dialogue": [
+            "'Hi $player. That's quite a first day you've had so far!'<br>'I think it's time to take a break. When you're ready, come and talk to me again and we'll get something organised.'",
+            "Are you ready to go?",
+            {
+                "state": 2,
+                "keywords": [
+                    "yes",
+                    "ok",
+                    "im ready",
+                    "yup",
+                    "y"
+                ],
+                "response": "'Right, let's get this party sorted!'<br>'I've ordered a bus. Give me one last shout when you're ready to round everyone up!'",
+                "nextState": 3
+            },
+            {
+                "state": 2,
+                "keywords": [
+                    "n",
+                    "no",
+                    "not",
+                    "not yet"
+                ],
+                "response": "'OK. Give me a shout when you <i>are</i>.'",
+                "nextState": 1
+            }
+        ]
+    },
+    "conditionAttributes": {
+        "alive": true,
+        "conversationState": 3
+    },
+    "reward": {
+        "locations": [
+            {
+                "object": "location",
+                "name": "bus",
+                "displayName": "Party bus",
+                "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
+                "exits": [
+                    {
+                        "object": "exit",
+                        "longname": "out",
+                        "direction": "o",
+                        "source": "bus",
+                        "destination": "office-front"
+                    }
+                ]
+            }
+        ],
+        "exits": [
+            {
+                "object": "exit",
+                "longname": "in",
+                "direction": "i",
+                "source": "office-front",
+                "destination": "bus"
+            }
+        ],
+        "affinityModifier": 5,
+        "increaseAffinityFor": "all"
+    }
+}
