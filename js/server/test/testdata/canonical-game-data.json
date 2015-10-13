@@ -6520,13 +6520,45 @@
                   "charges": 1,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 18
+                  "nutrition": 18,
+                  "combinesWith": [
+                    "sugar"
+                  ]
                 },
                 "synonyms": [
                   "brew",
                   "drink",
                   "coffee",
                   "milky coffee"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "sweet white coffee",
+                    "description": "sweet white coffee",
+                    "detailedDescription": "Milky development fuel with added sugar",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 22
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee",
+                      "sweet milky coffee",
+                      "sugary coffee"
+                    ]
+                  }
                 ]
               }
             ]
@@ -6589,7 +6621,7 @@
                 "detailedDescription": "Development fuel with added sugar!",
                 "attributes": {
                   "defaultAction": "drink",
-                  "weight": 1,
+                  "weight": 0.5,
                   "type": "food",
                   "requiresContainer": true,
                   "isLiquid": true,
@@ -6598,13 +6630,45 @@
                   "charges": 1,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 15
+                  "nutrition": 15,
+                  "combinesWith": [
+                    "milk"
+                  ]
                 },
                 "synonyms": [
                   "brew",
                   "drink",
                   "coffee",
                   "sugary coffee"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "sweet white coffee",
+                    "description": "sweet white coffee",
+                    "detailedDescription": "Milky development fuel with added sugar",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 22
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee",
+                      "sweet milky coffee",
+                      "sugary coffee"
+                    ]
+                  }
                 ]
               },
               {
@@ -6614,7 +6678,7 @@
                 "detailedDescription": "Hipster Development fuel with added sugar!",
                 "attributes": {
                   "defaultAction": "drink",
-                  "weight": 0.5,
+                  "weight": 1,
                   "type": "food",
                   "requiresContainer": true,
                   "isLiquid": true,
@@ -6640,7 +6704,7 @@
                 "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
                 "attributes": {
                   "defaultAction": "drink",
-                  "weight": 0.5,
+                  "weight": 1,
                   "type": "food",
                   "requiresContainer": true,
                   "isLiquid": true,
@@ -6791,7 +6855,7 @@
                 "detailedDescription": "Hipster Development fuel with added sugar!",
                 "attributes": {
                   "defaultAction": "drink",
-                  "weight": 0.5,
+                  "weight": 1,
                   "type": "food",
                   "requiresContainer": true,
                   "isLiquid": true,
@@ -6845,7 +6909,7 @@
                 "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
                 "attributes": {
                   "defaultAction": "drink",
-                  "weight": 0.5,
+                  "weight": 1,
                   "type": "food",
                   "requiresContainer": true,
                   "isLiquid": true,
@@ -6901,7 +6965,7 @@
                 "detailedDescription": "Development fuel with added sugar!",
                 "attributes": {
                   "defaultAction": "drink",
-                  "weight": 1,
+                  "weight": 0.5,
                   "type": "food",
                   "requiresContainer": true,
                   "isLiquid": true,
@@ -6910,13 +6974,45 @@
                   "charges": 1,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 15
+                  "nutrition": 15,
+                  "combinesWith": [
+                    "milk"
+                  ]
                 },
                 "synonyms": [
                   "brew",
                   "drink",
                   "coffee",
                   "sugary coffee"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "sweet white coffee",
+                    "description": "sweet white coffee",
+                    "detailedDescription": "Milky development fuel with added sugar",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 22
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee",
+                      "sweet milky coffee",
+                      "sugary coffee"
+                    ]
+                  }
                 ]
               },
               {
@@ -6935,13 +7031,45 @@
                   "charges": 1,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 18
+                  "nutrition": 18,
+                  "combinesWith": [
+                    "sugar"
+                  ]
                 },
                 "synonyms": [
                   "brew",
                   "drink",
                   "coffee",
                   "milky coffee"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "sweet white coffee",
+                    "description": "sweet white coffee",
+                    "detailedDescription": "Milky development fuel with added sugar",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 22
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee",
+                      "sweet milky coffee",
+                      "sugary coffee"
+                    ]
+                  }
                 ]
               }
             ]

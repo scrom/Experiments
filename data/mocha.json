@@ -1,0 +1,32 @@
+﻿{
+    "object": "artefact",
+    "name": "mocha",
+    "description": "mocha coffee",
+    "detailedDescription": "Coffee <i>and</i> chocolate. What a combination!",
+    "attributes": {
+        "defaultAction": "drink",
+        "weight": 1,
+        "type": "food",
+        "requiresContainer": true,
+        "isLiquid": true,
+        "requiredContainer": "cup",
+        "canCollect": true,
+        "charges": 1,
+        "plural": true,
+        "affinityModifier": 2,
+        "isEdible": true,
+        "nutrition": 35,
+        "combinesWith": "sugar",
+        "requiredComponentCount": 2
+    },
+    "synonyms": [
+        "brew",
+        "drink"
+    ],
+    "delivers": [
+        {
+            "object": "artefact",
+            "template": "sweet-mocha"
+        }
+    ]
+}

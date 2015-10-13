@@ -1,0 +1,32 @@
+﻿{
+    "object": "artefact",
+    "name": "latte",
+    "description": "latte",
+    "detailedDescription": "Development fuel for former hipsters.",
+    "attributes": {
+        "defaultAction": "drink",
+        "weight": 1,
+        "type": "food",
+        "requiresContainer": true,
+        "isLiquid": true,
+        "requiredContainer": "cup",
+        "canCollect": true,
+        "charges": 1,
+        "plural": true,
+        "affinityModifier": 2,
+        "isEdible": true,
+        "nutrition": 12,
+        "combinesWith": "sugar",
+        "requiredComponentCount": 1
+    },
+    "synonyms": [
+        "brew",
+        "drink"
+    ],
+    "delivers": [
+        {
+            "object": "artefact",
+            "template": "sweet-latte"
+        }
+    ]
+}

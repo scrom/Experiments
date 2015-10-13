@@ -14,12 +14,21 @@
     "charges": 1,
     "plural": true,
     "isEdible": true,
-    "nutrition": 18
+    "nutrition": 18,
+    "combinesWith": [
+      "sugar"
+    ]
 },
 "synonyms": [
     "brew",
     "drink",
     "coffee",
     "milky coffee"
-]
+],
+"delivers": [
+        {
+            "object": "artefact",
+            "template": "sweet-white-coffee"
+        }
+    ]
 }

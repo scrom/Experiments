@@ -1,0 +1,22 @@
+﻿{
+    "object": "mission",
+    "name": "beans",
+    "displayName": "get the coffee machine working",
+    "description": "Before you can get any coffee, this machine needs beans.",
+    "attributes": {
+        "missionObject": "coffee machine",
+        "static": true
+    },
+    "conditionAttributes": {
+        "isDestroyed": false,
+        "isBroken": false,
+        "checkComponents": true,
+        "contains": [
+            "beans"
+        ]
+    },
+    "reward": {
+        "score": 50,
+        "message": "Congratulations, you got the coffee machine working!"
+    }
+}

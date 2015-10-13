@@ -5,7 +5,7 @@
 "detailedDescription": "Chocolatey hipster development fuel with added sugar!",
 "attributes": {
     "defaultAction": "drink",
-    "weight": 0.5,
+    "weight": 1,
     "type": "food",
     "requiresContainer": true,
     "isLiquid": true,

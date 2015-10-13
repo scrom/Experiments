@@ -1,0 +1,37 @@
+﻿{
+    "object": "artefact",
+    "name": "coffee",
+    "description": "coffee",
+    "detailedDescription": "Development fuel.",
+    "attributes": {
+        "defaultAction": "drink",
+        "weight": 0.5,
+        "type": "food",
+        "requiresContainer": true,
+        "isLiquid": true,
+        "requiredContainer": "cup",
+        "canCollect": true,
+        "charges": 1,
+        "plural": true,
+        "isEdible": true,
+        "nutrition": 8,
+        "combinesWith": [
+            "milk",
+            "sugar"
+        ]
+    },
+    "synonyms": [
+        "brew",
+        "drink"
+    ],
+    "delivers": [
+        {
+            "object": "artefact",
+            "template": "sweet-coffee"
+        },
+        {
+            "object": "artefact",
+            "template": "white-coffee"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+﻿{
+    "object": "mission",
+    "name": "destroycoffeemachine",
+    "displayName": "destroy the coffee machine",
+    "attributes": {
+        "missionObject": "coffee machine",
+        "static": true
+    },
+    "conditionAttributes": {
+        "isDestroyed": true
+    },
+    "reward": {
+        "score": -100,
+        "affinityModifier": 2,
+        "decreaseAffinityFor": "everyone",
+        "message": "Wow, that was foolish. You've just made yourself one of the <i>least</i> popular people in the building.<br>Good luck getting help from anyone now!"
+    }
+}
