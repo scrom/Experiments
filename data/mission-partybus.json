@@ -47,10 +47,12 @@
                 }
             ]
         },
-        "removeLocation": {
-            "name": "bus",
-            "removeCreatures": true
-        }
+      "removeLocation": {
+        "name": "bus",
+        "removeCreatures": true
+      },
+      "affinityModifier": 5,
+      "decreaseAffinityFor": "all"
     },
     "reward": {
         "score": 50,
@@ -88,6 +90,8 @@
         "removeLocation": {
             "name": "bus",
             "removeCreatures": false
-        }
+        },
+      "affinityModifier": 5,
+      "decreaseAffinityFor": "all"
     }
 }
