@@ -149,6 +149,55 @@ module.exports.MissionController = function MissionController() {
                 
             return resultString;
         };
+        
+        self.initiateNewChildMissions = function (missionToStart, newlyCompletedMissions, player, playerLocation, missionOwnerName) {
+            //clear parents from any child missions (from newly completed missions) to make them accessible
+            //and initiate those local to the player
+            var resultString = "";
+            if (!missionToStart.hasParent()) {
+                return resultString;
+            };
+            if (newlyCompletedMissions.length == 0) {
+                return resultString;
+            };
+
+            for (var j = 0; j < newlyCompletedMissions.length; j++) {
+                var missionName = newlyCompletedMissions[j];
+                if (missionToStart.checkParent(missionName)) {
+                    
+                    missionToStart.clearParent();
+                    
+                    //initiate any creature-only missions or events that we've just cleared the parent of
+                    if (missionToStart.getMissionObjectName() == missionOwnerName && missionToStart.getType() == "event") {
+                        //console.log("starting mission: " + missionToStart.getName());
+                        missionToStart.startTimer();
+                    };
+                    
+                    //duplicated code from location examine - initiate any location-based missions.
+                    var newMissions = playerLocation.getMissions();
+                    //remove any with dialogue from this collection.
+                    for (var m = 0; m < newMissions.length; m++) {
+                        //note we're splicing a *copy*, not the original array!
+                        if (newMissions[m].hasDialogue()) { newMissions.splice(m, 1); };
+                    };
+                    
+                    if (newMissions.length > 0) { resultString += "<br><br>"; };
+                    
+                    for (var nm = 0; nm < newMissions.length; nm++) {
+                        newMissions[nm].startTimer();
+                        if (!(newMissions[nm].isStatic())) {
+                            player.addMission(newMissions[nm]);
+                            playerLocation.removeMission(newMissions[nm].getName());
+                        };
+                        resultString += newMissions[nm].getDescription() + "<br>";
+                    };
+                        //end duplicated code
+
+                };
+            };
+
+            return resultString;
+        };
 
         
         self.updateMissions = function (time, player, map) {
@@ -204,8 +253,7 @@ module.exports.MissionController = function MissionController() {
                 //avoid duplicate processing
                 if ((processedMissions.indexOf(allMissions[i].getName()) == -1) && failedPlayerMissions.indexOf(allMissions[i].getName() == -1)) {
                     
-                    //update missions where there's a mission object in the player location
-                    //is there a mission object/destination in this location?
+                    //update missions where there's a mission object/destination in the player location
                     if (playerLocation.objectExists(allMissions[i].getMissionObjectName()) || 
                         playerLocation.objectExists(allMissions[i].getDestination()) || 
                         playerLocation.getName() == (allMissions[i].getDestination()) ||
@@ -225,58 +273,27 @@ module.exports.MissionController = function MissionController() {
                     };
                 };
                 
-                //check status of any creature-owned/event missions
-                var missionOwner = map.getMissionOwner(allMissions[i].getName()); //we'll use this twice later
+                
+                //retrieve mission owner info - we use it twice later and it's an expensive call.
+                var missionOwner = map.getMissionOwner(allMissions[i].getName()); 
                 var missionOwnerName;
                 if (missionOwner) {
                     missionOwnerName = missionOwner.getName();
                 };
 
-                if (allMissions[i].isActive()) {
+                if (allMissions[i].isActive()) {                    
+                    //tick all still active missions
+                    allMissions[i].addTicks(time);
+                    
+                    //check status of any creature-owned/event missions
                     if (allMissions[i].getMissionObjectName() == missionOwnerName && allMissions[i].getType() == "event") {
                         self.processMissionState(allMissions[i], map, player, missionOwner, newlyCompletedMissions);
                     };
                 };
-
-                //clear parents from any child missions (from newly completed missions) to make them accessible
-                //and initiate those local to the player
-                for (var j = 0; j < newlyCompletedMissions.length; j++) {
-                    var missionName = newlyCompletedMissions[j];
-                    if (allMissions[i].checkParent(missionName)) {
-                        
-                        allMissions[i].clearParent();
-                        
-                        //initiate any creature-only missions or events that we've just cleared the parent of
-                        if (allMissions[i].getMissionObjectName() == missionOwnerName && allMissions[i].getType() == "event") {
-                            //console.log("starting mission: " + allMissions[i].getName());
-                            allMissions[i].startTimer();
-                        };
-                        
-                        //duplicated code from location examine - initiate any location-based missions.
-                        var newMissions = playerLocation.getMissions();
-                        //remove any with dialogue from this collection.
-                        for (var m = 0; m < newMissions.length; m++) {
-                            //note we're splicing a *copy*, not the original array!
-                            if (newMissions[m].hasDialogue()) { newMissions.splice(m, 1); };
-                        };
-
-                        if (newMissions.length > 0) { resultString += "<br><br>"; };
-
-                        for (var nm = 0; nm < newMissions.length; nm++) {
-                            newMissions[nm].startTimer();
-                            if (!(newMissions[nm].isStatic())) {
-                                player.addMission(newMissions[nm]);
-                                playerLocation.removeMission(newMissions[nm].getName());
-                            };
-                            resultString += newMissions[nm].getDescription() + "<br>";
-                        };
-                        //end duplicated code
-
-                    };
-                };
                 
-                //tick all active missions
-                allMissions[i].addTicks(time);
+                //clear parents from any child missions (from newly completed missions) to make them accessible and initiate those local to the player
+                resultString += self.initiateNewChildMissions(allMissions[i], newlyCompletedMissions, player, playerLocation, missionOwnerName);
+
             };
             
             return resultString;
