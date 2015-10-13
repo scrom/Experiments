@@ -521,6 +521,98 @@
     "missions": [
       {
         "object": "mission",
+        "name": "partybus",
+        "displayName": "get everyone on the party bus",
+        "description": "You did a great job of saving the company. Time for a break. Get everyone onto the party bus before it leaves!",
+        "attributes": {
+          "parent": "partybusprep",
+          "missionObject": "bus"
+        },
+        "failAttributes": {
+          "friendlyCreatureCount": ">7"
+        },
+        "conditionAttributes": {
+          "time": 250
+        },
+        "reward": {
+          "modifyLocation": {
+            "name": "office-front",
+            "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "smoke",
+                "description": "smoke",
+                "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                "attributes": {
+                  "type": "scenery",
+                  "subType": "intangible",
+                  "smell": "It's going to linger in your nose and memories for quite some time."
+                },
+                "synonyms": [
+                  "ash",
+                  "wreckage",
+                  "burning",
+                  "hint of ash",
+                  "debris",
+                  "bodies"
+                ]
+              }
+            ]
+          },
+          "score": 50,
+          "message": "<br>Oh no, you're out of time!<br>The party bus is leaving and you haven't got enough people on board.<br><br>You rush out to try and salvage your efforts.<br>As you recover your breath outside and the bus pulls away you see a lick of flame through the windows.<br>Something's very wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!",
+          "teleport": "office-front",
+          "modifyLocationCreatures": {
+            "name": "bus",
+            "health": -0.51
+          },
+          "removeLocation": {
+            "name": "bus",
+            "removeCreatures": false
+          },
+          "affinityModifier": 5,
+          "decreaseAffinityFor": "all"
+        },
+        "fail": {
+          "modifyLocation": {
+            "name": "office-front",
+            "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "smoke",
+                "description": "smoke",
+                "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                "attributes": {
+                  "type": "scenery",
+                  "subType": "intangible",
+                  "smell": "It's going to linger in your nose and memories for quite some time."
+                },
+                "synonyms": [
+                  "ash",
+                  "wreckage",
+                  "burning",
+                  "hint of ash",
+                  "debris",
+                  "bodies"
+                ]
+              }
+            ]
+          },
+          "score": -150,
+          "message": "<br>It looks like you're doing well at getting people onto the bus. Great job!<br>It's often hard work herding people around here.<br><br>You dash out to the front of the office to check for stragglers and as you recover your breath you smell smoke on the air.<br>Something's very wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.",
+          "teleport": "office-front",
+          "removeLocation": {
+            "name": "bus",
+            "removeCreatures": true
+          },
+          "affinityModifier": 5,
+          "decreaseAffinityFor": "all"
+        }
+      },
+      {
+        "object": "mission",
         "name": "awaitvanarrival",
         "displayName": "steal some valuables",
         "attributes": {
@@ -2064,7 +2156,7 @@
         "name": "mark wightman",
         "displayname": "Mark Wightman",
         "description": "Mark Wightman",
-        "detailedDescription": "Mark's our head of Development.",
+        "detailedDescription": "Mark's our head of Organizational Effectiveness.",
         "attributes": {
           "weight": 120,
           "money": 20,
@@ -2127,7 +2219,7 @@
                     "yup",
                     "y"
                   ],
-                  "response": "'Right, let's get this party sorted!'<br>'I've ordered a bus. Give me one last shout when you're ready to round everyone up!'",
+                  "response": "'Right, let's get this party sorted!'<br>'Give me one last shout when you're ready and in the meantime I'll get something organised.'",
                   "nextState": 3
                 },
                 {
@@ -2148,12 +2240,33 @@
               "conversationState": 3
             },
             "reward": {
+              "message": "<br>Stop back in with Mark in a little while to find out what he's got arranged."
+            }
+          },
+          {
+            "object": "mission",
+            "name": "partybusprep",
+            "displayName": "let Mark know you're ready to party.",
+            "description": "Mark's ordered a bus. Let's get people moving.",
+            "attributes": {
+              "parent": "partytime",
+              "missionObject": "mark wightman",
+              "static": true,
+              "dialogue": [
+                "'Hi again $player.'<br>'That was quite a job with the zombies, thanks!'<br>'As I said earlier, I think it's time we all had a break.'<br>'I've ordered a bus to take us all out. It should be waiting outside ready to go.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or more of the team on board (including yourself), it'll be time to head off.'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 1
+            },
+            "reward": {
               "locations": [
                 {
                   "object": "location",
                   "name": "bus",
                   "displayName": "Party bus",
-                  "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
+                  "description": "You're on the 'party bus'!<br>It's a small hired coach - not much to distinguish it really.<br>You need to encourage as many people as you can to head over here to start our celebrations.",
                   "exits": [
                     {
                       "object": "exit",
@@ -2176,99 +2289,6 @@
               ],
               "affinityModifier": 5,
               "increaseAffinityFor": "all"
-            }
-          },
-          {
-            "object": "mission",
-            "name": "partybus",
-            "displayName": "get everyone on the party bus",
-            "description": "You did a great job of saving the company. Time for a break. Get everyone onto the party bus before it leaves!",
-            "attributes": {
-              "parent": "partytime",
-              "missionObject": "bus",
-              "static": true,
-              "dialogue": [
-                "'Hi $player.'<br>'That was quite a job with the zombies, thanks!'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to unwind after the day we've had.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or so partygoers (including yourself), it'll be time to relax.'",
-                "'Hey $player, I hope the people organising is going well. Keep up the great work.'"
-              ]
-            },
-            "failAttributes": {
-              "friendlyCreatureCount": ">7"
-            },
-            "conditionAttributes": {
-              "time": 250
-            },
-            "reward": {
-              "modifyLocation": {
-                "name": "office-front",
-                "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "smoke",
-                    "description": "smoke",
-                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-                    "attributes": {
-                      "type": "scenery",
-                      "subType": "intangible",
-                      "smell": "It's going to linger in your nose and memories for quite some time."
-                    },
-                    "synonyms": [
-                      "ash",
-                      "wreckage",
-                      "burning",
-                      "hint of ash",
-                      "debris",
-                      "bodies"
-                    ]
-                  }
-                ]
-              },
-              "score": 50,
-              "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush out to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows.<br>Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!",
-              "teleport": "office-front",
-              "modifyLocationCreatures": {
-                "name": "bus",
-                "health": -0.51
-              },
-              "removeLocation": {
-                "name": "bus",
-                "removeCreatures": false
-              }
-            },
-            "fail": {
-              "modifyLocation": {
-                "name": "office-front",
-                "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "smoke",
-                    "description": "smoke",
-                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-                    "attributes": {
-                      "type": "scenery",
-                      "subType": "intangible",
-                      "smell": "It's going to linger in your nose and memories for quite some time."
-                    },
-                    "synonyms": [
-                      "ash",
-                      "wreckage",
-                      "burning",
-                      "hint of ash",
-                      "debris",
-                      "bodies"
-                    ]
-                  }
-                ]
-              },
-              "score": -150,
-              "message": "<br>Congratulations, you're doing great at getting the bus loaded.<br>It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows.<br>Something's wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.",
-              "teleport": "office-front",
-              "removeLocation": {
-                "name": "bus",
-                "removeCreatures": true
-              }
             }
           }
         ]

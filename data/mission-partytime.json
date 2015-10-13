@@ -19,7 +19,7 @@
                     "yup",
                     "y"
                 ],
-                "response": "'Right, let's get this party sorted!'<br>'I've ordered a bus. Give me one last shout when you're ready to round everyone up!'",
+                "response": "'Right, let's get this party sorted!'<br>'Give me one last shout when you're ready and in the meantime I'll get something organised.'",
                 "nextState": 3
             },
             {
@@ -40,33 +40,6 @@
         "conversationState": 3
     },
     "reward": {
-        "locations": [
-            {
-                "object": "location",
-                "name": "bus",
-                "displayName": "Party bus",
-                "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
-                "exits": [
-                    {
-                        "object": "exit",
-                        "longname": "out",
-                        "direction": "o",
-                        "source": "bus",
-                        "destination": "office-front"
-                    }
-                ]
-            }
-        ],
-        "exits": [
-            {
-                "object": "exit",
-                "longname": "in",
-                "direction": "i",
-                "source": "office-front",
-                "destination": "bus"
-            }
-        ],
-        "affinityModifier": 5,
-        "increaseAffinityFor": "all"
+        "message": "<br>Stop back in with Mark in a little while to find out what he's got arranged."
     }
 }

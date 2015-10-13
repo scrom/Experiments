@@ -682,6 +682,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.obtainMissionObjectWhereDestinationIsNotAnArtefactOrCreature = function(map, player, location) {
             var missionObject;
+
             switch(true) {
             case (!(_destination) && (!(_missionObject))):
                 //if destination and mission object are not set, we're after overall map stats.
@@ -700,6 +701,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 } else {
                     //console.log('mission destination location reached');
                     return location.getObject(_missionObject, true); //ignore syns and don't search creatures
+                };
+                break;
+            case (_destination == _missionObject):
+                //destination == mission object. Check if we're after the status of a location somewhere...
+                var otherLocation = map.getLocation(_missionObject)
+                if (otherLocation) {
+                    return otherLocation;
                 };
                 break;
             };

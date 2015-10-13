@@ -1,0 +1,25 @@
+﻿{
+    "object": "creature",
+    "name": "mark wightman",
+    "displayname": "Mark Wightman",
+    "description": "Mark Wightman",
+    "detailedDescription": "Mark's our head of Organizational Effectiveness.",
+    "attributes": {
+        "template": "creature-male-l3",
+        "imageName": "markwightman.jpg"
+    },
+    "inventory": [
+        { "file": "keyfob" }
+    ],
+    "synonyms": [
+        "mark",
+        "mark w",
+        "mw",
+        "wightman",
+        "him"
+    ],
+    "missions": [
+        {"file": "mission-partytime"},
+        {"file": "mission-partybusprep"}                
+    ]
+}

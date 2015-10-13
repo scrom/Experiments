@@ -95,6 +95,7 @@
     <Content Include="data\hand-dryer.json" />
     <Content Include="data\incidentals-blinkpipe.json" />
     <Content Include="data\is-area.json" />
+    <Content Include="data\jeff-foster.json" />
     <Content Include="data\jellyfish-meeting-room.json" />
     <Content Include="data\john-bowles.json" />
     <Content Include="data\jordan-miller.json" />
@@ -108,6 +109,7 @@
     <Content Include="data\lift-second-floor.json" />
     <Content Include="data\machine-room-east.json" />
     <Content Include="data\machine-room-west.json" />
+    <Content Include="data\mark-wightman.json" />
     <Content Include="data\marketing.json" />
     <Content Include="data\mercedes.json" />
     <Content Include="data\milk.json" />
@@ -125,10 +127,12 @@
     <Content Include="data\mission-latte.json" />
     <Content Include="data\mission-laylow.json" />
     <Content Include="data\mission-partybus.json" />
+    <Content Include="data\mission-partybusprep.json" />
     <Content Include="data\mission-partytime.json" />
     <Content Include="data\mission-planecrash.json" />
     <Content Include="data\mission-repaircoffeemachine.json" />
     <Content Include="data\mission-retrievedisk.json" />
+    <Content Include="data\mission-rumforthecaptain.json" />
     <Content Include="data\mission-stealsketchbook.json" />
     <Content Include="data\mission-stealvaluables.json" />
     <Content Include="data\mission-vanarrival.json" />
@@ -215,6 +219,7 @@
     <Content Include="data\servery-south-west.json" />
     <Content Include="data\shower-ground-floor.json" />
     <Content Include="data\signpost.json" />
+    <Content Include="data\simon-cromarty.json" />
     <Content Include="data\sketchbook.json" />
     <Content Include="data\smoking-area.json" />
     <Content Include="data\snorting-horses.json" />

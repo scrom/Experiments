@@ -1,0 +1,21 @@
+﻿{
+    "object": "creature",
+    "name": "jeff foster",
+    "displayname": "Jeff Foster",
+    "description": "Jeff Foster",
+    "detailedDescription": "Jeff is our head of Software Engineering.",
+    "attributes": {
+        "template": "creature-male-l3",
+        "imageName": "jefffoster.jpg"
+    },
+    "inventory": [
+        { "file": "keyfob" }
+    ],
+    "synonyms": [
+        "jeff",
+        "jeff f",
+        "jf",
+        "foster",
+        "him"
+    ]
+}

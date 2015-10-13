@@ -4,45 +4,45 @@
     "displayName": "Atrium",
     "description": "You're standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
     "attributes": {
-        "start": true
+      "start": true
     },
     "exits": [
-        {
-            "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "atrium",
-            "destination": "reception"
-        },
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "atrium",
-            "destination": "ground-floor-toilet"
-        },
-        {
-            "object": "exit",
-            "longname": "in",
-            "direction": "i",
-            "source": "atrium",
-            "destination": "lift-ground-floor",
-            "hidden": true
-        },
-        {
-            "object": "exit",
-            "longname": "West",
-            "direction": "w",
-            "source": "atrium",
-            "destination": "stairs-ground-floor"
-        },
-        {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "atrium",
-            "destination": "office-front"
-        }
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "atrium",
+        "destination": "reception"
+      },
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "atrium",
+        "destination": "ground-floor-toilet"
+      },
+      {
+        "object": "exit",
+        "longname": "in",
+        "direction": "i",
+        "source": "atrium",
+        "destination": "lift-ground-floor",
+        "hidden": true
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "atrium",
+        "destination": "stairs-ground-floor"
+      },
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "atrium",
+        "destination": "office-front"
+      }
     ],
     "inventory": [
       {
@@ -54,7 +54,10 @@
           "type": "scenery",
           "subType": "intangible",
           "customAction": [
-            "get", "find", "where is", "where"
+            "get",
+            "find",
+            "where is",
+            "where"
           ],
           "defaultResult": "You'll need to learn to fend for yourself eventually.<br>Try heading <i>East</i> from here."
         },
@@ -63,115 +66,119 @@
           "vic"
         ]
       },
-        {
-            "object": "artefact",
-            "name": "smell of coffee",
-            "description": "coffee",
-            "detailedDescription": "You'll need to head to the kitchen.",
-            "attributes": {
-                "type": "scenery",
-                "subType": "intangible",
-                "customAction": [
-                    "get", "find", "where is", "where"
-                ],
-                "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
-                "smell": "Yup, smells like coffee here.<br>Good coffee at that."
-            },
-            "synonyms": [
-                "latte",
-                "coffee"
-            ]
+      {
+        "object": "artefact",
+        "name": "smell of coffee",
+        "description": "coffee",
+        "detailedDescription": "You'll need to head to the kitchen.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get",
+            "find",
+            "where is",
+            "where"
+          ],
+          "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
+          "smell": "Yup, smells like coffee here.<br>Good coffee at that."
         },
-        {
-            "object": "artefact",
-            "name": "air",
-            "description": "smell of smart people and coffee",
-            "detailedDescription": "As I said - smart people and coffee.",
-            "attributes": {
-                "type": "scenery",
-                "subType": "intangible",
-                "customAction": [
-                    "get"
-                ],
-                "defaultResult": "The place is full of 'em. Go explore!",
-                "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
-            },
-            "synonyms": [
-                "smart",
-                "smart people",
-                "people",
-                "graduates"
-            ]
+        "synonyms": [
+          "latte",
+          "coffee"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "air",
+        "description": "smell of smart people and coffee",
+        "detailedDescription": "As I said - smart people and coffee.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "The place is full of 'em. Go explore!",
+          "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
         },
-        {
-            "object": "artefact",
-            "name": "button",
-            "description": "lift call button",
-            "detailedDescription": "If you <i>push</i> the button, perhaps a lift may come.",
-            "attributes": {
-                "defaultAction": "press",
-                "weight": 200,
-                "type": "tool",
-                "canOpen": true,
-                "customAction": "call",
-                "defaultResult": "$action press"
-            },
-            "linkedexits": [
-                {
-                    "object": "exit",
-                    "longname": "in",
-                    "direction": "i",
-                    "source": "atrium",
-                    "destination": "lift-ground-floor",
-                    "hidden": true
-                }
-            ],
-            "synonyms": [
-                "lift",
-                "lift call",
-                "lift button",
-                "lift call button",
-                "door"
-            ]
+        "synonyms": [
+          "smart",
+          "smart people",
+          "people",
+          "graduates"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "button",
+        "description": "lift call button",
+        "detailedDescription": "If you <i>push</i> the button, perhaps a lift may come.",
+        "attributes": {
+          "defaultAction": "press",
+          "weight": 200,
+          "type": "tool",
+          "canOpen": true,
+          "customAction": "call",
+          "defaultResult": "$action press"
         },
-        {
-            "object": "artefact",
-            "name": "screen",
-            "template": "flat-screen",
-            "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
+        "linkedexits": [
+          {
+            "object": "exit",
+            "longname": "in",
+            "direction": "i",
+            "source": "atrium",
+            "destination": "lift-ground-floor",
+            "hidden": true
+          }
+        ],
+        "synonyms": [
+          "lift",
+          "lift call",
+          "lift button",
+          "lift call button",
+          "door"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "screen",
+        "template": "flat-screen",
+        "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
+        "attributes": {
+          "imageName": "screen.jpg"
+        },
+        "missions": [
+          {
+            "object": "mission",
+            "name": "destroyscreen",
+            "displayName": "destroy the screen",
+            "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
             "attributes": {
-                "imageName": "screen.jpg"
+              "missionObject": "screen",
+              "static": true
             },
-            "missions": [
-                {
-                    "object": "mission",
-                    "name": "destroyscreen",
-                    "displayName": "destroy the screen",
-                    "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
-                    "attributes": {
-                        "missionObject": "screen",
-                        "static": true
-                    },
-                    "failAttributes": {
-                        "time": 10
-                    },
-                    "conditionAttributes": {
-                        "isDestroyed": true
-                    },
-                    "reward": {
-                        "score": -25,
-                        "health": -15,
-                        "message": "Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen."
-                    },
-                    "fail": {
-                        "message": "You didn't manage to destroy the screen quickly enough.<br>Never mind, it's probably better left alone anyway."
-                    }
-                }
-            ]
-        }
+            "failAttributes": {
+              "time": 10
+            },
+            "conditionAttributes": {
+              "isDestroyed": true
+            },
+            "reward": {
+              "score": -25,
+              "health": -15,
+              "message": "Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen."
+            },
+            "fail": {
+              "message": "You didn't manage to destroy the screen quickly enough.<br>Never mind, it's probably better left alone anyway."
+            }
+          }
+        ]
+      }
     ],
     "missions": [
-      {"file": "mission-awaitvanarrival"},
+      {"file": "mission-partybus"},
+      { "file": "mission-awaitvanarrival" },
       {
         "object": "mission",
         "name": "boring",
@@ -187,21 +194,21 @@
           "message": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
         }
       },
-        {
-            "object": "mission",
-            "name": "explorer",
-            "displayName": "find every location",
-            "attributes": {
-                "missionObject": "player"
-            },
-            "conditionAttributes": {
-                "locationsToFind": 0
-            },
-            "reward": {
-                "score": 100,
-                "message": "<br>You're quite the explorer!<br>Congratulations, you've found every location."
-            }
+      {
+        "object": "mission",
+        "name": "explorer",
+        "displayName": "find every location",
+        "attributes": {
+          "missionObject": "player"
         },
+        "conditionAttributes": {
+          "locationsToFind": 0
+        },
+        "reward": {
+          "score": 100,
+          "message": "<br>You're quite the explorer!<br>Congratulations, you've found every location."
+        }
+      },
       {
         "object": "mission",
         "name": "hunter",
