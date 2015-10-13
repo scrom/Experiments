@@ -50,7 +50,9 @@
         "removeLocation": {
             "name": "bus",
             "removeCreatures": true
-        }
+        },
+        "affinityModifier": 5,
+        "decreaseAffinityFor": "all"
     },
     "reward": {
         "score": 50,
@@ -82,12 +84,14 @@
             ]
         },
         "modifyLocationCreatures": {
-            "name": "bus", 
+            "name": "bus",
             "health": -0.51
         },
         "removeLocation": {
             "name": "bus",
             "removeCreatures": false
-        }
+        },
+        "affinityModifier": 5,
+        "decreaseAffinityFor": "all"
     }
 }
