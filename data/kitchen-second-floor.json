@@ -1,14 +1,14 @@
 ﻿  {
     "object": "location",
-    "name": "second-floor-kitchen",
+    "name": "kitchen-second-floor",
     "displayName": "Second floor kitchen",
-    "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
+    "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
     "exits": [
       {
         "object": "exit",
         "longname": "South",
         "direction": "s",
-        "source": "second-floor-kitchen",
+        "source": "kitchen-second-floor",
         "destination": "second-floor-seating-area-east"
       }
     ],
@@ -30,6 +30,7 @@
           "latte",
           "coffee",
           "machine",
+          "coffee machine",
           "coffee machine space"
         ]
       },

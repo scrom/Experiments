@@ -100,6 +100,7 @@
     <Content Include="data\john-bowles.json" />
     <Content Include="data\jordan-miller.json" />
     <Content Include="data\keyfob.json" />
+    <Content Include="data\kitchen-first-floor.json" />
     <Content Include="data\kitchen-ground-floor.json" />
     <Content Include="data\latte.json" />
     <Content Include="data\lawyer-lobby.json" />
@@ -196,7 +197,7 @@
     <Content Include="data\second-floor-cubicle.json" />
     <Content Include="data\second-floor-east-corridor.json" />
     <Content Include="data\second-floor-fire-escape.json" />
-    <Content Include="data\second-floor-kitchen.json" />
+    <Content Include="data\kitchen-second-floor.json" />
     <Content Include="data\second-floor-landing-central.json" />
     <Content Include="data\second-floor-landing-east.json" />
     <Content Include="data\second-floor-landing-west.json" />
