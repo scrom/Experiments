@@ -218,11 +218,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return self.canCarry(anObject);
         };
         
-        self.getLiquid = function () {
+        self.getLiquidOrPowder = function () {
             //as opposed to "hasLiquid".
             //only explore items directly in this inventory, no nested items.
             for (var i = 0; i < _items.length; i++) {
-                if (_items[i].isLiquid()) { return _items[i];};
+                if (_items[i].isLiquid()) { return _items[i]; };
+                if (_items[i].isPowder()) { return _items[i]; };
             };
             return null;
         };
@@ -705,6 +706,22 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 };
            };
            return returnObjects;
+        };
+        
+        self.getOwnerFor = function (anObjectName) {
+            for (var index = _items.length - 1; index >= 0; index--) {
+                if (_items[index].getType() == "creature") {
+                    continue;
+                };
+                if (_items[index].contains(anObjectName)) {
+                    //check it's not nested futher.
+                    var nestedInventory = _items[index].getInventoryObject();
+                    var owner = nestedInventory.getOwnerFor(anObjectName);
+                    if (owner) { return owner };
+                    return _items[index];
+                };
+            };
+            return null;
         };
 
         self.getSuitableContainer = function(anObject) {

@@ -21,7 +21,8 @@
             "mocha"
         ],
         "combinesWith": [
-            "coffee"
+          "coffee",
+          "sweet coffee"
         ]
     },
     "synonyms": [

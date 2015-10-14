@@ -862,26 +862,38 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return _liquid;
         };
         
-        self.compareLiquid = function (liquid1, liquid2) {
+        self.compareLiquidOrPowder = function (item1, item2) {
             //compare attributes we care about.
-            if (!liquid1.isLiquid() || !liquid2.isLiquid()) {
+            if (item1.getType() != item2.getType()) {
                 return false;
             };
-            if (liquid1.getType() != liquid2.getType()) {
+            if (item1.getName() != item2.getName()) {
                 return false;
             };
-            if (liquid1.getName() != liquid2.getName()) {
+            if (item1.getDisplayName() != item2.getDisplayName()) {
                 return false;
             };
-            if (liquid1.getDisplayName() != liquid2.getDisplayName()) {
-                return false;
+
+            if (item1.isPowder() && item2.isPowder()) {
+                return true;
             };
-            return true;
+
+            if (item1.isLiquid() && item2.isLiquid()) {
+                return true;
+            };
+
+            return false;
 
         };
         
-        self.combineLiquid = function (consume, keep) {
-            //we assume liquid has already been compared!
+        self.combineWithLiquid = function (consume, keep) {
+            //we assume liquid/powder has already been compared!
+            if (keep.isPowder()) {
+                //swap keep/consume - adding powder to liquid (or another powder in which case it doesn't matter))
+                var tempConsume = consume;
+                consume = keep;
+                keep = tempConsume;
+            };
             var consumeAttributes = consume.getCurrentAttributes();
             var keepAttributes = keep.getCurrentAttributes();
             var newAttributes = {};
@@ -1835,10 +1847,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return self.getCustomActionResult(verb);
             };
             
-            var liquid = _inventory.getLiquid();
-            if (liquid) {
+            var liquidOrPowder = _inventory.getLiquidOrPowder();
+            if (liquidOrPowder) {
                 if (self.isOpen()) {
-                    return tools.initCap(liquid.getName())+" sloshes around inside " + self.getSuffix() + " but you manage not to spill any.";
+                    return tools.initCap(liquidOrPowder.getName())+" sloshes around inside " + self.getSuffix() + " but you manage not to spill any.";
                 } else {
                     return "You hear a sloshing sound from inside " + self.getSuffix() + ".";
                 };
@@ -2824,23 +2836,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 
                 //return result
                 return resultString + tools.initCap(self.getDisplayName()) + " now contains " + anObject.getDescription() + ".";
-
-            } else if (anObject.isLiquid()) {
+            //handle liquids or powders here
+            } else if (anObject.isLiquid() || anObject.isPowder()) {
                 //console.log("liquid handling");
-                var inventoryLiquid = _inventory.getLiquid();
-                if (inventoryLiquid) {
-                    if (inventoryLiquid.getName() != anObject.getName()) {
+                var inventoryLiquidOrPowder = _inventory.getLiquidOrPowder();
+                if (inventoryLiquidOrPowder) {
+                    if (inventoryLiquidOrPowder.getName() != anObject.getName()) {
                         //we're mixing 2 liquids that shouldn't combine.
                         resultString = "$fail$You attempt to add " + anObject.getDisplayName() + " to " + self.getDisplayName();
-                        return resultString + " but realise "+self.getPrefix().toLowerCase()+" really won't mix well with " + inventoryLiquid.getDisplayName() + " that's already in there.";
+                        return resultString + " but decide "+self.getPrefix().toLowerCase()+" won't really mix well with " + inventoryLiquidOrPowder.getDisplayName() + " that's already in there.";
                     } else {
                         //this is a liquid with the same name - is is comparable
-                        if (self.compareLiquid(anObject, inventoryLiquid)) {
-                            var combinedLiquid = self.combineLiquid(anObject, inventoryLiquid);
-                            _inventory.remove(inventoryLiquid.getName());
-                            _inventory.add(combinedLiquid);
+                        if (self.compareLiquidOrPowder(anObject, inventoryLiquidOrPowder)) {
+                            var combinedLiquidOrPowder = self.combineWithLiquid(anObject, inventoryLiquidOrPowder);
+                            _inventory.remove(inventoryLiquidOrPowder.getName());
+                            _inventory.add(combinedLiquidOrPowder);
                             //increase attributes of existing inventory object from attributes of the one we're adding
-                            return resultString + self.getPrefix() + " now contains even more " + combinedLiquid.getName() + ".";
+                            return resultString + self.getPrefix() + " now contains even more " + combinedLiquidOrPowder.getName() + ".";
                         };
                     };
                 };

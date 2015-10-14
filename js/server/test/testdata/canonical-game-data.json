@@ -13517,7 +13517,8 @@
         "synonyms": [
           "jar",
           "marmite jar",
-          "plastic jar"
+          "plastic jar",
+          "jar of marmite"
         ],
         "inventory": [
           {
@@ -13537,8 +13538,6 @@
               "nutrition": 35
             },
             "synonyms": [
-              "jar",
-              "marmite jar",
               "food"
             ]
           }

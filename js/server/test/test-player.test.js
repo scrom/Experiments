@@ -1520,7 +1520,7 @@ exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine = f
     console.log(bottle.receive(rum));
     console.log(p0.acceptItem(bottle));
 
-    var expectedResult = "You attempt to add the soup to the bottle but realise it really won't mix well with the rum that's already in there.";
+    var expectedResult = "You attempt to add the soup to the bottle but decide it won't really mix well with the rum that's already in there.";
     var actualResult = p0.get('get', soup.getName());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -1722,7 +1722,7 @@ exports.canLookInDirectionAndSeeDestination = function (test) {
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "West leads to 'Reception'.";
-    var actualResult = p0.examine('look', 'w', m0);
+    var actualResult = p0.examine('look', 'w', null, m0);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -1736,7 +1736,7 @@ exports.canLookInDirectionWithNoExitAndSeeNothing = function (test) {
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "You peer north but there's nothing else to see there.";
-    var actualResult = p0.examine('look', 'n', m0);
+    var actualResult = p0.examine('look', 'n', null, m0);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -1749,7 +1749,7 @@ exports.canLookInDirectionWithClosedDoorWithWindowAndSeeThroughDoor = function (
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "You see a door leading south.<br>Peering through the window you see serious people in suits looking busy and important.<br>It's locked.";
-    var actualResult = p0.examine('look', 's', m0);
+    var actualResult = p0.examine('look', 's', null, m0);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -1762,7 +1762,7 @@ exports.canLookInDirectionWithClosedDoorAndSeeDoor = function (test) {
     var reception = m0.getLocation("reception");
     p0.setLocation(reception);
     var expectedResult = "You see an office door.<br>It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.<br>It's locked.";
-    var actualResult = p0.examine('look', 's', m0);
+    var actualResult = p0.examine('look', 's', null, m0);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -2843,7 +2843,7 @@ exports.PlayerCanSlipOnWetFloor = function (test) {
     l0.addLiquid("liquid9");
     l0.addLiquid("liquid10");
 
-    var expectedResult = "<br>As you enter, you slip on the wet floor and injure yourself.<br>You feel weaker. ";
+    var expectedResult = "<br>As you enter, you slip on the mess on the floor and injure yourself.<br>You feel weaker. ";
     var alternateResult = "ngle exit to the South.<br><br>You might want to mind out, the floor's slippery here."; //not reliable
     var actualResult = p0.go("n","n", m1).substr(-85);
     console.log("Expected: "+expectedResult);
