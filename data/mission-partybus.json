@@ -8,7 +8,7 @@
         "missionObject": "bus"
     },
     "conditionAttributes": {
-        "time": 250
+        "time": 175
     },
     "failAttributes": {
         "friendlyCreatureCount": ">7"
