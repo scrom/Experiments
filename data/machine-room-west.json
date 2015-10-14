@@ -36,14 +36,20 @@
           "tools",
           "hardware",
           "wire",
-          "wires"
+          "wires",
+          "spare",
+          "spares",
+          "spare hardware",
+          "spare pieces",
+          "spare pieces of hardware",
+          "spare pieces hardware"
         ]
       },
       {
         "object": "artefact",
         "name": "screwdriver",
         "description": "large flat-headed screwdriver",
-        "detailedDescription": "Not much use for working on electronics but I'm sure it has other uses.",
+        "detailedDescription": "It's too large for working on electronics but I'm sure it has other uses.",
         "attributes": {
           "defaultAction": "open",
           "weight": 0.1,
