@@ -121,9 +121,11 @@
     <Content Include="data\mission-awaitvanarrival.json" />
     <Content Include="data\mission-beans.json" />
     <Content Include="data\mission-beansinthepostroom.json" />
+    <Content Include="data\mission-bodycount.json" />
     <Content Include="data\mission-destroycoffeemachine.json" />
     <Content Include="data\mission-finddaveandroger.json" />
     <Content Include="data\mission-givetrusttokentoplayer.json" />
+    <Content Include="data\mission-healbusvictims.json" />
     <Content Include="data\mission-jordanreachesmachineroom.json" />
     <Content Include="data\mission-killthespy.json" />
     <Content Include="data\mission-latte.json" />
@@ -135,6 +137,7 @@
     <Content Include="data\mission-repaircoffeemachine.json" />
     <Content Include="data\mission-retrievedisk.json" />
     <Content Include="data\mission-rumforthecaptain.json" />
+    <Content Include="data\mission-saveredgate.json" />
     <Content Include="data\mission-stealsketchbook.json" />
     <Content Include="data\mission-stealvaluables.json" />
     <Content Include="data\mission-vanarrival.json" />

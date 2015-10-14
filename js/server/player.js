@@ -4790,12 +4790,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return result;
         };
 
-        self.kill = function(){
+        self.kill = function(isPermanent){
             console.log("Player killed");
             var resultString = "";
+            _hitPoints = 0;
             _killedCount ++;
             //reduce score
-            var minusPoints = 100;
+            var minusPoints = 50 * _killedCount;
             _score -= minusPoints;
             if (_score < -1000) { _score = -1000; }; //can't score less than -1000 (seriously!)
             
@@ -4828,23 +4829,50 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var inventoryContents = _inventory.getAllObjects(true).slice();
             for(var i = 0; i < inventoryContents.length; i++) {
                 _currentLocation.addObject(removeObjectFromPlayer(inventoryContents[i].getName()));
-            }; 
+            };
 
             _bleeding = false;
+            
+            if (_killedCount > 5) {
+                isPermanent = true;
+            };
+
+            if (isPermanent) {
+                resultString += "<br>That's it. Game over. You had plenty of chances.<br>If you want to try again you either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
+                return resultString;
+            };
+
             self.recover(_maxHitPoints);
 
             resultString += "<br><br>";
             resultString += reasonForDeath;
 
-            resultString += " Fortunately, we currently have a special on infinite reincarnation. "+
-                   "It'll cost you "+minusPoints+" points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" 
+            resultString += "<br>Fortunately, we currently have a special on reincarnation.<br>"+
+                   "This time we've charged you "+minusPoints+" points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>" 
 
             var newLocationDescription = self.setLocation(_startLocation);
             if (!(self.canSee())) {resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
             else {resultString +=newLocationDescription;};
 
             return resultString;
-         };
+        };
+        
+        self.checkCreatureHealth = function (creatureName) {            
+            if (creatureName) {
+                if (creatureName != "self" && creatureName != "player") {
+                    var creature = getObjectFromLocation(creatureName);
+                    if (!(creature)) { return "There's no " + creatureName + " here."; };
+                    if (creature.getType() != "creature") { return tools.initCap(creature.getDisplayName()) + " can't be helped."; };
+                };
+            };
+            
+            if (!(creature)) {
+                if (_hitPoints >= _maxHitPoints - 1) { return "You don't need healing at the moment."; };
+                return self.health();
+            };
+
+            return creature.health();
+        };
 
         self.health = function() {
             var resultString = "";

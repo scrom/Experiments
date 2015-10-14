@@ -1,0 +1,16 @@
+﻿{
+  "object": "mission",
+  "name": "bodycount",
+  "displayName": "game reaches 15 friendly deaths",
+  "attributes": {
+  },
+  "conditionAttributes": {
+    "deathToll": {
+      "friendly": ">15"
+    }
+  },
+  "reward": {
+    "score": -50,
+    "message": "<br>Let's assume for now that the bodycount around here isn't your doing. Suffice to say <b>something deeply troubling is going on here</b>."
+  }
+}

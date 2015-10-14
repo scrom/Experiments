@@ -2179,7 +2179,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _hitPoints -= pointsToRemove;
             return _hitPoints;
         };
-
+               
+        self.isBleeding = function () {
+            return _bleeding;
+        };
         
         self.heal = function(medicalArtefact, healer) {
             if (_hitPoints >= _maxHitPoints-1) { return tools.initCap(self.getPrefix())+" doesn't need healing.";};

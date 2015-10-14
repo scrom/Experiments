@@ -349,9 +349,14 @@ exports.Action = function Action(player, map, fileManager) {
                         _ticks = 0;
                         description = "Oh dear, are you lost? This is a text adventure you know.<br>Time to get some graph paper, a pencil and start drawing!";
                         break;
+                    case 'triage':
                     case 'health':
-                        _ticks = 0;
-                        description = _player.health();
+                        if (_object0) {
+                            description = _player.checkCreatureHealth(_object0);
+                        } else {
+                            _ticks = 0;
+                            description = _player.health();
+                        };
                         break;
                     case 'heal':
                         description = _player.healCharacter(_object0);
@@ -1272,6 +1277,10 @@ exports.Action = function Action(player, map, fileManager) {
                     };
                     return "cannot kill "+_object0;               
                 };
+                
+                if (_verb == '+die') {
+                    return _player.kill();
+                };
 
                 if (_verb == '+attrib') {
                     var item;
@@ -1430,7 +1439,13 @@ exports.Action = function Action(player, map, fileManager) {
   
         self.act = function(anActionString) {
             var description = "";
-            var imageName;          
+            var imageName;
+                       
+            if (_player.isDead()) {
+                description = "You're dead. Game over.<br>There's nothing more you can do here.<br><br>You either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
+                //we're done processing, build the results...
+                return returnResultAsJson(description, imageName);
+            };     
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);

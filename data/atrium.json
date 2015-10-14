@@ -177,7 +177,8 @@
       }
     ],
     "missions": [
-      {"file": "mission-partybus"},
+      {"file": "mission-bodycount"},
+      { "file": "mission-partybus" },
       { "file": "mission-awaitvanarrival" },
       {
         "object": "mission",
