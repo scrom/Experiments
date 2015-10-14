@@ -1071,6 +1071,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'clear':
                     case 'wipe':
+                    case 'scrub':
                     case 'clean':
                         if (_object1) {
                             //clean x from y
