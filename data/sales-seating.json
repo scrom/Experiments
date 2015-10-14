@@ -28,29 +28,6 @@
           "viewDestination": "reception"
         }
       },
-      {
-        "object": "artefact",
-        "name": "xbox",
-        "description": "xbox 360",
-        "detailedDescription": "Fancy a game of Forza?",
-        "attributes": {
-          "weight": 6,
-          "type": "treasure",
-          "canCollect": true,
-          "isBreakable": true,
-          "price": 30,
-          "customAction": "play",
-          "defaultResult": "Brum. Bruuuum. BRRRRUUUUUUM!<br>After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
-        },
-        "synonyms": [
-          "console",
-          "xbox 360",
-          "x-box",
-          "games console",
-          "game",
-          "forza",
-          "game of forza"
-        ]
-      }
+      {"file": "chairs"}
     ]
   }
