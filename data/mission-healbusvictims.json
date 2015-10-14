@@ -2,7 +2,7 @@
   "object": "mission",
   "name": "healbusvictims",
   "displayName": "heal the survivors from the bus explosion",
-  "description": "Things just seem to be getting worse for you.<br>You need to save lives - fast. Time to triage and <i>heal</i>the wounded, I hope you've got a medical kit handy.",
+  "description": "Things just seem to be getting worse for you.<br>You need to save lives - fast. Time to triage and <i>heal</i> the wounded, I hope you've got a medical kit handy.",
   "attributes": {
     "parent": "partybus"
   },
