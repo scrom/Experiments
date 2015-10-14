@@ -447,9 +447,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (matchedItem) {
                     return matchedItem;
                 };
+                
+                //we use this multiple times - minor optimisation.
+                var itemType = _items[index].getType();
 
                 ////
-                if (_items[index].getType() != 'creature') {
+                if (itemType != 'creature') {
                     //just retrieve positioned objects from artefacts
                     //doesn't retrieve items hidden by creatures
                     //this section doesn't check custom actions at the moment - pretty sure that's a bug.
@@ -467,25 +470,14 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 };
                
                 ////                
-                if (_items[index].getType() == 'creature' && !searchCreatures) {
+                if (itemType == 'creature' && !searchCreatures) {
                     //if we won't search creatures
                     continue;
                 };
 
-                if (_items[index].getType() != 'creature' &&_items[index].isLocked() ) {
+                if (itemType != 'creature' &&_items[index].isLocked() ) {
                     //if we've got this far we can't look in locked artefacts
                     continue;
-                };
-                
-                //we're searching creatures - check creature sales inventory
-                if (_items[index].getType() == 'creature') {
-                    var salesInventory = _items[index].getSalesInventoryObject();
-                    if (salesInventory) {
-                        var salesObject = salesInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
-                        if (salesObject) {
-                            return salesObject;
-                        };
-                    };
                 };
                 
                 ////
@@ -500,6 +492,18 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         return heldObject;
                     };                     
                 };
+                
+                //we're searching creatures - check creature sales inventory
+                if (itemType == 'creature') {
+                    var salesInventory = _items[index].getSalesInventoryObject();
+                    if (salesInventory) {
+                        var salesObject = salesInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
+                        if (salesObject) {
+                            return salesObject;
+                        };
+                    };
+                };
+
            };
            return null;
         };
