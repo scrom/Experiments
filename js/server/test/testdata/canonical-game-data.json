@@ -2026,12 +2026,13 @@
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 0.5,
-              "carryWeight": 0.5,
+              "carryWeight": 1,
               "attackStrength": 5,
               "type": "container",
               "holdsLiquid": true,
               "canCollect": true,
               "affinityModifier": 0,
+              "canOpen": true,
               "position": "on"
             },
             "synonyms": [
@@ -2043,7 +2044,7 @@
               {
                 "object": "artefact",
                 "name": "spam",
-                "description": "Spam",
+                "description": "spam",
                 "detailedDescription": "Processed meat. How bad can it be? Right?",
                 "attributes": {
                   "weight": 1,
@@ -2052,10 +2053,9 @@
                   "charges": 3,
                   "chargeUnit": "portion",
                   "chargesDescription": "There's about $charges $chargeUnit left",
-                  "canOpen": true,
+                  "plural": true,
                   "isEdible": true,
                   "nutrition": -15,
-                  "position": "on",
                   "smell": "It reminds you of something.<br>You wonder to yourself if cats like Spam.",
                   "taste": "It tastes a lot like it <i>smell</i>s."
                 }
