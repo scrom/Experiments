@@ -810,8 +810,9 @@ exports.canBeKilledAndDropInventory = function (test) {
 exports.canBeKilledAndDropInventory.meta = { traits: ["Player Test", "Inventory Trait", "Health Trait", "Kill Trait"], description: "Test that a killed player drops inventory." };
 
 
-exports.killPlayer5TimesReturnsExpectedStringResult = function (test) {
-    var expectedResult = "XX";
+exports.killPlayerMoreThan5TimesReturnsExpectedStringResult = function (test) {
+    var expectedResult = "<br>That's it. Game over. You had plenty of chances.<br>If you want to try again you either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
+    p0.kill();
     p0.kill();
     p0.kill();
     p0.kill();
@@ -823,7 +824,7 @@ exports.killPlayer5TimesReturnsExpectedStringResult = function (test) {
     test.done();
 };
 
-exports.killPlayer5TimesReturnsExpectedStringResult.meta = { traits: ["Player Test", "Health Trait", "Kill Trait"], description: "Test that a killed player is returned to start with appropriate message." };
+exports.killPlayerMoreThan5TimesReturnsExpectedStringResult.meta = { traits: ["Player Test", "Health Trait", "Kill Trait"], description: "Test that a killed player is returned to start with appropriate message." };
 
 
 exports.killPlayerReturnsExpectedStringResult = function (test) {   
