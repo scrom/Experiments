@@ -2,7 +2,6 @@
     "object": "mission",
     "name": "killthespy",
     "displayName": "kill the spy",
-    "description": "I'm sure he wasn't around before the crash!",
     "attributes": {
         "parent": "saveredgate",
         "missionObject": "jordan miller"

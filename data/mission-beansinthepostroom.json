@@ -61,7 +61,6 @@
                                 "attackStrength": 2,
                                 "type": "container",
                                 "canCollect": true,
-                                "isBreakable": true,
                                 "affinityModifier": 0,
                                 "canOpen": true,
                                 "smell": "You can almost taste the coffee beans."
