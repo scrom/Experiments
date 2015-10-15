@@ -1440,8 +1440,9 @@ exports.Action = function Action(player, map, fileManager) {
         self.act = function(anActionString) {
             var description = "";
             var imageName;
-                       
-            if (_player.isDead()) {
+            
+            //explicitly test for true - supports stub testability          
+            if (_player.isDead() == true) {
                 description = "You're dead. Game over.<br>There's nothing more you can do here.<br><br>You either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
                 //we're done processing, build the results...
                 return returnResultAsJson(description, imageName);
