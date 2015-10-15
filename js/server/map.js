@@ -35,6 +35,7 @@ exports.Map = function Map() {
             currentAttributes.antibodies = self.gatherAntibodyStats(creatures);
             currentAttributes.contagionDeathToll = self.gatherContagionDeathTollStats(creatures);
             currentAttributes.deathToll = self.gatherDeathTollStats(creatures);
+            currentAttributes.bleedingCreatures = self.gatherBleedingStats(creatures);
             return currentAttributes;
         };
 
@@ -678,6 +679,21 @@ exports.Map = function Map() {
             };
             
             return deathTollData;
+        };
+        
+        self.gatherBleedingStats = function (creatures) {
+            var bleedingData = { "friendly": 0, "hostile": 0 };
+            for (var c = 0; c < creatures.length; c++) {
+                if (creatures[c].isBleeding()) {
+                    if (creatures[c].getSubType() == "friendly") {
+                        bleedingData.friendly++;
+                    } else {
+                        bleedingData.hostile++;
+                    };
+                };
+            };
+            
+            return bleedingData;
         };
         
         self.getAllMissions = function () {

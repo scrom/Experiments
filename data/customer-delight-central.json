@@ -34,29 +34,30 @@
         }
     ],
     "inventory": [
-        {
-            "object": "artefact",
-            "name": "wall",
-            "description": "glass wall full of LED lights",
-            "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
-            "attributes": {
-                "weight": 280,
-                "type": "scenery",
-                "plural": true,
-                "switched": true,
-                "isOn": true,
-                "canDrawOn": true
-            },
-            "synonyms": [
-                "led lights",
-                "led",
-                "leds",
-                "glass",
-                "glass wall",
-                "walls",
-                "lights"
-            ]
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "glass wall full of LED lights",
+        "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "plural": true,
+          "switched": true,
+          "isOn": true,
+          "canDrawOn": true
         },
+        "synonyms": [
+          "led lights",
+          "led",
+          "leds",
+          "glass",
+          "glass wall",
+          "walls",
+          "lights"
+        ]
+      },
+      {"file": "curved-sofa"},
         {
             "object": "creature",
             "name": "chris george",
@@ -78,169 +79,8 @@
                 "him"
             ]
         },
-        {
-            "object": "creature",
-            "name": "mark wightman",
-            "displayname": "Mark Wightman",
-            "description": "Mark Wightman",
-            "detailedDescription": "Mark's our head of Development.",
-            "attributes": {
-                "template": "creature-male-l3",
-                "imageName": "markwightman.jpg"
-            },
-            "inventory": [
-                { "file": "keyfob" }
-            ],
-            "synonyms": [
-                "mark",
-                "mark w",
-                "mw",
-                "wightman",
-                "him"
-            ],
-            "missions": [
-                {"file": "mission-partytime"},
-                {"file": "mission-partybus"}                
-            ]
-        },
-        {
-            "object": "creature",
-            "name": "jeff foster",
-            "displayname": "Jeff Foster",
-            "description": "Jeff Foster",
-            "detailedDescription": "Jeff is our head of Software Engineering.",
-            "attributes": {
-                "template": "creature-male-l3",
-                "imageName": "jefffoster.jpg"
-            },
-            "inventory": [
-                { "file": "keyfob" }
-            ],
-            "synonyms": [
-                "jeff",
-                "jeff f",
-                "jf",
-                "foster",
-                "him"
-            ]
-        },
-        {
-            "object": "creature",
-            "name": "simon cromarty",
-            "displayname": "Simon Cromarty",
-            "description": "Simon Cromarty",
-            "detailedDescription": "He's our head of Project Management (or a pirate if you give him enough rum).",
-            "attributes": {
-                "template": "creature-male-l3",
-                "imageName": "simoncromarty.jpg"
-            },
-            "inventory": [
-                { "file": "keyfob" }
-            ],
-            "synonyms": [
-                "simon",
-                "simon c",
-                "sc",
-                "cromarty",
-                "crom",
-                "him"
-            ],
-            "missions": [
-                {
-                    "object": "mission",
-                    "name": "rumforthecaptain",
-                    "displayName": "find some Rum for Simon.",
-                    "description": "Simon's team have just shipped a major release. He wants Rum to celebrate",
-                    "attributes": {
-                        "parent": "latte",
-                        "missionObject": "rum bottle",
-                        "destination": "simon cromarty",
-                        "static": true,
-                        "dialogue": [
-                            "'Hey $player.'<br>'I need a cheeky favour from you, if you're willing.'<br>'My team are just about to ship a new release but I forgot to stock up on the usual celebration supplies.'<br>'Most teams celebrate with champagne but we have a tradition of celebrating with something a bit tastier.'<br>'Could you track me down a decent bottle of rum from somewhere?'<br>'And don't worry, I'll pay you for it.'",
-                            {
-                                "state": 1,
-                                "keywords": [
-                                    "yes",
-                                    "ok",
-                                    "y"
-                                ],
-                                "response": "'Great! I'll be wandering around the office. Come and find me when you've got some.'",
-                                "nextState": 2
-                            },
-                            {
-                                "state": 1,
-                                "keywords": [
-                                    "n",
-                                    "no",
-                                    "not",
-                                    "not yet"
-                                ],
-                                "response": "'Well if you manage to get hold of any, I'll make it worthwhile.'",
-                                "nextState": 2
-                            },
-                            {
-                                "state": 1,
-                                "response": "'If you find any around, give me a shout. I'd really appreciate it.'",
-                                "nextState": 2
-                            },
-                            {
-                                "state": 2,
-                                "response": "'Hey $player. Did you get hold of any decent rum?'",
-                                "nextState": 3
-                            },
-                            {
-                                "state": 3,
-                                "requestedObject": "rum bottle",
-                                "keywords": [
-                                    "yes",
-                                    "ok",
-                                    "y"
-                                ],
-                                "response": "'Perfect!'",
-                                "nextState": 4
-                            },
-                            {
-                                "state": 3,
-                                "keywords": [
-                                    "n",
-                                    "no",
-                                    "not",
-                                    "not yet"
-                                ],
-                                "response": "'Maybe later eh.'",
-                                "nextState": 2
-                            },
-                            {
-                                "state": 3,
-                                "response": "'You'd be doing the rest of the team a favour too if you could get some.'",
-                                "nextState": 2
-                            },
-                            {
-                                "state": 4,
-                                "response": "'Hang on, this isn't the decent stuff.'<br>'Try again sunshine.'",
-                                "nextState": 2
-                            }
-                        ]
-                    },
-                    "conditionAttributes": {
-                        "isDestroyed": false,
-                        "isBroken": false,
-                        "isDamaged": false,
-                        "contains": [
-                            "quality rum"
-                        ]
-                    },
-                    "reward": {
-                        "increaseAffinityFor": "simon cromarty",
-                        "missionObject": "rum bottle",
-                        "removeObject": "quality rum",
-                        "score": 25,
-                        "money": 20,
-                        "message": "Simon opens the bottle and takes a large swig.<br>'Thankshh $player.' he says, 'It'ssh perfeck!'<br>He slaps a handful of money into your palm and staggers back towards his team area.<br>It's funny how many companies have a 'no drinking on site' policy. I think they'd struggle here given the number of release celebrations that seem to happen.<br>Let's hope there's enough rum left for the team by the time he gets back!<br>"
-                    }
-                }
-            ]
-        }
+        {"file": "mark-wightman"},
+        {"file": "jeff-foster"},
+        {"file": "simon-cromarty"}
     ]
   }

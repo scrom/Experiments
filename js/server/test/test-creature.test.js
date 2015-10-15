@@ -1946,7 +1946,7 @@ exports.CreatureCanSlipOnWetFloor = function (test) {
     console.log(p0.examine("look"));
     //console.log(c0.tick(15, m1, p0));
 
-    var expectedResult = "<br>A beastie wanders in and slips on the wet floor.<br>It's injured.";
+    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br>It's injured.";
     var actualResult = c0.tick(5, m1, p0);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1988,7 +1988,7 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
 
     //*note* - occasionaly - even with this much liquid, they might still not slip.
     //this matches player behaviour for fairness.
-    var expectedResult = "<br>A beastie wanders in and slips on the wet floor.<br><br><br><br><br>The creature is dead. Now you can steal all its stuff.";
+    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br><br><br><br><br>The creature is dead. Now you can steal all its stuff.";
     var actualResult = c0.tick(5, m1, p0);
     var attempts = 1;
     while (actualResult != expectedResult && attempts < 5) {

@@ -521,6 +521,113 @@
     "missions": [
       {
         "object": "mission",
+        "name": "bodycount",
+        "displayName": "game reaches 15 friendly deaths",
+        "attributes": {},
+        "conditionAttributes": {
+          "deathToll": {
+            "friendly": ">15"
+          }
+        },
+        "reward": {
+          "score": -50,
+          "message": "<br>Let's assume for now that the bodycount around here isn't your doing. Suffice to say <b>something deeply troubling is going on here</b>."
+        }
+      },
+      {
+        "object": "mission",
+        "name": "partybus",
+        "displayName": "get everyone on the party bus",
+        "description": "You did a great job of saving the company. Time for a break. Get everyone onto the party bus before it leaves!",
+        "attributes": {
+          "parent": "partybusprep",
+          "missionObject": "bus"
+        },
+        "failAttributes": {
+          "friendlyCreatureCount": ">7"
+        },
+        "conditionAttributes": {
+          "time": 250
+        },
+        "reward": {
+          "modifyLocation": {
+            "name": "office-front",
+            "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "smoke",
+                "description": "smoke",
+                "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                "attributes": {
+                  "type": "scenery",
+                  "subType": "intangible",
+                  "smell": "It's going to linger in your nose and memories for quite some time."
+                },
+                "synonyms": [
+                  "ash",
+                  "wreckage",
+                  "burning",
+                  "hint of ash",
+                  "debris",
+                  "bodies"
+                ]
+              }
+            ]
+          },
+          "score": 50,
+          "message": "<br>Oh no, you're out of time!<br>The party bus is leaving and you haven't got enough people on board.<br><br>You rush out to try and salvage your efforts.<br>As you recover your breath outside and the bus pulls away you see a lick of flame through the windows.<br>Something's very wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!",
+          "teleport": "office-front",
+          "modifyLocationCreatures": {
+            "name": "bus",
+            "health": -0.51
+          },
+          "removeLocation": {
+            "name": "bus",
+            "removeCreatures": false
+          },
+          "affinityModifier": 5,
+          "decreaseAffinityFor": "all"
+        },
+        "fail": {
+          "modifyLocation": {
+            "name": "office-front",
+            "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "smoke",
+                "description": "smoke",
+                "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+                "attributes": {
+                  "type": "scenery",
+                  "subType": "intangible",
+                  "smell": "It's going to linger in your nose and memories for quite some time."
+                },
+                "synonyms": [
+                  "ash",
+                  "wreckage",
+                  "burning",
+                  "hint of ash",
+                  "debris",
+                  "bodies"
+                ]
+              }
+            ]
+          },
+          "score": -150,
+          "message": "<br>It looks like you're doing well at getting people onto the bus. Great job!<br>It's often hard work herding people around here.<br><br>You dash out to the front of the office to check for stragglers and as you recover your breath you smell smoke on the air.<br>Something's very wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.",
+          "teleport": "office-front",
+          "removeLocation": {
+            "name": "bus",
+            "removeCreatures": true
+          },
+          "affinityModifier": 5,
+          "decreaseAffinityFor": "all"
+        }
+      },
+      {
+        "object": "mission",
         "name": "awaitvanarrival",
         "displayName": "steal some valuables",
         "attributes": {
@@ -1256,6 +1363,53 @@
           "whitebaord",
           "diagram",
           "code"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "code",
+            "description": "faint marks",
+            "detailedDescription": "It looks like someone has tried to write out the pseudocode for a string reversal algorithm.<br>Personally you don't see the value in that kind of old-fashioned algorithm solving question. Surely the answer is just 'string.reverse'.<br>When you came for a job here you did a pair programming exercise trying to fix a real product bug instead.",
+            "attributes": {
+              "type": "scenery"
+            },
+            "synonyms": [
+              "marks",
+              "coding",
+              "disused coding exercise",
+              "long-disused coding exercise",
+              "long disused coding exercise",
+              "coding exercise",
+              "code exercise",
+              "exercise",
+              "pseudocode",
+              "string",
+              "string reverse",
+              "string reversal",
+              "algorithm"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "architecture",
+            "description": "faint marks",
+            "detailedDescription": "It's pretty hard to see the details but it looks like the architecture for a basic ecommerce system with microservices and an event queue. ",
+            "attributes": {
+              "type": "scenery"
+            },
+            "synonyms": [
+              "faint marks",
+              "architecture diagram",
+              "diagram",
+              "ecommerce",
+              "ecommerce system",
+              "microservice",
+              "service",
+              "event",
+              "event queue",
+              "queue"
+            ]
+          }
         ]
       },
       {
@@ -2013,6 +2167,32 @@
         ]
       },
       {
+        "object": "artefact",
+        "name": "sofa",
+        "description": "curved, high-backed sofa",
+        "detailedDescription": "It's a large, comfy, and very solid-looking semicircular set of seats. There's room for about 5 people to sit on here.<br>It has high backs to allow for a team to have a decent conversation (or gaming session) without disturbing anyone nearby.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 300,
+          "type": "bed"
+        },
+        "synonyms": [
+          "chair",
+          "seat",
+          "curved sofa",
+          "high-backed sofa",
+          "high backed sofa",
+          "curved high-backed sofa",
+          "curved high backed sofa",
+          "curved, high backed sofa",
+          "curved, high-backed sofa",
+          "high sofa",
+          "high back sofa",
+          "high-back sofa",
+          "tall sofa"
+        ]
+      },
+      {
         "object": "creature",
         "name": "chris george",
         "displayname": "Chris George",
@@ -2064,7 +2244,7 @@
         "name": "mark wightman",
         "displayname": "Mark Wightman",
         "description": "Mark Wightman",
-        "detailedDescription": "Mark's our head of Development.",
+        "detailedDescription": "Mark's our head of Organizational Effectiveness.",
         "attributes": {
           "weight": 120,
           "money": 20,
@@ -2127,7 +2307,7 @@
                     "yup",
                     "y"
                   ],
-                  "response": "'Right, let's get this party sorted!'<br>'I've ordered a bus. Give me one last shout when you're ready to round everyone up!'",
+                  "response": "'Right, let's get this party sorted!'<br>'Give me one last shout when you're ready and in the meantime I'll get something organised.'",
                   "nextState": 3
                 },
                 {
@@ -2148,12 +2328,33 @@
               "conversationState": 3
             },
             "reward": {
+              "message": "<br>Stop back in with Mark in a little while to find out what he's got arranged."
+            }
+          },
+          {
+            "object": "mission",
+            "name": "partybusprep",
+            "displayName": "let Mark know you're ready to party.",
+            "description": "Mark's ordered a bus. Let's get people moving.",
+            "attributes": {
+              "parent": "partytime",
+              "missionObject": "mark wightman",
+              "static": true,
+              "dialogue": [
+                "'Hi again $player.'<br>'That was quite a job with the zombies, thanks!'<br>'As I said earlier, I think it's time we all had a break.'<br>'I've ordered a bus to take us all out. It should be waiting outside ready to go.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or more of the team on board (including yourself), it'll be time to head off.'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 1
+            },
+            "reward": {
               "locations": [
                 {
                   "object": "location",
                   "name": "bus",
                   "displayName": "Party bus",
-                  "description": "You're on the party bus! Check in with Mark Wightman if you've not done so already and then round everyone up here.",
+                  "description": "You're on the 'party bus'!<br>It's a small hired coach - not much to distinguish it really.<br>You need to encourage as many people as you can to head over here to start our celebrations.",
                   "exits": [
                     {
                       "object": "exit",
@@ -2176,99 +2377,6 @@
               ],
               "affinityModifier": 5,
               "increaseAffinityFor": "all"
-            }
-          },
-          {
-            "object": "mission",
-            "name": "partybus",
-            "displayName": "get everyone on the party bus",
-            "description": "You did a great job of saving the company. Time for a break. Get everyone onto the party bus before it leaves!",
-            "attributes": {
-              "parent": "partytime",
-              "missionObject": "bus",
-              "static": true,
-              "dialogue": [
-                "'Hi $player.'<br>'That was quite a job with the zombies, thanks!'<br>'I think it's time we all had a break.'<br>'There's a bus waiting outside to take everyone off to unwind after the day we've had.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or so partygoers (including yourself), it'll be time to relax.'",
-                "'Hey $player, I hope the people organising is going well. Keep up the great work.'"
-              ]
-            },
-            "failAttributes": {
-              "friendlyCreatureCount": ">7"
-            },
-            "conditionAttributes": {
-              "time": 250
-            },
-            "reward": {
-              "modifyLocation": {
-                "name": "office-front",
-                "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "smoke",
-                    "description": "smoke",
-                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-                    "attributes": {
-                      "type": "scenery",
-                      "subType": "intangible",
-                      "smell": "It's going to linger in your nose and memories for quite some time."
-                    },
-                    "synonyms": [
-                      "ash",
-                      "wreckage",
-                      "burning",
-                      "hint of ash",
-                      "debris",
-                      "bodies"
-                    ]
-                  }
-                ]
-              },
-              "score": 50,
-              "message": "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush out to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows.<br>Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!",
-              "teleport": "office-front",
-              "modifyLocationCreatures": {
-                "name": "bus",
-                "health": -0.51
-              },
-              "removeLocation": {
-                "name": "bus",
-                "removeCreatures": false
-              }
-            },
-            "fail": {
-              "modifyLocation": {
-                "name": "office-front",
-                "description": "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.",
-                "inventory": [
-                  {
-                    "object": "artefact",
-                    "name": "smoke",
-                    "description": "smoke",
-                    "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-                    "attributes": {
-                      "type": "scenery",
-                      "subType": "intangible",
-                      "smell": "It's going to linger in your nose and memories for quite some time."
-                    },
-                    "synonyms": [
-                      "ash",
-                      "wreckage",
-                      "burning",
-                      "hint of ash",
-                      "debris",
-                      "bodies"
-                    ]
-                  }
-                ]
-              },
-              "score": -150,
-              "message": "<br>Congratulations, you're doing great at getting the bus loaded.<br>It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows.<br>Something's wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.",
-              "teleport": "office-front",
-              "removeLocation": {
-                "name": "bus",
-                "removeCreatures": true
-              }
             }
           }
         ]
@@ -5182,7 +5290,7 @@
     "object": "location",
     "name": "first-floor-landing-east",
     "displayName": "First floor landing",
-    "description": "You're at the East end of the first floor landing.<br>Through the window to the East you can often see the sales team relaxing and playing on an XBox.",
+    "description": "You're at the East end of the first floor landing.<br>Through the nearby window you can often see some of the sales team relaxing.",
     "exits": [
       {
         "object": "exit",
@@ -6439,6 +6547,106 @@
   },
   {
     "object": "location",
+    "name": "kitchen-first-floor",
+    "displayName": "First floor kitchen",
+    "description": "You're in a small, open kitchen area.<br>There's the usual array of small kitcheny-type things here. (glasses, cereal, fruit squashes, a sink and fridge).",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "kitchen-first-floor",
+        "destination": "servery-north-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "bowl",
+        "description": "bowl",
+        "detailedDescription": "It's a round, china cereal bowl.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        },
+        "synonyms": [
+          "cereal bowl"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "shreddies",
+            "description": "shreddies",
+            "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'",
+            "attributes": {
+              "weight": 0.5,
+              "type": "food",
+              "requiresContainer": true,
+              "canCollect": true,
+              "charges": 1,
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 20
+            },
+            "synonyms": [
+              "food",
+              "cereal",
+              "shreddies"
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "tissue",
+        "description": "roll of tissue",
+        "detailedDescription": "It's cheap and blue but pretty good for mopping up spills and cleaning whiteboards.",
+        "attributes": {
+          "weight": 1.5,
+          "type": "tool",
+          "subType": "clean",
+          "canCollect": true
+        },
+        "synonyms": [
+          "roll",
+          "tissue roll",
+          "roll of tissue",
+          "roll tissue"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "first aid kit",
+        "description": "first aid kit",
+        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 5,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "kitchen-ground-floor",
     "displayName": "Atrium kitchen",
     "description": "You're in the atrium kitchen.",
@@ -6497,7 +6705,8 @@
                 "mocha"
               ],
               "combinesWith": [
-                "coffee"
+                "coffee",
+                "sweet coffee"
               ]
             },
             "synonyms": [
@@ -7853,6 +8062,108 @@
   },
   {
     "object": "location",
+    "name": "kitchen-second-floor",
+    "displayName": "Second floor kitchen",
+    "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "South",
+        "direction": "s",
+        "source": "kitchen-second-floor",
+        "destination": "second-floor-seating-area-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "space",
+        "description": "space",
+        "detailedDescription": "You'll need to head to the downstairs kitchen if you want coffee now.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "The coffee machine is in the <i>ground floor</i> kitchen now."
+        },
+        "synonyms": [
+          "latte",
+          "coffee",
+          "machine",
+          "coffee machine",
+          "coffee machine space"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "whiteboard",
+        "description": "large whiteboard",
+        "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
+        "attributes": {
+          "weight": 30,
+          "type": "scenery",
+          "canDrawOn": true,
+          "writings": [
+            "Who scrubbed off my cactus?",
+            "That wasn't a cactus!",
+            "meh",
+            "Richard Mitchell"
+          ]
+        },
+        "synonyms": [
+          "board",
+          "white board",
+          "large white board",
+          "large whiteboard",
+          "whitebaord"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "cloth",
+        "description": "dishcloth",
+        "detailedDescription": "It's slightly damp but should clean things up.",
+        "attributes": {
+          "weight": 0.5,
+          "type": "tool",
+          "subType": "clean",
+          "canCollect": true,
+          "smell": "It has that nasty smell of damp, old food and detergent."
+        },
+        "synonyms": [
+          "cloth",
+          "dish cloth",
+          "cleaning cloth"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "first aid kit",
+        "description": "first aid kit",
+        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "attributes": {
+          "defaultAction": "heal",
+          "weight": 1,
+          "type": "medical",
+          "canCollect": true,
+          "isBreakable": true,
+          "charges": 5,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "first aid",
+          "kit",
+          "firstaid kit",
+          "first-aid kit",
+          "first-aid"
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "lawyer-lobby",
     "displayName": "Lawyer's lobby",
     "description": "You're in the lobby of the resident law firm.<br>There's an air of bureaucracy, suits and books to the place.",
@@ -8484,7 +8795,14 @@
           "computer",
           "computers",
           "bay",
-          "hard drive bay"
+          "hard drive bay",
+          "rack",
+          "rack mounted",
+          "rack mounted blade",
+          "rack mounted blade server",
+          "rack-mounted",
+          "rack-mounted blade",
+          "rack-mounted blade server"
         ],
         "missions": [
           {
@@ -8509,7 +8827,7 @@
                 {
                   "name": "console",
                   "attributes": {
-                    "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'... ...'book of summ!£*_+g... ...sacri+}[@: souls open _^* gate'... ...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
+                    "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'...<br>...'book of summ!£*_+g...<br>...sacri+}[@: souls open _^* gate'...<br>...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br><br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
                   }
                 }
               ],
@@ -8534,7 +8852,13 @@
           "vdu",
           "screen",
           "old screen",
-          "old console"
+          "old console",
+          "old vdu console",
+          "old vdu",
+          "old fashioned vdu console",
+          "old fashioned vdu",
+          "old-fashioned vdu console",
+          "old-fashioned vdu"
         ]
       }
     ]
@@ -8577,14 +8901,20 @@
           "tools",
           "hardware",
           "wire",
-          "wires"
+          "wires",
+          "spare",
+          "spares",
+          "spare hardware",
+          "spare pieces",
+          "spare pieces of hardware",
+          "spare pieces hardware"
         ]
       },
       {
         "object": "artefact",
         "name": "screwdriver",
         "description": "large flat-headed screwdriver",
-        "detailedDescription": "Not much use for working on electronics but I'm sure it has other uses.",
+        "detailedDescription": "It's too large for working on electronics but I'm sure it has other uses.",
         "attributes": {
           "defaultAction": "open",
           "weight": 0.1,
@@ -8926,6 +9256,39 @@
           }
         ]
       }
+    ],
+    "missions": [
+      {
+        "object": "mission",
+        "name": "healbusvictims",
+        "displayName": "heal the survivors from the bus explosion",
+        "description": "Things just seem to be getting worse for you.<br>You need to save lives - fast. Time to triage and <i>heal</i>the wounded, I hope you've got a medical kit handy.",
+        "attributes": {
+          "parent": "partybus"
+        },
+        "failAttributes": {
+          "deathToll": {
+            "friendly": ">0"
+          }
+        },
+        "conditionAttributes": {
+          "bleedingCreatures": {
+            "friendly": 0
+          }
+        },
+        "reward": {
+          "score": 150,
+          "affinityModifier": 1,
+          "decreaseAffinityFor": "simon galbraith",
+          "message": "<br>Geat work. You managed to prevent any further loss of life.<br>The chain of near-fatal incidents is just too much to be a coincidence now though.<br><br>Mark ordered those buses. It's probably best to start with him."
+        },
+        "fail": {
+          "score": -100,
+          "affinityModifier": 2,
+          "increaseAffinityFor": "simon galbraith",
+          "message": "<br>You failed to save eveyone. They trusted you today and you've let them down.<br>Office fatalities in the software industry are pretty rare.<br><br>It's time you tried to redeem yourself and figure out what's going on.<br>Based on your poor performance so far there's a strong chance you'll struggle though."
+        }
+      }
     ]
   },
   {
@@ -8964,6 +9327,32 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "sofa",
+        "description": "curved, high-backed sofa",
+        "detailedDescription": "It's a large, comfy, and very solid-looking semicircular set of seats. There's room for about 5 people to sit on here.<br>It has high backs to allow for a team to have a decent conversation (or gaming session) without disturbing anyone nearby.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 300,
+          "type": "bed"
+        },
+        "synonyms": [
+          "chair",
+          "seat",
+          "curved sofa",
+          "high-backed sofa",
+          "high backed sofa",
+          "curved high-backed sofa",
+          "curved high backed sofa",
+          "curved, high backed sofa",
+          "curved, high-backed sofa",
+          "high sofa",
+          "high back sofa",
+          "high-back sofa",
+          "tall sofa"
+        ]
+      },
       {
         "object": "artefact",
         "name": "wall",
@@ -11130,7 +11519,7 @@
     "object": "location",
     "name": "sales-break-out",
     "displayName": "Sales area",
-    "description": "You're stood in a small break out area.",
+    "description": "You're stood in a small break out area. The area is dominated by a large sofa and TV.",
     "exits": [
       {
         "object": "exit",
@@ -11152,6 +11541,80 @@
         "direction": "w",
         "source": "sales-break-out",
         "destination": "sales-seating"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "tv",
+        "description": "giant TV screen",
+        "detailedDescription": "It's a huge 60 inch screen used solely for relaxing and gaming.",
+        "attributes": {
+          "weight": 51,
+          "switched": true,
+          "isOn": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "television",
+          "giant tv",
+          "giant screen",
+          "giant tv screen",
+          "flat panel",
+          "flat-panel screen",
+          "flat panel screen",
+          "monitor"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "sofa",
+        "description": "curved, high-backed sofa",
+        "detailedDescription": "It's a large, comfy, and very solid-looking semicircular set of seats. There's room for about 5 people to sit on here.<br>It has high backs to allow for a team to have a decent conversation (or gaming session) without disturbing anyone nearby.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 300,
+          "type": "bed"
+        },
+        "synonyms": [
+          "chair",
+          "seat",
+          "curved sofa",
+          "high-backed sofa",
+          "high backed sofa",
+          "curved high-backed sofa",
+          "curved high backed sofa",
+          "curved, high backed sofa",
+          "curved, high-backed sofa",
+          "high sofa",
+          "high back sofa",
+          "high-back sofa",
+          "tall sofa"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "xbox",
+        "description": "games console",
+        "detailedDescription": "Fancy a game of Forza?",
+        "attributes": {
+          "weight": 6,
+          "type": "treasure",
+          "canCollect": true,
+          "isBreakable": true,
+          "price": 30,
+          "customAction": "play",
+          "defaultResult": "Brum. Bruuuum. BRRRRUUUUUUM!<br>After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
+        },
+        "synonyms": [
+          "console",
+          "xbox 360",
+          "x-box",
+          "games console",
+          "game",
+          "forza",
+          "game of forza"
+        ]
       }
     ]
   },
@@ -11542,26 +12005,22 @@
       },
       {
         "object": "artefact",
-        "name": "xbox",
-        "description": "xbox 360",
-        "detailedDescription": "Fancy a game of Forza?",
+        "name": "chairs",
+        "description": "set of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
         "attributes": {
-          "weight": 6,
-          "type": "treasure",
-          "canCollect": true,
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
           "isBreakable": true,
-          "price": 30,
-          "customAction": "play",
-          "defaultResult": "Brum. Bruuuum. BRRRRUUUUUUM!<br>After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
         },
         "synonyms": [
-          "console",
-          "xbox 360",
-          "x-box",
-          "games console",
-          "game",
-          "forza",
-          "game of forza"
+          "chair"
         ]
       }
     ]
@@ -11968,107 +12427,6 @@
           "fire exit",
           "exit",
           "secure door"
-        ]
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "second-floor-kitchen",
-    "displayName": "Second floor kitchen",
-    "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "second-floor-kitchen",
-        "destination": "second-floor-seating-area-east"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "space",
-        "description": "space",
-        "detailedDescription": "You'll need to head to the downstairs kitchen if you want coffee now.",
-        "attributes": {
-          "type": "scenery",
-          "subType": "intangible",
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "The coffee machine is in the <i>ground floor</i> kitchen now."
-        },
-        "synonyms": [
-          "latte",
-          "coffee",
-          "machine",
-          "coffee machine space"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "whiteboard",
-        "description": "large whiteboard",
-        "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
-        "attributes": {
-          "weight": 30,
-          "type": "scenery",
-          "canDrawOn": true,
-          "writings": [
-            "Who scrubbed off my cactus?",
-            "That wasn't a cactus!",
-            "meh",
-            "Richard Mitchell"
-          ]
-        },
-        "synonyms": [
-          "board",
-          "white board",
-          "large white board",
-          "large whiteboard",
-          "whitebaord"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "cloth",
-        "description": "dishcloth",
-        "detailedDescription": "It's slightly damp but should clean things up.",
-        "attributes": {
-          "weight": 0.5,
-          "type": "tool",
-          "subType": "clean",
-          "canCollect": true,
-          "smell": "It has that nasty smell of damp, old food and detergent."
-        },
-        "synonyms": [
-          "cloth",
-          "dish cloth",
-          "cleaning cloth"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "first aid kit",
-        "description": "first aid kit",
-        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
-        "attributes": {
-          "defaultAction": "heal",
-          "weight": 1,
-          "type": "medical",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 5,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "first aid",
-          "kit",
-          "firstaid kit",
-          "first-aid kit",
-          "first-aid"
         ]
       }
     ]
@@ -12667,7 +13025,7 @@
         "longname": "North",
         "direction": "n",
         "source": "second-floor-seating-area-east",
-        "destination": "second-floor-kitchen"
+        "destination": "kitchen-second-floor"
       },
       {
         "object": "exit",
@@ -13208,7 +13566,8 @@
         "synonyms": [
           "jar",
           "marmite jar",
-          "plastic jar"
+          "plastic jar",
+          "jar of marmite"
         ],
         "inventory": [
           {
@@ -13228,8 +13587,6 @@
               "nutrition": 35
             },
             "synonyms": [
-              "jar",
-              "marmite jar",
               "food"
             ]
           }
@@ -13557,7 +13914,7 @@
     "object": "location",
     "name": "servery-north-west",
     "displayName": "Servery",
-    "description": "You're standing at the North-West end of the servery.<br>There's a wall full of postcards and a small kitchen area here.",
+    "description": "You're standing at the North-West corner of the servery. The walls here are decorated with postcards and photos.<br>This is the main thoroughfare for staff heading to and from the servery at lunchtimes.",
     "exits": [
       {
         "object": "exit",
@@ -13580,6 +13937,13 @@
         "direction": "w",
         "source": "servery-north-west",
         "destination": "customer-delight-east"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "servery-north-west",
+        "destination": "kitchen-first-floor"
       }
     ],
     "inventory": [
@@ -13618,16 +13982,23 @@
       {
         "object": "artefact",
         "name": "wall",
-        "description": "wall full of post cards",
-        "detailedDescription": "Poking through the cards on the wall, they generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.",
+        "description": "wall full of post cards and photos",
+        "detailedDescription": "You poke through the postcards interspersed with the photos. They generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.<br><br>You're tempted to take one of these to <i>give</i> to someone.",
         "attributes": {
           "weight": 280,
           "type": "scenery",
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "Taking just the one postcard was enough.",
           "canDrawOn": true
         },
         "synonyms": [
           "cards",
+          "photo",
+          "photos",
           "postcards",
+          "postcard",
           "post cards",
           "card wall",
           "walls"
@@ -13635,87 +14006,42 @@
       },
       {
         "object": "artefact",
-        "name": "first aid kit",
-        "description": "first aid kit",
-        "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+        "name": "photo",
+        "description": "photo",
+        "detailedDescription": "The photos are all full of people smiling and enjoying themselves.<br>Even from the short time you've been here, you now recognise a few of the faces here.",
         "attributes": {
-          "defaultAction": "heal",
-          "weight": 1,
-          "type": "medical",
-          "canCollect": true,
-          "isBreakable": true,
-          "charges": 5,
+          "defaultAction": "read",
+          "hidden": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "These are part of Redgate's 'Memory wall'. They're here to look at and enjoy, not to mess with.",
           "canDrawOn": true
         },
         "synonyms": [
-          "first aid",
-          "kit",
-          "firstaid kit",
-          "first-aid kit",
-          "first-aid"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "bowl",
-        "description": "bowl",
-        "detailedDescription": "It's a round, china cereal bowl.",
-        "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
-          "attackStrength": 1,
-          "type": "container",
-          "holdsLiquid": true,
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0
-        },
-        "synonyms": [
-          "cereal bowl"
-        ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "shreddies",
-            "description": "shreddies",
-            "detailedDescription": "Shreddies... 'Cereal in the daytime?!' wow, I've never had that before.",
-            "attributes": {
-              "weight": 0.5,
-              "type": "food",
-              "requiresContainer": true,
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 20
-            },
-            "synonyms": [
-              "food",
-              "cereal",
-              "shreddies"
-            ]
-          }
+          "photo",
+          "photograph",
+          "faces"
         ]
       },
       {
         "object": "artefact",
         "name": "postcard",
         "description": "thankyou postcard",
-        "detailedDescription": "Someone's written a message on it.",
+        "detailedDescription": "Someone's written a message on this one.",
         "attributes": {
           "defaultAction": "read",
           "type": "book",
           "canCollect": true,
           "affinityModifier": 3,
-          "defaultResult": "It says thanks for being great! (there are loads of others with similar thank-yous).<br>I reckon you could <i>give</i> this to someone and make their day.",
+          "hidden": true,
+          "defaultResult": "It says thanks for being great! (isn't that nice). There are loads of others with similar thank-yous on them.<br>I reckon you could <i>give</i> this to someone to let them know they're appreciated.",
           "canDrawOn": true
         },
         "synonyms": [
           "card",
           "post-card",
           "post card",
-          "wall",
           "thankyou postcard",
           "thankyou card",
           "thank-you card",

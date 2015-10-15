@@ -2,7 +2,7 @@
     "object": "location",
     "name": "first-floor-landing-east",
     "displayName": "First floor landing",
-    "description": "You're at the East end of the first floor landing.<br>Through the window to the East you can often see the sales team relaxing and playing on an XBox.",
+    "description": "You're at the East end of the first floor landing.<br>Through the nearby window you can often see some of the sales team relaxing.",
     "exits": [
       {
         "object": "exit",

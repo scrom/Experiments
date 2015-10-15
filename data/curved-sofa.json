@@ -1,0 +1,28 @@
+﻿{
+"object": "artefact",
+"name": "sofa",
+"description": "curved, high-backed sofa",
+"detailedDescription": "It's a large, comfy, and very solid-looking semicircular set of seats. There's room for about 5 people to sit on here.<br>It has high backs to allow for a team to have a decent conversation (or gaming session) without disturbing anyone nearby.",
+"attributes": {
+    "defaultAction": "rest",
+    "weight": 300,
+    "type": "bed",
+    "isBreakable": false
+},
+"synonyms": [
+  "chair",
+  "seat",
+  "curved sofa",
+  "high-backed sofa",
+  "high backed sofa",
+  "curved high-backed sofa",
+  "curved high backed sofa",
+  "curved, high backed sofa",
+  "curved, high-backed sofa",
+  "high sofa",
+  "high back sofa",
+  "high-back sofa",
+  "tall sofa"
+
+]
+}

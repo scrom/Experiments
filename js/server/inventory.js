@@ -218,11 +218,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return self.canCarry(anObject);
         };
         
-        self.getLiquid = function () {
+        self.getLiquidOrPowder = function () {
             //as opposed to "hasLiquid".
             //only explore items directly in this inventory, no nested items.
             for (var i = 0; i < _items.length; i++) {
-                if (_items[i].isLiquid()) { return _items[i];};
+                if (_items[i].isLiquid()) { return _items[i]; };
+                if (_items[i].isPowder()) { return _items[i]; };
             };
             return null;
         };
@@ -447,9 +448,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (matchedItem) {
                     return matchedItem;
                 };
+                
+                //we use this multiple times - minor optimisation.
+                var itemType = _items[index].getType();
 
                 ////
-                if (_items[index].getType() != 'creature') {
+                if (itemType != 'creature') {
                     //just retrieve positioned objects from artefacts
                     //doesn't retrieve items hidden by creatures
                     //this section doesn't check custom actions at the moment - pretty sure that's a bug.
@@ -467,25 +471,14 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 };
                
                 ////                
-                if (_items[index].getType() == 'creature' && !searchCreatures) {
+                if (itemType == 'creature' && !searchCreatures) {
                     //if we won't search creatures
                     continue;
                 };
 
-                if (_items[index].getType() != 'creature' &&_items[index].isLocked() ) {
+                if (itemType != 'creature' &&_items[index].isLocked() ) {
                     //if we've got this far we can't look in locked artefacts
                     continue;
-                };
-                
-                //we're searching creatures - check creature sales inventory
-                if (_items[index].getType() == 'creature') {
-                    var salesInventory = _items[index].getSalesInventoryObject();
-                    if (salesInventory) {
-                        var salesObject = salesInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
-                        if (salesObject) {
-                            return salesObject;
-                        };
-                    };
                 };
                 
                 ////
@@ -500,6 +493,18 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         return heldObject;
                     };                     
                 };
+                
+                //we're searching creatures - check creature sales inventory
+                if (itemType == 'creature') {
+                    var salesInventory = _items[index].getSalesInventoryObject();
+                    if (salesInventory) {
+                        var salesObject = salesInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
+                        if (salesObject) {
+                            return salesObject;
+                        };
+                    };
+                };
+
            };
            return null;
         };
@@ -701,6 +706,22 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 };
            };
            return returnObjects;
+        };
+        
+        self.getOwnerFor = function (anObjectName) {
+            for (var index = _items.length - 1; index >= 0; index--) {
+                if (_items[index].getType() == "creature") {
+                    continue;
+                };
+                if (_items[index].contains(anObjectName)) {
+                    //check it's not nested futher.
+                    var nestedInventory = _items[index].getInventoryObject();
+                    var owner = nestedInventory.getOwnerFor(anObjectName);
+                    if (owner) { return owner };
+                    return _items[index];
+                };
+            };
+            return null;
         };
 
         self.getSuitableContainer = function(anObject) {

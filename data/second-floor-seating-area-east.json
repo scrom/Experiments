@@ -9,7 +9,7 @@
         "longname": "North",
         "direction": "n",
         "source": "second-floor-seating-area-east",
-        "destination": "second-floor-kitchen"
+        "destination": "kitchen-second-floor"
       },
       {
         "object": "exit",

@@ -1868,6 +1868,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.removeObject = function(anObjectName) {
             return _inventory.remove(anObjectName);
         };
+        
+        self.getInventorySize = function (countHiddenObjects) {
+            return _inventory.size(countHiddenObjects);
+        };
+        
+        self.contains = function (anObjectName) {
+            //console.log("checking inventory for "+anObjectName);
+            return _inventory.check(anObjectName);
+        };
 
         self.listHiddenObjects = function(position, location) {
             return _inventory.listHiddenObjects(position, location);
@@ -2170,7 +2179,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _hitPoints -= pointsToRemove;
             return _hitPoints;
         };
-
+               
+        self.isBleeding = function () {
+            return _bleeding;
+        };
         
         self.heal = function(medicalArtefact, healer) {
             if (_hitPoints >= _maxHitPoints-1) { return tools.initCap(self.getPrefix())+" doesn't need healing.";};
@@ -3417,7 +3429,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 if (randomInt == 0) {
                                     slipString =".";
                                 } else if (randomInt <= (Math.floor(slippy*1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
-                                    slipString = " and slips on the wet floor."
+                                    slipString = " and slips on the mess on the floor."
                                     var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage you receive - up to a limit.
                                     self.decreaseAffinity(Math.floor(slippy/2)); //may decrease affinity
                                     var deadString = self.hurt(damage); 

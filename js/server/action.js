@@ -218,7 +218,7 @@ exports.Action = function Action(player, map, fileManager) {
             //attempt action (note this catches errors from bugs)
             try {
                 //user commands
-                switch(_verb) {
+                switch (_verb) {
                     case '':
                         _ticks = 0;
                         description = "Sorry, I didn't hear you there. ";
@@ -230,7 +230,7 @@ exports.Action = function Action(player, map, fileManager) {
                         //need to ensure navigation still works with this one so only respond if there's words other than "i".
                         if (_object0 || _object1) {
                             if (_inConversationWith) {
-                                description = _player.say('say', _actionString,_inConversationWith, _map);
+                                description = _player.say('say', _actionString, _inConversationWith, _map);
                                 _player.setLastVerbUsed('say');
                             } else {
                                 _ticks = 0;
@@ -243,7 +243,7 @@ exports.Action = function Action(player, map, fileManager) {
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(true, _map);
                             } else {
-                                description = _player.say('say', _actionString,_inConversationWith, _map);
+                                description = _player.say('say', _actionString, _inConversationWith, _map);
                                 _player.setLastVerbUsed('say');
                             };
                         } else {
@@ -253,7 +253,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'oh':
                         if (_inConversationWith) {
-                            description = _player.say('say', _actionString,_inConversationWith, _map);
+                            description = _player.say('say', _actionString, _inConversationWith, _map);
                             _player.setLastVerbUsed('say');
                         } else {
                             _ticks = 0;
@@ -263,7 +263,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'thankyou':
                     case 'thanks':
                         if (_inConversationWith) {
-                            description = _player.say('say', _actionString,_inConversationWith, _map);
+                            description = _player.say('say', _actionString, _inConversationWith, _map);
                             _player.setLastVerbUsed('say');
                         } else {
                             _ticks = 0;
@@ -271,32 +271,32 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'n':
-                            if (_inConversationWith && _awaitingPlayerAnswer) {
-                                description = _player.confirmOrDecline(false, _map);
-                                if (tools.stringIsEmpty(description)) {
-                                    description = _player.say('say', _actionString,_inConversationWith, _map);
-                                    _player.setLastVerbUsed('say');
-                                };
+                        if (_inConversationWith && _awaitingPlayerAnswer) {
+                            description = _player.confirmOrDecline(false, _map);
+                            if (tools.stringIsEmpty(description)) {
+                                description = _player.say('say', _actionString, _inConversationWith, _map);
+                                _player.setLastVerbUsed('say');
                             };
-                            //if not in conversation and expecting a reply, they're navigating.
+                        };
+                        //if not in conversation and expecting a reply, they're navigating.
                         break;
                     case 'no':
                         if (_inConversationWith) {
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(false, _map);
                                 if (tools.stringIsEmpty(description)) {
-                                    description = _player.say('say', _actionString,_inConversationWith, _map);
+                                    description = _player.say('say', _actionString, _inConversationWith, _map);
                                     _player.setLastVerbUsed('say');
                                 };
                             } else {
-                                description = _player.say('say', _actionString,_inConversationWith, _map);
+                                description = _player.say('say', _actionString, _inConversationWith, _map);
                                 _player.setLastVerbUsed('say');
                             };
                         } else {
                             _ticks = 0;
                             if (_awaitingPlayerAnswer == true) {
                                 description = "Meh. OK.";
-                                _awaitingPlayerAnswer = false;                            
+                                _awaitingPlayerAnswer = false;
                             } else {
                                 description = "Are you arguing with me?";
                                 _awaitingPlayerAnswer = true;
@@ -305,22 +305,22 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'y':
                         _verb = "yes";
-                        _actionString = _verb+_actionString.substr(1);
+                        _actionString = _verb + _actionString.substr(1);
                     case 'yes':
                         if (_inConversationWith) {
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(true, _map);
                             } else {
-                                description = _player.say('say', _actionString,_inConversationWith, _map);
+                                description = _player.say('say', _actionString, _inConversationWith, _map);
                                 _player.setLastVerbUsed('say');
                             };
                         } else {
                             _ticks = 0;
                             if (_awaitingPlayerAnswer == true) {
-                                var randomReplies = ["Are you sure about that?","Let's do this!", "OK.", "Really?", "Good for you!", "I'm not sure what else I can do for you right now. Let's just move on."];
+                                var randomReplies = ["Are you sure about that?", "Let's do this!", "OK.", "Really?", "Good for you!", "I'm not sure what else I can do for you right now. Let's just move on."];
                                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                                description =  randomReplies[randomIndex];
-                                _awaitingPlayerAnswer = false;                            
+                                description = randomReplies[randomIndex];
+                                _awaitingPlayerAnswer = false;
                             } else {
                                 description = "I'm sorry, I hadn't realised I asked you a question. Let's just get on with things shall we?";
                                 _awaitingPlayerAnswer = false;
@@ -329,29 +329,34 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'help':
                         _ticks = 0;
-                        if (_failCount >=3) {
+                        if (_failCount >= 3) {
                             _failCount = 0;
                             description = "It looks like you're still struggling to be understood. Here's some help for you...<br>";
                         } else {
                             description = "Stuck already? Ok...";
                         };
-                        description += "<br> I accept basic commands to move e.g. <i>'north','south','up','in'</i> etc.<br>"+
-                                        "You can interact with objects and creatures by supplying a <i>verb</i> and the <i>name</i> of the object or creature. e.g. <i>'get sword'</i> or <i>'eat apple'</i>.<br>"+
-                                        "You can also <i>'use'</i> objects on others (and creatures) e.g. <i>'give sword to farmer'</i>, <i>'hit door with sword'</i> or <i>'put key in box'</i>.<br>"+
-                                        "<br>Two of the most useful verbs to remember are <i>'look'</i> and <i>'examine'</i>.<br>"+
-                                        "In general I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy something more than a minimum viable adventure.<br>"+
-                                        "<br>To find out more about how you're doing, try <i>'stats'</i> or <i>'status'</i><br>"+  
-                                        "In many cases, your positive or negative interactions within the game may impact how others respond to you, use this knowledge wisely.<br>"+
-                                        "<br>You can save your progress by entering <i>'save'</i>.<br>You can return to a previously saved point from <i>this</i> session by simply typing <i>restore</i><br>You can load a previously saved game by entering '<i>load filename-x</i>' (where <i>filename-x</i> is the name of your previously saved game file.)<br>"+
-                                        "If you've really had enough of playing, you can enter <i>quit</i> to exit the game (without saving).<br>";                             
+                        description += "<br> I accept basic commands to move e.g. <i>'north','south','up','in'</i> etc.<br>" +
+                                        "You can interact with objects and creatures by supplying a <i>verb</i> and the <i>name</i> of the object or creature. e.g. <i>'get sword'</i> or <i>'eat apple'</i>.<br>" +
+                                        "You can also <i>'use'</i> objects on others (and creatures) e.g. <i>'give sword to farmer'</i>, <i>'hit door with sword'</i> or <i>'put key in box'</i>.<br>" +
+                                        "<br>Two of the most useful verbs to remember are <i>'look'</i> and <i>'examine'</i>.<br>" +
+                                        "In general I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy something more than a minimum viable adventure.<br>" +
+                                        "<br>To find out more about how you're doing, try <i>'stats'</i> or <i>'status'</i><br>" +  
+                                        "In many cases, your positive or negative interactions within the game may impact how others respond to you, use this knowledge wisely.<br>" +
+                                        "<br>You can save your progress by entering <i>'save'</i>.<br>You can return to a previously saved point from <i>this</i> session by simply typing <i>restore</i><br>You can load a previously saved game by entering '<i>load filename-x</i>' (where <i>filename-x</i> is the name of your previously saved game file.)<br>" +
+                                        "If you've really had enough of playing, you can enter <i>quit</i> to exit the game (without saving).<br>";
                         break;
                     case 'map':
                         _ticks = 0;
                         description = "Oh dear, are you lost? This is a text adventure you know.<br>Time to get some graph paper, a pencil and start drawing!";
                         break;
+                    case 'triage':
                     case 'health':
-                        _ticks = 0;
-                        description = _player.health();
+                        if (_object0) {
+                            description = _player.checkCreatureHealth(_object0);
+                        } else {
+                            _ticks = 0;
+                            description = _player.health();
+                        };
                         break;
                     case 'heal':
                         description = _player.healCharacter(_object0);
@@ -388,10 +393,13 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'peer':
                         //trap a few junk words - will return "look" with no object. 
                         var junkWords = ["exits", "objects", "artefacts", "creatures", "artifacts"]
-                        if (junkWords.indexOf(_object0) > -1) {_object0 = null;};
-                        
-                        //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
-                        if (_object1) {
+                        if (junkWords.indexOf(_object0) > -1) { _object0 = null; };
+                        if (_object0 && _object1) {
+                            //e.g. "examine sugar in cup"
+                            description = _player.examine(_verb, _object0, _object1, _map);
+                        } else if (_object1) {
+                            //if player enters "look at x", we'll have an object 1 (but no object 0). in this case we'll "examine" instead.
+
                             var positionIndex = tools.positions.indexOf(_splitWord);
                             if ((positionIndex > -1) ||(_adverb == "closely" || _adverb == "carefully")) {
                                 //support "look under", "look behind" and "look in" etc.
@@ -399,15 +407,15 @@ exports.Action = function Action(player, map, fileManager) {
                                 if (positionIndex == -1) { _ticks = 3; }; //full search takes longer
                                 
                                 if ((_verb == "stare" ||_verb == "look" || _verb == "peer") && _splitWord == "over") {
-                                    description = _player.examine(_verb + " " + _splitWord, _object1, _map);
+                                    description = _player.examine(_verb + " " + _splitWord, _object1, null, _map);
                                 } else {
                                     description = _player.search(_verb, _object1, _splitWord, tools.positions);
                                 };
                             } else {
-                                description = _player.examine(_verb+" "+_splitWord,_object1, _map);
+                                description = _player.examine(_verb+" "+_splitWord, _object1, null, _map);
                             };
                         } else {
-                            description = _player.examine(_verb, _object0, _map);
+                            description = _player.examine(_verb, _object0, null, _map);
                         };
                         break;  
                     case 'where':    
@@ -444,14 +452,17 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examien':
                     case 'browse':
                         _player.setLastVerbUsed('examine');
-                        if ((tools.positions.indexOf(_splitWord) > -1)) {
+                        if (_object0 && _object1) {
+                            //e.g. "examine sugar in cup"
+                            description = _player.examine(_verb, _object0, _object1, _map);
+                        } else if (tools.positions.indexOf(_splitWord) > -1) {
                             //support "examine under", "examine behind" and "examine in" etc.
                             description = _player.search(_verb, _object1, _splitWord, tools.positions);
                         } else if (_adverb == "closely" || _adverb == "carefully") {
                             _ticks = 3; //full search takes longer
                             description = _player.search(_verb, _object0, _splitWord, tools.positions);
                         } else {
-                            description = _player.examine(_verb, _object0, _map);
+                            description = _player.examine(_verb, _object0, null, _map);
                         };
                         break;  
                     case 'rest':
@@ -1071,6 +1082,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'clear':
                     case 'wipe':
+                    case 'scrub':
                     case 'clean':
                         if (_object1) {
                             //clean x from y
@@ -1265,6 +1277,10 @@ exports.Action = function Action(player, map, fileManager) {
                     };
                     return "cannot kill "+_object0;               
                 };
+                
+                if (_verb == '+die') {
+                    return _player.kill();
+                };
 
                 if (_verb == '+attrib') {
                     var item;
@@ -1423,7 +1439,13 @@ exports.Action = function Action(player, map, fileManager) {
   
         self.act = function(anActionString) {
             var description = "";
-            var imageName;          
+            var imageName;
+                       
+            if (_player.isDead()) {
+                description = "You're dead. Game over.<br>There's nothing more you can do here.<br><br>You either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
+                //we're done processing, build the results...
+                return returnResultAsJson(description, imageName);
+            };     
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);

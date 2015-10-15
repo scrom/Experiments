@@ -2,7 +2,7 @@
     "object": "location",
     "name": "sales-break-out",
     "displayName": "Sales area",
-    "description": "You're stood in a small break out area.",
+    "description": "You're stood in a small break out area. The area is dominated by a large sofa and TV.",
     "exits": [
       {
         "object": "exit",
@@ -24,6 +24,50 @@
         "direction": "w",
         "source": "sales-break-out",
         "destination": "sales-seating"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "tv",
+        "template": "flat-screen",
+        "description": "giant TV screen",
+        "detailedDescription": "It's a huge 60 inch screen used solely for relaxing and gaming.",
+        "attributes": {
+          "type": "junk",
+          "isBreakable": false
+        },
+        "synonyms": [
+          "television",
+          "giant tv",
+          "giant screen",
+          "giant tv screen"
+        ]
+      },
+      { "file": "curved-sofa" },
+      {
+        "object": "artefact",
+        "name": "xbox",
+        "description": "games console",
+        "detailedDescription": "Fancy a game of Forza?",
+        "attributes": {
+          "weight": 6,
+          "type": "treasure",
+          "canCollect": true,
+          "isBreakable": true,
+          "price": 30,
+          "customAction": "play",
+          "defaultResult": "Brum. Bruuuum. BRRRRUUUUUUM!<br>After a few minutes of button-mashing you think it's probably time to go and do something useful instead."
+        },
+        "synonyms": [
+          "console",
+          "xbox 360",
+          "x-box",
+          "games console",
+          "game",
+          "forza",
+          "game of forza"
+        ]
       }
     ]
   }

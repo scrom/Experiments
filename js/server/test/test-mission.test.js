@@ -430,12 +430,13 @@ exports.canGainStealthAttributeFromReadBookMission.meta = { traits: ["Mission Te
 
 exports.canCompletePartyBusMission = function (test) {
     var missionOwner = m0.getCreature('mark wightman');
+    var atrium = m0.getLocation("atrium");
     var missions = missionOwner.getMissions(true);
-    var missions;
+    missions = missions.concat(atrium.getMissions(true));
     var mission;
     var preMission;
     for (var i = 0; i < missions.length; i++) {
-        if (missions[i].getName() == "partytime") {
+        if (missions[i].getName() == "partybusprep") {
             preMission = missions[i];
         };
         if (missions[i].getName() == "partybus") {
@@ -443,9 +444,9 @@ exports.canCompletePartyBusMission = function (test) {
         };
     };
     
+    p0.addMission(mission);
+    
     preMission.clearParent();
-    console.log(preMission.getNextDialogue('y', 'y'));
-    console.log(preMission.getNextDialogue('y', 'y'));
     console.log(preMission.getNextDialogue('y', 'y'));
     var reward = preMission.checkState(p0, m0);
     console.log(preMission.processReward(m0, reward, p0));
@@ -463,7 +464,7 @@ exports.canCompletePartyBusMission = function (test) {
     reward = mission.checkState(p0, m0);
     var resultString = reward.message;
     
-    var expectedResult = "<br>Oh no! The party bus is leaving and you haven't got enough people on board!<br>Well that's your crowning glory failed.<br><br>You rush out to try and salvage your efforts.<br>As the bus pulls away you see a lick of flame through the windows.<br>Something's wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!";
+    var expectedResult = "<br>Oh no, you're out of time!<br>The party bus is leaving and you haven't got enough people on board.<br><br>You rush out to try and salvage your efforts.<br>As you recover your breath outside and the bus pulls away you see a lick of flame through the windows.<br>Something's very wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
@@ -477,12 +478,13 @@ exports.canCompletePartyBusMission.meta = { traits: ["Mission Test", "Mission Co
 
 exports.canFailPartyBusMission = function (test) {
     var missionOwner = m0.getCreature('mark wightman');
+    var atrium = m0.getLocation("atrium");
     var missions = missionOwner.getMissions(true);
-    var missions;
+    missions = missions.concat(atrium.getMissions(true));
     var mission;
     var preMission;
     for (var i = 0; i < missions.length; i++) {
-        if (missions[i].getName() == "partytime") {
+        if (missions[i].getName() == "partybusprep") {
             preMission = missions[i];
         };
         if (missions[i].getName() == "partybus") {
@@ -490,13 +492,13 @@ exports.canFailPartyBusMission = function (test) {
         };
     };
     
+    p0.addMission(mission);
+    
     preMission.clearParent();
-    console.log(preMission.getNextDialogue('y','y'));
-    console.log(preMission.getNextDialogue('y', 'y'));
     console.log(preMission.getNextDialogue('y', 'y'));
     var reward = preMission.checkState(p0, m0);
     console.log(preMission.processReward(m0, reward, p0));
-
+    
     //make the party mission completeable
     mission.clearParent();
     console.log(mission.getNextDialogue('y', 'y'));  
@@ -509,12 +511,12 @@ exports.canFailPartyBusMission = function (test) {
         creatures[i].go("", location);
         if (i==7) { break;} //we need 8 creatures to complete mission
     };
-    p0.setLocation(location); //player must be in location
+    p0.setLocation(atrium); //player must be in location
     //spy.kill();
     reward = mission.checkState(p0, m0);
     var resultString = reward.message;
     
-    var expectedResult = "<br><br>Congratulations, you're doing great at getting the bus loaded.<br>It's hard work herding people around here.<br><br>You step out to check for stragglers but as you look back you see a lick of flame through the bus windows.<br>Something's wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.";
+    var expectedResult = "<br><br>It looks like you're doing well at getting people onto the bus. Great job!<br>It's often hard work herding people around here.<br><br>You dash out to the front of the office to check for stragglers and as you recover your breath you smell smoke on the air.<br>Something's very wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.";
     var actualResult = resultString
     
     mission.processReward(m0, reward, p0);
@@ -531,46 +533,42 @@ exports.canFailPartyBusMission.meta = { traits: ["Mission Test", "Mission Comple
 
 exports.completingPartyBusMissionTeleportsPlayer = function (test) {
     var missionOwner = m0.getCreature('mark wightman');
+    var atrium = m0.getLocation("atrium");
     var missions = missionOwner.getMissions(true);
-    var missions;
+    missions = missions.concat(atrium.getMissions(true));
     var mission;
     var preMission;
     for (var i = 0; i < missions.length; i++) {
-        if (missions[i].getName() == "partytime") {
+        if (missions[i].getName() == "partybusprep") {
             preMission = missions[i];
-        }        ;
+        };
         if (missions[i].getName() == "partybus") {
             mission = missions[i];
-        }        ;
-    }    ;
+        };
+    };
+    
+    p0.addMission(mission);
     
     preMission.clearParent();
-    console.log(preMission.getNextDialogue('y', 'y'));
-    console.log(preMission.getNextDialogue('y', 'y'));
     console.log(preMission.getNextDialogue('y', 'y'));
     var reward = preMission.checkState(p0, m0);
     console.log(preMission.processReward(m0, reward, p0));
     
     //make the party mission completeable
     mission.clearParent();
-    console.log(mission.getNextDialogue('y', 'y'));
     mission.startTimer();
-    mission.addTicks(150);
+    mission.addTicks(250);
     var creatures = m0.getAllCreatures();
     var location = m0.getLocation("bus");
     console.log(location.getName());
-    for (var i = 0; i < creatures.length; i++) {
-        creatures[i].go("", location);
-        if (i == 7) { break; } //we need 8 creatures to complete mission
-    }    ;
-    p0.setLocation(location); //player must be in location
+    p0.setLocation(atrium); //player must be in location
     //spy.kill();
     reward = mission.checkState(p0, m0);
     
     mission.processReward(m0, reward, p0);
     var resultString = p0.examine("look", "", m0);
     
-    var expectedResult = "You're standing outside the front of the Red Gate offices. The weather has turned grey, damp and miserable. A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up. You can't shake the feeling something is deeply wrong here.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
+    var expectedResult = "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
     var actualResult = resultString
     
     //if (result) {actualResult = true;};
@@ -583,24 +581,83 @@ exports.completingPartyBusMissionTeleportsPlayer = function (test) {
 exports.completingPartyBusMissionTeleportsPlayer.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "Teleport Trait"], description: "Test that party bus mission can be successfully completed and player location is changed." };
 
 
-exports.completingPartyBusMissionKillsNPCs = function (test) {
+exports.completingPartyBusMissionInjuresNPCs = function (test) {
     var missionOwner = m0.getCreature('mark wightman');
+    var atrium = m0.getLocation("atrium");
     var missions = missionOwner.getMissions(true);
-    var missions;
+    missions = missions.concat(atrium.getMissions(true));
     var mission;
     var preMission;
     for (var i = 0; i < missions.length; i++) {
-        if (missions[i].getName() == "partytime") {
+        if (missions[i].getName() == "partybusprep") {
             preMission = missions[i];
-        }        ;
+        };
         if (missions[i].getName() == "partybus") {
             mission = missions[i];
-        }        ;
-    }    ;
+        };
+    };
+    
+    p0.addMission(mission);
     
     preMission.clearParent();
     console.log(preMission.getNextDialogue('y', 'y'));
-    console.log(preMission.getNextDialogue('y', 'y'));
+    var reward = preMission.checkState(p0, m0);
+    console.log(preMission.processReward(m0, reward, p0));
+  
+    //make the party mission completeable
+    mission.clearParent();
+    console.log(mission.getNextDialogue('y', 'y'));
+    mission.startTimer();
+    mission.addTicks(250);
+    var creatures = m0.getAllCreatures();
+    var location = m0.getLocation("bus");
+    var locationCreatures = [];
+    console.log(location.getName());
+    for (var i = 0; i < creatures.length; i++) {
+        creatures[i].go("", location);
+        locationCreatures.push(creatures[i]);
+        if (i == 5) { break; } //not enough to fail! we need 8 creatures to complete mission
+    };
+    p0.setLocation(location); //player must be in location
+
+    reward = mission.checkState(p0, m0);
+    
+    mission.processReward(m0, reward, p0);
+
+    var resultString = "Creature[3]: " + locationCreatures[3].health();
+    
+    var expectedResult = "Creature[3]: He's really not in good shape.";
+    var actualResult = resultString
+    
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.completingPartyBusMissionInjuresNPCs.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "ModifyLocationCreature Trait"], description: "Test that party bus mission can be successfully completed and death toll is set." };
+
+
+exports.failingPartyBusMissionKillsNPCs = function (test) {
+    var missionOwner = m0.getCreature('mark wightman');
+    var atrium = m0.getLocation("atrium");
+    var missions = missionOwner.getMissions(true);
+    missions = missions.concat(atrium.getMissions(true));
+    var mission;
+    var preMission;
+    for (var i = 0; i < missions.length; i++) {
+        if (missions[i].getName() == "partybusprep") {
+            preMission = missions[i];
+        };
+        if (missions[i].getName() == "partybus") {
+            mission = missions[i];
+        };
+    };
+    
+    p0.addMission(mission);
+    
+    preMission.clearParent();
     console.log(preMission.getNextDialogue('y', 'y'));
     var reward = preMission.checkState(p0, m0);
     console.log(preMission.processReward(m0, reward, p0));
@@ -615,7 +672,7 @@ exports.completingPartyBusMissionKillsNPCs = function (test) {
     console.log(location.getName());
     for (var i = 0; i < creatures.length; i++) {
         creatures[i].go("", location);
-        if (i == 7) { break; } //we need 8 creatures to complete mission
+        if (i == 7) { break; } //we need 8 creatures to fail mission
     }    ;
     p0.setLocation(location); //player must be in location
     //spy.kill();
@@ -634,7 +691,7 @@ exports.completingPartyBusMissionKillsNPCs = function (test) {
     test.done();
 };
 
-exports.completingPartyBusMissionKillsNPCs.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait", "Death Toll Trait"], description: "Test that party bus mission can be successfully completed and death toll is set." };
+exports.failingPartyBusMissionKillsNPCs.meta = { traits: ["Mission Test", "Mission Fail Trait", "Mission Check Trait", "Death Toll Trait"], description: "Test that party bus mission can be successfully completed and death toll is set." };
 
 
 exports.canCompleteKillSpyMission = function (test) {

@@ -167,7 +167,7 @@
                                 "read": true
                             },
                             "reward": {
-                                "message": "I'm sure you'll never need to know any of this, right?"
+                                "message": "<br>I'm sure you'll never need to know any of this, right?"
                             }
                         }
                     ]

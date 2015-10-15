@@ -229,7 +229,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "<br>You manage to gather up "+artefact.getPossessiveSuffix()+" "+remaining+""+contents+"."
         };
 
-        var notFoundMessage = function(objectName) {
+        var notFoundMessage = function(objectName, container) {
             //one last check - is there a spilled liquid we're trying to get?
             if (_currentLocation.spilledLiquidExists(objectName) || _inventory.hasLiquid(objectName)) {
                 return "There's not enough left to do anything useful with.";
@@ -261,7 +261,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "It's just some idle scrawl. Nothing you can do much with.";
             };
             
-            var randomReplies = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
+            var randomReplies;
+            if (container) {
+                if (container == "inventory") {
+                    randomReplies = ["You're not carrying any " + objectName + ".", "You'll need to try somewhere (or someone) else for that.", "You don't have any " + objectName + " to hand right now."];
+                } else if (container == "location") {
+                    randomReplies = ["You can't see any " + objectName + " around here.", "There's no sign of any " + objectName + " nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that."];
+                } else if (typeof container == "object"){
+                    randomReplies = ["There's no " + objectName + " in " + container.getDisplayName() + ".", "You can't see any " + objectName + " in " + container.getDisplayName() + ".", "There's no sign of any " + objectName + " in " + container.getDisplayName() + ". You'll probably need to look elsewhere.", "There's no " + objectName + " in " + container.getDisplayName() + " at the moment."];
+                };
+            };
+            
+            if (!randomReplies) {
+                randomReplies = ["There's no " + objectName + " here and you're not carrying any either.", "You can't see any " + objectName + " around here.", "There's no sign of any " + objectName + " nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no " + objectName + " available here at the moment."];
+            };
+            
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
             return randomReplies[randomIndex];
         };
@@ -2311,29 +2325,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             artefact.hide();
                             return "You "+verb+" "+artefact.getDisplayName()+" in "+receiver.getDisplayName()+".";
                         } else {
-                            return artefact.getDescriptivePrefix()+" already hidden.";
+                            return tools.initCap(artefact.getDescriptivePrefix())+" already hidden.";
                         };
                     } else {
-                        return artefact.getDescriptivePrefix()+" already in "+receiver.getDisplayName()+".";
+                        return tools.initCap(artefact.getDescriptivePrefix())+" already in "+receiver.getDisplayName()+".";
                     };
                 }; 
                     
-                if (artefact.isLiquid()||artefact.isPowder()) {
-                    //@todo - should really trap if the liquid/powder was *not* in a container prior to this
-                    var artefactChargesRemaining = artefact.consume();
-                    if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
-                    if (artefact.isLiquid()) { //not a creature by this point
-                    if (receiver.syn("floor")) {
-                        _currentLocation.addLiquid(artefactName)
-                    } else {
-                        receiver.addLiquid(artefactName);
-                    };
-
-                    if (artefactName == "blood") {
-                        return "Hmm. You're a bit sick aren't you.<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
-                    } else{
-                        return "It seems a bit wasteful if you ask me but it's your call...<br>You pour "+artefactName+" over "+receiver.getDisplayName()+".";
-                    };
+                if (artefact.isLiquid() || artefact.isPowder()) {
+                    //if receiver is liquid or powder it would have combined at this point. Therefore only "waste" if adding to a solid.
+                    if (!receiver.isLiquid() && !receiver.isPowder()) {
+                        //@todo - should really trap if the liquid/powder was *not* in a container prior to this
+                        var artefactChargesRemaining = artefact.consume();
+                        if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName); };
+                        if (receiver.syn("floor")) {
+                            _currentLocation.addLiquid(artefactName)
+                        } else {
+                            receiver.addLiquid(artefactName);
+                        };
+                        
+                        if (artefactName == "blood") {
+                            return "Hmm. You're a bit sick aren't you.<br>You pour " + artefactName + " over " + receiver.getDisplayName() + ".";
+                        } else {
+                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour " + artefactName + " over " + receiver.getDisplayName() + ".";
+                        };
                     };
                 };                   
                     
@@ -2364,11 +2379,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //console.log("collecting from location");
                 //try location first
                 collectedArtefact = getObjectFromLocation(artefactName);
+
             };
             if (!(collectedArtefact)) {
-                collectedArtefact = getObjectFromPlayerOrLocation(artefactName);
+                collectedArtefact = getObjectFromPlayer(artefactName);
             };
-            if (!(collectedArtefact)) { return "XXSorry, " + artefact.getSuffix() + " can't be picked up."; };
+            if (!(collectedArtefact)) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
+            
+            //track where we took the item from in case we need to return it (quite common)
+            var originalInventory;
+            var originalContainer;
+            if (objectIsInLocation) {
+                originalInventory = _currentLocation.getInventoryObject();
+            } else {
+                originalInventory = _inventory;
+            };
+            if (collectedArtefact.requiresContainer()) {
+                //get original container in case we need to return it.
+                var owner = originalInventory.getOwnerFor(collectedArtefact.getName());
+                if (owner) {
+                    originalInventory = owner.getInventoryObject();
+                };
+            };
+            //remove item from where it currently resides
+            originalInventory.remove(artefactName, false);  
 
             //put the x in the y
             var receiverDisplayNameString = receiver.getDisplayName();
@@ -2398,11 +2432,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
                 if (receiveResult.indexOf("$fail$") > -1) {
                     receiveResult = receiveResult.substr(6);
-                    if (objectIsInLocation) {
-                        _currentLocation.addObject(collectedArtefact);
-                    } else {
-                        _inventory.add(collectedArtefact);
-                    };
+                    
+                    //return item (need to return to original container if possible)
+                    originalInventory.add(collectedArtefact);
                     
                     //just return what happened in "receive"
                     return receiveResult
@@ -2414,14 +2446,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
             //did the collected artefact combine with anything?
-            var newObjectWeight = receiver.getInventoryObject().getObject(collectedArtefact.getName());
-            if (collectedArtefactWeight != newObjectWeight) {
-                if (_inventory.check(receiver.getName()) && receiveResult.indexOf(" now contains ") > -1) {
-                    var trimLocation = receiveResult.indexOf(" now contains ") + 14;
-                    receiveResult = "You now have " + receiveResult.substr(trimLocation);
+            var newObject = receiver.getInventoryObject().getObject(collectedArtefact.getName());
+            if (newObject) {
+                var newObjectWeight = newObject.getWeight();
+                if (collectedArtefactWeight != newObjectWeight) {
+                    if (_inventory.check(receiver.getName()) && receiveResult.indexOf(" now contains ") > -1) {
+                        var trimLocation = receiveResult.indexOf(" now contains ") + 14;
+                        receiveResult = "You now have " + receiveResult.substr(trimLocation);
+                    };
+                    resultString += receiveResult;
+                    return resultString;
                 };
-                resultString += receiveResult;
-                return resultString;
             };
 
             //did we just add a missing component?
@@ -2437,7 +2472,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             } else if (verb == "hide") { //can only hide if not a component
                 collectedArtefact.hide();
             };
-
+            
             return resultString;
 
         };
@@ -3130,7 +3165,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return sound;
         };
 
-        self.examine = function(verb, artefactName, map) {
+        self.examine = function(verb, artefactName, containerName, map) {
             var resultString = "";
             var newMissions = [];
 
@@ -3164,22 +3199,45 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
             
             };
-
-            var playerArtefact = getObjectFromPlayer(artefactName);
-            var locationArtefact = getObjectFromLocation(artefactName);
             
-            if (playerArtefact && locationArtefact) {
-                return "There's more than one " + artefactName + " available to you here. You'll need to be more specific.";
+            var playerArtefact;
+            var locationArtefact;
+            var container;        
+            if (containerName) {
+                container = getObjectFromPlayerOrLocation(containerName);
+                if (!container) {
+                    if (containerName == "inventory") {
+                        playerArtefact = getObjectFromPlayer(artefactName);
+                    } else if (containerName == "location") {
+                        locationArtefact = getObjectFromLocation(artefactName);
+                    } else {
+                        return "There's no sign of any " + containerName + " here.";
+                    };
+                };
+                if (container) {
+                    if (container.getType() == "creature") {
+                        return "You'll need to <i>ask</i> " + container.getSuffix() + " if you want a closer look at anything " + container.getPrefix().toLowerCase() + " has.";
+                    };
+                };
+            } else {
+                playerArtefact = getObjectFromPlayer(artefactName);
+                locationArtefact = getObjectFromLocation(artefactName);
+                
+                if (playerArtefact && locationArtefact) {
+                    return "There's more than one " + artefactName + " available to you here. You'll need to be more specific.<br>You can "+verb+" an item in your <i>inventory</i>, in this <i>location</i> or in another specific item.";
+                };
             };
             
             var artefact;
-            if (playerArtefact) {
+            if (container) {
+                artefact = container.getObject(artefactName);
+            } else if (playerArtefact) {
                 artefact = playerArtefact;
             } else {
                 artefact = locationArtefact
             };
 
-            if (!(artefact)) {
+            if (!(artefact) && map) {
                 if (artefactName == "around") {return _currentLocation.describe();};
                 var directionIndex = tools.directions.indexOf(artefactName);
                 if (directionIndex > -1) {
@@ -3206,7 +3264,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             var door = _currentLocation.getDoorForExit(artefactName, true);
                             if (door) {
                                 var resultString = "You see " + door.getDescription()+".<br>"
-                                return resultString+self.examine(verb, door.getName(), map);
+                                return resultString+self.examine(verb, door.getName(), containerName, map);
                             };
                             return "You peer " + artefactName + " but can't see through that way at the moment.";
                         };
@@ -3261,7 +3319,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 if (!artefact) {
-                    return notFoundMessage(artefactName);
+                    if (!container) {
+                        container = containerName;
+                    };
+                    return notFoundMessage(artefactName, container);
                 };
             };
  
@@ -3413,7 +3474,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var locationArtefact = getObjectFromLocation(artefactName);
             
             if (playerArtefact && locationArtefact) {
-                return "There's more than one " + artefactName + " available to you here. You'll need to be more specific.";
+                return "There's more than one " + artefactName + " available to you here. You'll need to be more specific about which one you want to "+verb+".";
             };
 
             var artefact;
@@ -4089,7 +4150,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (randomInt == 0) {
                     resultString +="<br>You might want to mind out, the floor's slippery here.";
                 } else if (randomInt < (slippy*2)) { //increasing % chance of success - 20% per slippy item (other than 0)
-                    resultString += "<br>As you enter, you slip on the wet floor and injure yourself.<br>"
+                    resultString += "<br>As you enter, you slip on the mess on the floor and injure yourself.<br>"
                     var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage you receive - up to a limit.
                     resultString += self.hurt(damage); 
                 };
@@ -4729,12 +4790,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return result;
         };
 
-        self.kill = function(){
+        self.kill = function(isPermanent){
             console.log("Player killed");
             var resultString = "";
+            _hitPoints = 0;
             _killedCount ++;
             //reduce score
-            var minusPoints = 100;
+            var minusPoints = 50 * _killedCount;
             _score -= minusPoints;
             if (_score < -1000) { _score = -1000; }; //can't score less than -1000 (seriously!)
             
@@ -4767,23 +4829,50 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var inventoryContents = _inventory.getAllObjects(true).slice();
             for(var i = 0; i < inventoryContents.length; i++) {
                 _currentLocation.addObject(removeObjectFromPlayer(inventoryContents[i].getName()));
-            }; 
+            };
 
             _bleeding = false;
+            
+            if (_killedCount > 5) {
+                isPermanent = true;
+            };
+
+            if (isPermanent) {
+                resultString += "<br>That's it. Game over. You had plenty of chances.<br>If you want to try again you either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
+                return resultString;
+            };
+
             self.recover(_maxHitPoints);
 
             resultString += "<br><br>";
             resultString += reasonForDeath;
 
-            resultString += " Fortunately, we currently have a special on infinite reincarnation. "+
-                   "It'll cost you "+minusPoints+" points and you'll need to find your way back to where you were and pick up all your stuff though!<br>Good luck.<br><br>" 
+            resultString += "<br>Fortunately, we currently have a special on reincarnation.<br>"+
+                   "This time we've charged you "+minusPoints+" points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>" 
 
             var newLocationDescription = self.setLocation(_startLocation);
             if (!(self.canSee())) {resultString += "It's too dark to see anything here.<br>You need to shed some light on the situation.";}
             else {resultString +=newLocationDescription;};
 
             return resultString;
-         };
+        };
+        
+        self.checkCreatureHealth = function (creatureName) {            
+            if (creatureName) {
+                if (creatureName != "self" && creatureName != "player") {
+                    var creature = getObjectFromLocation(creatureName);
+                    if (!(creature)) { return "There's no " + creatureName + " here."; };
+                    if (creature.getType() != "creature") { return tools.initCap(creature.getDisplayName()) + " can't be helped."; };
+                };
+            };
+            
+            if (!(creature)) {
+                if (_hitPoints >= _maxHitPoints - 1) { return "You don't need healing at the moment."; };
+                return self.health();
+            };
+
+            return creature.health();
+        };
 
         self.health = function() {
             var resultString = "";
