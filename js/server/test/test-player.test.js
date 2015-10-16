@@ -1640,7 +1640,7 @@ exports.canMakeSweetCoffeeByAddingSugarToCup.meta = { traits: ["Player Test", "C
 
 exports.cantPutObjectInItemWithNoCarryWeight = function (test) {
     p0.get('get', food.getName());
-    var expectedResult = "Sorry, the mighty sword can't hold the slab of sugary goodness.";
+    var expectedResult = "You try and try but can't find a satisfactory way to make it fit.";
     var actualResult = p0.put('put','cake', 'sword');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

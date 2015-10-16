@@ -24,6 +24,7 @@
                 "carryWeight": 3,
                 "attackStrength": 1,
                 "type": "container",
+                "subType": "bottle",
                 "holdsLiquid": true,
                 "canCollect": true,
                 "isBreakable": true,

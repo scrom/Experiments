@@ -345,6 +345,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
             };
+            
+            if (type == "container") {
+                var validContainerSubTypes = ["", "bottle"];
+                if (validContainerSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
+                if (subType == "bottle" && !_broken && !_destroyed) {
+                    _holdsLiquid = true;
+                };
+            };            
 
             if (type == "scenery") {
                 _hidden = true; //scenery is not shown in inventory etc.
@@ -861,6 +869,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.isLiquid = function() {
                 return _liquid;
         };
+
+        self.isPowder = function () {
+            return _powder;
+        };
+        
+        self.isSolid = function () {
+            if (_powder || _liquid) {
+                return false;
+            };
+            if (self.getSubType() == "intangible") {
+                return false;
+            };
+            
+            return true;
+        };
         
         self.compareLiquidOrPowder = function (item1, item2) {
             //compare attributes we care about.
@@ -934,9 +957,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
         };
 
-        self.isPowder = function() {
-                return _powder;
-        };
 
         self.holdsLiquid = function() {
                 if (_broken || _destroyed) {return false;};
@@ -1720,7 +1740,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canContain = function(anObject) {
             //broken containers can't contain anything
             if (self.isDestroyed()) {return false;};
-            if (self.getType() == "container" && self.isBroken()) {return false;};
+            if (self.getType() == "container" && self.isBroken()) { return false; };
+            if (self.getSubType() == "bottle" && anObject.isSolid()) { return false; };
             if ((anObject.isLiquid()||anObject.isPowder()) && (!(self.holdsLiquid()))) {return false;};
             return _inventory.canContain(anObject, self.getName());
         };

@@ -1199,7 +1199,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (_inventory.check(artefactName)) {
                     var inventoryObject = _inventory.getObject(artefactName);
                     return "You're carrying " + inventoryObject.getSuffix() + " already.";
-                }                ;
+                };
                 
                 //are we trying a "get all X"...
                 var firstWord = artefactName.split(" ", 1)[0];
@@ -1230,15 +1230,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return self.customAction(customVerb, artefactName);
             };
             if (!(artefact.isCollectable())) {
-                if (artefact.getType() == "scenery") {
-                    if (artefact.getName() == "air") {
-                        return "You wave your arms around but don't connect with anything tangible.";
-                    } else {
-                        return tools.initCap(artefact.getDescriptivePrefix())+" just part of the scenery, not much use to you I'm afraid.";
-                    };
-                } else {
-                    return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";
+                
+                if (artefact.getSubType() == "intangible") {
+                    return "You wave your arms around but don't connect with anything tangible.";
                 };
+                
+                if (artefact.getType() == "scenery") {
+                    return tools.initCap(artefact.getDescriptivePrefix()) + " just part of the scenery, not much use to you I'm afraid.";
+                };
+                
+                if (!artefact.isCollectable()) {
+                    var randomReplies = ["You try in vain to " + verb + " " + artefact.getDisplayName() + " but just end up tired and annoyed.", artefact.getPrefix().toLowerCase() + " can't be picked up.", "Nope, that's not going to work for you, sorry."];
+                    var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    return randomReplies[randomIndex];                    
+                };                
             };
 
             //@todo - is the artefact weight including positioned items?
@@ -2267,7 +2272,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
 
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) { return notFoundMessage(artefactName); };
 
             //replace requested artefact name with real name...
             artefactName = artefact.getName();
@@ -2277,6 +2282,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(receiver)) {
                 if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry "+artefact.getDisplayName()+".";};
                 return notFoundMessage(receiverName);
+            };
+            
+            if (artefact.getSubType() == "intangible") {
+                return tools.initCap(artefact.getName()) + " isn't really something you can do much with." +
+                        "<br>You try anyway. After a while, your arms get tired and you feel slightly awkward.";
+            };
+            
+            if (artefact.getType() == "scenery") {
+                return tools.initCap(artefact.getDisplayName()) + " is just scenery. You're not going to accomplish anything by doing that.";
+            };
+            
+            if (!artefact.isCollectable()) {
+                return "You try in vain to move " + artefact.getDisplayName() + " to where you want it but just end up tired and annoyed."
             };
 
             //validate if it's a container
@@ -2316,7 +2334,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //check receiver can carry item (container or not)
             //@todo - ensure artefact weight doesn't include positioned items
             if (!(receiver.canContain(artefact))) {
-                if (receiver.isBroken()){return receiver.getDescriptivePrefix()+" broken. You'll need to fix "+receiver.getSuffix()+" first.";};
 
                 //is it already there?
                 if (receiver.getObject(artefactName)) {
@@ -2330,7 +2347,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     } else {
                         return tools.initCap(artefact.getDescriptivePrefix())+" already in "+receiver.getDisplayName()+".";
                     };
-                }; 
+                };
+
+                if (receiver.isBroken()) {
+                    return receiver.getDescriptivePrefix() + " broken. You'll need to fix " + receiver.getSuffix() + " first.";
+                };
                     
                 if (artefact.isLiquid() || artefact.isPowder()) {
                     //if receiver is liquid or powder it would have combined at this point. Therefore only "waste" if adding to a solid.
@@ -2351,8 +2372,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     };
                 };                   
-                    
-                return  "Sorry, "+receiver.getDisplayName()+" can't hold "+artefact.getDisplayName()+"."; 
+                
+                if (receiver.getSubType() == "intangible") {
+                    return tools.initCap(receiver.getDisplayName()) + " isn't really something you can do much with." +
+                        "<br>You try anyway. After a while, you just feel tired and foolish.";
+                };              
+                if (artefact.getType() == "scenery") {
+                    return tools.initCap(receiver.getDisplayName()) + " is just scenery. You're not going to accomplish anything by doing that.";
+                };
+                return  "You try and try but can't find a satisfactory way to make "+artefact.getSuffix()+" fit."; 
             };
 
 
