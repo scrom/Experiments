@@ -576,7 +576,7 @@
             ]
           },
           "score": 50,
-          "message": "<br>Oh no, you're out of time!<br>The party bus is leaving and you haven't got enough people on board.<br><br>You rush out to try and salvage your efforts.<br>As you recover your breath outside and the bus pulls away you see a lick of flame through the windows.<br>Something's very wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!",
+          "message": "<br>Oh no, you're out of time!<br>The party bus is leaving and you haven't got enough people on board.<hr>You rush out to try and salvage your efforts.<br>As you recover your breath outside and the bus pulls away you see a lick of flame through the windows.<br>Something's very wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!",
           "teleport": "office-front",
           "modifyLocationCreatures": {
             "name": "bus",
@@ -586,7 +586,7 @@
             "name": "bus",
             "removeCreatures": false
           },
-          "affinityModifier": 5,
+          "affinityModifier": 4,
           "decreaseAffinityFor": "all"
         },
         "fail": {
@@ -616,13 +616,13 @@
             ]
           },
           "score": -150,
-          "message": "<br>It looks like you're doing well at getting people onto the bus. Great job!<br>It's often hard work herding people around here.<br><br>You dash out to the front of the office to check for stragglers and as you recover your breath you smell smoke on the air.<br>Something's very wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.",
+          "message": "<br>It looks like you're doing well at getting people onto the bus. Great job!<br>It's often hard work herding people around here.<hr>You dash out to the front of the office to check for stragglers and as you recover your breath you smell smoke on the air.<br>Something's very wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.",
           "teleport": "office-front",
           "removeLocation": {
             "name": "bus",
             "removeCreatures": true
           },
-          "affinityModifier": 5,
+          "affinityModifier": 4,
           "decreaseAffinityFor": "all"
         }
       },
@@ -1486,31 +1486,226 @@
   },
   {
     "object": "location",
-    "name": "camelids-a",
-    "displayName": "Camelids-A meeting room",
-    "description": "You're in Camelids-A. The UX team have filled the walls with post-it notes.<br>The table feels slightly too large for the room and it's a bit cramped in here.",
+    "name": "camelids",
+    "displayName": "Camelids meeting room",
+    "description": "You're in 'Camelids'. It's had a fairly recent makeover from the facilities team to give it a Moroccan theme with comfortable seating and tasteful decoration.<br>It blends the function of a meeting room with the space to relax and chat.<br>One wall has a small shelf whilst the UX team have filled another wall with post-it notes.<br>A window runs the length of the room looking out over the atrium stairs.",
     "exits": [
       {
         "object": "exit",
         "longname": "West",
         "direction": "w",
-        "source": "camelids-a",
-        "destination": "second-floor-north-west-corridor-central"
+        "source": "camelids",
+        "destination": "second-floor-north-west-corridor-north-east"
       }
     ],
     "inventory": [
       {
         "object": "artefact",
+        "name": "plant",
+        "description": "potted office plant",
+        "detailedDescription": "It's an ornamental evergreen variety (like most of the pants in the building).<br>This one's a generic yucca/palm/cactus type thing (nothing particularly interesting).",
+        "attributes": {
+          "weight": 3,
+          "type": "scenery",
+          "subType": "plant",
+          "position": "on",
+          "combinesWith": [
+            "water"
+          ]
+        },
+        "synonyms": [
+          "potted plant"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "Wave!",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "isBreakable": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish.",
+          "canDrawOn": true,
+          "viewDestination": "stairs-second-floor"
+        },
+        "synonyms": [
+          "glass",
+          "windows",
+          "outside"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "gesture",
+            "description": "rude gesture",
+            "detailedDescription": "You flap your arms and prance about staring at yourself.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "customAction": [
+                "get",
+                "make"
+              ],
+              "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish."
+            },
+            "synonyms": [
+              "v sign",
+              "rude sign",
+              "rude gesture"
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "sofa",
+        "description": "comfy-looking sofa",
+        "detailedDescription": "It's large, comfy, and somewhat squishy. The perfect place to relax or <i>nap</i>",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 300,
+          "type": "bed",
+          "imageName": "camelids.jpg"
+        },
+        "synonyms": [
+          "comfy sofa",
+          "comfy looking sofa",
+          "comfy-looking sofa",
+          "comfort",
+          "comfortable",
+          "comfortable sofa",
+          "comfortable seat",
+          "comfortable seating"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "shelf",
+        "description": "wall-mounted shelf",
+        "detailedDescription": "It's white and functional.",
+        "attributes": {
+          "type": "scenery",
+          "imageName": "camelids.jpg"
+        },
+        "synonyms": [
+          "small shelf",
+          "wall shelf"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "fez",
+            "description": "red fez",
+            "detailedDescription": "Is it socially acceptable to wear one of these?",
+            "attributes": {
+              "weight": 4,
+              "canCollect": true,
+              "position": "on",
+              "customAction": [
+                "wear"
+              ],
+              "defaultResult": "The tommy cooper look doesn't suit you.",
+              "imageName": "camelids.jpg"
+            },
+            "synonyms": [
+              "red",
+              "red fez",
+              "hat",
+              "red hat"
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "table",
         "description": "large boardroom style table",
-        "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
+        "detailedDescription": "Pretty standard office furniture.<br>It provides plenty of desktop working space for a large group of creative people.",
         "attributes": {
-          "weight": 120,
-          "type": "scenery",
+          "weight": 150,
           "canDrawOn": true
         },
         "synonyms": [
-          "desk"
+          "boardroom table",
+          "board table",
+          "large table",
+          "large boardroom table"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "wheeled office chairs",
+        "detailedDescription": "They look like standard meeting room chairs although they're surprisingly comfortable and ride on casters.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 40,
+          "plural": true,
+          "customAction": [
+            "ride",
+            "surf"
+          ],
+          "defaultResult": "Seeing as there's a sofa in here to rest on you decide the best use for one of these is office-surfing.<br>You wheel around the room dodging obstacles for a minute or two before realising you're still on probation and there's every chance you can be seen by everyone through the window in here."
+        },
+        "synonyms": [
+          "chair",
+          "wheeled",
+          "wheeled chair",
+          "office chair",
+          "wheeled office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "corner table",
+        "description": "little corner table",
+        "detailedDescription": "It's a pretty little wooden table in the corner of the room. It's here for aesthetics rather than function.",
+        "attributes": {
+          "weight": 120,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "corner",
+          "small table",
+          "little table",
+          "little corner table"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "hookah",
+            "description": "ornate hookah pipe",
+            "detailedDescription": "It's an ornate water pipe (a bong to those less cultured).<br>It looks unused",
+            "attributes": {
+              "weight": 4,
+              "type": "treasure",
+              "canCollect": true,
+              "isBreakable": true,
+              "price": 30,
+              "position": "on",
+              "customAction": [
+                "smoke"
+              ],
+              "defaultResult": "Publicly smoking a bong in the office (or even on the business park) is probably not a wise thing to do.",
+              "imageName": "hookah.jpg",
+              "smell": "Yep. Definitely never been used. They're a pretty clean-cut bunch here - honest."
+            },
+            "synonyms": [
+              "ornate hookah",
+              "bong",
+              "pipe",
+              "ornate pipe",
+              "ornate hookah pipe",
+              "hookah pipe",
+              "ornate bong",
+              "water pipe"
+            ]
+          }
         ]
       },
       {
@@ -1519,7 +1714,7 @@
         "description": "post-its",
         "detailedDescription": "You skim the dozens of post-its on the walls. Most contain phrases that are meaningless to you such as 'user journey', 'top of funnel analysis' etc.",
         "attributes": {
-          "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular <i>affinity</i> for.",
+          "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular affinity for.",
           "type": "scenery",
           "plural": true,
           "canDrawOn": true
@@ -1543,7 +1738,6 @@
             "description": "single post-it note",
             "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
             "attributes": {
-              "type": "book",
               "canCollect": true,
               "affinityModifier": 2,
               "imageName": "sticky-finger.jpg",
@@ -1558,65 +1752,6 @@
               "post-it note",
               "postit note",
               "note"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "camelids-b",
-    "displayName": "Camelids-B meeting room",
-    "description": "When not in use for small meetings, this room doubles as an in-office hairdressing salon.<br>The carpet in here feels strange underfoot.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "camelids-b",
-        "destination": "second-floor-north-west-corridor-north-east"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "floor",
-        "description": "office carpet",
-        "detailedDescription": "On the surface it's just a plain office carpet but it's a bit prickly.",
-        "attributes": {
-          "type": "scenery",
-          "customAction": [
-            "pee",
-            "urinate",
-            "piss",
-            "shit",
-            "crap"
-          ],
-          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ground",
-          "carpet"
-        ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "hair",
-            "description": "hair clippings",
-            "detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
-            "attributes": {
-              "plural": true,
-              "hidden": true,
-              "customAction": [
-                "get"
-              ],
-              "defaultResult": "They're too fine and embedded into the carpet to collect."
-            },
-            "synonyms": [
-              "hair clippings",
-              "clippings"
             ]
           }
         ]
@@ -4644,6 +4779,7 @@
             "synonyms": [
               "plant key",
               "heavy key",
+              "industrial key",
               "key"
             ]
           },
@@ -4738,7 +4874,6 @@
                           "attackStrength": 2,
                           "type": "container",
                           "canCollect": true,
-                          "isBreakable": true,
                           "affinityModifier": 0,
                           "canOpen": true,
                           "smell": "You can almost taste the coffee beans."
@@ -7726,7 +7861,6 @@
                       "object": "mission",
                       "name": "killthespy",
                       "displayName": "kill the spy",
-                      "description": "I'm sure he wasn't around before the crash!",
                       "attributes": {
                         "parent": "saveredgate",
                         "missionObject": "jordan miller"
@@ -8029,7 +8163,7 @@
                         "conversationState": 1
                       },
                       "reward": {
-                        "message": "Jordan pushes a small coin or medal into your hand.<br>'Here take this.'<br>'It's a symbol of trust for the group I work for.' 'It's extremely old, fragile and can only be given willingly.'<br>'Others in our circle of trust will imediately know you have it.'<br><br>As you close your hand on the coin you feel a short searing pain. Your mind fogs over and you feel the world shift beneath your feet.<br>You open your hand and discover nothing but grains of sand.<br>You brush the sand away and notice a sideways '8' symbol burned into your palm.<br>As the mental fog starts to clear to have a strong feeling of vertigo.",
+                        "message": "Jordan pushes a small coin or medal into your hand.<br>'Here take this.'<br>'It's a symbol of trust for the group I work for.' 'It's extremely old, fragile and can only be given willingly.'<br>'Others in our circle of trust will imediately know you have it.'<br><br>As you close your hand on the coin you feel a short searing pain. Your mind fogs over and you feel the world shift beneath your feet.<hr>You open your hand and discover nothing but grains of sand.<br>You brush the sand away and notice a sideways '8' symbol burned into your palm.<br>As the mental fog starts to clear to have a strong feeling of vertigo.",
                         "teleport": "roof"
                       }
                     }
@@ -8829,6 +8963,11 @@
                   "attributes": {
                     "detailedDescription": "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'...<br>...'book of summ!£*_+g...<br>...sacri+}[@: souls open _^* gate'...<br>...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br><br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building."
                   }
+                },
+                {
+                  "name": "server",
+                  "object": "artefact",
+                  "detailedDescription": "The servers look like they can be accessed via a console nearby."
                 }
               ],
               "score": 10,
@@ -10568,7 +10707,7 @@
           {
             "object": "artefact",
             "name": "sketchbook",
-            "description": "Simon's A3 sketch book",
+            "description": "a3 sketch book",
             "detailedDescription": "It looks like it contains all Simon's plans.",
             "attributes": {
               "defaultAction": "read",
@@ -12242,7 +12381,9 @@
         },
         "synonyms": [
           "guardian",
-          "newspaper"
+          "newspaper",
+          "news",
+          "paper"
         ]
       },
       {
@@ -12656,17 +12797,10 @@
       },
       {
         "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "second-floor-north-west-corridor-central",
-        "destination": "camelids-a"
-      },
-      {
-        "object": "exit",
         "longname": "West",
         "direction": "w",
         "source": "second-floor-north-west-corridor-central",
-        "destination": "flowers-a"
+        "destination": "war-room"
       }
     ]
   },
@@ -12717,7 +12851,7 @@
         "longname": "East",
         "direction": "e",
         "source": "second-floor-north-west-corridor-north-east",
-        "destination": "camelids-b"
+        "destination": "camelids"
       },
       {
         "object": "exit",
@@ -12750,6 +12884,13 @@
       },
       {
         "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-north-central",
+        "destination": "flowers-a"
+      },
+      {
+        "object": "exit",
         "longname": "South",
         "direction": "s",
         "source": "second-floor-north-west-corridor-north-end",
@@ -12769,13 +12910,6 @@
         "direction": "n",
         "source": "second-floor-north-west-corridor-south",
         "destination": "second-floor-north-west-corridor-central"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "second-floor-north-west-corridor-south",
-        "destination": "war-room"
       },
       {
         "object": "exit",
@@ -14931,7 +15065,7 @@
         "longname": "East",
         "direction": "e",
         "source": "war-room",
-        "destination": "second-floor-north-west-corridor-south"
+        "destination": "second-floor-north-west-corridor-central"
       }
     ]
   },
@@ -15078,7 +15212,7 @@
     "object": "location",
     "name": "web-meeting-room",
     "displayName": "Web meeting room",
-    "description": "You're in the Web meeting room.",
+    "description": "You're in 'Web'. When not in use for small meetings this room doubles as an in-office hairdressing salon.<br>The carpet in here feels strange underfoot.",
     "exits": [
       {
         "object": "exit",
@@ -15086,6 +15220,50 @@
         "direction": "s",
         "source": "web-meeting-room",
         "destination": "support-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "floor",
+        "description": "office carpet",
+        "detailedDescription": "On the surface it's just a plain office carpet but it's a bit prickly.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground",
+          "carpet"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "hair",
+            "description": "hair clippings",
+            "detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
+            "attributes": {
+              "plural": true,
+              "hidden": true,
+              "customAction": [
+                "get"
+              ],
+              "defaultResult": "They're too fine and embedded into the carpet to collect."
+            },
+            "synonyms": [
+              "hair clippings",
+              "clippings"
+            ]
+          }
+        ]
       }
     ]
   },

@@ -1,0 +1,23 @@
+﻿{
+  "object": "artefact",
+  "name": "fez",
+  "description": "red fez",
+  "detailedDescription": "Is it socially acceptable to wear one of these?",
+  "attributes": {
+    "weight": 4,
+    "type": "junk",
+    "canCollect": true,
+    "position": "on",
+    "imageName": "camelids.jpg",
+    "customAction": [
+      "wear"
+    ],
+    "defaultResult": "The tommy cooper look doesn't suit you."
+  },
+  "synonyms": [
+    "red",
+    "red fez",
+    "hat",
+    "red hat"
+  ]
+}

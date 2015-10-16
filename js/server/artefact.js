@@ -348,7 +348,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (type == "scenery") {
                 _hidden = true; //scenery is not shown in inventory etc.
-                var validScenerySubTypes = ["","intangible"];
+                var validScenerySubTypes = ["","intangible", "plant"];
                 if (validScenerySubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
             };
 

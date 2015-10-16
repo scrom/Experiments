@@ -1,0 +1,18 @@
+﻿{
+"object": "artefact",
+"name": "plant",
+"description": "potted office plant",
+"detailedDescription": "It's an ornamental evergreen variety (like most of the pants in the building).<br>This one's a generic yucca/palm/cactus type thing (nothing particularly interesting).",
+"attributes": {
+    "weight": 3,
+    "type": "scenery",
+    "subType": "plant",
+    "position": "on",
+    "combinesWith": [
+    "water"
+    ]
+},
+"synonyms": [
+    "potted plant"
+]
+}

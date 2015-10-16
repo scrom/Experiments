@@ -1,0 +1,30 @@
+﻿{
+  "object": "artefact",
+  "name": "hookah",
+  "description": "ornate hookah pipe",
+  "detailedDescription": "It's an ornate water pipe (a bong to those less cultured).<br>It looks unused",
+  "attributes": {
+    "weight": 4,
+    "type": "treasure",
+    "canCollect": true,
+    "isBreakable": true,
+    "price": 30,
+    "imageName": "hookah.jpg",
+    "position": "on",
+    "customAction": [
+      "smoke"
+    ],
+    "defaultResult": "Publicly smoking a bong in the office (or even on the business park) is probably not a wise thing to do.",
+    "smell": "Yep. Definitely never been used. They're a pretty clean-cut bunch here - honest."
+  },
+  "synonyms": [
+    "ornate hookah",
+    "bong",
+    "pipe",
+    "ornate pipe",
+    "ornate hookah pipe",
+    "hookah pipe",
+    "ornate bong",
+    "water pipe"
+  ]
+}

@@ -3901,6 +3901,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (vehicle.getType() != "vehicle") {
+                //can player still "ride" it?
+                var tempResult = self.customAction(verb, vehicle.getName());
+                if (tempResult) { return tempResult; };
                 return "You can't "+verb+" "+vehicle.getDisplayName();
             };
 

@@ -1,76 +1,210 @@
 ﻿{
-    "object": "location",
-    "name": "camelids",
-    "displayName": "Camelids meeting room",
-    "description": "You're in 'Camelids'. It's had a fairly recent makeover from the facilities team to give it a Moroccan theme with comfortable seating and tasteful decoration.<br>It blends the function of a meeting room with the space to relax and chat.<br>The UX team have filled one of the walls with post-it notes.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "camelids",
-        "destination": "second-floor-north-west-corridor-north-east"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "table",
-        "description": "large boardroom style table",
-        "detailedDescription": "Pretty standard office furniture.<br>It's been crammed in to provide plenty of desktop working space for a large group of creative people but it's a bit of a squeeze to fit in here.",
-        "attributes": {
-          "type": "scenery",
-          "isBreakable": false
-        }
-      },
-      {
-        "object": "artefact",
-        "name": "notes",
-        "description": "post-its",
-        "detailedDescription": "You skim the dozens of post-its on the walls. Most contain phrases that are meaningless to you such as 'user journey', 'top of funnel analysis' etc.",
-        "attributes": {
-          "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular <i>affinity</i> for.",
-          "type": "scenery",
-          "plural": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "stickies",
-          "sticky notes",
-          "post its",
-          "postits",
-          "post it notes",
-          "post-it notes",
-          "postit notes",
-          "post-its",
-          "wall",
-          "walls"
+  "object": "location",
+  "name": "camelids",
+  "displayName": "Camelids meeting room",
+  "description": "You're in 'Camelids'. It's had a fairly recent makeover from the facilities team to give it a Moroccan theme with comfortable seating and tasteful decoration.<br>It blends the function of a meeting room with the space to relax and chat.<br>One wall has a small shelf whilst the UX team have filled another wall with post-it notes.<br>A window runs the length of the room looking out over the atrium stairs.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "camelids",
+      "destination": "second-floor-north-west-corridor-north-east"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "indoor-plant"
+    },
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "Wave!",
+      "attributes": {
+        "viewDestination": "stairs-second-floor",
+        "customAction": [
+          "get"
         ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "post-it",
-            "description": "single post-it note",
-            "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
-            "attributes": {
-              "type": "book",
-              "canCollect": true,
-              "affinityModifier": 2,
-              "imageName": "sticky-finger.jpg",
-              "canDrawOn": true
-            },
-            "synonyms": [
-              "sticky",
-              "sticky note",
-              "post it",
-              "postit",
-              "post it note",
-              "post-it note",
-              "postit note",
-              "note"
-            ]
-          }
-        ]
-      }
-    ]
-  }
+        "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish."
+      },
+      "inventory": [
+        {
+          "object": "artefact",
+          "name": "gesture",
+          "description": "rude gesture",
+          "detailedDescription": "You flap your arms and prance about staring at yourself.",
+          "attributes": {
+            "type": "scenery",
+            "subType": "intangible",
+            "customAction": [
+              "get",
+              "make"
+            ],
+            "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish."
+          },
+          "synonyms": [
+            "v sign",
+            "rude sign",
+            "rude gesture"
+          ]
+        }
+      ]
+    },
+    {
+      "object": "artefact",
+      "name": "sofa",
+      "description": "comfy-looking sofa",
+      "detailedDescription": "It's large, comfy, and somewhat squishy. The perfect place to relax or <i>nap</i>",
+      "attributes": {
+        "defaultAction": "rest",
+        "weight": 300,
+        "type": "bed",
+        "imageName": "camelids.jpg",
+        "isBreakable": false
+      },
+      "synonyms": [
+        "comfy sofa",
+        "comfy looking sofa",
+        "comfy-looking sofa",
+        "comfort",
+        "comfortable",
+        "comfortable sofa",
+        "comfortable seat",
+        "comfortable seating"
+      ]
+    },
+    {
+      "object": "artefact",
+      "name": "shelf",
+      "description": "wall-mounted shelf",
+      "detailedDescription": "It's white and functional.",
+      "attributes": {
+        "type": "scenery",
+        "isBreakable": false,
+        "imageName": "camelids.jpg"
+      },
+      "synonyms": [
+        "small shelf",
+        "wall shelf"
+      ],
+      "inventory": [
+        {
+          "file": "fez"
+        }
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "table",
+      "description": "large boardroom style table",
+      "detailedDescription": "Pretty standard office furniture.<br>It provides plenty of desktop working space for a large group of creative people.",
+      "attributes": {
+        "type": "junk",
+        "weight": 150,
+        "isBreakable": false,
+        "canDrawOn": "true"
+      },
+      "synonyms": [
+        "boardroom table",
+        "board table",
+        "large table",
+        "large boardroom table"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "chairs",
+      "description": "wheeled office chairs",
+      "detailedDescription": "They look like standard meeting room chairs although they're surprisingly comfortable and ride on casters.",
+      "attributes": {
+        "type": "junk",
+        "weight": 40,
+        "isBreakable": false,
+        "customAction": [
+          "ride",
+          "surf"
+        ],
+        "defaultResult": "Seeing as there's a sofa in here to rest on you decide the best use for one of these is office-surfing.<br>You wheel around the room dodging obstacles for a minute or two before realising you're still on probation and there's every chance you can be seen by everyone through the window in here."
+      },
+      "synonyms": [
+        "chair",
+        "wheeled",
+        "wheeled chair",
+        "office chair",
+        "wheeled office chair"
+      ]
+    },
+    {
+      "object": "artefact",
+      "name": "corner table",
+      "template": "table",
+      "description": "little corner table",
+      "detailedDescription": "It's a pretty little wooden table in the corner of the room. It's here for aesthetics rather than function.",
+      "attributes": {
+        "type": "junk",
+        "canCollect": "false",
+        "isBreakable": false
+      },
+      "synonyms": [
+        "corner",
+        "small table",
+        "little table",
+        "little corner table"
+      ],
+      "inventory": [
+        {
+          "file": "hookah"
+        }
+      ]
+    },
+    {
+      "object": "artefact",
+      "name": "notes",
+      "description": "post-its",
+      "detailedDescription": "You skim the dozens of post-its on the walls. Most contain phrases that are meaningless to you such as 'user journey', 'top of funnel analysis' etc.",
+      "attributes": {
+        "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular affinity for.",
+        "type": "scenery",
+        "plural": true,
+        "canDrawOn": true
+      },
+      "synonyms": [
+        "stickies",
+        "sticky notes",
+        "post its",
+        "postits",
+        "post it notes",
+        "post-it notes",
+        "postit notes",
+        "post-its",
+        "wall",
+        "walls"
+      ],
+      "inventory": [
+        {
+          "object": "artefact",
+          "name": "post-it",
+          "description": "single post-it note",
+          "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
+          "attributes": {
+            "type": "junk",
+            "canCollect": true,
+            "affinityModifier": 2,
+            "imageName": "sticky-finger.jpg",
+            "canDrawOn": true
+          },
+          "synonyms": [
+            "sticky",
+            "sticky note",
+            "post it",
+            "postit",
+            "post it note",
+            "post-it note",
+            "postit note",
+            "note"
+          ]
+        }
+      ]
+    }
+  ]
+}

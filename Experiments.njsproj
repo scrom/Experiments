@@ -69,6 +69,7 @@
     <Content Include="data\emergency-first-aid-kit.json" />
     <Content Include="data\enterprise-meeting-room.json" />
     <Content Include="data\facilities-area.json" />
+    <Content Include="data\fez.json" />
     <Content Include="data\finance-area.json" />
     <Content Include="data\fire-door-exterior.json" />
     <Content Include="data\fire-exit.json" />
@@ -93,12 +94,14 @@
     <Content Include="data\ground-floor-fire-escape.json" />
     <Content Include="data\ground-floor-toilet.json" />
     <Content Include="data\hand-dryer.json" />
+    <Content Include="data\hookah.json" />
     <Content Include="data\images\camelids.jpg" />
     <Content Include="data\images\hookah.jpg" />
     <Content Include="data\images\map.jpg" />
     <Content Include="data\images\plaque.jpg" />
     <Content Include="data\images\soapdispenser.jpg" />
     <Content Include="data\incidentals-blinkpipe.json" />
+    <Content Include="data\indoor-plant.json" />
     <Content Include="data\is-area.json" />
     <Content Include="data\jeff-foster.json" />
     <Content Include="data\jellyfish-meeting-room.json" />
@@ -269,6 +272,7 @@
     <Content Include="data\window.json" />
     <Content Include="client\index.html" />
     <Content Include="data\windows-meeting-room.json" />
+    <Content Include="data\xbox.json" />
     <Content Include="js\server\test\testdata\canonical-game-data.json" />
     <Content Include="js\server\mocha\testdata\creature-room.json" />
     <Content Include="js\server\mocha\testdata\artefact-room.json" />
