@@ -3123,6 +3123,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             }; 
         };
         
+        self.willMove = function (partialResultString, playerLocation, playerAggression) {
+            //figure out if creature will or will not automatically move
+            if (partialResultString.length > 0) { return false; }; //has already acted
+            if (_currentDelay > -1) { return false; }; //is in a delay cycle
+            if (!(_traveller || (_canTravel && _destinations.length > 0))) { return false; }; //can't or won't travel
+            if (playerLocation == _currentLocation.getName() && self.willFollow(playerAggression)) { return false; }; //will follow player instead
+          
+            return true;      
+        };
+        
         var closePreviouslyOpenedDoors = function (map) {
             //did we open a door on the last move?
             //close it again before changing location
@@ -3291,9 +3301,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 
                 //update any active delays
                 self.calculateAndUpdateDelay(playerLocation, playerAggression);
-
-                //is a traveller, not delayed, not following player, not already acted...
-                if (((_traveller || (_canTravel && _destinations.length>0)) && (_currentDelay == -1)) && (!self.willFollow(playerAggression)) && (partialResultString.length ==0)) { 
+                
+                //if creature will move on this tick
+                if (self.willMove(partialResultString, playerLocation, playerAggression)) { 
                     var showMoveToPlayer = false;
                     if (playerLocation == _currentLocation.getName()) {showMoveToPlayer = true;};                   
                     
@@ -3307,7 +3317,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     } else if (_destinations.length > 0) {
                         //or has destinations?
                         //is creature in "current" destination?
-                        if (_destinations[_destinations.length-1] == _currentLocation.getName()) {
+                        if (_destinations[_destinations.length - 1] == _currentLocation.getName()) {
+                            //creature has reached destination
                             //console.log(self.getDisplayName()+" reached destination.");
                             self.clearPath();
                             self.clearDestination();
@@ -3319,6 +3330,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 _currentDelay = 0;
                             };                            
                         } else {
+                            //creature still has a destination to reach
                             //if no path set and not in current destination, set path to destination
                             if (_path.length == 0) {
                                 self.setPath(self.findBestPath(_destinations[_destinations.length-1], map, 25));
