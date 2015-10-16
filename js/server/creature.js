@@ -885,7 +885,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return ""; //neutral
         };
 
-        self.hasContagion = function(contagionName) {
+        self.hasContagion = function (contagionName) {
+            if (!contagionName) {
+                //do they have any contagion at all?
+                if (_contagion.length > 0) {
+                    return true;
+                };
+                return false;
+            };
+
             for (var i=0;i<_contagion.length;i++) {
                 if (_contagion[i].getName() == contagionName) {
                     return true;
@@ -3133,6 +3141,63 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return true;      
         };
         
+        self.getBestAvailableRandomExit = function () {
+            var useDoors = true;
+            if (self.getSubType() == "animal") {
+                useDoors = false;
+            };
+            
+            var exits = _currentLocation.getAvailableExits(useDoors, _inventory);
+            if (exits.length <= 1) {
+                //if we only have 1 or 0 exits...
+                if (exits[0]) {
+                    //there is an exit available - 50% chance of using the only available exit this time
+                    var randomInt = Math.floor(Math.random() * 2);
+                    if (randomInt > 0) {
+                        return exits[0];
+                    };
+                };
+
+                //    console.log("<--- " + self.getName() + " has no exits from " + _currentLocation.getName());
+                //no exit this time
+                return null;
+            };
+
+            //There's *more than 1 exit*, 1 in 4 chance of staying where they are 
+            var randomInt = Math.floor(Math.random() * 4);
+            if (randomInt == 0) {
+                return null;
+            };
+            
+            //console.log("getting random exit");
+            //don't double-back, don't use "avoid" locations, emergency exits, don't climb, run or crawl.
+            var useExitActions = false;
+            var exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, _lastDirection, false, useExitActions);
+            if (exit) {return exit};               
+
+            //allow possible use of extra actions                     
+            if (!_bleeding && (self.getSubType() != "animal")) {
+                useExitActions = true;
+            };
+                    
+            //try again - allow climbing/running/crawling
+            exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, _lastDirection, false, useExitActions);
+            if (exit) { return exit };  
+
+            //try again - also allow backtracking
+            exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, null, false, useExitActions);
+            if (exit) { return exit };  
+
+           
+            //try again - also allow emergency exits
+            exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, null, true, useExitActions);
+            if (exit) { return exit };
+            
+            //try one last time - also allow "avoid" locations - may still return null at this point
+            return _currentLocation.getRandomExit(useDoors, null, _inventory, null, true, useExitActions);
+
+        };
+        
         var closePreviouslyOpenedDoors = function (map) {
             //did we open a door on the last move?
             //close it again before changing location
@@ -3172,7 +3237,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "";
         };
         
-        var attemptToTraverseDoorsIfNeeded = function (exit, map) {
+        self.attemptToTraverseDoorsIfNeeded = function (exit, map) {
             if (exit.isVisible()) {
                 return exit;
             };
@@ -3249,12 +3314,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
         
-        var enactContagion = function (player, playerLocation) {
+        self.enactContagion = function (player, playerLocationName) {
             var resultString = "";
             if (_contagion.length > 0) {
                 for (var c = 0; c < _contagion.length; c++) {
                     var playerToInfect;
-                    if (playerLocation == _currentLocation.getName()) {
+                    if (playerLocationName == _currentLocation.getName()) {
                         playerToInfect = player;
                     };
                     resultString += _contagion[c].enactSymptoms(self, _currentLocation, playerToInfect);
@@ -3361,73 +3426,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //if they have a destination but no path by this point, they'll wander somewhere else and try to build a path again next time.
                     //this stops creatures getting stuck behind "avoided" locations.
                     if (!(exit)) {
-                        var wait = false;
-                        var useDoors = true;
-                        if (self.getSubType() == "animal") {
-                            useDoors = false;
-                        };
-
-                        var exits = _currentLocation.getAvailableExits(useDoors, _inventory);
-                        if (exits.length <= 1) {
-                            //if we only have 1 or 0 exits...
-                            if (exits[0]) {
-                                //there is an exit available - 50% chance of using the only available exit this time
-                                var randomInt = Math.floor(Math.random() * 2);
-                                if (randomInt > 0) {
-                                    exit = exits[0];
-                                };
-
-                            //} else {
-                            //    console.log("<--- " + self.getName() + " has no exits from " + _currentLocation.getName());
-                            };
-                        } else {
-                            //if there's *more than 1 exit*, 1 in 4 chance of staying where they are 
-                            if (exits.length > 1) {
-                                var randomInt = Math.floor(Math.random() * 4);
-                                if (randomInt == 0) {
-                                    wait = true;
-                                };
-                            };
-                        };
-                        
-                        if (!wait) {
-                            //console.log("getting random exit");
-                            //don't double-back, don't use "avoid" locations, emergency exits, don't climb, run or crawl.
-                            var useExitActions = false;
-                            if (!exit) {
-                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, _lastDirection, false, useExitActions);
-                            };
-                            
-                            if (!exit) {
-                                //allow possible use of extra actions                     
-                                if (!_bleeding && (self.getSubType() != "animal")) {
-                                    useExitActions = true;
-                                };
-                                
-                                //try again - allow climbing/running/crawling
-                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, _lastDirection, false, useExitActions);
-                            };
-                            if (!exit) {
-                                //try again - also allow backtracking
-                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, null, false, useExitActions);
-                            };
-                            if (!exit) {
-                                //try again - also allow emergency exits
-                                exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, null, true, useExitActions);
-                            };
-                            if (!exit) {
-                                //try again - also allow "avoid" locations
-                                exit = _currentLocation.getRandomExit(useDoors, null, _inventory, null, true, useExitActions);
-                            };
-                        };
-                        
+                        exit = self.getBestAvailableRandomExit();                        
                     };
 
                     if (exit) {
-                        exit = attemptToTraverseDoorsIfNeeded(exit, map);
+                        exit = self.attemptToTraverseDoorsIfNeeded(exit, map);
                         //exit will be blanked if door isn't usable.
                     };
-                    
                     
                     if (exit) {
                         var openedDoor;
@@ -3457,9 +3462,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     slipString =".";
                                 } else if (randomInt <= (Math.floor(slippy*1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
                                     slipString = " and slips on the mess on the floor."
-                                    var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage you receive - up to a limit.
-                                    self.decreaseAffinity(Math.floor(slippy/2)); //may decrease affinity
-                                    var deadString = self.hurt(damage); 
+                                    var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage received - up to a limit.
+                                    self.decreaseAffinity(Math.floor(slippy/2)); //may decrease affinity                                   
+                                    self.hurt(damage); 
                                     if (!(self.isDead())) {
                                         slipString += "<br>"+tools.initCap(self.getDescriptivePrefix())+" injured.";
                                     };
@@ -3498,7 +3503,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount()/5));
 
                 //contagion?
-                resultString += enactContagion(player, playerLocation);
+                resultString += self.enactContagion(player, playerLocation);
 
                 //bleed?
                 if (_bleeding) {
