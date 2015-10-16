@@ -29,6 +29,7 @@
                 "isLiquid": true,
                 "charges": 2,
                 "plural": true,
+                "hidden": true,
                 "chargeUnit": "gallon",
                 "chargesDescription": "There's about $charges $chargeUnit in the tank",
                 "affinityModifier": 0,
