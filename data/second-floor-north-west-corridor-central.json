@@ -20,17 +20,10 @@
       },
       {
         "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "second-floor-north-west-corridor-central",
-        "destination": "camelids-a"
-      },
-      {
-        "object": "exit",
         "longname": "West",
         "direction": "w",
         "source": "second-floor-north-west-corridor-central",
-        "destination": "flowers-a"
+        "destination": "war-room"
       }
     ]
   }

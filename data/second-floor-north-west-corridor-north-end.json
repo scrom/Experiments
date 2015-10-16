@@ -4,12 +4,19 @@
     "displayName": "Second floor West corridor",
     "description": "You're in a North-South corridor at the North-West corner of the second floor. To the North is a staircase leading down.",
     "exits": [
+        {
+            "object": "exit",
+            "longname": "North",
+            "direction": "n",
+            "source": "second-floor-north-west-corridor-north-end",
+            "destination": "second-floor-back-stairs-west"
+        },
       {
         "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "second-floor-north-west-corridor-north-end",
-        "destination": "second-floor-back-stairs-west"
+        "longname": "West",
+        "direction": "w",
+        "source": "second-floor-north-west-corridor-north-central",
+        "destination": "flowers-a"
       },
       {
         "object": "exit",

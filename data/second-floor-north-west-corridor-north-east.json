@@ -16,7 +16,7 @@
         "longname": "East",
         "direction": "e",
         "source": "second-floor-north-west-corridor-north-east",
-        "destination": "camelids-b"
+        "destination": "camelids"
       },
       {
         "object": "exit",

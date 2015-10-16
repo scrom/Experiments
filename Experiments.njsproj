@@ -40,8 +40,7 @@
     <Content Include="data\bike-ambulance.json" />
     <Content Include="data\bowl.json" />
     <Content Include="data\buenosaires.json" />
-    <Content Include="data\camelids-a.json" />
-    <Content Include="data\camelids-b.json" />
+    <Content Include="data\camelids.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />
@@ -94,6 +93,11 @@
     <Content Include="data\ground-floor-fire-escape.json" />
     <Content Include="data\ground-floor-toilet.json" />
     <Content Include="data\hand-dryer.json" />
+    <Content Include="data\images\camelids.jpg" />
+    <Content Include="data\images\hookah.jpg" />
+    <Content Include="data\images\map.jpg" />
+    <Content Include="data\images\plaque.jpg" />
+    <Content Include="data\images\soapdispenser.jpg" />
     <Content Include="data\incidentals-blinkpipe.json" />
     <Content Include="data\is-area.json" />
     <Content Include="data\jeff-foster.json" />
@@ -293,11 +297,9 @@
     <Content Include="data\images\axe.jpg" />
     <Content Include="data\images\coffeemachine.jpg" />
     <Content Include="data\images\guitar.jpg" />
-    <Content Include="data\images\icecreamman.jpg" />
     <Content Include="data\images\librarytable.jpg" />
     <Content Include="data\images\morpheuschair.jpg" />
     <Content Include="data\images\mug.jpg" />
-    <Content Include="data\images\spy.jpg" />
     <Content Include="data\images\sword.jpg" />
     <Compile Include="client\js\client.js" />
     <Compile Include="client\js\main.js" />

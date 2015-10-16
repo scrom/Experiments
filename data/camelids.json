@@ -1,15 +1,15 @@
 ﻿{
     "object": "location",
-    "name": "camelids-a",
-    "displayName": "Camelids-A meeting room",
-    "description": "You're in Camelids-A. The UX team have filled the walls with post-it notes.<br>The table feels slightly too large for the room and it's a bit cramped in here.",
+    "name": "camelids",
+    "displayName": "Camelids meeting room",
+    "description": "You're in 'Camelids'. It's had a fairly recent makeover from the facilities team to give it a Moroccan theme with comfortable seating and tasteful decoration.<br>It blends the function of a meeting room with the space to relax and chat.<br>The UX team have filled one of the walls with post-it notes.",
     "exits": [
       {
         "object": "exit",
         "longname": "West",
         "direction": "w",
-        "source": "camelids-a",
-        "destination": "second-floor-north-west-corridor-central"
+        "source": "camelids",
+        "destination": "second-floor-north-west-corridor-north-east"
       }
     ],
     "inventory": [
