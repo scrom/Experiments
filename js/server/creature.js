@@ -3070,6 +3070,59 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString;
         };
         
+        self.calculateAndUpdateDelay = function (playerLocationName, playerAggression) {
+            //loop, destination and wait delays are all positive numbers if set
+            //currentDelay is -1 if not active. When activated it starts from 0 and counts up
+            //to whichever delay is active.
+            if (playerLocationName == _currentLocation.getName()) {
+                if (_waitDelay > 0 && _currentDelay < _waitDelay) {
+                    //reduce active delay
+                    _currentDelay++;
+                } else if (self.willFollow(playerAggression)) {
+                    //switch off and non-wait delay to follow player instead
+                    _currentDelay = -1;
+                } else {
+                    //won't follow and not in a wait delay
+                    //process delay if set... (_currentDelay starts from 0 and counts up)
+                    if (_currentDelay >= 3) {
+                        //switch off delay after 3 turns without player interaction
+                        //this will override any loop or destination delays but not wait delays
+                        _currentDelay = -1;
+                    } else {
+                        //will switch on delay if not already set (e.g. to hang around for up to 3 turns)
+                        _currentDelay++;
+                    };
+                };
+            } else if (_currentDelay > -1) {
+                //we're in a delay of some sort but player is not present
+                var delay = 0;
+                //determine which delay to use...
+                if (_waitDelay > 0) {
+                    //deliberate wiat takes precedence over others
+                    delay = _waitDelay;
+                        //console.log(self.getDisplayName()+": wait delay. Time remaining:"+eval(delay-_currentDelay));
+                } else if (_clearedDestinations.length == 0) {
+                    //loop delay takes precedence over destination delay
+                    delay = _loopDelay;
+                        //console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
+                } else {
+                    //lowest priority
+                    delay = _destinationDelay;
+                        //console.log(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
+                };
+                
+                //increment or clear delay
+                if (_currentDelay < delay - 1) {
+                    _currentDelay++;
+                } else {
+                    _currentDelay = -1; //clear delay
+                    if (_waitDelay > 0) {
+                        _waitDelay = 0; //clear wait delay if set
+                    };
+                };     
+            }; 
+        };
+        
         var closePreviouslyOpenedDoors = function (map) {
             //did we open a door on the last move?
             //close it again before changing location
@@ -3229,53 +3282,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
-                    if (_waitDelay >0) {
-                        _waitDelay--; //wait 
-                    } else if (self.willFollow(playerAggression)) {
-                        //switch off delay to follow player instead
-                        _currentDelay = -1;
-                    } else {
-                        //process delay if set...
-                        if (_currentDelay >= 3) { 
-                            //switch off delay after 3 turns without interaction - this will override any loop or destination delays
-                            _currentDelay = -1;
-                        } else {
-                            //will switch on delay if not already set
-                            _currentDelay++;
-                        };
-                    };
-
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
                     //re-fetch player location in case we just killed them!
                     //playerLocation = player.getCurrentLocation().getName();
                     partialResultString = resultString;
-                } else if (_currentDelay > -1) {
-                    //we're in a delay of some sort
-                    var delay = 0;
-                    //determine which delay to use...
-                    if (_waitDelay>0) {
-                        delay = _waitDelay;
-                        //console.log(self.getDisplayName()+": wait delay. Time remaining:"+eval(delay-_currentDelay));
-                    } else if (_clearedDestinations.length == 0) {
-                        delay = _loopDelay;
-                        //console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
-                    } else {
-                        delay = _destinationDelay;
-                        //console.log(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
-                    };
-
-                    //increment or clear delay
-                    if (_currentDelay < delay-1) { 
-                        _currentDelay++;
-                    } else {
-                        _currentDelay = -1; //clear delay
-                        if (_waitDelay>0) {
-                            _waitDelay = 0; //clear wait delay if set
-                        };
-                    };
-                    
-                }; 
+                };
+                
+                //update any active delays
+                self.calculateAndUpdateDelay(playerLocation, playerAggression);
 
                 //is a traveller, not delayed, not following player, not already acted...
                 if (((_traveller || (_canTravel && _destinations.length>0)) && (_currentDelay == -1)) && (!self.willFollow(playerAggression)) && (partialResultString.length ==0)) { 
@@ -3297,7 +3312,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             self.clearPath();
                             self.clearDestination();
                             _destinationBlockedCount = 0;
-                            //if creature is in home location, stay there a short while.
+                            //if creature is in home location, stay there a short while. (activate wait delay)
                             if (_currentLocation.getName() == _homeLocation.getName()) {
                                 var randomWait = Math.floor(Math.random() * 7);
                                 _waitDelay = 3+randomWait;
