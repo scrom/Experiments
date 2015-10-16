@@ -4330,10 +4330,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 if (receiver.getType() == "creature") {
-                    if (receiver.isDead()) {return receiver.getPrefix()+"'s dead already."};
-
-                    //regardless of outcome, you're not making yourself popular
-                    receiver.decreaseAffinity(1);
 
                     if (receiver.getSubType() == "friendly") {
                         return receiver.hurt(0, self);
