@@ -1917,6 +1917,26 @@ exports.killingCreatureLeavesBloodInLocation = function (test) {
 exports.killingCreatureLeavesBloodInLocation.meta = { traits: ["Creature Test", "Kill Trait", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
 
+exports.killingCreatureWithInventoryReportsCorrectMessage = function (test) {
+    
+    var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
+    var l0 = new location.Location('home', 'Home', "You're home", {});
+    var inv = c0.getInventoryObject();
+    inv.add(a0);
+    l0.addObject(c0);
+    c0.go(null, l0);
+    
+    
+    var expected = "<br>The creature is dead. Now you can steal all its stuff.";
+    var actual = c0.kill();
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.killingCreatureWithInventoryReportsCorrectMessage.meta = { traits: ["Creature Test", "Kill Trait"], description: "Test that a freshly killed creature with inventory reports right messsage to player." };
+
+
 exports.CreatureCanSlipOnWetFloor = function (test) { 
 
     var l0 = new location.Location('home','home','a home location');
@@ -1988,14 +2008,16 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
 
     //*note* - occasionaly - even with this much liquid, they might still not slip.
     //this matches player behaviour for fairness.
-    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br><br><br><br><br>The creature is dead. Now you can steal all its stuff.";
+    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br><br><br>The creature is dead.";
     var actualResult = c0.tick(5, m1, p0);
+    console.log(actualResult);
     var attempts = 1;
     while (actualResult != expectedResult && attempts < 5) {
         //a 0 from the random slip algorithm will still not slip so try again
         console.log("Fail: slip did not occur - attempting try# "+attempts+"...");
         c0.go("n", l1);
         actualResult = c0.tick(5, m1, p0);
+        console.log(actualResult);
         attempts++;
     };
     console.log("Expected: "+expectedResult);

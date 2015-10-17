@@ -2417,7 +2417,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _currentLocation.addLiquid("blood");
             };
 
-            var resultString = "<br>"+tools.initCap(self.getDisplayName())+" is dead. Now you can steal all "+_genderPossessiveSuffix+" stuff.";
+            var resultString = "<br>" + tools.initCap(self.getDisplayName()) + " is dead.";
+            if (self.getInventorySize(true) > 0) {
+                resultString += " Now you can steal all " + _genderPossessiveSuffix + " stuff.";
+            };
+
             resultString += self.exposePositionedItems();
 
             //remove inactive missions - active ones will be handled elsewhere
@@ -2740,7 +2744,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
-        self.willInitiateConversation = function() {
+        self.willInitiateConversation = function () {
+            if (self.isDead()) {
+                return false;
+            };
             for (var i=0; i< _missions.length;i++) {
                 if (_missions[i].willInitiateConversation()) {
                     return true;
@@ -3328,14 +3335,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString;
         };
 
-        self.tick = function(time, map, player) {
+        self.tick = function (time, map, player) {
+            //quick return if already dead
+            if (self.isDead()) { return ""; };
+
             //important note. If the player is not in the same room as the creature at the end of the creature tick
             //none of the results of this tick will be visible to the player.
             var resultString = "";
             var partialResultString = "";
-
-            //quick return if already dead
-            if (self.isDead()) {return resultString;};
 
             var playerLocation = player.getCurrentLocation().getName();
             var playerAggression = player.getAggression();
@@ -3444,7 +3451,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         var originalLocationName = _currentLocation.getName();
                         var newLocationName = originalLocationName;
 
-                        var exposedItems = self.exposePositionedItems();
+                        var exposedItemString = self.exposePositionedItems();
                         self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
                         newLocationName = _currentLocation.getName();
 
@@ -3462,9 +3469,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     slipString =".";
                                 } else if (randomInt <= (Math.floor(slippy*1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
                                     slipString = " and slips on the mess on the floor."
-                                    var damage = Math.min(slippy*5, 25); //the slippier it is, the more damage received - up to a limit.
+                                    var slipDamage = Math.min(slippy*5, 25); //the slippier it is, the more damage received - up to a limit.
                                     self.decreaseAffinity(Math.floor(slippy/2)); //may decrease affinity                                   
-                                    self.hurt(damage); 
+                                    self.hurt(slipDamage); 
                                     if (!(self.isDead())) {
                                         slipString += "<br>"+tools.initCap(self.getDescriptivePrefix())+" injured.";
                                     };
@@ -3492,7 +3499,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 resultString += movementVerb + " " + exit.getLongName();
                                 resultString += "."; 
                                 if (showMoveToPlayer) {
-                                    partialResultString += resultString+exposedItems;
+                                    partialResultString += resultString+exposedItemString;
                                 };
                             };  
                         };
@@ -3534,6 +3541,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             };
                         };
                     } else {
+                        //increment damage during tick loop but only apply "hurt" once at end.
                         damage+=2;
                     };
                 } else {
@@ -3545,12 +3553,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };     
 
-            if (healPoints>0) {self.recover(healPoints);};   //heal before damage - just in case it's enough to not get killed.
+            if (healPoints > 0) { self.recover(healPoints); };   //heal before damage - just in case it's enough to not get killed.
+            
+            //we manually handle damage here so that we only report death, not injuries.
             if (damage>0) {_hitPoints -=damage;};
             //consider fleeing here if not quite dead
             if (self.isDead()) {
                 resultString += self.kill();                
-            } ;
+            };
                         
             if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
             if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+tools.initCap(self.getDisplayName())+" is bleeding. ";};    
@@ -3569,7 +3579,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
                 return resultString;
             } else if (playerLocation == homeLocation) {
-                return partialResultString; //just the outcome of fleeing.
+                return partialResultString; //just the outcome of fleeing/helping/leaving.
             } else {
                 return "";
                 //console.log(resultString);
