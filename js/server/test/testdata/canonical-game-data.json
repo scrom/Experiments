@@ -471,7 +471,7 @@
         "object": "artefact",
         "name": "screen",
         "description": "flat-panel screen",
-        "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
+        "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br><br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
         "attributes": {
           "weight": 51,
           "isBreakable": true,
@@ -495,24 +495,24 @@
             "object": "mission",
             "name": "destroyscreen",
             "displayName": "destroy the screen",
-            "description": "It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
+            "description": "<br>It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
             "attributes": {
               "missionObject": "screen",
               "static": true
             },
             "failAttributes": {
-              "time": 10
-            },
-            "conditionAttributes": {
               "isDestroyed": true
             },
+            "conditionAttributes": {
+              "time": 25
+            },
             "reward": {
+              "message": "<br>You forgot to destroy the screen in the Atrium.<br>To be honest, it's probably better that you left it alone anyway."
+            },
+            "fail": {
               "score": -25,
               "health": -15,
               "message": "Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen."
-            },
-            "fail": {
-              "message": "You didn't manage to destroy the screen quickly enough.<br>Never mind, it's probably better left alone anyway."
             }
           }
         ]
@@ -653,7 +653,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
+          "message": "<br>Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
         }
       },
       {
@@ -684,7 +684,7 @@
         "reward": {
           "score": 50,
           "hunt": 1,
-          "message": "You're getting pretty slick at this hunting thing. If you're trying to track others down you can probably speed things up by <i>follow</i>ing them from now on."
+          "message": "<br>You're getting pretty slick at this hunting thing. If you're trying to track others down you can probably speed things up by <i>follow</i>ing them from now on."
         }
       },
       {
