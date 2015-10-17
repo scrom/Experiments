@@ -1274,8 +1274,20 @@ exports.Action = function Action(player, map, fileManager) {
                         if (creature.getType() == "creature") {
                             return "Killing "+creature.getName()+":<br>"+creature.kill();
                         };
+                        return "cannot kill " + _object0;
                     };
-                    return "cannot kill "+_object0;               
+                    return "cannot find "+_object0+" to kill";               
+                };
+                
+                if (_verb == '+hurt') {
+                    var creature = _map.getObject(_object0);
+                    if (creature) {
+                        if (creature.getType() == "creature") {
+                            return "Hurting " + creature.getName() + ":<br>" + creature.hurt(_object1);
+                        };
+                        return "cannot hurt " + _object0;
+                    };
+                    return "cannot find " + _object0 + " to hurt";
                 };
                 
                 if (_verb == '+die') {

@@ -2091,7 +2091,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.hurt = function(pointsToRemove, attacker) {
-            if (self.isDead()) {return self.getDisplayName()+"'s dead already. Attacking corpses is probably crossing a line somewhere.";};
+            if (self.isDead()) {
+                if (attacker) {
+                    return self.getDisplayName() + "'s dead already. Attacking corpses is probably crossing a line somewhere.";
+                };
+                return "";
+            };
 
             var resultString = "";
 
@@ -3138,9 +3143,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             }; 
         };
         
-        self.willMove = function (partialResultString, playerLocation, playerAggression) {
+        self.willMove = function (hasActedSoFarString, playerLocation, playerAggression) {
             //figure out if creature will or will not automatically move
-            if (partialResultString.length > 0) { return false; }; //has already acted
+            if (hasActedSoFarString.length > 0) { return false; }; //has already acted
             if (_currentDelay > -1) { return false; }; //is in a delay cycle
             if (!(_traveller || (_canTravel && _destinations.length > 0))) { return false; }; //can't or won't travel
             if (playerLocation == _currentLocation.getName() && self.willFollow(playerAggression)) { return false; }; //will follow player instead
@@ -3342,7 +3347,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //important note. If the player is not in the same room as the creature at the end of the creature tick
             //none of the results of this tick will be visible to the player.
             var resultString = "";
-            var partialResultString = "";
+            var visibleResultString = "";
 
             var playerLocation = player.getCurrentLocation().getName();
             var playerAggression = player.getAggression();
@@ -3350,8 +3355,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var damage = 0;
             var healPoints = 0;
+            var showMoveToPlayer = false;
+
             //repeat for number of ticks
-            for (var t=0; t < time; t++) {
+            for (var t = 0; t < time; t++) {
+                //start with a clear resultString
+                resultString = "";
+
                 //console.log("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick();
 
@@ -3364,20 +3374,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
+                    showMoveToPlayer = true;
                     resultString += self.helpPlayer(player);
                     resultString += self.fightOrFlight(map, player);
                     //re-fetch player location in case we just killed them!
                     //playerLocation = player.getCurrentLocation().getName();
-                    partialResultString = resultString;
+                    visibleResultString += resultString;
                 };
+                
+                //clear resultString back down again;
+                resultString = "";
                 
                 //update any active delays
                 self.calculateAndUpdateDelay(playerLocation, playerAggression);
                 
                 //if creature will move on this tick
-                if (self.willMove(partialResultString, playerLocation, playerAggression)) { 
-                    var showMoveToPlayer = false;
-                    if (playerLocation == _currentLocation.getName()) {showMoveToPlayer = true;};                   
+                if (self.willMove(visibleResultString, playerLocation, playerAggression)) {         
                     
                     //start of creature moving
                     var exit;
@@ -3458,56 +3470,81 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //should really close the door behind us here but we do it on the next cycle. This has the added benefit of a player being able to slip through                        
 
                         if (newLocationName != originalLocationName) { //move was successful
-                            resultString += "<br>"+tools.initCap(self.getDescription())+" ";
-                                   
+
+                            //if creature ends up in player location (rather than starting there)...
+                            if (playerLocation == _currentLocation.getName()) {
+                                showMoveToPlayer = true;
+                                visibleResultString += "<br>" + tools.initCap(self.getDescription()) + " ";
+                                var movementVerb = "wanders";
+                                if (_bleeding) {
+                                    movementVerb = "stumbles";
+                                };
+                                if (_bleeding) {
+                                    movementVerb = "staggers";
+                                } else if (healthPercent() < 75) {
+                                    movementVerb = "stumbles";
+                                };
+                                if (exitAction) {movementVerb = exitAction+"s";};
+                                visibleResultString += movementVerb + " in";
+                                if (openedDoor) {
+                                    visibleResultString += " through " + openedDoor.getDisplayName();  //@todo - bug - this is actually the door/name from the other side!
+                                };
+                            } else {
+                                if (showMoveToPlayer) {
+                                    //creature was previously in player location but is not any more - show them leaving but not slipping
+                                    visibleResultString += "<br>" + tools.initCap(self.getDescription()) + " ";
+                                    if (openedDoor) {
+                                        visibleResultString += "opens " + openedDoor.getDisplayName() + " and ";
+                                    };
+                                    var movementVerb = "heads";
+                                    if (_bleeding) {
+                                        movementVerb = "staggers";
+                                    } else if (healthPercent() < 75) {
+                                        movementVerb = "limps";
+                                    };
+                                    if (exit.getLongName() == "in") {movementVerb = "goes";};
+                                    if (exitAction) {movementVerb = exitAction+"s";};
+                                    visibleResultString += movementVerb + " " + exit.getLongName();
+                                    visibleResultString += "."; 
+                                    visibleResultString += exposedItemString;
+                                    showMoveToPlayer = false;
+                                };
+                            };
+                           
                             //slip on liquid in new location?
                             var slippy = _currentLocation.slipLevel();
                             var slipString = ".";
-                            if (slippy >0) {
-                                var randomInt = Math.floor(Math.random() * 10); 
+                            if (slippy > 0) {
+                                var randomInt = Math.floor(Math.random() * 10);
                                 if (randomInt == 0) {
-                                    slipString =".";
-                                } else if (randomInt <= (Math.floor(slippy*1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
+                                    slipString = ".";
+                                } else if (randomInt <= (Math.floor(slippy * 1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
                                     slipString = " and slips on the mess on the floor."
-                                    var slipDamage = Math.min(slippy*5, 25); //the slippier it is, the more damage received - up to a limit.
-                                    self.decreaseAffinity(Math.floor(slippy/2)); //may decrease affinity                                   
-                                    self.hurt(slipDamage); 
+                                    var slipDamage = Math.min(slippy * 5, 25); //the slippier it is, the more damage received - up to a limit.
+                                    self.decreaseAffinity(Math.floor(slippy / 2)); //may decrease affinity                                   
+                                    var tempHurtString = self.hurt(slipDamage);
                                     if (!(self.isDead())) {
-                                        slipString += "<br>"+tools.initCap(self.getDescriptivePrefix())+" injured.";
+                                        slipString += "<br>" + tools.initCap(self.getDescriptivePrefix()) + " injured.";
+                                    } else {
+                                        slipString += tempHurtString;
                                     };
                                 };
                             };
 
-                            //if creature ends up in player location (rather than starting there)...
-                            if (player.getCurrentLocation().getName() == _currentLocation.getName()) {
-                                var movementVerb = "wanders";
-                                if (_bleeding) {movementVerb = "stumbles";};
-                                if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += movementVerb + " in";
-                                if (openedDoor) {
-                                    resultString += " through " + openedDoor.getDisplayName();  //@todo - bug - this is actually the door/name from the other side!
-                                };
-                                resultString += slipString;
-                            } else {
-                                if (openedDoor) {
-                                    resultString += "opens " + openedDoor.getDisplayName() + " and ";
-                                };
-                                var movementVerb = "heads";
-                                if (_bleeding) {movementVerb = "limps";};
-                                if (exit.getLongName() == "in") {movementVerb = "goes";};
-                                if (exitAction) {movementVerb = exitAction+"s";};
-                                resultString += movementVerb + " " + exit.getLongName();
-                                resultString += "."; 
-                                if (showMoveToPlayer) {
-                                    partialResultString += resultString+exposedItemString;
-                                };
-                            };  
+                            if (showMoveToPlayer) {
+                                visibleResultString += slipString;
+                            };
+
                         };
                     };            
                 };
 
                 //leave a trace
-                _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount()/5));
+                _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount() / 5));
+                
+                if (self.isDead()) {
+                    return visibleResultString;
+                };
 
                 //contagion?
                 resultString += self.enactContagion(player, playerLocation);
@@ -3551,15 +3588,31 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         _timeSinceEating++; //don't increment beyond what's needed
                     };
                 };
-            };     
+
+                if (showMoveToPlayer) {
+                    visibleResultString += resultString;
+                    showMoveToPlayer = false;
+                };
+            };
+            
+            //everything a player should see will now be in visibleResultString so clear resultString again
+            resultString = "";
+            if (playerLocation == _currentLocation.getName()) {
+                showMoveToPlayer = true;
+            };
 
             if (healPoints > 0) { self.recover(healPoints); };   //heal before damage - just in case it's enough to not get killed.
             
             //we manually handle damage here so that we only report death, not injuries.
             if (damage>0) {_hitPoints -=damage;};
-            //consider fleeing here if not quite dead
+            //@todo - if affinity < 0, consider fleeing here if not quite dead
             if (self.isDead()) {
-                resultString += self.kill();                
+                resultString += self.kill();
+                if (showMoveToPlayer) {
+                    visibleResultString += resultString;
+                };
+                
+                return visibleResultString;       
             };
                         
             if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
@@ -3577,9 +3630,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         resultString += self.initiateConversation(player);
                     };
                 };
-                return resultString;
+                if (showMoveToPlayer) {
+                    return visibleResultString + resultString;
+                };
             } else if (playerLocation == homeLocation) {
-                return partialResultString; //just the outcome of fleeing/helping/leaving.
+                return visibleResultString; //just the outcome of fleeing/helping/leaving.
             } else {
                 return "";
                 //console.log(resultString);

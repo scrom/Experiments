@@ -2008,7 +2008,7 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
 
     //*note* - occasionaly - even with this much liquid, they might still not slip.
     //this matches player behaviour for fairness.
-    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br><br><br>The creature is dead.";
+    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br>The creature is dead.";
     var actualResult = c0.tick(5, m1, p0);
     console.log(actualResult);
     var attempts = 1;
