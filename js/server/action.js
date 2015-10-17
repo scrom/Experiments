@@ -1320,7 +1320,8 @@ exports.Action = function Action(player, map, fileManager) {
 
                 if (_verb == '+wait') {
                     _ticks = parseInt(_object0);
-                    return "Waiting "+_object0+" ticks..."+_player.incrementWaitCount(_ticks);       
+                    _player.incrementWaitCount(_ticks);
+                    return "Waiting " + _object0 + " ticks...";       
                 };
 
                 if (_verb == '+go') {

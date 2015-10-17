@@ -192,7 +192,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
+          "message": "<br>Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
         }
       },
       {
@@ -223,7 +223,7 @@
         "reward": {
           "score": 50,
           "hunt": 1,
-          "message": "You're getting pretty slick at this hunting thing. If you're trying to track others down you can probably speed things up by <i>follow</i>ing them from now on."
+          "message": "<br>You're getting pretty slick at this hunting thing. If you're trying to track others down you can probably speed things up by <i>follow</i>ing them from now on."
         }
       },
       {
