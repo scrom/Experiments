@@ -11111,7 +11111,7 @@
             "object": "mission",
             "name": "vicsbook",
             "displayName": "give Vic something interesting to read",
-            "description": "Vic would like something interesting to read.",
+            "description": "Things are pretty quiet down here today and Vic looks bored. I reckon she'd appreciate something interesting to read.",
             "attributes": {
               "parent": "keyfob",
               "missionObject": "50 shades",

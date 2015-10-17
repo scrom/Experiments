@@ -903,7 +903,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (_hitPoints > _maxHitPoints) {_hitPoints = _maxHitPoints;};
             };
             if (changeBy < 0) {
-                self.reduceHitPoints(changeBy*-1);
+                self.hurt(changeBy*-1);
                 //note - if hp ends up <=0, player tick will kill player.
             };
         };
