@@ -2,6 +2,7 @@
 var creature = require('../creature.js');
 var player = require('../player.js');
 var artefact = require('../artefact.js');
+var contagion = require('../contagion.js');
 var mission = require('../mission.js');
 var location = require('../location.js');
 var mapBuilder = require('../mapbuilder.js');
@@ -777,7 +778,7 @@ exports.weakUnarmedCreatureWillCollectWeapon = function (test) {
 
     l.addObject(weakWeapon);
     l.addObject(lightWeapon);
-    var expected = "<br>The creature picked up the light weapon. Watch out!<br>";
+    var expected = "<br>The creature picked up the light weapon. Watch out!";
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
@@ -837,7 +838,7 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne = function (test) {
     l.addObject(mediumWeapon);
     l.addObject(heavyWeapon);
     l.addObject(lightWeapon);
-    var expected = "<br>The creature dropped the weak weapon.<br>The creature picked up the heavy weapon. Watch out!<br>";
+    var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!";
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
@@ -846,6 +847,43 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne = function (test) {
 };
 
 exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will collect a better weapon" };
+
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInSameLocation = function (test) {
+    var l = new location.Location("room", "a room", false, true, 0);
+    var m1 = new map.Map();
+    m1.addLocation(l);
+    var p0 = new player.Player({ username: "player" }, m1);
+    p0.setLocation(l);
+    p0.setAggression(2);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName, 'beastie', 'a small beastie', { weight: 120, attackStrength: 15, gender: 'unknown', type: 'creature', carryWeight: 50, health: 120, affinity: -10 });
+    c0.go("n", l);
+    
+    var weakWeaponAttributes = { weight: 1, attackStrength: 8, type: "weapon", canCollect: true };
+    var lightWeaponAttributes = { weight: 2, attackStrength: 12, type: "weapon", canCollect: true };
+    var mediumWeaponAttributes = { weight: 4, attackStrength: 25, type: "weapon", canCollect: true };
+    var heavyWeaponAttributes = { weight: 6, attackStrength: 50, type: "weapon", canCollect: true };
+    
+    var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
+    var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
+    
+    c0.receive(weakWeapon);
+    
+    l.addObject(mediumWeapon);
+    l.addObject(heavyWeapon);
+    l.addObject(lightWeapon);
+    var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!<br>It attacks you. You feel weaker. ";
+    var actual = c0.tick(1, m1, p0);
+    console.log("expected: " + expected);
+    console.log("actual: " + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInSameLocation.meta = { traits: ["Creature Test", "Weapon Trait", "Tick Trait"], description: "Test that an armed creature will collect a better weapon" };
 
 
 exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect = function (test) {
@@ -1351,7 +1389,34 @@ exports.unlockedTimedDoorWillStayOpenFor1Tick = function (test) {
     test.ok(actual == expected);
     test.done();
 };
-exports.unlockedTimedDoorWillStayOpenFor1Tick.meta = { traits: ["Door Trait", "Lock Trait"], description: "Test that a time lock door locks on its own after specified time." };
+exports.unlockedTimedDoorWillStayOpenFor1Tick.meta = { traits: ["Door Trait", "Lock Trait", "Tick Trait"], description: "Test that a time lock door locks on its own after specified time." };
+
+exports.creatureHealOnTickConsumesAllOfMedicalKitProperly = function (test) {
+    
+    var m = mb.buildMap();
+    var p0 = new player.Player({ username: "player" }, m);
+    p0.setLocation(m.getLocation('customer-delight-south-west'));
+    var alice = m.getCreature("alice easey");
+    alice.wait(null, 10);
+    
+    var expected = '<br>Alice Easey uses up the last of her first aid kit to heal herself.';
+    var actual = "";
+    var attempts = 0;
+    alice.hurt(90);
+    while (actual != expected && attempts < 6) {
+        actual = alice.tick(1, m, p0);
+        console.log(actual);
+        alice.hurt(40);
+        attempts++;
+    };
+    
+    console.log("Total ticks: " + attempts);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureHealOnTickConsumesAllOfMedicalKitProperly.meta = { traits: ["Creature Test", "Heal Trait", "Tick Trait"], description: "Test that a creature that heals when ticking will use their kit up." };
 
 
 exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = function (test) {
@@ -1966,7 +2031,7 @@ exports.CreatureCanSlipOnWetFloor = function (test) {
     console.log(p0.examine("look"));
     //console.log(c0.tick(15, m1, p0));
 
-    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br>It's injured.";
+    var expectedResult = "<br>A beastie wanders in and slips in the mess on the floor. It's injured.";
     var actualResult = c0.tick(5, m1, p0);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1974,7 +2039,7 @@ exports.CreatureCanSlipOnWetFloor = function (test) {
     test.done();
 };
 
-exports.CreatureCanSlipOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait"], description: "Test that player can slip on a wet floor." };
+exports.CreatureCanSlipOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
 
 
 exports.CreatureCanSlipAndDieOnWetFloor = function (test) { 
@@ -1988,7 +2053,9 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
     m1.addLocation(l1);
     p0.setLocation(l0);
     var creatureName = 'creature';
-    var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:20, affinity:0, canTravel: true, traveller: true, homeLocation: l0});
+    var c0 = new creature.Creature(creatureName, 'beastie', 'a small beastie', { weight: 120, attackStrength: 10, gender: 'unknown', type: 'creature', carryWeight: 50, health: 20, affinity: 0, canTravel: true, traveller: true, homeLocation: l0 });
+    var inv = c0.getInventoryObject();
+    inv.add(a0);
     c0.go("n", l1);
 
     //add enough liquids to guarantee slipping...
@@ -2008,7 +2075,7 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
 
     //*note* - occasionaly - even with this much liquid, they might still not slip.
     //this matches player behaviour for fairness.
-    var expectedResult = "<br>A beastie wanders in and slips on the mess on the floor.<br>The creature is dead.";
+    var expectedResult = "<br>A beastie wanders in, slips in the mess on the floor and dies from its injuries. Now you can steal all its stuff.";
     var actualResult = c0.tick(5, m1, p0);
     console.log(actualResult);
     var attempts = 1;
@@ -2026,7 +2093,44 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
     test.done();
 };
 
-exports.CreatureCanSlipAndDieOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait"], description: "Test that player can slip on a wet floor." };
+exports.CreatureCanSlipAndDieOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
+
+
+exports.CreatureWillEnactContagion = function (test) {
+    var con = new contagion.Contagion("death", "deathness", { "communicability": 1, "transmission": "bite", "symptoms": [{ "action": "hurt", "health": "3", "frequency": 1 }, {"action":"bite", "frequency":1}], "duration": -1 });
+    var l0 = new location.Location('home', 'home', 'a home location');
+    var p0 = new player.Player({ username: "user" });
+    var m1 = new map.Map();
+    m1.addLocation(l0);
+    p0.setLocation(l0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName, 'beastie', 'a small beastie', { weight: 120, attackStrength: 10, gender: 'unknown', type: 'creature', carryWeight: 50, health: 20, affinity: 0, canTravel: true, traveller: true, homeLocation: l0 });
+    c0.setContagion(con);    
+    var inv = c0.getInventoryObject();
+    inv.add(a0);
+    c0.go(null, l0);
+        
+
+    var expectedResult = "The creature is hurt. It's not happy.<br>It bites you. You feel weaker. <br><br>It's hurt. It's taken a fair beating.<br>It bites you. You feel weaker. <br>";
+    var actualResult = c0.tick(2, m1, p0);
+    console.log(actualResult);
+    var attempts = 1;
+    while (actualResult != expectedResult && attempts < 5) {
+        //a 0 from the random slip algorithm will still not slip so try again
+        console.log("Fail: contagion did not occur - attempting try# " + attempts + "...");
+        c0.go("n", l1);
+        actualResult = c0.tick(2, m1, p0);
+        console.log(actualResult);
+        attempts++;
+    };
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.CreatureWillEnactContagion.meta = { traits: ["Player Test", "Contagion Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
+
 
 exports.deneWontEatMissionChocolateEvenWhenHungry = function (test) {
 

@@ -1094,7 +1094,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.helpPlayer = function(player) {
+        self.helpPlayer = function (player) {
+            //will only help player if not bleeding themselves
+            if (self.isBleeding()) {
+                return "";
+            };
             var resultString = "";
             if (_affinity >= 3 && self.getSubType() != "animal") {
                 if (player.isBleeding()) {
@@ -2230,7 +2234,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else { 
                     var recipient = self.getDisplayName();
                     if (healer.getDisplayName() == recipient) {recipient = _genderSuffix+"self";};
-                    resultString += tools.initCap(healer.getDisplayName())+" uses "+medicalArtefact.getDescription()+" to heal "+recipient+".";
+                    resultString += tools.initCap(healer.getDisplayName()) + " uses " + medicalArtefact.getDescription() + " to heal " + recipient + ".";
                 };
             };
 
@@ -2281,7 +2285,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.bite = function(recipient) {
             var resultString = "<br>";
             resultString+=tools.initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
-            resultString+="<br>"+recipient.hurt(Math.floor(_attackStrength/5));
+            resultString+= recipient.hurt(Math.floor(_attackStrength/5));
 
             //2 way transfer of contagion/antibodies!
             resultString+=self.transmit(recipient, "bite");
@@ -2595,8 +2599,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
 
-        self.wait = function(player, duration) {            
-
+        self.wait = function(player, duration) {
+            if (!player) {
+                //mostly to help testability
+                _currentDelay = 0; //turn on delay
+                _waitDelay += duration;
+                return "";
+            };
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
             if (initialReply) {
@@ -3045,8 +3054,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.collectBestAvailableWeapon = function() {
-           // console.log("attempting to collect weapon");
+            // console.log("attempting to collect weapon");
             //collect the strongest non-breakable weapon.
+
             if (self.getSubType() == "animal") {return "";};
             var resultString = "";            
             var selectedWeaponStrength = self.getBaseAttackStrength(); //creatures have a base attack strength but if carrying a weapon, use that as a baseline.            
@@ -3078,14 +3088,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _inventory.add(selectedWeapon);
             _currentLocation.removeObject(selectedWeapon.getName());
             
+            resultString += "<br>" + tools.initCap(self.getDisplayName());
+            
             //drop old weapon. (prevents creature weapon harvesting)
             if (currentWeapon) {
                 _inventory.remove(currentWeapon.getName());
                 _currentLocation.addObject(currentWeapon);
-                resultString += '<br>'+tools.initCap(self.getDisplayName())+" dropped "+currentWeapon.getDisplayName()+".";
+                var currentWeaponName = currentWeapon.getDisplayName().replace("the ", self.getPossessiveSuffix()+" ");
+                resultString += " dropped " + currentWeaponName + " and";
             };
 
-            resultString += '<br>'+tools.initCap(self.getDisplayName())+" picked up "+selectedWeapon.getDisplayName()+". Watch out!<br>";
+            resultString += " picked up "+selectedWeapon.getDisplayName()+". Watch out!";
 
             return resultString;
         };
@@ -3356,6 +3369,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var damage = 0;
             var healPoints = 0;
             var showMoveToPlayer = false;
+            var visiblyHealedWithKit = false;
+            
+            var localDisplayName = tools.initCap(self.getDisplayName()); //we use this lots.
+            var localDescriptivePrefix = tools.initCap(self.getDescriptivePrefix()); //and replace it with this
+            var localPrefix = tools.initCap(self.getPrefix()); //and replace it with this
 
             //repeat for number of ticks
             for (var t = 0; t < time; t++) {
@@ -3369,14 +3387,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //if creature is hostile, collect available weapons
                 if (self.isHostile(playerAggression)) {
-                    resultString += self.collectBestAvailableWeapon();
+                    resultString += self.collectBestAvailableWeapon(); // may return sentence with <br>+self.getDisplayName()
                 };
 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
                     showMoveToPlayer = true;
-                    resultString += self.helpPlayer(player);
-                    resultString += self.fightOrFlight(map, player);
+                    var tempResultString = "";
+                    tempResultString += self.helpPlayer(player);  // may return sentence with <br>+self.getDisplayName()
+                    tempResultString += self.fightOrFlight(map, player); //may return sentence with <br>+self.getDisplayName()
+                    
+                    if (resultString.indexOf(localDisplayName) > -1) {
+                        //we've already used their name once or more. Don't use it again.
+                        tempResultString = tempResultString.replace(localDisplayName, localPrefix);
+                    };
+                    resultString += tempResultString;
+
                     //re-fetch player location in case we just killed them!
                     //playerLocation = player.getCurrentLocation().getName();
                     visibleResultString += resultString;
@@ -3394,7 +3420,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //start of creature moving
                     var exit;
 
-                    //hunting player?
+                    //hunting player (including mission hunt flags)?
                     if (self.isHuntingPlayer()) {
                         _destinationBlockedCount = 0;                    
                         exit = _currentLocation.getExitWithBestTrace('player',map, _inventory);
@@ -3470,11 +3496,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //should really close the door behind us here but we do it on the next cycle. This has the added benefit of a player being able to slip through                        
 
                         if (newLocationName != originalLocationName) { //move was successful
+                            var movementPrefixString = tools.initCap(self.getDescription());
+                            if (visibleResultString.indexOf(localDisplayName) > -1) {
+                                //we've already used their name once or more. Don't use it again.
+                                movementPrefixString = localPrefix;
+                            };
 
                             //if creature ends up in player location (rather than starting there)...
                             if (playerLocation == _currentLocation.getName()) {
                                 showMoveToPlayer = true;
-                                visibleResultString += "<br>" + tools.initCap(self.getDescription()) + " ";
+                                visibleResultString += "<br>" + movementPrefixString + " ";
                                 var movementVerb = "wanders";
                                 if (_bleeding) {
                                     movementVerb = "stumbles";
@@ -3492,7 +3523,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             } else {
                                 if (showMoveToPlayer) {
                                     //creature was previously in player location but is not any more - show them leaving but not slipping
-                                    visibleResultString += "<br>" + tools.initCap(self.getDescription()) + " ";
+                                    visibleResultString += "<br>" + movementPrefixString + " ";
                                     if (openedDoor) {
                                         visibleResultString += "opens " + openedDoor.getDisplayName() + " and ";
                                     };
@@ -3519,14 +3550,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 if (randomInt == 0) {
                                     slipString = ".";
                                 } else if (randomInt <= (Math.floor(slippy * 1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
-                                    slipString = " and slips on the mess on the floor."
                                     var slipDamage = Math.min(slippy * 5, 25); //the slippier it is, the more damage received - up to a limit.
                                     self.decreaseAffinity(Math.floor(slippy / 2)); //may decrease affinity                                   
                                     var tempHurtString = self.hurt(slipDamage);
                                     if (!(self.isDead())) {
-                                        slipString += "<br>" + tools.initCap(self.getDescriptivePrefix()) + " injured.";
+                                        slipString = " and slips in the mess on the floor. " + tools.initCap(self.getDescriptivePrefix()) + " injured.";
                                     } else {
-                                        slipString += tempHurtString;
+                                        tempHurtString = tempHurtString.replace("<br>"+localDisplayName+" is dead.", "")
+                                        slipString = ", slips in the mess on the floor and dies from "+self.getPossessiveSuffix()+" injuries."+tempHurtString;
                                     };
                                 };
                             };
@@ -3547,7 +3578,33 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
 
                 //contagion?
-                resultString += self.enactContagion(player, playerLocation);
+                var enactedContagion = false;
+                var contagionString = self.enactContagion(player, playerLocation); //may return 2 sentences starting with self.getDisplayName() etc. - per tick
+                if (contagionString && showMoveToPlayer) {
+                    enactedContagion = true;
+                    //clean up contagion string output to remove repetition of creature name. (issue #221 - this fix is a lot messier than the rest.)
+                    if (visibleResultString.indexOf(localDisplayName) > -1 
+                        || resultString.indexOf(localDisplayName) > -1 
+                        || contagionString.lastIndexOf(localDisplayName) > localDisplayName.length) {
+                        
+                        var tempKeep = contagionString.slice(0, contagionString.indexOf(localDisplayName) + localDisplayName.length);
+                        contagionString = contagionString.slice(contagionString.indexOf(localDisplayName) + localDisplayName.length);
+                        //we've already used their name once or more. Don't use it again.
+                        //catch both "x bites y" and "x is injured"
+                        contagionString = contagionString.replace(localDisplayName, localPrefix);
+                        contagionString = contagionString.replace(localDisplayName, localPrefix);
+                        contagionString = contagionString.replace(localPrefix + " is ", localDescriptivePrefix + " ");
+                        
+                        if (visibleResultString.indexOf(localDisplayName) > -1 || resultString.indexOf(localDisplayName) > -1) {
+                            contagionString = localPrefix + contagionString;
+                            contagionString = contagionString.replace(localPrefix + " is ", localDescriptivePrefix + " ");
+                        } else {
+                            contagionString = tempKeep + contagionString;
+                        };
+                    };
+                    
+                    resultString += contagionString;
+                };
 
                 //bleed?
                 if (_bleeding) {
@@ -3557,23 +3614,39 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //attempt to heal...
 
                     //is there a medicalArtefact available?
-                    var medicalArtefact = _inventory.getObjectByType("medical");
-                    var locationObject = false;
-                    if (!(medicalArtefact)) {
-                         medicalArtefact = _currentLocation.getObjectByType("medical");
-                         locationObject = true;
+                    var medicalArtefact;
+                    if (!enactedContagion) {
+                        //only has it mentally together enough to heal if did not enact contagion
+                        medicalArtefact = _inventory.getObjectByType("medical");
+                        var locationObject = false;
+                        if (!(medicalArtefact)) {
+                            medicalArtefact = _currentLocation.getObjectByType("medical");
+                            locationObject = true;
+                        };
                     };
 
                     if (medicalArtefact) {
-                        resultString += "<br>"+self.heal(medicalArtefact, self);
+                        if (showMoveToPlayer) {
+                            visiblyHealedWithKit = true;
+                        };
+                        resultString += "<br>"+self.heal(medicalArtefact, self); //@todo - issue #221 returns a sentence with self.getDisplayName() (we add the <br>)
 
                         //remove medicalArtefact if used up.
                         if (medicalArtefact.chargesRemaining() == 0) {
+                            var searchString = " uses " + medicalArtefact.getDescription();
                             if (locationObject) {
-                                resultString += "<br>"+tools.initCap(self.getDisplayName())+" used up "+medicalArtefact.getDisplayName()+"."
+                                var replaceString = " uses up a nearby " + medicalArtefact.getDescription();
+                                resultString = resultString.replace(searchString, replaceString);
                                 _currentLocation.removeObject(medicalArtefact.getName());
                             } else {
-                                resultString += "<br>"+tools.initCap(self.getDisplayName())+" used up "+_genderPossessiveSuffix+" "+medicalArtefact.getDisplayName()+"."
+                                //remove first word
+                                var artefactDescription = medicalArtefact.getDescription();
+                                if (artefactDescription.toLowerCase() == artefactDescription) {
+                                    //not a proper noun
+                                    artefactDescription = artefactDescription.substr(artefactDescription.indexOf(" "));     
+                                };                   
+                                var replaceString = " uses up the last of " + _genderPossessiveSuffix + artefactDescription;
+                                resultString = resultString.replace(searchString, replaceString);
                                 _inventory.remove(medicalArtefact.getName());
                             };
                         };
@@ -3593,10 +3666,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     visibleResultString += resultString;
                     showMoveToPlayer = false;
                 };
-            };
+            }; //end of "ticks" loop.
             
             //everything a player should see will now be in visibleResultString so clear resultString again
             resultString = "";
+
             if (playerLocation == _currentLocation.getName()) {
                 showMoveToPlayer = true;
             };
@@ -3607,35 +3681,61 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (damage>0) {_hitPoints -=damage;};
             //@todo - if affinity < 0, consider fleeing here if not quite dead
             if (self.isDead()) {
-                resultString += self.kill();
+                var tempKillString = self.kill();
                 if (showMoveToPlayer) {
-                    visibleResultString += resultString;
+                    if (visibleResultString.indexOf(localDisplayName) > -1) {
+                        //we've already used their name once or more. Don't use it again.
+                        tempKillString = tempKillString.replace(localDisplayName, localDescriptivePrefix);
+                    };
+                    visibleResultString += tempKillString;
                 };
                 
+                //even if not showing their death itself. Processing ends here - show what player may have previously seen
                 return visibleResultString;       
             };
+            
+            //will only get this far if not dead
                         
             if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
-            if (_bleeding && (!(self.isDead()))) {resultString+="<br>"+tools.initCap(self.getDisplayName())+" is bleeding. ";};    
+            if (_bleeding) {
+                if (showMoveToPlayer) {
+                    var still = "";
+                    if (visiblyHealedWithKit) {
+                        //still bleeding despire healing
+                        still = " still";
+                    };
+                    var bleedingPrefixToUse = "<br>" +localDisplayName + " is";
+                    if (visibleResultString.indexOf(localDisplayName) > -1) {
+                        //we've already used their name once or more. Don't use it again.
+                        bleedingPrefixToUse = " " + localDescriptivePrefix;
+                    };
+                    visibleResultString += bleedingPrefixToUse + still +" bleeding. ";
+                };
+            };    
 
-            //only show what's going on if the player is in the same location
             //note we store playerLocation at the beginning in case the player was killed as a result of the tick.
             if (playerLocation == _currentLocation.getName()) {
                 if (!self.willInitiateConversation()) {
-                    self.setHuntingPlayer(false);
+                    self.setHuntingPlayer(false); //has no reason to be hunting any more
                 } else {
                     //is player is not already talking to someone else?
                     if (player.getLastCreatureSpokenTo() == undefined || player.getLastCreatureSpokenTo() == self.getName()) {
-                        self.setHuntingPlayer(false);
-                        resultString += self.initiateConversation(player);
+                        self.setHuntingPlayer(false); //has found player
+                        var conversationString = self.initiateConversation(player);
+                        if (visibleResultString.indexOf(localDisplayName) > -1) {
+                            //we've already used their name once or more. Don't use it again.
+                            conversationString = conversationString.replace(localDisplayName, localPrefix);
+                        };
+                        visibleResultString += conversationString;
                     };
                 };
                 if (showMoveToPlayer) {
-                    return visibleResultString + resultString;
+                    return visibleResultString;
                 };
             } else if (playerLocation == homeLocation) {
-                return visibleResultString; //just the outcome of fleeing/helping/leaving.
+                return visibleResultString; //just the outcome of what was visible in their inital move - e.g. fleeing/helping/leaving.
             } else {
+                //nothing visible to player.
                 return "";
                 //console.log(resultString);
             };
