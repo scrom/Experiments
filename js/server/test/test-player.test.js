@@ -391,7 +391,7 @@ exports.RestPartiallyResetsTimeSinceResting = function (test) {
     l0.addObject(bed);
     var baselineTime = p0.increaseTimeSinceResting(55);
     //p0.reduceHitPoints(6);
-    var expectedResult = Math.floor(baselineTime / 5);
+    var expectedResult = Math.floor(baselineTime / 4);
     p0.rest('rest', 1, m0);
     var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
     console.log("Expected: " + expectedResult);
