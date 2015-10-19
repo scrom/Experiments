@@ -29,11 +29,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _startLocation;
         var _returnDirection;
         var _currentLocation;
-        var _timeSinceEating = 0;
+        var _totalTimeTaken = 0;
+        var _timeSinceEating = 0; // set to 200 start half an hour away from hungry
+        //var _timeSinceDrinking = 0;
         var _timeSinceResting = 0;
         var _timeTrapped = 0;
-        var _maxMovesUntilHungry = 70;
-        var _additionalMovesUntilStarving = 15;
+        //var _maxMovesUntilThirsty = 95;
+        //var _additionalMovesUntilGasping = 25;
+        var _maxMovesUntilHungry = 70;//set to 250
+        var _additionalMovesUntilStarving = 15;//set to 50;
         var _maxMovesUntilTired = 125;
         var _additionalMovesUntilExhausted = 25;
         var _contagion = [];
@@ -324,7 +328,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 _loadCount = parseInt(playerAttributes.loadCount)+1;
             } else {
                 if (_saveCount >0) {_loadCount++;};
-            }; 
+            };
+
+            if (playerAttributes.totalTimeTaken != undefined) { _totalTimeTaken = playerAttributes.totalTimeTaken; };
             if (playerAttributes.timeSinceEating != undefined) { _timeSinceEating = playerAttributes.timeSinceEating; };
             if (playerAttributes.timeSinceResting != undefined) { _timeSinceResting = playerAttributes.timeSinceResting; };
             if (playerAttributes.timeTrapped != undefined) { _timeTrapped = playerAttributes.timeTrapped; };
@@ -558,7 +564,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_riding) {resultString += ',"riding":'+_riding.toString();};
             if (_saveCount > 0) { resultString += ',"saveCount":' + _saveCount; };
             if (_cheatCount > 0) { resultString += ',"cheatCount":' + _cheatCount; };
-            if (_loadCount > 0) {resultString += ',"loadCount":'+_loadCount;};
+            if (_loadCount > 0) { resultString += ',"loadCount":' + _loadCount; };
+            
+            if (_totalTimeTaken > 0) { resultString += ',"totalTimeTaken":' + _totalTimeTaken; };
             if (_timeSinceEating > 0) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
             if (_timeSinceResting > 0) { resultString += ',"timeSinceResting":' + _timeSinceResting; };
             if (_timeTrapped > 0) { resultString += ',"timeTrapped":' + _timeTrapped; };
@@ -642,6 +650,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.saveCount = _saveCount;
             currentAttributes.cheatCount = _cheatCount;
             currentAttributes.loadCount = _loadCount;
+            
+            currentAttributes.totalTimeTaken = _totalTimeTaken;
             currentAttributes.timeSinceEating = _timeSinceEating;
             currentAttributes.timeSinceResting = _timeSinceResting;
             currentAttributes.timeTrapped = _timeTrapped;
@@ -650,6 +660,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.maxMovesUntilTired = _maxMovesUntilTired;
             currentAttributes.additionalMovesUntilExahusted = _additionalMovesUntilExhausted;            
             currentAttributes.stepsTaken = _stepsTaken;
+
             currentAttributes.locationsFound = _locationsFound;
             currentAttributes.locationsToFind = map.getLocationCount()-_locationsFound;
             currentAttributes.maxAggression = _maxAggression;
@@ -786,6 +797,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.incrementHealCount = function() {
             _healCount++;
+        };
+        
+        
+        self.increaseTotalTimeTaken = function (changeValue) {
+            _totalTimeTaken += changeValue;
+            return _totalTimeTaken;
         };
 
         self.increaseTimeSinceEating = function(changeValue) {
@@ -4534,7 +4551,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 _timeSinceResting = 0;
             } else {
                 //probably "rest", "sit", "zz" 
-                _timeSinceResting = Math.floor(_timeSinceResting/5);
+                _timeSinceResting = Math.floor(_timeSinceResting/4);
             };
 
             var resultString = "You " + verb + " for a while.<br>" + self.tick(duration, map);
@@ -5207,6 +5224,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             return { "max": maxAffinity, "min": minAffinity, "strongLike": strongLikePercent, "like": likePercent, "wary": waryPercent, "strongDislike": strongDislikePercent, "dislike": dislikePercent, "neutral": neutralPercent };
         };
+        
+        self.time = function () {
+            //convert ticks to clocktime. 100 ticks = 1 hour)
+            var startHours = 9;
+            var startMinutes = 0;
+            var hours = Math.floor(_totalTimeTaken / 100) + startHours;
+            if (hours < 10) { hours = "0"+hours.toString() };
+            var percentMinutes = _totalTimeTaken % 100;
+            var minutes = Math.floor(60 * percentMinutes / 100) + startMinutes;
+            if (minutes < 10) { minutes = "0" + minutes.toString() };
+            var time = hours + ":" + minutes;
+
+            return "The time is " + time + ".";
+        };
 
         self.stats = function (map) {
             //private local function
@@ -5229,7 +5260,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var status = "";
 
             status += "<i>Statistics for $player:</i><br>";
-            status += "Your score is "+_score+" out of "+maxScore+"<br>";
+            status += "Your score is " + _score + " out of " + maxScore + "<br>";
+            status += "Total game time taken so far: " + pluralise(_totalTimeTaken, "tick") + ".<br>"; 
             if (_killedCount > 0) { status += "You have been killed " + temporise(_killedCount) + ".<br>" };
             if (_cheatCount > 0) { status += "You have cheated (or tried to cheat) " + temporise(_cheatCount) + ".<br>" };
             if (_saveCount > 0) { status += "You have saved your progress "+ temporise(_saveCount)+".<br>"};

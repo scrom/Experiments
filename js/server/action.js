@@ -21,6 +21,7 @@ exports.Action = function Action(player, map, fileManager) {
         var _object0 = '';
         var _object1 = '';
         var _ticks = 1; //assume a move passes time. Some won't - for these, ticks will be 0.
+        var _skipPlayerTick = false; //use for handling cases where player action has caused ticks already.
         var _failCount = 0; //count the number of consecutive user errors
         var _awaitingPlayerAnswer = false; //initial support for asking the player questions.
         var _inConversationWith; //who is the player talking to?
@@ -201,7 +202,8 @@ exports.Action = function Action(player, map, fileManager) {
 
         };
 
-        self.performPlayerAction = function() {
+        self.performPlayerAction = function () {
+            _skipPlayerTick = false;  //assume player will tick unless set otherwise.
             var description = "";
 
             var lastVerbUsed = _player.getLastVerbUsed();
@@ -468,14 +470,16 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'rest':
                     case 'sit':
                     case 'zz':
-                        _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                        description = _player.rest("rest", 4, _map);
+                        _ticks = 7; //player ticks are handled within rest routine but full game ticks are also needed.
+                        _skipPlayerTick = true;
+                        description = _player.rest("rest", 7, _map);
                         break;
                     case 'sleep':
                     case 'nap':
                     case 'zzz':
-                        _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                        description = _player.rest("sleep", 9, _map);
+                        _skipPlayerTick = true;
+                        _ticks = 25; //player ticks are handled within rest routine but full game ticks are also needed.
+                        description = _player.rest("sleep", 25, _map);
                         break;
                     case 'wait':
                     case 'z':
@@ -1317,6 +1321,10 @@ exports.Action = function Action(player, map, fileManager) {
                     };
                     return "cannot find " + _object0;
                 };
+                               
+                if (_verb == '+time') {
+                    return _player.time();
+                };
 
                 if (_verb == '+wait') {
                     _ticks = parseInt(_object0);
@@ -1466,6 +1474,7 @@ exports.Action = function Action(player, map, fileManager) {
             try {
                 //work out how many ticks will actually occur against rest of game...
                 var actualTicks = _player.calculateTicks(_ticks, _verb);
+                player.increaseTotalTimeTaken(actualTicks); //track total time
 
                 //perform creature actions.
                 description += processCreatureTicks(actualTicks, _map, _player);
@@ -1479,7 +1488,9 @@ exports.Action = function Action(player, map, fileManager) {
                 //if time is passing, what additional things happen to a player?
                 //note - player ticks happen last so that we can adjust responses based on current state
                 //we also only use "original" ticks here as any extras (wait/sleep) are explicitly covered elsewhere
-                description += _player.tick(_ticks, _map);
+                if (!_skipPlayerTick) {
+                    description += _player.tick(_ticks, _map);
+                };
             
             } catch (err) {
                 description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
