@@ -487,12 +487,12 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'have':
                         if (_object0 == "break" || _object0 == "rest") {
-                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                            description = _player.rest("rest", 4, _map);
+                            _ticks = 7; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("rest", 7, _map);
                             break;
                         } else if (_object0 == "nap" || _object0 == "power nap" || _object0 == "sleep") {
-                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                            description = _player.rest("sleep", 9, _map);
+                            _ticks = 25; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("sleep", 25, _map);
                             break;
                         };
                         break; //don't handle any other "have" actions for now.
