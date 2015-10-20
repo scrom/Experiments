@@ -1,12 +1,45 @@
 ﻿"use strict";
 //tools.js - common tools used in all other MVTA classes - improve code reuse a little...
-var self = module.exports = {
+var self = module.exports= {
 
     //common data
     directions: ['n','north','s','south','e','east','w','west', 'l','left', 'r', 'right', 'i', 'in', 'o', 'out', 'u', 'up', 'd', 'down', 'c', 'continue', 'b','back'],
     positions:  ['onto', 'on to', 'on top of', 'on', 'above', 'over', 'under', 'underneath', 'below', 'beneath', 'behind'], //split words that are also "put" positions.
     onIndex: 6,
     minimumSizeForDistanceViewing : 2,
+    baseTickSize: 2,
+    hourMultiplier: 100,
+    
+    /* --- Time handling --- */
+    hoursAsTicks: function (hours) {
+        if (hours) {
+            return Math.floor(hours * (self.hourMultiplier * self.baseTickSize));
+        };
+        return 0;
+    },
+    
+    minutesAsTicks: function (minutes) {
+        if (minutes) {
+            return Math.floor(minutes * ((self.hourMultiplier * self.baseTickSize)/60));
+        };
+        return 0
+    },
+    
+    time: function (startHours, startMinutes, ticks) {
+        //convert ticks to clocktime. 100 ticks = 1 hour)
+        if (!ticks) { ticks = 0; };
+        if (!startHours) { startHours = 0; };
+        if (!startMinutes) { startMinutes = 0; };
+
+        var hours = Math.floor(ticks / (self.hourMultiplier * self.baseTickSize)) + startHours;
+        if (hours < 10) { hours = "0" + hours.toString() };
+        var percentMinutes = ticks % (self.hourMultiplier * self.baseTickSize);
+        var minutes = Math.floor(60 * percentMinutes / (self.hourMultiplier * self.baseTickSize)) + startMinutes;
+        if (minutes < 10) { minutes = "0" + minutes.toString() };
+        return hours + ":" + minutes;
+
+    },
+
 
     /* --- String handling ---*/
     //check if a string is null, undefined or "" 

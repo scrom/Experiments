@@ -11,7 +11,7 @@
             "empty-room",
             "locked-room"
         ],
-        "destinationDelay": 1
+        "destinationDelay": 3
     },
     "inventory": [
         { "file": "autolock-key" },

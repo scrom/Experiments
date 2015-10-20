@@ -418,9 +418,9 @@ exports.SleepCompletelyResetsTimeSinceResting = function (test) {
 exports.SleepCompletelyResetsTimeSinceResting.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Sleep Trait"], description: "Test that time since resting is completely reset." };
 
 exports.movingWhenVeryTiredTakesTwiceAsLong = function (test) {
-    p0.increaseTimeSinceResting(138);
+    p0.increaseTimeSinceResting(245);
     //p0.reduceHitPoints(6);
-    var expectedResult = 148;
+    var expectedResult = 255;
     
     var ticks = p0.calculateTicks(1);
     console.log("ticks:" + ticks);
@@ -442,9 +442,9 @@ exports.movingWhenVeryTiredTakesTwiceAsLong.meta = { traits: ["Player Test", "In
 
 
 exports.movingWhenExhaustedTakesThreeTimesAsLong = function (test) {
-    p0.increaseTimeSinceResting(150);
+    p0.increaseTimeSinceResting(250);
     //p0.reduceHitPoints(6);
-    var expectedResult = 165;
+    var expectedResult = 265;
     
     var ticks = p0.calculateTicks(1);
     console.log("ticks:" + ticks);
@@ -465,7 +465,7 @@ exports.movingWhenExhaustedTakesThreeTimesAsLong = function (test) {
 exports.movingWhenExhaustedTakesThreeTimesAsLong.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Rest Trait", "Exhaustion Trait"], description: "Test that moving when exhausted costs 2 ticks." };
 
 exports.movingWhenExhaustedTellsPlayer = function (test) {
-    p0.increaseTimeSinceResting(150);
+    p0.increaseTimeSinceResting(250);
     //p0.reduceHitPoints(6);
     var expectedResult = "<br>You're exhausted.<br>You feel weaker. ";
     
@@ -482,7 +482,7 @@ exports.movingWhenExhaustedTellsPlayer.meta = { traits: ["Player Test", "Invento
 
 exports.cannotClimbWhenExhausted = function (test) {
     p0.setLocation(m0.getLocation("roof"));
-    p0.increaseTimeSinceResting(150);
+    p0.increaseTimeSinceResting(250);
     //p0.reduceHitPoints(6);
     var expectedResult = "You try to climb but you're so exhausted that your limbs give out on you.";
     var actualResult = p0.go("climb", "down", m0);
@@ -514,9 +514,8 @@ exports.canNormallyRunThroughARequiredRunExit = function (test) {
     var runExit = atrium.getExit("north");
     runExit.setRequiredAction("run"); //make it necessary to "run" out only.
     p0.setLocation(atrium);
-    p0.increaseTimeSinceResting(125);
     //p0.reduceHitPoints(6);
-    var expectedResult = "You're too tired to make it through quickly enough.";
+    var expectedResult = "You run n...<br><br>Current location: Office front<br>You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
     var actualResult = p0.go("run", "n", m0);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -532,10 +531,10 @@ exports.cannotRunWhentired = function (test) {
     var runExit = atrium.getExit("north");
     runExit.setRequiredAction("run"); //make it necessary to "run" out only.
     p0.setLocation(atrium);
-    p0.increaseTimeSinceResting(125);
+    p0.increaseTimeSinceResting(200);
     //p0.reduceHitPoints(6);
     var expectedResult = "You're too tired to make it through quickly enough.";
-    var actualResult = p0.go("run", "n", m0);
+    var actualResult = p0.go("run", "north", m0);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -574,7 +573,7 @@ exports.canClimbWhenNeeded.meta = { traits: ["Player Test", "Inventory Trait", "
 
 exports.movingWhenVeryTiredWarnsPlayer = function (test) {
     p0.get('get', bed.getName());
-    p0.increaseTimeSinceResting(136);
+    p0.increaseTimeSinceResting(224);
     //p0.reduceHitPoints(6);
     var expectedResult = "<br>You need to <i>rest</i>. You're struggling to keep up with those around you. ";
     var actualResult = p0.tick(1, m0);
@@ -589,11 +588,11 @@ exports.movingWhenVeryTiredWarnsPlayer.meta = { traits: ["Player Test", "Invento
 
 exports.movingWhenAlmostTiredOccasionallyWarnsPlayer = function (test) {
     p0.get('get', bed.getName());
-    p0.increaseTimeSinceResting(121);
+    p0.increaseTimeSinceResting(195);
     var expectedResult = "<br>You've been on your feet quite a while. You could do with taking a break. ";
     var attempts = 0;
     var actualResult = "";
-    //randomly happens roughly 1 in 4 times
+    //randomly happens roughly 1 in 3 times
     while (actualResult != expectedResult && attempts < 10) {
         actualResult = p0.tick(1, m0);
         p0.increaseTimeSinceResting(-1); //hack!
@@ -611,7 +610,7 @@ exports.movingWhenAlmostTiredOccasionallyWarnsPlayer.meta = { traits: ["Player T
 
 exports.movingWhenExhaustedDoesDamage = function (test) {
     p0.get('get', bed.getName());
-    p0.increaseTimeSinceResting(150);
+    p0.increaseTimeSinceResting(250);
     
     var ticks = p0.calculateTicks(1);
     console.log("ticks:"+ticks)
@@ -664,7 +663,7 @@ exports.canEatFoodWhenHungryTestBoundaryCase.meta = { traits: ["Player Test", "I
 
 exports.cannotEatFoodWhenNotHungry = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(39);
+    p0.increaseTimeSinceEating(-301); //as of issue #379 player defaults to hungry soon
     var expectedResult = "You're not hungry at the moment.";
     var actualResult = p0.eat('eat','cake');
     console.log("Expected: "+expectedResult);
@@ -678,7 +677,7 @@ exports.cannotEatFoodWhenNotHungry.meta = { traits: ["Player Test", "Inventory T
 
 exports.cannotEatFoodWhenNotHungryEvenIfInjured = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(4);
+    p0.increaseTimeSinceEating(-301); //as of issue #379 player defaults to hungry soon
     p0.reduceHitPoints(6); //test boundary
     var expectedResult = "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";
     var actualResult = p0.eat('eat','cake');
@@ -707,7 +706,7 @@ exports.canEatFoodWhenMoreHungryAndModeratelyInjured.meta = { traits: ["Player T
 
 exports.cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(26);
+    p0.increaseTimeSinceEating(-200); //as of issue #379 player defaults to hungry soon 
     p0.reduceHitPoints(5); //test boundary
     var expectedResult = "You're not hungry at the moment.";
     var actualResult = p0.eat('eat','cake');
@@ -722,7 +721,7 @@ exports.cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured.meta = { traits: [
 
 exports.cannotEatFoodWhenHealthGreaterThan95Percent = function (test) {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(5);
+    p0.increaseTimeSinceEating(-500); //as of issue #379 player defaults to hungry soon
     p0.reduceHitPoints(4);
     var expectedResult = "You're not hungry at the moment.";
     var actualResult = p0.eat('eat','cake');
@@ -753,6 +752,7 @@ exports.canDrinkToxicFood = function (test) {
     var poison = new artefact.Artefact('poison', 'poison', "eek, don't eat it!",poisonAttributes, null);
     l0.addObject(poison);
     p0.get('get', poison.getName());
+    p0.increaseTimeSinceDrinking(100);
     var expectedResult = "You drink the poison. You feel weaker. That wasn't a good idea.";
     var actualResult = p0.drink('drink','poison');
     console.log("Expected: "+expectedResult);
@@ -785,8 +785,9 @@ exports.eatLiquidAutomaticallyDrinksInstead = function (test) {
     var poison = new artefact.Artefact('poison', 'poison', "eek, don't eat it!",poisonAttributes, null);
     l0.addObject(poison);
     p0.get('get', poison.getName());
+    p0.increaseTimeSinceDrinking(75);   
     var expectedResult = "You drink the poison. You feel weaker. That wasn't a good idea.";
-    var actualResult = p0.eat('eat','poison');
+    var actualResult = p0.eat('eat', 'poison');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -886,7 +887,7 @@ exports.hitAndKillPlayerReturnsExpectedStringResult.meta = { traits: ["Player Te
 
 
 exports.playerDeathFromExhaustionReturnsExpectedStringResult = function (test) {
-    p0.increaseTimeSinceResting(150);
+    p0.increaseTimeSinceResting(250);
     p0.tick(19, m0);
     var expectedResult = "<br><br>You stagger onward with the pains of exhuastion setting in. After a few steps you collapse and curl into a ball to die.<br>We're all about sustainable pace here!<br>Killing yourself from exhaustion isn't really something we condone.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     var actualResult = p0.tick(1, m0);
@@ -901,7 +902,7 @@ exports.playerDeathFromExhaustionReturnsExpectedStringResult.meta = { traits: ["
 
 
 exports.playerDeathFromStarvationReturnsExpectedStringResult = function (test) {
-    p0.increaseTimeSinceEating(85);
+    p0.increaseTimeSinceEating(200); //new player hunger starts at 500 
     p0.tick(17, m0);
     var expectedResult = "<br><br>You're dead. You really do need to keep your energy up if you're going to survive in this environment.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     var actualResult = p0.tick(1, m0);
@@ -913,6 +914,21 @@ exports.playerDeathFromStarvationReturnsExpectedStringResult = function (test) {
 };
 
 exports.playerDeathFromStarvationReturnsExpectedStringResult.meta = { traits: ["Player Test", "Health Trait", "Kill Trait", "Hunger Trait"], description: "Test that a killed player receiving a hit is returned to start with appropriate message." };
+
+
+exports.playerDeathFromDehydrationReturnsExpectedStringResult = function (test) {
+    p0.increaseTimeSinceDrinking(300);
+    p0.tick(17, m0);
+    var expectedResult = "<br><br>You're dead. You really do need to keep your fluid levels up if you're going to survive in this environment.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
+    var actualResult = p0.tick(1, m0);
+    console.log(p0.health());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerDeathFromDehydrationReturnsExpectedStringResult.meta = { traits: ["Player Test", "Health Trait", "Kill Trait", "Hunger Trait"], description: "Test that a killed player receiving a hit is returned to start with appropriate message." };
 
 
 exports.playerDeathFromContagionReturnsExpectedStringResult = function (test) {
@@ -2010,7 +2026,8 @@ exports.drinkUpDrinksMostRecentlyCollectedDrink = function (test) {
     glass.receive(beer);
     cup.receive(coffee);
     p0.get('get','cup');
-    p0.get('get','glass');
+    p0.get('get', 'glass');
+    p0.increaseTimeSinceDrinking(75);
 
     var expectedResult = 'You drink the beer.';
     var actualResult = p0.drink('drink','up').substring(0,19);
@@ -2023,6 +2040,28 @@ exports.drinkUpDrinksMostRecentlyCollectedDrink = function (test) {
 exports.drinkUpDrinksMostRecentlyCollectedDrink.meta = { traits: ["Player Test", "Drink Trait", "Food Trait"], description: "Test that player can 'drink up'." };
 
 
+exports.cannotDrinkCoffeeWhenNotThirsty = function (test) {
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    
+    var coffeeAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, nutrition: 10, isBreakable: false, requiresContainer: true, isLiquid: true, requiredContainer: 'cup' };
+    var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", coffeeAttributes, null);
+    
+    l0.addObject(cup);
+    cup.receive(coffee);
+    p0.get('get', 'cup');
+    
+    var expectedResult = "You're not Thirsty at the moment";
+    var actualResult = p0.drink('drink', 'coffee');
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotDrinkCoffeeWhenNotThirsty.meta = { traits: ["Player Test", "Drink Trait", "Food Trait"], description: "Test that player can drink coffee." };
+
+
 exports.canDrinkCoffee = function (test) {
     var openBreakableContainerAttributes = {weight: 2, carryWeight: 2, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
     var cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
@@ -2032,7 +2071,8 @@ exports.canDrinkCoffee = function (test) {
 
     l0.addObject(cup);
     cup.receive(coffee);
-    p0.get('get','cup');
+    p0.get('get', 'cup');
+    p0.increaseTimeSinceDrinking(75);
 
     var expectedResult = 'You drink the coffee. ';
     var actualResult = p0.drink('drink','coffee').substring(0,22);

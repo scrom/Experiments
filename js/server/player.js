@@ -30,16 +30,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _returnDirection;
         var _currentLocation;
         var _totalTimeTaken = 0;
-        var _timeSinceEating = 0; // set to 200 start half an hour away from hungry
-        //var _timeSinceDrinking = 0;
+        var _timeSinceEating = tools.hoursAsTicks(2.5); // set to start half an hour away from hungry at start
+        var _timeSinceDrinking = 0;
         var _timeSinceResting = 0;
         var _timeTrapped = 0;
-        //var _maxMovesUntilThirsty = 95;
-        //var _additionalMovesUntilGasping = 25;
-        var _maxMovesUntilHungry = 70;//set to 250
-        var _additionalMovesUntilStarving = 15;//set to 50;
-        var _maxMovesUntilTired = 125;
-        var _additionalMovesUntilExhausted = 25;
+        var _maxMovesUntilThirsty = tools.hoursAsTicks(1.25); //set to 75 mins
+        var _additionalMovesUntilGasping = tools.minutesAsTicks(15); //set to 15 mins
+        var _maxMovesUntilHungry = tools.hoursAsTicks(3);//set to 3 hours
+        var _additionalMovesUntilStarving = tools.hoursAsTicks(0.5); //set to "30" mins
+        var _maxMovesUntilTired = tools.hoursAsTicks(1); //set to 1 hour
+        var _additionalMovesUntilExhausted = tools.minutesAsTicks(15); //set to 15 mins
         var _contagion = [];
         var _antibodies = [];
         var _lastCreatureSpokenTo;
@@ -332,10 +332,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (playerAttributes.totalTimeTaken != undefined) { _totalTimeTaken = playerAttributes.totalTimeTaken; };
             if (playerAttributes.timeSinceEating != undefined) { _timeSinceEating = playerAttributes.timeSinceEating; };
+            if (playerAttributes.timeSinceDrinking != undefined) { _timeSinceDrinking = playerAttributes.timeSinceDrinking; };
             if (playerAttributes.timeSinceResting != undefined) { _timeSinceResting = playerAttributes.timeSinceResting; };
             if (playerAttributes.timeTrapped != undefined) { _timeTrapped = playerAttributes.timeTrapped; };
-            if (playerAttributes.maxMovesUntilHungry != undefined) {_maxMovesUntilHungry = playerAttributes.maxMovesUntilHungry;};
-            if (playerAttributes.additionalMovesUntilStarving != undefined) {_additionalMovesUntilStarving = playerAttributes.additionalMovesUntilStarving;};
+            if (playerAttributes.maxMovesUntilHungry != undefined) { _maxMovesUntilHungry = playerAttributes.maxMovesUntilHungry; };
+            if (playerAttributes.maxMovesUntilThirsty != undefined) { _maxMovesUntilThirsty = playerAttributes.maxMovesUntilThirsty; };            
+            if (playerAttributes.additionalMovesUntilStarving != undefined) { _additionalMovesUntilStarving = playerAttributes.additionalMovesUntilStarving; };
+            if (playerAttributes.additionalMovesUntilGasping != undefined) { _additionalMovesUntilGasping = playerAttributes.additionalMovesUntilGasping; };
             if (playerAttributes.maxMovesUntilTired != undefined) { _maxMovesUntilTired = playerAttributes.maxMovesUntilTired; };
             if (playerAttributes.additionalMovesUntilExhausted != undefined) { _additionalMovesUntilExhausted = playerAttributes.additionalMovesUntilExhausted; };
 
@@ -567,13 +570,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_loadCount > 0) { resultString += ',"loadCount":' + _loadCount; };
             
             if (_totalTimeTaken > 0) { resultString += ',"totalTimeTaken":' + _totalTimeTaken; };
-            if (_timeSinceEating > 0) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
+            if (_timeSinceEating != 500) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
+            if (_timeSinceDrinking > 0) { resultString += ',"timeSinceDrinking":' + _timeSinceDrinking; };
             if (_timeSinceResting > 0) { resultString += ',"timeSinceResting":' + _timeSinceResting; };
             if (_timeTrapped > 0) { resultString += ',"timeTrapped":' + _timeTrapped; };
-            if (_maxMovesUntilHungry != 70) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
-            if (_additionalMovesUntilStarving != 15) { resultString += ',"additionalMovesUntilStarving":' + _additionalMovesUntilStarving; };
-            if (_maxMovesUntilTired != 125) { resultString += ',"maxMovesUntilTired":' + _maxMovesUntilTired; };
-            if (_additionalMovesUntilExhausted != 25) { resultString += ',"additionalMovesUntilExhausted":' + _additionalMovesUntilExhausted; };
+            if (_maxMovesUntilHungry != 600) {resultString += ',"maxMovesUntilHungry":'+_maxMovesUntilHungry;};
+            if (_additionalMovesUntilStarving != 100) { resultString += ',"additionalMovesUntilStarving":' + _additionalMovesUntilStarving; };
+            if (_maxMovesUntilThirsty != 250) { resultString += ',"maxMovesUntilThirsty":' + _maxMovesUntilThirsty; };
+            if (_additionalMovesUntilGasping != 50) { resultString += ',"additionalMovesUntilGasping":' + _additionalMovesUntilGasping; };
+            if (_maxMovesUntilTired != 200) { resultString += ',"maxMovesUntilTired":' + _maxMovesUntilTired; };
+            if (_additionalMovesUntilExhausted != 50) { resultString += ',"additionalMovesUntilExhausted":' + _additionalMovesUntilExhausted; };
             if (_stepsTaken > 0) {resultString += ',"stepsTaken":'+_stepsTaken;};
             if (_locationsFound > 0) {resultString += ',"locationsFound":'+_locationsFound;};
             if (_maxAggression > 0) {resultString += ',"maxAggression":'+_maxAggression;};
@@ -653,10 +659,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             currentAttributes.totalTimeTaken = _totalTimeTaken;
             currentAttributes.timeSinceEating = _timeSinceEating;
+            currentAttributes.timeSinceDrinking = _timeSinceDrinking;
             currentAttributes.timeSinceResting = _timeSinceResting;
             currentAttributes.timeTrapped = _timeTrapped;
             currentAttributes.maxMovesUntilHungry = _maxMovesUntilHungry;
             currentAttributes.additionalMovesUntilStarving = _additionalMovesUntilStarving;
+            currentAttributes.maxMovesUntilThirsty = _maxMovesUntilThirsty;
+            currentAttributes.additionalMovesUntilGasping = _additionalMovesUntilGasping;            
             currentAttributes.maxMovesUntilTired = _maxMovesUntilTired;
             currentAttributes.additionalMovesUntilExahusted = _additionalMovesUntilExhausted;            
             currentAttributes.stepsTaken = _stepsTaken;
@@ -808,6 +817,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.increaseTimeSinceEating = function(changeValue) {
             _timeSinceEating += changeValue;
             return _timeSinceEating;
+        };
+              
+        self.increaseTimeSinceDrinking = function (changeValue) {
+            _timeSinceDrinking += changeValue;
+            return _timeSinceDrinking;
         };
         
         self.increaseTimeSinceResting = function (changeValue) {
@@ -4734,11 +4748,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //allow eating very first item earlier in game.
                 if (_consumedObjects.length > 0) {
                     //can't keep eating to heal in battle - must use medical item
-                    if (_timeSinceEating < 5 && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
+                    if (_timeSinceEating < (_maxMovesUntilHungry/3) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
                     //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
                     if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
                     //can't eat unless hungry if health is nearly full.
-                    if ((_timeSinceEating < _maxMovesUntilHungry-15) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+                    if ((_timeSinceEating < _maxMovesUntilHungry - (_maxMovesUntilHungry/6)) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
                 };
             };
             self.transmit(artefact, "bite");
@@ -4822,6 +4836,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             var result = artefact.drink(self); //trying to eat some things give interesting results.
             if (artefact.isEdible() && artefact.isLiquid()) {
+                
+                if (_consumedObjects.length > 0) {
+                    if (_timeSinceDrinking < _maxMovesUntilThirsty / 4) { return "You're not thirsty at the moment."; };
+                };
 
                 //consume it
                 if (artefact.chargesRemaining() == 0) {
@@ -4829,6 +4847,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     _consumedObjects.push(artefact);
                 };
                 //console.log('player drinks.');
+
+                _timeSinceDrinking = 0;
             };
 
             return result;
@@ -4846,7 +4866,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             var reasonForDeath = "You're dead. You really should try to stay out of trouble and look after yourself better.";
             if (_contagion.length > 0) {
-                reasonForDeath = "You collapse in a pool of weeping pus.<br>That was unfortunate. It looks like you were overcome by the "+_contagion[0].getName()+" contagion or something equally nasty."
+                reasonForDeath = "You collapse in a pool of weeping pus.<br>That was unfortunate. It looks like you were overcome by the " + _contagion[0].getName() + " contagion or something equally nasty."
+            } else if (self.isGasping()) {
+                if (_timeSinceDrinking - (_maxMovesUntilThirsty + _additionalMovesUntilGasping) > 10) {
+                    reasonForDeath = "You're dead. You really do need to keep your fluid levels up if you're going to survive in this environment.";
+                };
             } else if (self.isStarving()) {
                 if (_timeSinceEating - (_maxMovesUntilHungry + _additionalMovesUntilStarving) > 10) {
                     reasonForDeath = "You're dead. You really do need to keep your energy up if you're going to survive in this environment.";
@@ -5022,12 +5046,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //slowly recover health (this makes rest and sleep work nicely although we'll give them a boost)
                     healPoints++;
                 };
+                
+                //drink?
+                self.increaseTimeSinceDrinking(1); //we loop on this for time variable
+                if (_timeSinceDrinking > _maxMovesUntilThirsty + _additionalMovesUntilGasping) {
+                    //gets worse the longer it's left.
+                    damage += Math.floor((_timeSinceDrinking - (_maxMovesUntilThirsty + _additionalMovesUntilGasping)) / 1.5);
+                };                 
 
                 //feed?
                 self.increaseTimeSinceEating(1); //we loop on this for time variable
                 if (_timeSinceEating > _maxMovesUntilHungry + _additionalMovesUntilStarving) {
                     //gets worse the longer it's left.
-                    damage += Math.floor((_timeSinceEating - (_maxMovesUntilHungry + _additionalMovesUntilStarving)) / 1.5);
+                    damage += Math.floor((_timeSinceEating - (_maxMovesUntilHungry + _additionalMovesUntilStarving)) / 1.6);
                 }; 
 
                 //rest?
@@ -5041,7 +5072,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var afflictionString = "";
             if (self.isStarving()) { afflictionString+="<br>You're starving. ";}
             else if (self.isHungry()) { afflictionString+="<br>You're hungry.";}
-            else if (_timeSinceEating == _maxMovesUntilHungry-(Math.floor(Math.random() * 5))) { afflictionString+="<br>Your stomach just growled.";};
+            else if (_timeSinceEating == _maxMovesUntilHungry-(Math.floor(Math.random() * 10))) { afflictionString+="<br>Your stomach just growled.";};
+            
+            if (self.isGasping()) { afflictionString += "<br>You urgently need something to drink. "; }
+            else if (self.isThirsty()) { afflictionString += "<br>You're thirsty."; }
+            else if (_timeSinceDrinking == _maxMovesUntilThirsty - (Math.floor(Math.random() * 10))) { afflictionString += "<br>Your mouth is feeling a little dry."; };
             
             if (self.isExhausted()) {
                 if (_timeSinceResting == _maxMovesUntilTired + _additionalMovesUntilExhausted) {
@@ -5059,7 +5094,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
             } 
-            else if (_timeSinceResting == _maxMovesUntilTired - (Math.floor(Math.random() * 4))) { afflictionString += "<br>You've been on your feet quite a while. You could do with taking a break. "; }; //@todo make this more varied
+            else if (_timeSinceResting == _maxMovesUntilTired - (Math.floor(Math.random() * 7))) { afflictionString += "<br>You've been on your feet quite a while. You could do with taking a break. "; }; //@todo make this more varied
             
 
             if (_bleeding) { afflictionString+="<br>You're bleeding. ";};           
@@ -5163,6 +5198,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_timeSinceEating >=_maxMovesUntilHungry+_additionalMovesUntilStarving) {return true;};
             return false;
         };
+        
+        self.isThirsty = function () {
+            if (_timeSinceDrinking >= _maxMovesUntilThirsty) { return true; };
+            return false;
+        };
+        
+        self.isGasping = function () {
+            if (_timeSinceDrinking >= _maxMovesUntilThirsty + _additionalMovesUntilGasping) { return true; };
+            return false;
+        };
                 
         self.isTired = function () {
             if (_timeSinceResting >= _maxMovesUntilTired) { return true; };
@@ -5225,18 +5270,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return { "max": maxAffinity, "min": minAffinity, "strongLike": strongLikePercent, "like": likePercent, "wary": waryPercent, "strongDislike": strongDislikePercent, "dislike": dislikePercent, "neutral": neutralPercent };
         };
         
-        self.time = function () {
-            //convert ticks to clocktime. 100 ticks = 1 hour)
-            var startHours = 9;
-            var startMinutes = 0;
-            var hours = Math.floor(_totalTimeTaken / 100) + startHours;
-            if (hours < 10) { hours = "0"+hours.toString() };
-            var percentMinutes = _totalTimeTaken % 100;
-            var minutes = Math.floor(60 * percentMinutes / 100) + startMinutes;
-            if (minutes < 10) { minutes = "0" + minutes.toString() };
-            var time = hours + ":" + minutes;
-
-            return "The time is " + time + ".";
+        self.time = function (startHours, startMinutes) {
+            return "The time is " + tools.time(startHours, startMinutes, _totalTimeTaken) + ".";
         };
 
         self.stats = function (map) {
@@ -5261,7 +5296,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             status += "<i>Statistics for $player:</i><br>";
             status += "Your score is " + _score + " out of " + maxScore + "<br>";
-            status += "Total game time taken so far: " + pluralise(_totalTimeTaken, "tick") + ".<br>"; 
             if (_killedCount > 0) { status += "You have been killed " + temporise(_killedCount) + ".<br>" };
             if (_cheatCount > 0) { status += "You have cheated (or tried to cheat) " + temporise(_cheatCount) + ".<br>" };
             if (_saveCount > 0) { status += "You have saved your progress "+ temporise(_saveCount)+".<br>"};
@@ -5300,6 +5334,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_injuriesReceived > 0) {status += "You have been injured "+ temporise(_injuriesReceived)+".<br>";};
             if (_totalDamageReceived > 0) {status += "You have received "+_totalDamageReceived+" points of damage (in total) during this game.<br>";};
             //if (_objectsChewed > 0) status += "You have chewed "+_objectsChewed+" objects.<br>";
+            
+            status += "Total game time taken so far: " + tools.time(0, 0, _totalTimeTaken) + ".<br>"; 
 
             status += "<br>In a survey of your popularity..."
             status +="<br> Your overall popularity rating is "+Math.ceil((maxMinAffinity.strongLike+maxMinAffinity.like)-(maxMinAffinity.wary+maxMinAffinity.strongDislike))+".";
@@ -5365,7 +5401,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             status += "<i>Status:</i><br>";
             if (self.isStarving()) {status+="You're starving.<br>";}
-            else if (self.isHungry()) {status+="You're hungry.<br>";};
+            else if (self.isHungry()) { status += "You're hungry.<br>"; };
+            
+            if (self.isGasping()) { status += "You urgently need something to drink.<br>"; }
+            else if (self.isThirsty()) { status += "You're thirsty.<br>"; };
+            
+            if (self.isTired()) { status += "You could do with a break for a while.<br>"; }
+            else if (self.isExhausted()) { status += "You really need to have a rest.<br>"; };           
 
             if (_contagion.length>0) { status += "You're infected with something nasty.<br>"};
             if (_antibodies.length>0) {

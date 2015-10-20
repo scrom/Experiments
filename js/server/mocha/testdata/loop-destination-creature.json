@@ -12,8 +12,8 @@
             "locked-room"
         ],
         "loops": -1,
-        "loopDelay": 5,
-        "destinationDelay": 1
+        "loopDelay": 7,
+        "destinationDelay": 3
     },
     "inventory": [
         { "file": "autolock-key" },

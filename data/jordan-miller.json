@@ -15,7 +15,7 @@
     "avoiding": [
         "bus"
     ],
-    "destinationDelay": 15,
+    "destinationDelay": 20,
     "imageName": "spy.jpg"
     },
     "inventory": [

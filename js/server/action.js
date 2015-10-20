@@ -20,7 +20,8 @@ exports.Action = function Action(player, map, fileManager) {
         var _objects = []; //objects and creatures
         var _object0 = '';
         var _object1 = '';
-        var _ticks = 1; //assume a move passes time. Some won't - for these, ticks will be 0.
+        var _baseTickSize = tools.baseTickSize; //default base measure of time
+        var _ticks = _baseTickSize; //assume a move passes time. Some won't - for these, ticks will be 0.
         var _skipPlayerTick = false; //use for handling cases where player action has caused ticks already.
         var _failCount = 0; //count the number of consecutive user errors
         var _awaitingPlayerAnswer = false; //initial support for asking the player questions.
@@ -406,7 +407,7 @@ exports.Action = function Action(player, map, fileManager) {
                             if ((positionIndex > -1) ||(_adverb == "closely" || _adverb == "carefully")) {
                                 //support "look under", "look behind" and "look in" etc.
                                 if (_adverb) {_verb = _verb+" "+_adverb;};
-                                if (positionIndex == -1) { _ticks = 3; }; //full search takes longer
+                                if (positionIndex == -1) { _ticks = _baseTickSize*3; }; //full search takes longer
                                 
                                 if ((_verb == "stare" ||_verb == "look" || _verb == "peer") && _splitWord == "over") {
                                     description = _player.examine(_verb + " " + _splitWord, _object1, null, _map);
@@ -427,6 +428,7 @@ exports.Action = function Action(player, map, fileManager) {
                             var objectToFind = _object0+_object1;
                             return "You ask "+_inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+_inConversationWith+" to find "+objectToFind);
                         } else { 
+                            _ticks = _baseTickSize * 2;
                             if (!(_object0)) {_object0 = _object1};                                     
                             description = _player.hunt(_verb, _object0, map);
                             //"find" is a cheat - disable it for now
@@ -439,7 +441,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'inspect': 
                     case 'search':  
-                        _ticks = 3; //random searching takes a while! - look under/behind x is faster
+                        _ticks = _baseTickSize*3; //random searching takes a while! - look under/behind x is faster
                         //would like to add "search for x" support here in future.  
                         if (!_object0) {
                             description = _player.search(_verb, _object1, _splitWord, tools.positions);
@@ -461,7 +463,7 @@ exports.Action = function Action(player, map, fileManager) {
                             //support "examine under", "examine behind" and "examine in" etc.
                             description = _player.search(_verb, _object1, _splitWord, tools.positions);
                         } else if (_adverb == "closely" || _adverb == "carefully") {
-                            _ticks = 3; //full search takes longer
+                            _ticks = _baseTickSize*3; //full search takes longer
                             description = _player.search(_verb, _object0, _splitWord, tools.positions);
                         } else {
                             description = _player.examine(_verb, _object0, null, _map);
@@ -483,7 +485,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'wait':
                     case 'z':
-                        description = _player.wait(1, map);
+                        description = _player.wait(1, map); //wait count, not ticks
                         break;
                     case 'have':
                         if (_object0 == "break" || _object0 == "rest") {
@@ -533,6 +535,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.put(_verb, _object1, _object0);
                         break;
                     case 'empty':
+                        _ticks = 1;
                         description = _player.empty(_verb, _object0, _splitWord, _object1);
                         break;
                     case 'water':
@@ -558,6 +561,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'throw':
                         if (_object0 && _splitWord == "at" && _object1) {
                             //throw x at y
+                            _ticks = 1;
                              description = _player.hit (_verb, _object1, _object0);
                              break;
                         };
@@ -570,6 +574,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 break;
                             } else { _object0 = _object0+" "+_splitWord+" "+_object1;};
                         };
+                        _ticks = 1;
                         description = _player.drop(_verb, _object0, _map);
                         //we're throwing the object *at* something. Use it as a weapon.
                         //this needs work
@@ -608,11 +613,13 @@ exports.Action = function Action(player, map, fileManager) {
                         //fall through to "shove"
                     case 'shove':
                     case 'press':
-                    case 'push':                  
+                    case 'push':
+                        _ticks = 1;              
                         description = _player.shove(_verb, _object0);
                         break;
                     case 'pull':
-                    case 'open': 
+                    case 'open':
+                        _ticks = 1;
                         description = _player.open(_verb, _object0);
                         //don't consume time if already open
                         if (description.indexOf("already") > -1) {
@@ -621,9 +628,11 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'shut':
                     case 'close':
+                        _ticks = 1;
                         description = _player.close(_verb, _object0);
                         break;
-                    case 'drink': 
+                    case 'drink':
+                        _ticks = 1;
                         description = _player.drink(_verb, _object0);
                         break;
                     case 'bite':
@@ -637,6 +646,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'shake':
                     case 'rattle':
+                        _ticks = 1;
                         description = _player.shake(_verb, _object0);
                         break;
                     case 'nerf':
@@ -651,6 +661,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'smack':
                     case 'punch':
                     case 'kick':
+                        _ticks = 1;
                         if (_object0 && _splitWord == "on" && _object1) {
                             //smash bottle on floor
                             description = _player.hit(_verb, _object1, _object0);
@@ -674,6 +685,7 @@ exports.Action = function Action(player, map, fileManager) {
                         _object0 = _object0.replace(" up","");
 
                         if (originalObject0 != _object0) {
+                            _ticks = 1;
                             _verb = 'pick up';
                             description = _player.take(_verb, _object0, _object1);
                             break;
@@ -684,6 +696,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                         
                     case 'get':
+                        _ticks = 1;
                         if (_splitWord == "off") {
                             if (!(_object0)) {
                                 if (_object1.indexOf("of ") ==0) {
@@ -717,12 +730,12 @@ exports.Action = function Action(player, map, fileManager) {
                             description = _player.dismantle(_verb + " apart", _object0.replace("apart ", ""));
                             break;
                         } else if (_object0 == "break" || _object0 == "rest") {
-                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                            description = _player.rest("rest", 4, _map);
+                            _ticks = 7; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("rest", 7, _map);
                             break;                            
                         } else if (_object0 == "nap" || _object0 == "power nap" || _object0 == "sleep") {
-                            _ticks = 1; //most ticks are handled within rest routine but last one should cause a full game tick
-                            description = _player.rest("sleep", 9, _map);
+                            _ticks = 25; //most ticks are handled within rest routine but last one should cause a full game tick
+                            description = _player.rest("sleep", 25, _map);
                             break;                              
                         };
                         //fall through to other "take" actions
@@ -730,27 +743,33 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'collect':
                     case 'remove':
                     case 'make':
+                        _ticks = 1;
                         description = _player.take(_verb, _object0, _object1); 
                         break;
                     case 'dismantle':
                         description = _player.dismantle(_verb, _object0);
                         break;
                     case 'mug':
+                        _ticks = 1;
                         if ((!(_object1)) || (_object1 == "")) {
                             _object1 = _object0;
                             _object0 = "";
                         };
                     case 'steal':
+                        _ticks = 1;
                         description = _player.steal(_verb, _object0, _object1);            
                         break;
                     case 'borrow':
+                        _ticks = 1;
                         //like ask but borrow object from person rather than ask person for object...
                         description = _player.ask(_verb, _object1, _object0);            
                         break;
                     case 'tell':
+                        _ticks = 0;
                         description = "We <i>ask</i> people things here, we don't <i>tell</i>.";
                         break;
                     case 'ask':
+                        _ticks = 1;
                         //console.log("split: "+_splitWord);
                         if (_splitWord == "is"||_splitWord == "to"|| _splitWord == "are") {
                             //check for "ask x to find y" or "ask x where y is" or "ask x where is y";
@@ -852,6 +871,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.ask(_verb, _object0, _object1, _map);            
                         break;
                     case 'wave':
+                        _ticks = 1;
                         description = _player.wave(_verb, _object0, _object1);
                         break;
                     case 'stroke':
@@ -869,6 +889,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'tak':
                     case 'takl':
                     case 'tslk':
+                        _ticks = 1;
                         //we assume "talk to x" - it "to" is missing, handle speech anyway.
                         if (tools.stringIsEmpty(_object1) && (!(tools.stringIsEmpty(_object0)))) {
                             _object1 = _object0;
@@ -880,6 +901,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'sing':
                     case 'shout':
                     //case 'howl':
+                        _ticks = 1;
                         if (!_object0 && _splitWord == "for") {
                             //e.g. "shout for help"
                             _object0 = _object1;
@@ -890,6 +912,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'greet':
                     case 'hello':
+                        _ticks = 1;
                         if (_inConversationWith && !_object0) {
                             _object0 = _inConversationWith;
                         };
@@ -897,6 +920,7 @@ exports.Action = function Action(player, map, fileManager) {
                         _player.setLastVerbUsed('say');    
                         break;
                     case 'hi':
+                        _ticks = 1;
                         if (_inConversationWith && !_object0) {
                             _object0 = _inConversationWith;
                         };
@@ -904,16 +928,19 @@ exports.Action = function Action(player, map, fileManager) {
                         _player.setLastVerbUsed('say');   
                         break;
                     case 'bye':
+                        _ticks = 0;
                         if (_inConversationWith && !_object0) {
                             _object0 = _inConversationWith;
                         };
                         description = _player.say('say', "Bye",_object0, _map);    
                         break;
                     case 'good':
+                        _ticks = 0;
                         description = _player.say('say', _actionString,_inConversationWith, _map);
                         _player.setLastVerbUsed('say');    
                         break;
                     case 'goodbye':
+                        _ticks = 0;
                         description = _player.say('say', "Goodbye",_object0, _map);   
                         break;
                     case 'straight':
@@ -928,6 +955,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'climb':
                     case 'head':
                     case 'go':
+                        _ticks = 1;
                         //translate to "go north" etc. Overwrite the verb with direction. 
                         //this will fall through to navigation later.
                         //if player enters "go to x" or "climb on x", we'll have an object 1 (but no object 0).
@@ -987,6 +1015,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'on':
                     case 'off':
+                        _ticks = 1;
                         return self.processAction("turn "+_actionString);
                         break;
                     case 'turn': //turn on/off or rotate
@@ -994,6 +1023,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'rotate':
                     case 'switch': //(this is a special one) - could be switch off light or switch light on.
                         //if player enters "switch on x", we'll have an object 1 (but no object 0).
+                        _ticks = 1;
                         if ((!_object0) && (_object1)) {
                             description = _player.turn(_verb,_object1,_splitWord);
                         } else if (_object0 && _object1) {
@@ -1004,20 +1034,23 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'ignite':
                     case 'light':
+                        _ticks = 1;
                         description = _player.turn('light', _object0, 'on');
                         break;
                     case 'extinguish':
                     case 'unlight':
+                        _ticks = 1;
                         description = _player.turn('turn', _object0,'out');
                         break;
                     case 'read':
                     case 'study':
-                        _ticks = 2; //studying takes time!
+                        _ticks = _baseTickSize*7; //studying takes time!
                         description = _player.read(_verb, _object0);
                         break;
                     case 'repair':
                     case 'mend':
                     case 'fix':
+                        _ticks = _baseTickSize * 3;
                         description = _player.repair(_verb, _object0);
                         break;
                     case 'use':
@@ -1043,9 +1076,11 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'kiss':
                     case 'hug':
                     case 'wink':
+                        _ticks = 0;
                         description = "That's a slightly over-friendly thing to do don't you think?<br>It won't actually make you any more popular either.";
                         break;
                     case 'jump':
+                        _ticks = 1;
                         var index = tools.positions.indexOf(_splitWord);
                         if (!_object0 && _object1 && (0 <= index && index < tools.onIndex)) {
                             //player is trying "jump on or jump over"
@@ -1064,6 +1099,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'how':
                     case 'pardon':
                     case 'sorry':
+                        _ticks = 1;
                         if (_inConversationWith) {
                             description = _player.say('say', _actionString,_inConversationWith, _map);
                             _player.setLastVerbUsed('say');
@@ -1097,6 +1133,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'sniff': //see also smell - by default, not much but would want to add smell attributes to creatures and artefacts
                     case 'smell':
+                        _ticks = 1;
                         description = _player.smell(_verb, _object0);
                         break;
                     case 'listen':
@@ -1120,9 +1157,11 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'hum':
                     case 'whistle':
+                        _ticks = 1;
                         description = "You attempt to "+_verb+" and manage to emit a tuneless, annoying noise.<br>Thanks for that then."
                         break;
                     case 'knock':
+                        _ticks = 1;
                         if (_object0 == "knock") {description = "Who's there?";};
                         break;  
                     case 'sail': //boat.
@@ -1145,12 +1184,15 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.unRide(_verb, _object0);
                         break;
                     case 'start':
+                        _ticks = 1;
                         description = _player.turn(_verb, _object0);
                         break;
-                    case 'stop':  
+                    case 'stop':
+                        _ticks = 1;
                         description = _player.turn(_verb, _object0);
                         break;      
                     case 'curse':
+                        _ticks = 0;
                         description = "Damn you "+_object0+"!<br>I'm guessing that's not what you planned."
                         break;
                     case 'type':
@@ -1183,7 +1225,7 @@ exports.Action = function Action(player, map, fileManager) {
                             description = _player.customAction(_verb, _object1);
                         };
 
-                        if (description) {_ticks = 1;};
+                        if (description) {_ticks = _baseTickSize*1;};
                         //console.log("Custom result:"+description);
                         //console.log('verb: '+_verb+' default response');
                         //allow fall-through
@@ -1243,7 +1285,7 @@ exports.Action = function Action(player, map, fileManager) {
                     };
 
                     _ticks = 1;
-                    if (_verb == "crawl" || _verb == "climb") {_ticks = 2};
+                    if (_verb == "crawl" || _verb == "climb") {_ticks = _baseTickSize*2};
                     return _player.go(_verb, _direction, _map);
                 };
 
@@ -1323,7 +1365,7 @@ exports.Action = function Action(player, map, fileManager) {
                 };
                                
                 if (_verb == '+time') {
-                    return _player.time();
+                    return _player.time(9, 0); //starting from 9am
                 };
 
                 if (_verb == '+wait') {
@@ -1411,7 +1453,7 @@ exports.Action = function Action(player, map, fileManager) {
         };
 
         self.processAction = function(anActionString) {
-            _ticks = 1; //reset ticks.
+            _ticks = _baseTickSize; //reset ticks.
             _direction = ""; //reset direction
             var description = "";
 

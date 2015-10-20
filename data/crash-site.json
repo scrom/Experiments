@@ -111,8 +111,8 @@
             "dislikes": [
                 "jordan miller"
             ],
-            "loopDelay": 3,
-            "destinationDelay": 3,
+            "loopDelay": 5,
+            "destinationDelay": 5,
             "imageName": "daveconvery.jpg",
             "contagion": [
                 {
@@ -158,7 +158,7 @@
             "dislikes": [
                 "jordan miller"
             ],
-            "destinationDelay": 2,
+            "destinationDelay": 5,
             "imageName": "rogerhart.jpg",
             "contagion": [
                 {

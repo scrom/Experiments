@@ -45,8 +45,8 @@
                     "first-floor-fire-escape"
                 ],
                 "loops": -1,
-                "loopDelay": 5,
-                "destinationDelay": 1,
+                "loopDelay": 7,
+                "destinationDelay": 3,
                 "imageName": "paweljonczak.jpg"
             },
             "inventory": [

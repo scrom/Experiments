@@ -49,8 +49,8 @@
                 "graffiti-a"
             ],
             "loops": 12,
-            "loopDelay": 5,
-            "destinationDelay": 4,
+            "loopDelay": 7,
+            "destinationDelay": 5,
             "imageName": "chriswhitworth.jpg"
         },
         "inventory": [

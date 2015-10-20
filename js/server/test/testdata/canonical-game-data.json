@@ -3224,8 +3224,8 @@
             "graffiti-a"
           ],
           "loops": 12,
-          "loopDelay": 5,
-          "destinationDelay": 4,
+          "loopDelay": 7,
+          "destinationDelay": 5,
           "imageName": "chriswhitworth.jpg"
         },
         "inventory": [
@@ -3658,8 +3658,8 @@
             "atrium"
           ],
           "loops": 3,
-          "loopDelay": 5,
-          "destinationDelay": 3,
+          "loopDelay": 7,
+          "destinationDelay": 5,
           "imageName": "chrismoore.jpg"
         },
         "inventory": [
@@ -4735,8 +4735,8 @@
             "smoking-area"
           ],
           "loops": -1,
-          "loopDelay": 5,
-          "destinationDelay": 1,
+          "loopDelay": 7,
+          "destinationDelay": 3,
           "imageName": "johnbowles.jpg",
           "repairSkills": [
             "coffee machine",
@@ -7618,8 +7618,8 @@
                       "kitchen-ground-floor",
                       "creative-agency-area"
                     ],
-                    "loopDelay": 3,
-                    "destinationDelay": 3,
+                    "loopDelay": 5,
+                    "destinationDelay": 5,
                     "imageName": "daveconvery.jpg",
                     "contagion": [
                       {
@@ -7688,7 +7688,7 @@
                     "destinations": [
                       "east-bike-racks"
                     ],
-                    "destinationDelay": 2,
+                    "destinationDelay": 5,
                     "imageName": "rogerhart.jpg",
                     "contagion": [
                       {
@@ -7767,7 +7767,7 @@
                     "avoiding": [
                       "bus"
                     ],
-                    "destinationDelay": 15,
+                    "destinationDelay": 20,
                     "imageName": "spy.jpg"
                   },
                   "inventory": [
@@ -9937,8 +9937,8 @@
             "finance-area"
           ],
           "loops": 10,
-          "loopDelay": 5,
-          "destinationDelay": 2,
+          "loopDelay": 7,
+          "destinationDelay": 4,
           "imageName": "lucyboyes.jpg"
         },
         "inventory": [
@@ -13919,8 +13919,8 @@
             "first-floor-fire-escape"
           ],
           "loops": -1,
-          "loopDelay": 5,
-          "destinationDelay": 1,
+          "loopDelay": 7,
+          "destinationDelay": 3,
           "imageName": "waynestanford.jpg"
         },
         "inventory": [
@@ -15129,8 +15129,8 @@
             "first-floor-fire-escape"
           ],
           "loops": -1,
-          "loopDelay": 5,
-          "destinationDelay": 1,
+          "loopDelay": 7,
+          "destinationDelay": 3,
           "imageName": "paweljonczak.jpg"
         },
         "inventory": [

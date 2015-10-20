@@ -3117,8 +3117,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 } else {
                     //won't follow and not in a wait delay
                     //process delay if set... (_currentDelay starts from 0 and counts up)
-                    if (_currentDelay >= 3) {
-                        //switch off delay after 3 turns without player interaction
+                    if (_currentDelay >= 4) {
+                        //switch off delay after 4 turns without player interaction
                         //this will override any loop or destination delays but not wait delays
                         _currentDelay = -1;
                     } else {
@@ -3435,7 +3435,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             _destinationBlockedCount = 0;
                             //if creature is in home location, stay there a short while. (activate wait delay)
                             if (_currentLocation.getName() == _homeLocation.getName()) {
-                                var randomWait = Math.floor(Math.random() * 7);
+                                var randomWait = Math.floor(Math.random() * 9);
                                 _waitDelay = 3+randomWait;
                                 _currentDelay = 0;
                             };                            

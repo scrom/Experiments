@@ -198,8 +198,8 @@
                     "atrium"
                 ],
                 "loops": 3,
-                "loopDelay": 5,
-                "destinationDelay": 3,
+                "loopDelay": 7,
+                "destinationDelay": 5,
                 "imageName": "chrismoore.jpg"
             },
             "synonyms": [
