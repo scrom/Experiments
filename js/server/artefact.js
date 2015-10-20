@@ -368,6 +368,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (type == "food") {
                 //all food is marked as edible. Nutrition could be negative though.
+                var validFoodSubTypes = ["", "snack", "meal", "drink"];
+                if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 _edible = true;
             };
 
@@ -1557,6 +1559,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _weight+_inventory.getWeight();
         };
 
+        self.getRemainingSpace = function () {
+            return _inventory.getRemainingSpace();
+        };
+
         self.getPrice = function () {
             return _price;
         };
@@ -1682,6 +1688,49 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             return false;
         };
+        
+        
+        self.split = function (chargeSize, removeSplitPart) {
+            
+            if (chargeSize == self.chargesRemaining()) {
+                //caller will need to handle nothing coming back and taking whole item instead.
+                return null;
+            };
+            //we can only split items without inventory
+            if (self.getInventorySize(true) > 0) {
+                return null;
+            };
+           
+            //adjust/define weight and charges
+            var originalWeight = self.getWeight();
+            var originalCharges = self.chargesRemaining();
+
+            var newDestinationWeight = Math.round((originalWeight / originalCharges) * chargeSize * 10) / 10;
+            
+            //we sometimes call artefact.split to test a result - in these cases we don't want to remove it from the original 
+            if (removeSplitPart) {
+                self.consume(chargeSize);
+                
+                //set new weights rounded to 1 decimal place
+                var newSourceWeight = Math.round((originalWeight / originalCharges) * self.chargesRemaining() * 10) / 10;
+                if (originalWeight < newSourceWeight + newDestinationWeight) {
+                    //catch rounding issues
+                    var reduceSourceWeightBy = (newSourceWeight + newDestinationWeight) - originalWeight;
+                    newSourceWeight -= reduceSourceWeightBy;
+                };
+
+                self.setWeight(newSourceWeight);
+            };            
+            
+            
+            //return a new (smaller) instance of self
+            var splitItem = new Artefact(self.getName(), self.getRawDescription(), self.getInitialDetailedDescription(), self.getSourceAttributes(), self.getLinkedExits(), self.getDeliveryItems());
+            splitItem.addSyns(self.getSyns());               
+            splitItem.setCharges(chargeSize);
+            splitItem.setWeight(newDestinationWeight);       
+            
+            return splitItem;
+        };        
 
         self.combineWith = function(anObject) {
             if (!(self.combinesWith(anObject,true))) { return null; };   
@@ -1882,7 +1931,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             
             return "Rattle rattle rattle... ...Nothing happens.";
-        };        
+        };
+        
+        self.willDivide = function () {
+            if (_charges > 1 && (self.getType() == "food" || self.isLiquid() || self.isPowder())) {
+                return true;
+            };
+            return false;
+        };     
 
         self.chargesRemaining = function() {
             if (self.isDestroyed()) {return 0;};
@@ -1894,6 +1950,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getChargeUnit = function() {
             if (_chargeUnit) {return _chargeUnit;};
             return "charge";
+        };
+        
+        self.getChargeWeight = function () {
+            if (!self.willDivide()) { return self.getWeight(); };
+            if (_charges < 1) { return self.getWeight(); };
+            return Math.round((self.getWeight() / self.chargesRemaining()) * 10) / 10;
         };
 
         self.setCharges = function(newValue) {
@@ -2012,18 +2074,30 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (anObjectChargesRemaining == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
         };
 
-        self.consumeComponents = function(quantity) {
+        self.consumeComponents = function(quantity, components) {
             //comsume a charge from each component and return the lowest remaining charge.
-            var components = _inventory.getComponents(self.getName(),true);
+            if (!components) {
+                components = _inventory.getComponents(self.getName(), true);
+            };
             if (!(quantity)) {
                 if (_burnRate > 0) {
                     quantity = _burnRate;
                 };
             };
-
+            
             var minChargesRemaining = -1;
-            for (var i=0;i<components.length;i++) {
+            for (var i = 0; i < components.length; i++) {
+                var originalCharges = components[i].chargesRemaining();
                 var chargesRemaining = components[i].consume(quantity);
+                if (components[i].willDivide()) {
+                    //decrease weight of component
+                    var originalWeight = components[i].getWeight();
+                    var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 10) / 10;
+                    components[i].setWeight(newWeight);
+                };
+                if (chargesRemaining == 0) {
+                    _inventory.remove(components[i].getName());
+                };
                 if (chargesRemaining >-1 ) {
                     if (minChargesRemaining == -1 || minChargesRemaining > chargesRemaining) {
                         minChargesRemaining = chargesRemaining;
@@ -2072,8 +2146,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var components = _inventory.getComponents(self.getName());
             components = components.concat(_inventory.getComponents(anObjectName));
 
-            //iterate thru each component and remove charge.
-            self.consumeComponents();
+            //iterate thru each component - remove charge and reduce weight.
+            self.consumeComponents(null, components);                       
 
             //get the source we're using...
             var deliveryItemSource;
@@ -2559,19 +2633,35 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) {return "There's nothing left to chew on.";};
             if ((!(_chewed)) || (_edible && self.chargesRemaining() !=0))  {
                 _chewed = true; 
-                if (self.isEdible()){
+                if (self.isEdible()) {
+                    var originalCharges = self.chargesRemaining();
+                    var chargesRemaining = originalCharges;
+
                     var eatenAll = " ";
-                    if (self.chargesRemaining() >0) {
-                        _charges--;
+                    if (chargesRemaining >0) {
+                        chargesRemaining = self.consume();
                     };
-                    if (self.chargesRemaining() ==0) {
+                    if (chargesRemaining == 0) {
                         _weight = 0;
-                        eatenAll = " all "
+                        eatenAll = " all ";
+                    } else if (chargesRemaining > 0) {
+                        if (self.willDivide()) {
+                            //decrease weight
+                            var originalWeight = self.getWeight();
+                            var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 10) / 10;
+                            self.setWeight(newWeight);
+                        };
+                        eatenAll = " some of ";
                     };
                     var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+eatenAll+self.getDisplayName();
                     if (_nutrition >=0) {
                         consumer.recover(_nutrition);
-                        var randomReplies = [", mmm, tasty. Much better!", ", that hit the spot.", ", that should keep "+consumer.getSuffix()+" going for a while."];
+                        var randomReplies;
+                        if (_nutrition >= 20) {
+                            randomReplies = [", mmm, tasty. Much better!", ", that hit the spot.", ", that should keep " + consumer.getSuffix() + " going for a while."];
+                        } else {
+                            randomReplies = [", mmm, tasty.", ", that'll stave off the hunger for a short while."];
+                        };
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
                         return resultString +=randomReplies[randomIndex];
                     } else { //nutrition is negative
@@ -2873,7 +2963,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             _inventory.remove(inventoryLiquidOrPowder.getName());
                             _inventory.add(combinedLiquidOrPowder);
                             //increase attributes of existing inventory object from attributes of the one we're adding
-                            return resultString + self.getPrefix() + " now contains even more " + combinedLiquidOrPowder.getName() + ".";
+                            return resultString + self.getPrefix() + " now contains more " + combinedLiquidOrPowder.getName() + ".";
                         };
                     };
                 };

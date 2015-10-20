@@ -9,7 +9,7 @@
         "longname": "East",
         "direction": "e",
         "source": "servery-main",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       },
       {
         "object": "exit",

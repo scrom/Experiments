@@ -240,6 +240,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
 
             return true;
         };
+        
+        self.getRemainingSpace = function () {
+            return _maxCarryingWeight - self.getWeight();
+        };
     
         self.add = function(anObject) {
             if (anObject == undefined) {return "Can't pick it up.";};
@@ -736,24 +740,55 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             var suitableContainer;
             if (requiredContainer) {
                 suitableContainer = self.getObject(requiredContainer);
-                if (!(suitableContainer)) { return null;};
+                if (!(suitableContainer)) {
+                    return null;
+                };
                 //check suitable container can carry item
-                if (!(suitableContainer.canCarry(anObject))) { return null;};
-            } else if (requiresContainer) {
-                //find all player containers 
+                if (!(suitableContainer.canCarry(anObject))) {
+                    if (!anObject.willDivide()) {
+                        return null;
+                    };
+                    
+                    //try one more time with smaller portion size                  
+                    var anObjectPiece = anObject.split(1, false);
+                    
+                    if (!(suitableContainer.canCarry(anObjectPiece))) {
+                        return null;
+                    };
+                };
+                //it fits
+                return suitableContainer;
+            };
+            
+            if (requiresContainer) {
+                //find all containers 
                 var possibleContainers = self.getAllObjectsOfType('container');
-                for(var index = 0; index < possibleContainers.length; index++) {
+                //work backwards from most recently added
+                for (var index = possibleContainers.length - 1; index >= 0; index--) {
                     //loop thru all containers
                     //check canContain
                     //if any one is true, add it, if not fail
                     if(possibleContainers[index].canCarry(anObject)) {
                         //console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" in "+_ownerName+" inventory. Index: "+index);
-                        suitableContainer = possibleContainers[index];
-                        break; //exit loop early if success
+                        return possibleContainers[index];
                     };
-                };                
-            };
+                };
 
+                //we only get this far if we don't have anything that'll take the whole quantity
+                if (!anObject.willDivide()) {
+                    return null;
+                };
+
+                //try one more time with smaller portion size                  
+                var anObjectPiece = anObject.split(1, false);
+                    
+                for (var index = possibleContainers.length - 1; index >= 0; index--) {
+                    if (possibleContainers[index].canCarry(anObjectPiece)) {
+                        return possibleContainers[index];
+                    };
+                };
+            };
+            //probably null at this point
             return suitableContainer;
         };
 

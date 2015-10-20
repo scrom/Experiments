@@ -5432,7 +5432,7 @@
         "longname": "West",
         "direction": "w",
         "source": "sales-south",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       },
       {
         "object": "exit",
@@ -6609,7 +6609,7 @@
         "longname": "South",
         "direction": "s",
         "source": "servery-kitchen",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       }
     ]
   },
@@ -6624,7 +6624,7 @@
         "longname": "East",
         "direction": "e",
         "source": "servery-main",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       },
       {
         "object": "exit",
@@ -6778,7 +6778,7 @@
   },
   {
     "object": "location",
-    "name": "servery-salad-bar",
+    "name": "servery-food-bar",
     "description": "You're standing by the SQL Servery salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
     "visits": 4,
     "exits": [
@@ -6786,21 +6786,21 @@
         "object": "exit",
         "longname": "North",
         "direction": "n",
-        "source": "servery-salad-bar",
+        "source": "servery-food-bar",
         "destination": "servery-kitchen"
       },
       {
         "object": "exit",
         "longname": "West",
         "direction": "w",
-        "source": "servery-salad-bar",
+        "source": "servery-food-bar",
         "destination": "servery-main"
       },
       {
         "object": "exit",
         "longname": "East",
         "direction": "e",
-        "source": "servery-salad-bar",
+        "source": "servery-food-bar",
         "destination": "sales-south"
       }
     ]

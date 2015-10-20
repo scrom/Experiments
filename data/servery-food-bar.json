@@ -1,0 +1,35 @@
+﻿  {
+    "object": "location",
+    "name": "servery-food-bar",
+    "displayName": "Servery",
+    "description": "You're standing by the SQL Servery serving area and salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.<br><br>It's breakfast time!",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "servery-food-bar",
+        "destination": "servery-kitchen"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "servery-food-bar",
+        "destination": "servery-main"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "servery-food-bar",
+        "destination": "sales-south"
+      }
+    ],
+    "inventory": [
+      { "file": "bowl" },
+      { "file": "bowl" },
+      { "file": "bowl" },
+      { "file": "vat" }
+    ]
+  }

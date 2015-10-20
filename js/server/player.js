@@ -1156,59 +1156,63 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 for (var i=0;i<allLocationObjects.length;i++) {
                     var deliversRequestedItem = false;
                     var tempDeliveryItem;
-                    if (allLocationObjects[i].getType() != 'creature') {
-                        var deliveryItems = allLocationObjects[i].getDeliveryItems();
-                        for (var d=0;d<deliveryItems.length;d++) {
-                            if (deliveryItems[d].getName() == artefactName) {
-                                deliversRequestedItem = true;
-                                tempDeliveryItem = deliveryItems[d];
-                                break;
-                            };
-                        };
-                        if (deliversRequestedItem) {
-                            var tmpRequiresContainer = tempDeliveryItem.requiresContainer();
-                            if (tmpRequiresContainer) {
-                                var tmpSuitableContainer = _inventory.getSuitableContainer(tempDeliveryItem);
-                                if (!tmpSuitableContainer) {
-                                    var tmpRequiredContainerName = tempDeliveryItem.getRequiredContainer();
-                                    var tmpRequiredContainer;
-                                    if (tmpRequiredContainerName) {
-                                        tmpRequiredContainer = getObjectFromPlayerOrLocation(tmpRequiredContainerName);
-                                    };
-                                    if (tmpRequiredContainer) {
-                                        //the required object exists but can't carry it.
-                                        if (tmpRequiredContainer.isBroken() || tmpRequiredContainer.isDestroyed()) {
-                                            return "It looks like the only available " + tmpRequiredContainer.getName() + " around here has seen better days."; 
-                                        };
-                                        if (tmpRequiredContainer.getInventorySize() > 0 && (!(tmpRequiredContainer.canCarry(tempDeliveryItem)))) {
-                                            var tmpContainerInventory = tmpRequiredContainer.getInventoryObject();
-                                            var deliveryItemName = tempDeliveryItem.getName();
-                                            //depending on whether container already has some of this in it, tweak the "full" wording.
-                                            if (tmpContainerInventory.check(deliveryItemName)) {
-                                                deliveryItemName = "any more.";
-                                            } else {
-                                                deliveryItemName += " as well.";
-                                            };
-                                            return "The only available " + tmpRequiredContainer.getName() + " already has "+ tmpContainerInventory.listObjects()+" in "+ tmpRequiredContainer.getSuffix()+". There isn't room for "+ deliveryItemName;
-                                        };                                        ;
-                                        if (tmpRequiredContainer.getCarryWeight() < tempDeliveryItem.getWeight()) {
-                                            return "You need a " + tmpRequiredContainer.getName() + " that can hold " + tempDeliveryItem.getName() + ". None here seem to fit the bill.";
-                                        };
-                                    } else {
-                                        return "Sorry. You can't collect " + tempDeliveryItem.getDisplayName() + " without something suitable to carry " + tempDeliveryItem.getSuffix() + " in."; 
-                                    };
-                                };
-                            };
+                    if (allLocationObjects[i].getType() == 'creature') {
+                        continue;
+                    };
 
-                            var locationInventory = _currentLocation.getInventoryObject();                                            
-                            var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
-                            if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
-                                //we got the requested object back!
-                                return tempResultString;
+                    var deliveryItems = allLocationObjects[i].getDeliveryItems();
+                    for (var d=0;d<deliveryItems.length;d++) {
+                        if (deliveryItems[d].getName() == artefactName) {
+                            deliversRequestedItem = true;
+                            tempDeliveryItem = deliveryItems[d];
+                            break;
+                        };
+                    };
+                    if (!deliversRequestedItem) {
+                        continue;
+                    };
+                    var tmpRequiresContainer = tempDeliveryItem.requiresContainer();
+                    if (tmpRequiresContainer) {
+                        var tmpSuitableContainer = _inventory.getSuitableContainer(tempDeliveryItem);
+                        if (!tmpSuitableContainer) {
+                            var tmpRequiredContainerName = tempDeliveryItem.getRequiredContainer();
+                            var tmpRequiredContainer;
+                            if (tmpRequiredContainerName) {
+                                tmpRequiredContainer = getObjectFromPlayerOrLocation(tmpRequiredContainerName);
+                            };
+                            //@todo issue #394 -potentially get an alternate suitable container from locaiton inventory at this point.
+                            if (tmpRequiredContainer) {
+                                if (tmpRequiredContainer.isBroken() || tmpRequiredContainer.isDestroyed()) {
+                                    //the required object exists but can't carry it.
+                                    return "It looks like the only available " + tmpRequiredContainer.getName() + " around here has seen better days."; 
+                                };
+                                if (tmpRequiredContainer.getInventorySize() > 0 && (!(tmpRequiredContainer.canCarry(tempDeliveryItem)))) {
+                                    var tmpContainerInventory = tmpRequiredContainer.getInventoryObject();
+                                    var deliveryItemName = tempDeliveryItem.getName();
+                                    //depending on whether container already has some of this in it, tweak the "full" wording.
+                                    if (tmpContainerInventory.check(deliveryItemName)) {
+                                        deliveryItemName = "any more.";
+                                    } else {
+                                        deliveryItemName += " as well.";
+                                    };
+                                    return "The only available " + tmpRequiredContainer.getName() + " already has "+ tmpContainerInventory.listObjects()+" in "+ tmpRequiredContainer.getSuffix()+". There isn't room for "+ deliveryItemName;
+                                };
+                                if (tmpRequiredContainer.getCarryWeight() < tempDeliveryItem.getWeight()) {
+                                    return "You need a " + tmpRequiredContainer.getName() + " that can hold " + tempDeliveryItem.getName() + ". None here seem to fit the bill.";
+                                };
                             } else {
-                                return "You'll need to figure out what's wrong with "+allLocationObjects[i].getDisplayName()+" before you can get any "+artefactName+"."
+                                return "Sorry. You can't collect " + tempDeliveryItem.getDisplayName() + " without something suitable to carry " + tempDeliveryItem.getSuffix() + " in."; 
                             };
                         };
+                    };
+
+                    var locationInventory = _currentLocation.getInventoryObject();                                            
+                    var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
+                    if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
+                        //we got the requested object back!
+                        return tempResultString;
+                    } else {
+                        return "You'll need to figure out what's wrong with "+allLocationObjects[i].getDisplayName()+" before you can get any "+artefactName+"."
                     };
                 };
 
@@ -1279,14 +1283,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //@todo - is the artefact weight including positioned items?
 
-            if (!(_inventory.canCarry(artefact))) { return tools.initCap(artefact.getDescriptivePrefix())+" too heavy. You may need to get rid of some things you're carrying in order to carry "+artefact.getSuffix()+".";};
+            if (!(_inventory.canCarry(artefact))) { return tools.initCap(artefact.getDescriptivePrefix())+" too heavy. You may need to get rid of some things you're holding in order to carry "+artefact.getSuffix()+".";};
 
             var requiresContainer = artefact.requiresContainer();
             if (requiresContainer) {
-                //@todo -  handling of suitable containers here needs some better handling
-                var suitableContainer = _inventory.getSuitableContainer(artefact);
+                //@todo -  issue #394 handling of suitable containers here needs some better handling
+                //@todo -  issue #395 handling of portion sizes here needs work
+                var suitableContainer = _inventory.getSuitableContainer(artefact); //@todo #394 - try location inventory.
     
-                if (!suitableContainer) { return "Sorry. You can't collect "+artefact.getDisplayName()+" without something suitable to carry "+artefact.getSuffix()+" in.";};
+                if (!suitableContainer) { return "You're not carrying anything that you can put "+artefact.getDisplayName()+" into.";};
 
                 var requiredContainer = artefact.getRequiredContainer();
                 return self.put("collect", artefactName, suitableContainer.getName(), requiredContainer);
@@ -2286,24 +2291,29 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
         /*Allow player to put something in an object */
-    self.put = function(verb, artefactName, receiverName, requiredContainer){
+    self.put = function(verb, artefactName, receiverName, requiredContainer, artefact){
             var resultString = "";
-
-            if (tools.stringIsEmpty(artefactName)){ return verb+" what?";};
-            if (tools.stringIsEmpty(receiverName)){ return verb+" "+artefactName+" where?";};
-            if (artefactName == "all") {return "Sorry, you'll need to be more specific.";};
-
-            var artefact;
-            if (verb == "collect") {
-                //try location first
-                artefact = getObjectFromLocation(artefactName);
+            var artefactPreviouslyCollected = false;
+            var collectedArtefact;
+            if (artefact) {
+                artefactPreviouslyCollected = true;
+                collectedArtefact = artefact;
+            } else {
+                if (tools.stringIsEmpty(artefactName)) { return verb + " what?"; };
+                if (tools.stringIsEmpty(receiverName)) { return verb + " " + artefactName + " where?"; };
+                if (artefactName == "all") { return "Sorry, you'll need to be more specific."; };
+                                
+                if (verb == "collect") {
+                    //try location first
+                    artefact = getObjectFromLocation(artefactName);
+                };
+                if (!(artefact)) {
+                    artefact = getObjectFromPlayerOrLocation(artefactName);
+                };
+                
+                
+                if (!(artefact)) { return notFoundMessage(artefactName); };
             };
-            if (!(artefact)) {
-                artefact = getObjectFromPlayerOrLocation(artefactName);
-            };
-            
-
-            if (!(artefact)) { return notFoundMessage(artefactName); };
 
             //replace requested artefact name with real name...
             artefactName = artefact.getName();
@@ -2376,12 +2386,21 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             return tools.initCap(artefact.getDescriptivePrefix())+" already hidden.";
                         };
                     } else {
-                        return tools.initCap(artefact.getDescriptivePrefix())+" already in "+receiver.getDisplayName()+".";
+                        return "There's already "+ artefact.descriptionWithCorrectPrefix()+" in "+receiver.getDisplayName()+".";
                     };
                 };
 
                 if (receiver.isBroken()) {
                     return receiver.getDescriptivePrefix() + " broken. You'll need to fix " + receiver.getSuffix() + " first.";
+                };
+                
+                //issue #395 at this point, if artefact has multiple charges, figure out how much receiver can hold and split artefact.
+                if (artefact.willDivide()) {
+                    var spaceToFill = receiver.getRemainingSpace();
+                    var chargesRequired = Math.floor(spaceToFill / artefact.getChargeWeight());
+                    var newArtefact = artefact.split(chargesRequired, true);
+                    //if we have a new artefact at this point, we've split from the original.
+                    return self.put(verb, artefactName, receiverName, requiredContainer, newArtefact);
                 };
                     
                 if (artefact.isLiquid() || artefact.isPowder()) {
@@ -2430,45 +2449,62 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return "It looks like " + artefact.getDisplayName() + " has seen a little too much action.<br>You'll need to find a way to <i>repair</i> " + artefact.getSuffix() + " before you can " + verb + " " + artefact.getSuffix() + " in there.";
                 };
             };
-            
-            //"collect" it from its current home.
-            var objectIsInLocation = _currentLocation.objectExists(artefactName, true, false);
-            var collectedArtefact;
-            if (objectIsInLocation) {
-                //console.log("collecting from location");
-                //try location first
-                collectedArtefact = getObjectFromLocation(artefactName);
 
-            };
-            if (!(collectedArtefact)) {
-                collectedArtefact = getObjectFromPlayer(artefactName);
-            };
-            if (!(collectedArtefact)) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
-            
-            //track where we took the item from in case we need to return it (quite common)
-            var originalInventory;
-            var originalContainer;
-            if (objectIsInLocation) {
-                originalInventory = _currentLocation.getInventoryObject();
-            } else {
-                originalInventory = _inventory;
-            };
-            if (collectedArtefact.requiresContainer()) {
-                //get original container in case we need to return it.
-                var owner = originalInventory.getOwnerFor(collectedArtefact.getName());
-                if (owner) {
-                    originalInventory = owner.getInventoryObject();
+            if (!artefactPreviouslyCollected) {
+                //"collect" it from its current home.
+                var objectIsInLocation = _currentLocation.objectExists(artefactName, true, false);
+                var objectIsInPlayerInventory = _inventory.check(artefactName, true, true, false);
+                if (objectIsInLocation && objectIsInPlayerInventory) {
+                    //there's one of these items in both player inventory and location.
+                    //take a guess based on location of destination instead.
+                    var receiverIsInLocation = _currentLocation.objectExists(receiver.getName(), true, false);
+                    if (receiverIsInLocation) {
+                        //we'll assume we're taking an item from the player.
+                        objectIsInLocation = false;
+                    };
                 };
+                if (objectIsInLocation) {
+                    //console.log("collecting from location");
+                    //try location first
+                    collectedArtefact = getObjectFromLocation(artefactName);
+
+                };
+                if (!(collectedArtefact)) {
+                    collectedArtefact = getObjectFromPlayer(artefactName);
+                };
+                
+
+                if (!(collectedArtefact)) { return "Sorry, " + artefact.getSuffix() + " can't be picked up."; };
+            
+                //track where we took the item from in case we need to return it (quite common)
+                var originalInventory;
+                var originalContainer;
+                if (objectIsInLocation) {
+                    originalInventory = _currentLocation.getInventoryObject();
+                } else {
+                    originalInventory = _inventory;
+                };
+                if (collectedArtefact.requiresContainer()) {
+                    //get original container in case we need to return it.
+                    var owner = originalInventory.getOwnerFor(collectedArtefact.getName());
+                    if (owner) {
+                        originalInventory = owner.getInventoryObject();
+                    };
+                };
+                //remove item from where it currently resides
+
+                originalInventory.remove(artefactName, false);
             };
-            //remove item from where it currently resides
-            originalInventory.remove(artefactName, false);  
+            
 
             //put the x in the y
             var receiverDisplayNameString = receiver.getDisplayName();
             if (_inventory.check(receiver.getName())) {receiverDisplayNameString = "your "+receiver.getName();};
 
             var artefactDisplayNameString = collectedArtefact.getDisplayName();
-            if (!objectIsInLocation) {artefactDisplayNameString = "your "+collectedArtefact.getName();};
+            if (artefactPreviouslyCollected) {
+                artefactDisplayNameString = "some " + collectedArtefact.getName();
+            } else if (!objectIsInLocation) {artefactDisplayNameString = "your "+collectedArtefact.getName();};
 
             resultString = "You "+verb+" "+artefactDisplayNameString;
             if (verb == "attach" || verb == "stick" || verb == "join" || verb == "add") {
@@ -4769,7 +4805,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 if (verb != "lick" && verb != "taste") {
                     //only resolve hunger if actually eating thing.
-                    _timeSinceEating = 0;
+                    if (artefact.getNutrition() >= 20 || artefact.getSubType() == "meal") {
+                        _timeSinceEating = 0;
+                    } else if (artefact.getNutrition() > 0) {
+                        _timeSinceEating -= (artefact.getNutrition() * 8);
+                    };
                 };
                 //console.log('player eats some food.');
             };

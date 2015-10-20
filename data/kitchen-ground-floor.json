@@ -129,7 +129,7 @@
                 "defaultAction": "get coffee from machine",
                 "extendedInventoryDescription": "It's fully loaded with ",
                 "weight": 151,
-                "carryWeight": 25,
+                "carryWeight": 15,
                 "holdsLiquid": true,
                 "isBreakable": true,
                 "isBroken": true,

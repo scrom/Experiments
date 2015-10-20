@@ -1250,6 +1250,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getWeight = function() {
              return  _weight+_inventory.getWeight();
         };
+        
+        self.getRemainingSpace = function () {
+            return _inventory.getRemainingSpace();
+        };
 
         self.getPrice = function () {
             return _price;
@@ -1904,6 +1908,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getAllObjects = function(includeHiddenObjects) {
             return _inventory.getAllObjects(includeHiddenObjects);
+        };
+        
+        self.split = function () {
+            return null;
         };
 
         self.hit = function(receiver, damageModifier) {
@@ -3811,6 +3819,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.chargesRemaining = function() {
             return Math.round(_charges*100)/100;
         };
+        
+        self.getChargeWeight = function () {
+            if (!self.willDivide()) { return self.getWeight(); };
+            if (_charges < 1) { return self.getWeight(); };
+            return Math.round((self.getWeight() / self.chargesRemaining()) * 10) / 10;
+        };
+        
+        self.willDivide = function () {
+            return false; //in theory you could chop a creature up but we'll assume not.
+        }; 
 
         self.hasPower = function() {
             return false;

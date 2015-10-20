@@ -198,6 +198,7 @@
     <Content Include="data\images\screen.jpg" />
     <Content Include="data\images\sticky-finger.jpg" />
     <Content Include="data\office-door.json" />
+    <Content Include="data\salad.json" />
     <Content Include="data\sales-break-out.json" />
     <Content Include="data\sales-main.json" />
     <Content Include="data\sales-north.json" />
@@ -227,7 +228,7 @@
     <Content Include="data\servery-kitchen.json" />
     <Content Include="data\servery-main.json" />
     <Content Include="data\servery-north-west.json" />
-    <Content Include="data\servery-salad-bar.json" />
+    <Content Include="data\servery-food-bar.json" />
     <Content Include="data\servery-south-west.json" />
     <Content Include="data\shower-ground-floor.json" />
     <Content Include="data\signpost.json" />
@@ -258,6 +259,7 @@
     <Content Include="data\traffic-jam-meeting-room.json" />
     <Content Include="data\tyre-tracks.json" />
     <Content Include="data\van.json" />
+    <Content Include="data\vat.json" />
     <Content Include="data\war-room.json" />
     <Content Include="data\waste-area.json" />
     <Content Include="data\water.json" />

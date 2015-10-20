@@ -1777,8 +1777,8 @@ exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood 
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var resultString = c0.receive(food, p0);
-    var expected = "He eats the slab He holds onto the remainder for later.";
-    var actual = resultString.substr(0,17)+resultString.substr(-38);
+    var expected = "He eats some of the slab He holds onto the remainder for later.";
+    var actual = resultString.substr(0,25)+resultString.substr(-38);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);
@@ -2161,8 +2161,8 @@ exports.otherCreatureWillStillEatChocolate = function (test) {
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
  
-    var expected = "He eats the chocolate";
-    var actual = c0.receive(chocolate, p0).substr(0,21);
+    var expected = "He eats some of the chocolate";
+    var actual = c0.receive(chocolate, p0).substr(0,29);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
     test.equal(actual, expected);

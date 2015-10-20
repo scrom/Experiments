@@ -4843,7 +4843,7 @@
                     "attributes": {
                       "defaultAction": "open",
                       "weight": 2,
-                      "carryWeight": 25,
+                      "carryWeight": 7,
                       "attackStrength": 2,
                       "type": "container",
                       "canCollect": true,
@@ -4871,7 +4871,7 @@
                         "attributes": {
                           "defaultAction": "open",
                           "weight": 2,
-                          "carryWeight": 3,
+                          "carryWeight": 5,
                           "attackStrength": 2,
                           "type": "container",
                           "canCollect": true,
@@ -4892,19 +4892,23 @@
                             "description": "coffee beans",
                             "detailedDescription": "Development fuel. Almost enough to last a day here.",
                             "attributes": {
-                              "weight": 2,
+                              "weight": 5,
                               "attackStrength": 5,
+                              "type": "food",
                               "requiresContainer": true,
                               "canCollect": true,
-                              "charges": 10,
+                              "charges": 20,
                               "chargeUnit": "cup",
                               "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
                               "plural": true,
                               "affinityModifier": 0,
+                              "isEdible": true,
+                              "nutrition": 1,
                               "componentOf": [
                                 "coffee machine"
                               ],
-                              "smell": "They smell like pretty good quality coffee."
+                              "smell": "They smell like pretty good quality coffee.",
+                              "taste": "They're bitter, crunchy and pretty low in nutritional value"
                             },
                             "synonyms": [
                               "coffee beans"
@@ -6827,12 +6831,12 @@
             "detailedDescription": "Enough for a few lattes.",
             "attributes": {
               "defaultAction": "drink",
-              "weight": 1,
+              "weight": 3,
               "type": "food",
               "requiresContainer": true,
               "isLiquid": true,
               "canCollect": true,
-              "charges": 5,
+              "charges": 8,
               "chargeUnit": "cup",
               "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
               "plural": true,
@@ -7151,7 +7155,7 @@
           "defaultAction": "get coffee from machine",
           "extendedInventoryDescription": "It's fully loaded with ",
           "weight": 151,
-          "carryWeight": 25,
+          "carryWeight": 15,
           "holdsLiquid": true,
           "isBreakable": true,
           "isBroken": true,
@@ -12179,7 +12183,7 @@
         "longname": "West",
         "direction": "w",
         "source": "sales-south",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       },
       {
         "object": "exit",
@@ -13620,6 +13624,133 @@
   },
   {
     "object": "location",
+    "name": "servery-food-bar",
+    "displayName": "Servery",
+    "description": "You're standing by the SQL Servery serving area and salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.<br><br>It's breakfast time!",
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "servery-food-bar",
+        "destination": "servery-kitchen"
+      },
+      {
+        "object": "exit",
+        "longname": "West",
+        "direction": "w",
+        "source": "servery-food-bar",
+        "destination": "servery-main"
+      },
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "servery-food-bar",
+        "destination": "sales-south"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "bowl",
+        "description": "bowl",
+        "detailedDescription": "A round bowl",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "bowl",
+        "description": "bowl",
+        "detailedDescription": "A round bowl",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "bowl",
+        "description": "bowl",
+        "detailedDescription": "A round bowl",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        }
+      },
+      {
+        "object": "artefact",
+        "name": "vat",
+        "description": "vat",
+        "detailedDescription": "A large stainless steel cooking vat",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 3,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It belongs here for the benefit of all staff, not just you."
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "porridge",
+            "description": "porridge",
+            "detailedDescription": "A great, healthy, warm start to the day.<br>A bowl of this should keep you going until lunchtime.",
+            "attributes": {
+              "weight": 3,
+              "type": "food",
+              "requiresContainer": true,
+              "canCollect": true,
+              "charges": 6,
+              "chargeUnit": "bowlful",
+              "chargesDescription": "There's about $charges $chargeUnit of porridge left",
+              "plural": true,
+              "affinityModifier": 0,
+              "isEdible": true,
+              "nutrition": 20
+            },
+            "synonyms": [
+              "food",
+              "cereal",
+              "oats",
+              "oatmeal"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "object": "location",
     "name": "servery-kitchen",
     "displayName": "Servery kitchen",
     "description": "You're in the SQL Servery kitchen.",
@@ -13636,7 +13767,7 @@
         "longname": "South",
         "direction": "s",
         "source": "servery-kitchen",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       }
     ],
     "inventory": [
@@ -13964,7 +14095,7 @@
         "longname": "East",
         "direction": "e",
         "source": "servery-main",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       },
       {
         "object": "exit",
@@ -14185,57 +14316,6 @@
           "thankyou card",
           "thank-you card",
           "thank you card"
-        ]
-      }
-    ]
-  },
-  {
-    "object": "location",
-    "name": "servery-salad-bar",
-    "displayName": "Servery",
-    "description": "You're standing by the SQL Servery salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "servery-salad-bar",
-        "destination": "servery-kitchen"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "servery-salad-bar",
-        "destination": "servery-main"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "servery-salad-bar",
-        "destination": "sales-south"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "salad",
-        "description": "plate of salad",
-        "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
-        "attributes": {
-          "defaultAction": "eat",
-          "weight": 2,
-          "type": "food",
-          "canCollect": true,
-          "charges": 1,
-          "isEdible": true,
-          "nutrition": 25
-        },
-        "synonyms": [
-          "plate of salad",
-          "plate",
-          "food"
         ]
       }
     ]

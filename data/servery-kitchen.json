@@ -16,7 +16,7 @@
         "longname": "South",
         "direction": "s",
         "source": "servery-kitchen",
-        "destination": "servery-salad-bar"
+        "destination": "servery-food-bar"
       }
     ],
     "inventory": [
