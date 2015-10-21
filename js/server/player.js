@@ -3275,7 +3275,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 //retrieve missions from location:
 
-                newMissions = _currentLocation.getMissions();
+                newMissions = _currentLocation.getMissions(true);
                 var hiddenMissionCount = 0;
                 //remove any with dialogue from this list.
                 for (var j=0; j< newMissions.length;j++) {
@@ -3284,15 +3284,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (!(newMissions[j].getDescription())) { hiddenMissionCount++;};
                 };
                 if (newMissions.length>0 && (newMissions.length>hiddenMissionCount)) {resultString+= "<br><br>";};
-                for (var i=0; i< newMissions.length;i++) {
-                    newMissions[i].startTimer();
+                for (var i = 0; i < newMissions.length; i++) {
+                    if (!newMissions[i].hasParent()) {
+                        newMissions[i].startTimer();
+                        
+                        var missionDescription = newMissions[i].getDescription();
+                        if (missionDescription) {
+                            resultString += missionDescription + "<br>";
+                        };
+                    };
                     if (!(newMissions[i].isStatic())) {
                         self.addMission(newMissions[i]);
                         _currentLocation.removeMission(newMissions[i].getName());
-                    };
-                    var missionDescription = newMissions[i].getDescription();
-                    if (missionDescription) {
-                        resultString+= missionDescription+"<br>";
                     };
                 };
 
@@ -3837,8 +3840,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += _currentLocation.describe();
             };
 
-            //retrieve missions from location:
-            var newMissions = _currentLocation.getMissions();
+            //retrieve missions from location including those that are inactive and non-static:
+            var newMissions = _currentLocation.getMissions(true);
 
             var hiddenMissionCount = 0;
             //remove any with dialogue from this list.
@@ -3848,16 +3851,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (newMissions.length>0) {resultString+= "<br><br>";};
-            for (var i=0; i< newMissions.length;i++) {
-                newMissions[i].startTimer();
+            for (var i = 0; i < newMissions.length; i++) {
+                if (!newMissions[i].hasParent()) {
+                    newMissions[i].startTimer();
+             
+                    var missionDescription = newMissions[i].getDescription();
+                    if (missionDescription) {
+                        resultString += missionDescription + "<br>";
+                    };
+                };
                 if (!(newMissions[i].isStatic())) {
                     self.addMission(newMissions[i]);
                     _currentLocation.removeMission(newMissions[i].getName());
-                };
-
-                var missionDescription = newMissions[i].getDescription();
-                if (missionDescription) {
-                    resultString+= newMissions[i].getDescription()+"<br>";
                 };
             };
 
@@ -5438,11 +5443,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var status = "";
             var missions = _missions.concat(_currentLocation.getMissions());
             if (missions.length > 0) {status+="<i>Tasks:</i><br>";};
-            for (var i=0; i< missions.length;i++) {
-                var missionDescription = missions[i].getDescription();
-                if (missionDescription) {
-                        status+=missionDescription+"<br>";
-                };                
+            for (var i = 0; i < missions.length; i++) {
+                if (!missions[i].hasParent()) {
+                    var missionDescription = missions[i].getDescription();
+                    if (missionDescription) {
+                        status += missionDescription + "<br>";
+                    };
+                };               
             };
             if (missions.length > 0) {status+="<br>";};
 
