@@ -107,6 +107,7 @@
                 "plural": true,
                 "canCollect": true,
                 "requiresContainer": true,
+                "requiredContainer": "bowl",
                 "charges": 1,
                 "isEdible": true,
                 "nutrition": 20

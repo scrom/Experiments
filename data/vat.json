@@ -26,6 +26,7 @@
         "type": "food",
         "canCollect": true,
         "requiresContainer": true,
+        "requiredContainer": "bowl",
         "charges": 6,
         "chargeUnit": "bowlful",
         "chargesDescription": "There's about $charges $chargeUnit of porridge left",
@@ -38,7 +39,8 @@
         "food",
         "cereal",
         "oats",
-        "oatmeal"
+        "oatmeal",
+        "breakfast"
       ]
     }
   ]
