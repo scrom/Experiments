@@ -183,6 +183,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
 
         self.enactSymptoms = function (carrier, location, player) {
             //example: "symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0},{ "action":"hurt", "health":5, "frequency":0.1,"escalation":0.1}],
+            if (carrier.isDead()) { return ""; }; //do nothing
             var resultString = "";
             if (_duration == 0) { return resultString; }; //contagion should no longer exist
             if (_incubationPeriod > 0) {
@@ -211,6 +212,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                 if (_symptoms[i].action) {
                     switch (_symptoms[i].action) {
                         case "bite":
+                            if (carrier.healthPercent() < 25) {
+                                //don't bite if too weak
+                                break;
+                            };
                             //console.log("bite symptom firing.");
                             var initialVictims = [];
                             if (location) { initialVictims = location.getCreatures() };
@@ -264,7 +269,6 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
 
                             break;
                         case "hurt":
-                            if (carrier.isDead()) { break; }; //do nothing
                             var rand = Math.floor(Math.random() * frequency);
                             //console.log("health symptom firing. Rand = "+rand);
                             if (rand == 0) {

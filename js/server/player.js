@@ -89,13 +89,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
 	    var _objectName = "player";
 
-        var healthPercent = function() {
-            //avoid dividebyzerot
-            if (_maxHitPoints == 0) {return 0;};
-
-            return Math.floor((_hitPoints/_maxHitPoints)*100);
-        };
-
         var getObjectFromPlayer = function(objectName, verb){
             var requestedObject = _inventory.getObject(objectName, false, false, verb);
             if (!requestedObject) {
@@ -282,6 +275,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
             return randomReplies[randomIndex];
+        };
+        
+        self.healthPercent = function () {
+            //avoid dividebyzerot
+            if (_maxHitPoints == 0) { return 0; };
+            
+            return Math.floor((_hitPoints / _maxHitPoints) * 100);
         };
 
         var processAttributes = function(playerAttributes, map) {
@@ -4319,11 +4319,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //reduce aggression
             self.decreaseAggression(1);
-            if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
+            if (self.healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
 
             if (_hitPoints <=0) {return self.kill();};
             
-            //@todo - add some more random alternatives to "you feel weaker"
+            //@todo - add some more random alternatives to "you feel weaker" - tricky as the cause of "hurt" may be violence or bleeding
+            //probably want to add "attacker" in as a parameter in the same way we do for creature.hurt.
             return "You feel weaker. ";
         };
 
@@ -4474,10 +4475,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //alter strength/damage if bleeding or nearly dying.
-            if (healthPercent() <=5) {
+            if (self.healthPercent() <=5) {
                 //double damage for dying blow if they can get one in!!
                 pointsToRemove = pointsToRemove*2
-            } else if (healthPercent() <=10) {
+            } else if (self.healthPercent() <=10) {
                 //50% strength
                 pointsToRemove = pointsToRemove*0.5
             } else if (_bleeding) {
@@ -4580,7 +4581,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //prevent resting if health > 90%
-            if (healthPercent() >90 && _timeSinceResting < 15) {return "You're not tired at the moment.";};
+            if (self.healthPercent() >90 && _timeSinceResting < 15) {return "You're not tired at the moment.";};
 
             //check if there's an unfrindly creature here...
             var creatures = _currentLocation.getCreatures();
@@ -4633,7 +4634,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = "";
             var pointsToAdd = 0;
             var pointsNeeded = _maxHitPoints-_hitPoints;
-            if (healthPercent() >=65) {
+            if (self.healthPercent() >=65) {
                 //add 50% of remaining health to gain.
                 pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
             } else {
@@ -4664,7 +4665,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             self.recover(pointsToAdd);
             
             //did we stop the bleeding?
-            if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
+            if ((self.healthPercent() > _bleedingHealthThreshold) && _bleeding) {
                 _bleeding = false;
                 if (healer) {
                     if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
@@ -4984,24 +4985,25 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.health = function() {
             var resultString = "";
+            var healthPercent = self.healthPercent();
 
             switch(true) {
-                    case (healthPercent()>99):
+                    case (healthPercent>99):
                         resultString = "You're generally the picture of health.";
                         break;
-                    case (healthPercent()>80):
+                    case (healthPercent>80):
                         resultString = "You're just getting warmed up.";
                         break;
-                    case (healthPercent()>_bleedingHealthThreshold):
+                    case (healthPercent>_bleedingHealthThreshold):
                         resultString = "You've taken a fair beating.";
                         break;
-                    case (healthPercent()>25):
+                    case (healthPercent>25):
                         resultString = "You're really not in good shape.";
                         break;
-                    case (healthPercent()>10):
+                    case (healthPercent>10):
                         resultString = "You're dying.";
                         break;
-                    case (healthPercent()>0):
+                    case (healthPercent>0):
                         resultString = "You're almost dead.";
                         break;
                     default:
@@ -5130,14 +5132,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 afflictionString += "<br>You need to <i>rest</i>. ";
                 //console.log("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
                 if (_timeSinceResting == Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2))) {
-                    afflictionString += "You're struggling to keep up with those around you. ";
+                    afflictionString += "<br>You're struggling to keep up with those around you. ";
                 };
 
             } 
             else if (_timeSinceResting == _maxMovesUntilTired - (Math.floor(Math.random() * 7))) { afflictionString += "<br>You've been on your feet quite a while. You could do with taking a break. "; }; //@todo make this more varied
             
-
-            if (_bleeding) { afflictionString+="<br>You're bleeding. ";};           
+            
+            var bleedString = "";
+            if (_bleeding) { bleedString +="<br>You're bleeding. ";};           
 
             if (healPoints>0 && (_hitPoints < _maxHitPoints)) {self.recover(healPoints);};   //heal before damage - just in case it's enough to not get killed.
             if (damage > 0) {
@@ -5146,10 +5149,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //just got killed.
                     return damageString;
                 } else {
-                    resultString += afflictionString + damageString;
+                    if (_bleeding && self.healthPercent() > 10 ) {
+                        resultString += afflictionString + bleedString;
+                    } else {
+                        //player already knows they're hurting.
+                        resultString += afflictionString + damageString;
+                    };
                 };
             } else {
-                resultString += afflictionString;
+                resultString += afflictionString + bleedString;
             };
             
             //is player trapped?
@@ -5460,7 +5468,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
             if (_bleeding) { status += "You're bleeding and need healing.<br>"};
-            status += "Your health is at "+healthPercent()+"%.";//remove this in the final game
+            status += "Your health is at "+self.healthPercent()+"%.";//remove this in the final game
             //status += self.health();
 
             status +='<br><br>'+_currentLocation.describe()

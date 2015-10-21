@@ -134,6 +134,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
              };
             return "doesn't";
         };
+        
+        self.healthPercent = function () {
+            return 100;
+        };
 
         self.hasPlural = function() {
             if (_plural) {

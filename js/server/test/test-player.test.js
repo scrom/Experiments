@@ -575,7 +575,7 @@ exports.movingWhenVeryTiredWarnsPlayer = function (test) {
     p0.get('get', bed.getName());
     p0.increaseTimeSinceResting(224);
     //p0.reduceHitPoints(6);
-    var expectedResult = "<br>You need to <i>rest</i>. You're struggling to keep up with those around you. ";
+    var expectedResult = "<br>You need to <i>rest</i>. <br>You're struggling to keep up with those around you. ";
     var actualResult = p0.tick(1, m0);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -1009,7 +1009,7 @@ exports.canStealObjectFromCreature.meta = { traits: ["Player Test", "Inventory T
 
 exports.canHitCreatureWithInventoryWeapon = function (test) {
     p0.get('get', weapon.getName());
-    var expectedResult = "The creature is hurt. He's taken a fair beating.";
+    var expectedResult = "He's injured.";
     var hitcount = 0;
     while (hitcount < 1) {
         var actualResult = p0.hit('hit', c0.getName());
@@ -2392,10 +2392,10 @@ exports.playerCanHealBleedingCreature = function (test) {
     var creatureName = 'creature 3';
     var c2 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     c2.go('n',l0);
-    var expected = "You use a first aid kit to heal the creature 3. You manage to stop it bleeding.<br>It seems much better but would benefit from a rest.";
+    var expected = "You use a first aid kit to heal the creature 3 and manage to stop its bleeding.<br>It seems much better but would benefit from a rest.";
     var actual = p0.healCharacter('creature 3');
     console.log("Expected: "+expected);
-    console.log("Actual:"+actual);
+    console.log("Actual: "+actual);
     test.equal(actual, expected);
     test.done();
 };

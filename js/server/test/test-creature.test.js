@@ -2111,14 +2111,12 @@ exports.CreatureWillEnactContagion = function (test) {
     c0.go(null, l0);
         
 
-    var expectedResult = "The creature is hurt. It's not happy.<br>It bites you. You feel weaker. <br><br>It's hurt. It's taken a fair beating.<br>It bites you. You feel weaker. <br>";
+    var expectedResult = "The creature is hurt.<br>It bites you. You feel weaker. <br><br>It's hurt.<br>It bites you. You feel weaker. <br>";
     var actualResult = c0.tick(2, m1, p0);
     console.log(actualResult);
     var attempts = 1;
     while (actualResult != expectedResult && attempts < 5) {
-        //a 0 from the random slip algorithm will still not slip so try again
         console.log("Fail: contagion did not occur - attempting try# " + attempts + "...");
-        c0.go("n", l1);
         actualResult = c0.tick(2, m1, p0);
         console.log(actualResult);
         attempts++;
@@ -2129,8 +2127,7 @@ exports.CreatureWillEnactContagion = function (test) {
     test.done();
 };
 
-exports.CreatureWillEnactContagion.meta = { traits: ["Player Test", "Contagion Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
-
+exports.CreatureWillEnactContagion.meta = { traits: ["Player Test", "Contagion Trait", "Tick Trait"], description: "Test that creature will bite if contagious." };
 
 exports.deneWontEatMissionChocolateEvenWhenHungry = function (test) {
 

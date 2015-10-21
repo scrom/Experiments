@@ -345,7 +345,7 @@ exports.testSymptomsStopIfDurationIsSet = function (test) {
     actualResult +=c.enactSymptoms(cr);
     actualResult +=c.enactSymptoms(cr);
 
-    var expectedResult = "The creature is hurt. It's not happy.The creature is hurt. It's not happy.The creature is hurt. It's not happy.The creature is hurt. It's not happy.The creature is hurt. It's taken a fair beating.";
+    var expectedResult = "The creature is hurt.The creature is hurt.The creature is hurt.The creature is hurt.The creature is hurt.";
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);

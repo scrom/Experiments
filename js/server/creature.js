@@ -79,16 +79,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _originalType = "creature";
         var _originalBaseAffinity = 0;
         var _friendlyAttackCount = 0;
-
-        var healthPercent = function() {
-            //avoid dividebyzero
-            if (_maxHitPoints == 0) {return 0;};
-
-            return (_hitPoints/_maxHitPoints)*100;
-        };
         
         self.updateAttributes = function (newAttributes) {
             processAttributes(newAttributes);
+        };
+        
+        self.healthPercent = function () {
+            //avoid dividebyzero
+            if (_maxHitPoints == 0) { return 0; };
+            
+            return (_hitPoints / _maxHitPoints) * 100;
         };
         
         self.removeContagion = function (contagionName) {
@@ -143,7 +143,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //allow explicit setting of maxHealth
             if (creatureAttributes.maxHealth != undefined) {_maxHitPoints = creatureAttributes.maxHealth};
             if (creatureAttributes.bleedingHealthThreshold != undefined) {_bleedingHealthThreshold = creatureAttributes.bleedingHealthThreshold};
-            if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;}; //set bleeding
+            if (self.healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;}; //set bleeding
             if (creatureAttributes.canTravel != undefined) {
                 if (creatureAttributes.canTravel== true || creatureAttributes.canTravel == "true") { _canTravel = true;}
                 else {_canTravel = false;};
@@ -1157,7 +1157,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //will run away if affinity is less than 0 and player aggression is between 0 and the point where they turn hostile.
             //this makes a very small window where you can interact with unfriendly creatures. (you must not be hostile)
             if ((_affinity <0) && (playerAggression>0) && (_affinity >= playerAggression*-1)) {return true;};
-            if (healthPercent() <=10) {return true;}; //flee if nearly dead
+            if (self.healthPercent() <=10) {return true;}; //flee if nearly dead
 
             //act based on other creatures present...
             var creatures = _currentLocation.getCreatures();
@@ -1284,10 +1284,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var currentAttackStrength = self.getBaseAttackStrength();
 
             //alter strength if bleeding or nearly dying.
-            if (healthPercent() <=5) {
+            if (self.healthPercent() <=5) {
                 //double damage for dying blow if they can get one in!!
                 currentAttackStrength = currentAttackStrength*2
-            } else if (healthPercent() <=10) {
+            } else if (self.healthPercent() <=10) {
                 //50% strength
                 currentAttackStrength = currentAttackStrength*0.5
             } else if (_bleeding) {
@@ -1955,7 +1955,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             else {fearLevel = playerAggression;};
 
             //if nearly dead - flee the greater number of spaces of fear or half of remaining health...
-            if (healthPercent() <=10) {
+            if (self.healthPercent() <=10) {
                 fearLevel = Math.max(fearLevel, Math.floor(_hitPoints/2));
             };
 
@@ -2102,9 +2102,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _inventory.updateCarryWeight(changeBy);
         };
 
-        self.hurt = function(pointsToRemove, attacker) {
+        self.hurt = function (pointsToRemove, attacker) {
+            var playerIsAttacker = false;
+            if (attacker) {
+                if (attacker.getType() == "player") {
+                    playerIsAttacker = true;
+                };
+            };     
+
             if (self.isDead()) {
-                if (attacker) {
+                if (playerIsAttacker) {
                     return self.getDisplayName() + "'s dead already. Attacking corpses is probably crossing a line somewhere.";
                 };
                 return "";
@@ -2114,43 +2121,54 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //if player is attacking a friendly...
             if (self.getSubType() == "friendly") {
-                if (attacker) {
-                    if (attacker.getType() == "player")  { 
-                        //console.log("player attacks friendly");        
-                        _friendlyAttackCount ++;
+                if (playerIsAttacker) {
+                    //console.log("player attacks friendly");        
+                    _friendlyAttackCount ++;
                     
-                        if (_friendlyAttackCount >2) {
-                            //switch to unfriendly
-                            _type = "creature";
-                            _canTravel = true;
-                            _traveller = true;
-                            _friendlyAttackCount = 0;
-                            _baseAffinity = -1;
-                            if (_affinity > -1) {_affinity = -1;};
-                            resultString +="You're obviously determined to fight "+_genderSuffix+". Fair enough, on your head be it.<br>"; 
-                        } else if (_friendlyAttackCount ==2) {
-                            return "You missed. This is your last chance. Seriously, don't do that again any time soon.";
-                        } else {
-                            return self.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again.";
-                        };     
-                    };
+                    if (_friendlyAttackCount >2) {
+                        //switch to unfriendly
+                        _type = "creature";
+                        _canTravel = true;
+                        _traveller = true;
+                        _friendlyAttackCount = 0;
+                        _baseAffinity = -1;
+                        if (_affinity > -1) {_affinity = -1;};
+                        resultString +="You're obviously determined to fight "+_genderSuffix+". Fair enough, on your head be it.<br>"; 
+                    } else if (_friendlyAttackCount ==2) {
+                        return "You missed. This is your last chance. Seriously, don't do that again any time soon.";
+                    } else {
+                        return self.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again.";
+                    };     
                 };
             };
 
             if (pointsToRemove != 0) {
                 _hitPoints -= pointsToRemove;
                 //should really bash weapon here in case it's breakable too.
-                if (self.isDead()) {return self.kill();};
+                if (self.isDead()) { return self.kill(); };
+                
+                if (self.healthPercent() <= _bleedingHealthThreshold) { _bleeding = true; };
+                
+                var hurtString = " is hurt.";
+                if (self.healthPercent() <= 25) {
+                    hurtString = " is dying.";
+                } else if (self.healthPercent() <= 50) {
+                    hurtString = " is bleeding."
+                };
 
-                if (healthPercent() <=_bleedingHealthThreshold) {_bleeding = true;};
-
-                resultString += tools.initCap(self.getDisplayName())+" is hurt. "+self.health();
+                if (playerIsAttacker) {
+                    hurtString = hurtString.replace(" is ", "'s ");
+                    hurtString = hurtString.replace(" hurt", " injured");
+                    resultString += tools.initCap(self.getPrefix()) + hurtString;
+                } else {
+                    resultString += tools.initCap(self.getDisplayName()) + hurtString;
+                };
 
                 //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
             } else {
                 if (!(attacker)) {
                    resultString += "There's no sign of any physical harm done.";  
-                } else if (attacker.getType() == "player")  { 
+                } else if (playerIsAttacker)  { 
                    resultString += "You missed!"; 
                 } else {
                    resultString += "There's no sign of any physical harm done.";  
@@ -2216,7 +2234,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //heal self...
             var pointsToAdd = 0;
             var pointsNeeded = _maxHitPoints-_hitPoints;
-            if (healthPercent() >=60) {
+            if (self.healthPercent() >=60) {
                 //add 50% of remaining health to gain.
                 pointsToAdd = Math.floor(((_maxHitPoints-_hitPoints)/2));
             } else {
@@ -2250,11 +2268,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             self.recover(pointsToAdd);
             
             //did we stop the bleeding?
-            if ((healthPercent() > _bleedingHealthThreshold) && _bleeding) {
+            if ((self.healthPercent() > _bleedingHealthThreshold) && _bleeding) {
                 _bleeding = false;
                 if (healer) {
-                    if (healer.getType() == "player") { //only show these messages is player is doing the healing.                     
-                        resultString += "You manage to stop "+_genderSuffix+" bleeding.<br>";
+                    if (healer.getType() == "player") { //only show these messages is player is doing the healing. 
+                        resultString = resultString.replace(".", "");                    
+                        resultString += "and manage to stop "+_genderPossessiveSuffix+" bleeding.<br>";
                     };
                 };
             };
@@ -2276,7 +2295,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.feed = function(pointsToAdd) {
             self.increaseAffinity(1);
-            if (healthPercent()<=_bleedingHealthThreshold) {
+            if (self.healthPercent()<=_bleedingHealthThreshold) {
                 var pointsNeeded = Math.floor(_maxHitPoints/(1/(_bleedingHealthThreshold/100)))-_hitPoints;
                 if (pointsNeeded <0) {pointsNeeded = 0;}; //unlikely but just in case.
                 if (pointsToAdd > pointsNeeded) {pointsToAdd = pointsNeeded;};
@@ -2293,7 +2312,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.bite = function(recipient) {
             var resultString = "<br>";
             resultString+=tools.initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
-            resultString+= recipient.hurt(Math.floor(_attackStrength/5));
+            resultString+= recipient.hurt(Math.floor(_attackStrength/5), self);
 
             //2 way transfer of contagion/antibodies!
             resultString+=self.transmit(recipient, "bite");
@@ -2375,23 +2394,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.health = function() {
             //console.log('creature health: '+_hitPoints);
-            switch(true) {
-                    case (healthPercent()>99):
+            var healthPercent = self.healthPercent();
+            switch (true) {
+                    case (healthPercent>99):
                         return _genderPrefix+"'s generally the picture of health.";
                         break;
-                    case (healthPercent()>80):
+                    case (healthPercent>80):
                         return _genderPrefix+"'s not happy.";
                         break;
-                    case (healthPercent()>50):
+                    case (healthPercent>50):
                         return _genderPrefix+"'s taken a fair beating.";
                         break;
-                    case (healthPercent()>25):
+                    case (healthPercent>25):
                         return _genderPrefix+"'s really not in good shape.";
                         break;
-                    case (healthPercent()>10):
+                    case (healthPercent>10):
                         return _genderPrefix+"'s dying.";
                         break;
-                    case (healthPercent()>0):
+                    case (healthPercent>0):
                         return _genderPrefix+"'s almost dead.";
                         break;
                     default:
@@ -3363,7 +3383,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.tick = function (time, map, player) {
             //quick return if already dead
-            if (self.isDead()) { return ""; };
+            if (self.isDead()) {
+                return "";
+            };
 
             //important note. If the player is not in the same room as the creature at the end of the creature tick
             //none of the results of this tick will be visible to the player.
@@ -3520,7 +3542,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 };
                                 if (_bleeding) {
                                     movementVerb = "staggers";
-                                } else if (healthPercent() < 75) {
+                                } else if (self.healthPercent() < 75) {
                                     movementVerb = "stumbles";
                                 };
                                 if (exitAction) {movementVerb = exitAction+"s";};
@@ -3538,7 +3560,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     var movementVerb = "heads";
                                     if (_bleeding) {
                                         movementVerb = "staggers";
-                                    } else if (healthPercent() < 75) {
+                                    } else if (self.healthPercent() < 75) {
                                         movementVerb = "limps";
                                     };
                                     if (exit.getLongName() == "in") {movementVerb = "goes";};
@@ -3582,6 +3604,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount() / 5));
                 
                 if (self.isDead()) {
+                    visibleResultString = visibleResultString.replace("<br>It's dying.", "");
                     return visibleResultString;
                 };
 
@@ -3612,6 +3635,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
                     
                     resultString += contagionString;
+                    if (self.isDead()) {
+                        //died from contagion - return here.
+                        visibleResultString += resultString;
+                        visibleResultString = visibleResultString.replace("<br>It's dying.", "");
+                        return resultString;
+                    };
                 };
 
                 //bleed?
@@ -3693,31 +3722,35 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (showMoveToPlayer) {
                     if (visibleResultString.indexOf(localDisplayName) > -1) {
                         //we've already used their name once or more. Don't use it again.
-                        tempKillString = tempKillString.replace(localDisplayName, localDescriptivePrefix);
+                        tempKillString = tempKillString.replace(localDisplayName+" is", localDescriptivePrefix);
                     };
                     visibleResultString += tempKillString;
+                    visibleResultString = visibleResultString.replace("<br>It's dying.", "");                
                 };
                 
                 //even if not showing their death itself. Processing ends here - show what player may have previously seen
                 return visibleResultString;       
-            };
+            };            
             
             //will only get this far if not dead
                         
-            if ((healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
+            if ((self.healthPercent() <=_bleedingHealthThreshold) && (!(self.isDead()))) {_bleeding = true;};
             if (_bleeding) {
                 if (showMoveToPlayer) {
-                    var still = "";
-                    if (visiblyHealedWithKit) {
-                        //still bleeding despire healing
-                        still = " still";
+                    if (visibleResultString.indexOf(" bleeding") == -1 || visibleResultString.indexOf("ou're bleeding") > -1) {
+                        //creature bleeding has not yet been reported
+                        var still = "";
+                        if (visiblyHealedWithKit) {
+                            //still bleeding despire healing
+                            still = " still";
+                        };
+                        var bleedingPrefixToUse = "<br>" + localDisplayName + " is";
+                        if (visibleResultString.indexOf(localDisplayName) > -1) {
+                            //we've already used their name once or more. Don't use it again.
+                            bleedingPrefixToUse = " " + localDescriptivePrefix;
+                        };
+                        visibleResultString += bleedingPrefixToUse + still + " bleeding. ";
                     };
-                    var bleedingPrefixToUse = "<br>" +localDisplayName + " is";
-                    if (visibleResultString.indexOf(localDisplayName) > -1) {
-                        //we've already used their name once or more. Don't use it again.
-                        bleedingPrefixToUse = " " + localDescriptivePrefix;
-                    };
-                    visibleResultString += bleedingPrefixToUse + still +" bleeding. ";
                 };
             };    
 
