@@ -179,7 +179,7 @@
     "missions": [
       {"file": "mission-bodycount"},
       { "file": "mission-partybus" },
-      { "file": "mission-awaitvanarrival" },
+      { "file": "event-awaitvanarrival" },
       {
         "object": "mission",
         "name": "boring",

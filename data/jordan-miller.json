@@ -29,7 +29,7 @@
         "him"
     ],
     "missions": [
-        {"file": "mission-jordanreachesmachineroom"},
+        {"file": "event-jordanreachesmachineroom"},
         {"file": "mission-killthespy"},
         {"file": "mission-stealsketchbook"},
         {"file": "mission-vanarrival"},

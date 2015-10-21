@@ -28,6 +28,6 @@
         }
     ],
     "missions": [        
-        { "file": "mission-laylow" }
+        { "file": "event-laylow" }
     ]
   }
