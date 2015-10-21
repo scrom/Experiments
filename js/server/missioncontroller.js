@@ -173,13 +173,20 @@ module.exports.MissionController = function MissionController() {
                     
                     missionToStart.clearParent();
                     
-                    //initiate any creature-only missions or events that we've just cleared the parent of
-                    if (missionToStart.getMissionObjectName() == missionOwnerName && missionToStart.getType() == "event") {
+                    if (missionToStart.getMissionObjectName() == "player") {
+                        //initiate any player (missions or events) that we've just cleared the parent of
+                        //console.log("starting mission: " + missionToStart.getName());
+                        missionToStart.startTimer();
+                    } else if (missionToStart.getMissionObjectName() == missionOwnerName && missionToStart.getType() == "event") {
+                        //initiate any creature-only events that we've just cleared the parent of
                         //console.log("starting mission: " + missionToStart.getName());
                         missionToStart.startTimer();
                     };
                     
                     //duplicated code from location examine - initiate any location-based missions.
+                    //@todo - due to work on issue #428 I think this block of code could be removed 
+                    //(although modified locations after mission completion might still need it)
+                    //however some replacement code to activate any player-carried child missions is needed instead.
                     var newMissions = playerLocation.getMissions();
                     //remove any with dialogue from this collection.
                     for (var m = 0; m < newMissions.length; m++) {
