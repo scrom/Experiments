@@ -122,12 +122,11 @@
                     "attributes": {
                         "incubationPeriod": 10,
                         "communicability": 0.5,
-                        "mutate": true,
                         "symptoms": [
                             {
                                 "action": "bite",
                                 "frequency": 0.33,
-                                "escalation": 0.1
+                                "escalation": 0.02
                             }
                         ]
                     }
@@ -173,13 +172,12 @@
                             {
                                 "action": "bite",
                                 "frequency": 0.33,
-                                "escalation": 0.1
+                                "escalation": 0.02
                             },
                             {
                                 "action": "hurt",
-                                "health": 0.5,
-                                "frequency": 0.1,
-                                "escalation": 0.05
+                                "health": 3,
+                                "frequency": 0.1
                             }
                         ]
                     }
