@@ -237,6 +237,7 @@
     <Content Include="data\smoking-area.json" />
     <Content Include="data\snorting-horses.json" />
     <Content Include="data\soap.json" />
+    <Content Include="data\soup.json" />
     <Content Include="data\southeast-corridor-ground-floor.json" />
     <Content Include="data\southwest-corridor-ground-floor.json" />
     <Content Include="data\spiderman.json" />

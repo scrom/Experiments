@@ -162,7 +162,7 @@
               "isDestroyed": true
             },
             "conditionAttributes": {
-              "time": 25
+              "time": 35
             },
             "fail": {
               "score": -25,

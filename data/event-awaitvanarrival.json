@@ -7,7 +7,7 @@
         "parent": "stealsketchbook"
     },
     "conditionAttributes": {
-        "time": "25"
+        "time": "35"
     },
     "reward": {
         "message": "You've probably kept out of the way long enough to go and chat to Jordan again without suspicion if you feel like taking on another 'job'."
