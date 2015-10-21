@@ -177,7 +177,11 @@
       }
     ],
     "missions": [
-      {"file": "mission-bodycount"},
+      { "file": "event-endofbreakfast" },
+      { "file": "event-startoflunch"},
+      { "file": "event-endoflunch" },
+      { "file": "event-endofday"},
+      { "file": "mission-bodycount" },
       { "file": "mission-partybus" },
       { "file": "event-awaitvanarrival" },
       {
@@ -438,7 +442,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>You're treading a fine line here.<br>Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br><br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good."
+          "message": "<br>Although it's not clear exactly what you've done so far, some of your actions aren't making you popular.<br>Admittedly you can't make an omelette without breaking some eggs but you're treading a fine line here.<br><br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the 'greater good' but consider this a reminder to consider the consequences of your actions."
         }
       },
       {
@@ -453,7 +457,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>You're think you're quite the artist, don't you."
+          "message": "<br>You think you're quite the artist, don't you."
         }
       },
       {

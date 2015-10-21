@@ -30,29 +30,6 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "soup",
-        "description": "bowl of soup",
-        "detailedDescription": "Butternut squash and coconut.",
-        "attributes": {
-          "defaultAction": "eat",
-          "weight": 1,
-          "type": "food",
-          "requiresContainer": true,
-          "isLiquid": true,
-          "canCollect": true,
-          "charges": 1,
-          "plural": true,
-          "isEdible": true,
-          "nutrition": 15
-        },
-        "synonyms": [
-          "bowl",
-          "bowl of soup",
-          "food"
-        ]
-      },
-      {
-        "object": "artefact",
         "template": "fire-exit",
         "linkedexits": [
           {

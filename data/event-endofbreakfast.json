@@ -1,0 +1,19 @@
+﻿{
+  "object": "mission",
+  "name": "endofbreakfast",
+  "displayName": "breakfast time is over",
+  "attributes": {
+    "type": "event",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "time": 200
+  },
+  "reward": {
+    "modifyLocation": {
+      "name": "servery-food-bar",
+      "description": "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery."
+    },
+    "removeObject": "vat"
+  }
+}

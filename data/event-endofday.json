@@ -1,0 +1,17 @@
+﻿{
+  "object": "mission",
+  "name": "endofday",
+  "displayName": "it's the end of the day",
+  "attributes": {
+    "parent": "endoflunch",
+    "type": "event",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "time": 700
+  },
+  "reward": {
+    "message": "<br>It's 5pm. Your first (eventful) day in the office is over.<br>Even if you're part-way through battling a particularly nasty bug we have a strict policy on sending new recruits home on time in their fist week so that's all for today. Off you go.<br>",
+    "endGame": true
+  }
+}

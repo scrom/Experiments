@@ -1,0 +1,24 @@
+﻿{
+  "object": "mission",
+  "name": "startoflunch",
+  "displayName": "It's lunch time",
+  "attributes": {
+    "parent": "endofbreakfast",
+    "type": "event",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "time": 400
+  },
+  "reward": {
+    "modifyLocation": {
+      "name": "servery-food-bar",
+      "description": "You're in the SQL Servery serving area.<br>The kitchen team have cleared everything away for the day.<br>You'll need to raid the cereal supply or vending machine if you're hungry this afternoon.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
+      "inventory": [
+        { "file": "soup" },
+        { "file": "salad"}
+      ]
+
+    }
+  }
+}

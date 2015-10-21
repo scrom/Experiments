@@ -1345,6 +1345,9 @@ exports.Action = function Action(player, map, fileManager) {
                     if (!_object0) {
                         item = _player.getCurrentLocation();
                     };
+                    if (_object0 == "player" || _object0 == "self") {
+                        item = _player;
+                    };
                     if (!(item)) {
                         item = _player.getObject(_object0);
                     };
@@ -1357,8 +1360,12 @@ exports.Action = function Action(player, map, fileManager) {
                     if (!(item)) {
                         item = _map.getObject(_object0);
                     };
+                    if (!(item)) {
+                        item = _map.getNamedMission(_object0, player);
+                    };
                     if (item) {
                         var itemString = item.toString();
+                        itemString = itemString.replace(/<br>/g, '&lt;br>');
                         return itemString.replace(/"/g, '\\"');
                     };
                     return "cannot find " + _object0;
@@ -1393,7 +1400,7 @@ exports.Action = function Action(player, map, fileManager) {
                 };
             
                 if (_verb == '+activate') {
-                    return _map.activateNamedMission(_object0);
+                    return _map.activateNamedMission(_object0, _player);
                 };
 
                 if (_verb == '+destination') {
@@ -1503,6 +1510,13 @@ exports.Action = function Action(player, map, fileManager) {
         self.act = function(anActionString) {
             var description = "";
             var imageName;
+            
+            //explicitly test for false - supports stub testability          
+            if (_player.gameIsActive() == false && anActionString != "stats" && anActionString != "score") {
+                description = "Thanks for playing.<br>There's nothing more you can do here for now.<br><br>You can either <i>quit</i> and start a fresh game or <i>load</i> a previously saved game.";
+                //we're done processing, build the results...
+                return returnResultAsJson(description, imageName);
+            };  
             
             //explicitly test for true - supports stub testability          
             if (_player.isDead() == true) {

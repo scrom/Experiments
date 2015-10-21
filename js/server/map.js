@@ -700,12 +700,12 @@ exports.Map = function Map() {
             return _missionController.getAllMissions(_locations);
         };
         
-        self.getNamedMission = function (missionName) {
-            return _missionController.getNamedMission(missionName, _locations);
+        self.getNamedMission = function (missionName, player) {
+            return _missionController.getNamedMission(missionName, _locations, player);
         };
         
-        self.activateNamedMission = function (missionName) {
-            return _missionController.activateNamedMission(missionName, _locations);
+        self.activateNamedMission = function (missionName, player) {
+            return _missionController.activateNamedMission(missionName, _locations, player);
         };
         
         self.listAllMissions = function (player) {

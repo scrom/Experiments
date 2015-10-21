@@ -248,6 +248,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.processReward = function(map, reward, player) {
             var resultString = "";
+            if (reward.endGame) { 
+                //game over?
+                if (reward.endGame == true) { return player.endGame();};
+            };
             if (reward.locations) {
                 //add locations
                 for (var l=0; l<reward.locations.length;l++) {

@@ -24,6 +24,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _hunt = 0;
         var _huntCount = 0;
         var _killedCount = 0;
+        var _maxLives = 5;
+        var _active = true; //is player/game active?
         var _bleeding = false;
         var _bleedingHealthThreshold = 50; //health needs to be at 50% or lower to be bleeding.
         var _startLocation;
@@ -316,7 +318,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (playerAttributes.bleeding== true || playerAttributes.bleeding == "true") { _bleeding = true;}
             };
 
-            if (playerAttributes.killedCount != undefined) {_killedCount = playerAttributes.killedCount;};
+            if (playerAttributes.killedCount != undefined) { _killedCount = playerAttributes.killedCount; };
+            if (playerAttributes.active == false) { _active = playerAttributes.active; };
             if (playerAttributes.returnDirection != undefined) {_returnDirection = playerAttributes.returnDirection;};
             
             
@@ -555,7 +558,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString+= ']';
             };
 
-            if (_killedCount > 0) {resultString += ',"killedCount":'+_killedCount;};
+            if (_killedCount > 0) { resultString += ',"killedCount":' + _killedCount; };
+            if (!_active) { resultString += ',"active":' + _active; };
             if (_bleeding) {resultString += ',"bleeding":'+_bleeding;};
             if (_bleedingHealthThreshold != 50) {resultString += ',"bleedingHealthThreshold":'+_bleedingHealthThreshold;};
 
@@ -648,6 +652,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.bleedingHealthThreshold = _bleedingHealthThreshold;
             currentAttributes.bleeding = _bleeding;
             currentAttributes.killedCount = _killedCount;
+            currentAttributes.active = _active;
             currentAttributes.returnDirection = _returnDirection;
             currentAttributes.lastCreatureSpokenTo = _lastCreatureSpokenTo;
             currentAttributes.lastVerbUsed = _lastVerbUsed;           
@@ -4894,6 +4899,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             return result;
         };
+        
+        self.gameIsActive = function() {
+            return _active;
+        };
+
+        self.endGame = function () {
+            _active = false;
+            return resultString += "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
+        };
 
         self.kill = function(isPermanent){
             console.log("Player killed");
@@ -4942,12 +4956,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             _bleeding = false;
             
-            if (_killedCount > 5) {
+            if (_killedCount >= _maxLives) {
                 isPermanent = true;
             };
 
             if (isPermanent) {
                 resultString += "<br>That's it. Game over. You had plenty of chances.<br>If you want to try again you either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
+                _active = false;
                 return resultString;
             };
 

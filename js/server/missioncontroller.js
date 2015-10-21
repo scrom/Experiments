@@ -25,8 +25,11 @@ module.exports.MissionController = function MissionController() {
             return missions;
         };
         
-        self.getNamedMission = function (missionName, locations) {
+        self.getNamedMission = function (missionName, locations, player) {
             var missions = self.getAllMissions(locations);
+            if (player) {
+                missions = missions.concat(player.getMissions(true));
+            };
             for (var i = 0; i < missions.length; i++) {
                 if (missions[i].getName() == missionName) {
                     return missions[i];
@@ -34,11 +37,14 @@ module.exports.MissionController = function MissionController() {
             };
         };
         
-        self.activateNamedMission = function (missionName, locations) {
-            var mission = self.getNamedMission(missionName, locations);
-            mission.clearParent();
-            mission.startTimer();
-            return "Mission: '" + mission.getName() + "' force-activated.";
+        self.activateNamedMission = function (missionName, locations, player) {
+            var mission = self.getNamedMission(missionName, locations, player);
+            if (mission) {
+                mission.clearParent();
+                mission.startTimer();
+                return "Mission: '" + mission.getName() + "' force-activated.";
+            };
+            return "Mission: '" + missionName + "' not found.";
         };
 
         self.listAllMissions = function (player, locations) {

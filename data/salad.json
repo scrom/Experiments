@@ -1,0 +1,20 @@
+﻿{
+  "object": "artefact",
+  "name": "salad",
+  "description": "plate of salad",
+  "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
+  "attributes": {
+    "defaultAction": "eat",
+    "weight": 2,
+    "type": "food",
+    "canCollect": true,
+    "charges": 1,
+    "isEdible": true,
+    "nutrition": 25
+  },
+  "synonyms": [
+    "plate of salad",
+    "plate",
+    "food"
+  ]
+}

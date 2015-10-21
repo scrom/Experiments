@@ -68,6 +68,10 @@
     <Content Include="data\east-south-end-corridor-ground-floor.json" />
     <Content Include="data\emergency-first-aid-kit.json" />
     <Content Include="data\enterprise-meeting-room.json" />
+    <Content Include="data\event-endofbreakfast.json" />
+    <Content Include="data\event-endofday.json" />
+    <Content Include="data\event-endoflunch.json" />
+    <Content Include="data\event-startoflunch.json" />
     <Content Include="data\facilities-area.json" />
     <Content Include="data\fez.json" />
     <Content Include="data\finance-area.json" />
