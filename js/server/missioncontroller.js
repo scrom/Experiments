@@ -63,16 +63,16 @@ module.exports.MissionController = function MissionController() {
                     allMissions.push(missions[i].getName() + " - " + missions[i].getDisplayName() + ". Parent: " + missions[i].getParent() + ". Active? " + missions[i].isActive());
                 } else {
                     events.push(missions[i].getName() + " - " + missions[i].getDisplayName() + ". Parent: " + missions[i].getParent() + ". Active? " + missions[i].isActive());
-                }                ;
-            }            ;
+                };
+            };
             
             for (var i = 0; i < completedMissions.length; i++) {
                 allMissions.push(completedMissions[i] + " - completed");
-            }            ;
+            };
             
             for (var i = 0; i < failedMissions.length; i++) {
                 allMissions.push(failedMissions[i] + " - failed");
-            }            ;
+            };
             
             allMissions.sort();
             events.sort();
@@ -80,10 +80,10 @@ module.exports.MissionController = function MissionController() {
             var missionList = "";
             for (var i = 0; i < allMissions.length; i++) {
                 missionList += i + 1 + ": " + allMissions[i] + "<br>";
-            }            ;
+            };
             for (var i = 0; i < events.length; i++) {
                 missionList += "Event: " + events[i] + "<br>";
-            }            ;
+            };
             return missionList;
         };
         
