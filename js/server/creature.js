@@ -439,6 +439,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getName = function() {
             return _name;
         };
+        
+        self.getFirstName = function () {
+            if (tools.isProperNoun(_displayName)) {
+                var splitName = _displayName.split(" ");
+                if (splitName[0]) {
+                    return splitName[0];
+                };
+            };
+            return _displayName;
+        };
 
         self.getImageName = function() {
             return _imageName;
@@ -1731,7 +1741,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                     player.addStolenObject(objectToGive.getName());
                     if (self.isDead()) { 
-                        resultString += "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getDisplayName()+"'s corpse.";
+                        resultString += "You quietly remove "+objectToGive.getDisplayName()+" from "+self.getFirstName()+"'s corpse.";
                         return resultString;
                     };
                     self.decreaseAffinity(objectToGive.getAffinityModifier());
@@ -1803,7 +1813,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             playerInventory.add(objectToGive);
             _inventory.remove(anObjectName);
 
-            if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from "+_genderPossessiveSuffix+" corpse.";};
+            if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from " + self.getFirstName() + "'s corpse.";};
   
             //reduce creature affinity by article modifier
             self.decreaseAffinity(affinityModifier);
@@ -2357,7 +2367,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
                 if (self.isDead()) {
-                    resultString += "You sink your teeth into "+self.getDisplayName()+" but gag at the thought of eating corpses. "
+                    resultString += "You sink your teeth into "+_genderPrefix+" but gag at the thought of eating corpses. "
                     resultString += player.hurt(3);
                     return resultString;
                 };
@@ -2543,7 +2553,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.moveOrOpen = function(verb) {
-            if (self.isDead()) {return "You're a bit sick aren't you.<br>You pull and tear at the corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
+            if (self.isDead()) {return "You're a bit sick aren't you.<br>You pull and tear at "+ _genderPossessiveSuffix+" corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
             self.decreaseAffinity(1);
             if (verb == 'push'||verb == 'pull') {return tools.initCap(self.getDisplayName())+" really doesn't appreciate being pushed around."};
             //open
