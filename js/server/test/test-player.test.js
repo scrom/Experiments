@@ -2291,7 +2291,7 @@ exports.cannotEatDeadFriendlyCreature = function (test) {
     p0.increaseTimeSinceEating(28);
     p0.reduceHitPoints(6);
 
-    var expectedResult = 'You sink your teeth into him but gag at the thought of eating corpses. You feel weaker. ';
+    var expectedResult = 'You sink your teeth into him but gag at the thought of eating corpses. ';
     var actualResult = p0.eat('eat','dead creature');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

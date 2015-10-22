@@ -1932,7 +1932,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //@todo do something here around aggression or dislike/affinity for the thing they're hitting
                     
             //hurt thing
-            return receiver.hurt(Math.floor(self.getAttackStrength()*damageModifier));
+            return receiver.hurt(Math.floor(self.getAttackStrength()*damageModifier), self);
         };
 
         self.fightOrFlight = function(map,player) {
@@ -2197,8 +2197,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                    resultString += "There's no sign of any physical harm done.";  
                 } else if (playerIsAttacker)  { 
                    resultString += "You missed!"; 
-                } else {
-                   resultString += "There's no sign of any physical harm done.";  
                 };
             };
 
@@ -2368,18 +2366,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(self.isEdible())){
                 if (self.isDead()) {
                     resultString += "You sink your teeth into "+_genderSuffix+" but gag at the thought of eating corpses. "
-                    resultString += player.hurt(3);
+                    resultString += player.hurt(3, self);
                     return resultString;
                 };
                 self.decreaseAffinity(1);
-                player.hurt(Math.floor(_attackStrength/4)); //bites player (base attack strength / 4 - not with weapon)
+                player.hurt(Math.floor(_attackStrength/4), self); //bites player (base attack strength / 4 - not with weapon)
                 var playerContagion = player.getContagion();
                 var playerAntibodies = player.getAntibodies();
                 if (playerContagion.length==0 && playerAntibodies.length == 0) {
                     resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of your way and bites you back.";
                 } else {
                     resultString = "You sink your teeth into "+self.getDisplayName()+". "+_genderPrefix+" struggles free and bites you back.";
-                    resultString += "<br>"+self.hurt(10); //player injures creature.
+                    resultString += "<br>"+self.hurt(10); //player injures creature - we deliberately don't pass player in as attacker here though.
                     player.increaseAggression(1); //slowly increase aggression
                 };
                 resultString += self.transmit(player, "bite");

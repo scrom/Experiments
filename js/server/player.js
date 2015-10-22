@@ -4320,8 +4320,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _unarmedAttackStrength;
         };
 
-        self.hurt = function(pointsToRemove) {
-            if (pointsToRemove == 0) {return "";};
+        self.hurt = function(pointsToRemove, attacker) {
+            if (pointsToRemove == 0) {
+                if (attacker) {
+                    return tools.initCap(attacker.getPrefix()) + " missed."
+                };
+                return "";
+            };
 
             self.reduceHitPoints(pointsToRemove);
 
@@ -4337,7 +4342,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_hitPoints <=0) {return self.kill();};
             
             //@todo - add some more random alternatives to "you feel weaker" - tricky as the cause of "hurt" may be violence or bleeding
-            //probably want to add "attacker" in as a parameter in the same way we do for creature.hurt.
+            if (attacker) {
+                if (pointsToRemove > 35) {
+                    return "That really hurt. You really can't take many more hits like that."
+                } else if (pointsToRemove > 25) {
+                    return "It feels like " + attacker.getPrefix() + " broke something in you."
+                } else if (pointsToRemove > 15) {
+                    return "That hurt.";
+                };
+                return "";
+            };
             return "You feel weaker. ";
         };
 

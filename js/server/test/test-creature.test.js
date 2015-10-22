@@ -875,7 +875,7 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInS
     l.addObject(mediumWeapon);
     l.addObject(heavyWeapon);
     l.addObject(lightWeapon);
-    var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!<br>It attacks you. You feel weaker. ";
+    var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!<br>It attacks you. That really hurt. You really can't take many more hits like that.";
     var actual = c0.tick(1, m1, p0);
     console.log("expected: " + expected);
     console.log("actual: " + actual);
@@ -2111,7 +2111,7 @@ exports.CreatureWillEnactContagion = function (test) {
     c0.go(null, l0);
         
 
-    var expectedResult = "The creature is hurt.<br>It bites you. You feel weaker. <br><br>It's hurt.<br>It bites you. You feel weaker. <br>";
+    var expectedResult = "The creature is hurt.<br>It bites you twice <br>";
     var actualResult = c0.tick(2, m1, p0);
     console.log(actualResult);
     var attempts = 1;
