@@ -2367,7 +2367,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
                 if (self.isDead()) {
-                    resultString += "You sink your teeth into "+_genderPrefix+" but gag at the thought of eating corpses. "
+                    resultString += "You sink your teeth into "+_genderSuffix+" but gag at the thought of eating corpses. "
                     resultString += player.hurt(3);
                     return resultString;
                 };
