@@ -193,20 +193,20 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
             if (_previousContagionString.length > 0) {
                 //contagion has happened before
 
-                if (_previousContagionString.indexOf("bites you") > -1 && contagionString.indexOf("bites you") > -1) {
+                if (_previousContagionString.indexOf("bites you") > -1) {
                     //identical result (surprisingly common)
                     var randomReplies = ["bites you again", "sinks " + carrier.getPossessiveSuffix() + " teeth into your shoulder", "gnaws on your arm", "gnashes at your throat"];
                     var randomIndex = Math.floor(Math.random() * randomReplies.length);
                     contagionString = contagionString.replace("bites you", randomReplies[randomIndex]);
                 
-                } else if (_previousContagionString.indexOf("bites") > -1 && contagionString.indexOf("bites") > -1) {
+                } else if (_previousContagionString.indexOf("bites") > -1) {
                     //identical result (surprisingly common)
                     var randomReplies = ["sinks " + carrier.getPossessiveSuffix() + " teeth into", "chomps on"];
                     var randomIndex = Math.floor(Math.random() * randomReplies.length);
                     contagionString = contagionString.replace("bites", randomReplies[randomIndex]);
                 };
 
-                if (_previousContagionString.indexOf("lurches in a spasm of pain") > -1 && contagionString.indexOf("lurches in a spasm of pain") > -1) {
+                if (_previousContagionString.indexOf("lurches in a spasm of pain") > -1) {
                     //identical result (surprisingly common)
                     var randomReplies = ["moans in distress", "wails in anguish", "shivers in discomfort", "shudders in pain"];
                     var randomIndex = Math.floor(Math.random() * randomReplies.length);
