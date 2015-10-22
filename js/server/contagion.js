@@ -17,6 +17,8 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
         var _originalSymptoms = [];
         var _duration = -1;
         var _originalDuration = -1;
+        
+        var _previousContagionString = "";
 
 
         var _objectName = "Contagion";
@@ -186,6 +188,35 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                 };
             };
         };
+        
+        self.deduplicateContagionStrings = function (contagionString, carrier) {
+            if (_previousContagionString.length > 0) {
+                //contagion has happened before
+
+                if (_previousContagionString.indexOf("bites you") > -1 && contagionString.indexOf("bites you") > -1) {
+                    //identical result (surprisingly common)
+                    var randomReplies = ["bites you again", "sinks " + carrier.getPossessiveSuffix() + " teeth into your shoulder", "gnaws on your arm", "gnashes at your throat"];
+                    var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    contagionString = contagionString.replace("bites you", randomReplies[randomIndex]);
+                
+                } else if (_previousContagionString.indexOf("bites") > -1 && contagionString.indexOf("bites") > -1) {
+                    //identical result (surprisingly common)
+                    var randomReplies = ["sinks " + carrier.getPossessiveSuffix() + " teeth into", "chomps on"];
+                    var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    contagionString = contagionString.replace("bites", randomReplies[randomIndex]);
+                };
+
+                if (_previousContagionString.indexOf("lurches in a spasm of pain") > -1 && contagionString.indexOf("lurches in a spasm of pain") > -1) {
+                    //identical result (surprisingly common)
+                    var randomReplies = ["moans in distress", "wails in anguish", "shivers in discomfort", "shudders in pain"];
+                    var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    contagionString = contagionString.replace("lurches in a spasm of pain", randomReplies[randomIndex]);
+                };
+            };
+            
+            _previousContagionString = contagionString;
+            return contagionString;
+        };
 
         self.enactSymptoms = function (carrier, location, player) {
             //example: "symptoms": [{ "action":"bite", "frequency":0.3,"escalation":0},{ "action":"hurt", "health":5, "frequency":0.1,"escalation":0.1}],
@@ -326,6 +357,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                 //console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
             };
             
+            resultString = self.deduplicateContagionStrings(resultString, carrier);
             return resultString;
         };
 

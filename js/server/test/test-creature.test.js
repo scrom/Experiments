@@ -2111,14 +2111,16 @@ exports.CreatureWillEnactContagion = function (test) {
     c0.go(null, l0);
         
 
-    var expectedResult = "The creature lurches in a spasm of pain and bites you. <br>It lurches in a spasm of pain and bites you. <br>";
-    var actualResult = c0.tick(2, m1, p0);
-    console.log(actualResult);
+    var expectedResult = "The creature lurches in a spasm of pain and bites you. <br>It ";
+    var fullResult = c0.tick(2, m1, p0);
+    var actualResult = fullResult.substr(0, expectedResult.length);
+    console.log(fullResult);
     var attempts = 1;
     while (actualResult != expectedResult && attempts < 5) {
         console.log("Fail: contagion did not occur - attempting try# " + attempts + "...");
-        actualResult = c0.tick(2, m1, p0);
-        console.log(actualResult);
+        fullResult = c0.tick(2, m1, p0);
+        actualResult = fullResult.substr(0, expectedResult.length);
+        console.log(fullResult);
         attempts++;
     };
     console.log("Expected: " + expectedResult);

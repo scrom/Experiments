@@ -3644,8 +3644,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //contagion?
                 var enactedContagion = false;
                 var contagionString = self.enactContagion(player, playerLocation); //may return 2 sentences starting with self.getDisplayName() etc. - per tick
-                if (contagionString && showMoveToPlayer) {
+                if (contagionString.length > 0) {
                     enactedContagion = true;
+                };
+                if (contagionString.length > 0 && showMoveToPlayer) {                   
+
                     //clean up contagion string output to remove repetition of creature name. (issue #221 - this fix is a lot messier than the rest.)
                     if (visibleResultString.indexOf(localDisplayName) > -1 
                         || contagionString.lastIndexOf(localDisplayName) > localDisplayName.length) {

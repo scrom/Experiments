@@ -337,7 +337,10 @@ exports.testSymptomsStopIfDurationIsSet = function (test) {
     actualResult +=c.enactSymptoms(cr);
     actualResult +=c.enactSymptoms(cr);
     actualResult +=c.enactSymptoms(cr);
-    actualResult +=c.enactSymptoms(cr);//should only see 5 sets of symptoms logged
+    actualResult += c.enactSymptoms(cr);
+
+    var expectedResult = actualResult; //should only see 5 sets of symptoms logged
+
     actualResult +=c.enactSymptoms(cr);
     actualResult +=c.enactSymptoms(cr);
     actualResult +=c.enactSymptoms(cr);
@@ -345,7 +348,6 @@ exports.testSymptomsStopIfDurationIsSet = function (test) {
     actualResult +=c.enactSymptoms(cr);
     actualResult +=c.enactSymptoms(cr);
 
-    var expectedResult = "The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.";
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
