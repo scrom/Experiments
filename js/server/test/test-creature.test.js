@@ -2097,7 +2097,7 @@ exports.CreatureCanSlipAndDieOnWetFloor.meta = { traits: ["Player Test", "Slip T
 
 
 exports.CreatureWillEnactContagion = function (test) {
-    var con = new contagion.Contagion("death", "deathness", { "communicability": 1, "transmission": "bite", "symptoms": [{ "action": "hurt", "health": "3", "frequency": 1 }, {"action":"bite", "frequency":1}], "duration": -1 });
+    var con = new contagion.Contagion("death", "deathness", { "communicability": 1, "transmission": "bite", "symptoms": [{ "action": "hurt", "health": "3", "frequency": 1 }, { "action": "bite", "frequency": 1 }], "duration": -1 });
     var l0 = new location.Location('home', 'home', 'a home location');
     var p0 = new player.Player({ username: "user" });
     var m1 = new map.Map();
@@ -2111,7 +2111,7 @@ exports.CreatureWillEnactContagion = function (test) {
     c0.go(null, l0);
         
 
-    var expectedResult = "The creature is hurt.<br>It bites you twice <br>";
+    var expectedResult = "The creature lurches in a spasm of pain and bites you. <br>It lurches in a spasm of pain and bites you. <br>";
     var actualResult = c0.tick(2, m1, p0);
     console.log(actualResult);
     var attempts = 1;

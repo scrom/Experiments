@@ -1943,7 +1943,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //otherwise they try to flee but can't get past you
             if(self.willFlee(playerAggression)) {
                 //console.log("Flee!");
-                return "<br>"+self.flee(map, playerAggression, player.getCurrentLocation());
+                return self.flee(map, playerAggression, player.getCurrentLocation());
             };
 
             //for each hostile creature, attack the player
@@ -1999,7 +1999,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (!(fled)) {
                             var movementVerb = "flees";
                             if (_bleeding) {movementVerb = "staggers";};
-                            resultString += tools.initCap(self.getDisplayName())+escapes+" "+movementVerb+" "+exit.getLongName()+".<br>";
+                            resultString += "<br>" +tools.initCap(self.getDisplayName())+escapes+" "+movementVerb+" "+exit.getLongName()+".<br>";
                             resultString += self.exposePositionedItems();
                             //if creature was heading somewhere, we'll need to regenerate their path later.
                             if (_destinations.length>0) {self.clearPath();};
@@ -2188,6 +2188,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     hurtString = hurtString.replace(" hurt", " injured");
                     resultString += tools.initCap(self.getPrefix()) + hurtString;
                 } else {
+                    if (attacker) {
+                        if (attacker.getType() == "contagion") {
+                            hurtString = " lurches in a spasm of pain."
+                        };
+                    };
                     resultString += tools.initCap(self.getDisplayName()) + hurtString;
                 };
 
@@ -2335,7 +2340,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.bite = function(recipient) {
-            var resultString = "<br>";
+            var resultString = " ";
             resultString+=tools.initCap(self.getDisplayName())+" bites "+recipient.getDisplayName()+". ";
             resultString+= recipient.hurt(Math.floor(_attackStrength/5), self);
 
@@ -3403,7 +3408,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     resultString += _contagion[c].enactSymptoms(self, _currentLocation, playerToInfect);
                 };
             };
-            return resultString;
+            if (playerLocationName == _currentLocation.getName()) {
+                return resultString;
+            };
+            return "";
         };
 
         self.tick = function (time, map, player) {
@@ -3439,7 +3447,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString += _inventory.tick();
 
                 resultString += closePreviouslyOpenedDoors(map);
-
+                
                 //if creature is hostile, collect available weapons
                 if (self.isHostile(playerAggression)) {
                     resultString += self.collectBestAvailableWeapon(); // may return sentence with <br>+self.getDisplayName()
@@ -3463,7 +3471,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     visibleResultString += resultString;
                 };
                 
-                //clear resultString back down again;
+                //clear resultString back down again we should not use it agian after this point;
                 resultString = "";
                 
                 //update any active delays
@@ -3640,7 +3648,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     enactedContagion = true;
                     //clean up contagion string output to remove repetition of creature name. (issue #221 - this fix is a lot messier than the rest.)
                     if (visibleResultString.indexOf(localDisplayName) > -1 
-                        || resultString.indexOf(localDisplayName) > -1 
                         || contagionString.lastIndexOf(localDisplayName) > localDisplayName.length) {
                         
                         var tempKeep = contagionString.slice(0, contagionString.indexOf(localDisplayName) + localDisplayName.length);
@@ -3651,7 +3658,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         contagionString = contagionString.replace(localDisplayName, localPrefix);
                         contagionString = contagionString.replace(localPrefix + " is ", localDescriptivePrefix + " ");
                         
-                        if (visibleResultString.indexOf(localDisplayName) > -1 || resultString.indexOf(localDisplayName) > -1) {
+                        if (visibleResultString.indexOf(localDisplayName) > -1) {
                             contagionString = localPrefix + contagionString;
                             contagionString = contagionString.replace(localPrefix + " is ", localDescriptivePrefix + " ");
                         } else {
@@ -3659,16 +3666,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
                     };
                     
-                    resultString += contagionString;
                     if (self.isDead()) {
                         //died from contagion - return here.
-                        visibleResultString += resultString;
+                        visibleResultString += contagionString;
                         visibleResultString = visibleResultString.replace("<br>It's dying.", "");
-                        return resultString;
+                        return visibleResultString;
                     };
                 };
 
                 //bleed?
+                var healString = "";
                 if (_bleeding) {
                     //bleed
                     _currentLocation.addLiquid("blood");
@@ -3686,19 +3693,19 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             locationObject = true;
                         };
                     };
-
+                    
                     if (medicalArtefact) {
                         if (showMoveToPlayer) {
                             visiblyHealedWithKit = true;
                         };
-                        resultString += "<br>"+self.heal(medicalArtefact, self); //@todo - issue #221 returns a sentence with self.getDisplayName() (we add the <br>)
+                        healString = "<br>"+self.heal(medicalArtefact, self); //@todo - issue #221 returns a sentence with self.getDisplayName() (we add the <br>)
 
                         //remove medicalArtefact if used up.
                         if (medicalArtefact.chargesRemaining() == 0) {
                             var searchString = " uses " + medicalArtefact.getDescription();
                             if (locationObject) {
                                 var replaceString = " uses up a nearby " + medicalArtefact.getDescription();
-                                resultString = resultString.replace(searchString, replaceString);
+                                healString = healString.replace(searchString, replaceString);
                                 _currentLocation.removeObject(medicalArtefact.getName());
                             } else {
                                 //remove first word
@@ -3708,7 +3715,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     artefactDescription = artefactDescription.substr(artefactDescription.indexOf(" "));     
                                 };                   
                                 var replaceString = " uses up the last of " + _genderPossessiveSuffix + artefactDescription;
-                                resultString = resultString.replace(searchString, replaceString);
+                                healString = healString.replace(searchString, replaceString);
                                 _inventory.remove(medicalArtefact.getName());
                             };
                         };
@@ -3723,15 +3730,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         _timeSinceEating++; //don't increment beyond what's needed
                     };
                 };
-
+                
+                //still within loop
                 if (showMoveToPlayer) {
-                    visibleResultString += resultString;
+                    visibleResultString += contagionString + healString;
                     showMoveToPlayer = false;
                 };
             }; //end of "ticks" loop.
-            
-            //everything a player should see will now be in visibleResultString so clear resultString again
-            resultString = "";
 
             if (playerLocation == _currentLocation.getName()) {
                 showMoveToPlayer = true;

@@ -763,6 +763,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.getPossessiveSuffix = function() {
             return "your";
         };
+        
+        self.getName = function () {
+            return "player";
+        };        
 
         self.getDisplayName = function() {
             return "you";

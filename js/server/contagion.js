@@ -2,6 +2,8 @@
 //contagion object
 exports.Contagion = function Contagion(name, displayName, attributes) {
     try {
+        //module deps
+        var tools = require('./tools.js');
         var self = this; //closure so we don't lose this reference in callbacks
 
         var _name = name;
@@ -71,6 +73,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
             resultString += ',"attributes":' + JSON.stringify(self.getAttributesToSave()); //should use self.getCurrentAttributes()
             resultString += '}';
             return resultString;
+        };
+        
+        self.getType = function () {
+            return "contagion";
         };
 
         self.getCurrentAttributes = function () {
@@ -190,7 +196,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                 _incubationPeriod--; //reduce incubation, do nothing else yet
                 //console.log("contagion dormant for " + _incubationPeriod+" more ticks.");
                 return resultString;
-            }; 
+            };
+            
+            var biteCount = 0;
+            var hurtCount = 0;
             for (var i = 0; i < _symptoms.length; i++) {
                 //set symptom defaults
                 var frequency = 1;
@@ -257,11 +266,16 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                                 randomIndex = Math.floor(Math.random() * victims.length);
                                 resultString += "<br>" + carrier.eat("bite", victims[randomIndex].getName());
                             } else {
-                                var biteCount = 0;
                                 for (var c = 0; c < victims.length; c++) {
                                     var randomAttack = Math.floor(Math.random() * (Math.ceil(c / 2) * frequency));
                                     if (randomAttack == 0 && biteCount < 2) {
-                                        resultString += carrier.bite(victims[c]);
+                                        //limit to maximum of 2 bites
+                                        var biteString = carrier.bite(victims[c]);
+                                        if (hurtCount > 0 && biteCount == 0) {
+                                            biteString = biteString.replace(tools.initCap(carrier.getDisplayName()), "and");
+                                            resultString = resultString.replace(".", "");
+                                        };
+                                        resultString += biteString;
                                         biteCount++;
                                     };
                                 };
@@ -272,7 +286,14 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                             var rand = Math.floor(Math.random() * frequency);
                             //console.log("health symptom firing. Rand = "+rand);
                             if (rand == 0) {
-                                resultString += carrier.hurt(hp);
+                                var hurtString = carrier.hurt(hp, self);
+                                if (biteCount > 0) {
+                                    hurtString = hurtString.replace(tools.initCap(carrier.getDisplayName()), "and");
+                                    hurtString += "<br>";
+                                    resultString = resultString.replace(". <br>", " ");
+                                };
+                                resultString += hurtString;
+                                hurtCount++;
                                 //escalate hp damage
                                 if (parseFloat(_symptoms[i].escalation) > 0) {
                                     _symptoms[i].health += Math.ceil(_symptoms[i].health*(_symptoms[i].escalation/2))

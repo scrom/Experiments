@@ -276,7 +276,7 @@ exports.checkBitingWorksCorrectlyWithSelfAndOneOtherCreatureInLocation = functio
 
     //carrier, location, player
 
-    var expectedResult = "<br>The creature1 bites the creature2. <br>";
+    var expectedResult = " The creature1 bites the creature2. <br>";
     var actualResult = c.enactSymptoms(cr, l);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -304,7 +304,7 @@ exports.checkBitingWorksCorrectlyWithSelfAndFourOtherCreaturesInLocation = funct
 
     //carrier, location, player
 
-    var expectedResult = 86; //we expect 2 and only 2 creatures to be bitten but it'll be random which 2 it is
+    var expectedResult = 80; //we expect 2 and only 2 creatures to be bitten but it'll be random which 2 it is
     var resultText = c.enactSymptoms(cr, l);
     console.log("Text: " + resultText);
     var actualResult = resultText.length;
@@ -345,7 +345,7 @@ exports.testSymptomsStopIfDurationIsSet = function (test) {
     actualResult +=c.enactSymptoms(cr);
     actualResult +=c.enactSymptoms(cr);
 
-    var expectedResult = "The creature is hurt.The creature is hurt.The creature is hurt.The creature is hurt.The creature is hurt.";
+    var expectedResult = "The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.The creature lurches in a spasm of pain.";
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
