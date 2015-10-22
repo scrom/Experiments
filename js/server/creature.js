@@ -1966,13 +1966,30 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.canTravel()) {
                 var retryCount = 0;
                 _avoiding.push(playerLocation.getName()); //avoid player location             
-                for (var i=0; i<fearLevel; i++) {
-                    var exit = _currentLocation.getRandomExit(false, _avoiding, _inventory, null, true, true);
+                for (var i = 0; i < fearLevel; i++) {
+                    var exit;
+                    var escapes = "";
+                    var exits = _currentLocation.getAvailableExits(true, _inventory);
+                    if (exits.length == 0) {
+                        continue; //no available exit this time
+                    } else if (exits.length == 1) {
+                        //if we only have 1 or 0 exits...
+                        if (exits[0]) {
+                            //there is an exit available - 33% chance of using the only available exit this time
+                            var randomInt = Math.floor(Math.random() * 3);
+                            if (randomInt == 0) {
+                                exit = exits[0];
+                                escapes = " pushes past you and ";
+                            };
+                        };
+                    } else {
+                        exit = _currentLocation.getRandomExit(false, _avoiding, _inventory, null, true, true);
+                    };
                     if (exit) {
                         if (!(fled)) {
                             var movementVerb = "flees";
                             if (_bleeding) {movementVerb = "staggers";};
-                            resultString += tools.initCap(self.getDisplayName())+" "+movementVerb+" "+exit.getLongName()+".<br>";
+                            resultString += tools.initCap(self.getDisplayName())+escapes+" "+movementVerb+" "+exit.getLongName()+".<br>";
                             resultString += self.exposePositionedItems();
                             //if creature was heading somewhere, we'll need to regenerate their path later.
                             if (_destinations.length>0) {self.clearPath();};

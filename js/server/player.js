@@ -3281,9 +3281,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 for (var j=0; j< newMissions.length;j++) {
                     //note we're splicing a *copy*, not the original array!
                     if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
-                    if (!(newMissions[j].getDescription())) { hiddenMissionCount++;};
+                    if (!(newMissions[j].getDescription())) { hiddenMissionCount++; };
+                    if (newMissions[j].hasParent()) { hiddenMissionCount++; };
                 };
-                if (newMissions.length>0 && (newMissions.length>hiddenMissionCount)) {resultString+= "<br><br>";};
+
+                if ((newMissions.length - hiddenMissionCount)>0) {resultString+= "<br><br>";};
                 for (var i = 0; i < newMissions.length; i++) {
                     if (!newMissions[i].hasParent()) {
                         newMissions[i].startTimer();
@@ -3847,10 +3849,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //remove any with dialogue from this list.
             for (var j=0; j< newMissions.length;j++) {
                 if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
-                if (!(newMissions[j].getDescription())) { hiddenMissionCount++;};
+                if (!(newMissions[j].getDescription())) { hiddenMissionCount++; };
+                if (newMissions[j].hasParent()) { hiddenMissionCount++; };
             };
 
-            if (newMissions.length>0) {resultString+= "<br><br>";};
+            if ((newMissions.length - hiddenMissionCount)>0) {resultString+= "<br><br>";};
             for (var i = 0; i < newMissions.length; i++) {
                 if (!newMissions[i].hasParent()) {
                     newMissions[i].startTimer();

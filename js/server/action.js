@@ -362,6 +362,7 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'heal':
+                        _ticks = 1;
                         description = _player.healCharacter(_object0);
                         break;
                     case 'stats':
