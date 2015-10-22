@@ -504,7 +504,7 @@
               "isDestroyed": true
             },
             "conditionAttributes": {
-              "time": 25
+              "time": 35
             },
             "reward": {
               "message": "<br>You forgot to destroy the screen in the Atrium.<br>To be honest, it's probably better that you left it alone anyway."
@@ -519,6 +519,126 @@
       }
     ],
     "missions": [
+      {
+        "object": "mission",
+        "name": "endofbreakfast",
+        "displayName": "breakfast time is over",
+        "attributes": {
+          "type": "event",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "time": 200
+        },
+        "reward": {
+          "modifyLocation": {
+            "name": "servery-food-bar",
+            "description": "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery."
+          },
+          "removeObject": "vat"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "startoflunch",
+        "displayName": "It's lunch time",
+        "attributes": {
+          "type": "event",
+          "parent": "endofbreakfast",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "time": 400
+        },
+        "reward": {
+          "modifyLocation": {
+            "name": "servery-food-bar",
+            "description": "You're in the SQL Servery serving area.<br>Lunch is served. You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "soup",
+                "description": "bowl of soup",
+                "detailedDescription": "Butternut squash and coconut.",
+                "attributes": {
+                  "defaultAction": "eat",
+                  "weight": 1,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 1,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15
+                },
+                "synonyms": [
+                  "bowl",
+                  "bowl of soup",
+                  "food"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "salad",
+                "description": "plate of salad",
+                "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
+                "attributes": {
+                  "defaultAction": "eat",
+                  "weight": 2,
+                  "type": "food",
+                  "canCollect": true,
+                  "charges": 1,
+                  "isEdible": true,
+                  "nutrition": 25
+                },
+                "synonyms": [
+                  "plate of salad",
+                  "plate",
+                  "food"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "object": "mission",
+        "name": "endoflunch",
+        "displayName": "lunch time is over",
+        "attributes": {
+          "type": "event",
+          "parent": "startoflunch",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "time": 300
+        },
+        "reward": {
+          "modifyLocation": {
+            "name": "servery-food-bar",
+            "description": "You're in the SQL Servery serving area.<br>The kitchen team have cleared everything away for the day.<br>You'll need to raid the cereal supply or vending machine if you're hungry this afternoon.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery."
+          },
+          "removeObject": "soup"
+        }
+      },
+      {
+        "object": "mission",
+        "name": "endofday",
+        "displayName": "it's the end of the day",
+        "attributes": {
+          "type": "event",
+          "parent": "endoflunch",
+          "missionObject": "player"
+        },
+        "conditionAttributes": {
+          "time": 700
+        },
+        "reward": {
+          "message": "<br>It's 5pm. Your first (eventful) day in the office is over.<br>Even if you're part-way through battling a particularly nasty bug we have a strict policy on sending new recruits home on time in their fist week so that's all for today. Off you go.<br>",
+          "endGame": true
+        }
+      },
       {
         "object": "mission",
         "name": "bodycount",
@@ -635,7 +755,7 @@
           "parent": "stealsketchbook"
         },
         "conditionAttributes": {
-          "time": "25"
+          "time": "35"
         },
         "reward": {
           "message": "You've probably kept out of the way long enough to go and chat to Jordan again without suspicion if you feel like taking on another 'job'."
@@ -899,7 +1019,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>You're treading a fine line here.<br>Admittedly you can't make an omelette without breaking some eggs but your actions aren't making you popular.<br><br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the greater good."
+          "message": "<br>Although it's not clear exactly what you've done so far, some of your actions aren't making you popular.<br>Admittedly you can't make an omelette without breaking some eggs but you're treading a fine line here.<br><br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the 'greater good' but consider this a reminder to consider the consequences of your actions."
         }
       },
       {
@@ -914,7 +1034,7 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>You're think you're quite the artist, don't you."
+          "message": "<br>You think you're quite the artist, don't you."
         }
       },
       {
@@ -4410,7 +4530,7 @@
           "parent": "stealvaluables"
         },
         "conditionAttributes": {
-          "time": "37"
+          "time": "47"
         },
         "reward": {
           "message": ""
@@ -14116,29 +14236,6 @@
       }
     ],
     "inventory": [
-      {
-        "object": "artefact",
-        "name": "soup",
-        "description": "bowl of soup",
-        "detailedDescription": "Butternut squash and coconut.",
-        "attributes": {
-          "defaultAction": "eat",
-          "weight": 1,
-          "type": "food",
-          "requiresContainer": true,
-          "isLiquid": true,
-          "canCollect": true,
-          "charges": 1,
-          "plural": true,
-          "isEdible": true,
-          "nutrition": 15
-        },
-        "synonyms": [
-          "bowl",
-          "bowl of soup",
-          "food"
-        ]
-      },
       {
         "object": "artefact",
         "name": "fire exit",
