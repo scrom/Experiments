@@ -4326,9 +4326,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.hurt = function(pointsToRemove, attacker) {
             if (pointsToRemove == 0) {
-                if (attacker) {
-                    return tools.initCap(attacker.getPrefix()) + " missed."
-                };
                 return "";
             };
 
