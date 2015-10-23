@@ -2169,7 +2169,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
 
-            if (pointsToRemove != 0) {
+            if (pointsToRemove > 0) {
                 _hitPoints -= pointsToRemove;
                 //should really bash weapon here in case it's breakable too.
                 if (self.isDead()) { return self.kill(); };

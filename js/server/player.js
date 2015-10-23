@@ -4332,7 +4332,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.hurt = function(pointsToRemove, attacker) {
-            if (pointsToRemove == 0) {
+            if (pointsToRemove <= 0) {
                 return "";
             };
 
@@ -4498,10 +4498,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //get initial damage level
-            var pointsToRemove = weapon.getAttackStrength();
+            var pointsToRemove = weapon.getAttackStrength() + (_baseAttackStrength/2);
 
             if (verb == "throw") {
-                pointsToRemove += weapon.getWeight();
+                //has the potential to do a lot of damage - limit somewhat by weight...
+                var weaponWeight = weapon.getWeight();
+                if (weaponWeight > (_inventory.getCarryWeight() / 2)) {
+                    weaponWeight = _inventory.getCarryWeight() / 2;
+                };
+                if (_baseAttackStrength < 0) {
+                    //damage penalty
+                    penaltyMultiplier = -2;
+                    pointsToRemove += weaponWeight * ((_baseAttackStrength/2) / penaltyMultiplier);      
+                } else {
+                    pointsToRemove += weaponWeight * (_baseAttackStrength / 2);      
+                };
+                
                 if (_inventory.check(weapon.getName())) {
                     _inventory.remove(weapon.getName());
                     _currentLocation.addObject(weapon);
