@@ -1488,13 +1488,15 @@
           {
             "object": "artefact",
             "name": "code",
-            "description": "faint marks",
+            "description": "faint writing",
             "detailedDescription": "It looks like someone has tried to write out the pseudocode for a string reversal algorithm.<br>Personally you don't see the value in that kind of old-fashioned algorithm solving question. Surely the answer is just 'string.reverse'.<br>When you came for a job here you did a pair programming exercise trying to fix a real product bug instead.",
             "attributes": {
-              "type": "scenery"
+              "type": "scenery",
+              "plural": true
             },
             "synonyms": [
-              "marks",
+              "faint writing",
+              "writing",
               "coding",
               "disused coding exercise",
               "long-disused coding exercise",
@@ -1515,9 +1517,11 @@
             "description": "faint marks",
             "detailedDescription": "It's pretty hard to see the details but it looks like the architecture for a basic ecommerce system with microservices and an event queue. ",
             "attributes": {
-              "type": "scenery"
+              "type": "scenery",
+              "plural": true
             },
             "synonyms": [
+              "marks",
               "faint marks",
               "architecture diagram",
               "diagram",
