@@ -1010,7 +1010,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getDescription = function() {
             var resultString = self.descriptionWithCorrectPrefix();
             //if it's a container with a single item and it's open (or fixed open), include contents
-            if (self.getType() == "container" && _inventory.size() == 1 && ((!_opens)||_open)) {
+            if (self.getType() == "container" && _inventory.size(false, true) == 1 && ((!_opens)||_open)) {
                 var inventoryItems = _inventory.getAllObjects();
                 var inventoryItem;
                 if (inventoryItems.length > 0) {
@@ -1154,7 +1154,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             
             var inventoryDescription = _inventory.describe(null, minSize)
-            if ((_inventory.size() > 0) && inventoryIsVisible && (!((inventoryDescription.substr(0, 7) == "nothing") && inventoryDescription.length > 7))) {
+            if ((_inventory.size(false, true) > 0) && inventoryIsVisible && (!((inventoryDescription.substr(0, 7) == "nothing") && inventoryDescription.length > 7))) {
                 resultString += "<br>";
                 
                 //inventory description may be extended...
@@ -1170,7 +1170,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     resultString = resultString.replace("$inventory", inventoryDescription);
                 };
                 
-            } else if ((_inventory.size() > 0)) {
+            } else if ((_inventory.size(false, true) > 0)) {
                 var positionedItems = _inventory.describePositionedItems(minSize);
                 if (positionedItems.length > 0) {
                     resultString += positionedItems + ".";
@@ -1305,8 +1305,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             if (_wetted.length > 0) {resultString += " on "+self.getSuffix()+".";};
 
-            
-            if ((_inventory.size() != _inventory.size(true)) && self.getType() != "scenery") {
+            if ((_inventory.size() != _inventory.size(true, true)) && self.getType() != "scenery") {
                 if ( inventoryIsVisible || (_inventory.getPositionedObjects(true).length > 0)) {
                     //something is hidden here
                     //50% chance of spotting something amiss
@@ -1832,8 +1831,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.getObject(anObjectName);
         };
 
-        self.getInventorySize = function(countHiddenObjects) {
-            return _inventory.size(countHiddenObjects);
+        self.getInventorySize = function(countHiddenObjects, ignoreSceneryObjects) {
+            return _inventory.size(countHiddenObjects, ignoreSceneryObjects);
         };
 
         self.contains = function(anObjectName) {
@@ -1929,7 +1928,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return "You hear a sloshing sound from inside " + self.getSuffix() + ".";
                 };
             };
-            if (_inventory.size(true) > 0) {
+            if (_inventory.size(true, true) > 0) {
                 var bashResult = self.bash();
                 return "Rattle rattle rattle... ...kerchink!<br>your fingers slip briefly from " + self.getName() + " before you recover your composure. "+bashResult;
             };
@@ -2514,7 +2513,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 if (verb == 'open'||verb == 'unlock') {
                     var resultString = "You "+verb+" "+self.getDisplayName()+".";
-                    if (_inventory.size() > 0) {
+                    if (_inventory.size(false, true) > 0) {
                         resultString += " "+tools.initCap(_itemPrefix)+ " contain";
                         if (!(_plural)) resultString += "s"
                         resultString +=" "+_inventory.describe()+".";

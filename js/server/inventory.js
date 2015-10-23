@@ -31,8 +31,17 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
        
         };
 
-        self.size = function(countHiddenObjects) {
+        self.size = function(countHiddenObjects, ignoreSceneryObjects) {
             if (countHiddenObjects) {
+                if (ignoreSceneryObjects) {
+                    var objectCount = 0;
+                    for (var i = 0; i < _items.length; i++) {
+                        if (_items[i].getType() != "scenery") {
+                            objectCount++;
+                        };
+                    };
+                    return objectCount;
+                };
                 return _items.length;
             };
             var objectCount = 0;
@@ -333,7 +342,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.listHiddenObjects = function(position, location) {
             var foundItems = [];
             for(var i = 0; i < _items.length; i++) {
-                if (_items[i].isHidden()) {
+                if (_items[i].isHidden() && _items[i].getType() != "scenery") {
                     if (!position || (_items[i].getPosition() == position)) {
                         foundItems.push(_items[i]);
                     };
@@ -354,7 +363,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.showHiddenObjects = function(position, location) {
             var foundItems = [];
             for(var i = 0; i < _items.length; i++) {
-                if (_items[i].isHidden()) {
+                if (_items[i].isHidden() && _items[i].getType() != "scenery") {
                     if (!position || (_items[i].getPosition() == position)) {
                         _items[i].show();
                         foundItems.push(_items[i]);

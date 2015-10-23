@@ -665,7 +665,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         self.describe = function() {
             var resultString = _description;
 
-            if (_inventory.size() > 0) {
+            if (_inventory.size(false, true) > 0) {
                 //clean up grammar here (there is/there are)
                 resultString+="<br><br>You can see "+self.listObjects()+".";
             };

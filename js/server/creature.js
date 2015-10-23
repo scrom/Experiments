@@ -1190,7 +1190,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (_contagion.length>0) {resultString+= "<br>"+_genderPrefix + " really doesn't look very well."};
             };
 
-            if (_inventory.size() > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe(null, minSize) + "."; };
+            if (_inventory.size(false, true) > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe(null, minSize) + "."; };
             resultString = resultString.replace("placed on top", "placed on top of "+self.getSuffix());
 
             if (minSize >= tools.minimumSizeForDistanceViewing) {
@@ -1201,7 +1201,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) {
                 if (_salesInventory.size() >0) { resultString += "<br>" + _genderPrefix + " used to sell " + _salesInventory.describe()+".<br>"; };
 
-                if ((_inventory.size() != _inventory.size(true))) {
+                if ((_inventory.size() != _inventory.size(true, true))) {
                     if (_inventory.getPositionedObjects(true).length > 0) {
                         //something is hidden here
                         //50% chance of spotting something amiss
@@ -1895,8 +1895,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _inventory.remove(anObjectName);
         };
         
-        self.getInventorySize = function (countHiddenObjects) {
-            return _inventory.size(countHiddenObjects);
+        self.getInventorySize = function (countHiddenObjects, ignoreSceneryObjects) {
+            return _inventory.size(countHiddenObjects, ignoreSceneryObjects);
         };
         
         self.contains = function (anObjectName) {
