@@ -109,6 +109,7 @@ exports.Map = function Map() {
             var newDisplayName;
             var newDescription;
             var inventory = [];
+            var removals = [];
             if (modification) {
                 if (modification.name) {
                     locationName = modification.name;
@@ -122,6 +123,11 @@ exports.Map = function Map() {
                 if (modification.inventory) {
                     for (var i=0;i<modification.inventory.length;i++) {
                         inventory.push(modification.inventory[i]);
+                    };
+                };
+                if (modification.remove) {
+                    for (var i = 0; i < modification.remove.length; i++) {
+                        removals.push(modification.remove[i]);
                     };
                 };
             };
@@ -141,6 +147,12 @@ exports.Map = function Map() {
                             } else {
                                 _locations[i].addObject(inventory[v]);  
                             };  
+                        };
+                        
+                        for (var r = 0; r < removals.length; r++) {
+                            if (_locations[i].objectExists(removals[r], true, false, false)) {
+                                _locations[i].removeObject(removals[r], false);
+                            };
                         };
                         break;
                     };

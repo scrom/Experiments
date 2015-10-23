@@ -2051,7 +2051,7 @@ exports.cannotDrinkCoffeeWhenNotThirsty = function (test) {
     cup.receive(coffee);
     p0.get('get', 'cup');
     
-    var expectedResult = "You're not Thirsty at the moment";
+    var expectedResult = "You're not thirsty at the moment.";
     var actualResult = p0.drink('drink', 'coffee');
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);

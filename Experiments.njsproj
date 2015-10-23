@@ -138,6 +138,7 @@
     <Content Include="data\mission-givetrusttokentoplayer.json" />
     <Content Include="data\mission-healbusvictims.json" />
     <Content Include="data\event-jordanreachesmachineroom.json" />
+    <Content Include="data\mission-installdisk.json" />
     <Content Include="data\mission-killthespy.json" />
     <Content Include="data\mission-latte.json" />
     <Content Include="data\event-laylow.json" />

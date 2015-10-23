@@ -294,9 +294,24 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
             };
             if (reward.modifyLocationCreatures) { map.modifyLocationCreatures(reward.modifyLocationCreatures); }; //important! modify before remove
-            if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player);};
-            if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation);}; //important! modify before remove
-            if (reward.removeLocation) { map.removeLocation(reward.removeLocation);};
+            if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player); };
+            if (reward.removeObjects) {
+                for (var m = 0; m < reward.removeObjects.length; m++) {
+                    map.removeObject(reward.removeObjects[m], self.getDestination(), player);
+                };
+            };
+            if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation); }; //important! modify before remove
+            if (reward.modifyLocations) {
+                for (var m = 0; m < reward.modifyLocations.length; m++) {
+                    map.modifyLocation(reward.modifyLocations[m]);
+                };
+            };
+            if (reward.removeLocation) { map.removeLocation(reward.removeLocation); };
+            if (reward.removeLocations) {
+                for (var m = 0; m < reward.removeLocations.length; m++) {
+                    map.removeLocation(reward.removeLocations[m]);
+                };
+            };
             if (reward.health) { player.updateHitPoints(reward.health); };
             if (reward.teleport) {
                 var newLocation = map.getLocation(reward.teleport);

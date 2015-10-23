@@ -348,6 +348,38 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
             return resultObject;
         };
+        
+        var buildModifyLocationObject = function (modifyLocationData) {
+            var modifyLocation = {};
+            if (modifyLocationData.name) { modifyLocation.name = modifyLocationData.name };
+            if (modifyLocationData.description) { modifyLocation.description = modifyLocationData.description };
+            if (modifyLocationData.remove) { modifyLocation.remove = modifyLocationData.remove };
+            
+            if (modifyLocationData.inventory && modifyLocationData.name) {
+                modifyLocation.inventory = [];
+                for (var i = 0; i < modifyLocationData.inventory.length; i++) {
+                    var inventoryData = modifyLocationData.inventory[i];
+                    //construct from file first if needed
+                    if (inventoryData.file) {
+                        inventoryData = self.buildFromFile(_data[inventoryData.file]);
+                    };
+                    if (inventoryData.object == "artefact") {
+                        modifyLocation.inventory.push(self.buildArtefact(inventoryData));
+                    } else if (inventoryData.object == "creature") {
+                        var creature = self.buildCreature(inventoryData)
+                        if (inventoryData.attributes) {
+                            if (inventoryData.attributes.homeLocationName) {
+                                var homeLocation = _map.getLocation(inventoryData.attributes.homeLocationName);
+                                creature.setHomeLocation(homeLocation);
+                            };
+                        };
+                        modifyLocation.inventory.push(creature);
+                    };
+                };
+            };
+
+            return modifyLocation;
+        };
 
         self.unpackReward = function (reward) {
             //construct from file first if needed
@@ -409,31 +441,13 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             };
 
             if (reward.modifyLocation) {
-                returnObject.modifyLocation = {};
-                if (reward.modifyLocation.name) {returnObject.modifyLocation.name = reward.modifyLocation.name};
-                if (reward.modifyLocation.description) {returnObject.modifyLocation.description = reward.modifyLocation.description};
+                returnObject.modifyLocation = buildModifyLocationObject(reward.modifyLocation)
+            };
 
-                if (reward.modifyLocation.inventory && reward.modifyLocation.name) {
-                    returnObject.modifyLocation.inventory = [];
-                    for (var i=0; i<reward.modifyLocation.inventory.length;i++) {
-                        var inventoryData = reward.modifyLocation.inventory[i];
-                        //construct from file first if needed
-                        if (inventoryData.file) {
-                            inventoryData = self.buildFromFile(_data[inventoryData.file]);
-                        };
-                        if (inventoryData.object == "artefact") {
-                            returnObject.modifyLocation.inventory.push(self.buildArtefact(inventoryData));
-                        } else if (inventoryData.object == "creature") {
-                            var creature = self.buildCreature(inventoryData)
-                            if (inventoryData.attributes) {
-                                if (inventoryData.attributes.homeLocationName) {
-                                    var homeLocation = _map.getLocation(inventoryData.attributes.homeLocationName);
-                                    creature.setHomeLocation(homeLocation);
-                                };
-                            };
-                            returnObject.modifyLocation.inventory.push(creature);                   
-                        };                        
-                    }; 
+            if (reward.modifyLocations) {
+                returnObject.modifyLocations = [];
+                for (var l = 0; l < reward.modifyLocations.length; l++) {
+                    returnObject.modifyLocations.push(buildModifyLocationObject(reward.modifyLocations[l]));
                 };
             };
 
@@ -457,6 +471,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             };
 
             //add other attributes back in
+            //this should cover removeObject, removeLocation, removeLocations
             for (var attr in reward) {
                 if (reward.hasOwnProperty(attr)) {
                     if (!(returnObject.hasOwnProperty(attr))) {
