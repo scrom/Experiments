@@ -4981,6 +4981,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //reset aggression
             self.setAggression(0);
+            //reset thirst
+            _timeSinceDrinking = 0;
             //reset hunger
             _timeSinceEating = 0;
             //reset tiredness
