@@ -406,6 +406,22 @@ exports.endofBreakfastClearsAndUpdatesServery = function (test) {
 exports.endofBreakfastClearsAndUpdatesServery.meta = { traits: ["Mission Test", "Mission Completion Trait", "Event Trait", "Mission Check Trait"], description: "Test that when breakfast is over, location descriptin is modified and contents are removed correctly." };
 
 
+exports.endofDayEndsGame = function (test) {
+    
+    var endofDay = m0.getNamedMission("endofday");
+    var reward = endofDay.event();
+           
+    var expectedResult = "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
+    var actualResult = endofDay.processReward(m0, reward, p0);
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.endofDayEndsGame.meta = { traits: ["Mission Test", "Mission Completion Trait", "Event Trait", "End Game Trait", "Mission Check Trait"], description: "Test that when game is ended when end game mission reward is triggered." };
+
 exports.installDiskMissionModifiesMultipleObjects = function (test) {
     
     var installDisk = m0.getNamedMission("installdisk");

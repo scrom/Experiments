@@ -3134,6 +3134,21 @@ exports.duplicateItemsAreCollatedInPlayerInventoryDescription = function (test) 
 
 exports.duplicateItemsAreCollatedInPlayerInventoryDescription.meta = { traits: ["Player Test", "Match Trait"], description: "Test that a player inventory correctly reports duplicate items." };
 
+
+exports.endGameTriggersCorrectMessage = function (test) {
+    
+    var expectedResult = "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
+    var actualResult = p0.endGame();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.endGameTriggersCorrectMessage.meta = { traits: ["Player Test", "End Game Trait"], description: "Test that game can be ended." };
+
+
 /*
 Methods needing testing:
 getName, 

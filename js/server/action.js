@@ -1511,20 +1511,21 @@ exports.Action = function Action(player, map, fileManager) {
         self.act = function(anActionString) {
             var description = "";
             var imageName;
-            
-            //explicitly test for false - supports stub testability          
-            if (_player.gameIsActive() == false && anActionString != "stats" && anActionString != "score") {
-                description = "Thanks for playing.<br>There's nothing more you can do here for now.<br><br>You can either <i>quit</i> and start a fresh game or <i>load</i> a previously saved game.";
-                //we're done processing, build the results...
-                return returnResultAsJson(description, imageName);
-            };  
-            
-            //explicitly test for true - supports stub testability          
-            if (_player.isDead() == true) {
-                description = "You're dead. Game over.<br>There's nothing more you can do here.<br><br>You either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
-                //we're done processing, build the results...
-                return returnResultAsJson(description, imageName);
-            };     
+            if (anActionString != "stats" && anActionString != "score") {
+                //explicitly test for false - supports stub testability          
+                if (_player.gameIsActive() == false) {
+                    description = "Thanks for playing.<br>There's nothing more you can do here for now.<br><br>You can either <i>quit</i> and start a fresh game or <i>load</i> a previously saved game.";
+                    //we're done processing, build the results...
+                    return returnResultAsJson(description, imageName);
+                };
+                
+                //explicitly test for true - supports stub testability          
+                if (_player.isDead() == true) {
+                    description = "You're dead. Game over.<br>There's nothing more you can do here.<br><br>You either need to <i>quit</i> and restart a game or <i>load</i> a previously saved game.";
+                    //we're done processing, build the results...
+                    return returnResultAsJson(description, imageName);
+                };
+            };   
 
             //attempt to perform/translate requested action
             description = self.processAction(anActionString);

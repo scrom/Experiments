@@ -237,3 +237,40 @@ exports.testGoObjectAction = function (test) {
 };
 
 exports.testGoObjectAction.meta = { traits: ["Action Test", "Verb Trait"], description: "Test that an action can be manually built up and the resulting call tested." };
+
+
+exports.cannotContinuePlayingAfterEndGame = function (test) {
+    var p = new player.Player("Tester");
+    var m = new map.Map();  
+    p.endGame();    
+    var a = new action.Action(p, m);
+
+    var expectedResult = '{"verb":"","object0":"","object1":"","description":"Thanks for playing.<br>There\'s nothing more you can do here for now.<br><br>You can either <i>quit</i> and start a fresh game or <i>load</i> a previously saved game.","attributes":{"username":"undefined","money":5,"score":0,"injuriesReceived":0,"bleeding":false}}';
+    var actualResult = a.act("look");
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotContinuePlayingAfterEndGame.meta = { traits: ["Action Test", "End Game Trait"], description: "Test that when game is ended game cannot continue to be played." };
+
+
+exports.canStillRetieveStatsAfterEndGame = function (test) {
+    var p = new player.Player("Tester");
+    var m = new map.Map();
+    p.endGame();
+    var a = new action.Action(p, m);
+    
+    var expectedResult = '{"verb":"stats","object0":"","object1":"","description":"=== GAME OVER ===<br><i>Final </i><i>Statistics for :</i><br>Your score is 0 out of 0<br>You have taken 0 steps.<br>You have visited 0 out of 0 locations.<br>Total game time taken so far: 00:00.<br><br>In a survey of your popularity...<br> Your overall popularity rating is 0.","attributes":{"username":"undefined","money":5,"score":0,"injuriesReceived":0,"bleeding":false}}';
+    var actualResult = a.act("stats");
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canStillRetieveStatsAfterEndGame.meta = { traits: ["Action Test", "End Game Trait", "Player Statistics Trait"], description: "Test that when game is ended plyer can still call up their statistics." };
+

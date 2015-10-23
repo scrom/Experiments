@@ -4948,7 +4948,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.endGame = function () {
             _active = false;
-            return resultString += "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
+            return "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
         };
 
         self.kill = function(isPermanent){
@@ -5339,6 +5339,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var extremePositiveCount = 0;
             var maxAffinity = 0;
             var minAffinity = 0;
+            var waryPercent = 0;
+            var strongLikePercent = 0;
+            var likePercent = 0;
+            var strongDislikePercent = 0;
+            var dislikePercent = 0;
+            var neutralPercent = 0;            
+
             for (var i=0;i<creatures.length;i++) {
                 if (!(creatures[i].isDead())) { livingCreatureCount++;};
                 var creatureAffinity = creatures[i].getAffinity();
@@ -5363,13 +5370,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         neutralCount++
                         break;
                 };
-
-                var waryPercent = (waryCount / livingCreatureCount) * 100;
-                var strongLikePercent = (extremePositiveCount / livingCreatureCount) * 100;
-                var likePercent = (positiveCount / livingCreatureCount) * 100;
-                var strongDislikePercent = (extremeNegativeCount / livingCreatureCount) * 100;
-                var dislikePercent = (negativeCount / livingCreatureCount) * 100;
-                var neutralPercent = (neutralCount / livingCreatureCount) * 100;
+                
+                if (livingCreatureCount > 0) {
+                    waryPercent = (waryCount / livingCreatureCount) * 100;
+                    strongLikePercent = (extremePositiveCount / livingCreatureCount) * 100;
+                    likePercent = (positiveCount / livingCreatureCount) * 100;
+                    strongDislikePercent = (extremeNegativeCount / livingCreatureCount) * 100;
+                    dislikePercent = (negativeCount / livingCreatureCount) * 100;
+                    neutralPercent = (neutralCount / livingCreatureCount) * 100;
+                };
 
                 if (creatureAffinity < minAffinity) {minAffinity = creatureAffinity;};
                 if (creatureAffinity > maxAffinity) {maxAffinity = creatureAffinity;};
@@ -5400,8 +5409,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var maxMinAffinity = self.getMaxMinAffinity(map);
 
             var status = "";
+            
+            if (!_active) {
+                status += "=== GAME OVER ===<br><i>Final </i>";
+            };
 
             status += "<i>Statistics for $player:</i><br>";
+
             status += "Your score is " + _score + " out of " + maxScore + "<br>";
             if (_killedCount > 0) { status += "You have been killed " + temporise(_killedCount) + ".<br>" };
             if (_cheatCount > 0) { status += "You have cheated (or tried to cheat) " + temporise(_cheatCount) + ".<br>" };

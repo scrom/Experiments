@@ -214,6 +214,7 @@ module.exports.MissionController = function MissionController() {
 
         
         self.updateMissions = function (time, player, map) {
+            if (player.gameIsActive() == false ) {return ""};
             var resultString = "";
             var newlyCompletedMissions = [];
             var processedMissions = [];
