@@ -18,7 +18,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _repairSkills = []; //player can learn repair skills.
         var _maxHitPoints = 100;
         var _hitPoints = _maxHitPoints;
-        var _unarmedAttackStrength = 5; //hardcoded and not used in most cases.
+        var _baseAttackStrength = 5;
         var _aggression = 0;
         var _stealth = 1;
         var _hunt = 0;
@@ -302,6 +302,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     _currentLocation = _startLocation;
                 };
             };
+            if (playerAttributes.baseAttackStrength != undefined) { _baseAttackStrengthh = playerAttributes.baseAttackStrength; };
             if (playerAttributes.aggression != undefined) {_aggression = playerAttributes.aggression;};
             if (playerAttributes.stealth != undefined) {_stealth = playerAttributes.stealth;};
             if (playerAttributes.hunt != undefined) { _hunt = playerAttributes.hunt; };
@@ -455,7 +456,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var resultString = '{"object":"'+_objectName+'","username":"'+_username+'"';
             resultString += ',"currentLocation":"'+_currentLocation.getName()+'"';
             resultString += ',"health":'+_hitPoints;
-            if (_maxHitPoints != 100) {resultString += ',"maxHealth":'+_maxHitPoints;};
+            if (_maxHitPoints != 100) { resultString += ',"maxHealth":' + _maxHitPoints; };
+            if (_baseAttackStrength != 5) { resultString += ',"baseAttackStrength":' + _baseAttackStrength; };
             if (_aggression != 0) {resultString += ',"aggression":'+_aggression;};
             if (_stealth != 1) {resultString += ',"stealth":'+_stealth;};
             if (_hunt != 0) { resultString += ',"hunt":' + _hunt };
@@ -641,8 +643,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             currentAttributes.startLocation = _startLocation;
             currentAttributes.currentLocation = _currentLocation;
+            currentAttributes.baseAttackStrength = _baseAttackStrength;
             currentAttributes.aggression = _aggression;
-            currentAttributes.stealth = _stealth;
+            currentAttributes.stealth = _stealth;           
             currentAttributes.hunt = _hunt;
             currentAttributes.huntCount = _huntCount;
             currentAttributes.money = _inventory.getCashBalance();
@@ -925,6 +928,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 self.removeContagion(contagionName);
                 self.setAntibody(contagionName);
             };
+        };
+               
+        self.updateBaseAttackStrength = function (changeBy) {
+            _baseAttackStrength += changeBy;
         };
 
         self.updateMaxHitPoints = function(changeBy) {
@@ -4319,9 +4326,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.getAttackStrength = function(verb) {
             var weapon = self.getWeapon(verb);
             if (weapon) {
-                return weapon.getAttackStrength();
+                return weapon.getAttackStrength() + (_baseAttackStrength/2);
             };
-            return _unarmedAttackStrength;
+            return _baseAttackStrength;
         };
 
         self.hurt = function(pointsToRemove, attacker) {

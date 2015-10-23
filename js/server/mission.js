@@ -307,7 +307,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
             };
             if (reward.maxHealth) { player.updateMaxHitPoints(reward.maxHealth);};
-            if (reward.carryWeight) { player.updateCarryWeight(reward.carryWeight);};            
+            if (reward.carryWeight) { player.updateCarryWeight(reward.carryWeight); };
+            if (reward.attackStrength) { player.updateBaseAttackStrength(reward.attackStrength); };    
             if (reward.score) { player.updateScore(reward.score);};
             if (reward.money) { player.updateCash(reward.money);};
             if (reward.stealth) { player.setStealth(player.getStealth() + reward.stealth);};
