@@ -2177,26 +2177,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (self.healthPercent() <= _bleedingHealthThreshold) { _bleeding = true; };
                 
                 var hurtString = " is hurt.";
-                if (self.healthPercent() <= 25) {
-                    hurtString = " is dying.";
-                } else if (self.healthPercent() <= 50) {
-                    hurtString = " is bleeding."
-                };
-
-                if (playerIsAttacker) {
-                    hurtString = hurtString.replace(" is ", "'s ");
-                    hurtString = hurtString.replace(" hurt", " injured");
-                    resultString += tools.initCap(self.getPrefix()) + hurtString;
-                } else {
-                    if (attacker) {
-                        if (attacker.getType() == "contagion") {
-                            hurtString = " lurches in a spasm of pain."
-                        };
+                if (_bleeding) {
+                    if (playerIsAttacker) {
+                        hurtString = " is badly hurt.";
+                    } else {
+                        //bleeding/dying are reported on tick instead.
+                        hurtString = "";
                     };
-                    resultString += tools.initCap(self.getDisplayName()) + hurtString;
                 };
 
-                //console.log('Creature hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+                if (attacker) {
+                    if (attacker.getType() == "contagion") {
+                        hurtString = " lurches in a spasm of pain."
+                    };
+                };
+                
+                if (hurtString.length > 0) {
+                    if (playerIsAttacker) {
+                        hurtString = hurtString.replace(" is ", "'s ");
+                        hurtString = hurtString.replace(" hurt", " injured");
+                        resultString += tools.initCap(self.getPrefix()) + hurtString;
+                    } else {
+                        resultString += tools.initCap(self.getDisplayName()) + hurtString;
+                    };
+                };
+
+                //console.log('Creature hurt, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
             } else {
                 if (!(attacker)) {
                    resultString += "There's no sign of any physical harm done.";  
@@ -3782,7 +3788,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //we've already used their name once or more. Don't use it again.
                             bleedingPrefixToUse = " " + localDescriptivePrefix;
                         };
-                        visibleResultString += bleedingPrefixToUse + still + " bleeding. ";
+                        var bleedingSuffixToUse = still + " bleeding. ";
+                        if (self.healthPercent() <= 25) {
+                            bleedingSuffixToUse = " dying. ";
+                        };
+                        visibleResultString += bleedingPrefixToUse + bleedingSuffixToUse;
                     };
                 };
             };    
