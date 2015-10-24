@@ -178,6 +178,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         self.getConditionAttributes = function() {
             return _conditionAttributes;
         };
+        
+        self.setConditionAttributes = function (newAttributes) {
+            _conditionAttributes = newAttributes;
+        };
+        
+        self.setFailAttributes = function (newAttributes) {
+            _failAttributes = newAttributes;
+        };
 
         self.getRewardObject = function() {
             if (_reward.delivers) {

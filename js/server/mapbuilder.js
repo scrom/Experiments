@@ -136,6 +136,18 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (!artefact) {
                     console.log("ERROR: Artefact data. Failed to build" + artefactData + ".");
                 };
+                if (artefact.getType() == "food") {
+                    if (!artefactData.attributes) {
+                        console.log("DATA QUALITY WARNING: food item " + artefactData.name + " has no attributes.");
+                    } else {
+                        if (!artefactData.attributes.smell) {
+                            console.log("DATA QUALITY WARNING: food item " + artefactData.name + " has no 'smell' attribute.");
+                        };
+                        if (!artefactData.attributes.taste) {
+                            console.log("DATA QUALITY WARNING: food item " + artefactData.name + " has no 'taste' attribute.");
+                        };
+                    };
+                };
                 if (artefactData.synonyms) {artefact.addSyns(artefactData.synonyms);};
                 if (artefactData.inventory) {
                     //add items directly to inventory
@@ -322,6 +334,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 resultObject.inventory = [];
                 for (var i = 0; i < modification.inventory.length; i++) {
                     var inventoryData = modification.inventory[i];
+                    //construct from file first if needed
+                    if (inventoryData.file) {
+                        inventoryData = self.buildFromFile(_data[inventoryData.file]);
+                    };
                     if (inventoryData.object == "artefact") {
                         resultObject.inventory.push(self.buildArtefact(inventoryData));
                     } else if (inventoryData.object == "creature") {

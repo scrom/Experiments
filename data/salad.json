@@ -1,20 +1,35 @@
 ﻿{
   "object": "artefact",
   "name": "salad",
-  "description": "plate of salad",
-  "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
+  "description": "full salad bar",
+  "detailedDescription": "It's got mixed leaves, some cheese, beans, and beetroot. All with a French dressing.",
   "attributes": {
     "defaultAction": "eat",
-    "weight": 2,
+    "weight": 3,
     "type": "food",
     "canCollect": true,
-    "charges": 1,
+    "requiresContainer": true,
+    "requiredContainer": "plate",
+    "charges": 15,
+    "chargeUnit": "plateful",
+    "chargesDescription": "There's plenty of assorted salad items left but we'd prefer you only stuck to one $chargeUnit.",
+    "affinityModifier": 0,
     "isEdible": true,
-    "nutrition": 25
+    "nutrition": 23,
+    "smell": "It smells fresh and (mostly) green It's better than you'd find in many restaurants.",
+    "taste": "Hmm. Crisp and fresh. You're not sure if you're a huge fan of salad or not but it tastes as good as you'd hope a salad would really.." 
   },
   "synonyms": [
-    "plate of salad",
-    "plate",
+    "salad",
+    "leaves",
+    "mixed leaves",
+    "cheese",
+    "beans",
+    "beetroot",
+    "beets",
+    "dressing",
+    "fresnch dressing",
+    "salad bar",
     "food"
   ]
 }

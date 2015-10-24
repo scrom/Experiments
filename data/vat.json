@@ -2,7 +2,7 @@
   "object": "artefact",
   "name": "vat",
   "description": "vat",
-  "detailedDescription": "A large stainless steel cooking vat",
+  "detailedDescription": "It's a large stainless steel cooking vat",
   "attributes": {
     "extendedInventoryDescription": "There's $inventory in it.",
     "weight": 0.5,
@@ -16,32 +16,6 @@
     "defaultResult": "It belongs here for the benefit of all staff, not just you."
   },
   "inventory": [
-    {
-      "object": "artefact",
-      "name": "porridge",
-      "description": "porridge",
-      "detailedDescription": "A great, healthy, warm start to the day.<br>A bowl of this should keep you going until lunchtime.",
-      "attributes": {
-        "weight": 3,
-        "type": "food",
-        "canCollect": true,
-        "requiresContainer": true,
-        "requiredContainer": "bowl",
-        "charges": 6,
-        "chargeUnit": "bowlful",
-        "chargesDescription": "There's about $charges $chargeUnit of porridge left",
-        "plural": true,
-        "affinityModifier": 0,
-        "isEdible": true,
-        "nutrition": 20
-      },
-      "synonyms": [
-        "food",
-        "cereal",
-        "oats",
-        "oatmeal",
-        "breakfast"
-      ]
-    }
+    {"file": "porridge"}
   ]
 }

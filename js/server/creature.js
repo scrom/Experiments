@@ -2662,10 +2662,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _currentDelay = 0;
             return null;
         };
+        
+        self.setDestinationDelay = function (duration, overrideExistingDelay) {
+            if (_destinationDelay == 0 || overrideExistingDelay) {
+                _destinationDelay = duration;
+            };
+            return _destinationDelay;
+        };
 
         self.wait = function(player, duration) {
             if (!player) {
-                //mostly to help testability
+                //helps testability but can also be called from a mission reward
                 _currentDelay = 0; //turn on delay
                 _waitDelay += duration;
                 return "";
@@ -3448,17 +3455,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             for (var t = 0; t < time; t++) {
                 //start with a clear resultString
                 resultString = "";
-
+                
                 //console.log("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick();
-
+                
                 resultString += closePreviouslyOpenedDoors(map);
                 
                 //if creature is hostile, collect available weapons
                 if (self.isHostile(playerAggression)) {
                     resultString += self.collectBestAvailableWeapon(); // may return sentence with <br>+self.getDisplayName()
                 };
-
+                
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {
                     showMoveToPlayer = true;
@@ -3471,7 +3478,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         tempResultString = tempResultString.replace(localDisplayName, localPrefix);
                     };
                     resultString += tempResultString;
-
+                    
                     //re-fetch player location in case we just killed them!
                     //playerLocation = player.getCurrentLocation().getName();
                     visibleResultString += resultString;
@@ -3484,15 +3491,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 self.calculateAndUpdateDelay(playerLocation, playerAggression);
                 
                 //if creature will move on this tick
-                if (self.willMove(visibleResultString, playerLocation, playerAggression)) {         
+                if (self.willMove(visibleResultString, playerLocation, playerAggression)) {
                     
                     //start of creature moving
                     var exit;
-
+                    
                     //hunting player (including mission hunt flags)?
                     if (self.isHuntingPlayer()) {
-                        _destinationBlockedCount = 0;                    
-                        exit = _currentLocation.getExitWithBestTrace('player',map, _inventory);
+                        _destinationBlockedCount = 0;
+                        exit = _currentLocation.getExitWithBestTrace('player', map, _inventory);
                     } else if (_destinations.length > 0) {
                         //or has destinations?
                         //is creature in "current" destination?
@@ -3505,16 +3512,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //if creature is in home location, stay there a short while. (activate wait delay)
                             if (_currentLocation.getName() == _homeLocation.getName()) {
                                 var randomWait = Math.floor(Math.random() * 9);
-                                _waitDelay = 3+randomWait;
+                                _waitDelay = 3 + randomWait;
                                 _currentDelay = 0;
-                            };                            
+                            };
                         } else {
                             //creature still has a destination to reach
                             //if no path set and not in current destination, set path to destination
                             if (_path.length == 0) {
-                                self.setPath(self.findBestPath(_destinations[_destinations.length-1], map, 25));
+                                self.setPath(self.findBestPath(_destinations[_destinations.length - 1], map, 25));
                             };
-
+                            
                             if (_path.length > 0) {
                                 //we have a path now
                                 _destinationBlockedCount = 0;
@@ -3531,114 +3538,115 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 if (_destinationBlockedCount >= 15) {
                                     //cannot reach destination at the moment. Give up and try again later
                                     self.clearDestination();
-                                };   
+                                };
                             };
-                        }; 
-                    }; //end destinations         
-
-                    //no destination or path...
-                    //if they have a destination but no path by this point, they'll wander somewhere else and try to build a path again next time.
-                    //this stops creatures getting stuck behind "avoided" locations.
-                    if (!(exit)) {
-                        exit = self.getBestAvailableRandomExit();                        
-                    };
-
-                    if (exit) {
-                        exit = self.attemptToTraverseDoorsIfNeeded(exit, map);
-                        //exit will be blanked if door isn't usable.
-                    };
-                    
-                    if (exit) {
-                        var openedDoor;
-                        if (_openedDoor) {
-                            openedDoor = _currentLocation.getDoorForExit(exit.getDirection(), true);
                         };
-
-                        var exitAction = exit.getRequiredAction(); //we use this later
-                        var originalLocationName = _currentLocation.getName();
-                        var newLocationName = originalLocationName;
-
-                        var exposedItemString = self.exposePositionedItems();
-                        self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
-                        newLocationName = _currentLocation.getName();
-
-                        //should really close the door behind us here but we do it on the next cycle. This has the added benefit of a player being able to slip through                        
-
-                        if (newLocationName != originalLocationName) { //move was successful
-                            var movementPrefixString = tools.initCap(self.getDescription());
-                            if (visibleResultString.indexOf(localDisplayName) > -1) {
-                                //we've already used their name once or more. Don't use it again.
-                                movementPrefixString = localPrefix;
+                    }; //end destinations         
+                    
+                    if (_currentDelay < 0) {
+                            //no destination or path...
+                        //if they have a destination but no path by this point, they'll wander somewhere else and try to build a path again next time.
+                        //this stops creatures getting stuck behind "avoided" locations.
+                        if (!(exit)) {
+                            exit = self.getBestAvailableRandomExit();
+                        };
+                    
+                        if (exit) {
+                            exit = self.attemptToTraverseDoorsIfNeeded(exit, map);
+                                //exit will be blanked if door isn't usable.
+                        };
+                    
+                        if (exit) {
+                            var openedDoor;
+                            if (_openedDoor) {
+                                openedDoor = _currentLocation.getDoorForExit(exit.getDirection(), true);
                             };
-
-                            //if creature ends up in player location (rather than starting there)...
-                            if (playerLocation == _currentLocation.getName()) {
-                                showMoveToPlayer = true;
-                                visibleResultString += "<br>" + movementPrefixString + " ";
-                                var movementVerb = "wanders";
-                                if (_bleeding) {
-                                    movementVerb = "stumbles";
+                        
+                            var exitAction = exit.getRequiredAction(); //we use this later
+                            var originalLocationName = _currentLocation.getName();
+                            var newLocationName = originalLocationName;
+                        
+                            var exposedItemString = self.exposePositionedItems();
+                            self.go(exit.getDirection(), map.getLocation(exit.getDestinationName()));
+                            newLocationName = _currentLocation.getName();
+                        
+                            //should really close the door behind us here but we do it on the next cycle. This has the added benefit of a player being able to slip through                        
+                        
+                            if (newLocationName != originalLocationName) { //move was successful
+                                var movementPrefixString = tools.initCap(self.getDescription());
+                                if (visibleResultString.indexOf(localDisplayName) > -1) {
+                                    //we've already used their name once or more. Don't use it again.
+                                    movementPrefixString = localPrefix;
                                 };
-                                if (_bleeding) {
-                                    movementVerb = "staggers";
-                                } else if (self.healthPercent() < 75) {
-                                    movementVerb = "stumbles";
-                                };
-                                if (exitAction) {movementVerb = exitAction+"s";};
-                                visibleResultString += movementVerb + " in";
-                                if (openedDoor) {
-                                    visibleResultString += " through " + openedDoor.getDisplayName();  //@todo - bug - this is actually the door/name from the other side!
-                                };
-                            } else {
-                                if (showMoveToPlayer) {
-                                    //creature was previously in player location but is not any more - show them leaving but not slipping
+                            
+                                //if creature ends up in player location (rather than starting there)...
+                                if (playerLocation == _currentLocation.getName()) {
+                                    showMoveToPlayer = true;
                                     visibleResultString += "<br>" + movementPrefixString + " ";
-                                    if (openedDoor) {
-                                        visibleResultString += "opens " + openedDoor.getDisplayName() + " and ";
+                                    var movementVerb = "wanders";
+                                    if (_bleeding) {
+                                        movementVerb = "stumbles";
                                     };
-                                    var movementVerb = "heads";
                                     if (_bleeding) {
                                         movementVerb = "staggers";
                                     } else if (self.healthPercent() < 75) {
-                                        movementVerb = "limps";
+                                        movementVerb = "stumbles";
                                     };
-                                    if (exit.getLongName() == "in") {movementVerb = "goes";};
-                                    if (exitAction) {movementVerb = exitAction+"s";};
-                                    visibleResultString += movementVerb + " " + exit.getLongName();
-                                    visibleResultString += "."; 
-                                    visibleResultString += exposedItemString;
-                                    showMoveToPlayer = false;
-                                };
-                            };
-                           
-                            //slip on liquid in new location?
-                            var slippy = _currentLocation.slipLevel();
-                            var slipString = ".";
-                            if (slippy > 0) {
-                                var randomInt = Math.floor(Math.random() * 10);
-                                if (randomInt == 0) {
-                                    slipString = ".";
-                                } else if (randomInt <= (Math.floor(slippy * 1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
-                                    var slipDamage = Math.min(slippy * 5, 25); //the slippier it is, the more damage received - up to a limit.
-                                    self.decreaseAffinity(Math.floor(slippy / 2)); //may decrease affinity                                   
-                                    var tempHurtString = self.hurt(slipDamage);
-                                    if (!(self.isDead())) {
-                                        slipString = " and slips in the mess on the floor. " + tools.initCap(self.getDescriptivePrefix()) + " injured.";
-                                    } else {
-                                        tempHurtString = tempHurtString.replace("<br>"+localDisplayName+" is dead.", "")
-                                        slipString = ", slips in the mess on the floor and dies from "+self.getPossessiveSuffix()+" injuries."+tempHurtString;
+                                    if (exitAction) { movementVerb = exitAction + "s"; };
+                                    visibleResultString += movementVerb + " in";
+                                    if (openedDoor) {
+                                        visibleResultString += " through " + openedDoor.getDisplayName();  //@todo - bug - this is actually the door/name from the other side!
+                                    };
+                                } else {
+                                    if (showMoveToPlayer) {
+                                        //creature was previously in player location but is not any more - show them leaving but not slipping
+                                        visibleResultString += "<br>" + movementPrefixString + " ";
+                                        if (openedDoor) {
+                                            visibleResultString += "opens " + openedDoor.getDisplayName() + " and ";
+                                        };
+                                        var movementVerb = "heads";
+                                        if (_bleeding) {
+                                            movementVerb = "staggers";
+                                        } else if (self.healthPercent() < 75) {
+                                            movementVerb = "limps";
+                                        };
+                                        if (exit.getLongName() == "in") { movementVerb = "goes"; };
+                                        if (exitAction) { movementVerb = exitAction + "s"; };
+                                        visibleResultString += movementVerb + " " + exit.getLongName();
+                                        visibleResultString += ".";
+                                        visibleResultString += exposedItemString;
+                                        showMoveToPlayer = false;
                                     };
                                 };
-                            };
+                            
+                                //slip on liquid in new location?
+                                var slippy = _currentLocation.slipLevel();
+                                var slipString = ".";
+                                if (slippy > 0) {
+                                    var randomInt = Math.floor(Math.random() * 10);
+                                    if (randomInt == 0) {
+                                        slipString = ".";
+                                    } else if (randomInt <= (Math.floor(slippy * 1.5))) { //increasing % chance of success - ~10-20% per slippy item (other than 0)
+                                        var slipDamage = Math.min(slippy * 5, 25); //the slippier it is, the more damage received - up to a limit.
+                                        self.decreaseAffinity(Math.floor(slippy / 2)); //may decrease affinity                                   
+                                        var tempHurtString = self.hurt(slipDamage);
+                                        if (!(self.isDead())) {
+                                            slipString = " and slips in the mess on the floor. " + tools.initCap(self.getDescriptivePrefix()) + " injured.";
+                                        } else {
+                                            tempHurtString = tempHurtString.replace("<br>" + localDisplayName + " is dead.", "")
+                                            slipString = ", slips in the mess on the floor and dies from " + self.getPossessiveSuffix() + " injuries." + tempHurtString;
+                                        };
+                                    };
+                                };
+                            
+                                if (showMoveToPlayer) {
+                                    visibleResultString += slipString;
+                                };
 
-                            if (showMoveToPlayer) {
-                                visibleResultString += slipString;
                             };
-
                         };
-                    };            
-                };
-
+                    };
+                }; //currentDelay < 0;
                 //leave a trace
                 _currentLocation.setCreatureTrace(self.getName(), Math.floor(map.getLocationCount() / 5));
                 
@@ -4089,7 +4097,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //this is someone who's not on a loop any more, has returned home for a second time.
                 //Had an original set of more than 1 preprogrammed set of destinations and has no further destinations set.
                 //this is likely (but not guaranteed) someone who's been wandering for a while - so restart their original set of destinations.
-                //this partially ensures is a player tailgated a character who has completed their destinations
+                //this partially ensures if a player tailgated a character who has completed their destinations
                 //that they might eventually come back.
                 _clearedDestinations.splice(0, 1);  //remove home location from list
                 _destinations = _destinations.concat(_clearedDestinations);

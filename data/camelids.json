@@ -99,10 +99,7 @@
       "description": "large boardroom style table",
       "detailedDescription": "Pretty standard office furniture.<br>It provides plenty of desktop working space for a large group of creative people.",
       "attributes": {
-        "type": "junk",
-        "weight": 150,
-        "isBreakable": false,
-        "canDrawOn": "true"
+        "isBreakable": false
       },
       "synonyms": [
         "boardroom table",

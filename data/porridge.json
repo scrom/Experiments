@@ -1,0 +1,29 @@
+﻿{
+  "object": "artefact",
+  "name": "porridge",
+  "description": "porridge",
+  "detailedDescription": "A great, healthy, warm start to the day.<br>A bowl of this should keep you going until lunchtime.",
+  "attributes": {
+    "weight": 3,
+    "type": "food",
+    "canCollect": true,
+    "requiresContainer": true,
+    "requiredContainer": "bowl",
+    "charges": 6,
+    "chargeUnit": "bowlful",
+    "chargesDescription": "There's about $charges $chargeUnit of porridge left",
+    "plural": true,
+    "affinityModifier": 0,
+    "isEdible": true,
+    "nutrition": 20,
+    "smell": "It smells warm and comforting.",
+    "taste": "It's 'just right'. First time too, no need for any additional salt or sugar here."
+  },
+  "synonyms": [
+    "food",
+    "cereal",
+    "oats",
+    "oatmeal",
+    "breakfast"
+  ]
+}

@@ -2,7 +2,7 @@
     "object": "location",
     "name": "servery-main",
     "displayName": "Servery",
-    "description": "You're in SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses.",
+    "description": "You're in the SQL Servery. It's still early enough in the morning for a few of the staff here to be wandering past to get their breakfasts.",
     "exits": [
       {
         "object": "exit",
@@ -49,6 +49,79 @@
             "hidden": true
           }
         ]
-      }
+      },
+      {
+        "object": "artefact",
+        "template": "chairs",
+        "description": "plastic dining chairs",
+        "detailedDescription": "They're stackable chairs that allow the entire space to be cleared for company-wide presentations.",
+        "attributes": {
+          "type": "bed",
+          "weight": 40,
+          "isBreakable": false,
+          "customAction": [
+            "stack",
+            "get"
+          ],
+          "defaultResult": "They need to be left out for now."
+        },
+        "synonyms": [
+          "chair",
+          "plastic chair",
+          "plastic dining chair",
+          "dining chair",
+          "plastic",
+          "dining"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "table",
+        "description": "large white canteen tables",
+        "detailedDescription": "These are quite neat. They have a wipe-clean surface and they fold away so that the area can be cleared<br>Despite them being able to fold they're also pretty sturdy.",
+        "attributes": {
+          "isBreakable": false,
+          "plural": "true",
+          "customAction": [
+            "fold",
+            "get"
+          ],
+          "defaultResult": "Other people will still want to use the tables today. Best to leave them as they are."
+        },
+        "synonyms": [
+          "dining table",
+          "canteen table",
+          "large table",
+          "large dining table",
+          "large canteen table",
+          "large white canteen table",
+          "large white dining table",
+          "large white table",
+          "white dining table",
+          "white canteen table",
+          "white table"
+        ]
+      },
+{
+            "object": "artefact",
+            "name": "breakfast",
+            "description": "food",
+            "detailedDescription": "You'll need to head to the serving area for breakfast.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "customAction": [
+                "get",
+                "find",
+                "where is",
+                "where"
+              ],
+              "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
+              "smell": "There's a warm comforting smell coming from the serving area to the East."
+            },
+            "synonyms": [
+              "food"
+            ]
+          }
     ]
   }

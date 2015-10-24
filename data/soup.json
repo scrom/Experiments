@@ -1,23 +1,27 @@
 ﻿{
   "object": "artefact",
   "name": "soup",
-  "description": "bowl of soup",
-  "detailedDescription": "Butternut squash and coconut.",
+  "description": "soup",
+  "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
   "attributes": {
-    "defaultAction": "eat",
-    "weight": 1,
+
+    "weight": 3,
     "type": "food",
-    "requiresContainer": true,
-    "isLiquid": true,
     "canCollect": true,
-    "charges": 1,
+    "requiresContainer": true,
+    "requiredContainer": "bowl",
+    "charges": 9,
+    "chargeUnit": "bowlful",
+    "chargesDescription": "There's about $charges $chargeUnit left",
     "plural": true,
+    "isLiquid": true,
     "isEdible": true,
-    "nutrition": 15
+    "nutrition": 15,
+    "smell": "It has a lovely aromatic smell. A mix of both sweet and spicy.",
+    "taste": "Yep, it's good."
   },
   "synonyms": [
-    "bowl",
-    "bowl of soup",
+    "soup",
     "food"
   ]
 }

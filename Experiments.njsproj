@@ -90,6 +90,7 @@
     <Content Include="data\flipchart.json" />
     <Content Include="data\flowers-a.json" />
     <Content Include="data\flowers-b.json" />
+    <Content Include="data\fruit.json" />
     <Content Include="data\graffiti-a.json" />
     <Content Include="data\graffiti-b.json" />
     <Content Include="data\ground-floor-back-stair-east.json" />
@@ -174,11 +175,14 @@
     <Content Include="data\people-team-water-cooler.json" />
     <Content Include="data\pioneer.json" />
     <Content Include="data\plant-room.json" />
+    <Content Include="data\plate.json" />
     <Content Include="data\poppy.json" />
+    <Content Include="data\porridge.json" />
     <Content Include="data\post-room.json" />
     <Content Include="data\punts.json" />
     <Content Include="data\reception.json" />
     <Content Include="data\rest-area-ground-floor.json" />
+    <Content Include="data\roast.json" />
     <Content Include="data\roof.json" />
     <Content Include="data\room-404.json" />
     <Content Include="data\rubbish-bins.json" />

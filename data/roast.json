@@ -1,0 +1,40 @@
+﻿{
+  "object": "artefact",
+  "name": "roast",
+  "description": "delicious roast carvery",
+  "detailedDescription": "The team have outdone themselves. It's roast turkey with all the trimmings <i>and</i> yorkshire pudding.",
+  "attributes": {
+    "weight": 2,
+    "type": "food",
+    "canCollect": true,
+    "requiresContainer": true,
+    "requiredContainer": "plate",
+    "charges": 10,
+    "chargeUnit": "plateful",
+    "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping",
+    "affinityModifier": 0,
+    "isEdible": true,
+    "nutrition": 40,
+    "smell": "It's like new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+    "taste": "Amazing! A complete free roast dinner never tasted so good." 
+  },
+  "synonyms": [
+    "food",
+    "delicious food",
+    "delicious dinner",
+    "roast carvery",
+    "delicious roast carvery",
+    "carvery",
+    "delicious carvery",
+    "delicious roast",
+    "carvery dinner",
+    "roast dinner",
+    "roast turkey",
+    "yorkshire",
+    "yorkshire pud",
+    "yorkshire pudding",
+    "trimmings",
+    "dinner",
+    "lunch"
+  ]
+}

@@ -531,16 +531,22 @@
           "time": 200
         },
         "reward": {
-          "modifyLocation": {
-            "name": "servery-food-bar",
-            "description": "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
-            "remove": [
-              "vat",
-              "bowl",
-              "bowl",
-              "bowl"
-            ]
-          }
+          "modifyLocations": [
+            {
+              "name": "servery-food-bar",
+              "description": "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.",
+              "remove": [
+                "porridge",
+                "bowl",
+                "bowl",
+                "bowl"
+              ]
+            },
+            {
+              "name": "servery-main",
+              "description": "You're in the SQL Servery.<br>When mealtimes aren't being served you can still find people occasionally sat in here studying or chatting to one another although mostly it's just a quick throroughfare between the sales and development team areas."
+            }
+          ]
         }
       },
       {
@@ -556,54 +562,187 @@
           "time": 400
         },
         "reward": {
-          "modifyLocation": {
-            "name": "servery-food-bar",
-            "description": "You're in the SQL Servery serving area.<br>Lunch is served. You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
-            "inventory": [
-              {
-                "object": "artefact",
-                "name": "soup",
-                "description": "bowl of soup",
-                "detailedDescription": "Butternut squash and coconut.",
-                "attributes": {
-                  "defaultAction": "eat",
-                  "weight": 1,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "canCollect": true,
-                  "charges": 1,
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15
+          "modifyLocations": [
+            {
+              "name": "servery-food-bar",
+              "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
+              "inventory": [
+                {
+                  "object": "artefact",
+                  "name": "bowl",
+                  "description": "bowl",
+                  "detailedDescription": "A round bowl",
+                  "attributes": {
+                    "extendedInventoryDescription": "There's $inventory in it.",
+                    "weight": 0.5,
+                    "carryWeight": 0.5,
+                    "attackStrength": 1,
+                    "type": "container",
+                    "holdsLiquid": true,
+                    "canCollect": true,
+                    "isBreakable": true,
+                    "affinityModifier": 0
+                  }
                 },
-                "synonyms": [
-                  "bowl",
-                  "bowl of soup",
-                  "food"
-                ]
-              },
-              {
-                "object": "artefact",
-                "name": "salad",
-                "description": "plate of salad",
-                "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
-                "attributes": {
-                  "defaultAction": "eat",
-                  "weight": 2,
-                  "type": "food",
-                  "canCollect": true,
-                  "charges": 1,
-                  "isEdible": true,
-                  "nutrition": 25
+                {
+                  "object": "artefact",
+                  "name": "bowl",
+                  "description": "bowl",
+                  "detailedDescription": "A round bowl",
+                  "attributes": {
+                    "extendedInventoryDescription": "There's $inventory in it.",
+                    "weight": 0.5,
+                    "carryWeight": 0.5,
+                    "attackStrength": 1,
+                    "type": "container",
+                    "holdsLiquid": true,
+                    "canCollect": true,
+                    "isBreakable": true,
+                    "affinityModifier": 0
+                  }
                 },
-                "synonyms": [
-                  "plate of salad",
-                  "plate",
-                  "food"
-                ]
-              }
-            ]
+                {
+                  "object": "artefact",
+                  "name": "soup",
+                  "description": "soup",
+                  "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
+                  "attributes": {
+                    "weight": 3,
+                    "type": "food",
+                    "requiresContainer": true,
+                    "isLiquid": true,
+                    "requiredContainer": "bowl",
+                    "canCollect": true,
+                    "charges": 6,
+                    "chargeUnit": "bowlful",
+                    "chargesDescription": "There's about $charges $chargeUnit of porridge left",
+                    "plural": true,
+                    "isEdible": true,
+                    "nutrition": 15
+                  },
+                  "synonyms": [
+                    "soup",
+                    "food"
+                  ]
+                },
+                {
+                  "object": "artefact",
+                  "name": "salad",
+                  "description": "plate of salad",
+                  "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
+                  "attributes": {
+                    "defaultAction": "eat",
+                    "weight": 2,
+                    "type": "food",
+                    "canCollect": true,
+                    "charges": 1,
+                    "isEdible": true,
+                    "nutrition": 25
+                  },
+                  "synonyms": [
+                    "plate of salad",
+                    "plate",
+                    "food"
+                  ]
+                },
+                {
+                  "object": "artefact",
+                  "name": "roast",
+                  "description": "delicious roast dinner",
+                  "detailedDescription": "The team have outdone themselves. It's roast turkey with all the trimmings <i>and</i> yorkshire pudding.",
+                  "attributes": {
+                    "weight": 2,
+                    "type": "food",
+                    "requiresContainer": true,
+                    "requiredContainer": "plate",
+                    "canCollect": true,
+                    "charges": 10,
+                    "chargeUnit": "plateful",
+                    "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping",
+                    "affinityModifier": 0,
+                    "isEdible": true,
+                    "nutrition": 40
+                  },
+                  "synonyms": [
+                    "food",
+                    "roast dinner",
+                    "roast turkey",
+                    "yorkshire",
+                    "yorkshire pud",
+                    "yorkshire pudding",
+                    "trimmings",
+                    "dinner",
+                    "lunch"
+                  ]
+                },
+                {
+                  "object": "artefact",
+                  "name": "plate",
+                  "description": "plate",
+                  "detailedDescription": "It's a standard white mass-produced dinner place",
+                  "attributes": {
+                    "extendedInventoryDescription": "There's $inventory on it.",
+                    "weight": 0.2,
+                    "carryWeight": 0.2,
+                    "type": "container",
+                    "canCollect": true,
+                    "isBreakable": true,
+                    "affinityModifier": 0
+                  }
+                },
+                {
+                  "object": "artefact",
+                  "name": "plate",
+                  "description": "plate",
+                  "detailedDescription": "It's a standard white mass-produced dinner place",
+                  "attributes": {
+                    "extendedInventoryDescription": "There's $inventory on it.",
+                    "weight": 0.2,
+                    "carryWeight": 0.2,
+                    "type": "container",
+                    "canCollect": true,
+                    "isBreakable": true,
+                    "affinityModifier": 0
+                  }
+                }
+              ]
+            },
+            {
+              "name": "servery-main",
+              "description": "You're in the SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses. It looks like everyone descended on the canteen at the same time for lunch.",
+              "inventory": [
+                {
+                  "object": "artefact",
+                  "name": "smell of food",
+                  "description": "food",
+                  "detailedDescription": "You'll need to head to the serving area.",
+                  "attributes": {
+                    "type": "scenery",
+                    "subType": "intangible",
+                    "customAction": [
+                      "get",
+                      "find",
+                      "where is",
+                      "where"
+                    ],
+                    "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
+                    "smell": "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
+                  },
+                  "synonyms": [
+                    "food"
+                  ]
+                }
+              ]
+            }
+          ],
+          "modifyObject": {
+            "name": "vat",
+            "inventory": []
+          },
+          "modifyLocationCreatures": {
+            "name": "all",
+            "destination": "servery-main",
+            "destinationDelay": 35
           }
         }
       },
@@ -620,11 +759,28 @@
           "time": 300
         },
         "reward": {
-          "modifyLocation": {
-            "name": "servery-food-bar",
-            "description": "You're in the SQL Servery serving area.<br>The kitchen team have cleared everything away for the day.<br>You'll need to raid the cereal supply or vending machine if you're hungry this afternoon.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery."
-          },
-          "removeObject": "soup"
+          "modifyLocations": [
+            {
+              "name": "servery-food-bar",
+              "description": "You're in the SQL Servery serving area.<br>The kitchen team have cleared everything away for the day.<br>You'll need to raid the cereal supply or vending machine if you're hungry this afternoon.",
+              "remove": [
+                "bowl",
+                "bowl",
+                "soup",
+                "salad",
+                "roast",
+                "plate",
+                "plate"
+              ]
+            },
+            {
+              "name": "servery-main",
+              "description": "You're in the SQL Servery.<br>All the food sittings are over for the day. The area has been cleaned up and returned back to its normal background activity level.",
+              "remove": [
+                "smell of food"
+              ]
+            }
+          ]
         }
       },
       {
@@ -1756,7 +1912,7 @@
         "description": "large boardroom style table",
         "detailedDescription": "Pretty standard office furniture.<br>It provides plenty of desktop working space for a large group of creative people.",
         "attributes": {
-          "weight": 150,
+          "weight": 120,
           "canDrawOn": true
         },
         "synonyms": [
@@ -7955,42 +8111,51 @@
                         "alive": true
                       },
                       "reward": {
-                        "modifyObject": {
-                          "name": "jordan miller",
-                          "attributes": {
-                            "antibodies": [
-                              "zombie"
+                        "modifyObjects": [
+                          {
+                            "name": "jordan miller",
+                            "attributes": {
+                              "antibodies": [
+                                "zombie"
+                              ]
+                            },
+                            "inventory": [
+                              {
+                                "object": "artefact",
+                                "name": "hard disk",
+                                "description": "hard disk",
+                                "detailedDescription": "Our IS team are pretty handy with these things.",
+                                "attributes": {
+                                  "weight": 0.75,
+                                  "attackStrength": 5,
+                                  "canCollect": true,
+                                  "isBreakable": true,
+                                  "isDamaged": true,
+                                  "price": 50,
+                                  "componentOf": [
+                                    "server"
+                                  ]
+                                },
+                                "synonyms": [
+                                  "disc",
+                                  "drive",
+                                  "hard drive",
+                                  "disk",
+                                  "hard disc",
+                                  "disc drive",
+                                  "disk drive"
+                                ]
+                              }
                             ]
                           },
-                          "inventory": [
-                            {
-                              "object": "artefact",
-                              "name": "hard disk",
-                              "description": "hard disk",
-                              "detailedDescription": "Our IS team are pretty handy with these things.",
-                              "attributes": {
-                                "weight": 0.75,
-                                "attackStrength": 5,
-                                "canCollect": true,
-                                "isBreakable": true,
-                                "isDamaged": true,
-                                "price": 50,
-                                "componentOf": [
-                                  "server"
-                                ]
-                              },
-                              "synonyms": [
-                                "disc",
-                                "drive",
-                                "hard drive",
-                                "disk",
-                                "hard disc",
-                                "disc drive",
-                                "disk drive"
-                              ]
+                          {
+                            "name": "server",
+                            "attributes": {
+                              "detailedDescription": "The servers look like they're connected to a console nearby.<br>One of the servers has a bay to install an extra hard drive into.",
+                              "defaultResult": "$action install disk in server"
                             }
-                          ]
-                        }
+                          }
+                        ]
                       }
                     },
                     {
@@ -9046,14 +9211,13 @@
         "object": "artefact",
         "name": "server",
         "description": "rack-mounted blade server",
-        "detailedDescription": "The servers look like they can be accessed via a console nearby.<br>One of the servers has a bay to install extra hard drives into.",
+        "detailedDescription": "The servers look like they're connected to a console nearby.",
         "attributes": {
           "defaultAction": "open",
           "weight": 0.1,
           "carryWeight": 0.75,
           "type": "container",
-          "isBreakable": true,
-          "defaultResult": "$action install disk in server"
+          "isBreakable": true
         },
         "synonyms": [
           "rack",
@@ -13756,7 +13920,7 @@
     "object": "location",
     "name": "servery-food-bar",
     "displayName": "Servery",
-    "description": "You're standing by the SQL Servery serving area and salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.<br><br>It's breakfast time!",
+    "description": "You're standing by the SQL Servery serving area and salad bar.<br>It's breakfast time. The kitchen team have laid out a breakfast spread of fruit and porridge.",
     "exits": [
       {
         "object": "exit",
@@ -14220,7 +14384,7 @@
     "object": "location",
     "name": "servery-main",
     "displayName": "Servery",
-    "description": "You're in SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses.",
+    "description": "You're in the SQL Servery. It's still early enough in the morning for a few of the staff here to be wandering past to get their breakfasts.",
     "exits": [
       {
         "object": "exit",
@@ -14285,6 +14449,60 @@
           "door",
           "fire door",
           "exit"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "plastic dining chairs",
+        "detailedDescription": "They're stackable chairs that allow the entire space to be cleared for company-wide presentations.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 40,
+          "type": "bed",
+          "plural": true,
+          "customAction": [
+            "stack",
+            "get"
+          ],
+          "defaultResult": "They need to be left out for now."
+        },
+        "synonyms": [
+          "chair",
+          "plastic chair",
+          "plastic dining chair",
+          "dining chair",
+          "plastic",
+          "dining"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "large white canteen tables",
+        "detailedDescription": "These are quite neat. They have a wipe-clean surface and they fold away so that the area can be cleared<br>Despite them being able to fold they're also pretty sturdy.",
+        "attributes": {
+          "weight": 120,
+          "plural": true,
+          "customAction": [
+            "fold",
+            "get"
+          ],
+          "defaultResult": "Other people will still want to use the tables today. Best to leave them as they are.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "dining table",
+          "canteen table",
+          "large table",
+          "large dining table",
+          "large canteen table",
+          "large white canteen table",
+          "large white dining table",
+          "large white table",
+          "white dining table",
+          "white canteen table",
+          "white table"
         ]
       }
     ]

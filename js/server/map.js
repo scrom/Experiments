@@ -238,7 +238,11 @@ exports.Map = function Map() {
             var location;
             if (modification) {
                 if (modification.name) {
-                    location = self.getLocation(modification.name);
+                    if (modification.name = "all") {
+                        location = self;
+                    } else {
+                        location = self.getLocation(modification.name);
+                    };
                 };
             };
 
@@ -275,6 +279,17 @@ exports.Map = function Map() {
                 };
                 if (newLocation) {
                     creatures[c].go(null, newLocation);
+                };
+                if (modification.destination) {
+                    creatures[c].setDestination(modification.destination, "true"); //the "true" here sets this to their next immediate destination
+                };
+                if (modification.destinationDelay) {
+                    creatures[c].setDestinationDelay(modification.destinationDelay, false);
+                };
+                if (modification.wait || modification.waitDelay) {
+                    var delay = modification.wait;
+                    if (!delay) { delay = modification.waitDelay;}
+                    creatures[c].wait(null, delay); //sets an immediate wait
                 };
                 if (modification.maxHealth) {
                     creatures[c].updateMaxHitPoints(modification.maxHealth);
@@ -335,7 +350,8 @@ exports.Map = function Map() {
                 newAttribs = modification.attributes;
 
                 if (modification.inventory) {
-                    for (var i=0;i<modification.inventory.length;i++) {
+                    for (var i = 0; i < modification.inventory.length; i++) {
+                        //console.log("adding " + modification.inventory[i].getName() + " to queue for " + objectName);
                         inventory.push(modification.inventory[i]);
                     };
                 };
@@ -356,7 +372,9 @@ exports.Map = function Map() {
                     //add items to inventory
                     var objectInventory = objectToModify.getInventoryObject();
                     for (var v = 0; v < inventory.length; v++) {
+                        //console.log("adding " + modification.inventory[v].getName() + " to " + objectName);
                         objectInventory.forceAdd(inventory[v]);
+                        //console.log("Object added? " + objectInventory.check(inventory[v].getName()));
                     };
                 };
             };
@@ -525,12 +543,8 @@ exports.Map = function Map() {
             return false;
         };
         
-        self.getInternalLocationName = function (locationName) {
-            //note, this *won't* find objects delivered by a mission or delivered by another object.
-            //it *will* find creatures
-            
+        self.getInternalLocationName = function (locationName) {            
             //loop through each location
-            //Get object (by synonym)
             //return when found
             for (var i = 0; i < _locations.length; i++) {
                 if (_locations[i].getDisplayName().toLowerCase() == locationName.toLowerCase()) { return _locations[i].getName()};
@@ -572,6 +586,10 @@ exports.Map = function Map() {
                 creatures = creatures.concat(_locations[i].getAllObjectsOfType('creature'));
             };
             return creatures;
+        };
+           
+        self.getCreatures = function () {
+            return self.getAllCreatures();
         };
 
         self.gatherAntibodyStats = function(creatures) {
@@ -717,8 +735,31 @@ exports.Map = function Map() {
         };
         
         self.activateNamedMission = function (missionName, player) {
-            return _missionController.activateNamedMission(missionName, _locations, player);
+            var mission = self.getNamedMission(missionName, player);
+            if (mission) {
+                return _missionController.activateNamedMission(missionName, _locations, player);
+            };
+            return "Mission '" + missionName + "' not found.";
         };
+        
+        self.completeNamedMission = function (missionName, player) {
+            var mission = self.getNamedMission(missionName, player);
+            if (mission) {
+                mission.setConditionAttributes({ "time": 1 });
+                return "Mission '" + missionName + "' set to complete in 1 tick.";
+            };
+            return "Mission '" + missionName + "' not found.";
+        };
+        
+        self.failNamedMission = function (missionName, player) {
+            var mission = self.getNamedMission(missionName, player);
+            if (mission) {
+                mission.setConditionAttributes({ "time": 1 });
+                return "Mission '" + missionName + "' set to fail in 1 tick.";
+            };
+            return "Mission '" + missionName + "' not found.";
+        };
+        
         
         self.listAllMissions = function (player) {
             return _missionController.listAllMissions(player, _locations);

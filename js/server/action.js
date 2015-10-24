@@ -1404,6 +1404,14 @@ exports.Action = function Action(player, map, fileManager) {
                     return _map.activateNamedMission(_object0, _player);
                 };
 
+                if (_verb == '+complete') {
+                    return _map.completeNamedMission(_object0, _player);
+                };
+                
+                if (_verb == '+fail') {
+                    return _map.failNamedMission(_object0, _player);
+                };
+
                 if (_verb == '+destination') {
                     var creatures = _map.getAllCreatures();
                     var resultString = "";

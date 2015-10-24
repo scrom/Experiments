@@ -10,11 +10,24 @@
     "time": 200
   },
   "reward": {
-    "modifyLocation": 
+    "modifyLocations": [
       {
         "name": "servery-food-bar",
-        "description": "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.",
-        "remove": [ "vat", "bowl", "bowl", "bowl" ]
+        "description": "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.",
+        "remove": [ "porridge", "bowl", "bowl", "bowl" ]
+      },
+      {
+        "name": "servery-main",
+        "description": "You're in the SQL Servery.<br>When mealtimes aren't being served you can still find people occasionally sat in here studying or chatting to one another although mostly it's just a quick throroughfare between the sales and development team areas.",
+        "remove": [ "breakfast" ]
       }
+    ],
+    "modifyObject": {
+      "name": "vat",
+      "attributes": {
+        "description": "empty cooking vat",
+        "detailedDescription": "It's the type used in a bain-marie for keeping things like soup warm."
+      }
+    }
   }
 }

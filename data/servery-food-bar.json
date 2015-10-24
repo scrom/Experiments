@@ -2,7 +2,7 @@
     "object": "location",
     "name": "servery-food-bar",
     "displayName": "Servery",
-    "description": "You're standing by the SQL Servery serving area and salad bar.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.<br><br>It's breakfast time!",
+    "description": "You're standing by the SQL Servery serving area and salad bar.<br>It's breakfast time. The kitchen team have laid out a breakfast spread of fruit and porridge.",
     "exits": [
       {
         "object": "exit",
