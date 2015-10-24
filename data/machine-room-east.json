@@ -17,7 +17,7 @@
             "object": "artefact",
             "name": "server",
             "description": "rack-mounted blade server",
-            "detailedDescription": "The servers look like they can be accessed via a console nearby.<br>One of the servers has a bay to install extra hard drives into.",
+            "detailedDescription": "The servers look like they're connected to a console nearby.",
             "attributes": {
                 "defaultAction": "open",
                 "weight": 0.1,
@@ -25,8 +25,7 @@
                 "type": "container",
                 "breakable": true,
                 "broken":  true,
-                "canCollect": false,
-                "defaultResult": "$action install disk in server"
+                "canCollect": false
             },
             "synonyms": [
                 "rack",

@@ -1,56 +1,64 @@
 ﻿{
-    "object": "mission",
-    "name": "jordanreachesmachineroom",
-    "displayName": "Jordan needs to reach the machine room",
-    "description": "",
-    "attributes": {
-        "parent": "planecrash",
-        "type": "event",
-        "missionObject": "jordan miller",
-        "destination": "machine-room-east",
-        "static": true
-    },
-    "failAttributes": {
-        "alive": false
-    },
-    "conditionAttributes": {
-        "alive": true
-    },
-    "reward": {
-        "modifyObject": 
-            {
-                "name": "jordan miller",
-                "attributes": {
-                    "antibodies": [ "zombie" ]
-                },
-                "inventory": [
-                    {
-                        "object": "artefact",
-                        "name": "hard disk",
-                        "description": "hard disk",
-                        "detailedDescription": "Our IS team are pretty handy with these things.",
-                        "attributes": {
-                            "weight": 0.75,
-                            "attackStrength": 5,
-                            "canCollect": true,
-                            "isBreakable": true,
-                            "isDamaged": true,
-                            "price": 50,
-                            "componentOf": [
-                                "server"
-                            ]
-                        },
-                        "synonyms": [
-                            "disc",
-                            "drive",
-                            "hard drive",
-                            "disk",
-                            "hard disc",
-                            "disc drive",
-                            "disk drive"
-                        ]
-                    }
-                ]
-            }
-    }
+  "object": "mission",
+  "name": "jordanreachesmachineroom",
+  "displayName": "Jordan needs to reach the machine room",
+  "description": "",
+  "attributes": {
+    "parent": "planecrash",
+    "type": "event",
+    "missionObject": "jordan miller",
+    "destination": "machine-room-east",
+    "static": true
+  },
+  "failAttributes": {
+    "alive": false
+  },
+  "conditionAttributes": {
+    "alive": true
+  },
+  "reward": {
+    "modifyObjects": [
+      {
+        "name": "jordan miller",
+        "attributes": {
+          "antibodies": [ "zombie" ]
+        },
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "hard disk",
+            "description": "hard disk",
+            "detailedDescription": "Our IS team are pretty handy with these things.",
+            "attributes": {
+              "weight": 0.75,
+              "attackStrength": 5,
+              "canCollect": true,
+              "isBreakable": true,
+              "isDamaged": true,
+              "price": 50,
+              "componentOf": [
+                "server"
+              ]
+            },
+            "synonyms": [
+              "disc",
+              "drive",
+              "hard drive",
+              "disk",
+              "hard disc",
+              "disc drive",
+              "disk drive"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "server",
+        "attributes": {
+          "detailedDescription": "The servers look like they're connected to a console nearby.<br>One of the servers has a bay to install an extra hard drive into.",
+          "defaultResult": "$action install disk in server"
+        }
+      }
+    ]
+  }
 }
