@@ -3,6 +3,7 @@
 module.exports.Mission = function Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, failAttributes, reward, fail) {
     try {
         var tools = require('./tools.js');
+        var customAction = require('./customAction.js');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _name = name.toLowerCase();
         var _displayName = displayName;
@@ -74,51 +75,6 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         validateType();
 
-        self.literalToString = function(literal) {
-            var resultString = '{';
-            var counter = 0;
-            for (var key in literal) {
-               if (counter > 0) {resultString +=', ';};
-               counter++;
-
-               resultString += '"'+key+'":';
-               var obj = literal[key];
-               //console.log("LiteralConversion for "+key+": "+typeof(obj)+":"+obj.toString());
-
-                 if (typeof(obj) == 'object') {
-                    if (Object.prototype.toString.call(obj) === '[object Array]') {
-                        //console.log("Extracting Array...");
-                        resultString += '[';
-                        for (var j=0;j<obj.length;j++) {
-                            if (j>0) {resultString += ",";};
-                            if (typeof (obj[j]) == 'object') {
-                                if (obj[j].toString() === '[object Object]') {
-                                    //we have a simple literal object
-                                    resultString += self.literalToString(obj[j]);
-                                } else {
-                                    resultString += obj[j].toString();
-                                };
-                            } else {
-                                resultString += '"'+obj[j]+'"';
-                            };
-                        };
-                        resultString += ']';
-                     } else if (obj.toString() === '[object Object]'){
-                         //we have a simple literal object
-                         resultString += self.literalToString(obj);
-                     } else {
-                        resultString += obj.toString();
-                     };
-                 }
-                 else if (typeof(obj) == 'string') {resultString += '"'+obj+'"';}
-                 else if (typeof(obj) == 'boolean') {resultString += obj;}
-                 else {resultString += obj;};
-            };
-            resultString+= '}';
-            //console.log(resultString);
-            return resultString;
-        };
-
         ////public methods
 
         self.toString = function() {
@@ -131,15 +87,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
             resultString += ',"attributes":'+JSON.stringify(self.getCurrentAttributes());
             if (_initialAttributes) {
-                    resultString +=',"initialAttributes":'+self.literalToString(_initialAttributes);
+                    resultString +=',"initialAttributes":'+tools.literalToString(_initialAttributes);
             };
             if (_failAttributes) {
-                    resultString +=',"failAttributes":'+self.literalToString(_failAttributes);
+                    resultString +=',"failAttributes":'+tools.literalToString(_failAttributes);
             };
-            resultString +=',"conditionAttributes":'+self.literalToString(_conditionAttributes);
-            resultString +=',"reward":'+self.literalToString(_reward);
+            resultString +=',"conditionAttributes":'+tools.literalToString(_conditionAttributes);
+            resultString +=',"reward":'+tools.literalToString(_reward);
             if (_fail) {
-                resultString +=',"fail":'+self.literalToString(_fail);
+                resultString +=',"fail":'+tools.literalToString(_fail);
             };
             resultString+= '}';
             return resultString;
@@ -254,127 +210,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
-        self.processReward = function(map, reward, player) {
-            var resultString = "";
-            if (reward.endGame) { 
-                //game over?
-                if (reward.endGame == true) { return player.endGame();};
-            };
-            if (reward.locations) {
-                //add locations
-                for (var l=0; l<reward.locations.length;l++) {
-                    map.addLocation(reward.locations[l]);
-                    //var locationName = reward.locations[l].getName();
-                    //console.log("Location added: "+map.getLocation(reward.locations[l].getName()));
-                    if (reward.locations[l].inventory) {
-                        var newInventory = reward.locations[l].inventory;
-                        for (var i=0;i<newInventory.length;i++) {
-                            //console.log(newInventory[i]);
-                            //add item to location inventory
-                            if (newInventory[i].getType() == "creature") {
-                                newInventory[i].go(null, reward.locations[l]);  
-                            } else {
-                                reward.locations[l].addObject(newInventory[i]);                         
-                            }; 
-                        };
-
-                    };
-                };                        
-            };
-            if (reward.exits) {
-                //add exits
-                for (var e=0; e<reward.exits.length;e++) {
-                    var exitData = reward.exits[e];
-                    var locationToModify = map.getLocation(exitData.getSourceName())
-                    locationToModify.removeExit(exitData.getDestinationName()); //remove if already exists (allows modification)
-                    var hidden = true;
-                    if (exitData.isVisible()) {hidden = false;};
-                    locationToModify.addExit(exitData.getDirection(), exitData.getSourceName(), exitData.getDestinationName(), exitData.getDescription(), hidden, exitData.getRequiredAction());
-                    //var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
-                    //console.log("Exit added: "+exitDestination);
-                };
-            }            ;
-            //@todo issue #348 - alter all of the below to work on an array of objects or locations, make them plural
-            if (reward.modifyObject) { map.modifyObject(reward.modifyObject, player); };
-            if (reward.modifyObjects) {
-                for (var m = 0; m < reward.modifyObjects.length; m++) {
-                    map.modifyObject(reward.modifyObjects[m], player);
-                };
-            };
-            if (reward.modifyLocationCreatures) { map.modifyLocationCreatures(reward.modifyLocationCreatures); }; //important! modify before remove
-            if (reward.removeObject) { map.removeObject(reward.removeObject, self.getDestination(), player); };
-            if (reward.removeObjects) {
-                for (var m = 0; m < reward.removeObjects.length; m++) {
-                    map.removeObject(reward.removeObjects[m], self.getDestination(), player);
-                };
-            };
-            if (reward.modifyLocation) { map.modifyLocation(reward.modifyLocation); }; //important! modify before remove
-            if (reward.modifyLocations) {
-                for (var m = 0; m < reward.modifyLocations.length; m++) {
-                    map.modifyLocation(reward.modifyLocations[m]);
-                };
-            };
-            if (reward.removeLocation) { map.removeLocation(reward.removeLocation); };
-            if (reward.removeLocations) {
-                for (var m = 0; m < reward.removeLocations.length; m++) {
-                    map.removeLocation(reward.removeLocations[m]);
-                };
-            };
-            if (reward.health) { player.updateHitPoints(reward.health); };
-            if (reward.teleport) {
-                var newLocation = map.getLocation(reward.teleport);
-                //console.log("teleporting to:" + reward.teleport);
-                if (newLocation) {
-                    //console.log("location found");
-                    player.setLocation(newLocation);
-                };
-            };
-            if (reward.maxHealth) { player.updateMaxHitPoints(reward.maxHealth);};
-            if (reward.carryWeight) { player.updateCarryWeight(reward.carryWeight); };
-            if (reward.attackStrength) { player.updateBaseAttackStrength(reward.attackStrength); };    
-            if (reward.score) { player.updateScore(reward.score);};
-            if (reward.money) { player.updateCash(reward.money);};
-            if (reward.stealth) { player.setStealth(player.getStealth() + reward.stealth);};
-            if (reward.hunt) { player.setHunt(player.getHunt() + reward.hunt); };
-            if (reward.repairSkill) { player.addSkill(reward.repairSkill);};
-            if (reward.delivers) { resultString += player.acceptItem(reward.delivers); };
-            //@todo - issue #358 if (reward.kill) { process array of creatures to be killed, may also have a location element};
-
-            self.processAffinityModifiers(map, reward);
-
-            //if this mission ends up killing the player...
-            if (player.getHitPoints() <= 0) {resultString += player.kill();};
-
-            return resultString;
-        };
-
-        self.processAffinityModifiers = function(map, reward) {
-            //note, _reward is likely null at this point so we pass it back in.
-            //console.log("Processing affinity modifiers from mission reward");
-            var affinityModifier = 1;
-            if (reward.affinityModifier) { affinityModifier = reward.affinityModifier;};
-            if (reward.increaseAffinityFor) {
-                if (reward.increaseAffinityFor == "all" || reward.increaseAffinityFor == "everyone") {
-                    var creatures = map.getAllCreatures();
-                    for (var c=0;c<creatures.length;c++) {
-                        creatures[c].increaseAffinity(affinityModifier, true);
-                    };
-                } else { 
-                    var creatureToIncrease = map.getCreature(reward.increaseAffinityFor);
-                    if (creatureToIncrease) {creatureToIncrease.increaseAffinity(affinityModifier, true);};
-                };
-            };
-            if (reward.decreaseAffinityFor) { 
-                if (reward.decreaseAffinityFor == "all" || reward.decreaseAffinityFor == "everyone") {
-                    var creatures = map.getAllCreatures();
-                    for (var c=0;c<creatures.length;c++) {
-                        creatures[c].decreaseAffinity(affinityModifier, true);
-                    };
-                } else { 
-                    var creatureToDecrease = map.getCreature(reward.decreaseAffinityFor);
-                    if (creatureToDecrease) {creatureToDecrease.decreaseAffinity(affinityModifier, true);};
-                };
-            };
+        self.processReward = function (map, reward, player) {
+            if (!reward) { reward = {};};
+            reward.destination = self.getDestination();
+            return customAction.processCustomAction(map, reward, player); 
         };
 
         self.timeExpired = function() {

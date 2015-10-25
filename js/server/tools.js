@@ -61,6 +61,52 @@ var self = module.exports= {
         if (self.stringIsEmpty(aString)) {return "";};
         return aString.charAt(0).toUpperCase() + aString.slice(1);
     },
+    
+    //convert an object "literal" (my bad terminology) to a string
+    literalToString: function(literal) {
+        var resultString = '{';
+        var counter = 0;
+        for (var key in literal) {
+            if (counter > 0) { resultString += ', '; };
+            counter++;
+        
+            resultString += '"' + key + '":';
+            var obj = literal[key];
+            //console.log("LiteralConversion for "+key+": "+typeof(obj)+":"+obj.toString());
+        
+            if (typeof (obj) == 'object') {
+                if (Object.prototype.toString.call(obj) === '[object Array]') {
+                    //console.log("Extracting Array...");
+                    resultString += '[';
+                    for (var j = 0; j < obj.length; j++) {
+                        if (j > 0) { resultString += ","; };
+                        if (typeof (obj[j]) == 'object') {
+                            if (obj[j].toString() === '[object Object]') {
+                                //we have a simple literal object
+                                resultString += self.literalToString(obj[j]);
+                            } else {
+                                resultString += obj[j].toString();
+                            };
+                        } else {
+                            resultString += '"' + obj[j] + '"';
+                        };
+                    };
+                    resultString += ']';
+                } else if (obj.toString() === '[object Object]') {
+                    //we have a simple literal object
+                    resultString += self.literalToString(obj);
+                } else {
+                    resultString += obj.toString();
+                };
+            }
+            else if (typeof (obj) == 'string') { resultString += '"' + obj + '"'; }
+            else if (typeof (obj) == 'boolean') { resultString += obj; }
+            else { resultString += obj; };
+        };
+        resultString += '}';
+        //console.log(resultString);
+        return resultString;
+    },
 
     pluraliseDescription: function (aDescription, aCount) {
         if (aCount == 1) { return aDescription; };

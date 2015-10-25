@@ -544,9 +544,19 @@
             },
             {
               "name": "servery-main",
-              "description": "You're in the SQL Servery.<br>When mealtimes aren't being served you can still find people occasionally sat in here studying or chatting to one another although mostly it's just a quick throroughfare between the sales and development team areas."
+              "description": "You're in the SQL Servery.<br>When mealtimes aren't being served you can still find people occasionally sat in here studying or chatting to one another although mostly it's just a quick throroughfare between the sales and development team areas.",
+              "remove": [
+                "breakfast"
+              ]
             }
-          ]
+          ],
+          "modifyObject": {
+            "name": "vat",
+            "attributes": {
+              "description": "empty cooking vat",
+              "detailedDescription": "It's the type used in a bain-marie for keeping things like soup warm."
+            }
+          }
         }
       },
       {
@@ -569,16 +579,29 @@
               "inventory": [
                 {
                   "object": "artefact",
-                  "name": "bowl",
-                  "description": "bowl",
-                  "detailedDescription": "A round bowl",
+                  "name": "plate",
+                  "description": "plate",
+                  "detailedDescription": "It's a standard white mass-produced dinner place",
                   "attributes": {
-                    "extendedInventoryDescription": "There's $inventory in it.",
-                    "weight": 0.5,
-                    "carryWeight": 0.5,
-                    "attackStrength": 1,
+                    "extendedInventoryDescription": "There's $inventory on it.",
+                    "weight": 0.2,
+                    "carryWeight": 0.2,
                     "type": "container",
-                    "holdsLiquid": true,
+                    "canCollect": true,
+                    "isBreakable": true,
+                    "affinityModifier": 0
+                  }
+                },
+                {
+                  "object": "artefact",
+                  "name": "plate",
+                  "description": "plate",
+                  "detailedDescription": "It's a standard white mass-produced dinner place",
+                  "attributes": {
+                    "extendedInventoryDescription": "There's $inventory on it.",
+                    "weight": 0.2,
+                    "carryWeight": 0.2,
+                    "type": "container",
                     "canCollect": true,
                     "isBreakable": true,
                     "affinityModifier": 0
@@ -603,52 +626,60 @@
                 },
                 {
                   "object": "artefact",
-                  "name": "soup",
-                  "description": "soup",
-                  "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
+                  "name": "bowl",
+                  "description": "bowl",
+                  "detailedDescription": "A round bowl",
                   "attributes": {
-                    "weight": 3,
-                    "type": "food",
-                    "requiresContainer": true,
-                    "isLiquid": true,
-                    "requiredContainer": "bowl",
+                    "extendedInventoryDescription": "There's $inventory in it.",
+                    "weight": 0.5,
+                    "carryWeight": 0.5,
+                    "attackStrength": 1,
+                    "type": "container",
+                    "holdsLiquid": true,
                     "canCollect": true,
-                    "charges": 6,
-                    "chargeUnit": "bowlful",
-                    "chargesDescription": "There's about $charges $chargeUnit of porridge left",
-                    "plural": true,
-                    "isEdible": true,
-                    "nutrition": 15
-                  },
-                  "synonyms": [
-                    "soup",
-                    "food"
-                  ]
+                    "isBreakable": true,
+                    "affinityModifier": 0
+                  }
                 },
                 {
                   "object": "artefact",
                   "name": "salad",
-                  "description": "plate of salad",
-                  "detailedDescription": "Mixed leaves, some cheese, beans, beetroot. All with a French dressing.",
+                  "description": "full salad bar",
+                  "detailedDescription": "It's got mixed leaves, some cheese, beans, and beetroot. All with a French dressing.",
                   "attributes": {
                     "defaultAction": "eat",
-                    "weight": 2,
+                    "weight": 3,
                     "type": "food",
+                    "requiresContainer": true,
+                    "requiredContainer": "plate",
                     "canCollect": true,
-                    "charges": 1,
+                    "charges": 15,
+                    "chargeUnit": "plateful",
+                    "chargesDescription": "There's plenty of assorted salad items left but we'd prefer you only stuck to one $chargeUnit.",
+                    "affinityModifier": 0,
                     "isEdible": true,
-                    "nutrition": 25
+                    "nutrition": 23,
+                    "smell": "It smells fresh and (mostly) green It's better than you'd find in many restaurants.",
+                    "taste": "Hmm. Crisp and fresh. You're not sure if you're a huge fan of salad or not but it tastes as good as you'd hope a salad would really.."
                   },
                   "synonyms": [
-                    "plate of salad",
-                    "plate",
+                    "salad",
+                    "leaves",
+                    "mixed leaves",
+                    "cheese",
+                    "beans",
+                    "beetroot",
+                    "beets",
+                    "dressing",
+                    "fresnch dressing",
+                    "salad bar",
                     "food"
                   ]
                 },
                 {
                   "object": "artefact",
                   "name": "roast",
-                  "description": "delicious roast dinner",
+                  "description": "delicious roast carvery",
                   "detailedDescription": "The team have outdone themselves. It's roast turkey with all the trimmings <i>and</i> yorkshire pudding.",
                   "attributes": {
                     "weight": 2,
@@ -661,10 +692,20 @@
                     "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping",
                     "affinityModifier": 0,
                     "isEdible": true,
-                    "nutrition": 40
+                    "nutrition": 40,
+                    "smell": "It's like new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+                    "taste": "Amazing! A complete free roast dinner never tasted so good."
                   },
                   "synonyms": [
                     "food",
+                    "delicious food",
+                    "delicious dinner",
+                    "roast carvery",
+                    "delicious roast carvery",
+                    "carvery",
+                    "delicious carvery",
+                    "delicious roast",
+                    "carvery dinner",
                     "roast dinner",
                     "roast turkey",
                     "yorkshire",
@@ -674,36 +715,6 @@
                     "dinner",
                     "lunch"
                   ]
-                },
-                {
-                  "object": "artefact",
-                  "name": "plate",
-                  "description": "plate",
-                  "detailedDescription": "It's a standard white mass-produced dinner place",
-                  "attributes": {
-                    "extendedInventoryDescription": "There's $inventory on it.",
-                    "weight": 0.2,
-                    "carryWeight": 0.2,
-                    "type": "container",
-                    "canCollect": true,
-                    "isBreakable": true,
-                    "affinityModifier": 0
-                  }
-                },
-                {
-                  "object": "artefact",
-                  "name": "plate",
-                  "description": "plate",
-                  "detailedDescription": "It's a standard white mass-produced dinner place",
-                  "attributes": {
-                    "extendedInventoryDescription": "There's $inventory on it.",
-                    "weight": 0.2,
-                    "carryWeight": 0.2,
-                    "type": "container",
-                    "canCollect": true,
-                    "isBreakable": true,
-                    "affinityModifier": 0
-                  }
                 }
               ]
             },
@@ -737,7 +748,39 @@
           ],
           "modifyObject": {
             "name": "vat",
-            "inventory": []
+            "attributes": {
+              "description": "vat",
+              "detailedDescription": "It's a large stainless steel cooking vat",
+              "extendedInventoryDescription": "There's $inventory in it."
+            },
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "soup",
+                "description": "soup",
+                "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
+                "attributes": {
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "requiredContainer": "bowl",
+                  "canCollect": true,
+                  "charges": 9,
+                  "chargeUnit": "bowlful",
+                  "chargesDescription": "There's about $charges $chargeUnit left",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 15,
+                  "smell": "It has a lovely aromatic smell. A mix of both sweet and spicy.",
+                  "taste": "Yep, it's good."
+                },
+                "synonyms": [
+                  "soup",
+                  "food"
+                ]
+              }
+            ]
           },
           "modifyLocationCreatures": {
             "name": "all",
@@ -766,7 +809,6 @@
               "remove": [
                 "bowl",
                 "bowl",
-                "soup",
                 "salad",
                 "roast",
                 "plate",
@@ -780,7 +822,8 @@
                 "smell of food"
               ]
             }
-          ]
+          ],
+          "removeObject": "vat"
         }
       },
       {
@@ -14000,7 +14043,7 @@
         "object": "artefact",
         "name": "vat",
         "description": "vat",
-        "detailedDescription": "A large stainless steel cooking vat",
+        "detailedDescription": "It's a large stainless steel cooking vat",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
           "weight": 0.5,
@@ -14031,7 +14074,9 @@
               "plural": true,
               "affinityModifier": 0,
               "isEdible": true,
-              "nutrition": 20
+              "nutrition": 20,
+              "smell": "It smells warm and comforting.",
+              "taste": "It's 'just right'. First time too, no need for any additional salt or sugar here."
             },
             "synonyms": [
               "food",
@@ -14503,6 +14548,27 @@
           "white dining table",
           "white canteen table",
           "white table"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "breakfast",
+        "description": "food",
+        "detailedDescription": "You'll need to head to the serving area for breakfast.",
+        "attributes": {
+          "type": "scenery",
+          "subType": "intangible",
+          "customAction": [
+            "get",
+            "find",
+            "where is",
+            "where"
+          ],
+          "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
+          "smell": "There's a warm comforting smell coming from the serving area to the East."
+        },
+        "synonyms": [
+          "food"
         ]
       }
     ]

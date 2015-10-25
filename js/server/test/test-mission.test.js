@@ -1,5 +1,6 @@
 ﻿"use strict";
 var mission = require('../mission.js');
+var customAction = require('../customAction.js');
 var artefact = require('../artefact.js');
 var inventory = require('../inventory.js');
 var mapBuilder = require('../mapbuilder.js');
@@ -46,8 +47,7 @@ exports.rewardPositivelyModifiesCreatureAffinity = function (test) {
     var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon galbraith","decreaseAffinityFor": "james moore","message": "Congratulations. You killed the spy! Have 50 points."};
     var simon = m0.getCreature('simon galbraith');
 
-    var m = new mission.Mission('mission');
-    m.processAffinityModifiers(m0,reward)
+    customAction.processAffinityModifiers(m0,reward)
     var expectedResult = 'He seems to like you.';
     var actualResult = simon.getAffinityDescription();
     console.log("Expected: "+expectedResult);
@@ -130,8 +130,7 @@ exports.rewardNegativelyModifiesCreatureAffinity = function (test) {
     var reward = {"score": 50,"affinityModifier": 5,"increaseAffinityFor": "simon galbraith","decreaseAffinityFor": "james moore","message": "Congratulations. You killed the spy! Have 50 points."};
     var james = m0.getCreature('james moore');
 
-    var m = new mission.Mission('mission');
-    m.processAffinityModifiers(m0,reward)
+    customAction.processAffinityModifiers(m0,reward)
     var expectedResult = 'He really doesn\'t like you.';
     var actualResult = james.getAffinityDescription();
     console.log("Expected: "+expectedResult);
@@ -427,7 +426,7 @@ exports.endofBreakfastClearsAndUpdatesServery = function (test) {
     
     var kitchen = m0.getLocation("servery-food-bar");
     
-    var expectedResult = "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.<br>To the East is the sales and marketing area, to the West is the main area of the SQL Servery.<br>There are exits to the North, East, and West.<br>";
+    var expectedResult = "You're in the SQL Servery serving area.<br>The breakfast spread has been cleared away and things are quiet out here whilst the kitchen team prepare for lunch.<br><br>You can see an empty cooking vat.<br>There are exits to the North, East, and West.<br>";
     var actualResult = kitchen.describe();
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);

@@ -131,7 +131,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                         delivers.push(self.buildArtefact(artefactData.delivers[i]));
                     };
                 };
-
+                
                 artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);
                 if (!artefact) {
                     console.log("ERROR: Artefact data. Failed to build" + artefactData + ".");
@@ -329,7 +329,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             var resultObject = {};
             if (modification.name) { resultObject.name = modification.name };
             if (modification.description) { resultObject.description = modification.description };
-            if (modification.attributes) { resultObject.attributes = modification.attributes }                ;
+            if (modification.attributes) { resultObject.attributes = modification.attributes };
             if (modification.inventory && modification.name) {
                 resultObject.inventory = [];
                 for (var i = 0; i < modification.inventory.length; i++) {
