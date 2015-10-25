@@ -1,0 +1,25 @@
+﻿{
+  "object": "artefact",
+  "name": "fruit",
+  "description": "fruit",
+  "detailedDescription": "It's a cornucopia of breakfast fruit. Banana, strawberries, blueberries, and melon.",
+  "attributes": {
+    "weight": 0.5,
+    "type": "food",
+    "canCollect": true,
+    "charges": 2,
+    "plural": true,
+    "affinityModifier": 0,
+    "isEdible": true,
+    "nutrition": 18,
+    "smell": "You check around to make sure nobody's watching you and proceed to sniff each piece of fruit in turn.<br>Surprise! They smell like fruit."
+  },
+  "synonyms": [
+    "piece of fruit",
+    "banana",
+    "strawberries",
+    "blueberries",
+    "melon",
+    "fruit salad"
+  ]
+}
