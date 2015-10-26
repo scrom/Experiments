@@ -208,7 +208,7 @@ exports.Action = function Action(player, map, fileManager) {
             var description = "";
 
             var lastVerbUsed = _player.getLastVerbUsed();
-            if (lastVerbUsed == "say"||lastVerbUsed == "ask"||lastVerbUsed == "talk") {
+            if (lastVerbUsed == "say"||lastVerbUsed == "ask"||lastVerbUsed == "talk" || lastVerbUsed == "chat") {
                 _inConversationWith = _player.getLastCreatureSpokenTo();
             } else {
                 _inConversationWith = null;
@@ -890,8 +890,9 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'tak':
                     case 'takl':
                     case 'tslk':
+                    case 'chat':
                         _ticks = 1;
-                        //we assume "talk to x" - it "to" is missing, handle speech anyway.
+                        //we assume "talk to x" - if "to" is missing, handle speech anyway.
                         if (tools.stringIsEmpty(_object1) && (!(tools.stringIsEmpty(_object0)))) {
                             _object1 = _object0;
                             _object0 = null;

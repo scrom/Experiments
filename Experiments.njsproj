@@ -321,7 +321,7 @@
     <Compile Include="client\js\main.js" />
     <Compile Include="client\js\response.js" />
     <Compile Include="client\js\ui.js" />
-    <Compile Include="js\server\customAction.js" />
+    <Compile Include="js\server\customaction.js" />
     <Compile Include="js\server\action.js" />
     <Compile Include="js\server\artefact.js" />
     <Compile Include="js\server\config.js" />

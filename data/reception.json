@@ -47,6 +47,28 @@
         "inventory": [
           {
             "object": "artefact",
+            "name": "missing visitors book",
+            "description": "missing visitors book",
+            "detailedDescription": "Try talking to Vic first.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "customAction": [
+                "get",
+                "find",
+                "where is",
+                "where"
+              ],
+              "defaultResult": "Vic has the visitors book. Try having a chat with her."
+            },
+            "synonyms": [
+              "visitors book",
+              "visitor book",
+              "in"
+            ]
+          },
+          {
+            "object": "artefact",
             "name": "biro",
             "description": "blue biro",
             "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
@@ -80,15 +102,15 @@
           "imageName": "vicwiseman.jpg"
         },
         "synonyms": [
-            "receptionist",
-            "vic",
-            "vw",
-            "wiseman",
-            "vic w",
-            "her"
+          "receptionist",
+          "vic",
+          "vw",
+          "wiseman",
+          "vic w",
+          "her"
         ],
         "inventory": [
-            {"file": "keyfob"}
+          { "file": "keyfob" }
         ],
         "missions": [
           {
@@ -132,7 +154,8 @@
                     ]
                   }
                 ]
-              }
+              },
+              "removeObject": "missing visitors book"
             }
           },
           {
@@ -150,7 +173,7 @@
               "isDestroyed": false,
               "isBroken": false
             },
-            "reward": {              
+            "reward": {
               "removeObject": "50 shades",
               "score": 35,
               "affinityModifier": 2,

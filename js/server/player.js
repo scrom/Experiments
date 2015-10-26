@@ -2046,7 +2046,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiver.getType() == "creature") {return "It'll ruin your "+writingTool.getName()+" so you decide against it.";};
             if (receiver.getType() == "food") {return "You decide not to waste your "+receiver.getName()+" by defacing it.";};
-            if (receiver.getSubType() == "intangible") {return "There's nothing there you can "+verb+" on.";};
+            if (receiver.getSubType() == "intangible") {return "There's nothing here you can "+verb+" on.";};
             var maxWritings = 10;
             var inOn = "on"
             if (receiver.getType() == "book") {
