@@ -107,6 +107,15 @@ module.exports.MissionController = function MissionController() {
             var resultString = "";
             var initialScore = player.getScore();
             var missionName = mission.getName();
+            
+            if (!mission.hasParent()) {
+                if (missionOwner) {
+                    if (missionOwner.getName() == "player") {
+                        mission.startTimer(); //something missed starting the timer previously. Try agian now.
+                    };
+                };
+            };
+
             var missionReward = mission.checkState(player, map, missionOwner);
             if (!(missionReward)) { return ""; };
                 
@@ -172,12 +181,13 @@ module.exports.MissionController = function MissionController() {
                 if (missionToStart.checkParent(missionName)) {
                     
                     missionToStart.clearParent();
+                    var missionObjectName = missionToStart.getMissionObjectName();
                     
-                    if (missionToStart.getMissionObjectName() == "player") {
+                    if (missionObjectName == "player" || ((!missionObjectName) && missionOwnerName == "player")) {
                         //initiate any player (missions or events) that we've just cleared the parent of
                         //console.log("starting mission: " + missionToStart.getName());
                         missionToStart.startTimer();
-                    } else if (missionToStart.getMissionObjectName() == missionOwnerName && missionToStart.getType() == "event") {
+                    } else if (missionObjectName == missionOwnerName && missionToStart.getType() == "event") {
                         //initiate any creature-only events that we've just cleared the parent of
                         //console.log("starting mission: " + missionToStart.getName());
                         missionToStart.startTimer();
