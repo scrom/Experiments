@@ -3691,7 +3691,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (contagionString.length > 0) {
                     enactedContagion = true;
                 };
-                if (contagionString.length > 0 && showMoveToPlayer) {                   
+                if (contagionString.length > 0 && showMoveToPlayer) {
+                    contagionString = " " + contagionString; //add a space to the beginning         
 
                     //clean up contagion string output to remove repetition of creature name. (issue #221 - this fix is a lot messier than the rest.)
                     if (visibleResultString.indexOf(localDisplayName) > -1 
