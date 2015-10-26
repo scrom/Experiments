@@ -1324,7 +1324,7 @@ exports.unlockedTimedDoorWillRelockAfterTicks = function (test) {
     console.log("Door is locked? " + doorOut.isLocked());
     
     console.log("Environment ticks");
-    corridor.tick(2, m, p0);
+    corridor.tick(3, m, p0);
 
     console.log("Door is locked? " + doorOut.isLocked());
     
@@ -1355,7 +1355,7 @@ exports.unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage = function 
     console.log("Environment ticks");
     
     var expected = "<br>The office door closes and locks shut.<br>";
-    var actual = corridor.tick(2, m, p0);
+    var actual = corridor.tick(3, m, p0);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
     test.equal(expected, actual);

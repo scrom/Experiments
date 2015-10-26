@@ -4846,8 +4846,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -5808,8 +5808,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -8316,7 +8316,7 @@
                         "increaseAffinityFor": "jordan miller",
                         "removeObject": "sketchbook",
                         "money": 20,
-                        "message": "Jordan says 'Nice work!'<br>'Here's &pound;20.'<br>'Head back to the Atrium and keep low for a while.'<br>'You'll know when it's time to track me down for another chat.'"
+                        "message": "Jordan says 'Nice work!'<br>'Here's &pound;20.'<br>'Head somewhere well out of the way and and keep your head down for a while.'<br>'You'll know when it's time to track me down for another chat.'"
                       }
                     },
                     {
@@ -8492,7 +8492,7 @@
                           "name": "east-car-park-corner"
                         },
                         "money": 200,
-                        "message": "As you load up the van with the last of the valuables you see an envelope full of cash.<br>On the front it just says '$player'.<br>You hastily pocket the money and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
+                        "message": "As you load up the van with the last of the valuables you notice a thick manilla envelope. On the front it just says '$player'.<br>You open it and discover a bundle of banknotes inside.<br>You hastily pocket the cash, discard the envelope and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
                       }
                     },
                     {
@@ -9551,8 +9551,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -11514,8 +11514,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -12848,8 +12848,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -13081,8 +13081,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -13500,8 +13500,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -13966,8 +13966,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -14651,8 +14651,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -15174,8 +15174,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -15252,8 +15252,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
@@ -15316,8 +15316,8 @@
           "canOpen": true,
           "lockable": true,
           "locked": true,
-          "autoLock": 1,
-          "lockInMoves": 1,
+          "autoLock": 2,
+          "lockInMoves": 2,
           "hasLinkedDoor": true,
           "canDrawOn": true
         },
