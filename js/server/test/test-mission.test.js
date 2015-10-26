@@ -1,6 +1,6 @@
 ﻿"use strict";
 var mission = require('../mission.js');
-var customAction = require('../customAction.js');
+var customAction = require('../customaction.js');
 var artefact = require('../artefact.js');
 var inventory = require('../inventory.js');
 var mapBuilder = require('../mapbuilder.js');
