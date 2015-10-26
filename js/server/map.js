@@ -745,6 +745,7 @@ exports.Map = function Map() {
         self.completeNamedMission = function (missionName, player) {
             var mission = self.getNamedMission(missionName, player);
             if (mission) {
+                mission.clearParent();
                 mission.setConditionAttributes({ "time": 1 });
                 return "Mission '" + missionName + "' set to complete in 1 tick.";
             };
