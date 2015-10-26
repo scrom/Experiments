@@ -875,7 +875,7 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInS
     l.addObject(mediumWeapon);
     l.addObject(heavyWeapon);
     l.addObject(lightWeapon);
-    var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!<br>It attacks you. That really hurt. You really can't take many more hits like that.";
+    var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!<br>It attacks you. That really hurt. You really can't take many more hits like that. ";
     var actual = c0.tick(1, m1, p0);
     console.log("expected: " + expected);
     console.log("actual: " + actual);
@@ -2111,13 +2111,13 @@ exports.CreatureWillEnactContagion = function (test) {
     c0.go(null, l0);
         
 
-    var expectedResult = "The creature lurches in a spasm of pain and bites you. <br>It ";
+    var expectedResult = " The creature lurches in a spasm of pain and bites you. <br>It ";
     var fullResult = c0.tick(2, m1, p0);
     var actualResult = fullResult.substr(0, expectedResult.length);
     console.log(fullResult);
     var attempts = 1;
     while (actualResult != expectedResult && attempts < 5) {
-        console.log("Fail: contagion did not occur - attempting try# " + attempts + "...");
+        console.log("Fail: expected contagion did not match - attempting try# " + attempts + "...");
         fullResult = c0.tick(2, m1, p0);
         actualResult = fullResult.substr(0, expectedResult.length);
         console.log(fullResult);

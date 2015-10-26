@@ -2149,7 +2149,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (self.isDead()) {
                 if (playerIsAttacker) {
-                    return self.getDisplayName() + "'s dead already. Attacking corpses is probably crossing a line somewhere.";
+                    return tools.initCap(_genderDescriptivePrefix) + " dead already. Attacking corpses is probably crossing a line somewhere.";
                 };
                 return "";
             };
@@ -2391,14 +2391,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     return resultString;
                 };
                 self.decreaseAffinity(1);
-                player.hurt(Math.floor(_attackStrength/4), self); //bites player (base attack strength / 4 - not with weapon)
+
                 var playerContagion = player.getContagion();
                 var playerAntibodies = player.getAntibodies();
                 if (playerContagion.length==0 && playerAntibodies.length == 0) {
                     resultString = "You try biting "+self.getDisplayName()+" but "+_genderPrefix.toLowerCase()+" dodges out of your way and bites you back.";
                 } else {
-                    resultString = "You sink your teeth into "+self.getDisplayName()+". "+_genderPrefix+" struggles free and bites you back.";
-                    resultString += "<br>"+self.hurt(10); //player injures creature - we deliberately don't pass player in as attacker here though.
+                    resultString = "You sink your teeth into " + self.getDisplayName() + ". ";
+                    var biteBackString = "";
+                    var hurtString = self.hurt(8); //player injures creature - we deliberately don't pass player in as attacker here though.
+                    if (!self.isDead()) {
+                        biteBackString = _genderPrefix + " struggles free and bites you back.";
+                        //bites player (base attack strength / 4 - not with weapon)
+                        player.hurt(Math.floor(_attackStrength / 4), self); 
+                    };
+                    hurtString = hurtString.replace(self.getDisplayName() + " is", tools.initCap(_genderDescriptivePrefix));
+                    resultString += biteBackString + "<br>" + hurtString;
                     player.increaseAggression(1); //slowly increase aggression
                 };
                 resultString += self.transmit(player, "bite");
