@@ -68,6 +68,19 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
             return objectCount;
         };
+        
+        self.foodPortionCount = function () {
+            var portionCount = 0;
+            var foodItems = self.getAllObjectsOfType("food");
+            for (var f = 0; f < foodItems.length; f++) {
+                var portions = foodItems[f].chargesRemaining();
+                if (portions < 0) {
+                    portions = 1;
+                };
+                portionCount += portions;
+            };
+            return portionCount;
+        };
 
         self.setCashBalance = function (newBalance) {
             _money = newBalance;
@@ -771,7 +784,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             
             if (requiresContainer) {
                 //find all containers 
-                var possibleContainers = self.getAllObjectsOfType('container');
+                var possibleContainers = self.getAllObjectsOfType("container");
                 //work backwards from most recently added
                 for (var index = possibleContainers.length - 1; index >= 0; index--) {
                     //loop thru all containers

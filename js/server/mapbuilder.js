@@ -394,6 +394,13 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
             };
 
+            if (modifyLocationData.missions && modifyLocationData.name) {
+                modifyLocation.missions = [];
+                for (var m = 0; m < modifyLocationData.missions.length; m++) {
+                    modifyLocation.missions.push(self.buildMission(modifyLocationData.missions[m]));
+                };
+            }
+
             return modifyLocation;
         };
 
@@ -452,6 +459,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                             };                        
                         }; 
                     };
+                    if (reward.locations[l].missions) {
+                        for (var m = 0; m < reward.locations[l].missions.length; m++) {
+                            rewardLocation.addMission(self.buildMission(reward.locations[l].missions[m]));
+                        };
+                    };
                     returnObject.locations.push(rewardLocation);
                 }; 
             };
@@ -503,6 +515,9 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         self.buildMission = function(missionData) {
             //console.log("Building mission: "+missionData.name);
             //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward, fail
+            if (missionData.file) {
+                missionData = self.buildFromFile(_data[missionData.file]);
+            };
             try {
                 var conditionAttr;
                 var initialAttr;

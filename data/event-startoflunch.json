@@ -22,7 +22,8 @@
           { "file": "bowl" },
           { "file": "salad" },
           { "file": "roast" }
-        ]
+        ],
+        "missions": [{"file": "mission-limitfoodportions"}]
       },
       {
         "name": "servery-main",

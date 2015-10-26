@@ -111,6 +111,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             currentAttributes.start = _start;
             currentAttributes.imageName = _imageName;  
             currentAttributes.inventoryValue = _inventory.getInventoryValue();
+            currentAttributes.foodPortionCount = _inventory.foodPortionCount();
 
             return currentAttributes;
         };

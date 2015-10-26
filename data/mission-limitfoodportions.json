@@ -1,0 +1,25 @@
+﻿{
+  "object": "mission",
+  "name": "limitfoodportions",
+  "displayName": "Don't take too much food",
+  "description": "",
+  "attributes": {
+    "missionObject": "servery-food-bar",
+    "static": true
+  },
+  "failAttributes": {
+    "foodPortionCount": "<32"
+  },
+  "conditionAttributes": {
+    "time": 450
+  },
+  "reward": {
+     "message": ""
+  },
+  "fail": {
+    "message": "Hey, stop that. Be reasonable with how much food you're taking. Everyone else needs to eat too.<br>As a basic guideline, It's soup & salad, soup & roast or salad & roast.",
+    "affinityModifier": 1,
+    "decreaseAffinityFor": "everyone",
+    "score": -25
+  }
+}

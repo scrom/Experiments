@@ -71,7 +71,14 @@ var self = module.exports = {
                             //console.log("Exit added: "+exitDestination);
             };
         };
-        //@todo issue #348 - alter all of the below to work on an array of objects or locations, make them plural
+        if (actionData.removeMission) {
+            map.removeNamedMission(actionData.removeMission, player);
+        };
+        if (actionData.removeMissions) {
+            for (var m = 0; m < actionData.removeMissions.length; m++) {
+                map.removeNamedMission(actionData.removeMissions[m], player);
+            };
+        };
         if (actionData.modifyObject) { map.modifyObject(actionData.modifyObject, player); };
         if (actionData.modifyObjects) {
             for (var m = 0; m < actionData.modifyObjects.length; m++) {

@@ -634,7 +634,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.typings = _typings;
             currentAttributes.viewDestination = _viewDestination;    
             
-            currentAttributes.inventoryValue = _inventory.getInventoryValue();  
+            currentAttributes.inventoryValue = _inventory.getInventoryValue();
+            currentAttributes.foodPortionCount = _inventory.foodPortionCount();
 
             return currentAttributes;
 

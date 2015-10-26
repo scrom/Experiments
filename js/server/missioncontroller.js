@@ -37,6 +37,41 @@ module.exports.MissionController = function MissionController() {
             };
         };
         
+        self.removeNamedMission = function (missionName, locations, player) {
+            if (player) {
+                var playerMissions = player.getMissions(true);
+                for (var p = 0; p < playerMissions.length; p++) {
+                    if (playerMissions[p].getName() == missionName) {
+                        player.removeMission(missionName);
+                        return true;
+                    };
+                };
+
+            };
+            
+            for (var i = 0; i < locations.length; i++) {
+                var locationMissions = locations[i].getMissions(true);
+                for (var l = 0; l < locationMissions.length; l++) {
+                    if (locationMissions[l].getName() == missionName) {
+                        locations[i].removeMission(missionName);
+                        return true;
+                    };
+                };
+
+                var locationInventory = locations[i].getAllObjectsAndChildren(true);
+                for (var j = 0; j < locationInventory.length; j++) {
+                    var inventoryMissions = locationInventory[j].getMissions(true);
+                    for (var l = 0; l < inventoryMissions.length; l++) {
+                        if (inventoryMissions[l].getName() == missionName) {
+                            locationInventory[j].removeMission(missionName);
+                            return true;
+                        };
+                    };
+                };
+            };
+            return false;
+        };
+        
         self.activateNamedMission = function (missionName, locations, player) {
             var mission = self.getNamedMission(missionName, locations, player);
             if (mission) {

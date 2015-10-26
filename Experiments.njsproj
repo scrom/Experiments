@@ -145,6 +145,7 @@
     <Content Include="data\mission-killthespy.json" />
     <Content Include="data\mission-latte.json" />
     <Content Include="data\event-laylow.json" />
+    <Content Include="data\mission-limitfoodportions.json" />
     <Content Include="data\mission-partybus.json" />
     <Content Include="data\mission-partybusprep.json" />
     <Content Include="data\mission-partytime.json" />

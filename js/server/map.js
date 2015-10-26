@@ -95,7 +95,7 @@ exports.Map = function Map() {
         self.getLocationCount = function() {
             return _locations.length;
         };
-        
+              
         self.addLocation = function(location){
             _locations.push(location);
             _locationIndexMap.push(location.getName());
@@ -110,6 +110,7 @@ exports.Map = function Map() {
             var newDescription;
             var inventory = [];
             var removals = [];
+            var missions = [];
             if (modification) {
                 if (modification.name) {
                     locationName = modification.name;
@@ -121,13 +122,18 @@ exports.Map = function Map() {
                     newDescription = modification.description;
                 };
                 if (modification.inventory) {
-                    for (var i=0;i<modification.inventory.length;i++) {
+                    for (var i = 0; i <modification.inventory.length; i++) {
                         inventory.push(modification.inventory[i]);
                     };
                 };
                 if (modification.remove) {
                     for (var i = 0; i < modification.remove.length; i++) {
                         removals.push(modification.remove[i]);
+                    };
+                };
+                if (modification.missions) {
+                    for (var i = 0; i < modification.missions.length; i++) {
+                        missions.push(modification.missions[i]);
                     };
                 };
             };
@@ -153,6 +159,10 @@ exports.Map = function Map() {
                             if (_locations[i].objectExists(removals[r], true, false, false)) {
                                 _locations[i].removeObject(removals[r], false);
                             };
+                        };
+
+                        for (var m = 0; m < missions.length; m++) {
+                            _locations[i].addMission(missions[m]);
                         };
                         break;
                     };
@@ -800,10 +810,18 @@ exports.Map = function Map() {
         self.failNamedMission = function (missionName, player) {
             var mission = self.getNamedMission(missionName, player);
             if (mission) {
-                mission.setConditionAttributes({ "time": 1 });
+                mission.setFailAttributes({ "time": 1 });
                 return "Mission '" + missionName + "' set to fail in 1 tick.";
             };
             return "Mission '" + missionName + "' not found.";
+        };
+        
+        self.removeNamedMission = function (missionName, player) {
+            var removed = _missionController.removeNamedMission(missionName, _locations, player);
+            if (removed) {
+                //@todo - should probably re-parse remaining missions and clear parents of any that were dependent or remove those too as they won't be ocmpletable if left alone
+                _missionCount--;
+            };
         };
         
         

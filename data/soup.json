@@ -12,7 +12,7 @@
     "requiredContainer": "bowl",
     "charges": 9,
     "chargeUnit": "bowlful",
-    "chargesDescription": "There's about $charges $chargeUnit left",
+    "chargesDescription": "There's about $charges $chargeUnit left. For the benefit of everyone else, try to stick to just one portion though",
     "plural": true,
     "isLiquid": true,
     "isEdible": true,

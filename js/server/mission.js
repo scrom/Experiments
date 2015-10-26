@@ -259,7 +259,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             _reward = null;
             _fail = null;
             _ticking = false;
-            console.log("mission "+self.getName()+" failed");
+            //console.log("mission "+self.getName()+" failed");
             return fail;
         };
 
@@ -267,7 +267,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var returnObject = _reward;
             _reward=null;
             _ticking = false;
-            console.log("mission "+self.getName()+" event ocurred");
+            //console.log("mission "+self.getName()+" event ocurred");
             return returnObject;
         };
 

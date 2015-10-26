@@ -5423,7 +5423,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_loadCount > 0) { status += "You have loaded "+pluralise(_loadCount, "saved game")+".<br>"};
             status += "You have taken "+pluralise(_stepsTaken,"step")+".<br>"; 
             status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" locations.<br>";
-            if (_missionsCompleted.length > 0) { status += "You have completed "+_missionsCompleted.length+" out of "+map.getMissionCount() + " tasks.<br>"; };
+            if (_missionsCompleted.length > 0) { status += "You have completed "+_missionsCompleted.length+" out of "+map.getMissionCount() + " possible tasks.<br>"; };
             if (_missionsFailed.length > 0) { status += "You have failed " + pluralise(_missionsFailed.length,"task") + ".<br>"; };
              
             if (_booksRead > 0) { status += "You have read " + _booksRead +" out of "+map.getBookCount()+ " items" + ".<br>"; };

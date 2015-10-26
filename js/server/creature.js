@@ -675,7 +675,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.originalBaseAffinity = _originalBaseAffinity;
             currentAttributes.friendlyAttackCount = _friendlyAttackCount;       
             currentAttributes.inventoryValue = _inventory.getInventoryValue();  
-            currentAttributes.salesInventoryValue = _salesInventory.getInventoryValue();     
+            currentAttributes.salesInventoryValue = _salesInventory.getInventoryValue();
+            currentAttributes.foodPortionCount = _inventory.foodPortionCount()+_salesInventory.foodPortionCount();
                             
 
             return currentAttributes;

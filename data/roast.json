@@ -11,7 +11,7 @@
     "requiredContainer": "plate",
     "charges": 10,
     "chargeUnit": "plateful",
-    "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping",
+    "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping so that everyone can eat and we can maintain our budget",
     "affinityModifier": 0,
     "isEdible": true,
     "nutrition": 40,
