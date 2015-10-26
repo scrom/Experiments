@@ -4352,11 +4352,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //@todo - add some more random alternatives to "you feel weaker" - tricky as the cause of "hurt" may be violence or bleeding
             if (attacker) {
                 if (pointsToRemove > 35) {
-                    return "That really hurt. You really can't take many more hits like that."
+                    return "That really hurt. You really can't take many more hits like that. "
                 } else if (pointsToRemove > 25) {
-                    return "It feels like " + attacker.getPrefix() + " broke something in you."
+                    return "It feels like " + attacker.getPrefix() + " broke something in you. "
                 } else if (pointsToRemove > 15) {
-                    return "That hurt.";
+                    return "That hurt. ";
                 };
                 return "";
             };
@@ -4446,11 +4446,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     };
                 } else { //artefact
-                        resultString += "That hurt.";
+                        resultString += "That hurt. ";
                         if (verb=="punch" || verb=="kick" || verb == "slap" || verb == "smack") {
-                            resultString += " You haven't really mastered unarmed combat, you might want to use something as a weapon in future.<br>"; 
+                            resultString += "You haven't really mastered unarmed combat, you might want to use something as a weapon in future.<br>"; 
                         } else {
-                            resultString += " If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
+                            resultString += "If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
                         };
                         resultString += self.hurt(15);
                 };

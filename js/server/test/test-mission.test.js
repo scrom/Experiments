@@ -48,7 +48,7 @@ exports.rewardPositivelyModifiesCreatureAffinity = function (test) {
     var simon = m0.getCreature('simon galbraith');
 
     customAction.processAffinityModifiers(m0,reward)
-    var expectedResult = 'He seems to like you.';
+    var expectedResult = '<br>He seems to like you.';
     var actualResult = simon.getAffinityDescription();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -131,7 +131,7 @@ exports.rewardNegativelyModifiesCreatureAffinity = function (test) {
     var james = m0.getCreature('james moore');
 
     customAction.processAffinityModifiers(m0,reward)
-    var expectedResult = 'He really doesn\'t like you.';
+    var expectedResult = "<br>He really doesn't like you.";
     var actualResult = james.getAffinityDescription();
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

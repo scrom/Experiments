@@ -633,6 +633,50 @@ exports.Map = function Map() {
 
             return contagionData;
         };
+        
+        self.listDead = function () {
+            var creatures = self.getAllCreatures();
+            var deadList = [];
+            for (var c = 0; c < creatures.length; c++) {
+                if (creatures[c].isDead()) {
+                    deadList.push(creatures[c].getName());
+                };
+            };
+
+            return deadList.toString();
+        };
+        
+        self.listInfected = function () {
+            var creatures = self.getAllCreatures();
+            var infectedList = [];
+            for (var c = 0; c < creatures.length; c++) {
+                var creatureContagion = creatures[c].getContagion();
+                if (creatureContagion.length > 0) {
+                    var name = creatures[c].getName();
+                    if (creatures[c].isDead()) {
+                        name += " (dead)";
+                    } else {
+                        name += " (health: "+creatures[c].healthPercent()+")";
+                    };
+                    infectedList.push(name);
+                };
+            };
+            
+            return infectedList.toString();
+        };       
+        
+        self.listImmune = function () {
+            var creatures = self.getAllCreatures();
+            var immuneList = [];
+            for (var c = 0; c < creatures.length; c++) {
+                var creatureImmunity = creatures[c].getAntibodies();
+                if (creatureImmunity.length > 0) {
+                    immuneList.push(creatures[c].getName());
+                };
+            };
+            
+            return immuneList.toString();
+        };               
 
         self.gatherContagionDeathTollStats = function(creatures) {
             var deathTollData = {"friendly":0, "hostile":0};
@@ -746,6 +790,7 @@ exports.Map = function Map() {
             var mission = self.getNamedMission(missionName, player);
             if (mission) {
                 mission.clearParent();
+                mission.startTimer();
                 mission.setConditionAttributes({ "time": 1 });
                 return "Mission '" + missionName + "' set to complete in 1 tick.";
             };

@@ -42,6 +42,7 @@
     <Content Include="data\buenosaires.json" />
     <Content Include="data\camelids.json" />
     <Content Include="data\chairs.json" />
+    <Content Include="data\charred-comic.json" />
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />
     <Content Include="data\core-area-west.json" />
@@ -57,6 +58,7 @@
     <Content Include="data\customer-delight-south.json" />
     <Content Include="data\customer-delight-west.json" />
     <Content Include="data\darth-vader.json" />
+    <Content Include="data\dave-convery.json" />
     <Content Include="data\daves-desk.json" />
     <Content Include="data\east-bike-racks.json" />
     <Content Include="data\east-car-park-corner.json" />
@@ -183,6 +185,7 @@
     <Content Include="data\reception.json" />
     <Content Include="data\rest-area-ground-floor.json" />
     <Content Include="data\roast.json" />
+    <Content Include="data\roger-hart.json" />
     <Content Include="data\roof.json" />
     <Content Include="data\room-404.json" />
     <Content Include="data\rubbish-bins.json" />
@@ -270,6 +273,7 @@
     <Content Include="data\tyre-tracks.json" />
     <Content Include="data\van.json" />
     <Content Include="data\vat.json" />
+    <Content Include="data\venom.json" />
     <Content Include="data\war-room.json" />
     <Content Include="data\waste-area.json" />
     <Content Include="data\water.json" />

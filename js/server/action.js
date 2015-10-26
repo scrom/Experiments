@@ -1315,6 +1315,18 @@ exports.Action = function Action(player, map, fileManager) {
                 if (_verb == '+heal') {
                     return "Player Health set: "+_player.recover(parseInt(_object0));
                 };
+                
+                if (_verb == '+dead') {
+                    return "Obituaries: " + _map.listDead();
+                };
+                
+                if (_verb == '+contagion' || _verb == '+infected') {
+                    return "Infected: " + _map.listInfected();
+                };
+                
+                if (_verb == '+immunity' || _verb == '+immune') {
+                    return "Immune: " + _map.listImmune();
+                };
 
                 if (_verb == '+kill') {
                     var creature = _map.getObject(_object0);

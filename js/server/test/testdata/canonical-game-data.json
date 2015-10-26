@@ -7862,7 +7862,7 @@
                   "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
                   "attributes": {
                     "type": "scenery",
-                    "smell": "It's going to linger in your nose and memories for quite some time."
+                    "smell": "The whole area smells like a combination of burned plastic and barbecued hair."
                   },
                   "synonyms": [
                     "plastic",
@@ -7870,7 +7870,13 @@
                     "burning plastic",
                     "debris",
                     "plane",
-                    "bodies"
+                    "bodies",
+                    "air",
+                    "broken glass",
+                    "smouldering metal",
+                    "glass",
+                    "metal",
+                    "smoke"
                   ]
                 },
                 {
@@ -7966,7 +7972,7 @@
                           "symptoms": [
                             {
                               "action": "bite",
-                              "frequency": 0.33,
+                              "frequency": 0.16,
                               "escalation": 0.02
                             }
                           ]
@@ -8034,14 +8040,14 @@
                           "mutate": true,
                           "symptoms": [
                             {
-                              "action": "bite",
-                              "frequency": 0.33,
-                              "escalation": 0.02
+                              "action": "hurt",
+                              "health": 2,
+                              "frequency": 0.05
                             },
                             {
-                              "action": "hurt",
-                              "health": 3,
-                              "frequency": 0.1
+                              "action": "bite",
+                              "frequency": 0.16,
+                              "escalation": 0.02
                             }
                           ]
                         }
@@ -11338,6 +11344,28 @@
         "inventory": [
           {
             "object": "artefact",
+            "name": "missing visitors book",
+            "description": "missing visitors book",
+            "detailedDescription": "Try talking to Vic first.",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible",
+              "customAction": [
+                "get",
+                "find",
+                "where is",
+                "where"
+              ],
+              "defaultResult": "Vic has the visitors book. Try having a chat with her."
+            },
+            "synonyms": [
+              "visitors book",
+              "visitor book",
+              "in"
+            ]
+          },
+          {
+            "object": "artefact",
             "name": "biro",
             "description": "blue biro",
             "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
@@ -11445,7 +11473,8 @@
                   }
                 ]
               },
-              "message": "Vic Places a large visitors book on the desk.<br>'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'"
+              "message": "Vic Places a large visitors book on the desk.<br>'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'",
+              "removeObject": "missing visitors book"
             }
           },
           {
@@ -15894,7 +15923,7 @@
           "affinityModifier": 2,
           "decreaseAffinityFor": "jordan miller",
           "increaseAffinityFor": "simon galbraith",
-          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Someone we care about died in the zombie apocalypse.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+          "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
         }
       }
     ]

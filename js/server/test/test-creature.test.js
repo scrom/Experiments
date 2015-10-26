@@ -77,7 +77,7 @@ exports.canCreateCreatureWithSingleObject = function (test) {
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, a0);
     console.log('actual: '+c0.getDetailedDescription());
-    var expectedResult = creatureDetailedDescription+"<br><br>"+"It's carrying an "+artefactDescription+'.';
+    var expectedResult = creatureDetailedDescription+"<br>"+"It's carrying an "+artefactDescription+'.';
     console.log("expect: "+expectedResult);
        test.equal(c0.getDetailedDescription(), expectedResult);
     test.done();
@@ -98,7 +98,7 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
                                     //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, [a0,a1]);
     console.log('actual: '+c0.getDetailedDescription());
-    var expectedResult = "It's a big beastie with teeth.<br><br>It's carrying an artefact of little consequence and a second artefact of little consequence.";
+    var expectedResult = "It's a big beastie with teeth.<br>It's carrying an artefact of little consequence and a second artefact of little consequence.";
     console.log("expect: "+expectedResult);
     test.equal(c0.getDetailedDescription(), expectedResult);
     test.done();
@@ -529,7 +529,7 @@ exports.canGetObjectFromCreature.meta = { traits: ["Creature Test", "Inventory T
 exports.canRetrieveAffinity = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-5});
-    var expected = "It doesn't like you much.";
+    var expected = "<br>It doesn't like you much.";
     var actual = c0.getAffinityDescription();
     console.log("actual:"+actual);
     test.equal(actual, expected);

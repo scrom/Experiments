@@ -89,7 +89,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //avoid dividebyzero
             if (_maxHitPoints == 0) { return 0; };
             
-            return (_hitPoints / _maxHitPoints) * 100;
+            return Math.round((_hitPoints / _maxHitPoints) * 10000) / 100; //show to 2 decimal places
         };
         
         self.removeContagion = function (contagionName) {
@@ -891,11 +891,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getAffinityDescription = function() {
             if (self.isDead()) {return ""};
-            if (_affinity >5) {return _genderPrefix+" really likes you."};
-            if (_affinity >0) {return _genderPrefix+" seems to like you."};
-            if (_affinity <-5) {return _genderPrefix+" really doesn't like you."};        
-            if (_affinity <-2) {return _genderPrefix+" doesn't like you much."};
-            if (_affinity <0) {return _genderPrefix+" seems wary of you."};
+            if (_affinity >5) {return "<br>" + _genderPrefix+" really likes you."};
+            if (_affinity >0) {return "<br>" + _genderPrefix+" seems to like you."};
+            if (_affinity <-5) {return "<br>" + _genderPrefix+" really doesn't like you."};        
+            if (_affinity <-2) {return "<br>" + _genderPrefix+" doesn't like you much."};
+            if (_affinity <0) {return "<br>" + _genderPrefix+" seems wary of you."};
             return ""; //neutral
         };
 
@@ -1190,8 +1190,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString = _detailedDescription;
             if (minSize < tools.minimumSizeForDistanceViewing) {
                 //we're viewing from close-by
-                resultString += "<br>"+self.getAffinityDescription();
-                if (_contagion.length>0) {resultString+= "<br>"+_genderPrefix + " really doesn't look very well."};
+                resultString += self.getAffinityDescription();
+                if (_contagion.length > 0) {
+                    if (self.isDead()) {
+                        resultString += " Judging by " + _genderPossessiveSuffix + " condition and smell I recommend you steer clear of " + _genderPossessiveSuffix +" remains.";
+                    } else {
+                        resultString += "<br>" + _genderPrefix + " really doesn't look very well.";
+                    };
+                };
             };
 
             if (_inventory.size(false, true) > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe(null, minSize) + "."; };
@@ -2481,7 +2487,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _charges = Math.ceil(self.getWeight()/25);
             };
             _bleeding = false;
-            _smell = _genderPrefix+"'s not smelling so great. A bit like a cross between rotting meat and festival toilets.";
+            if (_contagion.length > 0) {
+                _smell = _genderPrefix + "'s really not smelling good. A bit like a cross between rotting meat and festival toilets.";
+            } else {
+                _smell = _genderPrefix + " smells musty and meaty - a bit like uncooked game. "+tools.initCap(_genderPossessiveSuffix)+" smell isn't too strong but I still don't recommend sniffing corpses more than you need to.";
+            };
             _sound = "There's nothing quite like the silence of the dead.";
             _taste = "Slightly meaty and musty. Not so great."
             _collectable = true; 

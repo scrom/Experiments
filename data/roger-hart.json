@@ -1,0 +1,51 @@
+﻿{
+  "object": "creature",
+  "name": "roger hart",
+  "displayname": "Roger Hart",
+  "description": "Roger Hart",
+  "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.<br>He runs a regular podcast on comics (along with Dave and Lucy)",
+  "attributes": {
+    "template": "creature-male-l3",
+    "destinations": [
+      "east-bike-racks"
+    ],
+    "dislikes": [
+      "jordan miller"
+    ],
+    "destinationDelay": 5,
+    "imageName": "rogerhart.jpg",
+    "contagion": [
+      {
+        "object": "Contagion",
+        "name": "zombie",
+        "displayName": "zombie",
+        "attributes": {
+          "incubationPeriod": 6,
+          "communicability": 0.5,
+          "mutate": true,
+          "symptoms": [
+            {
+                "action": "hurt",
+                "health": 2,
+                "frequency": 0.05
+            },
+            {
+              "action": "bite",
+              "frequency": 0.16,
+              "escalation": 0.02
+            }
+          ]
+        }
+      }
+    ],
+    "homeLocationName": "marketing"
+  },
+  "inventory": [
+    { "file": "keyfob" }
+  ],
+  "synonyms": [
+    "roger",
+    "hart",
+    "him"
+  ]
+}

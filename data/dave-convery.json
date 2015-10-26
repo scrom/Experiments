@@ -1,0 +1,48 @@
+﻿{
+  "object": "creature",
+  "name": "dave convery",
+  "displayname": "Dave Convery",
+  "description": "Dave Convery",
+  "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
+  "attributes": {
+    "template": "creature-male-l4",
+    "destinations": [
+      "atrium-seating",
+      "kitchen-ground-floor",
+      "creative-agency-area"
+    ],
+    "dislikes": [
+      "jordan miller"
+    ],
+    "loopDelay": 5,
+    "destinationDelay": 5,
+    "imageName": "daveconvery.jpg",
+    "contagion": [
+      {
+        "object": "Contagion",
+        "name": "zombie",
+        "displayName": "zombie",
+        "attributes": {
+          "incubationPeriod": 10,
+          "communicability": 0.5,
+          "symptoms": [
+            {
+              "action": "bite",
+              "frequency": 0.16,
+              "escalation": 0.02
+            }
+          ]
+        }
+      }
+    ],
+    "homeLocationName": "creative-agency-area"
+  },
+  "inventory": [
+    { "file": "keyfob" }
+  ],
+  "synonyms": [
+    "dave",
+    "convery",
+    "him"
+  ]
+}

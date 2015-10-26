@@ -1,199 +1,52 @@
 ﻿{
-    "object": "location",
-    "name": "crash-site",
-    "displayName": "Disaster scene",
-    "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
-    "attributes": {
+  "object": "location",
+  "name": "crash-site",
+  "displayName": "Disaster scene",
+  "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
+  "attributes": {
     "type": "outdoor",
     "vehiclesAllowed": [
-        "bike"
+      "bike"
     ]
-    },
-    "exits": [
+  },
+  "exits": [
     {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "crash-site",
-        "destination": "west-car-park"
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "crash-site",
+      "destination": "west-car-park"
     }
-    ],
-    "inventory": [
+  ],
+  "inventory": [
     {
-        "object": "artefact",
-        "name": "wreckage",
-        "description": "wreckage",
-        "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
-        "attributes": {
+      "object": "artefact",
+      "name": "wreckage",
+      "description": "wreckage",
+      "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
+      "attributes": {
         "type": "scenery",
-        "smell": "It's going to linger in your nose and memories for quite some time."
-        },
-        "synonyms": [
+        "smell": "The whole area smells like a combination of burned plastic and barbecued hair."
+      },
+      "synonyms": [
         "plastic",
         "burning",
         "burning plastic",
         "debris",
         "plane",
-        "bodies"
-        ]
+        "bodies",
+        "air",
+        "broken glass",
+        "smouldering metal",
+        "glass",
+        "metal",
+        "smoke"
+      ]
     },
-    {
-        "object": "artefact",
-        "name": "pool",
-        "description": "pool of zombie venom antibodies",
-        "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
-        "attributes": {
-        "defaultAction": "drink",
-        "weight": 1,
-        "requiresContainer": true,
-        "isLiquid": true,
-        "canCollect": true,
-        "charges": 3,
-        "chargeUnit": "dose",
-        "plural": true,
-        "affinityModifier": 0,
-        "isEdible": true,
-        "antibodies": [
-            "zombie"
-        ]
-        },
-        "synonyms": [
-        "antivenom",
-        "antibodies",
-        "zombie venom",
-        "zombie venom antibodies",
-        "zombie antibodies",
-        "venom",
-        "sample",
-        "zombie"
-        ]
-    },
-    {
-        "object": "artefact",
-        "name": "charred book",
-        "description": "book with charred pages",
-        "detailedDescription": "It looks like the tattered and charred remnants of a very rare graphic novel.<br>It could be a clue.",
-        "attributes": {
-        "defaultAction": "read",
-        "weight": 1,
-        "type": "book",
-        "canCollect": true,
-        "affinityModifier": 0,
-        "price": 15,
-        "defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something.",
-        "canDrawOn": true
-        },
-        "synonyms": [
-        "book",
-        "burned book",
-        "charred book",
-        "burned comic",
-        "charred comic",
-        "comic book",
-        "graphic",
-        "graphic novel",
-        "rare graphic novel"
-        ]
-    },
-    {
-        "object": "creature",
-        "name": "dave convery",
-        "displayname": "Dave Convery",
-        "description": "Dave Convery",
-        "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
-        "attributes": {
-            "template": "creature-male-l4",
-            "destinations": [
-                "atrium-seating",
-                "kitchen-ground-floor",
-                "creative-agency-area"
-            ],
-            "dislikes": [
-                "jordan miller"
-            ],
-            "loopDelay": 5,
-            "destinationDelay": 5,
-            "imageName": "daveconvery.jpg",
-            "contagion": [
-                {
-                    "object": "Contagion",
-                    "name": "zombie",
-                    "displayName": "zombie",
-                    "attributes": {
-                        "incubationPeriod": 10,
-                        "communicability": 0.5,
-                        "symptoms": [
-                            {
-                                "action": "bite",
-                                "frequency": 0.33,
-                                "escalation": 0.02
-                            }
-                        ]
-                    }
-                }
-            ],
-            "homeLocationName": "creative-agency-area"
-        },
-        "inventory": [
-            {"file": "keyfob"}
-        ],
-        "synonyms": [
-        "dave",
-        "convery",
-        "him"
-        ]
-    },
-    {
-        "object": "creature",
-        "name": "roger hart",
-        "displayname": "Roger Hart",
-        "description": "Roger Hart",
-        "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.<br>He runs a regular podcast on comics (along with Dave and Lucy)",
-        "attributes": {
-            "template": "creature-male-l3",
-            "destinations": [
-                "east-bike-racks"
-            ],
-            "dislikes": [
-                "jordan miller"
-            ],
-            "destinationDelay": 5,
-            "imageName": "rogerhart.jpg",
-            "contagion": [
-                {
-                    "object": "Contagion",
-                    "name": "zombie",
-                    "displayName": "zombie",
-                    "attributes": {
-                        "incubationPeriod": 6,
-                        "communicability": 0.5,
-                        "mutate": true,
-                        "symptoms": [
-                            {
-                                "action": "bite",
-                                "frequency": 0.33,
-                                "escalation": 0.02
-                            },
-                            {
-                                "action": "hurt",
-                                "health": 3,
-                                "frequency": 0.1
-                            }
-                        ]
-                    }
-                }
-            ],
-            "homeLocationName": "marketing"
-        },
-        "inventory": [
-            {"file": "keyfob"}
-        ],
-        "synonyms": [
-        "roger",
-        "hart",
-        "him"
-        ]
-    },
-        { "file": "jordan-miller" }
-    ]
+    {"file": "venom"},
+    {"file": "charred-comic"},
+    { "file": "dave-convery" },
+    { "file": "roger-hart"},
+    { "file": "jordan-miller" }
+  ]
 }
