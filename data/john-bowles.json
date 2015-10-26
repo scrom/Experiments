@@ -17,8 +17,8 @@
             "smoking-area"
         ],
         "loops": -1,
-        "loopDelay": 7,
-        "destinationDelay": 3,
+        "loopDelay": 9,
+        "destinationDelay": 5,
         "imageName": "johnbowles.jpg"
     },
     "inventory": [

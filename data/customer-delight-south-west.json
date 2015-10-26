@@ -198,7 +198,7 @@
                     "atrium"
                 ],
                 "loops": 3,
-                "loopDelay": 7,
+                "loopDelay": 9,
                 "destinationDelay": 5,
                 "imageName": "chrismoore.jpg"
             },

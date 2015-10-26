@@ -3552,7 +3552,7 @@
             "graffiti-a"
           ],
           "loops": 12,
-          "loopDelay": 7,
+          "loopDelay": 9,
           "destinationDelay": 5,
           "imageName": "chriswhitworth.jpg"
         },
@@ -3986,7 +3986,7 @@
             "atrium"
           ],
           "loops": 3,
-          "loopDelay": 7,
+          "loopDelay": 9,
           "destinationDelay": 5,
           "imageName": "chrismoore.jpg"
         },
@@ -5063,8 +5063,8 @@
             "smoking-area"
           ],
           "loops": -1,
-          "loopDelay": 7,
-          "destinationDelay": 3,
+          "loopDelay": 9,
+          "destinationDelay": 5,
           "imageName": "johnbowles.jpg",
           "repairSkills": [
             "coffee machine",
@@ -10278,8 +10278,8 @@
             "finance-area"
           ],
           "loops": 10,
-          "loopDelay": 7,
-          "destinationDelay": 4,
+          "loopDelay": 9,
+          "destinationDelay": 6,
           "imageName": "lucyboyes.jpg"
         },
         "inventory": [
@@ -14391,8 +14391,8 @@
             "first-floor-fire-escape"
           ],
           "loops": -1,
-          "loopDelay": 7,
-          "destinationDelay": 3,
+          "loopDelay": 9,
+          "destinationDelay": 5,
           "imageName": "waynestanford.jpg"
         },
         "inventory": [
@@ -15602,8 +15602,8 @@
             "first-floor-fire-escape"
           ],
           "loops": -1,
-          "loopDelay": 7,
-          "destinationDelay": 3,
+          "loopDelay": 9,
+          "destinationDelay": 5,
           "imageName": "paweljonczak.jpg"
         },
         "inventory": [

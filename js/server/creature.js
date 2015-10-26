@@ -61,6 +61,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _loopDelay = 0;
         var _destinationDelay = 0;
         var _waitDelay = 0;
+        var _playerDelay = 0;
         var _currentDelay = -1;
         var _returnDirection;
         var _openedDoor = false;
@@ -179,7 +180,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.loopCount != undefined) {_loopCount = creatureAttributes.loopCount;};
             if (creatureAttributes.loopDelay != undefined) {_loopDelay = creatureAttributes.loopDelay;};
             if (creatureAttributes.destinationDelay != undefined) {_destinationDelay = creatureAttributes.destinationDelay;};
-            if (creatureAttributes.waitDelay != undefined) {_waitDelay = creatureAttributes.waitDelay;};
+            if (creatureAttributes.waitDelay != undefined) { _waitDelay = creatureAttributes.waitDelay; };
+            if (creatureAttributes.playerDelay != undefined) { _playerDelay = creatureAttributes.playerDelay; };
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
@@ -657,6 +659,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.loopDelay = _loopDelay;
             currentAttributes.destinationDelay = _destinationDelay;
             currentAttributes.waitDelay = _waitDelay;
+            currentAttributes.playerDelay = _playerDelay;
             currentAttributes.currentDelay = _currentDelay;
             currentAttributes.returnDirection = _returnDirection;  
             currentAttributes.imageName = _imageName;  
@@ -717,7 +720,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.loopCount != 0) {saveAttributes.loopCount = creatureAttributes.loopCount;};
             if (creatureAttributes.loopDelay >0) {saveAttributes.loopDelay = creatureAttributes.loopDelay;};
             if (creatureAttributes.destinationDelay >0) {saveAttributes.destinationDelay = creatureAttributes.destinationDelay;};
-            if (creatureAttributes.waitDelay >0) {saveAttributes.waitDelay = creatureAttributes.waitDelay;};
+            if (creatureAttributes.waitDelay > 0) { saveAttributes.waitDelay = creatureAttributes.waitDelay; };
+            if (creatureAttributes.playerDelay > 0) { saveAttributes.playerDelay = creatureAttributes.playerDelay; };
             if (creatureAttributes.currentDelay >-1) {saveAttributes.currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {saveAttributes.returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {saveAttributes.imageName = creatureAttributes.imageName;};
@@ -3183,18 +3187,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //reduce active delay
                     _currentDelay++;
                 } else if (self.willFollow(playerAggression)) {
-                    //switch off and non-wait delay to follow player instead
+                    //switch off any non-wait delay to follow player instead
                     _currentDelay = -1;
                 } else {
                     //won't follow and not in a wait delay
                     //process delay if set... (_currentDelay starts from 0 and counts up)
-                    if (_currentDelay >= 4) {
-                        //switch off delay after 4 turns without player interaction
+                    var randomWait = 6 + Math.floor(Math.random() * 6);
+                    if (_playerDelay >= randomWait) {
+                        //switch off delay after 6-12 ticks without player interaction
                         //this will override any loop or destination delays but not wait delays
                         _currentDelay = -1;
+                        _playerDelay = 0; //if both creature and player don't move on this coming turn, they may stay longer again.
                     } else {
                         //will switch on delay if not already set (e.g. to hang around for up to 3 turns)
                         _currentDelay++;
+                        _playerDelay++; //and increment player delay to know when to turn delay off again.
                     };
                 };
             } else if (_currentDelay > -1) {
@@ -3202,20 +3209,33 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 var delay = 0;
                 //determine which delay to use...
                 if (_waitDelay > 0) {
-                    //deliberate wiat takes precedence over others
+                    //deliberate wait takes precedence over others - this may have been requested or from returning home
                     delay = _waitDelay;
                         //console.log(self.getDisplayName()+": wait delay. Time remaining:"+eval(delay-_currentDelay));
                 } else if (_clearedDestinations.length == 0) {
                     //loop delay takes precedence over destination delay
                     delay = _loopDelay;
                         //console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
-                } else {
-                    //lowest priority
-                    delay = _destinationDelay;
+                } else if (_clearedDestinations.length > 0) {
+                    if (_currentLocation.getName() == _clearedDestinations[0]) {
+                        //most recently cleared destination is unshifted to start of clearedDestination array so...
+                        //creature is still in destination location
+                        delay = _destinationDelay;
                         //console.log(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
+                    } else {
+                        //likely a leftover from player delay. Reset it.
+                        delay = _currentDelay;           
+                    };
+                    
                 };
                 
+                //@todo - could reduce main delays in creature data and randomly increase them hee by up to 30%
+                //to be more natural-seeming
+                
                 //increment or clear delay
+                if (_playerDelay > 0) {
+                    _playerDelay = 0; //ensure player delay is turned off if set
+                };
                 if (_currentDelay < delay - 1) {
                     _currentDelay++;
                 } else {

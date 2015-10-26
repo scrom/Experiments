@@ -46,8 +46,8 @@
                     "finance-area"
                 ],
                 "loops": 10,
-                "loopDelay": 7,
-                "destinationDelay": 4,
+                "loopDelay": 9,
+                "destinationDelay": 6,
                 "imageName": "lucyboyes.jpg"
             },
             "inventory": [
