@@ -4270,7 +4270,9 @@
                   "customAction": [
                     "get"
                   ],
-                  "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                  "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back.",
+                  "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+                  "taste": "They taste red. It's an odd thing to say but they really do."
                 },
                 "synonyms": [
                   "tomato",
@@ -6078,7 +6080,9 @@
               "combinesWith": [
                 "tree",
                 "tomato plants"
-              ]
+              ],
+              "smell": "It's odorless",
+              "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
             "delivers": [
               {
@@ -6115,7 +6119,9 @@
                       "customAction": [
                         "get"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back.",
+                      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+                      "taste": "They taste red. It's an odd thing to say but they really do."
                     },
                     "synonyms": [
                       "tomato",
@@ -6758,7 +6764,9 @@
               "combinesWith": [
                 "tree",
                 "tomato plants"
-              ]
+              ],
+              "smell": "It's odorless",
+              "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
             "delivers": [
               {
@@ -6795,7 +6803,9 @@
                       "customAction": [
                         "get"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back.",
+                      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+                      "taste": "They taste red. It's an odd thing to say but they really do."
                     },
                     "synonyms": [
                       "tomato",
@@ -7553,7 +7563,9 @@
               "isEdible": true,
               "nutrition": 12,
               "combinesWith": "sugar",
-              "requiredComponentCount": 1
+              "requiredComponentCount": 1,
+              "smell": "It smells of rich coffee and warm milk.",
+              "taste": "That's a mighty fine latte."
             },
             "synonyms": [
               "brew",
@@ -7663,7 +7675,9 @@
               "combinesWith": [
                 "milk",
                 "sugar"
-              ]
+              ],
+              "smell": "It smells warm and rich.",
+              "taste": "It's surprisingly good for office coffee. Better than many chain coffee stores."
             },
             "synonyms": [
               "brew",
@@ -9673,7 +9687,9 @@
               "affinityModifier": 5,
               "isEdible": true,
               "nutrition": 15,
-              "price": 3.5
+              "price": 3.5,
+              "smell": "There's a hint of vanilla and chocolate to it.",
+              "taste": "You lick at the ice cream. It's sweet, cold and delicious in a processed artificial non-dairy vanilla flavouring sort of way."
             },
             "synonyms": [
               "ice",
@@ -9756,7 +9772,9 @@
                   "saleUnit": 1,
                   "affinityModifier": 5,
                   "isEdible": true,
-                  "nutrition": 15
+                  "nutrition": 15,
+                  "smell": "There's a hint of vanilla and chocolate to it.",
+                  "taste": "You lick at the ice cream. It's sweet, cold and delicious in a processed artificial non-dairy vanilla flavouring sort of way."
                 },
                 "synonyms": [
                   "ice",
@@ -10780,7 +10798,9 @@
               "combinesWith": [
                 "tree",
                 "tomato plants"
-              ]
+              ],
+              "smell": "It's odorless",
+              "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
             "delivers": [
               {
@@ -10817,7 +10837,9 @@
                       "customAction": [
                         "get"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back.",
+                      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+                      "taste": "They taste red. It's an odd thing to say but they really do."
                     },
                     "synonyms": [
                       "tomato",
@@ -13874,7 +13896,9 @@
               "combinesWith": [
                 "tree",
                 "tomato plants"
-              ]
+              ],
+              "smell": "It's odorless",
+              "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
             "delivers": [
               {
@@ -13911,7 +13935,9 @@
                       "customAction": [
                         "get"
                       ],
-                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back.",
+                      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+                      "taste": "They taste red. It's an odd thing to say but they really do."
                     },
                     "synonyms": [
                       "tomato",
@@ -14255,7 +14281,9 @@
               "charges": 2,
               "plural": true,
               "isEdible": true,
-              "nutrition": 35
+              "nutrition": 35,
+              "smell": "It's tricky to describe. It smells pungent and yeasty but in quite a comforting way.",
+              "taste": "It's strong, salty and makes your tongue sting slightly. You're not quite sure if you like it or not but you find it oddly tasty."
             },
             "synonyms": [
               "food"
@@ -14339,7 +14367,9 @@
                   "canCollect": true,
                   "charges": 1,
                   "isEdible": true,
-                  "nutrition": 45
+                  "nutrition": 45,
+                  "smell": "It's like a vegetarian new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+                  "taste": "Amazing! A complete free roast dinner without meat never tasted so good."
                 },
                 "synonyms": [
                   "dinner",

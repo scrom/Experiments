@@ -1,0 +1,28 @@
+﻿{
+  "object": "artefact",
+  "template": "rum-bottle",
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "quality rum",
+      "description": "rum",
+      "detailedDescription": "Now <i>that's</i> the good stuff!<br>It looks like someone may have got their drinks mixed up. This is too good for cooking with.",
+      "attributes": {
+        "defaultAction": "drink",
+        "weight": 1,
+        "type": "food",
+        "requiresContainer": true,
+        "isLiquid": true,
+        "requiredContainer": "rum bottle",
+        "canCollect": true,
+        "charges": 1,
+        "plural": true,
+        "isEdible": true,
+        "nutrition": 1
+      },
+      "synonyms": [
+        "rum"
+      ]
+    }
+  ]
+}

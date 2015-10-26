@@ -17,7 +17,9 @@
         "isEdible": true,
         "nutrition": 12,
         "combinesWith": "sugar",
-        "requiredComponentCount": 1
+        "requiredComponentCount": 1,
+        "smell": "It smells of rich coffee and warm milk.",
+        "taste": "That's a mighty fine latte."
     },
     "synonyms": [
         "brew",

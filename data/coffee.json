@@ -4,21 +4,23 @@
     "description": "coffee",
     "detailedDescription": "Development fuel.",
     "attributes": {
-        "defaultAction": "drink",
-        "weight": 0.5,
-        "type": "food",
-        "requiresContainer": true,
-        "isLiquid": true,
-        "requiredContainer": "cup",
-        "canCollect": true,
-        "charges": 1,
-        "plural": true,
-        "isEdible": true,
-        "nutrition": 8,
-        "combinesWith": [
-            "milk",
-            "sugar"
-        ]
+      "defaultAction": "drink",
+      "weight": 0.5,
+      "type": "food",
+      "requiresContainer": true,
+      "isLiquid": true,
+      "requiredContainer": "cup",
+      "canCollect": true,
+      "charges": 1,
+      "plural": true,
+      "isEdible": true,
+      "nutrition": 8,
+      "smell": "It smells warm and rich.",
+      "taste": "It's surprisingly good for office coffee. Better than many chain coffee stores.",
+      "combinesWith": [
+          "milk",
+          "sugar"
+      ]
     },
     "synonyms": [
         "brew",

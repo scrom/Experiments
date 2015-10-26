@@ -15,7 +15,9 @@
               "affinityModifier": 5,
               "isEdible": true,
               "nutrition": 15,
-              "price": 3.5
+              "price": 3.5,
+              "smell": "There's a hint of vanilla and chocolate to it.",
+              "taste": "You lick at the ice cream. It's sweet, cold and delicious in a processed artificial non-dairy vanilla flavouring sort of way."
             },
             "synonyms": [
               "ice",

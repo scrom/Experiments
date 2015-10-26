@@ -125,8 +125,10 @@
     <Content Include="data\lift-second-floor.json" />
     <Content Include="data\machine-room-east.json" />
     <Content Include="data\machine-room-west.json" />
+    <Content Include="data\margaret-sexton.json" />
     <Content Include="data\mark-wightman.json" />
     <Content Include="data\marketing.json" />
+    <Content Include="data\marmite-jar.json" />
     <Content Include="data\mercedes.json" />
     <Content Include="data\milk.json" />
     <Content Include="data\milton-road-north-end.json" />
@@ -146,6 +148,7 @@
     <Content Include="data\mission-latte.json" />
     <Content Include="data\event-laylow.json" />
     <Content Include="data\mission-limitfoodportions.json" />
+    <Content Include="data\mission-lunchtime.json" />
     <Content Include="data\mission-partybus.json" />
     <Content Include="data\mission-partybusprep.json" />
     <Content Include="data\mission-partytime.json" />
@@ -156,6 +159,7 @@
     <Content Include="data\mission-saveredgate.json" />
     <Content Include="data\mission-stealsketchbook.json" />
     <Content Include="data\mission-stealvaluables.json" />
+    <Content Include="data\mission-tomatoesformargaret.json" />
     <Content Include="data\mission-vanarrival.json" />
     <Content Include="data\mocha.json" />
     <Content Include="data\mouse.json" />
@@ -183,6 +187,7 @@
     <Content Include="data\porridge.json" />
     <Content Include="data\post-room.json" />
     <Content Include="data\punts.json" />
+    <Content Include="data\quality-rum-bottle.json" />
     <Content Include="data\reception.json" />
     <Content Include="data\rest-area-ground-floor.json" />
     <Content Include="data\roast.json" />
@@ -278,6 +283,7 @@
     <Content Include="data\war-room.json" />
     <Content Include="data\waste-area.json" />
     <Content Include="data\water.json" />
+    <Content Include="data\wayne-stanford.json" />
     <Content Include="data\web-meeting-room.json" />
     <Content Include="data\west-bike-racks.json" />
     <Content Include="data\west-car-park.json" />

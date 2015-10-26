@@ -4,21 +4,23 @@
 "description": "water",
 "detailedDescription": "No real nutritional value but great for thirst and plants.",
 "attributes": {
-    "defaultAction": "drink",
-    "weight": 1,
-    "type": "food",
-    "requiresContainer": true,
-    "isLiquid": true,
-    "canCollect": true,
-    "charges": 1,
-    "chargeUnit": "drink",
-    "chargesDescription": "There's enough here for $charges $chargeUnit",
-    "plural": true,
-    "isEdible": true,
-    "combinesWith": [
-    "tree",
-    "tomato plants"
-    ]
+  "defaultAction": "drink",
+  "weight": 1,
+  "type": "food",
+  "requiresContainer": true,
+  "isLiquid": true,
+  "canCollect": true,
+  "charges": 1,
+  "chargeUnit": "drink",
+  "chargesDescription": "There's enough here for $charges $chargeUnit",
+  "plural": true,
+  "isEdible": true,
+  "smell": "It's odorless",
+  "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water.",
+  "combinesWith": [
+  "tree",
+  "tomato plants"
+  ]
 },
 "delivers": [
 	{

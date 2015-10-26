@@ -28,7 +28,9 @@
 			"plural": true,
             "isEdible": true,
             "charges": 1,
-			"nutrition": 15,
+      "nutrition": 15,
+      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+      "taste": "They taste red. It's an odd thing to say but they really do.",
 			"customAction": [
 			"get"
 			],
