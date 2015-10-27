@@ -14322,7 +14322,10 @@
             "displayName": "get some lunch",
             "description": "Margaret has your lunch ready",
             "attributes": {
-              "parent": "tomatoesformargaret",
+              "parent": [
+                "tomatoesformargaret",
+                "startoflunch"
+              ],
               "missionObject": "margaret sexton",
               "static": true,
               "dialogue": [
@@ -14349,6 +14352,10 @@
                   "nextState": 1
                 }
               ]
+            },
+            "failAttributes": {
+              "alive": false,
+              "time": 300
             },
             "conditionAttributes": {
               "alive": true,
@@ -14379,6 +14386,9 @@
               },
               "score": 25,
               "message": "Yay for you! Time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
+            },
+            "fail": {
+              "message": "Lunchtime's over. Margaret had prepared a tasty meal especially for you but you missed out."
             }
           },
           {

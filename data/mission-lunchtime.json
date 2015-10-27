@@ -4,7 +4,7 @@
   "displayName": "get some lunch",
   "description": "Margaret has your lunch ready",
   "attributes": {
-    "parent": "tomatoesformargaret",
+    "parent": [ "tomatoesformargaret", "startoflunch" ],
     "missionObject": "margaret sexton",
     "static": true,
     "dialogue": [
@@ -36,6 +36,10 @@
     "alive": true,
     "conversationState": 3
   },
+  "failAttributes": {
+    "alive": false,
+    "time": 300
+  },
   "reward": {
     "delivers": {
       "object": "artefact",
@@ -51,7 +55,7 @@
         "isEdible": true,
         "nutrition": 45,
         "smell": "It's like a vegetarian new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
-        "taste": "Amazing! A complete free roast dinner without meat never tasted so good." 
+        "taste": "Amazing! A complete free roast dinner without meat never tasted so good."
       },
       "synonyms": [
         "dinner",
@@ -61,5 +65,8 @@
     },
     "score": 25,
     "message": "Yay for you! Time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
+  },
+  "fail": {
+    "message": "Lunchtime's over. Margaret had prepared a tasty meal especially for you but you missed out."
   }
 }

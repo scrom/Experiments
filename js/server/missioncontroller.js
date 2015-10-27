@@ -205,6 +205,7 @@ module.exports.MissionController = function MissionController() {
             //and initiate those local to the player
             var resultString = "";
             if (!missionToStart.hasParent()) {
+                //has no parents already
                 return resultString;
             };
             if (newlyCompletedMissions.length == 0) {
@@ -214,8 +215,11 @@ module.exports.MissionController = function MissionController() {
             for (var j = 0; j < newlyCompletedMissions.length; j++) {
                 var missionName = newlyCompletedMissions[j];
                 if (missionToStart.checkParent(missionName)) {
-                    
-                    missionToStart.clearParent();
+                    missionToStart.clearParent(missionName);
+                    if (missionToStart.hasParent()) {
+                        //still has other parents
+                        continue;
+                    };
                     var missionObjectName = missionToStart.getMissionObjectName();
                     
                     if (missionObjectName == "player" || ((!missionObjectName) && missionOwnerName == "player")) {
@@ -358,49 +362,9 @@ module.exports.MissionController = function MissionController() {
             return resultString;
         };
 
-
-      /*  self.removeMissionAndChildren = function(missionName) {
-            //loop through each location, location inventory. 
-            //Get all missions to remove
-            var removedMissions = [];
-            for (var i=0;i<_locations.length;i++) {
-                var locationMissions = _locations[i].getMissions(true);
-                //loop through location missions, remove child missions, remove named mission
-                for (var x=0;x<locationMissions.length;x++) {
-                    if (locationMissions[x].getName(missionName)) {
-                        removedMissions.push(locationMissions[x]);
-                        _locations[i].removeMission(missionName);
-                    };
-                    if (locationMissions[x].checkParent(missionName)) {
-                        removedMissions.push(locationMissions[x]);
-                        _locations[i].removeMission(locationMissions[x].getName());
-                    };
-                };
-
-                var locationInventory = _locations[i].getAllObjectsAndChildren(true);
-                for (var j=0;j<locationInventory.length;j++) {
-                    var objectMissions = locationInventory[j].getMissions(true);
-                    //loop through object missions, remove child missions, remove named mission
-                    for (var x=0;x<objectMissions.length;x++) {
-                        if (objectMissions[x].getName(missionName)) {
-                            removedMissions.push(objectMissions[x]);
-                            locationInventory[j].removeMission(missionName);
-                        };
-                        if (objectMissions[x].checkParent(missionName)) {
-                            removedMissions.push(objectMissions[x]);
-                            locationInventory[j].removeMission(objectMissions[x].getName());
-                        };
-                    };
-                };
-            };
-            return removedMissions;
-        };
-      */
-
-
         ////end public methods
     }
     catch (err) {
         console.log('Unable to create MissionController object: ' + err);
-    }    ;
+    };
 };

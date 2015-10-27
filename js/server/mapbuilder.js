@@ -548,6 +548,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
 
                 if (missionData.attributes) {
+                    //@todo - unpack/build mission parent object
                     if (missionData.attributes.missionObject) {
                         if (missionData.attributes.missionObject.toLowerCase() != missionData.attributes.missionObject) {
                             console.log("Mission warning: missionObject contains mixed case; may not be true objectName'"+missionData.attributes.missionObject+"'.");

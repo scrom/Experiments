@@ -85,7 +85,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_description) {
                 resultString += ',"description":"'+_description+'"';
             };
-            resultString += ',"attributes":'+JSON.stringify(self.getCurrentAttributes());
+            resultString += ',"attributes":'+ tools.literalToString(self.getCurrentAttributes());
             if (_initialAttributes) {
                     resultString +=',"initialAttributes":'+tools.literalToString(_initialAttributes);
             };
@@ -191,22 +191,102 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return returnObject;
         };
 
-        self.clearParent = function() {
-            _parent = null;
+        self.clearParent = function (missionName) {
+            //@todo if missionName is provided, only clear that parent
+            if (!missionName || missionName == _parent) {
+                //clear all parents
+                _parent = null;
+                return true;               
+            };
+
+            //mission name is specified and _parent is not a single mission name
+            if (typeof (_parent) == 'object') {
+                if (Object.prototype.toString.call(_parent) === '[object Array]') {
+                    //arrays are an "and" list of parents.
+                    for (var p = 0; p < _parent.length; p++) {
+                        if (_parent[p] == missionName) {
+                            _parent.splice(p, 1);
+                            if (_parent.length == 0) {
+                                _parent = null;
+                            };
+                            return true;
+                        };
+                    };
+                } else {
+                    //objects can be either "and" or "or"
+                    var removedAttrCount = 0;
+                    var attrCount = 0;
+                    var andAttrCount = 0;
+                    for (var attr in _parent) {
+                        if (attr == "or" || attr == "and") {
+                            //this assumes the *value* stored in the attribute is the parent name
+                            if (_parent[attr] == missionName) {
+                                removedAttrCount++;
+                                delete _parent[attr];
+                            } else {
+                                attrCount++;
+                                if (_parent[attr] == "and") {
+                                    andAttrCount++;
+                                };
+                            };
+                        };
+                    };
+                    if (attrCount == 0) {
+                        //no attributes left to remove
+                        _parent = null;
+                        return true;
+                    };
+                    if (removedAttrCount > 0) {
+                        //we've removed an attribute, are there any "and" attrs left?
+                        if (andAttrCount == 0) {
+                            //no "and" attrs left - clear parent entirely
+                            _parent = null;
+                            return true;
+                        };
+                    };
+                };
+
+            };
+
+            return false;
         };
 
-        self.checkParent = function(parent) {
-            if (parent == _parent) {return true};
+        self.checkParent = function (missionName) {
+            //@todo handle where parent is an object/array here instead
+            if (missionName == _parent) { return true };
+            if (typeof (_parent) == 'object') {
+                if (Object.prototype.toString.call(_parent) === '[object Array]') {
+                    //arrays are an "and" list of parents.
+                    for (var p = 0; p < _parent.length; p++) {
+                        if (_parent[p] == missionName) {
+                            return true;
+                        };
+                    };
+                } else {
+                    //objects can be either "and" or "or"
+                    for (var attr in _parent) {
+                        //this assumes the *value* stored in the attribute is the parent name
+                        if (_parent[attr] == missionName) {
+                            return true;
+                        };
+                    };
+                };
+
+            };
             return false;
         };
         
         self.getParent = function () {
-            if (_parent) { return _parent };
+            if (_parent) {
+                //@todo if parent is an object or array, return string version
+                return _parent
+            };
             return "none";
         };
 
-        self.hasParent = function() {
-            if (_parent) {return true};
+        self.hasParent = function () {
+            //checks if mission has any parent set
+            if (_parent) { return true };
             return false;
         };
 
