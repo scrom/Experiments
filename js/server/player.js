@@ -3609,7 +3609,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var writings = artefact.getWritings();
             var drawings = artefact.getDrawings();
-            var noteCount = writings.length+drawings.length;
+            var noteCount = writings.length + drawings.length;
+                       
+            var imageName = artefact.getImageName();
+            var imageString = "";
+            if (imageName) {
+                imageString = "$image" + imageName + "/$image";
+            };
 
             if (artefact.getType() != "book" && noteCount == 0) {
                 var result;
@@ -3617,7 +3623,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     result = artefact.getCustomActionResult("read");
                     if (result) {return result;};
                 };
-                return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+".";
+                return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+"." + imageString;
             };
 
             if (artefact.isRead() && noteCount == 0) {
@@ -3638,13 +3644,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += artefact.read(verb);
 
                 var result;
+                //@todo - this is an odd combo related to custom/default actions being related
                 if (artefact.getDefaultAction() == "read") {
                     result = artefact.getCustomActionResult("read");
                     if (result) {resultString += "<br>"+result;};
                 };
                 if (!result && newMissions.length == 0 && noteCount == 0) {
                     resultString += "<br>" + artefact.getDescriptivePrefix() + " mildly interesting but you learn nothing new.";
-                    return resultString;
+                    return resultString + imageString;
                 };
 
                 if (newMissions.length>0) {resultString+= "<br>";};
@@ -3663,7 +3670,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += "<br>"+artefact.describeNotes();
             };
 
-            return resultString;
+            return resultString + imageString;
 
         };
 
