@@ -179,7 +179,7 @@ describe('Destinations', function() {
             //wait until time to head "home"
             var wait = 0;
             var destinations = destinationCreature.getDestinations();
-            while (wait < 150 && destinations.length == 0) {
+            while (wait < 200 && destinations.length == 0) {
                 destinationCreature.tick(1, m0, p0);
                 destinations = destinationCreature.getDestinations();
                 wait++
