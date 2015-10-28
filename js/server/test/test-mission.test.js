@@ -1,5 +1,6 @@
 ﻿"use strict";
 var mission = require('../mission.js');
+var missionController = require('../missioncontroller.js');
 var customAction = require('../customaction.js');
 var artefact = require('../artefact.js');
 var inventory = require('../inventory.js');
@@ -1039,4 +1040,55 @@ exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryI
 };
 
 exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull.meta = { traits: ["Mission Test", "Mission Completion Trait", "Mission Check Trait"], description: "Test that hard disk mission can be successfully completed." };
+
+
+exports.clearingSingleParentForMissionWith2AndParentsOnlyClearsSingleParent = function (test) {
+    var mc = new missionController.MissionController();
+
+    var childMission = m0.getNamedMission("lunchtime");
+    var parentMission1 = m0.getNamedMission("tomatoesformargaret");
+    var parentMission2 = m0.getNamedMission("startoflunch");
+    
+    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
+    mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
+
+    var resultString = m0.updateMissions(1, p0);
+    
+    var expectedResult = "startoflunch";
+    var actualResult = childMission.getParent();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.clearingSingleParentForMissionWith2AndParentsOnlyClearsSingleParent.meta = { traits: ["Mission Test", "Mission Parent Trait"], description: "Test that mission parents are correctly checked and cleared." };
+
+exports.clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMission = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var childMission = m0.getNamedMission("lunchtime");
+    var parentMission1 = m0.getNamedMission("tomatoesformargaret");
+    var parentMission2 = m0.getNamedMission("startoflunch");
+    
+    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
+    mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
+    mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+    
+    var resultString = m0.updateMissions(1, p0);
+    //the mission we're testing is dialogue-based. It's only activated through conversation.
+    var margaret = m0.getCreature("margaret sexton");
+    console.log(margaret.reply("hello", p0, null, m0));
+    
+    var expectedResult = true;
+    var actualResult = childMission.isActive();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMission.meta = { traits: ["Mission Test", "Mission Parent Trait"], description: "Test that mission parents are correctly checked and cleared." };
 
