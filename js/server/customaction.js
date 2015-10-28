@@ -119,6 +119,7 @@ var self = module.exports = {
         if (actionData.score) { player.updateScore(actionData.score); };
         if (actionData.money) { player.updateCash(actionData.money); };
         if (actionData.stealth) { player.setStealth(player.getStealth() + actionData.stealth); };
+        if (actionData.aggression) { player.increaseAggression(actionData.aggression); };
         if (actionData.hunt) { player.setHunt(player.getHunt() + actionData.hunt); };
         if (actionData.repairSkill) { player.addSkill(actionData.repairSkill); };
         if (actionData.delivers) { resultString += player.acceptItem(actionData.delivers); };

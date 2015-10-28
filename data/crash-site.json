@@ -43,10 +43,13 @@
         "smoke"
       ]
     },
-    {"file": "venom"},
-    {"file": "charred-comic"},
+    { "file": "venom" },
+    { "file": "charred-comic" },
     { "file": "dave-convery" },
-    { "file": "roger-hart"},
+    { "file": "roger-hart" },
     { "file": "jordan-miller" }
+  ],
+  "missions": [
+    {"file": "event-playerreachescrashsite"}
   ]
 }

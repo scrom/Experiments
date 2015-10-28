@@ -1,0 +1,16 @@
+﻿{
+  "object": "mission",
+  "name": "playerreachescrashsite",
+  "displayName": "Player reaches plane crash site and has read zombie book",
+  "attributes": {
+    "parent": [ "planecrash", "survivezombies"],
+    "type": "event",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "time": 4
+  },
+  "reward": {
+    "message": ""
+  }
+}

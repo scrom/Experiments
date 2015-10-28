@@ -12,12 +12,13 @@
     }
   },
   "conditionAttributes": {
-    "contagion": [],
+    "contagion": [ ],
     "contagionDeathToll": {
       "friendly": 0
     }
   },
   "reward": {
+    "removeMission": "supportfromalice",
     "score": 200,
     "maxHealth": 25,
     "affinityModifier": 1,

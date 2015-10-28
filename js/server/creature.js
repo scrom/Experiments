@@ -1171,7 +1171,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //will run away if affinity is less than 0 and player aggression is between 0 and the point where they turn hostile.
             //this makes a very small window where you can interact with unfriendly creatures. (you must not be hostile)
-            if ((_affinity <0) && (playerAggression>0) && (_affinity >= playerAggression*-1)) {return true;};
+            if ((_affinity < 0) && (playerAggression > 0) && (_affinity >= playerAggression * -1)) { return true; };
+            if ((_affinity <= 1) && (playerAggression > 2)) { return true; };
             if (self.healthPercent() <=10) {return true;}; //flee if nearly dead
 
             //act based on other creatures present...

@@ -1,0 +1,54 @@
+﻿{
+    "object": "mission",
+    "name": "supportfromalice",
+    "displayName": "get help from Alice dealing with Zombies",
+    "description": "Alice knows what's going on.",
+    "attributes": {
+        "parent": "playerreachescrashsite",
+        "missionObject": "alice easey",
+        "initiateConversation": true,
+        "huntPlayer": true,
+        "static": true,
+        "dialogue": [
+          "'$player!'<br>'We need your help...' '...Urgently.'<br>'Listen, I know what's going on.' 'Take this, I don't have time to explain.'<br>'It's happening!'"         
+        ]
+    },
+    "conditionAttributes": {
+        "alive": true,
+        "conversationState": 2
+    },
+    "reward": {
+      "delivers": {
+        "object": "artefact",
+        "name": "syringe",
+        "description": "hypodermic syringe and needle",
+        "detailedDescription": "It's still sterile.",
+        "attributes": {
+          "type": "container",
+          "canCollect": true,
+          "affinityModifier": 0,
+          "isBreakable": true,
+          "combinesWith": [
+            "venom"
+          ]
+        },
+        "synonyms": [
+          "hypo",
+          "needle",
+          "syringe",
+          "hypodermic",
+          "hypodermic syringe",
+          "hypodermic needle",
+          "hypodermic syringe and needle",
+          "hypodermic syringe needle"
+        ]
+      },
+      "modifyLocationCreatures": {
+        "name": "alice easey",
+        "destination": "ground-floor-back-stair-east",
+        "destinationDelay": 5
+      },
+      "aggression": 3,
+      "message": "Alice hastily hands you a hypodermic syringe.<br>She turns to run and pauses. 'You need to stop them.' 'Fast.'<br>You feel your adrenaline rising as you rack your brains trying to figure out what the hell she means."
+    }
+}

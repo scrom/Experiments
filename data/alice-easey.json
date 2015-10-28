@@ -1,78 +1,81 @@
 ﻿{
-    "object": "creature",
-    "name": "alice easey",
-    "displayname": "Alice Easey",
-    "description": "Alice Easey",
-    "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best bet for survival in a zombie apocalypse.",
-    "attributes": {
-        "template": "creature-female-l3",
-        "affinity": 1,
-        "avoiding": [
-            "bus"
-        ],
-        "imageName": "aliceeasey.jpg"
-    },
-    "inventory": [
-        {"file": "keyfob"},
-        {
-            "object": "artefact",
-            "name": "vial",
-            "description": "glass vial",
-            "detailedDescription": "A small glass vial. The type used to carry medical samples.",
-            "attributes": {
-                "extendedInventoryDescription": "There's $inventory in it.",
-                "weight": 1,
-                "carryWeight": 3,
-                "type": "container",
-                "subType": "bottle",
-                "holdsLiquid": true,
-                "canCollect": true,
-                "isBreakable": true
-            },
-            "synonyms": [
-                "bottle",
-                "glass vial",
-                "glass"
-            ]
-        },
-        {
-            "object": "artefact",
-            "template": "first-aid-kit"
-        },
-        {
-            "object": "artefact",
-            "name": "food rations",
-            "description": "pack of survival food rations",
-            "detailedDescription": "A few days worth of rather dull but long-lasting dried food.",
-            "attributes": {
-                "defaultAction": "eat",
-                "weight": 1,
-                "type": "food",
-                "canCollect": true,
-                "charges": 10,
-                "isEdible": true,
-                "nutrition": 25,
-                "canDrawOn": true
-            },
-            "synonyms": [
-                "food",
-                "ration",
-                "rations",
-                "dried food",
-                "dried rations",
-                "survival rations",
-                "survival food rations",
-                "pack"
-            ]
-        },
-        {"file": "survival-book"}
+  "object": "creature",
+  "name": "alice easey",
+  "displayname": "Alice Easey",
+  "description": "Alice Easey",
+  "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best bet for survival in a zombie apocalypse.",
+  "attributes": {
+    "template": "creature-female-l3",
+    "affinity": 1,
+    "avoiding": [
+      "bus"
     ],
-    "synonyms": [
-        "alice",
-        "alice easy",
-        "alice e",
-        "ae",
-        "easey",
-        "her"
-    ]
+    "imageName": "aliceeasey.jpg"
+  },
+  "inventory": [
+    { "file": "keyfob" },
+    {
+      "object": "artefact",
+      "name": "vial",
+      "description": "glass vial",
+      "detailedDescription": "A small glass vial. The type used to carry medical samples.",
+      "attributes": {
+        "extendedInventoryDescription": "There's $inventory in it.",
+        "weight": 1,
+        "carryWeight": 3,
+        "type": "container",
+        "subType": "bottle",
+        "holdsLiquid": true,
+        "canCollect": true,
+        "isBreakable": true
+      },
+      "synonyms": [
+        "bottle",
+        "glass vial",
+        "glass"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "first-aid-kit"
+    },
+    {
+      "object": "artefact",
+      "name": "food rations",
+      "description": "pack of survival food rations",
+      "detailedDescription": "A few days worth of rather dull but long-lasting dried food.",
+      "attributes": {
+        "defaultAction": "eat",
+        "weight": 1,
+        "type": "food",
+        "canCollect": true,
+        "charges": 10,
+        "isEdible": true,
+        "nutrition": 25,
+        "canDrawOn": true
+      },
+      "synonyms": [
+        "food",
+        "ration",
+        "rations",
+        "dried food",
+        "dried rations",
+        "survival rations",
+        "survival food rations",
+        "pack"
+      ]
+    },
+    { "file": "survival-book" }
+  ],
+  "missions": [
+    {"file": "mission-supportfromalice"}
+  ],
+  "synonyms": [
+      "alice",
+      "alice easy",
+      "alice e",
+      "ae",
+      "easey",
+      "her"
+  ]
 }
