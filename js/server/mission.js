@@ -218,17 +218,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     var attrCount = 0;
                     var andAttrCount = 0;
                     for (var attr in _parent) {
-                        if (attr == "or" || attr == "and") {
-                            //this assumes the *value* stored in the attribute is the parent name
-                            if (_parent[attr] == missionName) {
-                                removedAttrCount++;
-                                delete _parent[attr];
-                            } else {
-                                attrCount++;
-                                if (_parent[attr] == "and") {
-                                    andAttrCount++;
-                                };
-                            };
+                        //this assumes the *value* stored in the attribute is the and/or and the attribute name is the mission name
+                        if (attr == missionName) {
+                            removedAttrCount++;
+                            delete _parent[attr];
+                        } else {
+                            attrCount++;
+                            if (_parent[attr] == "and") {
+                                andAttrCount++;
+                            };                            
                         };
                     };
                     if (attrCount == 0) {
@@ -266,7 +264,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     //objects can be either "and" or "or"
                     for (var attr in _parent) {
                         //this assumes the *value* stored in the attribute is the parent name
-                        if (_parent[attr] == missionName) {
+                        if (attr == missionName) {
                             return true;
                         };
                     };

@@ -5,6 +5,7 @@ var customAction = require('../customaction.js');
 var artefact = require('../artefact.js');
 var inventory = require('../inventory.js');
 var mapBuilder = require('../mapbuilder.js');
+var tools = require('../tools.js');
 var player = require('../player.js');
 var playerName;
 var playerAttributes;
@@ -1092,3 +1093,115 @@ exports.clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMiss
 
 exports.clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMission.meta = { traits: ["Mission Test", "Mission Parent Trait"], description: "Test that mission parents are correctly checked and cleared." };
 
+
+exports.clearingSingleParentForMissionWith2_OR_ParentsClearsAllParents = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var missionJSONString = {
+        "object": "mission",
+        "name": "test mission",
+        "displayName": "will it build?",
+        "attributes": {
+            "type": "event",
+            "parent": { "option1": "or", "option2": "or" }
+        },
+        "conditionAttributes": {
+            "time": "666"
+        },
+        "reward": {
+            "message": "tadaaa!"
+        }
+    };
+    
+    var mission = mb.buildMission(missionJSONString);
+    p0.addMission(mission);
+    console.log(tools.literalToString(mission.getParent()));
+    
+    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
+    mc.initiateNewChildMissions(mission, ["option2"], p0, p0.getCurrentLocation(), null);
+    
+    var resultString = m0.updateMissions(1, p0);
+    
+    var expectedResult = "none";
+    var actualResult = mission.getParent();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.clearingSingleParentForMissionWith2_OR_ParentsClearsAllParents.meta = { traits: ["Mission Test", "Mission Parent Trait"], description: "Test that mission parents are correctly checked and cleared." };
+
+exports.mapBuilderCanHandleBuildingAMissionWith_OR_ParentsDefined = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var missionJSONString = {
+        "object": "mission",
+        "name": "test mission",
+        "displayName": "will it build?",
+        "attributes": {
+            "type": "event",
+            "parent": { "option1":"or", "option2":"or" }
+        },
+        "conditionAttributes": {
+            "time": "666"
+        },
+        "reward": {
+            "message": "tadaaa!"
+        }
+    };
+    
+    var mission = mb.buildMission(missionJSONString);
+    console.log(tools.literalToString(mission.getParent()));
+    
+    var expectedResult = '{"object":"mission","name":"test mission","displayName":"will it build?","attributes":{"type":"event", "parent":{"option1":"or", "option2":"or"}},"conditionAttributes":{"time":"666"},"reward":{"message":"tadaaa!"}}';
+    var actualResult = mission.toString();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.mapBuilderCanHandleBuildingAMissionWith_OR_ParentsDefined.meta = { traits: ["Mission Test", "Mission Parent Trait", "Map Builder Test"], description: "Test that a mission with multiple parents is correctly built from raw data." };
+
+
+exports.clearingSingleParentForMissionWith2_AND_ParentsAsObjectOnlyClearsOneParent = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var missionJSONString = {
+        "object": "mission",
+        "name": "test mission",
+        "displayName": "will it build?",
+        "attributes": {
+            "type": "event",
+            "parent": { "option1": "and", "option2": "and" }
+        },
+        "conditionAttributes": {
+            "time": "666"
+        },
+        "reward": {
+            "message": "tadaaa!"
+        }
+    };
+    
+    var mission = mb.buildMission(missionJSONString);
+    p0.addMission(mission);
+    console.log(tools.literalToString(mission.getParent()));
+    
+    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
+    mc.initiateNewChildMissions(mission, ["option2"], p0, p0.getCurrentLocation(), null);
+    
+    var resultString = m0.updateMissions(1, p0);
+    
+    var expectedResult = '{"option1":"and"}';
+    var actualResult = tools.literalToString(mission.getParent());
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.clearingSingleParentForMissionWith2_AND_ParentsAsObjectOnlyClearsOneParent.meta = { traits: ["Mission Test", "Mission Parent Trait"], description: "Test that mission parents are correctly checked and cleared." };
