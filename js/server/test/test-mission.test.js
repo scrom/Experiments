@@ -1205,3 +1205,69 @@ exports.clearingSingleParentForMissionWith2_AND_ParentsAsObjectOnlyClearsOnePare
 };
 
 exports.clearingSingleParentForMissionWith2_AND_ParentsAsObjectOnlyClearsOneParent.meta = { traits: ["Mission Test", "Mission Parent Trait"], description: "Test that mission parents are correctly checked and cleared." };
+
+exports.clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var kitchen = m0.getLocation("kitchen-ground-floor");
+    var planeCrash = kitchen.getMissions(true)[0];
+
+    m0.completeNamedMission("planecrash", p0);
+    p0.setLocation(kitchen);
+    p0.addMission(planeCrash);
+    kitchen.removeMission("planecrash");
+
+    console.log(p0.tick(2, m0));
+    console.log(mc.updateMissions(2, p0, m0));
+    console.log(mc.updateMissions(2, p0, m0));
+    
+    var alice = m0.getCreature("alice easey");
+    var book = alice.getObject("survival book");
+    var playerInventory = p0.getInventoryObject();
+    playerInventory.add(book);
+    
+    console.log(p0.read("read", "survival book"));
+    console.log(mc.updateMissions(2, p0, m0));
+    
+    var playerreachescrashsite = m0.getNamedMission("playerreachescrashsite");
+    
+    console.log(playerreachescrashsite.isActive());
+    console.log(playerreachescrashsite.getParent());    
+    
+    var crashSite = m0.getLocation("crash-site");
+    p0.setLocation(crashSite);
+    p0.tick(6, m0);
+    console.log(mc.updateMissions(2, p0, m0));
+    console.log(mc.updateMissions(3, p0, m0));
+    
+    console.log(p0.toString());
+    
+    console.log(p0.getCompletedMissions());
+    console.log(p0.getCompletedEvents());
+    
+    console.log(playerreachescrashsite.toString());
+    
+    console.log(alice.tick(1, m0, p0));
+    console.log("hunting?"+alice.isHuntingPlayer())
+
+    
+    var supportfromalice = m0.getNamedMission("supportfromalice");
+    console.log(supportfromalice.toString());
+
+    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
+    //mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
+    //mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+    
+    var resultString = m0.updateMissions(1, p0);
+    //the mission we're testing is dialogue-based. It's only activated through conversation.
+    
+    var expectedResult = true;
+    var actualResult = supportfromalice.isActive();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission.meta = { traits: ["Mission Test", "Mission Parent Trait", "Plot Trait"], description: "Test that mission parents are correctly checked and cleared." };

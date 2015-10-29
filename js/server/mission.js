@@ -855,11 +855,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
 
                 //if not, one last check...
-                //if this is a creature-owned event, use the supplied mission owner - if available.
+                //if this is a player or creature-owned event, use the supplied mission owner - if available.
                 if (self.getType() == "event" && missionOwner) {
                     //does the object we have support the "getName" method?
                     if (missionOwner.getName) {
                         if (missionOwner.getName() == _missionObject) {
+                            if (!_destination) {
+                                missionObject = missionOwner;
+                            } else
                             //does owner support "getCurrentLocation" method?
                             if (missionOwner.getCurrentLocation) {
                                 var ownerLocation = missionOwner.getCurrentLocation();
@@ -993,7 +996,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //console.log('condition matches: '+successCount+" out of "+requiredSuccessCount);
             if (successCount >= requiredSuccessCount) {
                 //if mission has dialogue, ensure that has been triggered at least once...
-                if ((self.hasDialogue() && _conversationState > 0)||(!(self.hasDialogue()))) {
+                if ((self.hasDialogue() && _conversationState > 0) || (!(self.hasDialogue()))) {
                     return self.success();
                 };
             };

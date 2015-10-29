@@ -161,8 +161,10 @@ module.exports.MissionController = function MissionController() {
                 
             //mission is either completed or failed...
             if (missionReward.message) {
-                //console.log(missionReward.message);
-                resultString += "<br>" + missionReward.message;
+                if (missionReward.message.length > 0) {
+                    //console.log(missionReward.message);
+                    resultString += "<br>" + missionReward.message;
+                };
             };
                 
             //note, if the mission failed, the "fail" object will be passed as missionReward
