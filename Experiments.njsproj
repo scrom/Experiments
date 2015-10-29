@@ -32,6 +32,7 @@
     <Content Include="data\access-road-junction.json" />
     <Content Include="data\access-road-west.json" />
     <Content Include="data\alarm-button.json" />
+    <Content Include="data\alice-easey.json" />
     <Content Include="data\atrium-seating.json" />
     <Content Include="data\atrium.json" />
     <Content Include="data\balcony.json" />
@@ -43,6 +44,8 @@
     <Content Include="data\camelids.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\charred-comic.json" />
+    <Content Include="data\chris-moore.json" />
+    <Content Include="data\chris-whitworth.json" />
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />
     <Content Include="data\core-area-west.json" />
@@ -73,6 +76,7 @@
     <Content Include="data\event-endofbreakfast.json" />
     <Content Include="data\event-endofday.json" />
     <Content Include="data\event-endoflunch.json" />
+    <Content Include="data\event-playerreachescrashsite.json" />
     <Content Include="data\event-startoflunch.json" />
     <Content Include="data\facilities-area.json" />
     <Content Include="data\fez.json" />
@@ -113,6 +117,7 @@
     <Content Include="data\jeff-foster.json" />
     <Content Include="data\jellyfish-meeting-room.json" />
     <Content Include="data\john-bowles.json" />
+    <Content Include="data\jonathan-watts.json" />
     <Content Include="data\jordan-miller.json" />
     <Content Include="data\keyfob.json" />
     <Content Include="data\kitchen-first-floor.json" />
@@ -140,6 +145,7 @@
     <Content Include="data\mission-bodycount.json" />
     <Content Include="data\mission-destroycoffeemachine.json" />
     <Content Include="data\mission-finddaveandroger.json" />
+    <Content Include="data\mission-fixchrisbike.json" />
     <Content Include="data\mission-givetrusttokentoplayer.json" />
     <Content Include="data\mission-healbusvictims.json" />
     <Content Include="data\event-jordanreachesmachineroom.json" />
@@ -159,6 +165,7 @@
     <Content Include="data\mission-saveredgate.json" />
     <Content Include="data\mission-stealsketchbook.json" />
     <Content Include="data\mission-stealvaluables.json" />
+    <Content Include="data\mission-supportfromalice.json" />
     <Content Include="data\mission-tomatoesformargaret.json" />
     <Content Include="data\mission-vanarrival.json" />
     <Content Include="data\mocha.json" />
@@ -265,6 +272,7 @@
     <Content Include="data\sugar.json" />
     <Content Include="data\support-east.json" />
     <Content Include="data\support-west.json" />
+    <Content Include="data\survival-book.json" />
     <Content Include="data\sweet-coffee.json" />
     <Content Include="data\sweet-latte.json" />
     <Content Include="data\sweet-mocha.json" />
