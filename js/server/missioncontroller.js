@@ -90,6 +90,7 @@ module.exports.MissionController = function MissionController() {
             
             var completedMissions = player.getCompletedMissions();
             var failedMissions = player.getFailedMissions();
+            var completedEvents = player.getCompletedEvents();
             var allMissions = [];
             var events = [];
             
@@ -107,6 +108,10 @@ module.exports.MissionController = function MissionController() {
             
             for (var i = 0; i < failedMissions.length; i++) {
                 allMissions.push(failedMissions[i] + " - failed");
+            };
+
+            for (var i = 0; i < completedEvents.length; i++) {
+                events.push(completedEvents[i] + " - completed");
             };
             
             allMissions.sort();
@@ -174,6 +179,8 @@ module.exports.MissionController = function MissionController() {
                 newlyCompletedMissions.push(mission.getName()); //note this impacts passed in item
                 if (mission.getType() == "mission") {
                     player.addCompletedMission(mission.getName());
+                } else if (mission.getType() == "event") {
+                    player.addCompletedEvent(mission.getName());
                 };
             };
                 

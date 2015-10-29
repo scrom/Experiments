@@ -54,6 +54,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _consumedObjects = []; //track all objects player has consumed
         var _stolenObjects = []; //track names of all objects player has stolen
         var _missionsCompleted = []; //track names of all missions completed
+        var _eventsCompleted = []; //track names of all events completed
         var _missionsFailed = []; //track names of all missions failed
         var _stepsTaken = 0; //only incremented when moving between locations but not yet used elsewhere
         var _locationsFound = 0;
@@ -402,6 +403,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     _stolenObjects.push(playerAttributes.stolenObjects[i]);
                 };
             };
+            
+            if (playerAttributes.eventsCompleted != undefined) {
+                for (var i = 0; i < playerAttributes.eventsCompleted.length; i++) {
+                    _eventsCompleted.push(playerAttributes.eventsCompleted[i]);
+                    //_map.incrementMissionCount();
+                };
+            };
 
             if (playerAttributes.missionsCompleted != undefined) {
                 for(var i=0; i<playerAttributes.missionsCompleted.length;i++) {
@@ -541,6 +549,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 resultString+= ']';
             };
+            
+            if (_eventsCompleted.length > 0) {
+                resultString += ',"eventsCompleted":[';
+                for (var i = 0; i < _eventsCompleted.length; i++) {
+                    if (i > 0) { resultString += ','; };
+                    resultString += '"' + _eventsCompleted[i] + '"';
+                };
+                resultString += ']';
+            };            
 
             if (_missionsCompleted.length > 0) {
                 resultString+= ',"missionsCompleted":[';
@@ -705,7 +722,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             currentAttributes.killedCreatures =_killedCreatures;
             currentAttributes.killedCreaturesCount =_killedCreatures.length;
             currentAttributes.stolenObjects =_stolenObjects;
-            currentAttributes.stolenObjectsCount =_stolenObjects.length;
+            currentAttributes.stolenObjectsCount = _stolenObjects.length;
+            currentAttributes.eventsCompleted = _eventsCompleted;
+            currentAttributes.eventsCompletedCount = _eventsCompleted.length;
             currentAttributes.missionsCompleted = _missionsCompleted;
             currentAttributes.missionsCompletedCount = _missionsCompleted.length;
             currentAttributes.missionsFailed = _missionsFailed;
@@ -1047,6 +1066,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.getFailedMissions = function() {
             return _missionsFailed;
         };
+        
+        self.getCompletedEvents = function () {
+            return _eventsCompleted;
+        };
 
         self.canAfford = function (price) {
             return _inventory.canAfford(price);
@@ -1109,6 +1132,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.addCompletedMission = function (missionName) {
             _missionsCompleted.push(missionName);
+        };
+        
+        self.addCompletedEvent = function (eventName) {
+            _eventsCompleted.push(eventName);
         };
 
         self.describeInventory = function() {
@@ -5429,7 +5456,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_saveCount > 0) { status += "You have saved your progress "+ temporise(_saveCount)+".<br>"};
             if (_loadCount > 0) { status += "You have loaded "+pluralise(_loadCount, "saved game")+".<br>"};
             status += "You have taken "+pluralise(_stepsTaken,"step")+".<br>"; 
-            status += "You have visited " + _locationsFound + " out of "+mapLocationCount+" locations.<br>";
+            status += "You have visited " + _locationsFound + " out of " + mapLocationCount + " locations.<br>";
+            //@todo - change this to a %complete value eventually
             if (_missionsCompleted.length > 0) { status += "You have completed "+_missionsCompleted.length+" out of "+map.getMissionCount() + " possible tasks.<br>"; };
             if (_missionsFailed.length > 0) { status += "You have failed " + pluralise(_missionsFailed.length,"task") + ".<br>"; };
              
