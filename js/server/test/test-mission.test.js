@@ -1214,10 +1214,10 @@ exports.clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission = fu
 
     m0.completeNamedMission("planecrash", p0);
     p0.setLocation(kitchen);
-    p0.addMission(planeCrash);
-    kitchen.removeMission("planecrash");
-
+    console.log("player ticks...");
+    console.log(p0.tick(1, m0));
     console.log(p0.tick(2, m0));
+    console.log("update missions x2...");
     console.log(mc.updateMissions(2, p0, m0));
     console.log(mc.updateMissions(2, p0, m0));
     
@@ -1226,43 +1226,45 @@ exports.clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission = fu
     var playerInventory = p0.getInventoryObject();
     playerInventory.add(book);
     
+    console.log("reading survival book");      
     console.log(p0.read("read", "survival book"));
+    console.log("update missions");
     console.log(mc.updateMissions(2, p0, m0));
     
     var playerreachescrashsite = m0.getNamedMission("playerreachescrashsite");
     
-    console.log(playerreachescrashsite.isActive());
-    console.log(playerreachescrashsite.getParent());    
+    console.log("playerreachescrashsite is active?"+playerreachescrashsite.isActive());
+    console.log("playerreachescrashsite parents:"+playerreachescrashsite.getParent());    
     
     var crashSite = m0.getLocation("crash-site");
     p0.setLocation(crashSite);
+    console.log("player ticks x6...");
     p0.tick(6, m0);
-    console.log(mc.updateMissions(2, p0, m0));
-    console.log(mc.updateMissions(3, p0, m0));
+    console.log("update missions x4, then 1 - this should complete playerreachescrashsite mission...");
+    console.log(mc.updateMissions(4, p0, m0));
+    console.log(mc.updateMissions(1, p0, m0));
     
+    console.log("player toString:");
     console.log(p0.toString());
     
-    console.log(p0.getCompletedMissions());
-    console.log(p0.getCompletedEvents());
+    console.log("Completed Missions: "+p0.getCompletedMissions());
+    console.log("Completed Events: " +p0.getCompletedEvents());
     
-    console.log(playerreachescrashsite.toString());
-    
-    console.log(alice.tick(1, m0, p0));
-    console.log("hunting?"+alice.isHuntingPlayer())
-
-    
+    console.log("playerreachescrashsite isfailedorcomplete?"+playerreachescrashsite.isFailedOrComplete()); //event has definitely passed its trigger point by here but still isn't cleared
+       
     var supportfromalice = m0.getNamedMission("supportfromalice");
+
+    console.log("supportfromalice toString:");
     console.log(supportfromalice.toString());
 
-    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
-    //mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
-    //mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+    //the mission we're testing sets a "hunting" trigger if no parents are set.
+    console.log("alice ticks x2...");
+    console.log(alice.tick(2, m0, p0));
+    console.log("supportfromalicehasparent? " + supportfromalice.hasParent())
+    console.log("is Alice hunting? " + alice.isHuntingPlayer())
     
-    var resultString = m0.updateMissions(1, p0);
-    //the mission we're testing is dialogue-based. It's only activated through conversation.
-    
-    var expectedResult = true;
-    var actualResult = supportfromalice.isActive();
+    var expectedResult = "Is Alice hunting player? true";
+    var actualResult = "Is Alice hunting player? " + alice.isHuntingPlayer();
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -1271,3 +1273,66 @@ exports.clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission = fu
 };
 
 exports.clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission.meta = { traits: ["Mission Test", "Mission Parent Trait", "Plot Trait"], description: "Test that mission parents are correctly checked and cleared." };
+
+
+exports.playerReachesCrashSiteEventCanBeCompleted = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var kitchen = m0.getLocation("kitchen-ground-floor");
+    var planeCrash = kitchen.getMissions(true)[0];
+    
+    //this is required in order to generate correct location and clear first parent
+    m0.completeNamedMission("planecrash", p0);
+    p0.setLocation(kitchen);
+    console.log("player ticks...");
+    console.log(p0.tick(1, m0));
+    console.log(p0.tick(2, m0));
+    console.log("update missions x2...");
+    console.log(mc.updateMissions(2, p0, m0));
+    console.log(mc.updateMissions(2, p0, m0));
+    
+    //this is required to clear second parent in the right way.
+    var alice = m0.getCreature("alice easey");
+    var book = alice.getObject("survival book");
+    var playerInventory = p0.getInventoryObject();
+    playerInventory.add(book);
+    
+    console.log("reading survival book");
+    console.log(p0.read("read", "survival book"));
+    console.log("update missions");
+    console.log(mc.updateMissions(2, p0, m0));
+    
+    var playerreachescrashsite = m0.getNamedMission("playerreachescrashsite");
+    
+    //mission is now active?
+    console.log("playerreachescrashsite is active?" + playerreachescrashsite.isActive());
+    console.log("playerreachescrashsite parents:" + playerreachescrashsite.getParent());
+    
+    //complete criteria for completing the mission.
+    var crashSite = m0.getLocation("crash-site");
+    p0.setLocation(crashSite);
+    console.log("player ticks x6...");
+    p0.tick(6, m0);
+    console.log("update missions x4, then 1 - this should complete playerreachescrashsite mission...");
+    console.log(mc.updateMissions(4, p0, m0));
+    console.log(mc.updateMissions(1, p0, m0));
+
+    console.log("player toString:");
+    console.log(p0.toString());
+    
+    console.log("Completed Missions: " + p0.getCompletedMissions());
+    console.log("Completed Events: " + p0.getCompletedEvents());
+    
+    console.log("playerreachescrashsite isfailedorcomplete?" + playerreachescrashsite.isFailedOrComplete()); //event has definitely passed its trigger point by here but still isn't cleared
+
+    
+    var expectedResult = true;
+    var actualResult = playerreachescrashsite.isFailedOrComplete();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerReachesCrashSiteEventCanBeCompleted.meta = { traits: ["Mission Test", "Mission Parent Trait", "Plot Trait", "Mission Completion Trait", "Event Trait"], description: "Test that plot mission/even can be completed." };
