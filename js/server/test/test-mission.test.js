@@ -556,7 +556,7 @@ exports.canCompletePartyBusMission = function (test) {
     reward = mission.checkState(p0, m0);
     var resultString = reward.message;
     
-    var expectedResult = "<br>Oh no, you're out of time!<br>The party bus is leaving and you haven't got enough people on board.<hr>You rush out to try and salvage your efforts.<br>As you recover your breath outside and the bus pulls away you see a lick of flame through the windows.<br>Something's very wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!";
+    var expectedResult = "<br>Oh no, you're out of time!<br>The party bus is leaving and you haven't got enough people on board.<hr>You rush out to try and salvage your efforts.<br>As you recover your breath outside and the bus pulls away you see a lick of flame through the windows.<br>Something's very wrong here.<br><br>You watch in horror before finally registering what's happening and dive for cover.<br>As the bus explodes into flames and a piece of shrapnel tears into your leg you realise it could have been so much worse.<br><br>You look around you for survivors. Anyone that made it out alive is going to need urgent medical help!";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
@@ -608,7 +608,7 @@ exports.canFailPartyBusMission = function (test) {
     reward = mission.checkState(p0, m0);
     var resultString = reward.message;
     
-    var expectedResult = "<br><br>It looks like you're doing well at getting people onto the bus. Great job!<br>It's often hard work herding people around here.<hr>You dash out to the front of the office to check for stragglers and as you recover your breath you smell smoke on the air.<br>Something's very wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.";
+    var expectedResult = "<br><br>It looks like you're doing well at getting people onto the bus. Great job!<br>It's often hard work herding people around here.<hr>You dash out to the front of the office to check for stragglers and as you recover your breath you smell smoke on the air.<br>Something's very wrong here.<br><br>As precious seconds pass, you register what's happening and dive for cover.<br>The bus explodes into flames before your eyes and you realise you've just lured some of your new friends and colleagues to their doom.<br>Your senses slowly recover to a feeling of numbness in your arm and blood on your hands.";
     var actualResult = resultString
     
     mission.processReward(m0, reward, p0);
