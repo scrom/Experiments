@@ -807,7 +807,7 @@ exports.canInjectAVaccineIntoSelf = function (test) {
     p0.get('get', syringe.getName());
     console.log(p0.examine("examine", "syringe", null, m0));
     console.log(p0.get('get', venom.getName()));
-    var expectedResult = "You inject yourself with the zombie vaccine. It's probably worth checking your <i>status</i> just to be sure it worked properly.";
+    var expectedResult = "You inject yourself with the zombie antibodies. It's probably worth checking your <i>status</i> just to be sure it worked properly.";
     var actualResult = p0.inject('venom', 'self');
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
