@@ -909,7 +909,11 @@ exports.creatureAttackCanKillPlayer = function (test) {
     var c2 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:104, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-15});
     c2.go(null, l0);
     var expected = "<br>The creature attacks you. <br><br>You're dead. You really should try to stay out of trouble and look after yourself better.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, a container, and a beastie.<br>There is a single exit to the South.<br>";
-    var actual = c2.fightOrFlight(null,p0);
+    var actual = c2.fightOrFlight(null, p0);
+    if (p0.getScore() >= 0) {
+        //sometimes creature misses - a second attempt should be enough. (score would be -50 if player was killed.
+        actual = c2.fightOrFlight(null, p0);
+    }
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);
