@@ -150,59 +150,8 @@
                 "vending machine"
             ],
             "delivers": [
-                {
-                    "object": "artefact",
-                    "name": "chocolate",
-                    "description": "bar of chocolate",
-                    "detailedDescription": "Mmmm tasty and loaded with calories.",
-                    "attributes": {
-                        "defaultAction": "eat",
-                        "weight": 1,
-                        "type": "food",
-                        "canCollect": true,
-                        "charges": 1,
-                        "chargeUnit": "bar",
-                        "chargesDescription": "$charges $chargeUnit",
-                        "saleUnit": 1,
-                        "isEdible": true,
-                        "nutrition": 25,
-                        "price": 0.5,
-                        "componentOf": [
-                            "mocha"
-                        ]
-                    },
-                    "synonyms": [
-                        "bar",
-                        "bar of chocolate",
-                        "chocolate bar",
-                        "food"
-                    ]
-                },
-                {
-                    "object": "artefact",
-                    "name": "crisps",
-                    "description": "packet of crisps",
-                    "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
-                    "attributes": {
-                        "defaultAction": "eat",
-                        "weight": 1,
-                        "type": "food",
-                        "canCollect": true,
-                        "charges": 1,
-                        "chargeUnit": "packet",
-                        "chargesDescription": "$charges $chargeUnit",
-                        "saleUnit": 1,
-                        "isEdible": true,
-                        "nutrition": 25,
-                        "price": 0.5
-                    },
-                    "synonyms": [
-                        "packet",
-                        "crisp packet",
-                        "packet of crisps",
-                        "food"
-                    ]
-                }
+                {"file": "chocolate"},
+                {"file": "crisps"}
             ]
         }
     ]

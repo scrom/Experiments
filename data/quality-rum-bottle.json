@@ -18,7 +18,9 @@
         "charges": 1,
         "plural": true,
         "isEdible": true,
-        "nutrition": 1
+        "nutrition": 1,
+        "smell": "This is definitely the good stuff. Admittedly it's not barrel-aged but it's a great smelling spiced rum with a strong scent of vanilla and a hint of lime, cinammon and nutmeg",
+        "taste": "You sip gently at the rum. It's deicious.<br>You never really envision spiced rum as a neat sipping drink but this is worth savouring."
       },
       "synonyms": [
         "rum"

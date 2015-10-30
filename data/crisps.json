@@ -1,0 +1,29 @@
+﻿{
+    "object": "artefact",
+    "name": "crisps",
+    "description": "packet of crisps",
+    "detailedDescription": "'Potato chips' to our friends in America.<br>Sadly the pink packet makes it clear these aren't Salt & Vinegar flavour but they'll do in an emergency.",
+    "attributes": {
+        "defaultAction": "eat",
+        "weight": 1,
+        "type": "food",
+        "canCollect": true,
+        "charges": 1,
+        "chargeUnit": "packet",
+        "chargesDescription": "$charges $chargeUnit",
+        "saleUnit": 1,
+        "isEdible": true,
+        "nutrition": 25,
+      "price": 0.5,
+      "smell": "Hmmm. They smell oddly fishy",
+      "taste": "They're oddly sweet and tangy. You're pretty sure they're loaded with MSG but there's something appealing about them.<br>"
+    },
+    "synonyms": [
+      "packet",
+      "crisp packet",
+      "packet of crisps",
+      "chips",
+      "potato chips",
+      "food"
+    ]
+}

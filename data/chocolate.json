@@ -1,0 +1,30 @@
+﻿{
+    "object": "artefact",
+    "name": "chocolate",
+    "description": "bar of chocolate",
+    "detailedDescription": "Mmmm tasty and loaded with calories. This is the kind of wonderful milk chocolate that you can still only buy in the UK.<br>Purists may disagree but you think this is the best sort for comfort eating.",
+    "attributes": {
+      "defaultAction": "eat",
+      "weight": 1,
+      "type": "food",
+      "canCollect": true,
+      "charges": 1,
+      "chargeUnit": "bar",
+      "chargesDescription": "$charges $chargeUnit",
+      "saleUnit": 1,
+      "isEdible": true,
+      "nutrition": 25,
+      "price": 0.5,
+      "smell":  "It has a comforting smell that reminds you of your childhood packed lunches. It brings memories flooding back of pulling all the chocolate off of your Twix biscuit bars with your fingers just to have a lump of neat caramel and chocolate to eat.",
+      "taste": "Nothing beats good old English milk chocolate for taste. Sickly sweet, slightly milky and no sign of bitterness.",
+      "componentOf": [
+          "mocha"
+      ]
+    },
+    "synonyms": [
+        "bar",
+        "bar of chocolate",
+        "chocolate bar",
+        "food"
+    ]
+}

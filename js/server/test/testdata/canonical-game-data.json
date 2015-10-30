@@ -5651,10 +5651,13 @@
               "chargesDescription": "There's enough here for about $charges $chargeUnit",
               "plural": true,
               "isEdible": true,
-              "nutrition": -3
+              "nutrition": -3,
+              "smell": "It smells like a mixture of farmyards and paint stripper. Maybe that's why this stuff's sometimes called agricultural rum.",
+              "taste": "As you bring it up to your mouth the smell overpowers your senses.<br>There's every chance it's just fine but this definitely isn't rum designed for tasting"
             },
             "synonyms": [
-              "rum"
+              "rum",
+              "agricultural rum"
             ]
           }
         ]
@@ -12044,7 +12047,7 @@
             "object": "artefact",
             "name": "chocolate",
             "description": "bar of chocolate",
-            "detailedDescription": "Mmmm tasty and loaded with calories.",
+            "detailedDescription": "Mmmm tasty and loaded with calories. This is the kind of wonderful milk chocolate that you can still only buy in the UK.<br>Purists may disagree but you think this is the best sort for comfort eating.",
             "attributes": {
               "defaultAction": "eat",
               "weight": 1,
@@ -12059,7 +12062,9 @@
               "price": 0.5,
               "componentOf": [
                 "mocha"
-              ]
+              ],
+              "smell": "It has a comforting smell that reminds you of your childhood packed lunches. It brings memories flooding back of pulling all the chocolate off of your Twix biscuit bars with your fingers just to have a lump of neat caramel and chocolate to eat.",
+              "taste": "Nothing beats good old English milk chocolate for taste. Sickly sweet, slightly milky and no sign of bitterness."
             },
             "synonyms": [
               "bar",
@@ -12072,7 +12077,7 @@
             "object": "artefact",
             "name": "crisps",
             "description": "packet of crisps",
-            "detailedDescription": "Sadly they're not Salt & Vinegar flavour - but they'll do in an emergency.",
+            "detailedDescription": "'Potato chips' to our friends in America.<br>Sadly the pink packet makes it clear these aren't Salt & Vinegar flavour but they'll do in an emergency.",
             "attributes": {
               "defaultAction": "eat",
               "weight": 1,
@@ -12084,12 +12089,16 @@
               "saleUnit": 1,
               "isEdible": true,
               "nutrition": 25,
-              "price": 0.5
+              "price": 0.5,
+              "smell": "Hmmm. They smell oddly fishy",
+              "taste": "They're oddly sweet and tangy. You're pretty sure they're loaded with MSG but there's something appealing about them.<br>"
             },
             "synonyms": [
               "packet",
               "crisp packet",
               "packet of crisps",
+              "chips",
+              "potato chips",
               "food"
             ]
           }
@@ -14493,7 +14502,9 @@
               "charges": 1,
               "plural": true,
               "isEdible": true,
-              "nutrition": 1
+              "nutrition": 1,
+              "smell": "This is definitely the good stuff. Admittedly it's not barrel-aged but it's a great smelling spiced rum with a strong scent of vanilla and a hint of lime, cinammon and nutmeg",
+              "taste": "You sip gently at the rum. It's deicious.<br>You never really envision spiced rum as a neat sipping drink but this is worth savouring."
             },
             "synonyms": [
               "rum"

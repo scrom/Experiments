@@ -44,6 +44,7 @@
     <Content Include="data\camelids.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\charred-comic.json" />
+    <Content Include="data\chocolate.json" />
     <Content Include="data\chris-moore.json" />
     <Content Include="data\chris-whitworth.json" />
     <Content Include="data\coffee.json" />
@@ -51,6 +52,7 @@
     <Content Include="data\core-area-west.json" />
     <Content Include="data\crash-site.json" />
     <Content Include="data\creative-agency-area.json" />
+    <Content Include="data\crisps.json" />
     <Content Include="data\curved-sofa.json" />
     <Content Include="data\customer-delight-central.json" />
     <Content Include="data\customer-delight-east.json" />
