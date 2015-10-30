@@ -3013,8 +3013,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if the character can pick it up, they'll take it!
             var resultString = "";
             if (getObjectFromLocation(artefactName)) {
-                //console.log('locationartefact');
-                //@todo - find an alternative for creature displayName on this response
                 if (!(artefact.isCollectable())) {return  tools.initCap(givers[0].getPrefix())+" can't pick "+artefact.getSuffix()+" up.";};
                 if (!(givers[0].canCarry(artefact))) { return tools.initCap(givers[0].getPrefix())+" can't carry "+artefact.getSuffix()+".";};
                 removeObjectFromLocation(artefactName);
