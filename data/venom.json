@@ -1,22 +1,22 @@
 ﻿{
   "object": "artefact",
   "name": "pool",
-  "description": "pool of zombie venom antibodies",
+  "description": "pool of zombie venom",
   "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
   "attributes": {
-    "defaultAction": "drink",
-    "weight": 1,
+    "weight": 0.5,
     "requiresContainer": true,
+    "requiredContainer": "syringe",
     "isLiquid": true,
     "canCollect": true,
-    "charges": 3,
-    "chargeUnit": "dose",
+    "hidden": true,
     "plural": true,
     "affinityModifier": 0,
-    "isEdible": true,
     "antibodies": [
       "zombie"
-    ]
+    ],
+    "combinesDescription": " ",
+    "combinesWith": "syringe"
   },
   "synonyms": [
     "antivenom",
@@ -27,5 +27,6 @@
     "venom",
     "sample",
     "zombie"
-  ]
+  ],
+  "delivers": [ { "file": "zombie-vaccine" } ]
 }

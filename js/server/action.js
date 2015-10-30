@@ -1201,6 +1201,9 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'input':
                         description = _player.type(_verb, _object0, _object1);
                         break;
+                    case 'inject':
+                        description = _player.inject(_object0, _object1);
+                        break;
                     case 'play': //generally a custom verb already
                     case 'burn': //see #299 - relies on having either an ignition source or something else already burning.
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                

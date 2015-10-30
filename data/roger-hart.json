@@ -20,9 +20,8 @@
         "name": "zombie",
         "displayName": "zombie",
         "attributes": {
-          "incubationPeriod": 6,
+          "incubationPeriod": 25,
           "communicability": 0.5,
-          "mutate": true,
           "symptoms": [
             {
                 "action": "hurt",

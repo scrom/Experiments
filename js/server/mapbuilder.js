@@ -86,6 +86,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             //console.log('Building: '+artefactData.name);
             var usingTemplate = false;
             if (artefactData) {
+                //construct from file first if needed
+                //build from file before template
+                if (artefactData.file) {
+                    artefactData = self.buildFromFile(_data[artefactData.file]);
+                };
                 //start with template if defined
                 if (artefactData.template) {
                     usingTemplate = true;
@@ -103,18 +108,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             };
 
             try {
-                if (_map.checkExists(artefactData.name)) {
-                    var templated = "";
-                    if (usingTemplate) {
-                        templated = " (templated)"
-                    };
-                    //console.log("usability warning: duplicate artefact name/synonym '" + artefactData.name + "'"+templated+".");
-                };
+                
                 var artefact;
                 var inventory;
                 var linkedExits = [];
                 var delivers = [];
-                var missions; //not implemented yet
 
                 if (artefactData.linkedexits) {
                     for (var j=0; j<artefactData.linkedexits.length; j++) {
@@ -124,10 +122,6 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
                 if (artefactData.delivers) {
                     for (var i = 0; i < artefactData.delivers.length; i++) {
-                        //construct from file first if needed
-                        if (artefactData.delivers[i].file) {
-                            artefactData.delivers[i] = self.buildFromFile(_data[artefactData.delivers[i].file]);
-                        };
                         delivers.push(self.buildArtefact(artefactData.delivers[i]));
                     };
                 };
@@ -418,7 +412,6 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             };
             if (reward.delivers) {
                 returnObject.delivers = null;
-                //console.log("Delivers: "+returnObject.delivers);
                 var deliveryObject = self.buildArtefact(reward.delivers);
                 returnObject.delivers = deliveryObject;
                 //console.log("Built delivery object");

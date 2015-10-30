@@ -1,9 +1,9 @@
 ﻿{
   "object": "mission",
   "name": "playerreachescrashsite",
-  "displayName": "Player reaches plane crash site and has read zombie book",
+  "displayName": "Player reaches plane crash site",
   "attributes": {
-    "parent": [ "planecrash", "survivezombies"],
+    "parent": "planecrash",
     "type": "event",
     "missionObject": "player"
   },

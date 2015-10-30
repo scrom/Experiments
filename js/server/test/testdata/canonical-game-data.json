@@ -2184,7 +2184,7 @@
         "name": "zara sheldrake",
         "displayname": "Zara Sheldrake",
         "description": "Zara Sheldrake",
-        "detailedDescription": "Our one and only business analyst. She mostly works with the core team but is also one of our first-aiders.",
+        "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most qualified first-aiders.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
         "attributes": {
           "weight": 105,
           "money": 20,
@@ -2200,24 +2200,77 @@
         "inventory": [
           {
             "object": "artefact",
-            "name": "first aid kit",
-            "description": "first aid kit",
-            "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+            "name": "medical bag",
+            "description": "medical bag",
+            "detailedDescription": "It's a small dark green canvas bag",
             "attributes": {
-              "defaultAction": "heal",
+              "defaultAction": "open",
               "weight": 1,
-              "type": "medical",
+              "carryWeight": 5,
+              "attackStrength": 12,
+              "type": "container",
               "canCollect": true,
-              "isBreakable": true,
-              "charges": 5,
-              "canDrawOn": true
+              "affinityModifier": 3,
+              "canOpen": true,
+              "smell": "It has a sterile, medical smell to it."
             },
             "synonyms": [
-              "first aid",
-              "kit",
-              "firstaid kit",
-              "first-aid kit",
-              "first-aid"
+              "medical",
+              "bag",
+              "green bag",
+              "canvas bag",
+              "green medical bag",
+              "green canvas bag"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "first aid kit",
+                "description": "first aid kit",
+                "detailedDescription": "There's enough equipment in here to heal a few nasty wounds.",
+                "attributes": {
+                  "defaultAction": "heal",
+                  "weight": 1,
+                  "type": "medical",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 5,
+                  "canDrawOn": true
+                },
+                "synonyms": [
+                  "first aid",
+                  "kit",
+                  "firstaid kit",
+                  "first-aid kit",
+                  "first-aid"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "syringe",
+                "description": "hypodermic syringe and needle",
+                "detailedDescription": "It's still sterile.",
+                "attributes": {
+                  "carryWeight": 0.5,
+                  "type": "container",
+                  "holdsLiquid": true,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "combinesDescription": " ",
+                  "affinityModifier": 0,
+                  "combinesWith": "pool"
+                },
+                "synonyms": [
+                  "hypo",
+                  "needle",
+                  "syringe",
+                  "hypodermic",
+                  "hypodermic syringe",
+                  "hypodermic needle",
+                  "hypodermic syringe and needle",
+                  "hypodermic syringe needle"
+                ]
+              }
             ]
           },
           {
@@ -3969,7 +4022,7 @@
                 "object": "mission",
                 "name": "survivezombies",
                 "displayName": "learn how to survive a zombie apocalypse",
-                "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of zombieism antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of zombie antibodies who is subsequently bitten may transfer those antibodies to their attacker.<br>Thus speed is of the essence, it is important to rapidly identify patient zero and all who have come into contact with them in order to pass on immunity and limit the contagion.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies and under no circumstances should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.",
+                "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of zombieism antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of zombie antibodies who is subsequently bitten may transfer those antibodies to their attacker.<br>Thus speed is of the essence, it is important to rapidly identify patient zero and all who have come into contact with them in order to pass on immunity and limit the contagion.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies and under no circumstances should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.<br><br>I'm sure you'll never need to know any of this, right?",
                 "attributes": {
                   "missionObject": "survival book",
                   "static": true
@@ -3979,7 +4032,7 @@
                   "read": true
                 },
                 "reward": {
-                  "message": "<br>I'm sure you'll never need to know any of this, right?"
+                  "message": "<br>Well that was an odd read."
                 }
               }
             ]
@@ -3992,6 +4045,124 @@
           "ae",
           "easey",
           "her"
+        ],
+        "missions": [
+          {
+            "object": "mission",
+            "name": "supportfromalice",
+            "displayName": "get help from Alice dealing with Zombies",
+            "description": "Alice knows what's going on.",
+            "attributes": {
+              "parent": "playerreachescrashsite",
+              "missionObject": "alice easey",
+              "initiateConversation": true,
+              "huntPlayer": true,
+              "static": true,
+              "dialogue": [
+                "'$player!'<br>'We need your help...' '...Urgently.'<br>'Listen, I know what's going on.' 'Take this, I don't have time to explain.'<br>'Search the wreckage!'<br>'It's happening!'"
+              ]
+            },
+            "conditionAttributes": {
+              "alive": true,
+              "conversationState": 2
+            },
+            "reward": {
+              "delivers": {
+                "object": "artefact",
+                "name": "syringe",
+                "description": "hypodermic syringe and needle",
+                "detailedDescription": "It's still sterile.",
+                "attributes": {
+                  "carryWeight": 0.5,
+                  "type": "container",
+                  "holdsLiquid": true,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "combinesDescription": " ",
+                  "affinityModifier": 0,
+                  "combinesWith": "pool"
+                },
+                "synonyms": [
+                  "hypo",
+                  "needle",
+                  "syringe",
+                  "hypodermic",
+                  "hypodermic syringe",
+                  "hypodermic needle",
+                  "hypodermic syringe and needle",
+                  "hypodermic syringe needle"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "syringe",
+                    "description": "hypodermic",
+                    "detailedDescription": "It's not reusable. Once the current doses have run out, that's it.",
+                    "attributes": {
+                      "defaultAction": "inject",
+                      "carryWeight": 0.5,
+                      "type": "container",
+                      "holdsLiquid": true,
+                      "canCollect": true,
+                      "isBreakable": true,
+                      "combinesDescription": " ",
+                      "affinityModifier": 0,
+                      "combinesWith": "pool",
+                      "customAction": "inject"
+                    },
+                    "synonyms": [
+                      "hypo",
+                      "needle",
+                      "syringe",
+                      "hypodermic",
+                      "hypodermic syringe",
+                      "hypodermic needle",
+                      "antivenom",
+                      "antibodies",
+                      "zombie venom",
+                      "zombie venom antibodies",
+                      "zombie antibodies",
+                      "venom",
+                      "sample",
+                      "zombie",
+                      "vaccine",
+                      "zombie vaccine"
+                    ],
+                    "inventory": [
+                      {
+                        "object": "artefact",
+                        "name": "vaccine",
+                        "description": "zombie antibodies",
+                        "detailedDescription": "There's only enough for you here by the look of things. You'll need to figure out how to save everyone else as well.",
+                        "attributes": {
+                          "weight": 0.5,
+                          "type": "cure",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "syringe",
+                          "canCollect": true,
+                          "charges": 2,
+                          "chargeUnit": "dose",
+                          "plural": true,
+                          "affinityModifier": 0,
+                          "antibodies": [
+                            "zombie"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "modifyLocationCreatures": {
+                "name": "alice easey",
+                "destination": "ground-floor-back-stair-east",
+                "destinationDelay": 5
+              },
+              "aggression": 3,
+              "message": "Alice hastily hands you a hypodermic syringe.<br>She turns to run and pauses. 'You need to stop them.' 'Fast.'<br>You feel your adrenaline rising as you rack your brains trying to figure out what the hell she means."
+            }
+          }
         ]
       },
       {
@@ -7883,7 +8054,7 @@
               "object": "location",
               "name": "crash-site",
               "displayName": "Disaster scene",
-              "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
+              "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somewhere in the wreckage of what was once a small plane you can hear a low moan.",
               "attributes": {
                 "type": "outdoor",
                 "vehiclesAllowed": [
@@ -7903,10 +8074,12 @@
                 {
                   "object": "artefact",
                   "name": "wreckage",
-                  "description": "wreckage",
+                  "description": "plane wreckage",
                   "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
                   "attributes": {
-                    "type": "scenery",
+                    "weight": 1500,
+                    "carryWeight": 1,
+                    "plural": true,
                     "smell": "The whole area smells like a combination of burned plastic and barbecued hair."
                   },
                   "synonyms": [
@@ -7922,37 +8095,100 @@
                     "glass",
                     "metal",
                     "smoke"
-                  ]
-                },
-                {
-                  "object": "artefact",
-                  "name": "pool",
-                  "description": "pool of zombie venom antibodies",
-                  "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
-                  "attributes": {
-                    "defaultAction": "drink",
-                    "weight": 1,
-                    "requiresContainer": true,
-                    "isLiquid": true,
-                    "canCollect": true,
-                    "charges": 3,
-                    "chargeUnit": "dose",
-                    "plural": true,
-                    "affinityModifier": 0,
-                    "isEdible": true,
-                    "antibodies": [
-                      "zombie"
-                    ]
-                  },
-                  "synonyms": [
-                    "antivenom",
-                    "antibodies",
-                    "zombie venom",
-                    "zombie venom antibodies",
-                    "zombie antibodies",
-                    "venom",
-                    "sample",
-                    "zombie"
+                  ],
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "pool",
+                      "description": "pool of zombie venom",
+                      "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
+                      "attributes": {
+                        "weight": 0.5,
+                        "requiresContainer": true,
+                        "isLiquid": true,
+                        "requiredContainer": "syringe",
+                        "canCollect": true,
+                        "combinesDescription": " ",
+                        "plural": true,
+                        "affinityModifier": 0,
+                        "hidden": true,
+                        "combinesWith": "syringe",
+                        "antibodies": [
+                          "zombie"
+                        ]
+                      },
+                      "synonyms": [
+                        "antivenom",
+                        "antibodies",
+                        "zombie venom",
+                        "zombie venom antibodies",
+                        "zombie antibodies",
+                        "venom",
+                        "sample",
+                        "zombie"
+                      ],
+                      "delivers": [
+                        {
+                          "object": "artefact",
+                          "name": "syringe",
+                          "description": "hypodermic",
+                          "detailedDescription": "It's not reusable. Once the current doses have run out, that's it.",
+                          "attributes": {
+                            "defaultAction": "inject",
+                            "carryWeight": 0.5,
+                            "type": "container",
+                            "holdsLiquid": true,
+                            "canCollect": true,
+                            "isBreakable": true,
+                            "combinesDescription": " ",
+                            "affinityModifier": 0,
+                            "combinesWith": "pool",
+                            "customAction": "inject"
+                          },
+                          "synonyms": [
+                            "hypo",
+                            "needle",
+                            "syringe",
+                            "hypodermic",
+                            "hypodermic syringe",
+                            "hypodermic needle",
+                            "antivenom",
+                            "antibodies",
+                            "zombie venom",
+                            "zombie venom antibodies",
+                            "zombie antibodies",
+                            "venom",
+                            "sample",
+                            "zombie",
+                            "vaccine",
+                            "zombie vaccine"
+                          ],
+                          "inventory": [
+                            {
+                              "object": "artefact",
+                              "name": "vaccine",
+                              "description": "zombie antibodies",
+                              "detailedDescription": "There's only enough for you here by the look of things. You'll need to figure out how to save everyone else as well.",
+                              "attributes": {
+                                "weight": 0.5,
+                                "type": "cure",
+                                "requiresContainer": true,
+                                "isLiquid": true,
+                                "requiredContainer": "syringe",
+                                "canCollect": true,
+                                "charges": 2,
+                                "chargeUnit": "dose",
+                                "plural": true,
+                                "affinityModifier": 0,
+                                "antibodies": [
+                                  "zombie"
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   ]
                 },
                 {
@@ -8012,7 +8248,7 @@
                         "name": "zombie",
                         "displayName": "zombie",
                         "attributes": {
-                          "incubationPeriod": 10,
+                          "incubationPeriod": 25,
                           "communicability": 0.5,
                           "symptoms": [
                             {
@@ -8080,9 +8316,8 @@
                         "name": "zombie",
                         "displayName": "zombie",
                         "attributes": {
-                          "incubationPeriod": 6,
+                          "incubationPeriod": 25,
                           "communicability": 0.5,
-                          "mutate": true,
                           "symptoms": [
                             {
                               "action": "hurt",
@@ -8564,6 +8799,24 @@
                       }
                     }
                   ]
+                }
+              ],
+              "missions": [
+                {
+                  "object": "mission",
+                  "name": "playerreachescrashsite",
+                  "displayName": "Player reaches plane crash site",
+                  "attributes": {
+                    "type": "event",
+                    "parent": "planecrash",
+                    "missionObject": "player"
+                  },
+                  "conditionAttributes": {
+                    "time": 4
+                  },
+                  "reward": {
+                    "message": ""
+                  }
                 }
               ]
             }
@@ -15982,6 +16235,7 @@
           }
         },
         "reward": {
+          "removeMission": "supportfromalice",
           "score": 200,
           "maxHealth": 25,
           "affinityModifier": 1,

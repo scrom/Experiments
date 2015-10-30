@@ -1,0 +1,29 @@
+﻿{
+  "object": "artefact",
+  "name": "medical bag",
+  "description": "medical bag",
+  "detailedDescription": "It's a small dark green canvas bag",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 1,
+    "carryWeight": 5,
+    "attackStrength": 12,
+    "type": "container",
+    "canCollect": true,
+    "affinityModifier": 3,
+    "canOpen": true,
+    "smell": "It has a sterile, medical smell to it."
+  },
+  "synonyms": [
+    "medical",
+    "bag",
+    "green bag",
+    "canvas bag",
+    "green medical bag",
+    "green canvas bag"
+  ],
+  "inventory": [
+    { "file": "first-aid-kit" },
+    { "file": "syringe" }
+  ]
+}

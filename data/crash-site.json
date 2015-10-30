@@ -2,7 +2,7 @@
   "object": "location",
   "name": "crash-site",
   "displayName": "Disaster scene",
-  "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somwhere in the wreckage of what was once a small plane you can hear a low moan.",
+  "description": "You're standing near the West car park.<br>It looks like a scene out of a disaster movie.<br>There's debris everywhere and a smell of burning plastic, aviation fuel and barbecues.<br>From somewhere in the wreckage of what was once a small plane you can hear a low moan.",
   "attributes": {
     "type": "outdoor",
     "vehiclesAllowed": [
@@ -22,10 +22,13 @@
     {
       "object": "artefact",
       "name": "wreckage",
-      "description": "wreckage",
+      "description": "plane wreckage",
       "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
       "attributes": {
-        "type": "scenery",
+        "type": "junk",
+        "plural": true,
+        "weight": 1500,
+        "carryWeight": 1,
         "smell": "The whole area smells like a combination of burned plastic and barbecued hair."
       },
       "synonyms": [
@@ -41,9 +44,11 @@
         "glass",
         "metal",
         "smoke"
+      ],
+      "inventory": [
+        { "file": "venom" }
       ]
     },
-    { "file": "venom" },
     { "file": "charred-comic" },
     { "file": "dave-convery" },
     { "file": "roger-hart" },

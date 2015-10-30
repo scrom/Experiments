@@ -1,0 +1,27 @@
+﻿{
+  "object": "artefact",
+  "name": "syringe",
+  "description": "hypodermic syringe and needle",
+  "detailedDescription": "It's still sterile.",
+  "attributes": {
+    "type": "container",
+    "subtype": "bottle",
+    "holdsLiquid": true,
+    "carryWeight": 0.5,
+    "canCollect": true,
+    "affinityModifier": 0,
+    "combinesDescription": " ",
+    "combinesWith": "pool",
+    "isBreakable": true
+  },
+  "synonyms": [
+    "hypo",
+    "needle",
+    "syringe",
+    "hypodermic",
+    "hypodermic syringe",
+    "hypodermic needle",
+    "hypodermic syringe and needle",
+    "hypodermic syringe needle"
+  ]
+}

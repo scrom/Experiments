@@ -1218,7 +1218,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
 
                     //return what can be combined with
-                    if (combinesWithList.length > 0) {
+                    if (combinesWithList.length > 0 && _combinesDescription != " ") {
                         //if we override the default "delivers" description...
                         if (_combinesDescription.length > 0) {
                             resultString += "<br>" + tools.initCap(_combinesDescription);
@@ -1736,14 +1736,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return splitItem;
         };        
 
-        self.combineWith = function(anObject) {
-            if (!(self.combinesWith(anObject,true))) { return null; };   
+        self.combineWith = function (anObject) {
+            if (!(self.combinesWith(anObject, true))) { return null; };
 
             //get first available delivery item that matches both combine objects.
             var deliveryItemSource;
             var objectDeliveryItems = anObject.getDeliveryItems();
             for (var d = 0;d<objectDeliveryItems.length;d++) {
-                for (var dd=0;dd<_delivers.length;dd++) {
+                for (var dd = 0; dd < _delivers.length; dd++) {
                     if (_delivers[dd].getName() == objectDeliveryItems[d].getName())  {
                         deliveryItemSource = _delivers[dd];
                     };
@@ -2585,6 +2585,38 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.canTravel = function() {
             return false;
+        };
+        
+        self.inject = function (player) {            
+            if (!self.checkCustomAction("inject")) {
+                return tools.initCap(self.getDescriptivePrefix()) + " not designed for that kind of personal medical use.";
+            };
+            var cures = _inventory.getAllObjectsOfType("cure");
+            if (cures.length == 0) {
+                return "There's nothing in " + self.getSuffix() + " that you can sensibly inject.";
+            };
+            
+            for (var c = 0; c < cures.length; c++) {
+                cures[c].transmit(player, "inject");
+                self.consumeItem(cures[c]); //will remove item if all doses are used up
+            };
+
+            var cureListAsString = "";
+            for (var i = 0; i < cures.length; i++) {
+                cureListAsString += tools.listSeparator(i, cures.length);
+                cureListAsString += cures[i].getDisplayName();
+            };
+            
+            var hurtString = player.hurt(5, self);
+            
+            var resultString = "You inject yourself with " + cureListAsString + ". ";
+            if (player.isDead()) {
+                resultString += hurtString;
+            } else {
+                resultString += "It's probably worth checking your <i>status</i> just to be sure it worked properly.";
+            };
+
+            return resultString;
         };
 
         self.drink = function(aPlayer) {

@@ -796,6 +796,50 @@ exports.eatLiquidAutomaticallyDrinksInstead = function (test) {
 
 exports.eatLiquidAutomaticallyDrinksInstead.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Eat Trait", "Drink Trait"], description: "Test that eating a liquid item reverts to 'drink'." };
 
+exports.canInjectAVaccineIntoSelf = function (test) {
+    var supportFromAlice = m0.getNamedMission("supportfromalice");
+    var reward = supportFromAlice.success();
+    var syringe = reward.delivers;
+    var venomData = {file: "venom" };
+    var venom = mb.buildArtefact(venomData);
+    l0.addObject(venom);
+    l0.addObject(syringe);
+    p0.get('get', syringe.getName());
+    console.log(p0.examine("examine", "syringe", null, m0));
+    console.log(p0.get('get', venom.getName()));
+    var expectedResult = "You inject yourself with the zombie vaccine. It's probably worth checking your <i>status</i> just to be sure it worked properly.";
+    var actualResult = p0.inject('venom', 'self');
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canInjectAVaccineIntoSelf.meta = { traits: ["Player Test", "Inject Trait", "Action Trait", "Contagion Trait"], description: "Test that player can inject a vaccine." };
+
+
+exports.injectingAVaccineProvidesAntibodies = function (test) {
+    var supportFromAlice = m0.getNamedMission("supportfromalice");
+    var reward = supportFromAlice.success();
+    var syringe = reward.delivers;
+    var venomData = { file: "venom" };
+    var venom = mb.buildArtefact(venomData);
+    l0.addObject(venom);
+    l0.addObject(syringe);
+    p0.get('get', syringe.getName());
+    console.log(p0.examine("examine", "syringe", null, m0));
+    console.log(p0.get('get', venom.getName()));
+    console.log(p0.inject('venom', 'self'));
+    var expectedResult = true;
+    var actualResult = p0.hasAntibodies("zombie");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.injectingAVaccineProvidesAntibodies.meta = { traits: ["Player Test", "Inject Trait", "Action Trait", "Contagion Trait"], description: "Test that player can inject a vaccine." };
+
 
 exports.canBeKilledAndDropInventory = function (test) {
     p0.get('get', food.getName());

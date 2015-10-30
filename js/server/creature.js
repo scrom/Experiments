@@ -2353,6 +2353,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log('Creature eats some food.');
         };
 
+        self.inject = function (player) {
+            return "Interesting idea but "+_genderDescriptivePrefix + " not really designed for personal medical use."
+        };
+
         self.drink = function(aPlayer) {
             return _genderPrefix+"'d get stuck in your throat if you tried."
         };

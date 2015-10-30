@@ -193,7 +193,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
             if (_previousContagionString.length > 0) {
                 //contagion has happened before
 
-                if (_previousContagionString.indexOf("bites you") > -1) {
+                if (_previousContagionString.indexOf("bites you") > -1 && carrier.getName() != "player") {
                     //identical result (surprisingly common)
                     var randomReplies = ["bites you again", "sinks " + carrier.getPossessiveSuffix() + " teeth into your shoulder", "gnaws on your arm", "gnashes at your throat"];
                     var randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -290,7 +290,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                             //(a bit like getting tired or running out of time)
                             //we shuffle the creatures array beforehand so that the selected creature to be bitten first may vary.
                             if (carrier.getType() == "player") {
-                                var randomMessage = ["You seem to have been infected with something nasty", "You don't seem fully in control of your actions", "You're really not feeling right", "You twitch and jerk uncontrollably", "You may have eaten something you shouldn't have"];
+                                var randomMessage = ["You seem to have been infected with something nasty", "You don't seem fully in control of your actions", "You're really not feeling right", "You twitch and jerk uncontrollably"];
                                 var randomIndex = Math.floor(Math.random() * randomMessage.length);
                                 resultString += "<br><br>" + randomMessage[randomIndex] + "."
                                 //bite a random creature (just one)

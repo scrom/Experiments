@@ -1,0 +1,51 @@
+﻿{
+  "object": "artefact",
+  "template": "syringe",
+  "description": "hypodermic",
+  "detailedDescription": "It's not reusable. Once the current doses have run out, that's it.",
+  "attributes": {
+    "defaultAction": "inject",
+    "customAction": "inject"
+  },
+  "synonyms": [
+    "hypo",
+    "needle",
+    "syringe",
+    "hypodermic",
+    "hypodermic syringe",
+    "hypodermic needle",
+    "antivenom",
+    "antibodies",
+    "zombie venom",
+    "zombie venom antibodies",
+    "zombie antibodies",
+    "venom",
+    "sample",
+    "zombie",
+    "vaccine",
+    "zombie vaccine"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "vaccine",
+      "description": "zombie antibodies",
+      "detailedDescription": "There's only enough for you here by the look of things. You'll need to figure out how to save everyone else as well.",
+      "attributes": {
+        "type": "cure",
+        "weight": 0.5,
+        "requiresContainer": true,
+        "requiredContainer": "syringe",
+        "isLiquid": true,
+        "canCollect": true,
+        "charges": 2,
+        "chargeUnit": "dose",
+        "plural": true,
+        "affinityModifier": 0,
+        "antibodies": [
+          "zombie"
+        ]
+      }
+    }
+  ]
+}

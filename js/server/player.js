@@ -3179,16 +3179,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var collectedItemsString = "";
             for (var f=0;f<foundItems.length;f++) {
                 //either collect item or move it to location.
-                if (foundItems[f].isCollectable() && _inventory.canCarry(foundItems[f])) {
-                    artefact.removeObject(foundItems[f].getName());
-                    _inventory.add(foundItems[f]);
-                    collectedItemCount++;
-                    if (collectedItemCount == 1) {
-                        collectedItemsString += "<br>You collect "+foundItems[f].getDisplayName();
-                    } else if (collectedItemCount > 1)  {
-                        collectedItemsString += ", "+foundItems[f].getDescription();
-                    };
-                } else if (!foundItems[f].isCollectable()) {
+                if (!foundItems[f].isCollectable() || foundItems[f].requiresContainer()) {
                     collectableItemCount --;
                     var position;
                     if (foundItems[f].getPosition() == "on") {
@@ -3205,6 +3196,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         sceneryCount++;
                     } else {
                         immovableCount++;
+                    };
+                } else if (foundItems[f].isCollectable() && _inventory.canCarry(foundItems[f])) {
+                    artefact.removeObject(foundItems[f].getName());
+                    _inventory.add(foundItems[f]);
+                    collectedItemCount++;
+                    if (collectedItemCount == 1) {
+                        collectedItemsString += "<br>You collect " + foundItems[f].getDisplayName();
+                    } else if (collectedItemCount > 1) {
+                        collectedItemsString += ", " + foundItems[f].getDescription();
                     };
                 } else {
                     artefact.removeObject(foundItems[f].getName());
@@ -4897,6 +4897,29 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             return resultString;
+        };
+        
+        self.inject = function (artefactName, receiverName) {
+            if (!artefactName) {
+                return "Inject what into whom?"
+            };
+            var selfNames = ["self", "me", "player", "myself", "arm", "leg", "my arm", "my leg", "my"];
+            if (selfNames.indexOf(artefactName) > -1) {
+                //swap names
+                var tempName = receiverName;
+                receiverName = artefactName;
+                artefactName = tempName;
+            };
+            if (receiverName) {
+                if (selfNames.indexOf(receiverName) == -1) {
+                    return "You're not qualified enough to perform invasive sterile medical procedures on others. By all means feel free to harm yourself if you have to though."
+                };
+            };
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) { return notFoundMessage(artefactName); };
+
+            return artefact.inject(self);
+
         };
 
         self.drink = function(verb, artefactName) {

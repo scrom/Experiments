@@ -63,6 +63,7 @@
     <Content Include="data\darth-vader.json" />
     <Content Include="data\dave-convery.json" />
     <Content Include="data\daves-desk.json" />
+    <Content Include="data\dene-boulton.json" />
     <Content Include="data\east-bike-racks.json" />
     <Content Include="data\east-car-park-corner.json" />
     <Content Include="data\east-car-park.json" />
@@ -134,6 +135,7 @@
     <Content Include="data\mark-wightman.json" />
     <Content Include="data\marketing.json" />
     <Content Include="data\marmite-jar.json" />
+    <Content Include="data\medical-bag.json" />
     <Content Include="data\mercedes.json" />
     <Content Include="data\milk.json" />
     <Content Include="data\milton-road-north-end.json" />
@@ -143,6 +145,7 @@
     <Content Include="data\mission-beans.json" />
     <Content Include="data\mission-beansinthepostroom.json" />
     <Content Include="data\mission-bodycount.json" />
+    <Content Include="data\mission-chocolatefordene.json" />
     <Content Include="data\mission-destroycoffeemachine.json" />
     <Content Include="data\mission-finddaveandroger.json" />
     <Content Include="data\mission-fixchrisbike.json" />
@@ -277,6 +280,7 @@
     <Content Include="data\sweet-latte.json" />
     <Content Include="data\sweet-mocha.json" />
     <Content Include="data\sweet-white-coffee.json" />
+    <Content Include="data\syringe.json" />
     <Content Include="data\table.json" />
     <Content Include="data\thinking-hats.json" />
     <Content Include="data\tin-of-spam.json" />
@@ -304,6 +308,8 @@
     <Content Include="client\index.html" />
     <Content Include="data\windows-meeting-room.json" />
     <Content Include="data\xbox.json" />
+    <Content Include="data\zara-sheldrake.json" />
+    <Content Include="data\zombie-vaccine.json" />
     <Content Include="js\server\test\testdata\canonical-game-data.json" />
     <Content Include="js\server\mocha\testdata\creature-room.json" />
     <Content Include="js\server\mocha\testdata\artefact-room.json" />
