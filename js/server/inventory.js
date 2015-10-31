@@ -149,6 +149,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     if (charges > 0 && saleUnit > 0) {
                         unitCount = Math.floor(Math.round((charges*100)/(saleUnit*100)));
                     };
+                    //@todo - want to use items[i].getDescription() instead of raw description if it's a container of x - e.g. bottle of milk
                     itemList[itemString] = { "description": items[i].getDescription(), "rawDescription": items[i].getRawDescription(), "price": items[i].getPrice(), "count": unitCount };
                 };
             };

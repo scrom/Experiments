@@ -1,0 +1,28 @@
+﻿{
+  "object": "artefact",
+  "name": "fridge",
+  "description": "refrigerator",
+  "detailedDescription": "It's red and shiny. The colour seems a little excessive but it does brighten up the area.",
+  "attributes": {
+    "extendedInventoryDescription": "It's full of ",
+    "weight": 151,
+    "carryWeight": 25,
+    "holdsLiquid": true,
+    "isBreakable": true,
+    "isBroken": false,
+    "canOpen": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "chiller",
+    "refrigerator",
+    "refridgerator"
+  ],
+  "inventory": [
+    { "file": "bottle-of-milk" },
+    { "file": "bottle-of-milk" },
+    { "file": "bottle-of-milk" },
+    { "file": "bottle-of-milk" },
+    { "file": "bottle-of-milk" }
+  ]
+}

@@ -39,6 +39,7 @@
     <Content Include="data\basin.json" />
     <Content Include="data\batteries.json" />
     <Content Include="data\bike-ambulance.json" />
+    <Content Include="data\bottle-of-milk.json" />
     <Content Include="data\bowl.json" />
     <Content Include="data\buenosaires.json" />
     <Content Include="data\camelids.json" />
@@ -47,6 +48,7 @@
     <Content Include="data\chocolate.json" />
     <Content Include="data\chris-moore.json" />
     <Content Include="data\chris-whitworth.json" />
+    <Content Include="data\coffee-machine.json" />
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />
     <Content Include="data\core-area-west.json" />
@@ -99,6 +101,7 @@
     <Content Include="data\flipchart.json" />
     <Content Include="data\flowers-a.json" />
     <Content Include="data\flowers-b.json" />
+    <Content Include="data\fridge.json" />
     <Content Include="data\fruit.json" />
     <Content Include="data\graffiti-a.json" />
     <Content Include="data\graffiti-b.json" />

@@ -7249,6 +7249,603 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "fridge",
+        "description": "refrigerator",
+        "detailedDescription": "It's red and shiny. The colour seems a little excessive but it does brighten up the area.",
+        "attributes": {
+          "extendedInventoryDescription": "It's full of ",
+          "weight": 151,
+          "carryWeight": 25,
+          "holdsLiquid": true,
+          "isBreakable": true,
+          "canOpen": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "chiller",
+          "refrigerator",
+          "refridgerator"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "bowl",
         "description": "bowl",
         "detailedDescription": "It's a round, china cereal bowl.",
@@ -7350,91 +7947,83 @@
     "inventory": [
       {
         "object": "artefact",
-        "name": "milk bottle",
-        "description": "bottle",
-        "detailedDescription": "A large milk bottle",
+        "name": "fridge",
+        "description": "refrigerator",
+        "detailedDescription": "It's red and shiny. The colour seems a little excessive but it does brighten up the area.",
         "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 1,
-          "carryWeight": 3,
-          "attackStrength": 1,
-          "type": "container",
-          "subType": "bottle",
+          "extendedInventoryDescription": "It's full of ",
+          "weight": 151,
+          "carryWeight": 25,
           "holdsLiquid": true,
-          "canCollect": true,
           "isBreakable": true,
-          "affinityModifier": 0
+          "canOpen": true,
+          "canDrawOn": true
         },
         "synonyms": [
-          "bottle",
-          "milkbottle",
-          "bottle of milk"
+          "chiller",
+          "refrigerator",
+          "refridgerator"
         ],
         "inventory": [
           {
             "object": "artefact",
-            "name": "milk",
-            "description": "milk",
-            "detailedDescription": "Enough for a few lattes.",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
             "attributes": {
-              "defaultAction": "drink",
-              "weight": 3,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
               "canCollect": true,
-              "charges": 8,
-              "chargeUnit": "cup",
-              "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 5,
-              "componentOf": [
-                "latte",
-                "mocha"
-              ],
-              "combinesWith": [
-                "coffee",
-                "sweet coffee"
-              ]
+              "isBreakable": true,
+              "affinityModifier": 0
             },
             "synonyms": [
-              "cow juice"
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
             ],
-            "delivers": [
+            "inventory": [
               {
                 "object": "artefact",
-                "name": "white coffee",
-                "description": "white coffee",
-                "detailedDescription": "Milky development fuel",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
                 "attributes": {
                   "defaultAction": "drink",
-                  "weight": 1,
+                  "weight": 3,
                   "type": "food",
                   "requiresContainer": true,
                   "isLiquid": true,
-                  "requiredContainer": "cup",
                   "canCollect": true,
-                  "charges": 1,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 18,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
                   "combinesWith": [
-                    "sugar"
+                    "coffee",
+                    "sweet coffee"
                   ]
                 },
                 "synonyms": [
-                  "brew",
-                  "drink",
-                  "coffee",
-                  "milky coffee"
+                  "cow juice"
                 ],
                 "delivers": [
                   {
                     "object": "artefact",
-                    "name": "sweet white coffee",
-                    "description": "sweet white coffee",
-                    "detailedDescription": "Milky development fuel with added sugar",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
                     "attributes": {
                       "defaultAction": "drink",
                       "weight": 1,
@@ -7446,15 +8035,505 @@
                       "charges": 1,
                       "plural": true,
                       "isEdible": true,
-                      "nutrition": 22
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
                     },
                     "synonyms": [
                       "brew",
                       "drink",
                       "coffee",
-                      "milky coffee",
-                      "sweet milky coffee",
-                      "sugary coffee"
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "milk bottle",
+            "description": "bottle",
+            "detailedDescription": "It's a large milk bottle",
+            "attributes": {
+              "extendedInventoryDescription": "There's $inventory in it.",
+              "weight": 1,
+              "carryWeight": 3,
+              "attackStrength": 1,
+              "type": "container",
+              "subType": "bottle",
+              "holdsLiquid": true,
+              "canCollect": true,
+              "isBreakable": true,
+              "affinityModifier": 0
+            },
+            "synonyms": [
+              "bottle",
+              "milkbottle",
+              "bottle of milk"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "milk",
+                "description": "milk",
+                "detailedDescription": "Enough for a few lattes.",
+                "attributes": {
+                  "defaultAction": "drink",
+                  "weight": 3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isLiquid": true,
+                  "canCollect": true,
+                  "charges": 8,
+                  "chargeUnit": "cup",
+                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 5,
+                  "componentOf": [
+                    "latte",
+                    "mocha"
+                  ],
+                  "combinesWith": [
+                    "coffee",
+                    "sweet coffee"
+                  ]
+                },
+                "synonyms": [
+                  "cow juice"
+                ],
+                "delivers": [
+                  {
+                    "object": "artefact",
+                    "name": "white coffee",
+                    "description": "white coffee",
+                    "detailedDescription": "Milky development fuel",
+                    "attributes": {
+                      "defaultAction": "drink",
+                      "weight": 1,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "cup",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 18,
+                      "combinesWith": [
+                        "sugar"
+                      ]
+                    },
+                    "synonyms": [
+                      "brew",
+                      "drink",
+                      "coffee",
+                      "milky coffee"
+                    ],
+                    "delivers": [
+                      {
+                        "object": "artefact",
+                        "name": "sweet white coffee",
+                        "description": "sweet white coffee",
+                        "detailedDescription": "Milky development fuel with added sugar",
+                        "attributes": {
+                          "defaultAction": "drink",
+                          "weight": 1,
+                          "type": "food",
+                          "requiresContainer": true,
+                          "isLiquid": true,
+                          "requiredContainer": "cup",
+                          "canCollect": true,
+                          "charges": 1,
+                          "plural": true,
+                          "isEdible": true,
+                          "nutrition": 22
+                        },
+                        "synonyms": [
+                          "brew",
+                          "drink",
+                          "coffee",
+                          "milky coffee",
+                          "sweet milky coffee",
+                          "sugary coffee"
+                        ]
+                      }
                     ]
                   }
                 ]

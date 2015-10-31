@@ -1,0 +1,26 @@
+﻿{
+    "object": "artefact",
+    "name": "milk bottle",
+    "description": "bottle",
+    "detailedDescription": "It's a large milk bottle",
+    "attributes": {
+        "extendedInventoryDescription": "There's $inventory in it.",
+        "weight": 1,
+        "carryWeight": 3,
+        "attackStrength": 1,
+        "type": "container",
+        "subType": "bottle",
+        "holdsLiquid": true,
+        "canCollect": true,
+        "isBreakable": true,
+        "affinityModifier": 0
+    },
+    "synonyms": [
+        "bottle",
+        "milkbottle",
+        "bottle of milk"
+    ],
+    "inventory": [
+        {"file": "milk"}
+    ]
+}

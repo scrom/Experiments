@@ -13,32 +13,7 @@
         }
     ],
     "inventory": [
-        {
-            "object": "artefact",
-            "name": "milk bottle",
-            "description": "bottle",
-            "detailedDescription": "A large milk bottle",
-            "attributes": {
-                "extendedInventoryDescription": "There's $inventory in it.",
-                "weight": 1,
-                "carryWeight": 3,
-                "attackStrength": 1,
-                "type": "container",
-                "subType": "bottle",
-                "holdsLiquid": true,
-                "canCollect": true,
-                "isBreakable": true,
-                "affinityModifier": 0
-            },
-            "synonyms": [
-                "bottle",
-                "milkbottle",
-                "bottle of milk"
-            ],
-            "inventory": [
-                {"file": "milk"}
-            ]
-        },
+        {"file": "fridge"},
         {
             "object": "artefact",
             "name": "glass jar",
@@ -88,7 +63,7 @@
                 "coffee mug"
             ]
         },
-              {
+        {
         "object": "artefact",
         "template": "bowl",
         "detailedDescription": "It's a round, china cereal bowl.",
@@ -121,43 +96,7 @@
         }
         ]
       },
-        {
-            "object": "artefact",
-            "name": "coffee machine",
-            "description": "coffee vending machine",
-            "detailedDescription": "Given the right ingredients it makes a variety of coffees.",
-            "attributes": {
-                "defaultAction": "get coffee from machine",
-                "extendedInventoryDescription": "It's fully loaded with ",
-                "weight": 151,
-                "carryWeight": 15,
-                "holdsLiquid": true,
-                "isBreakable": true,
-                "isBroken": true,
-                "canOpen": true,
-                "lockable": true,
-                "locked": true,
-                "requiredComponentCount": 1,
-                "imageName": "coffeemachine.jpg",
-                "canDrawOn": true
-            },
-            "synonyms": [
-                "machine",
-                "vending",
-                "vending machine",
-                "coffee vending machine"
-            ],
-            "delivers": [
-                {"file": "latte"},
-                {"file": "mocha"},
-                {"file": "coffee"}
-            ],
-            "missions": [
-                {"file": "mission-repaircoffeemachine"},
-                {"file": "mission-destroycoffeemachine"},
-                {"file": "mission-beans"}
-            ]
-        }
+        {"file": "coffee-machine"}
     ],
     "missions": [ 
         {"file": "event-planecrash"}

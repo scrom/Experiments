@@ -1,0 +1,37 @@
+﻿{
+    "object": "artefact",
+    "name": "coffee machine",
+    "description": "coffee vending machine",
+    "detailedDescription": "Given the right ingredients it makes a variety of coffees.",
+    "attributes": {
+        "defaultAction": "get coffee from machine",
+        "extendedInventoryDescription": "It's fully loaded with ",
+        "weight": 151,
+        "carryWeight": 15,
+        "holdsLiquid": true,
+        "isBreakable": true,
+        "isBroken": true,
+        "canOpen": true,
+        "lockable": true,
+        "locked": true,
+        "requiredComponentCount": 1,
+        "imageName": "coffeemachine.jpg",
+        "canDrawOn": true
+    },
+    "synonyms": [
+        "machine",
+        "vending",
+        "vending machine",
+        "coffee vending machine"
+    ],
+    "delivers": [
+        {"file": "latte"},
+        {"file": "mocha"},
+        {"file": "coffee"}
+    ],
+    "missions": [
+        {"file": "mission-repaircoffeemachine"},
+        {"file": "mission-destroycoffeemachine"},
+        {"file": "mission-beans"}
+    ]
+}
