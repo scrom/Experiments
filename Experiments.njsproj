@@ -56,6 +56,7 @@
     <Content Include="data\crash-site.json" />
     <Content Include="data\creative-agency-area.json" />
     <Content Include="data\crisps.json" />
+    <Content Include="data\cup.json" />
     <Content Include="data\curved-sofa.json" />
     <Content Include="data\customer-delight-central.json" />
     <Content Include="data\customer-delight-east.json" />
@@ -104,6 +105,7 @@
     <Content Include="data\flowers-b.json" />
     <Content Include="data\fridge.json" />
     <Content Include="data\fruit.json" />
+    <Content Include="data\glass.json" />
     <Content Include="data\graffiti-a.json" />
     <Content Include="data\graffiti-b.json" />
     <Content Include="data\ground-floor-back-stair-east.json" />
@@ -270,6 +272,7 @@
     <Content Include="data\signpost.json" />
     <Content Include="data\simon-cromarty.json" />
     <Content Include="data\simon-galbraith.json" />
+    <Content Include="data\sink.json" />
     <Content Include="data\sketchbook.json" />
     <Content Include="data\smoking-area.json" />
     <Content Include="data\snorting-horses.json" />

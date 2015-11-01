@@ -1,0 +1,23 @@
+﻿{
+    "object": "artefact",
+    "name": "cup",
+    "description": "cup",
+    "detailedDescription": "It's just the right size for a decent brew.",
+    "attributes": {
+      "extendedInventoryDescription": "There's $inventory in it.",
+      "weight": 0.5,
+      "carryWeight": 1.1,
+      "attackStrength": 2,
+      "type": "container",
+      "holdsLiquid": true,
+      "canCollect": true,
+      "isBreakable": true,
+      "imageName": "mug.jpg",
+      "canDrawOn": true
+    },
+    "synonyms": [
+      "mug",
+      "coffee cup",
+      "coffee mug"
+    ]
+}

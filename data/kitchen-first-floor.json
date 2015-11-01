@@ -2,7 +2,7 @@
   "object": "location",
   "name": "kitchen-first-floor",
   "displayName": "First floor kitchen",
-  "description": "You're in a small, open kitchen area.<br>There's the usual array of small kitcheny-type things here. (glasses, cereal, fruit squashes, a sink and fridge).",
+  "description": "You're in a small, open kitchen area.<br>There's a small sink and fridge plus the usual array of small kitcheny-type things here.",
   "exits": [
     {
       "object": "exit",
@@ -13,7 +13,13 @@
     }
   ],
   "inventory": [
-    {"file": "fridge"},
+    { "file": "fridge" },
+    { "file": "bowl" },
+    { "file": "bowl" },
+    { "file": "glass" },
+    { "file": "glass" },
+    { "file": "sink" },
+
     {
       "object": "artefact",
       "template": "bowl",
