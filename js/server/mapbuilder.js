@@ -128,7 +128,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 
                 artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);
                 if (!artefact) {
-                    console.log("ERROR: Artefact data. Failed to build" + artefactData + ".");
+                    console.log("ERROR: Artefact data. Failed to create aretefact object" + artefactData + ".");
                 };
                 if (artefact.getType() == "food") {
                     if (!artefactData.attributes) {
@@ -192,7 +192,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (artefact.getSyns().length ==0) {console.log("Usability check: artefact '"+artefact.getName()+"' has no synonyms defined.");};
                 return artefact;
             } catch(err) {
-	            console.log("Failed to build artefact: "+artefactData.name+": "+err.stack);
+	            console.log("MAP ERROR: Failed to build artefact: "+artefactData.name+": "+err.stack);
             };
         };
 
@@ -244,7 +244,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
                 creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
                 if (!creature) {
-                    console.log("ERROR: Creature data. Failed to build" + creatureData + ".");
+                    console.log("ERROR: Creature data. Failed to create creature object" + creatureData + ".");
                 };                
                 if (creatureData.synonyms) { creature.addSyns(creatureData.synonyms); };
                 if (creatureData.dislikes) {creature.addDislikes(creatureData.dislikes);};
@@ -298,7 +298,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (creature.getSyns().length ==0) {console.log("Usability check: creature '"+creature.getName()+"' has no synonyms defined.");};
                 return creature;
             } catch(err) {
-	            console.log("Failed to build creature: "+creatureData.name+": "+err.stack);
+	            console.log("MAP ERROR: Failed to build creature: "+creatureData.name+": "+err.stack);
             };
         };
 
@@ -544,12 +544,12 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     //@todo - unpack/build mission parent object
                     if (missionData.attributes.missionObject) {
                         if (missionData.attributes.missionObject.toLowerCase() != missionData.attributes.missionObject) {
-                            console.log("Mission warning: missionObject contains mixed case; may not be true objectName'"+missionData.attributes.missionObject+"'.");
+                            console.log("MISSION DATA WARNING: missionObject contains mixed case; may not be true objectName'"+missionData.attributes.missionObject+"'.");
                         };
                     };
                     if (missionData.attributes.destination) {
                         if (missionData.attributes.destination.toLowerCase() != missionData.attributes.destination) {
-                            console.log("Mission warning: mission destination contains mixed case; may not be true objectName'"+missionData.attributes.destination+"'.");
+                            console.log("MISSION DATA WARNING: mission destination contains mixed case; may not be true objectName'"+missionData.attributes.destination+"'.");
                         };
                     };
                     if (missionData.attributes.type == "event") {
@@ -565,7 +565,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 var newMission = new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData, failData);
                 return newMission;
             } catch(err) {
-	            console.log("Failed to build mission: "+missionData.name+": "+err.stack);
+	            console.log("MAP ERROR: Failed to build mission: "+missionData.name+": "+err.stack);
             };
         };
 
@@ -581,7 +581,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 var newLocation = new locationObjectModule.Location(locationData.name,locationData.displayName,locationData.description,locationData.attributes);
                 return newLocation;
             }  catch(err) {
-	            console.log("Failed to build location: "+locationData.name+": "+err.stack);
+	            console.log("MAP ERROR: Failed to build location: "+locationData.name+": "+err.stack);
             };
         };
         
