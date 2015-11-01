@@ -3146,14 +3146,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     
                 };
             };
-            //if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());};
-            //else {console.log('Creature is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
         };
 
         self.collectBestAvailableWeapon = function() {
-            // console.log("attempting to collect weapon");
             //collect the strongest non-breakable weapon.
 
             if (self.getSubType() == "animal") {return "";};
@@ -3167,7 +3164,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //creature won't collect a breakable weapon - will only auto-use non-breakable ones.
                 if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
                     var weaponStrength = weapons[index].getAttackStrength();
-                    //console.log(self.getDisplayName()+' found weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                     if (weaponStrength > selectedWeaponStrength) {
                         //only if they can carry it
                         if (self.canCarry(weapons[index])) {
@@ -3183,7 +3179,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(selectedWeapon)) { return "";};
 
             //we'll only get to this point if they found something better.
-            //console.log('Creature collected weapon: '+selectedWeapon.getDisplayName());
             _inventory.add(selectedWeapon);
             _currentLocation.removeObject(selectedWeapon.getName());
             
@@ -4101,13 +4096,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.clearDestination = function() {
             //console.log(self.getDisplayName()+" destination cleared");
             var clearedDestination = _destinations.pop();
-            //console.log("clearing: " + clearedDestination);
             //do we have existing cleared destinations?
             var duplicate = false;
             if (_clearedDestinations.length > 0) {
                 //if this is a duplicate destination (related to wanderers having destination set to "home")
                 if (clearedDestination == _clearedDestinations[0]) {
-                    //console.log("<-----duplicate");
                     duplicate = true;
                 };
             };
@@ -4115,7 +4108,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //store cleared destination.
             if (!duplicate) {
                 _clearedDestinations.unshift(clearedDestination);
-                //console.log("<-----not duplicate"+ _clearedDestinations);
             };
                                
             //Still has loops to complete but no remaining destinations.
@@ -4138,7 +4130,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (_loops == 0 && duplicate && _clearedDestinations.length > 1 && _destinations.length == 0) {
-                //console.log("<-----regenerating");
+                //Regenerate original destinations
                 //this is someone who's not on a loop any more, has returned home for a second time.
                 //Had an original set of more than 1 preprogrammed set of destinations and has no further destinations set.
                 //this is likely (but not guaranteed) someone who's been wandering for a while - so restart their original set of destinations.
@@ -4171,7 +4163,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var path;
             var duplicateCount = 0;
             for (i=0;i<attempts;i++) {
-                //console.log("loop#"+i); //how many attempts are we making?
                 var tempPath = self.findPath(true, destinationName, map, _currentLocation);
 
                 //if we can't find a path at the moment.
@@ -4204,7 +4195,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //console.log("finding path from "+currentLocation.getName()+" to "+destinationName);
 
             if (currentLocation.getName() == destinationName) {
-                //console.log("pathfinder destination found");
+                //pathfinder destination found;
                 return [];
              };       
 

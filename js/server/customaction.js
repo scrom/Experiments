@@ -46,7 +46,6 @@ var self = module.exports = {
                 if (actionData.locations[l].inventory) {
                     var newInventory = actionData.locations[l].inventory;
                     for (var i = 0; i < newInventory.length; i++) {
-                        //console.log(newInventory[i]);
                         //add item to location inventory
                         if (newInventory[i].getType() == "creature") {
                             newInventory[i].go(null, actionData.locations[l]);
@@ -109,7 +108,6 @@ var self = module.exports = {
             var newLocation = map.getLocation(actionData.teleport);
             //console.log("teleporting to:" + actionData.teleport);
             if (newLocation) {
-                //console.log("location found");
                 player.setLocation(newLocation);
             };
         };

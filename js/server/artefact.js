@@ -3164,10 +3164,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         };
                         closeAndLock += ".<br>";
                         resultString += tools.initCap(self.getDisplayName()) + closeAndLock;
-                        if (self.getName() == "fire door") {
-                            console.log("debug me");
-                        };
-
                     } else {
                         _lockInMoves--;
                     };

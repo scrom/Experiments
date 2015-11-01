@@ -253,12 +253,12 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 if (i>0) {gamelist +=','};
                 var aGame = self.getGame(null, i).getNameAndId();
                 gamelist += aGame;
-                console.log('game: '+i+' details: '+self.getGame(null, i).getNameAndId());//+' toString: '+self.getGame(i).toString());
+                //console.log('game: '+i+' details: '+self.getGame(null, i).getNameAndId());//+' toString: '+self.getGame(i).toString());
             };
 
             gamelist += ']}';
             //console.log(gamelist);
-            return gamelist; //doesn't work at the moment
+            return gamelist; //@todo doesn't work at the moment
         };
 
         self.userAction = function(aUsername, aGameId,anAction) {
