@@ -6288,6 +6288,7 @@
               "isEdible": true,
               "combinesWith": [
                 "tree",
+                "plant",
                 "tomato plants"
               ],
               "smell": "It's odorless",
@@ -6295,7 +6296,7 @@
             },
             "synonyms": [
               "drink",
-              "aqua",
+              "refreshment",
               "h20"
             ],
             "delivers": [
@@ -6977,6 +6978,7 @@
               "isEdible": true,
               "combinesWith": [
                 "tree",
+                "plant",
                 "tomato plants"
               ],
               "smell": "It's odorless",
@@ -6984,7 +6986,7 @@
             },
             "synonyms": [
               "drink",
-              "aqua",
+              "refreshment",
               "h20"
             ],
             "delivers": [
@@ -7278,7 +7280,7 @@
     "object": "location",
     "name": "kitchen-first-floor",
     "displayName": "First floor kitchen",
-    "description": "You're in a small, open kitchen area.<br>There's the usual array of small kitcheny-type things here. (glasses, cereal, fruit squashes, a sink and fridge).",
+    "description": "You're in a small, open kitchen area.<br>There's a small sink and fridge plus the usual array of small kitcheny-type things here.",
     "exits": [
       {
         "object": "exit",
@@ -7920,6 +7922,198 @@
         "object": "artefact",
         "name": "bowl",
         "description": "bowl",
+        "detailedDescription": "It's a plain round china bowl",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        },
+        "synonyms": [
+          "plain bowl",
+          "round bowl",
+          "china bowl",
+          "plain round bowl",
+          "round china bowl",
+          "plain round china bowl"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "bowl",
+        "description": "bowl",
+        "detailedDescription": "It's a plain round china bowl",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 0.5,
+          "attackStrength": 1,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "affinityModifier": 0
+        },
+        "synonyms": [
+          "plain bowl",
+          "round bowl",
+          "china bowl",
+          "plain round bowl",
+          "round china bowl",
+          "plain round china bowl"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "glass",
+        "description": "drinking glass",
+        "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.3,
+          "carryWeight": 0.8,
+          "attackStrength": 2,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "pint glass",
+          "beer glass"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "glass",
+        "description": "drinking glass",
+        "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.3,
+          "carryWeight": 0.8,
+          "attackStrength": 2,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "pint glass",
+          "beer glass"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "sink",
+        "description": "",
+        "detailedDescription": "It's a sink! With running water too. Who'd've thought it.<br>Although we generally expect people to clean up after themselves; the less considerate dump their crockery in here too.",
+        "attributes": {
+          "weight": 100,
+          "type": "scenery",
+          "customAction": "wash",
+          "defaultResult": "You rinse your hands in the sink."
+        },
+        "synonyms": [
+          "wash basin",
+          "sink",
+          "tap",
+          "hands"
+        ],
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "water",
+            "description": "water",
+            "detailedDescription": "No real nutritional value but great for thirst and plants.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "drink",
+              "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "combinesWith": [
+                "tree",
+                "plant",
+                "tomato plants"
+              ],
+              "smell": "It's odorless",
+              "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
+            },
+            "synonyms": [
+              "drink",
+              "refreshment",
+              "h20"
+            ],
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "healthy tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're well watered and fruiting.",
+                "attributes": {
+                  "weight": 35,
+                  "carryWeight": 5,
+                  "isBreakable": true,
+                  "plural": true
+                },
+                "synonyms": [
+                  "tomato plants",
+                  "tomato plant",
+                  "plant",
+                  "plants"
+                ],
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tomatoes",
+                    "description": "tomatoes",
+                    "detailedDescription": "They're ripe and ready to pick.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back.",
+                      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+                      "taste": "They taste red. It's an odd thing to say but they really do."
+                    },
+                    "synonyms": [
+                      "tomato",
+                      "tomatoes"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "bowl",
+        "description": "bowl",
         "detailedDescription": "It's a round, china cereal bowl.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
@@ -8011,7 +8205,7 @@
     "object": "location",
     "name": "kitchen-ground-floor",
     "displayName": "Atrium kitchen",
-    "description": "You're in the atrium kitchen.",
+    "description": "You're in the atrium kitchen. This is the main hub of activity for staff refreshments outside mealtimes.<br>Some years ago there was a coffee machine on each floor but they were all removed to encourage serendipity.<br>Although at the time many people complained, It's just something everybody's used to now.",
     "exits": [
       {
         "object": "exit",
@@ -8022,6 +8216,104 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "sink",
+        "description": "",
+        "detailedDescription": "It's a sink! With running water too. Who'd've thought it.<br>Although we generally expect people to clean up after themselves; the less considerate dump their crockery in here too.",
+        "attributes": {
+          "weight": 100,
+          "type": "scenery",
+          "customAction": "wash",
+          "defaultResult": "You rinse your hands in the sink."
+        },
+        "synonyms": [
+          "wash basin",
+          "sink",
+          "tap",
+          "hands"
+        ],
+        "delivers": [
+          {
+            "object": "artefact",
+            "name": "water",
+            "description": "water",
+            "detailedDescription": "No real nutritional value but great for thirst and plants.",
+            "attributes": {
+              "defaultAction": "drink",
+              "weight": 1,
+              "type": "food",
+              "requiresContainer": true,
+              "isLiquid": true,
+              "canCollect": true,
+              "charges": 1,
+              "chargeUnit": "drink",
+              "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "plural": true,
+              "isEdible": true,
+              "combinesWith": [
+                "tree",
+                "plant",
+                "tomato plants"
+              ],
+              "smell": "It's odorless",
+              "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
+            },
+            "synonyms": [
+              "drink",
+              "refreshment",
+              "h20"
+            ],
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "healthy tomato plants",
+                "description": "tomato plants",
+                "detailedDescription": "They're well watered and fruiting.",
+                "attributes": {
+                  "weight": 35,
+                  "carryWeight": 5,
+                  "isBreakable": true,
+                  "plural": true
+                },
+                "synonyms": [
+                  "tomato plants",
+                  "tomato plant",
+                  "plant",
+                  "plants"
+                ],
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "tomatoes",
+                    "description": "tomatoes",
+                    "detailedDescription": "They're ripe and ready to pick.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "canCollect": true,
+                      "charges": 1,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "customAction": [
+                        "get"
+                      ],
+                      "defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back.",
+                      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+                      "taste": "They taste red. It's an odd thing to say but they really do."
+                    },
+                    "synonyms": [
+                      "tomato",
+                      "tomatoes"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       {
         "object": "artefact",
         "name": "fridge",
@@ -8829,10 +9121,10 @@
         "object": "artefact",
         "name": "cup",
         "description": "cup",
-        "detailedDescription": "Just the right size for a decent brew.",
+        "detailedDescription": "It's just the right size for a decent brew.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 2,
+          "weight": 0.5,
           "carryWeight": 1.1,
           "attackStrength": 2,
           "type": "container",
@@ -8846,6 +9138,96 @@
           "mug",
           "coffee cup",
           "coffee mug"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "cup",
+        "description": "cup",
+        "detailedDescription": "It's just the right size for a decent brew.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 1.1,
+          "attackStrength": 2,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "imageName": "mug.jpg",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "mug",
+          "coffee cup",
+          "coffee mug"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "cup",
+        "description": "cup",
+        "detailedDescription": "It's just the right size for a decent brew.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.5,
+          "carryWeight": 1.1,
+          "attackStrength": 2,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "imageName": "mug.jpg",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "mug",
+          "coffee cup",
+          "coffee mug"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "glass",
+        "description": "drinking glass",
+        "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.3,
+          "carryWeight": 0.8,
+          "attackStrength": 2,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "pint glass",
+          "beer glass"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "glass",
+        "description": "drinking glass",
+        "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
+        "attributes": {
+          "extendedInventoryDescription": "There's $inventory in it.",
+          "weight": 0.3,
+          "carryWeight": 0.8,
+          "attackStrength": 2,
+          "type": "container",
+          "holdsLiquid": true,
+          "canCollect": true,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "glass",
+          "pint glass",
+          "beer glass"
         ]
       },
       {
@@ -12298,6 +12680,7 @@
               "isEdible": true,
               "combinesWith": [
                 "tree",
+                "plant",
                 "tomato plants"
               ],
               "smell": "It's odorless",
@@ -12305,7 +12688,7 @@
             },
             "synonyms": [
               "drink",
-              "aqua",
+              "refreshment",
               "h20"
             ],
             "delivers": [
@@ -15393,6 +15776,7 @@
               "isEdible": true,
               "combinesWith": [
                 "tree",
+                "plant",
                 "tomato plants"
               ],
               "smell": "It's odorless",
@@ -15400,7 +15784,7 @@
             },
             "synonyms": [
               "drink",
-              "aqua",
+              "refreshment",
               "h20"
             ],
             "delivers": [

@@ -187,7 +187,7 @@ exports.canCompleteHardDiskMissionByInstallingInServer = function (test) {
     p0.setLocation(location);
     //console.log(p0.breakOrDestroy("break", "hard disk"));
     //console.log(disk.isBroken());
-    console.log(p0.put("install", "hard disk", "server"));
+    console.log(p0.put("install", "hard disk", "in", "server"));
     
     console.log("Does server contain disk? " + server.check("hard disk"));
     //check disk can fit in server

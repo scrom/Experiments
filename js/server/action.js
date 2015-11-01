@@ -530,10 +530,10 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'add':
                     case 'mix':
                     case 'pour':
-                        description = _player.put(_verb, _object0, _object1);
+                        description = _player.put(_verb, _object0, _splitWord, _object1);
                         break;
                     case 'fill':
-                        description = _player.put(_verb, _object1, _object0);
+                        description = _player.put(_verb, _object1, _splitWord, _object0);
                         break;
                     case 'empty':
                         _ticks = 1;
@@ -548,7 +548,7 @@ exports.Action = function Action(player, map, fileManager) {
                         var tempObject = _object0;
                         _object0 = _object1; //water or other fluid
                         _object1 = tempObject; //actual object to be watered
-                        description = _player.put(_verb, _object0, _object1);
+                        description = _player.put(_verb, _object0, "over", _object1);
                         break;
                     case 'offer':
                     case 'give':
@@ -571,7 +571,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'drop': //add support for "all" later
                         if (_object0 && _splitWord && _object1) {
                             if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to") {
-                                description = _player.put(_verb, _object0, _object1);
+                                description = _player.put(_verb, _object0, "into", _object1);
                                 break;
                             } else { _object0 = _object0+" "+_splitWord+" "+_object1;};
                         };

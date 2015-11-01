@@ -144,7 +144,7 @@ exports.testMoveIntoAction = function (test) {
 
     var actionString = "move fish into bowl"
 
-    var expectedResult = 'function: put, args[0]:put, args[1]:fish, args[2]:bowl';
+    var expectedResult = 'function: put, args[0]:put, args[1]:fish, args[2]:into, args[3]:bowl';
     var actualResult = a.processAction(actionString);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

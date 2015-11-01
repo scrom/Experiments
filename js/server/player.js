@@ -1337,7 +1337,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!suitableContainer) { return "You're not carrying anything that you can put "+artefact.getDisplayName()+" into.";};
 
                 var requiredContainer = artefact.getRequiredContainer();
-                return self.put("collect", artefactName, suitableContainer.getName(), requiredContainer);
+                return self.put("collect", artefactName, "into", suitableContainer.getName(), requiredContainer);
             };
         
             var collectedArtefact = removeObjectFromLocation(artefactName);
@@ -1510,7 +1510,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(receiver)) {return notFoundMessage(receiverName);};
 
                 var inventorySize = artefact.getInventoryObject().size(true);
-                if (inventorySize == 0) {return "There's nothing to "+verb+" out.";}; 
+                if (inventorySize == 0) { return "There's nothing to " + verb + " out."; };
+                if (inventorySize == 1) { return self.put("empty", artefactName, splitWord, receiverName);}; 
 
                 //@todo - issue #305
                 return "You'll need to "+verb+" "+artefact.getDisplayName()+" "+splitWord+" "+receiver.getDisplayName()+" one named item at a time.";
@@ -2334,7 +2335,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
         /*Allow player to put something in an object */
-    self.put = function(verb, artefactName, receiverName, requiredContainer, artefact){
+    self.put = function(verb, artefactName, splitword, receiverName, requiredContainer, artefact){
             var resultString = "";
             var artefactPreviouslyCollected = false;
             var collectedArtefact;
@@ -2424,7 +2425,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (verb == "hide") {
                         if (!(artefact.isHidden())) {
                             artefact.hide();
-                            return "You "+verb+" "+artefact.getDisplayName()+" in "+receiver.getDisplayName()+".";
+                            return "You "+verb+" "+artefact.getDisplayName()+" "+splitword+" "+receiver.getDisplayName()+".";
                         } else {
                             return tools.initCap(artefact.getDescriptivePrefix())+" already hidden.";
                         };
@@ -2443,7 +2444,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     var chargesRequired = Math.floor(spaceToFill / artefact.getChargeWeight());
                     var newArtefact = artefact.split(chargesRequired, true);
                     //if we have a new artefact at this point, we've split from the original.
-                    return self.put(verb, artefactName, receiverName, requiredContainer, newArtefact);
+                    return self.put(verb, artefactName, "into", receiverName, requiredContainer, newArtefact);
                 };
                     
                 if (artefact.isLiquid() || artefact.isPowder()) {
@@ -2459,9 +2460,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                         
                         if (artefactName == "blood") {
-                            return "Hmm. You're a bit sick aren't you.<br>You pour " + artefactName + " over " + receiver.getDisplayName() + ".";
+                            return "Hmm. You're a bit sick aren't you.<br>You pour " + artefactName + " " + splitword + " " + receiver.getDisplayName() + ".";
                         } else {
-                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour " + artefactName + " over " + receiver.getDisplayName() + ".";
+                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour " + artefactName + " " + splitword + " " + receiver.getDisplayName() + ".";
                         };
                     };
                 };                   

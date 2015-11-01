@@ -1555,7 +1555,7 @@ exports.hittingContainerArtefactTwiceWhenArmedUsuallyDamagesContents.meta = { tr
 exports.cannotPutObjectInClosedContainer = function (test) {
     p0.get('get', food.getName());
     var expectedResult = "Sorry, it's closed.";
-    var actualResult = p0.put('put','cake', 'container');
+    var actualResult = p0.put('put','cake', "in", 'container');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1568,7 +1568,7 @@ exports.cannotPutObjectInClosedContainer.meta = { traits: ["Player Test", "Inven
 exports.canPutObjectInOpenContainer = function (test) {
     var expectedResult = "You put the slab of sugary goodness in the container.<br>";
     p0.open('open','container');
-    var actualResult = p0.put('put','cake', 'container');
+    var actualResult = p0.put('put','cake', "in", 'container');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1582,7 +1582,7 @@ exports.cantPutObjectInBrokenContainer = function (test) {
     var expectedResult = "It's broken. You'll need to fix it first.";
     p0.open('open','container');
     console.log(p0.breakOrDestroy('break','container'));
-    var actualResult = p0.put('put','cake', 'container');
+    var actualResult = p0.put('put','cake', "in", 'container');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1692,7 +1692,7 @@ exports.canMakeSweetCoffeeByAddingSugarToCup = function (test) {
     cup.receive(coffee);
 
     var expectedResult = "You add the sugar to the coffee.<br>Your cup now contains sweet coffee.";
-    var actualResult = p0.put('put','sugar','cup');
+    var actualResult = p0.put('put','sugar', "into", 'cup');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1705,7 +1705,7 @@ exports.canMakeSweetCoffeeByAddingSugarToCup.meta = { traits: ["Player Test", "C
 exports.cantPutObjectInItemWithNoCarryWeight = function (test) {
     p0.get('get', food.getName());
     var expectedResult = "You try and try but can't find a satisfactory way to make it fit.";
-    var actualResult = p0.put('put','cake', 'sword');
+    var actualResult = p0.put('put','cake', "in", 'sword');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1718,7 +1718,7 @@ exports.cantPutObjectInItemThatDoesntExist = function (test) {
     var objectName = 'missing';
     p0.get('get', food.getName());
     var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
-    var actualResult = p0.put('put','cake', 'missing');
+    var actualResult = p0.put('put','cake', "in", 'missing');
     var expectedResult = false;
     if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
     console.log("Expected: "+expectedResult);
@@ -1733,7 +1733,7 @@ exports.cantPutObjectInItemThatDoesntExist.meta = { traits: ["Player Test", "Inv
 exports.canPutObjectInNonContainerItemWithCarryWeight = function (test) {
     //p0.get('get', food.getName());
     var expectedResult = "You put the slab of sugary goodness in the artefact of little consequence.<br>";
-    var actualResult = p0.put('put','cake', 'artefact');
+    var actualResult = p0.put('put','cake', "in", 'artefact');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1746,7 +1746,7 @@ exports.canPutObjectInBrokenNonContainerItemWithCarryWeight = function (test) {
     p0.get('get', food.getName());
     p0.breakOrDestroy('break','glass');
     var expectedResult = "You put your cake in the drinking glass.<br>";
-    var actualResult = p0.put('put','cake', 'glass');
+    var actualResult = p0.put('put','cake', "in", 'glass');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1760,7 +1760,7 @@ exports.canRemoveObjectFromOpenContainer = function (test) {
     p0.get('get', food.getName());
     var expectedResult = "You're now carrying a slab of sugary goodness.";
     p0.open('open','container');
-    p0.put('put','cake', 'container');
+    p0.put('put','cake', "in", 'container');
     var actualResult = p0.remove('remove','cake', 'container');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1774,7 +1774,7 @@ exports.canDropObjectFromOpenContainer = function (test) {
     p0.get('get', food.getName());
     var expectedResult = "You drop the slab of sugary goodness. ";//note trailing space
     p0.open('open','container');
-    p0.put('put','cake', 'container');
+    p0.put('put','cake', "in", 'container');
     p0.get('get', 'container');
     var actualResult = p0.drop('drop','cake');
     console.log("Expected: "+expectedResult);
@@ -1789,7 +1789,7 @@ exports.canDropObjectFromOpenContainer.meta = { traits: ["Player Test", "Invento
 exports.canExamineContainer = function (test) {
     var expectedResult = "hold hold hold<br>It contains a slab of sugary goodness.";
     p0.open('open',container.getName());
-    p0.put('put','cake', container.getName());
+    p0.put('put','cake', "in", container.getName());
     var actualResult = p0.examine('examine', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1875,7 +1875,7 @@ exports.playerCanMakeSweetCoffeeByAddingSugarToCoffeeWhenCupIsInInventory = func
     l0.addObject(cup);
     cup.receive(coffee);
     p0.get('get','cup');
-    p0.put('add','sugar','coffee');
+    p0.put('add','sugar', "in", 'coffee');
 
     var expectedResult = "Just the right size for a decent brew.<br>There's some sweet coffee in it.";
     var actualResult = p0.examine('examine','cup');
@@ -1912,7 +1912,7 @@ exports.playerCanMakeSweetCoffeeByAddingSugarToCupContainingCoffeeWhenCupIsInLoc
     cup.receive(coffee);   
 
     var expectedResult = "You add the sugar to the coffee to produce sweet coffee.";
-    var actualResult = p0.put('add','sugar','cup');;
+    var actualResult = p0.put('add','sugar', "in", 'cup');;
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -1945,7 +1945,7 @@ exports.canMakeSweetCoffeeByAddingCoffeeToSugarInACup = function (test) {
     l0.addObject(coffee);
     cup.receive(sugar);
     p0.get('get','cup');
-    p0.put('add','coffee','sugar');
+    p0.put('add','coffee', "to", 'sugar');
 
     var expectedResult = 'Some coffee in here would be great.<br>It contains some sweet coffee.';
     var actualResult = p0.examine('examine','cup');
@@ -1980,7 +1980,7 @@ exports.sweetCoffeeDoesntLoseSynonymsOnDelivery = function (test) {
     l0.addObject(coffee);
     cup.receive(sugar);
     p0.get('get','cup');
-    p0.put('add','coffee','sugar');
+    p0.put('add','coffee', "to", 'sugar');
 
     var deliveredSweetCoffee = cup.getInventoryObject().getObject("sweet coffee");
 
@@ -2015,7 +2015,7 @@ exports.cantMakeSweetCoffeeWithoutACup = function (test) {
     l0.addObject(sugar);
 
     var expectedResult = "Sorry, you don't have a suitable container for the sweet coffee.";
-    var actualResult = p0.put('add','coffee','sugar');
+    var actualResult = p0.put('add','coffee', "to", 'sugar');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
     test.equal(actualResult, expectedResult);
@@ -2046,7 +2046,7 @@ exports.failingToMakeSweetCoffeeDoesnotModifyIngredients = function (test) {
 
     console.log(l0.addObject(coffee));
     l0.addObject(sugar);
-    p0.put('add','coffee','sugar');
+    p0.put('add','coffee', "to", 'sugar');
 
     var expectedResult = "a home location<br><br>You can see some coffee and some sugar.<br>There are no visible exits.<br> Coffee weight: 1, Sugar weight: 0.1";
     var actualResult = p0.examine('look')+" Coffee weight: "+coffee.getWeight()+", Sugar weight: "+sugar.getWeight();//
@@ -3102,8 +3102,8 @@ exports.playerCanCollectAndPourBloodOnFloor = function (test) {
     inv.add(bottle);
     p0.get("collect", "blood");
     
-    var expected = "Hmm. You're a bit sick aren't you.<br>You pour blood over the floor.";
-    var actual = p0.put("pour", "blood", "floor");
+    var expected = "Hmm. You're a bit sick aren't you.<br>You pour blood on the floor.";
+    var actual = p0.put("pour", "blood", "on", "floor");
     console.log("expected:" + expected);
     console.log("actual:" + actual);
     test.equal(actual, expected);
@@ -3119,7 +3119,7 @@ exports.bloodPouredOnFloorIsVisible = function (test) {
     inv.add(bottle);
     p0.get("collect", "blood");
     l0.tick(15);
-    p0.put("pour", "blood", "floor");
+    p0.put("pour", "blood", "onto", "floor");
     var expected = "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.";
     var actual = l0.describeBlood();
     console.log("expected:" + expected);
