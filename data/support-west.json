@@ -30,7 +30,7 @@
       {
         "object": "creature",
         "name": "chris allen",
-        "displayname": "Chris Allen",
+        "displayName": "Chris Allen",
         "description": "Chris Allen",
         "detailedDescription": "Support and music skills. What more could you need?",
         "attributes": {

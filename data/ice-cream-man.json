@@ -1,0 +1,31 @@
+﻿{
+  "object": "creature",
+  "name": "ice cream man",
+  "displayName": "the ice cream man",
+  "description": "ice cream man",
+  "detailedDescription": "A random guy who occasionally has ice cream for sale.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "canTravel": false,
+    "traveller": false,
+    "imageName": "icecreamman.jpg"
+  },
+  "sells": [
+    {
+      "object": "artefact",
+      "template": "ice-cream",
+      "attributes": {
+        "weight": 15,
+        "charges": 15
+      }
+    }
+  ],
+  "synonyms": [
+    "man",
+    "icecream man",
+    "him"
+  ],
+  "missions": [
+    {"file": "mission-freeicecream"}
+  ]
+}

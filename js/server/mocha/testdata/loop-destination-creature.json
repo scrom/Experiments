@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "loop destination creature",
-    "displayname": "Loop Destination Creature",
+    "displayName": "Loop Destination Creature",
     "description": "Loop Destination Creature",
     "detailedDescription": "A creature that has a series of destinations that it plays in a loop.",
     "attributes": {

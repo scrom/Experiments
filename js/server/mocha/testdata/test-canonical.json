@@ -89,7 +89,7 @@
       {
         "object": "creature",
         "name": "destination creature",
-        "displayname": "Destination Creature",
+        "displayName": "Destination Creature",
         "description": "Destination Creature",
         "detailedDescription": "A creature that has a series of destinations.",
         "attributes": {
@@ -151,7 +151,7 @@
       {
         "object": "creature",
         "name": "wandering creature",
-        "displayname": "Wandering Creature",
+        "displayName": "Wandering Creature",
         "description": "Wandering Creature",
         "detailedDescription": "A creature that wanders randomly.",
         "attributes": {
@@ -207,7 +207,7 @@
       {
         "object": "creature",
         "name": "loop destination creature",
-        "displayname": "Loop Destination Creature",
+        "displayName": "Loop Destination Creature",
         "description": "Loop Destination Creature",
         "detailedDescription": "A creature that has a series of destinations that it plays in a loop.",
         "attributes": {

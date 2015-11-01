@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "dene boulton",
-  "displayname": "Dene Boulton",
+  "displayName": "Dene Boulton",
   "description": "Dene Boulton",
   "detailedDescription": "CORE team tester and specialist in the art of looking grumpy and happy at the same time.",
   "attributes": {

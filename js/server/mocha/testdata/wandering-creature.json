@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "wandering creature",
-    "displayname": "Wandering Creature",
+    "displayName": "Wandering Creature",
     "description": "Wandering Creature",
     "detailedDescription": "A creature that wanders randomly.",
     "attributes": {

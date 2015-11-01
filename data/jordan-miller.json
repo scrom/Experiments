@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "jordan miller",
-    "displayname": "Jordan Miller",
+    "displayName": "Jordan Miller",
     "description": "Jordan Miller",
     "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
     "attributes": {

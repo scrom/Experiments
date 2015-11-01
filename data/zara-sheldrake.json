@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "zara sheldrake",
-  "displayname": "Zara Sheldrake",
+  "displayName": "Zara Sheldrake",
   "description": "Zara Sheldrake",
   "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most qualified first-aiders.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
   "attributes": {

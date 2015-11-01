@@ -1649,7 +1649,7 @@
       {
         "object": "creature",
         "name": "rick",
-        "displayname": "Rick",
+        "displayName": "Rick",
         "description": "Rick the bike ambulance guy",
         "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
         "attributes": {
@@ -2207,7 +2207,7 @@
       {
         "object": "creature",
         "name": "zara sheldrake",
-        "displayname": "Zara Sheldrake",
+        "displayName": "Zara Sheldrake",
         "description": "Zara Sheldrake",
         "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most qualified first-aiders.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
         "attributes": {
@@ -2328,7 +2328,7 @@
       {
         "object": "creature",
         "name": "dene boulton",
-        "displayname": "Dene Boulton",
+        "displayName": "Dene Boulton",
         "description": "Dene Boulton",
         "detailedDescription": "CORE team tester and specialist in the art of looking grumpy and happy at the same time.",
         "attributes": {
@@ -2771,7 +2771,7 @@
       {
         "object": "creature",
         "name": "chris george",
-        "displayname": "Chris George",
+        "displayName": "Chris George",
         "description": "Chris George",
         "detailedDescription": "Chris is our resident head of Test.<br>He's becoming pretty famous in the testing world and has even had people ask for his autograph.",
         "attributes": {
@@ -2818,7 +2818,7 @@
       {
         "object": "creature",
         "name": "mark wightman",
-        "displayname": "Mark Wightman",
+        "displayName": "Mark Wightman",
         "description": "Mark Wightman",
         "detailedDescription": "Mark's our head of Organizational Effectiveness.",
         "attributes": {
@@ -2960,7 +2960,7 @@
       {
         "object": "creature",
         "name": "jeff foster",
-        "displayname": "Jeff Foster",
+        "displayName": "Jeff Foster",
         "description": "Jeff Foster",
         "detailedDescription": "Jeff is our head of Software Engineering.",
         "attributes": {
@@ -3007,7 +3007,7 @@
       {
         "object": "creature",
         "name": "simon cromarty",
-        "displayname": "Simon Cromarty",
+        "displayName": "Simon Cromarty",
         "description": "Simon Cromarty",
         "detailedDescription": "He's our head of Project Management (or a pirate if you give him enough rum).",
         "attributes": {
@@ -3234,7 +3234,7 @@
       {
         "object": "creature",
         "name": "brian harris",
-        "displayname": "Brian Harris",
+        "displayName": "Brian Harris",
         "description": "Brian Harris",
         "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe's (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
         "attributes": {
@@ -3360,7 +3360,7 @@
       {
         "object": "creature",
         "name": "james dening",
-        "displayname": "James Dening",
+        "displayName": "James Dening",
         "description": "James Dening",
         "detailedDescription": "Our head of Sales. Like a 6-foot-plus tigger.",
         "attributes": {
@@ -3454,7 +3454,7 @@
       {
         "object": "creature",
         "name": "alan platt",
-        "displayname": "Alan Platt",
+        "displayName": "the alan platt",
         "description": "Alan Platt",
         "detailedDescription": "The master of Customer Delight.",
         "attributes": {
@@ -3644,7 +3644,7 @@
       {
         "object": "creature",
         "name": "chris whitworth",
-        "displayname": "Chris Whitworth",
+        "displayName": "Chris Whitworth",
         "description": "Chris Whitworth",
         "detailedDescription": "Great developer, exceptional musician. Part of our customer delight development team.",
         "attributes": {
@@ -3862,7 +3862,7 @@
       {
         "object": "creature",
         "name": "jonathan watts",
-        "displayname": "Jonathan Watts",
+        "displayName": "Jonathan Watts",
         "description": "Jonathan Watts",
         "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
         "attributes": {
@@ -3912,7 +3912,7 @@
       {
         "object": "creature",
         "name": "alice easey",
-        "displayname": "Alice Easey",
+        "displayName": "Alice Easey",
         "description": "Alice Easey",
         "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best bet for survival in a zombie apocalypse.",
         "attributes": {
@@ -4203,7 +4203,7 @@
       {
         "object": "creature",
         "name": "chris moore",
-        "displayname": "Chris Moore",
+        "displayName": "Chris Moore",
         "description": "Chris Moore",
         "detailedDescription": "Endlessly cheerful security guru extraordinaire. Keep him away from Rum and pub floors.",
         "attributes": {
@@ -4492,7 +4492,7 @@
       {
         "object": "creature",
         "name": "filippa vajda",
-        "displayname": "Filippa Vajda",
+        "displayName": "Filippa Vajda",
         "description": "Filippa Vajda",
         "detailedDescription": "Roaming UX redhead.",
         "attributes": {
@@ -4624,7 +4624,7 @@
       {
         "object": "creature",
         "name": "adam parker",
-        "displayname": "Adam Parker",
+        "displayName": "Adam Parker",
         "description": "Adam Parker",
         "detailedDescription": "Master of user experience and a somewhat problematic addiction to stationery.",
         "attributes": {
@@ -5283,7 +5283,7 @@
       {
         "object": "creature",
         "name": "john bowles",
-        "displayname": "John Bowles",
+        "displayName": "John Bowles",
         "description": "John Bowles",
         "detailedDescription": "He's like a short, stocky version of Brian Blessed.<br>He's in charge of what he describes as 'hard services' - the physical aspects of the building.",
         "attributes": {
@@ -7102,7 +7102,7 @@
       {
         "object": "creature",
         "name": "amanda mansfield",
-        "displayname": "Amanda Mansfield",
+        "displayName": "the amanda mansfield",
         "description": "Amanda from IS",
         "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
         "attributes": {
@@ -8015,7 +8015,7 @@
       {
         "object": "artefact",
         "name": "sink",
-        "description": "",
+        "description": "kitchen sink",
         "detailedDescription": "It's a sink! With running water too. Who'd've thought it.<br>Although we generally expect people to clean up after themselves; the less considerate dump their crockery in here too.",
         "attributes": {
           "weight": 100,
@@ -8219,7 +8219,7 @@
       {
         "object": "artefact",
         "name": "sink",
-        "description": "",
+        "description": "kitchen sink",
         "detailedDescription": "It's a sink! With running water too. Who'd've thought it.<br>Although we generally expect people to clean up after themselves; the less considerate dump their crockery in here too.",
         "attributes": {
           "weight": 100,
@@ -9831,7 +9831,7 @@
                 {
                   "object": "creature",
                   "name": "dave convery",
-                  "displayname": "Dave Convery",
+                  "displayName": "Dave Convery",
                   "description": "Dave Convery",
                   "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
                   "attributes": {
@@ -9902,7 +9902,7 @@
                 {
                   "object": "creature",
                   "name": "roger hart",
-                  "displayname": "Roger Hart",
+                  "displayName": "Roger Hart",
                   "description": "Roger Hart",
                   "detailedDescription": "If you've ever seen Withnail and I; think 'Uncle Monty' but somewhat more dashing and a whole lot more 'wrong'.<br>He runs a regular podcast on comics (along with Dave and Lucy)",
                   "attributes": {
@@ -9975,7 +9975,7 @@
                 {
                   "object": "creature",
                   "name": "jordan miller",
-                  "displayname": "Jordan Miller",
+                  "displayName": "Jordan Miller",
                   "description": "Jordan Miller",
                   "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
                   "attributes": {
@@ -10356,7 +10356,7 @@
                             {
                               "object": "creature",
                               "name": "mouse",
-                              "displayname": "the mouse",
+                              "displayName": "the mouse",
                               "description": "small grey mouse",
                               "detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
                               "attributes": {
@@ -11539,7 +11539,7 @@
       {
         "object": "creature",
         "name": "ice cream man",
-        "displayname": "the ice cream man",
+        "displayName": "the ice cream man",
         "description": "ice cream man",
         "detailedDescription": "A random guy who occasionally has ice cream for sale.",
         "attributes": {
@@ -11894,7 +11894,7 @@
       {
         "object": "creature",
         "name": "chris smith",
-        "displayname": "Chris Smith",
+        "displayName": "Chris Smith",
         "description": "Chris Smith",
         "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
         "attributes": {
@@ -12064,7 +12064,7 @@
       {
         "object": "creature",
         "name": "james moore",
-        "displayname": "James Moore",
+        "displayName": "the james moore",
         "description": "James Moore",
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
@@ -12192,7 +12192,7 @@
       {
         "object": "creature",
         "name": "lucy boyes",
-        "displayname": "Lucy Boyes",
+        "displayName": "Lucy Boyes",
         "description": "Lucy Boyes",
         "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.<br>She runs a regular podcast on comics (along with Roger and Dave)",
         "attributes": {
@@ -12308,7 +12308,7 @@
       {
         "object": "creature",
         "name": "sara stopford-pickering",
-        "displayname": "Sara Stopford-Pickering",
+        "displayName": "Sara Stopford-Pickering",
         "description": "Sara Stopford-Pickering",
         "detailedDescription": "One of our super-capable and friendly PA team.",
         "attributes": {
@@ -12963,7 +12963,7 @@
       {
         "object": "creature",
         "name": "simon galbraith",
-        "displayname": "Simon Galbraith",
+        "displayName": "Simon Galbraith",
         "description": "Simon the CEO",
         "detailedDescription": "He runs the show.",
         "attributes": {
@@ -13335,7 +13335,7 @@
       {
         "object": "creature",
         "name": "vic wiseman",
-        "displayname": "Vic Wiseman",
+        "displayName": "Vic Wiseman",
         "description": "Vic the receptionist",
         "detailedDescription": "Vic's one of our support team on the customer-facing front line.<br>'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
         "attributes": {
@@ -14097,7 +14097,7 @@
       {
         "object": "creature",
         "name": "alex freeman",
-        "displayname": "Alex Freeman",
+        "displayName": "Alex Freeman",
         "description": "Alex Freeman",
         "detailedDescription": "Can haz mor Accountz.",
         "attributes": {
@@ -14145,7 +14145,7 @@
       {
         "object": "creature",
         "name": "james king",
-        "displayname": "James King",
+        "displayName": "James King",
         "description": "James King",
         "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
         "attributes": {
@@ -14193,7 +14193,7 @@
       {
         "object": "creature",
         "name": "justin heron",
-        "displayname": "Justin Heron",
+        "displayName": "Justin Heron",
         "description": "Justin Heron",
         "detailedDescription": "He's a master of selling!",
         "attributes": {
@@ -14328,7 +14328,7 @@
       {
         "object": "creature",
         "name": "cassi roper",
-        "displayname": "Cassi Roper",
+        "displayName": "Cassi Roper",
         "description": "Cassi Roper",
         "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
         "attributes": {
@@ -16217,7 +16217,7 @@
       {
         "object": "creature",
         "name": "margaret sexton",
-        "displayname": "Margaret Sexton",
+        "displayName": "Margaret Sexton",
         "description": "Margaret Sexton",
         "detailedDescription": "A true ray of sunshine every lunchtime. Serving you food on a daily basis.<br>Seriously - she's lovely and looks out for all of us.",
         "attributes": {
@@ -16393,7 +16393,7 @@
       {
         "object": "creature",
         "name": "wayne stanford",
-        "displayname": "Wayne Stanford",
+        "displayName": "Wayne Stanford",
         "description": "Wayne Stanford",
         "detailedDescription": "Chef Wayne, master of the Red Gate dessert!",
         "attributes": {
@@ -16937,7 +16937,7 @@
       {
         "object": "creature",
         "name": "cat",
-        "displayname": "the cat",
+        "displayName": "the cat",
         "description": "small tabby cat",
         "detailedDescription": "It looks like a stray. I think it's hungry.",
         "attributes": {
@@ -17432,7 +17432,7 @@
       {
         "object": "creature",
         "name": "chris allen",
-        "displayname": "Chris Allen",
+        "displayName": "Chris Allen",
         "description": "Chris Allen",
         "detailedDescription": "Support and music skills. What more could you need?",
         "attributes": {
@@ -17602,7 +17602,7 @@
       {
         "object": "creature",
         "name": "pawel jonczak",
-        "displayname": "Pawel Jonczak",
+        "displayName": "Pawel Jonczak",
         "description": "Pawel Jonczak",
         "detailedDescription": "He's one of the hidden heroes of our catering team.",
         "attributes": {

@@ -235,11 +235,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 var creatureName = creatureData.name;
 
                 //is their name a proper noun?
-                if (tools.isProperNoun(creatureData.displayname)) {
-                    if (creatureName.toLowerCase() != creatureData.displayname.toLowerCase()) {
-                        console.log("DATA QUALITY WARNING: proper noun for displayName '"+creatureData.displayname+"' doesn't match original creature name'"+creatureName+"'.");
+                if (tools.isProperNoun(creatureData.displayName)) {
+                    if (creatureName.toLowerCase() != creatureData.displayName.toLowerCase()) {
+                        console.log("DATA QUALITY WARNING: proper noun for displayName '"+creatureData.displayName+"' doesn't match original creature name'"+creatureName+"'.");
                     };
-                    creatureName = creatureData.displayname;
+                    creatureName = creatureData.displayName;
                 }; //creature name is a proper noun
 
                 creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later

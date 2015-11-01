@@ -1,0 +1,27 @@
+﻿{
+  "object": "creature",
+  "name": "filippa vajda",
+  "displayName": "Filippa Vajda",
+  "description": "Filippa Vajda",
+  "detailedDescription": "Roaming UX redhead.",
+  "attributes": {
+      "template": "creature-female-l3",
+      "imageName": "filippavajda.jpg"
+  },
+  "inventory": [
+      {"file": "keyfob"}
+  ],
+  "synonyms": [
+    "fil",
+    "fillippa",
+    "fillipa",
+    "filippa",
+    "filipa",
+    "philippa",
+    "phillippa",
+    "her"
+  ],
+  "missions": [
+    {"file": "mission-waterfilsplants"}
+  ]
+}

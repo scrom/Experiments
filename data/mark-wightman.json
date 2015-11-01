@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "mark wightman",
-    "displayname": "Mark Wightman",
+    "displayName": "Mark Wightman",
     "description": "Mark Wightman",
     "detailedDescription": "Mark's our head of Organizational Effectiveness.",
     "attributes": {

@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "wayne stanford",
-  "displayname": "Wayne Stanford",
+  "displayName": "Wayne Stanford",
   "description": "Wayne Stanford",
   "detailedDescription": "Chef Wayne, master of the Red Gate dessert!",
   "attributes": {

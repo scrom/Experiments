@@ -106,7 +106,7 @@
         {
             "object": "creature",
             "name": "cat",
-            "displayname": "the cat",
+            "displayName": "the cat",
             "description": "small tabby cat",
             "detailedDescription": "It looks like a stray. I think it's hungry.",
             "attributes": {

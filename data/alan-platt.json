@@ -1,0 +1,21 @@
+﻿{
+    "object": "creature",
+    "name": "alan platt",
+    "displayname": "Alan Platt",
+    "description": "Alan Platt",
+    "detailedDescription": "The master of Customer Delight.",
+    "attributes": {
+        "template": "creature-male-l5",
+        "imageName": "alanplatt.jpg"
+    },
+    "inventory": [
+        {"file": "keyfob"}
+    ],
+    "synonyms": [
+        "alan",
+        "alan p",
+        "ap",
+        "platt",
+        "him"
+    ]
+}

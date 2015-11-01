@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "dave convery",
-  "displayname": "Dave Convery",
+  "displayName": "Dave Convery",
   "description": "Dave Convery",
   "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Roger and Lucy).",
   "attributes": {

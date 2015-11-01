@@ -1507,11 +1507,23 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiverName) {
                 var receiver = getObjectFromPlayerOrLocation(receiverName);
-                if (!(receiver)) {return notFoundMessage(receiverName);};
+                if (!(receiver)) { return notFoundMessage(receiverName); };
+                
+                if (!artefact.isSolid()) {
+                    //player has referenced a liquid or powder directly
+                    return self.put("empty", artefact.getName(), splitWord, receiverName);
+                };
 
-                var inventorySize = artefact.getInventoryObject().size(true);
+                var artefactInventory = artefact.getInventoryObject();
+                var inventorySize = artefactInventory.size(true);
                 if (inventorySize == 0) { return "There's nothing to " + verb + " out."; };
-                if (inventorySize == 1) { return self.put("empty", artefactName, splitWord, receiverName);}; 
+                if (inventorySize == 1) {
+                    var tempObjects = artefactInventory.getAllObjects(true);
+                    if (tempObjects.length == 1) {
+                        var itemToRemove = tempObjects[0];
+                        return self.put("empty", itemToRemove.getName(), splitWord, receiverName);
+                    };
+                }; 
 
                 //@todo - issue #305
                 return "You'll need to "+verb+" "+artefact.getDisplayName()+" "+splitWord+" "+receiver.getDisplayName()+" one named item at a time.";

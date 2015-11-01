@@ -1,8 +1,7 @@
 ﻿{
 "object": "artefact",
 "name": "sink",
-"displayName": "kitchen sink",
-"description": "",
+"description": "kitchen sink",
 "detailedDescription": "It's a sink! With running water too. Who'd've thought it.<br>Although we generally expect people to clean up after themselves; the less considerate dump their crockery in here too.",
 "attributes": {
     "weight": 100,

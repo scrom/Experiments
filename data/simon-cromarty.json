@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "simon cromarty",
-  "displayname": "Simon Cromarty",
+  "displayName": "Simon Cromarty",
   "description": "Simon Cromarty",
   "detailedDescription": "He's our head of Project Management (or a pirate if you give him enough rum).",
   "attributes": {

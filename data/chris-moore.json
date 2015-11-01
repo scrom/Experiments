@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "chris moore",
-    "displayname": "Chris Moore",
+    "displayName": "Chris Moore",
     "description": "Chris Moore",
     "detailedDescription": "Endlessly cheerful security guru extraordinaire. Keep him away from Rum and pub floors.",
     "attributes": {

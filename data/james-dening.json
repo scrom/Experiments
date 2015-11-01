@@ -1,0 +1,68 @@
+﻿{
+    "object": "creature",
+    "name": "james dening",
+    "displayName": "James Dening",
+    "description": "James Dening",
+    "detailedDescription": "Our head of Sales. Like a 6-foot-plus tigger.",
+    "attributes": {
+        "template": "creature-male-l5",
+        "affinity": 2,
+        "imageName": "jamesdening.jpg"
+    },
+    "inventory": [
+        {"file": "keyfob"},
+        {
+            "object": "artefact",
+            "name": "wig",
+            "description": "blonde wig",
+            "detailedDescription": "A disturbing remnant from the sales team beating their records and making their management team wear fancy dress.",
+            "attributes": {
+                "weight": 1,
+                "canCollect": true,
+                "affinityModifier": 2,
+                "customAction": [
+                    "wear"
+                ],
+                "defaultResult": "Nope, that's really not a good look for you. (Or anyone for that matter)"
+            },
+            "synonyms": [
+                "blonde",
+                "blonde wig",
+                "hair",
+                "blonde hair"
+            ]
+        },
+        {
+            "object": "artefact",
+            "name": "maracas",
+            "description": "pair of maracas",
+            "detailedDescription": "A reminder of one of our great days out and of Chris Whitworth's musical talents.",
+            "attributes": {
+                "weight": 1,
+                "canCollect": true,
+                "isBreakable": true,
+                "plural": true,
+                "affinityModifier": 2,
+                "price": 5,
+                "customAction": [
+                    "play",
+                    "shake"
+                ],
+                "defaultResult": "They're <i>really</i> annoying. Please don't do that again.",
+                "canDrawOn": true
+            },
+            "synonyms": [
+                "pair of maracas",
+                "a pair of maracas"
+            ]
+        }
+    ],
+    "synonyms": [
+        "james",
+        "james denning",
+        "james d",
+        "jd",
+        "dening",
+        "him"
+    ]
+}

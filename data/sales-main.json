@@ -30,7 +30,7 @@
       {
         "object": "creature",
         "name": "alex freeman",
-        "displayname": "Alex Freeman",
+        "displayName": "Alex Freeman",
         "description": "Alex Freeman",
         "detailedDescription": "Can haz mor Accountz.",
         "attributes": {
@@ -52,7 +52,7 @@
       {
         "object": "creature",
         "name": "james king",
-        "displayname": "James King",
+        "displayName": "James King",
         "description": "James King",
         "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
         "attributes": {
@@ -74,7 +74,7 @@
       {
         "object": "creature",
         "name": "justin heron",
-        "displayname": "Justin Heron",
+        "displayName": "Justin Heron",
         "description": "Justin Heron",
         "detailedDescription": "He's a master of selling!",
         "attributes": {
@@ -183,7 +183,7 @@
       {
         "object": "creature",
         "name": "cassi roper",
-        "displayname": "Cassi Roper",
+        "displayName": "Cassi Roper",
         "description": "Cassi Roper",
         "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
         "attributes": {

@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "john bowles",
-    "displayname": "John Bowles",
+    "displayName": "John Bowles",
     "description": "John Bowles",
     "detailedDescription": "He's like a short, stocky version of Brian Blessed.<br>He's in charge of what he describes as 'hard services' - the physical aspects of the building.",
     "attributes": {

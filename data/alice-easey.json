@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "alice easey",
-  "displayname": "Alice Easey",
+  "displayName": "Alice Easey",
   "description": "Alice Easey",
   "detailedDescription": "A source of endless positivity, even when the world is falling apart.<br>Probably your best bet for survival in a zombie apocalypse.",
   "attributes": {

@@ -1,0 +1,94 @@
+﻿{
+  "object": "creature",
+  "name": "vic wiseman",
+  "displayName": "Vic Wiseman",
+  "description": "Vic the receptionist",
+  "detailedDescription": "Vic's one of our support team on the customer-facing front line.<br>'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
+  "attributes": {
+    "template": "creature-female-l3",
+    "canTravel": false,
+    "traveller": false,
+    "imageName": "vicwiseman.jpg"
+  },
+  "synonyms": [
+    "receptionist",
+    "vic",
+    "vw",
+    "wiseman",
+    "vic w",
+    "her"
+  ],
+  "inventory": [
+    { "file": "keyfob" }
+  ],
+  "missions": [
+    {
+      "object": "mission",
+      "name": "talktovic",
+      "displayName": "greet vic",
+      "description": "Vic needs you to sign in.",
+      "attributes": {
+        "missionObject": "vic wiseman",
+        "static": true,
+        "dialogue": [
+          "'Good morning. You must be $player.'<br>'Welcome aboard!'"
+        ]
+      },
+      "conditionAttributes": {
+        "alive": true
+      },
+      "reward": {
+        "message": "Vic Places a large visitors book on the desk.<br>'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'",
+        "modifyObject": {
+          "name": "reception desk",
+          "inventory": [
+            {
+              "object": "artefact",
+              "name": "visitors book",
+              "description": "visitor's book",
+              "detailedDescription": "It looks like you're the first newcomer today.",
+              "attributes": {
+                "weight": 1,
+                "position": "on",
+                "customAction": [
+                  "get"
+                ],
+                "defaultResult": "It needs to stay down here on reception.",
+                "canDrawOn": true
+              },
+              "synonyms": [
+                "book",
+                "visitor book",
+                "in"
+              ]
+            }
+          ]
+        },
+        "removeObject": "missing visitors book"
+      }
+    },
+    {
+      "object": "mission",
+      "name": "vicsbook",
+      "displayName": "give Vic something interesting to read",
+      "description": "Things are pretty quiet down here today and Vic looks bored. I reckon she'd appreciate something interesting to read.",
+      "attributes": {
+        "parent": "keyfob",
+        "missionObject": "50 shades",
+        "destination": "vic wiseman",
+        "static": true
+      },
+      "conditionAttributes": {
+        "isDestroyed": false,
+        "isBroken": false
+      },
+      "reward": {
+        "removeObject": "50 shades",
+        "score": 35,
+        "affinityModifier": 2,
+        "increaseAffinityFor": "Vic Wiseman",
+        "message": "<br>Congratulations. Vic likes the book.<br><br>'Thanks $player!'<br>'If you ever need help tracking anything down, just pop down and <i>ask</i> me and I'll see what I can do.'"
+      }
+    }
+  ]
+}

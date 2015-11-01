@@ -1,0 +1,24 @@
+﻿{
+  "object": "creature",
+  "name": "chris smith",
+  "displayName": "Chris Smith",
+  "description": "Chris Smith",
+  "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "affinity": 1,
+    "imageName": "chrissmith.jpg"
+  },
+  "inventory": [
+    { "file": "keyfob" }
+  ],
+  "synonyms": [
+    "chris",
+    "smithy",
+    "smith",
+    "him"
+  ],
+  "missions": [
+    {"file": "mission-facilitatethefacilitator"}
+  ]
+}

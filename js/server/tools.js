@@ -50,6 +50,7 @@ var self = module.exports= {
 
     //test if a string is a proper noun
     isProperNoun: function (aString) {
+        if (!aString) { return false;};
         var initial = aString.charAt(0);
         var regexUpperCase = /^[A-Z]$/;
         if (regexUpperCase.test(initial)) { return true; };

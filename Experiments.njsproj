@@ -31,8 +31,11 @@
     <Content Include="data\access-road-east.json" />
     <Content Include="data\access-road-junction.json" />
     <Content Include="data\access-road-west.json" />
+    <Content Include="data\adam-parker.json" />
+    <Content Include="data\alan-platt.json" />
     <Content Include="data\alarm-button.json" />
     <Content Include="data\alice-easey.json" />
+    <Content Include="data\amanda-mansfield.json" />
     <Content Include="data\atrium-seating.json" />
     <Content Include="data\atrium.json" />
     <Content Include="data\balcony.json" />
@@ -41,13 +44,16 @@
     <Content Include="data\bike-ambulance.json" />
     <Content Include="data\bottle-of-milk.json" />
     <Content Include="data\bowl.json" />
+    <Content Include="data\brian-harris.json" />
     <Content Include="data\brick.json" />
     <Content Include="data\buenosaires.json" />
     <Content Include="data\camelids.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\charred-comic.json" />
     <Content Include="data\chocolate.json" />
+    <Content Include="data\chris-george.json" />
     <Content Include="data\chris-moore.json" />
+    <Content Include="data\chris-smith.json" />
     <Content Include="data\chris-whitworth.json" />
     <Content Include="data\coffee-machine.json" />
     <Content Include="data\coffee.json" />
@@ -87,6 +93,7 @@
     <Content Include="data\event-startoflunch.json" />
     <Content Include="data\facilities-area.json" />
     <Content Include="data\fez.json" />
+    <Content Include="data\filippa-vajda.json" />
     <Content Include="data\finance-area.json" />
     <Content Include="data\fire-door-exterior.json" />
     <Content Include="data\fire-exit.json" />
@@ -115,6 +122,7 @@
     <Content Include="data\ground-floor-toilet.json" />
     <Content Include="data\hand-dryer.json" />
     <Content Include="data\hookah.json" />
+    <Content Include="data\ice-cream-man.json" />
     <Content Include="data\images\camelids.jpg" />
     <Content Include="data\images\hookah.jpg" />
     <Content Include="data\images\map.jpg" />
@@ -123,6 +131,8 @@
     <Content Include="data\incidentals-blinkpipe.json" />
     <Content Include="data\indoor-plant.json" />
     <Content Include="data\is-area.json" />
+    <Content Include="data\james-dening.json" />
+    <Content Include="data\james-moore.json" />
     <Content Include="data\jeff-foster.json" />
     <Content Include="data\jellyfish-meeting-room.json" />
     <Content Include="data\john-bowles.json" />
@@ -137,6 +147,7 @@
     <Content Include="data\lift-first-floor.json" />
     <Content Include="data\lift-ground-floor.json" />
     <Content Include="data\lift-second-floor.json" />
+    <Content Include="data\lucy-boyes.json" />
     <Content Include="data\machine-room-east.json" />
     <Content Include="data\machine-room-west.json" />
     <Content Include="data\margaret-sexton.json" />
@@ -155,8 +166,12 @@
     <Content Include="data\mission-bodycount.json" />
     <Content Include="data\mission-chocolatefordene.json" />
     <Content Include="data\mission-destroycoffeemachine.json" />
+    <Content Include="data\mission-facilitatethefacilitator.json" />
+    <Content Include="data\mission-findadamstrainers.json" />
+    <Content Include="data\mission-findbriansguardian.json" />
     <Content Include="data\mission-finddaveandroger.json" />
     <Content Include="data\mission-fixchrisbike.json" />
+    <Content Include="data\mission-freeicecream.json" />
     <Content Include="data\mission-givetrusttokentoplayer.json" />
     <Content Include="data\mission-healbusvictims.json" />
     <Content Include="data\event-jordanreachesmachineroom.json" />
@@ -178,8 +193,10 @@
     <Content Include="data\mission-stealsketchbook.json" />
     <Content Include="data\mission-stealvaluables.json" />
     <Content Include="data\mission-supportfromalice.json" />
+    <Content Include="data\mission-teachprojectorrepair.json" />
     <Content Include="data\mission-tomatoesformargaret.json" />
     <Content Include="data\mission-vanarrival.json" />
+    <Content Include="data\mission-waterfilsplants.json" />
     <Content Include="data\mocha.json" />
     <Content Include="data\mouse.json" />
     <Content Include="data\northwest-corridor-ground-floor.json" />
@@ -242,6 +259,7 @@
     <Content Include="data\sales-north.json" />
     <Content Include="data\sales-seating.json" />
     <Content Include="data\sales-south.json" />
+    <Content Include="data\sara-stopford-pickering.json" />
     <Content Include="data\second-floor-back-stairs-east.json" />
     <Content Include="data\second-floor-back-stairs-west.json" />
     <Content Include="data\second-floor-cubicle.json" />
@@ -304,6 +322,7 @@
     <Content Include="data\van.json" />
     <Content Include="data\vat.json" />
     <Content Include="data\venom.json" />
+    <Content Include="data\vic-wiseman.json" />
     <Content Include="data\war-room.json" />
     <Content Include="data\waste-area.json" />
     <Content Include="data\water.json" />

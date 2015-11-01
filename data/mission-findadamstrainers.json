@@ -1,0 +1,77 @@
+﻿{
+  "object": "mission",
+  "name": "findadamstrainers",
+  "displayName": "find Adam's trainers",
+  "description": "Adam soaked his feet.",
+  "attributes": {
+    "parent": "beans",
+    "missionObject": "trainers",
+    "destination": "adam parker",
+    "static": true,
+    "dialogue": [
+      "'Hi $player.'<br>'I managed to get a soaking cycling into work this morning and can't find my spare trainers.'<br>'They're usually somewhere around my desk but they could be anywhere to be honest.'<br>'Could you do track them down and bring them back to me?'",
+      {
+        "state": 1,
+        "keywords": [
+          "yes",
+          "ok",
+          "yup",
+          "y"
+        ],
+        "response": "'Thanks $player.'",
+        "nextState": 3
+      },
+      {
+        "state": 1,
+        "keywords": [
+          "n",
+          "no",
+          "not",
+          "not yet"
+        ],
+        "response": "'Well, I'll be around if you change your mind.'",
+        "nextState": 2
+      },
+      {
+        "state": 1,
+        "response": "'Keep an eye out for them if you can.'",
+        "nextState": 3
+      },
+      {
+        "state": 2,
+        "response": "'Hey $player. Any joy tracking my trainers down?'",
+        "nextState": 3
+      },
+      {
+        "state": 3,
+        "response": "'Have you found my trainers yet?'",
+        "nextState": 4
+      },
+      {
+        "state": 4,
+        "requestedObject": "trainers",
+        "keywords": [
+          "yes",
+          "ok",
+          "yup",
+          "y"
+        ],
+        "response": "'Excellent!'"
+      },
+      {
+        "state": 4,
+        "response": "'I won't ask again but I'd appreciate it if you can help.'"
+      }
+    ]
+  },
+  "conditionAttributes": {
+    "isDestroyed": false
+  },
+  "reward": {
+    "score": 25,
+    "affinityModifier": 2,
+    "removeObject": "trainers",
+    "increaseAffinityFor": "adam parker",
+    "message": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'"
+  }
+}

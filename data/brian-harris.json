@@ -1,0 +1,24 @@
+﻿{
+    "object": "creature",
+    "name": "brian harris",
+    "displayName": "Brian Harris",
+    "description": "Brian Harris",
+    "detailedDescription": "Our head of Tech Comm's.<br>He has a pathologic aversion to misplaced apostrophe's (can you see what I did here?); He's also the ghost-writer for all the Feel-Good-Fund invitations.",
+    "attributes": {
+        "template": "creature-male-l2",
+        "imageName": "brianharris.jpg"
+    },
+    "inventory": [
+        { "file": "keyfob" }
+    ],
+    "synonyms": [
+        "brian",
+        "brian h",
+        "bh",
+        "harris",
+        "him"
+    ],
+    "missions": [
+        {"file": "mission-findbriansguardian"}
+    ]
+}

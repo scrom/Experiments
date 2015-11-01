@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "simon galbraith",
-    "displayname": "Simon Galbraith",
+    "displayName": "Simon Galbraith",
     "description": "Simon the CEO",
     "detailedDescription": "He runs the show.",
     "attributes": {

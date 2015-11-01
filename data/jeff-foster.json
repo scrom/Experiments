@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "jeff foster",
-    "displayname": "Jeff Foster",
+    "displayName": "Jeff Foster",
     "description": "Jeff Foster",
     "detailedDescription": "Jeff is our head of Software Engineering.",
     "attributes": {

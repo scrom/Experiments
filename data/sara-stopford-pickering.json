@@ -1,0 +1,31 @@
+﻿{
+    "object": "creature",
+    "name": "sara stopford-pickering",
+    "displayName": "Sara Stopford-Pickering",
+    "description": "Sara Stopford-Pickering",
+    "detailedDescription": "One of our super-capable and friendly PA team.",
+    "attributes": {
+        "template": "creature-female-l2",
+        "affinity": 1,
+        "imageName": "sarastopfordpickering.jpg"
+    },
+    "inventory": [
+        {"file": "keyfob"}
+    ],
+    "synonyms": [
+        "sara",
+        "sarah",
+        "sara sp",
+        "sarah sp",
+        "ssp",
+        "sp",
+        "sarah stopford",
+        "sara stopford pickering",
+        "sara stopfordpickering",
+        "sara pickering",
+        "sarah stopford pickering",
+        "sarah stopfordpickering",
+        "sarah pickering",
+        "her"
+    ]
+}

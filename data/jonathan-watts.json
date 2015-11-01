@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "jonathan watts",
-    "displayname": "Jonathan Watts",
+    "displayName": "Jonathan Watts",
     "description": "Jonathan Watts",
     "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
     "attributes": {

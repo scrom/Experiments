@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "destination creature",
-    "displayname": "Destination Creature",
+    "displayName": "Destination Creature",
     "description": "Destination Creature",
     "detailedDescription": "A creature that has a series of destinations.",
     "attributes": {

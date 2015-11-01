@@ -1,0 +1,55 @@
+﻿{
+    "object": "creature",
+    "name": "lucy boyes",
+    "displayName": "Lucy Boyes",
+    "description": "Lucy Boyes",
+    "detailedDescription": "A key part of our world of wrong. Probably the most unlikely but capable PA to a CEO you'll ever meet.<br>She runs a regular podcast on comics (along with Roger and Dave)",
+    "attributes": {
+        "template": "creature-female-l4",
+        "affinity": -1,
+        "destinations": [
+            "atrium",
+            "customer-delight-south",
+            "kitchen-ground-floor",
+            "atrium",
+            "opportunities-south",
+            "atrium",
+            "finance-area"
+        ],
+        "loops": 10,
+        "loopDelay": 9,
+        "destinationDelay": 6,
+        "imageName": "lucyboyes.jpg"
+    },
+    "inventory": [
+        {"file": "keyfob"},
+        {
+            "object": "artefact",
+            "name": "axe",
+            "description": "fire axe",
+            "detailedDescription": "I have no idea why a PA would carry such a dangerous weapon but I wouldn't mess with anyone carrying this.",
+            "attributes": {
+                "weight": 6,
+                "attackStrength": 30,
+                "type": "weapon",
+                "subType": "blunt",
+                "canCollect": true,
+                "imageName": "axe.jpg"
+            },
+            "synonyms": [
+                "axe",
+                "fireaxe"
+            ]
+        }
+    ],
+    "synonyms": [
+        "lucy",
+        "lucy b",
+        "lb",
+        "boyes",
+        "her"
+    ],
+    "missions": [
+        {"file": "mission-finddaveandroger"}
+    ]
+}
