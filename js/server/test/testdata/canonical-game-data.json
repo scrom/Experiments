@@ -4007,6 +4007,8 @@
               "charges": 10,
               "isEdible": true,
               "nutrition": 25,
+              "smell": "There's hardly any smell to them at all. Just plain, grim and dry.",
+              "taste": "Ugh. This stuff will do the job in an emergency but it's a lot like filling your mouth with carboard and foam packing material. Dry, tasteless and uncomfortable.",
               "canDrawOn": true
             },
             "synonyms": [
@@ -7355,7 +7357,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -7380,7 +7384,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -7405,7 +7411,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -7470,7 +7478,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -7495,7 +7505,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -7520,7 +7532,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -7585,7 +7599,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -7610,7 +7626,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -7635,7 +7653,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -7700,7 +7720,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -7725,7 +7747,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -7750,7 +7774,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -7815,7 +7841,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -7840,7 +7868,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -7865,7 +7895,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -8058,7 +8090,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -8083,7 +8117,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -8108,7 +8144,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -8173,7 +8211,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -8198,7 +8238,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -8223,7 +8265,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -8288,7 +8332,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -8313,7 +8359,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -8338,7 +8386,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -8403,7 +8453,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -8428,7 +8480,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -8453,7 +8507,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -8518,7 +8574,9 @@
                   "combinesWith": [
                     "coffee",
                     "sweet coffee"
-                  ]
+                  ],
+                  "smell": "It smells fresh and creamy",
+                  "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                 },
                 "synonyms": [
                   "cow juice"
@@ -8543,7 +8601,9 @@
                       "nutrition": 18,
                       "combinesWith": [
                         "sugar"
-                      ]
+                      ],
+                      "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                      "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                     },
                     "synonyms": [
                       "brew",
@@ -8568,7 +8628,9 @@
                           "charges": 1,
                           "plural": true,
                           "isEdible": true,
-                          "nutrition": 22
+                          "nutrition": 22,
+                          "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                          "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                         },
                         "synonyms": [
                           "brew",
@@ -8633,7 +8695,9 @@
                 "coffee",
                 "latte",
                 "mocha"
-              ]
+              ],
+              "smell": "It's just sugar.",
+              "taste": "It's sweet and crunchy in your mouth."
             },
             "synonyms": [
               "sweetener"
@@ -8658,7 +8722,9 @@
                   "nutrition": 15,
                   "combinesWith": [
                     "milk"
-                  ]
+                  ],
+                  "smell": "It smells warm, rich and slightly sweet.",
+                  "taste": "The black coffee and sugar balance each other well but it's still a little too sweet for your taste."
                 },
                 "synonyms": [
                   "brew",
@@ -8683,7 +8749,9 @@
                       "charges": 1,
                       "plural": true,
                       "isEdible": true,
-                      "nutrition": 22
+                      "nutrition": 22,
+                      "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                      "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                     },
                     "synonyms": [
                       "brew",
@@ -8712,7 +8780,9 @@
                   "charges": 1,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 25
+                  "nutrition": 25,
+                  "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                  "taste": "I have no idea why you'd spoil a perfectly good latte by adding sugar to it but still... I'm sure plenty of other people around here might appreciate it."
                 },
                 "synonyms": [
                   "brew",
@@ -8739,7 +8809,9 @@
                   "plural": true,
                   "affinityModifier": 2,
                   "isEdible": true,
-                  "nutrition": 25
+                  "nutrition": 25,
+                  "smell": "It smells warm, chocolatey, sweet and caffeinated.",
+                  "taste": "The combination of coffee and chocolate is like a tasty bedtime drink that's designed to keep you awake instead. The extra sugar just pushes it over the edge to be a little sickly but full of energy."
                 },
                 "synonyms": [
                   "brew",
@@ -8897,7 +8969,9 @@
                   "charges": 1,
                   "plural": true,
                   "isEdible": true,
-                  "nutrition": 25
+                  "nutrition": 25,
+                  "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                  "taste": "I have no idea why you'd spoil a perfectly good latte by adding sugar to it but still... I'm sure plenty of other people around here might appreciate it."
                 },
                 "synonyms": [
                   "brew",
@@ -8928,7 +9002,9 @@
               "isEdible": true,
               "nutrition": 35,
               "combinesWith": "sugar",
-              "requiredComponentCount": 2
+              "requiredComponentCount": 2,
+              "smell": "It smells warm, chocolatey and caffeinated.",
+              "taste": "It's oddly comforting. The combination of coffee and chocolate is like a tasty bedtime drink that's designed to keep you awake instead."
             },
             "synonyms": [
               "brew",
@@ -8952,7 +9028,9 @@
                   "plural": true,
                   "affinityModifier": 2,
                   "isEdible": true,
-                  "nutrition": 25
+                  "nutrition": 25,
+                  "smell": "It smells warm, chocolatey, sweet and caffeinated.",
+                  "taste": "The combination of coffee and chocolate is like a tasty bedtime drink that's designed to keep you awake instead. The extra sugar just pushes it over the edge to be a little sickly but full of energy."
                 },
                 "synonyms": [
                   "brew",
@@ -9012,7 +9090,9 @@
                   "nutrition": 15,
                   "combinesWith": [
                     "milk"
-                  ]
+                  ],
+                  "smell": "It smells warm, rich and slightly sweet.",
+                  "taste": "The black coffee and sugar balance each other well but it's still a little too sweet for your taste."
                 },
                 "synonyms": [
                   "brew",
@@ -9037,7 +9117,9 @@
                       "charges": 1,
                       "plural": true,
                       "isEdible": true,
-                      "nutrition": 22
+                      "nutrition": 22,
+                      "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                      "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                     },
                     "synonyms": [
                       "brew",
@@ -9069,7 +9151,9 @@
                   "nutrition": 18,
                   "combinesWith": [
                     "sugar"
-                  ]
+                  ],
+                  "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+                  "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty."
                 },
                 "synonyms": [
                   "brew",
@@ -9094,7 +9178,9 @@
                       "charges": 1,
                       "plural": true,
                       "isEdible": true,
-                      "nutrition": 22
+                      "nutrition": 22,
+                      "smell": "It smells warm, milky, caffeinated and slightly sweet.",
+                      "taste": "It's a little too sweet for your taste but I'm sure plenty of other people around here might appreciate it."
                     },
                     "synonyms": [
                       "brew",

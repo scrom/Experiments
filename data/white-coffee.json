@@ -4,20 +4,22 @@
 "description": "white coffee",
 "detailedDescription": "Milky development fuel",
 "attributes": {
-    "defaultAction": "drink",
-    "weight": 1,
-    "type": "food",
-    "requiresContainer": true,
-    "isLiquid": true,
-    "requiredContainer": "cup",
-    "canCollect": true,
-    "charges": 1,
-    "plural": true,
-    "isEdible": true,
-    "nutrition": 18,
-    "combinesWith": [
-      "sugar"
-    ]
+  "defaultAction": "drink",
+  "weight": 1,
+  "type": "food",
+  "requiresContainer": true,
+  "isLiquid": true,
+  "requiredContainer": "cup",
+  "canCollect": true,
+  "charges": 1,
+  "plural": true,
+  "isEdible": true,
+  "nutrition": 18,
+  "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
+  "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty.",
+  "combinesWith": [
+    "sugar"
+  ]
 },
 "synonyms": [
     "brew",

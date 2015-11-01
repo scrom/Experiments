@@ -4,24 +4,26 @@
     "description": "sugar",
     "detailedDescription": "Not so good for the waistline but sugary, sweet and tasty.",
     "attributes": {
-        "weight": 0.1,
-        "type": "food",
-        "requiresContainer": true,
-        "isPowder": true,
-        "canCollect": true,
-        "charges": 3,
-        "chargeUnit": "spoonfull",
-        "chargesDescription": "There's about $charges $chargeUnit left",
-        "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
-        "plural": true,
-        "affinityModifier": 0,
-        "isEdible": true,
-        "nutrition": 5,
-        "combinesWith": [
-            "coffee",
-            "latte",
-            "mocha"
-        ]
+      "weight": 0.1,
+      "type": "food",
+      "requiresContainer": true,
+      "isPowder": true,
+      "canCollect": true,
+      "charges": 3,
+      "chargeUnit": "spoonfull",
+      "chargesDescription": "There's about $charges $chargeUnit left",
+      "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
+      "plural": true,
+      "affinityModifier": 0,
+      "isEdible": true,
+      "nutrition": 5,
+      "smell": "It's just sugar.",
+      "taste": "It's sweet and crunchy in your mouth.",
+      "combinesWith": [
+          "coffee",
+          "latte",
+          "mocha"
+      ]
     },
   "delivers": [
     {

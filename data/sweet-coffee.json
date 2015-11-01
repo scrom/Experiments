@@ -4,20 +4,22 @@
 "description": "sweet coffee",
 "detailedDescription": "Development fuel with added sugar!",
 "attributes": {
-    "defaultAction": "drink",
-    "weight": 0.5,
-    "type": "food",
-    "requiresContainer": true,
-    "isLiquid": true,
-    "requiredContainer": "cup",
-    "canCollect": true,
-    "charges": 1,
-    "plural": true,
-    "isEdible": true,
-    "nutrition": 15,
-    "combinesWith": [
-      "milk"
-    ]
+  "defaultAction": "drink",
+  "weight": 0.5,
+  "type": "food",
+  "requiresContainer": true,
+  "isLiquid": true,
+  "requiredContainer": "cup",
+  "canCollect": true,
+  "charges": 1,
+  "plural": true,
+  "isEdible": true,
+  "nutrition": 15,
+  "smell": "It smells warm, rich and slightly sweet.",
+  "taste": "The black coffee and sugar balance each other well but it's still a little too sweet for your taste.",
+  "combinesWith": [
+    "milk"
+  ]
 },
 "synonyms": [
     "brew",

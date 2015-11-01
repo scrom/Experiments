@@ -15,7 +15,9 @@
         "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
         "plural": true,
         "isEdible": true,
-        "nutrition": 5,
+      "nutrition": 5,
+      "smell": "It smells fresh and creamy",
+      "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard.",
         "componentOf": [
             "latte",
             "mocha"
