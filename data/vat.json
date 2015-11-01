@@ -16,6 +16,16 @@
     "defaultResult": "It belongs here for the benefit of all staff, not just you."
   },
   "inventory": [
-    {"file": "porridge"}
+    { "file": "porridge" }
+  ],
+  "synonyms": [
+    "cooking vat",
+    "steel vat",
+    "porridge vat",
+    "soup vat",
+    "stainless vat",
+    "stainless steel vat",
+    "stainless steel cooking vat",
+    "empty vat"
   ]
 }

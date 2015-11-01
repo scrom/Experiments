@@ -17,9 +17,6 @@
     "hands"
 ],
 "delivers": [
-    {
-    "object": "artefact",
-    "template": "water"
-    }
+    {"file": "water"}
 ]
 }

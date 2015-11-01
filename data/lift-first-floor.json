@@ -1,75 +1,78 @@
 ﻿{
-    "object": "location",
-    "name": "lift-first-floor",
-    "displayName": "Lift",
-    "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "out",
-            "direction": "o",
-            "source": "lift-first-floor",
-            "destination": "first-floor-landing-central"
-        },
-        {
-            "object": "exit",
-            "longname": "down",
-            "direction": "d",
-            "source": "lift-first-floor",
-            "destination": "lift-ground-floor"
-        },
-        {
-            "object": "exit",
-            "longname": "up",
-            "direction": "u",
-            "source": "lift-first-floor",
-            "destination": "lift-second-floor"
-        }
-    ],
-    "inventory": [
-        {"file": "alarm-button"},
-        {
-            "object": "artefact",
-            "name": "led",
-            "description": "led lights",
-            "detailedDescription": "They're a kind of baleful blueish white.",
-            "attributes": {
-                "type": "scenery"
-            },
-            "synonyms": [
-                "light",
-                "lights",
-                "leds",
-                "led lights",
-                "lighting",
-                "led lighting",
-                "white",
-                "blue",
-                "blueish",
-                "dark led",
-                "dark led lights"
-            ]
-        },
-        {
-            "object": "artefact",
-            "name": "door",
-            "description": "lift doors",
-            "detailedDescription": "They're just plain metal lift doors.",
-            "attributes": {
-                "type": "scenery",
-                "plural": true
-            }
-        },
-        {
-            "object": "artefact",
-            "template": "mirror",
-            "detailedDescription": "With the white/blue-ish dark LED light, the full-length view of yourself and the enclosed space the view is making you uncomfortable.<br>This mirror seems to shed pounds from you leaving you looking gaunt, aging and unwell.",
-            "synonyms": [
-                "lift mirror",
-                "self",
-                "yourself",
-                "full mirror"
-            ]
-        }
-    ]
+  "object": "location",
+  "name": "lift-first-floor",
+  "displayName": "Lift",
+  "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "out",
+      "direction": "o",
+      "source": "lift-first-floor",
+      "destination": "first-floor-landing-central"
+    },
+    {
+      "object": "exit",
+      "longname": "down",
+      "direction": "d",
+      "source": "lift-first-floor",
+      "destination": "lift-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "up",
+      "direction": "u",
+      "source": "lift-first-floor",
+      "destination": "lift-second-floor"
+    }
+  ],
+  "inventory": [
+    { "file": "alarm-button" },
+    {
+      "object": "artefact",
+      "name": "led",
+      "description": "led lights",
+      "detailedDescription": "They're a kind of baleful blueish white.",
+      "attributes": {
+        "type": "scenery"
+      },
+      "synonyms": [
+        "light",
+        "lights",
+        "leds",
+        "led lights",
+        "lighting",
+        "led lighting",
+        "white",
+        "blue",
+        "blueish",
+        "dark led",
+        "dark led lights"
+      ]
+    },
+    {
+      "object": "artefact",
+      "name": "door",
+      "description": "lift doors",
+      "detailedDescription": "They're just plain metal lift doors.",
+      "attributes": {
+        "type": "scenery",
+        "plural": true
+      },
+      "synonyms": [
+        "lift door"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "mirror",
+      "detailedDescription": "With the white/blue-ish dark LED light, the full-length view of yourself and the enclosed space the view is making you uncomfortable.<br>This mirror seems to shed pounds from you leaving you looking gaunt, aging and unwell.",
+      "synonyms": [
+        "lift mirror",
+        "self",
+        "yourself",
+        "full mirror"
+      ]
+    }
+  ]
   }

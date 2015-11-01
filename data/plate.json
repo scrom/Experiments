@@ -1,15 +1,18 @@
 ﻿{
-    "object": "artefact",
-    "name": "plate",
-    "description": "plate",
-    "detailedDescription": "It's a standard white mass-produced dinner place",
-    "attributes": {
-        "extendedInventoryDescription": "There's $inventory on it.",
-        "weight": 0.2,
-        "carryWeight": 0.2,
-        "type": "container",
-        "canCollect": true,
-        "isBreakable": true,
-        "affinityModifier": 0
-    }
+  "object": "artefact",
+  "name": "plate",
+  "description": "plate",
+  "detailedDescription": "It's a standard white mass-produced dinner plate",
+  "attributes": {
+    "extendedInventoryDescription": "There's $inventory on it.",
+    "weight": 0.2,
+    "carryWeight": 0.2,
+    "type": "container",
+    "canCollect": true,
+    "isBreakable": true,
+    "affinityModifier": 0
+  },
+  "synonyms": [
+    "white plate"
+  ]
 }

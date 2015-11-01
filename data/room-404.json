@@ -11,23 +11,5 @@
         "source": "room-404",
         "destination": "southeast-corridor-ground-floor"
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "brick",
-        "description": "brick",
-        "detailedDescription": "This would make quite a good cudgel but it's likely to break.",
-        "attributes": {
-          "weight": 1,
-          "attackStrength": 15,
-          "type": "weapon",
-          "subType": "blunt",
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0,
-          "canDrawOn": true
-        }
-      }
     ]
   }

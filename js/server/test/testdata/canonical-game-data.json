@@ -581,7 +581,7 @@
                   "object": "artefact",
                   "name": "plate",
                   "description": "plate",
-                  "detailedDescription": "It's a standard white mass-produced dinner place",
+                  "detailedDescription": "It's a standard white mass-produced dinner plate",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory on it.",
                     "weight": 0.2,
@@ -590,13 +590,16 @@
                     "canCollect": true,
                     "isBreakable": true,
                     "affinityModifier": 0
-                  }
+                  },
+                  "synonyms": [
+                    "white plate"
+                  ]
                 },
                 {
                   "object": "artefact",
                   "name": "plate",
                   "description": "plate",
-                  "detailedDescription": "It's a standard white mass-produced dinner place",
+                  "detailedDescription": "It's a standard white mass-produced dinner plate",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory on it.",
                     "weight": 0.2,
@@ -605,13 +608,16 @@
                     "canCollect": true,
                     "isBreakable": true,
                     "affinityModifier": 0
-                  }
+                  },
+                  "synonyms": [
+                    "white plate"
+                  ]
                 },
                 {
                   "object": "artefact",
                   "name": "bowl",
                   "description": "bowl",
-                  "detailedDescription": "A round bowl",
+                  "detailedDescription": "It's a plain round china bowl",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory in it.",
                     "weight": 0.5,
@@ -622,13 +628,21 @@
                     "canCollect": true,
                     "isBreakable": true,
                     "affinityModifier": 0
-                  }
+                  },
+                  "synonyms": [
+                    "plain bowl",
+                    "round bowl",
+                    "china bowl",
+                    "plain round bowl",
+                    "round china bowl",
+                    "plain round china bowl"
+                  ]
                 },
                 {
                   "object": "artefact",
                   "name": "bowl",
                   "description": "bowl",
-                  "detailedDescription": "A round bowl",
+                  "detailedDescription": "It's a plain round china bowl",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory in it.",
                     "weight": 0.5,
@@ -639,7 +653,15 @@
                     "canCollect": true,
                     "isBreakable": true,
                     "affinityModifier": 0
-                  }
+                  },
+                  "synonyms": [
+                    "plain bowl",
+                    "round bowl",
+                    "china bowl",
+                    "plain round bowl",
+                    "round china bowl",
+                    "plain round china bowl"
+                  ]
                 },
                 {
                   "object": "artefact",
@@ -2608,7 +2630,11 @@
                   "nutrition": -15,
                   "smell": "It reminds you of something.<br>You wonder to yourself if cats like Spam.",
                   "taste": "It tastes a lot like it <i>smell</i>s."
-                }
+                },
+                "synonyms": [
+                  "meat",
+                  "processed meat"
+                ]
               }
             ]
           }
@@ -4136,7 +4162,7 @@
                         "object": "artefact",
                         "name": "vaccine",
                         "description": "zombie antibodies",
-                        "detailedDescription": "There's only enough for you here by the look of things. You'll need to figure out how to save everyone else as well.",
+                        "detailedDescription": "There's only enough for you here. You'll need to figure out another way to save everyone else as well.",
                         "attributes": {
                           "weight": 0.5,
                           "type": "cure",
@@ -4151,7 +4177,11 @@
                           "antibodies": [
                             "zombie"
                           ]
-                        }
+                        },
+                        "synonyms": [
+                          "antibodies",
+                          "zombie vaccine"
+                        ]
                       }
                     ]
                   }
@@ -6261,6 +6291,11 @@
               "smell": "It's odorless",
               "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
+            "synonyms": [
+              "drink",
+              "aqua",
+              "h20"
+            ],
             "delivers": [
               {
                 "object": "artefact",
@@ -6945,6 +6980,11 @@
               "smell": "It's odorless",
               "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
+            "synonyms": [
+              "drink",
+              "aqua",
+              "h20"
+            ],
             "delivers": [
               {
                 "object": "artefact",
@@ -7861,7 +7901,12 @@
           "affinityModifier": 0
         },
         "synonyms": [
-          "cereal bowl"
+          "cereal bowl",
+          "round bowl",
+          "china bowl",
+          "plain round bowl",
+          "round china bowl",
+          "plain round china bowl"
         ],
         "inventory": [
           {
@@ -8590,6 +8635,9 @@
                 "mocha"
               ]
             },
+            "synonyms": [
+              "sweetener"
+            ],
             "delivers": [
               {
                 "object": "artefact",
@@ -8745,7 +8793,12 @@
           "affinityModifier": 0
         },
         "synonyms": [
-          "cereal bowl"
+          "cereal bowl",
+          "round bowl",
+          "china bowl",
+          "plain round bowl",
+          "round china bowl",
+          "plain round china bowl"
         ],
         "inventory": [
           {
@@ -9253,7 +9306,7 @@
                               "object": "artefact",
                               "name": "vaccine",
                               "description": "zombie antibodies",
-                              "detailedDescription": "There's only enough for you here by the look of things. You'll need to figure out how to save everyone else as well.",
+                              "detailedDescription": "There's only enough for you here. You'll need to figure out another way to save everyone else as well.",
                               "attributes": {
                                 "weight": 0.5,
                                 "type": "cure",
@@ -9268,7 +9321,11 @@
                                 "antibodies": [
                                   "zombie"
                                 ]
-                              }
+                              },
+                              "synonyms": [
+                                "antibodies",
+                                "zombie vaccine"
+                              ]
                             }
                           ]
                         }
@@ -10088,7 +10145,13 @@
               ],
               "defaultResult": "It says 'Whosoever contributeth most to our billion-dollar revenue is rightwise born to pull out this sword of this stone and table.'",
               "imageName": "plaque.jpg"
-            }
+            },
+            "synonyms": [
+              "shiny plaque",
+              "shiny gold plaque",
+              "gold plaque",
+              "brass plaque"
+            ]
           }
         ]
       },
@@ -10300,8 +10363,16 @@
               "customAction": [
                 "get"
               ],
-              "defaultResult": "They look pretty worn out. It's best to leave them alone."
-            }
+              "defaultResult": "They look pretty worn out. They'll be no use as a garotte or tourniquet. Their only function is for making plinky sounds on a guitar so it's best to leave them alone."
+            },
+            "synonyms": [
+              "guitar strings",
+              "nylon strings",
+              "nylon wound strings",
+              "nylon-wound strings",
+              "nylon guitar strings",
+              "spanish guitar strings"
+            ]
           }
         ]
       }
@@ -10386,7 +10457,10 @@
         "attributes": {
           "type": "scenery",
           "plural": true
-        }
+        },
+        "synonyms": [
+          "lift door"
+        ]
       },
       {
         "object": "artefact",
@@ -10591,7 +10665,10 @@
         "attributes": {
           "type": "scenery",
           "plural": true
-        }
+        },
+        "synonyms": [
+          "lift door"
+        ]
       },
       {
         "object": "artefact",
@@ -12140,6 +12217,11 @@
               "smell": "It's odorless",
               "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
+            "synonyms": [
+              "drink",
+              "aqua",
+              "h20"
+            ],
             "delivers": [
               {
                 "object": "artefact",
@@ -12374,6 +12456,10 @@
           "switched": true,
           "requiredComponentCount": 1
         },
+        "synonyms": [
+          "old projector",
+          "broken projector"
+        ],
         "missions": [
           {
             "object": "mission",
@@ -13257,24 +13343,6 @@
         "direction": "w",
         "source": "room-404",
         "destination": "southeast-corridor-ground-floor"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "brick",
-        "description": "brick",
-        "detailedDescription": "This would make quite a good cudgel but it's likely to break.",
-        "attributes": {
-          "weight": 1,
-          "attackStrength": 15,
-          "type": "weapon",
-          "subType": "blunt",
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0,
-          "canDrawOn": true
-        }
       }
     ]
   },
@@ -15244,6 +15312,11 @@
               "smell": "It's odorless",
               "taste": "They always taught you in science class that water was tasteless and odorless. That's probably true for 'pure' water but this tastes just like water.<br>You wrestle with the idea of explaining what purified water tastes like to someone else but settle for accepting it's just water."
             },
+            "synonyms": [
+              "drink",
+              "aqua",
+              "h20"
+            ],
             "delivers": [
               {
                 "object": "artefact",
@@ -15422,7 +15495,7 @@
         "object": "artefact",
         "name": "bowl",
         "description": "bowl",
-        "detailedDescription": "A round bowl",
+        "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
           "weight": 0.5,
@@ -15433,13 +15506,21 @@
           "canCollect": true,
           "isBreakable": true,
           "affinityModifier": 0
-        }
+        },
+        "synonyms": [
+          "plain bowl",
+          "round bowl",
+          "china bowl",
+          "plain round bowl",
+          "round china bowl",
+          "plain round china bowl"
+        ]
       },
       {
         "object": "artefact",
         "name": "bowl",
         "description": "bowl",
-        "detailedDescription": "A round bowl",
+        "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
           "weight": 0.5,
@@ -15450,13 +15531,21 @@
           "canCollect": true,
           "isBreakable": true,
           "affinityModifier": 0
-        }
+        },
+        "synonyms": [
+          "plain bowl",
+          "round bowl",
+          "china bowl",
+          "plain round bowl",
+          "round china bowl",
+          "plain round china bowl"
+        ]
       },
       {
         "object": "artefact",
         "name": "bowl",
         "description": "bowl",
-        "detailedDescription": "A round bowl",
+        "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
           "weight": 0.5,
@@ -15467,7 +15556,15 @@
           "canCollect": true,
           "isBreakable": true,
           "affinityModifier": 0
-        }
+        },
+        "synonyms": [
+          "plain bowl",
+          "round bowl",
+          "china bowl",
+          "plain round bowl",
+          "round china bowl",
+          "plain round china bowl"
+        ]
       },
       {
         "object": "artefact",
@@ -15486,6 +15583,16 @@
           ],
           "defaultResult": "It belongs here for the benefit of all staff, not just you."
         },
+        "synonyms": [
+          "cooking vat",
+          "steel vat",
+          "porridge vat",
+          "soup vat",
+          "stainless vat",
+          "stainless steel vat",
+          "stainless steel cooking vat",
+          "empty vat"
+        ],
         "inventory": [
           {
             "object": "artefact",

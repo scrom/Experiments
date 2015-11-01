@@ -1,0 +1,21 @@
+﻿{
+  "object": "artefact",
+  "name": "brick",
+  "description": "brick",
+  "detailedDescription": "It's a plain red brick. it'd make quite a good projectile but it's likely to break on impact.",
+  "attributes": {
+    "weight": 1,
+    "attackStrength": 15,
+    "type": "weapon",
+    "subType": "blunt",
+    "canCollect": true,
+    "isBreakable": true,
+    "affinityModifier": 0,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "plain brick",
+    "plain red brick",
+    "red brick"
+  ]
+}

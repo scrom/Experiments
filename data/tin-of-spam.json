@@ -1,45 +1,48 @@
 ﻿{
+  "object": "artefact",
+  "name": "tin",
+  "description": "tin",
+  "detailedDescription": "'SPAM!'<br>It's an easy-open canned meat container - a leftover from an email marketing training course a few years ago.<br>It says 'best before end: November 2015.'<br>I thought this stuff lasted forever!",
+  "attributes": {
+    "extendedInventoryDescription": "There's $inventory in it.",
+    "weight": 0.5,
+    "carryWeight": 1,
+    "attackStrength": 5,
+    "type": "container",
+    "canOpen": true,
+    "position": "on",
+    "holdsLiquid": true,
+    "canCollect": true,
+    "affinityModifier": 0
+  },
+  "synonyms": [
+    "tin of spam",
+    "tin spam",
+    "spam tin"
+  ],
+  "inventory": [
+    {
       "object": "artefact",
-      "name": "tin",
-      "description": "tin",
-      "detailedDescription": "'SPAM!'<br>It's an easy-open canned meat container - a leftover from an email marketing training course a few years ago.<br>It says 'best before end: November 2015.'<br>I thought this stuff lasted forever!",
+      "name": "spam",
+      "description": "spam",
+      "detailedDescription": "Processed meat. How bad can it be? Right?",
       "attributes": {
-        "extendedInventoryDescription": "There's $inventory in it.",
-        "weight": 0.5,
-        "carryWeight": 1,
-        "attackStrength": 5,
-        "type": "container",
-        "canOpen": true,
-        "position": "on",
-        "holdsLiquid": true,
+        "weight": 1,
+        "type": "food",
         "canCollect": true,
-        "affinityModifier": 0
+        "charges": 3,
+        "chargeUnit": "portion",
+        "chargesDescription": "There's about $charges $chargeUnit left",
+        "isEdible": true,
+        "plural": true,
+        "nutrition": -15,
+        "smell": "It reminds you of something.<br>You wonder to yourself if cats like Spam.",
+        "taste": "It tastes a lot like it <i>smell</i>s."
       },
       "synonyms": [
-        "tin of spam",
-        "tin spam",
-        "spam tin"
-      ],
-      "inventory": [
-        {
-          "object": "artefact",
-          "name": "spam",
-          "description": "spam",
-          "detailedDescription": "Processed meat. How bad can it be? Right?",
-          "attributes": {
-            "weight": 1,
-            "type": "food",
-            "canCollect": true,
-            "charges": 3,
-            "chargeUnit": "portion",
-            "chargesDescription": "There's about $charges $chargeUnit left",
-            "isEdible": true,
-            "plural": true,
-            "nutrition": -15,
-            "smell": "It reminds you of something.<br>You wonder to yourself if cats like Spam.",
-            "taste": "It tastes a lot like it <i>smell</i>s."
-          },
-          "synonyms": []
-        }
+        "meat",
+        "processed meat"
       ]
+    }
+  ]
     }

@@ -23,18 +23,19 @@
             "mocha"
         ]
     },
-    "delivers": [
-        {
-            "object": "artefact",
-            "template": "sweet-coffee"
-        },
-        {
-            "object": "artefact",
-            "template": "sweet-latte"
-        },
-        {
-            "object": "artefact",
-            "template": "sweet-mocha"
-        }
-    ]
+  "delivers": [
+    {
+      "object": "artefact",
+      "template": "sweet-coffee"
+    },
+    {
+      "object": "artefact",
+      "template": "sweet-latte"
+    },
+    {
+      "object": "artefact",
+      "template": "sweet-mocha"
+    }
+  ],
+  "synonyms": ["sweetener"]
 }

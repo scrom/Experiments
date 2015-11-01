@@ -30,7 +30,7 @@
       "object": "artefact",
       "name": "vaccine",
       "description": "zombie antibodies",
-      "detailedDescription": "There's only enough for you here by the look of things. You'll need to figure out how to save everyone else as well.",
+      "detailedDescription": "There's only enough for you here. You'll need to figure out another way to save everyone else as well.",
       "attributes": {
         "type": "cure",
         "weight": 0.5,
@@ -45,7 +45,11 @@
         "antibodies": [
           "zombie"
         ]
-      }
+      },
+      "synonyms": [
+        "antibodies",
+        "zombie vaccine"
+      ]
     }
   ]
 }

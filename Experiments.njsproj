@@ -41,6 +41,7 @@
     <Content Include="data\bike-ambulance.json" />
     <Content Include="data\bottle-of-milk.json" />
     <Content Include="data\bowl.json" />
+    <Content Include="data\brick.json" />
     <Content Include="data\buenosaires.json" />
     <Content Include="data\camelids.json" />
     <Content Include="data\chairs.json" />
@@ -168,6 +169,7 @@
     <Content Include="data\mission-partytime.json" />
     <Content Include="data\event-planecrash.json" />
     <Content Include="data\mission-repaircoffeemachine.json" />
+    <Content Include="data\mission-repairprojector.json" />
     <Content Include="data\mission-retrievedisk.json" />
     <Content Include="data\mission-rumforthecaptain.json" />
     <Content Include="data\mission-saveredgate.json" />
@@ -201,6 +203,7 @@
     <Content Include="data\poppy.json" />
     <Content Include="data\porridge.json" />
     <Content Include="data\post-room.json" />
+    <Content Include="data\projector.json" />
     <Content Include="data\punts.json" />
     <Content Include="data\quality-rum-bottle.json" />
     <Content Include="data\reception.json" />
@@ -266,6 +269,7 @@
     <Content Include="data\shower-ground-floor.json" />
     <Content Include="data\signpost.json" />
     <Content Include="data\simon-cromarty.json" />
+    <Content Include="data\simon-galbraith.json" />
     <Content Include="data\sketchbook.json" />
     <Content Include="data\smoking-area.json" />
     <Content Include="data\snorting-horses.json" />

@@ -1,0 +1,28 @@
+﻿{
+    "object": "mission",
+    "name": "repairprojector",
+    "displayName": "repair the projector",
+    "description": "The projector's broken, someone needs to fix it.",
+    "attributes": {
+        "parent": "teachprojectorrepair",
+        "missionObject": "projector"
+    },
+    "failAttributes": {
+        "isDestroyed": true
+    },
+    "conditionAttributes": {
+        "isDestroyed": false,
+        "isBroken": false,
+        "isDamaged": false,
+        "checkComponents": true,
+        "contains": [
+            "bulb"
+        ]
+    },
+    "reward": {
+        "score": 25,
+        "affinityModifier": 2,
+        "increaseAffinityFor": "amanda mansfield",
+        "message": "Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i>"
+    }
+}

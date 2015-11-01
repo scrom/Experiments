@@ -51,7 +51,10 @@
             "attributes": {
                 "type": "scenery",
                 "plural": true
-            }
+            },
+            "synonyms": [
+              "lift door"
+            ]
         },
         {
             "object": "artefact",
