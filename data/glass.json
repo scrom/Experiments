@@ -1,11 +1,11 @@
 ﻿{
     "object": "artefact",
-    "name": "glass",
-    "description": "drinking glass",
+    "name": "drinking glass",
+    "description": "glass",
     "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
     "attributes": {
       "extendedInventoryDescription": "There's $inventory in it.",
-      "weight": 0.3,
+      "weight": 0.25,
       "carryWeight": 0.8,
       "attackStrength": 2,
       "type": "container",

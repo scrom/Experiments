@@ -1,0 +1,27 @@
+﻿{
+  "object": "artefact",
+  "name": "shreddies",
+  "description": "shreddies",
+  "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'",
+  "attributes": {
+    "weight": 2.5,
+    "type": "food",
+    "plural": true,
+    "canCollect": true,
+    "requiresContainer": true,
+    "isPowder": true,
+    "charges": 11,
+    "chargeUnit": "serving",
+    "chargesDescription": "There's roughly $charges $chargeUnit here.",
+    "isEdible": true,
+    "plural": true,
+    "nutrition": 20,
+    "smell": "They have an oddly delicious malty smell to them whilst still having a hit of dry cardboard.",
+    "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of holding a solitary shreddie on your tongue whilst stood in your place of work but it's rather good."
+  },
+  "synonyms": [
+    "food",
+    "cereal",
+    "shreddies"
+  ]
+}

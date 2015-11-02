@@ -5,8 +5,8 @@
   "detailedDescription": "It's a plain round china bowl",
   "attributes": {
     "extendedInventoryDescription": "There's $inventory in it.",
-    "weight": 0.5,
-    "carryWeight": 0.5,
+    "weight": 0.25,
+    "carryWeight": 0.25,
     "attackStrength": 1,
     "type": "container",
     "holdsLiquid": true,

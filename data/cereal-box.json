@@ -1,0 +1,20 @@
+﻿{
+    "object": "artefact",
+    "name": "cereal box",
+    "description": "box",
+    "detailedDescription": "It's a typical branded cereal box. Hey - at least they buy the real stuff here.",
+    "attributes": {
+        "defaultAction": "open",
+        "weight": 0.2,
+        "carryWeight": 3,
+        "type": "container",
+        "canCollect": true,
+        "affinityModifier": 0,
+        "canDrawOn": true
+    },
+    "synonyms": [
+        "cereal packet",
+        "cereal pack",
+        "box"
+    ]
+}

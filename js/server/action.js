@@ -87,7 +87,7 @@ exports.Action = function Action(player, map, fileManager) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['in with', 'with', 'into', 'in to', 'onto', 'on to', 'on top of', 'to', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over']; //the words we'll try to split on.
+            var splitWordArray = ['in with', 'with my', 'with', 'into my', 'into', 'in to my', 'in my', 'in to', 'onto my', 'onto', 'on to my', 'on to', 'on top of my', 'on top of', 'to my', 'to', 'from my', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'my', 'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid substring oddities
                 if (objectPair != aString) { //split successful
@@ -464,8 +464,13 @@ exports.Action = function Action(player, map, fileManager) {
                             //support "examine under", "examine behind" and "examine in" etc.
                             description = _player.search(_verb, _object1, _splitWord, tools.positions);
                         } else if (_adverb == "closely" || _adverb == "carefully") {
-                            _ticks = _baseTickSize*3; //full search takes longer
+                            _ticks = _baseTickSize * 3; //full search takes longer
                             description = _player.search(_verb, _object0, _splitWord, tools.positions);
+                        } else if (_splitWord == "my") {
+                            if (!_object0) {
+                                _object0 = _object1;
+                            };
+                            description = _player.examine(_verb, _object0, _splitWord, _map);
                         } else {
                             description = _player.examine(_verb, _object0, null, _map);
                         };

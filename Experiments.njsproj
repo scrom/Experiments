@@ -48,6 +48,7 @@
     <Content Include="data\brick.json" />
     <Content Include="data\buenosaires.json" />
     <Content Include="data\camelids.json" />
+    <Content Include="data\cereal-box.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\charred-comic.json" />
     <Content Include="data\chocolate.json" />
@@ -55,6 +56,7 @@
     <Content Include="data\chris-moore.json" />
     <Content Include="data\chris-smith.json" />
     <Content Include="data\chris-whitworth.json" />
+    <Content Include="data\coco-pops.json" />
     <Content Include="data\coffee-machine.json" />
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />
@@ -287,6 +289,7 @@
     <Content Include="data\servery-food-bar.json" />
     <Content Include="data\servery-south-west.json" />
     <Content Include="data\shower-ground-floor.json" />
+    <Content Include="data\shreddies.json" />
     <Content Include="data\signpost.json" />
     <Content Include="data\simon-cromarty.json" />
     <Content Include="data\simon-galbraith.json" />

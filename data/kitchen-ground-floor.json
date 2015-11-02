@@ -13,7 +13,7 @@
     }
   ],
   "inventory": [
-    {"file": "sink"},
+    { "file": "sink" },
     { "file": "fridge" },
     {
       "object": "artefact",
@@ -48,35 +48,17 @@
     { "file": "glass" },
     {
       "object": "artefact",
+      "template": "cereal-box",
+      "inventory": [
+        {"file": "coco-pops"}
+      ]
+    },
+    {
+      "object": "artefact",
       "template": "bowl",
       "detailedDescription": "It's a round, china cereal bowl.",
       "synonyms": [
         "cereal bowl"
-      ],
-      "inventory": [
-        {
-          "object": "artefact",
-          "name": "coco pops",
-          "description": "coco pops",
-          "detailedDescription": "They're going a bit soggy but still tasty.",
-          "attributes": {
-            "weight": 0.5,
-            "type": "food",
-            "plural": true,
-            "canCollect": true,
-            "requiresContainer": true,
-            "requiredContainer": "bowl",
-            "charges": 1,
-            "isEdible": true,
-            "nutrition": 20
-          },
-          "synonyms": [
-            "food",
-            "cereal",
-            "pops",
-            "coco"
-          ]
-        }
       ]
     },
     { "file": "coffee-machine" }

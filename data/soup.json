@@ -10,7 +10,7 @@
     "canCollect": true,
     "requiresContainer": true,
     "requiredContainer": "bowl",
-    "charges": 9,
+    "charges": 12,
     "chargeUnit": "bowlful",
     "chargesDescription": "There's about $charges $chargeUnit left. For the benefit of everyone else, try to stick to just one portion though",
     "plural": true,

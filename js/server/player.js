@@ -1333,8 +1333,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //@todo -  issue #394 handling of suitable containers here needs some better handling
                 //@todo -  issue #395 handling of portion sizes here needs work
                 var suitableContainer = _inventory.getSuitableContainer(artefact); //@todo #394 - try location inventory.
+                var locationInventory = _currentLocation.getInventoryObject();
+                if (!(suitableContainer)) {
+                    suitableContainer = locationInventory.getSuitableContainer(artefact);
+                };
     
-                if (!suitableContainer) { return "You're not carrying anything that you can put "+artefact.getDisplayName()+" into.";};
+                if (!suitableContainer) {
+                    return "You're not carrying anything that you can put " + artefact.getDisplayName() + " into.";
+                };
 
                 var requiredContainer = artefact.getRequiredContainer();
                 return self.put("collect", artefactName, "into", suitableContainer.getName(), requiredContainer);
@@ -2555,7 +2561,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //put the x in the y
             var receiverDisplayNameString = receiver.getDisplayName();
-            if (_inventory.check(receiver.getName())) {receiverDisplayNameString = "your "+receiver.getName();};
+            if (_inventory.check(receiver.getName())) {
+                receiverDisplayNameString = "your " + receiver.getName();
+            } else if (verb == "collect") {
+                receiverDisplayNameString = "a nearby " + receiver.getName();
+            };
 
             var artefactDisplayNameString = collectedArtefact.getDisplayName();
             if (artefactPreviouslyCollected) {
@@ -2585,7 +2595,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     receiveResult = receiveResult.substr(6);
                     
                     //return item (need to return to original container if possible)
-                    originalInventory.add(collectedArtefact);
+                    if (originalInventory) {
+                        originalInventory.add(collectedArtefact);
+                    };
                     
                     //just return what happened in "receive"
                     return receiveResult
@@ -2596,6 +2608,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             };
             
+            //collect suitable container if possible
+            if (verb == "collect") {
+                if (!(_inventory.check(receiver.getName()))) {                    
+                    //automatically collect the container if possible
+                    if (_inventory.canCarry(receiver)) {
+                        var locationInventory = _currentLocation.getInventoryObject();
+                        locationInventory.remove(receiver.getName());
+                        _inventory.add(receiver);                        
+                    };
+                };
+            };
+            
             //did the collected artefact combine with anything?
             var newObject = receiver.getInventoryObject().getObject(collectedArtefact.getName());
             if (newObject) {
@@ -2604,9 +2628,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (_inventory.check(receiver.getName()) && receiveResult.indexOf(" now contains ") > -1) {
                         var trimLocation = receiveResult.indexOf(" now contains ") + 14;
                         receiveResult = "You now have " + receiveResult.substr(trimLocation);
+                    } else if (!_inventory.check(receiver.getName())) {
+                        //if the player can't pick it up.
+                        receiveResult = "<br>" + newObject.getDescriptivePrefix().toLowerCase() + " here for you to collect when you're ready.";
                     };
                     resultString += receiveResult;
                     return resultString;
+                };
+            } else {                
+                if (!_inventory.check(receiver.getName())) {
+                    //if the player can't pick it up.
+                    resultString += "<br>" + collectedArtefact.getDescriptivePrefix().toLowerCase() + " here for you to collect when you're ready.";
                 };
             };
 
@@ -2614,7 +2646,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (collectedArtefact.isComponentOf(receiver.getName())) {
                 //if we have all components and it needs reparing...
                 if (receiver.checkComponents()) {
-                    resultString += "<br>That's all the missing ingredients in place."; //@todo - improve the wording of this
                     //would like to attempt an auto-repair here
                     if (receiver.isBroken()) {     
                         resultString += "<br>"+receiver.repair(self);                 
@@ -3360,8 +3391,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (containerName) {
                 container = getObjectFromPlayerOrLocation(containerName);
                 if (!container) {
-                    if (containerName == "inventory") {
+                    if (containerName == "inventory" || containerName == "my") {
                         playerArtefact = getObjectFromPlayer(artefactName);
+                        if (!playerArtefact) {
+                            return notFoundMessage(artefactName, "inventory");
+                        };
                     } else if (containerName == "location") {
                         locationArtefact = getObjectFromLocation(artefactName);
                     } else {
@@ -3378,7 +3412,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 locationArtefact = getObjectFromLocation(artefactName);
                 
                 if (playerArtefact && locationArtefact) {
-                    return "There's more than one " + artefactName + " available to you here. You'll need to be more specific.<br>You can "+verb+" an item in your <i>inventory</i>, in this <i>location</i> or in another specific item.";
+                    return "There's more than one " + artefactName + " available to you here. You'll need to be more specific.<br>You can " + verb + " an item in your <i>inventory</i> - e.g. '" + verb + " my " + artefactName +
+                           "', in this <i>location</i> e.g. '" + verb + " " + artefactName + " in location'."+
+                           "<br> Or in another specific item. e.g. '" + verb + " " + artefactName + " in box'.";
                 };
             };
             
@@ -3468,7 +3504,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             artefact = tempArtefacts[0];
                         };
                     } else {
-                        return "There's more than one "+singularName+" here, you'll need to be more specific.";
+                        return "There's more than one " + singularName + " available to you here. You'll need to be more specific.<br>You can " + verb + " an item in your <i>inventory</i> - e.g. '" + verb + " my " + singularName +
+                           "', in this <i>location</i> e.g. '" + verb + " " + singularName + " in location'." +
+                           "<br> Or in another specific item. e.g. '" + verb + " " + singularName + " in box'.";
                     };
                 };
 
@@ -3628,7 +3666,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var locationArtefact = getObjectFromLocation(artefactName);
             
             if (playerArtefact && locationArtefact) {
-                return "There's more than one " + artefactName + " available to you here. You'll need to be more specific about which one you want to "+verb+".";
+                return "There's more than one " + artefactName + " available to you here. You'll need to be much more specific about which one you want to "+verb+".";
             };
 
             var artefact;

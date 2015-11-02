@@ -1,0 +1,28 @@
+﻿{
+  "object": "artefact",
+  "name": "coco pops",
+  "description": "coco pops",
+  "detailedDescription": "Sugar, chocolate and puffed rice. That's all the food groups ticked right?",
+  "attributes": {
+    "weight": 2.5,
+    "type": "food",
+    "plural": true,
+    "canCollect": true,
+    "requiresContainer": true,
+    "isPowder": true,
+    "charges": 11,
+    "chargeUnit": "serving",
+    "chargesDescription": "There's about $charges $chargeUnit here.",
+    "plural": true,
+    "isEdible": true,
+    "nutrition": 20,
+    "smell": "They smell sweet and chocolatey. More mike cocoa powder rather than snacks though.",
+    "taste": "They're sweet, chocolatey and crunchy."
+  },
+  "synonyms": [
+    "food",
+    "cereal",
+    "pops",
+    "coco"
+  ]
+}

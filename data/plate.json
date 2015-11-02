@@ -5,7 +5,7 @@
   "detailedDescription": "It's a standard white mass-produced dinner plate",
   "attributes": {
     "extendedInventoryDescription": "There's $inventory on it.",
-    "weight": 0.2,
+    "weight": 0.25,
     "carryWeight": 0.2,
     "type": "container",
     "canCollect": true,
