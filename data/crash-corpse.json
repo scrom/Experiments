@@ -1,0 +1,28 @@
+﻿{
+  "object": "artefact",
+  "name": "burned corpse",
+  "displayName": "burned corpse",
+  "description": "burned corpse",
+  "detailedDescription": "Despite being burned beyond all recognition it looks recently dead.<br>It continues to make occasional groaning and settling noises, I think it might still be cooking inside.",
+  "attributes": {
+	  "weight": 90,
+	  "carryWeight": 1,
+    "health": 0,
+    "hidden": true,
+    "extendedInventoryDescription": "It's holding onto $inventory.",
+    "smell": "Not good.<br>I shan't do into detail - suffice to say it's <i>not</i> barbecued chicken.",
+    "taste": "Whoa there. Are you some kind of sicko?"
+  },
+  "inventory": [
+    { "file": "charred-comic" }
+  ],
+  "synonyms": [
+    "corpse",
+    "body",
+    "dead body",
+    "burned body",
+    "burnt corpse",
+    "burnt body",
+    "it"
+  ]
+}

@@ -28,7 +28,7 @@
         "type": "junk",
         "plural": true,
         "weight": 1500,
-        "carryWeight": 1,
+        "carryWeight": 95,
         "smell": "The whole area smells like a combination of burned plastic and barbecued hair."
       },
       "synonyms": [
@@ -46,10 +46,10 @@
         "smoke"
       ],
       "inventory": [
-        { "file": "venom" }
+        { "file": "venom" },
+        { "file": "crash-corpse"}
       ]
     },
-    { "file": "charred-comic" },
     { "file": "dave-convery" },
     { "file": "roger-hart" },
     { "file": "jordan-miller" }

@@ -61,6 +61,7 @@
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />
     <Content Include="data\core-area-west.json" />
+    <Content Include="data\crash-corpse.json" />
     <Content Include="data\crash-site.json" />
     <Content Include="data\creative-agency-area.json" />
     <Content Include="data\crisps.json" />
