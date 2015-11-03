@@ -2,19 +2,20 @@
     "object": "artefact",
     "name": "milk",
     "description": "milk",
-    "detailedDescription": "Enough for a few lattes.",
+    "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
     "attributes": {
-        "defaultAction": "drink",
-        "weight": 3,
-        "type": "food",
-        "requiresContainer": true,
-        "isLiquid": true,
-        "canCollect": true,
-        "charges": 8,
-        "chargeUnit": "cup",
-        "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
-        "plural": true,
-        "isEdible": true,
+      "defaultAction": "drink",
+      "weight": 3,
+      "type": "food",
+      "requiresContainer": true,
+      "isLiquid": true,
+      "canCollect": true,
+      "charges": 10,
+      "chargeUnit": "serving",
+      "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+      "hideDeliveryDescription":  true,
+      "plural": true,
+      "isEdible": true,
       "nutrition": 5,
       "smell": "It smells fresh and creamy",
       "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard.",
@@ -33,9 +34,8 @@
         "cow juice"
     ],
     "delivers": [
-        {
-            "object": "artefact",
-            "template": "white-coffee"
-        }
+      { "file": "white-coffee" },
+      { "file": "milky-shreddies" },
+      { "file": "milky-coco-pops" }
     ]
 }

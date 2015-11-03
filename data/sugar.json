@@ -17,6 +17,7 @@
       "affinityModifier": 0,
       "isEdible": true,
       "nutrition": 5,
+      "hideDeliveryDescription":  true,
       "smell": "It's just sugar.",
       "taste": "It's sweet and crunchy in your mouth.",
       "combinesWith": [

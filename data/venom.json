@@ -12,6 +12,7 @@
     "hidden": true,
     "plural": true,
     "affinityModifier": 0,
+    "hideDeliveryDescription":  true,
     "antibodies": [
       "zombie"
     ],

@@ -17,6 +17,7 @@
       "nutrition": 8,
       "smell": "It smells warm and rich.",
       "taste": "It's surprisingly good for office coffee. Better than many chain coffee stores.",
+      "hideDeliveryDescription":  true,
       "combinesWith": [
           "milk",
           "sugar"

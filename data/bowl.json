@@ -6,7 +6,7 @@
   "attributes": {
     "extendedInventoryDescription": "There's $inventory in it.",
     "weight": 0.25,
-    "carryWeight": 0.25,
+    "carryWeight": 0.3,
     "attackStrength": 1,
     "type": "container",
     "holdsLiquid": true,

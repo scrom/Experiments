@@ -1,0 +1,35 @@
+﻿{
+  "object": "artefact",
+  "name": "milky coco pops",
+  "description": "milky coco pops",
+  "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+  "attributes": {
+    "weight": 0.3,
+    "type": "food",
+    "plural": true,
+    "canCollect": true,
+    "requiresContainer": true,
+    "requiredContainer": "bowl",
+    "isPowder": true,
+    "isEdible": true,
+    "nutrition": 25,
+    "smell": "They smell pretty appetising. Sweet and chocolatey.",
+    "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+    "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!",
+    "combinesWith": [
+      "milk"
+    ]
+  },
+  "synonyms": [
+    "food",
+    "cereal",
+    "pops",
+    "puffed rice",
+    "coco",
+    "brown milk",
+    "chocolate milk",
+    "chocolatey",
+    "milky",
+    "coco pops"
+  ]
+}

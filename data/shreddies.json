@@ -14,14 +14,19 @@
     "chargeUnit": "serving",
     "chargesDescription": "There's roughly $charges $chargeUnit here.",
     "isEdible": true,
-    "plural": true,
     "nutrition": 20,
     "smell": "They have an oddly delicious malty smell to them whilst still having a hit of dry cardboard.",
-    "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of holding a solitary shreddie on your tongue whilst stood in your place of work but it's rather good."
+    "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of holding a solitary shreddie on your tongue whilst stood in your place of work but it's rather good.",
+    "combinesWith": [
+      "milk"
+    ]
   },
   "synonyms": [
     "food",
     "cereal",
     "shreddies"
-  ]
+  ],
+    "delivers": [
+      { "file": "milky-shreddies" }
+    ]
 }

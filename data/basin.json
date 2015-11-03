@@ -4,11 +4,12 @@
 "description": "wash basin",
 "detailedDescription": "Clean and with a supply of fresh water.",
 "attributes": {
-    "weight": 100,
-    "type": "scenery",
-    "customAction": "wash",
-    "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
-    "canDrawOn": true
+  "weight": 100,
+  "type": "scenery",
+  "customAction": "wash",
+  "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
+  "hideDeliveryDescription":  true,
+  "canDrawOn": true
 },
 "synonyms": [
     "wash basin",

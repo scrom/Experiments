@@ -15,6 +15,7 @@
   "plural": true,
   "isEdible": true,
   "nutrition": 18,
+  "hideDeliveryDescription":  true,
   "smell": "It smells warm, milky and caffeinated. Just like coffee should.",
   "taste": "You're pleasantly surprised. Given that this is office coffee, it's reasonably strong, warm and generally tasty.",
   "combinesWith": [

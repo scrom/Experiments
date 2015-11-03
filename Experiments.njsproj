@@ -159,6 +159,8 @@
     <Content Include="data\medical-bag.json" />
     <Content Include="data\mercedes.json" />
     <Content Include="data\milk.json" />
+    <Content Include="data\milky-coco-pops.json" />
+    <Content Include="data\milky-shreddies.json" />
     <Content Include="data\milton-road-north-end.json" />
     <Content Include="data\milton-road.json" />
     <Content Include="data\mirror.json" />

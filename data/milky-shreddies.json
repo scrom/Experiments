@@ -1,0 +1,28 @@
+﻿{
+  "object": "artefact",
+  "name": "milky shreddies",
+  "description": "milky shreddies",
+  "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+  "attributes": {
+    "weight": 0.3,
+    "type": "food",
+    "plural": true,
+    "canCollect": true,
+    "requiresContainer": true,
+    "requiredContainer": "bowl",
+    "isPowder": true,
+    "isEdible": true,
+    "nutrition": 25,
+    "smell": "They have an oddly delicious malty smell to them.",
+    "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good.",
+    "combinesWith": [
+      "milk"
+    ]
+  },
+  "synonyms": [
+    "food",
+    "cereal",
+    "shreddies",
+    "milky"
+  ]
+}

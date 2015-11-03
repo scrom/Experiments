@@ -60,7 +60,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _componentOf = []; //unique names of the object this is a component of.
         var _combinesWith = ""; //unique name of the object this can combine with.
         var _requiredComponentCount = 0; //in conjunction with above will allow us to know if an object has all its components.
-        var _delivers = delivers||[]; //what does this deliver when all components are in place? (it uses a charge of each component to do so)--
+        var _delivers = delivers || []; //what does this deliver when all components are in place? (it uses a charge of each component to do so)--
+        var _hideDeliveryDescription = false;
         var _combinesDescription = "";
         var _requiresContainer = false;
         var _requiredContainer = null;
@@ -238,7 +239,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.burnRate != undefined) {_burnRate = parseFloat(artefactAttributes.burnRate);};
             if (artefactAttributes.chargeUnit != undefined) {_chargeUnit = artefactAttributes.chargeUnit;};
             if (artefactAttributes.chargesDescription != undefined) {_chargesDescription = artefactAttributes.chargesDescription;};
-            if (artefactAttributes.saleUnit != undefined) {_saleUnit = artefactAttributes.saleUnit;};
+            if (artefactAttributes.saleUnit != undefined) { _saleUnit = artefactAttributes.saleUnit; };           
+            if (artefactAttributes.hideDeliveryDescription != undefined) { _hideDeliveryDescription = artefactAttributes.hideDeliveryDescription; };
             if (artefactAttributes.combinesDescription != undefined) {_combinesDescription = artefactAttributes.combinesDescription;};
 
 
@@ -591,6 +593,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.burnRate = _burnRate;            
             currentAttributes.chargeUnit = _chargeUnit;
             currentAttributes.chargesDescription = _chargesDescription;
+            currentAttributes.hideDeliveryDescription = _hideDeliveryDescription;
             currentAttributes.combinesDescription = _combinesDescription;
             currentAttributes.saleUnit = _saleUnit;            
             currentAttributes.checkComponents = self.checkComponents();
@@ -674,8 +677,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.charges != -1) {saveAttributes.charges = artefactAttributes.charges;};
             if (artefactAttributes.burnRate != 0) {saveAttributes.burnRate = artefactAttributes.burnRate;};
             if (artefactAttributes.chargeUnit != "") {saveAttributes.chargeUnit = artefactAttributes.chargeUnit;};
-            if (artefactAttributes.chargesDescription != "") {saveAttributes.chargesDescription = artefactAttributes.chargesDescription;};
-            if (artefactAttributes.combinesDescription != "") {saveAttributes.combinesDescription = artefactAttributes.combinesDescription;};
+            if (artefactAttributes.chargesDescription != "") { saveAttributes.chargesDescription = artefactAttributes.chargesDescription; };
+            if (artefactAttributes.hideDeliveryDescription) { saveAttributes.hideDeliveryDescription = artefactAttributes.hideDeliveryDescription; };
+            if (artefactAttributes.combinesDescription != "") { saveAttributes.combinesDescription = artefactAttributes.combinesDescription; };
             if (artefactAttributes.saleUnit != -1) {saveAttributes.saleUnit = artefactAttributes.saleUnit;};           
             if (artefactAttributes.plural) {saveAttributes.plural = true;};            
             if (artefactAttributes.affinityModifier != 1) {saveAttributes.affinityModifier = artefactAttributes.affinityModifier;};
@@ -1197,7 +1201,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " missing something.";
                 resultString = resultString.replace(_detailedDescription, "");
             } else {
-                if (_delivers.length > 0) {
+                if (_delivers.length > 0 && (!_hideDeliveryDescription)) {
                     //split delivers items into what can currently be delivered and what can't
                     var canDeliverList = [];
                     var sellsList = [];

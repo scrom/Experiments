@@ -8,6 +8,7 @@
     "type": "scenery",
     "carryweight": 5,
     "customAction": "wash",
+    "hideDeliveryDescription":  true,
     "defaultResult": "You rinse your hands in the sink."
 },
 "synonyms": [

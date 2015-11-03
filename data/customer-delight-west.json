@@ -39,6 +39,7 @@
           "isBreakable": true,
           "combinesDescription": "They really need <i>water</i>",
           "plural": true,
+          "hideDeliveryDescription":  true,
           "combinesWith": [
             "water"
           ]

@@ -2281,6 +2281,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 if (artefact.isLiquid() || artefact.isPowder()) {
+                    if (artefact.combinesWith(receiver, true) && on) {
+                        return self.put(verb, artefactName, position, receiverName);
+                    };
                     var artefactChargesRemaining = artefact.consume();
                     if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName);};
                     if (receiver.getType() != "creature"  && on && artefact.isLiquid()) {

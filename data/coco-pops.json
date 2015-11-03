@@ -12,17 +12,22 @@
     "isPowder": true,
     "charges": 11,
     "chargeUnit": "serving",
-    "chargesDescription": "There's about $charges $chargeUnit here.",
-    "plural": true,
+    "chargesDescription": "There's about $charges $chargeUnit here",
     "isEdible": true,
     "nutrition": 20,
-    "smell": "They smell sweet and chocolatey. More mike cocoa powder rather than snacks though.",
-    "taste": "They're sweet, chocolatey and crunchy."
+    "smell": "They smell sweet and chocolatey. More like cocoa powder rather than snacks though.",
+    "taste": "They're sweet, chocolatey and crunchy.",
+    "combinesWith": [
+      "milk"
+    ]
   },
   "synonyms": [
     "food",
     "cereal",
     "pops",
     "coco"
-  ]
+  ],
+    "delivers": [
+      { "file": "milky-coco-pops" }
+    ]
 }

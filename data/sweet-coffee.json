@@ -15,6 +15,7 @@
   "plural": true,
   "isEdible": true,
   "nutrition": 15,
+  "hideDeliveryDescription":  true,
   "smell": "It smells warm, rich and slightly sweet.",
   "taste": "The black coffee and sugar balance each other well but it's still a little too sweet for your taste.",
   "combinesWith": [

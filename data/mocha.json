@@ -18,6 +18,7 @@
       "nutrition": 35,
       "combinesWith": "sugar",
       "requiredComponentCount": 2,
+      "hideDeliveryDescription":  true,
       "smell": "It smells warm, chocolatey and caffeinated.",
       "taste": "It's oddly comforting. The combination of coffee and chocolate is like a tasty bedtime drink that's designed to keep you awake instead."
     },

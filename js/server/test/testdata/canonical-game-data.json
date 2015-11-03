@@ -584,7 +584,7 @@
                   "detailedDescription": "It's a standard white mass-produced dinner plate",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory on it.",
-                    "weight": 0.2,
+                    "weight": 0.25,
                     "carryWeight": 0.2,
                     "type": "container",
                     "canCollect": true,
@@ -602,7 +602,7 @@
                   "detailedDescription": "It's a standard white mass-produced dinner plate",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory on it.",
-                    "weight": 0.2,
+                    "weight": 0.25,
                     "carryWeight": 0.2,
                     "type": "container",
                     "canCollect": true,
@@ -620,8 +620,8 @@
                   "detailedDescription": "It's a plain round china bowl",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory in it.",
-                    "weight": 0.5,
-                    "carryWeight": 0.5,
+                    "weight": 0.25,
+                    "carryWeight": 0.3,
                     "attackStrength": 1,
                     "type": "container",
                     "holdsLiquid": true,
@@ -645,8 +645,8 @@
                   "detailedDescription": "It's a plain round china bowl",
                   "attributes": {
                     "extendedInventoryDescription": "There's $inventory in it.",
-                    "weight": 0.5,
-                    "carryWeight": 0.5,
+                    "weight": 0.25,
+                    "carryWeight": 0.3,
                     "attackStrength": 1,
                     "type": "container",
                     "holdsLiquid": true,
@@ -818,7 +818,7 @@
                   "isLiquid": true,
                   "requiredContainer": "bowl",
                   "canCollect": true,
-                  "charges": 9,
+                  "charges": 12,
                   "chargeUnit": "bowlful",
                   "chargesDescription": "There's about $charges $chargeUnit left. For the benefit of everyone else, try to stick to just one portion though",
                   "plural": true,
@@ -1453,6 +1453,59 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "table",
+        "description": "large dining table",
+        "detailedDescription": "It's a modern, rectangular dining table.",
+        "attributes": {
+          "weight": 120,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "dining table",
+          "large table",
+          "large dining table",
+          "modern dining table",
+          "modern rectangular dining table",
+          "regtangular dining table"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "cake",
+            "description": "victoria sponge cake",
+            "detailedDescription": "Mmmm tasty <i>and</i> healthy.<br>Well, maybe not so healthy but it really <i>is</i> cake - no lie!<br>It's a pretty hefty cake.",
+            "attributes": {
+              "defaultAction": "eat",
+              "weight": 9,
+              "type": "food",
+              "canCollect": true,
+              "charges": 12,
+              "chargeUnit": "slice",
+              "chargesDescription": "There's enough here for about $charges good-sized $chargeUnit",
+              "isEdible": true,
+              "nutrition": 15,
+              "position": "on",
+              "smell": "You bend down and sniff at the cake. It doesn't smell of much except sugar and baking.<br>As this is obviously meant to be shared around, you try not to be too obvious about breathing all over it.",
+              "taste": "It's fresh, sweet and moist with a layer of buttercream icing and jam."
+            },
+            "synonyms": [
+              "slice",
+              "sponge cake",
+              "sponge",
+              "victoria cake",
+              "victoria sponge",
+              "victoria sponge cake",
+              "icing",
+              "buttercream",
+              "buttercream icing",
+              "jam",
+              "food"
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "tree",
         "description": "large tree",
         "detailedDescription": "It's an ornamental evergreen variety.<br>The twisted trunks spiral up about 25 feet into a carefully manicured crown of green.",
@@ -1582,31 +1635,6 @@
               "door key"
             ]
           }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "cake",
-        "description": "slice of victoria sponge cake",
-        "detailedDescription": "Mmmm tasty <i>and</i> healthy. It really <i>is</i> cake - no lie!<br>If only there were more.",
-        "attributes": {
-          "defaultAction": "eat",
-          "weight": 1,
-          "type": "food",
-          "canCollect": true,
-          "charges": 1,
-          "affinityModifier": 2,
-          "isEdible": true,
-          "nutrition": 25
-        },
-        "synonyms": [
-          "slice",
-          "sponge cake",
-          "sponge",
-          "victoria cake",
-          "victoria sponge",
-          "victoria sponge cake",
-          "food"
         ]
       }
     ]
@@ -4428,6 +4456,7 @@
           "weight": 40,
           "canCollect": true,
           "isBreakable": true,
+          "hideDeliveryDescription": true,
           "combinesDescription": "They really need <i>water</i>",
           "plural": true,
           "combinesWith": [
@@ -6258,6 +6287,7 @@
         "attributes": {
           "weight": 100,
           "type": "scenery",
+          "hideDeliveryDescription": true,
           "customAction": "wash",
           "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
           "canDrawOn": true
@@ -6284,6 +6314,7 @@
               "charges": 1,
               "chargeUnit": "drink",
               "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "hideDeliveryDescription": true,
               "plural": true,
               "isEdible": true,
               "combinesWith": [
@@ -6948,6 +6979,7 @@
         "attributes": {
           "weight": 100,
           "type": "scenery",
+          "hideDeliveryDescription": true,
           "customAction": "wash",
           "defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm.",
           "canDrawOn": true
@@ -6974,6 +7006,7 @@
               "charges": 1,
               "chargeUnit": "drink",
               "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "hideDeliveryDescription": true,
               "plural": true,
               "isEdible": true,
               "combinesWith": [
@@ -7338,7 +7371,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -7346,9 +7379,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -7358,7 +7392,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -7381,6 +7417,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -7427,6 +7464,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -7459,7 +7554,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -7467,9 +7562,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -7479,7 +7575,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -7502,6 +7600,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -7548,6 +7647,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -7580,7 +7737,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -7588,9 +7745,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -7600,7 +7758,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -7623,6 +7783,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -7669,6 +7830,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -7701,7 +7920,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -7709,9 +7928,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -7721,7 +7941,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -7744,6 +7966,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -7790,6 +8013,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -7822,7 +8103,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -7830,9 +8111,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -7842,7 +8124,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -7865,6 +8149,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -7910,6 +8195,64 @@
                           "sugary coffee"
                         ]
                       }
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
                     ]
                   }
                 ]
@@ -7925,8 +8268,8 @@
         "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
+          "weight": 0.25,
+          "carryWeight": 0.3,
           "attackStrength": 1,
           "type": "container",
           "holdsLiquid": true,
@@ -7950,8 +8293,8 @@
         "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
+          "weight": 0.25,
+          "carryWeight": 0.3,
           "attackStrength": 1,
           "type": "container",
           "holdsLiquid": true,
@@ -7970,12 +8313,12 @@
       },
       {
         "object": "artefact",
-        "name": "glass",
-        "description": "drinking glass",
+        "name": "drinking glass",
+        "description": "glass",
         "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.3,
+          "weight": 0.25,
           "carryWeight": 0.8,
           "attackStrength": 2,
           "type": "container",
@@ -7992,12 +8335,12 @@
       },
       {
         "object": "artefact",
-        "name": "glass",
-        "description": "drinking glass",
+        "name": "drinking glass",
+        "description": "glass",
         "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.3,
+          "weight": 0.25,
           "carryWeight": 0.8,
           "attackStrength": 2,
           "type": "container",
@@ -8020,6 +8363,7 @@
         "attributes": {
           "weight": 100,
           "type": "scenery",
+          "hideDeliveryDescription": true,
           "customAction": "wash",
           "defaultResult": "You rinse your hands in the sink."
         },
@@ -8045,6 +8389,7 @@
               "charges": 1,
               "chargeUnit": "drink",
               "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "hideDeliveryDescription": true,
               "plural": true,
               "isEdible": true,
               "combinesWith": [
@@ -8112,27 +8457,22 @@
       },
       {
         "object": "artefact",
-        "name": "bowl",
-        "description": "bowl",
-        "detailedDescription": "It's a round, china cereal bowl.",
+        "name": "cereal box",
+        "description": "box",
+        "detailedDescription": "It's a typical branded cereal box. Hey - at least they buy the real stuff here.",
         "attributes": {
-          "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
-          "attackStrength": 1,
+          "defaultAction": "open",
+          "weight": 0.2,
+          "carryWeight": 3,
           "type": "container",
-          "holdsLiquid": true,
           "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 0
+          "affinityModifier": 0,
+          "canDrawOn": true
         },
         "synonyms": [
-          "cereal bowl",
-          "round bowl",
-          "china bowl",
-          "plain round bowl",
-          "round china bowl",
-          "plain round china bowl"
+          "cereal packet",
+          "cereal pack",
+          "box"
         ],
         "inventory": [
           {
@@ -8141,20 +8481,55 @@
             "description": "shreddies",
             "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'",
             "attributes": {
-              "weight": 0.5,
+              "weight": 2.5,
               "type": "food",
               "requiresContainer": true,
-              "requiredContainer": "bowl",
+              "isPowder": true,
               "canCollect": true,
-              "charges": 1,
+              "charges": 11,
+              "chargeUnit": "serving",
+              "chargesDescription": "There's roughly $charges $chargeUnit here.",
               "plural": true,
               "isEdible": true,
-              "nutrition": 20
+              "nutrition": 20,
+              "combinesWith": [
+                "milk"
+              ],
+              "smell": "They have an oddly delicious malty smell to them whilst still having a hit of dry cardboard.",
+              "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of holding a solitary shreddie on your tongue whilst stood in your place of work but it's rather good."
             },
             "synonyms": [
               "food",
               "cereal",
               "shreddies"
+            ],
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "milky shreddies",
+                "description": "milky shreddies",
+                "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                "attributes": {
+                  "weight": 0.3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isPowder": true,
+                  "canCollect": true,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 25,
+                  "combinesWith": [
+                    "milk"
+                  ],
+                  "smell": "They have an oddly delicious malty smell to them.",
+                  "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                },
+                "synonyms": [
+                  "food",
+                  "cereal",
+                  "shreddies"
+                ]
+              }
             ]
           }
         ]
@@ -8224,6 +8599,7 @@
         "attributes": {
           "weight": 100,
           "type": "scenery",
+          "hideDeliveryDescription": true,
           "customAction": "wash",
           "defaultResult": "You rinse your hands in the sink."
         },
@@ -8249,6 +8625,7 @@
               "charges": 1,
               "chargeUnit": "drink",
               "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "hideDeliveryDescription": true,
               "plural": true,
               "isEdible": true,
               "combinesWith": [
@@ -8361,7 +8738,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -8369,9 +8746,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -8381,7 +8759,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -8404,6 +8784,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -8450,6 +8831,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -8482,7 +8921,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -8490,9 +8929,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -8502,7 +8942,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -8525,6 +8967,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -8571,6 +9014,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -8603,7 +9104,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -8611,9 +9112,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -8623,7 +9125,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -8646,6 +9150,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -8692,6 +9197,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -8724,7 +9287,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -8732,9 +9295,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -8744,7 +9308,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -8767,6 +9333,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -8813,6 +9380,64 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
+                    ]
                   }
                 ]
               }
@@ -8845,7 +9470,7 @@
                 "object": "artefact",
                 "name": "milk",
                 "description": "milk",
-                "detailedDescription": "Enough for a few lattes.",
+                "detailedDescription": "It's semi-skimmed. Just the right balance of healthy and creamy.",
                 "attributes": {
                   "defaultAction": "drink",
                   "weight": 3,
@@ -8853,9 +9478,10 @@
                   "requiresContainer": true,
                   "isLiquid": true,
                   "canCollect": true,
-                  "charges": 8,
-                  "chargeUnit": "cup",
-                  "chargesDescription": "There's enough here for $charges $chargeUnit of coffee",
+                  "charges": 10,
+                  "chargeUnit": "serving",
+                  "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 5,
@@ -8865,7 +9491,9 @@
                   ],
                   "combinesWith": [
                     "coffee",
-                    "sweet coffee"
+                    "sweet coffee",
+                    "coco pops",
+                    "shreddies"
                   ],
                   "smell": "It smells fresh and creamy",
                   "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
@@ -8888,6 +9516,7 @@
                       "requiredContainer": "cup",
                       "canCollect": true,
                       "charges": 1,
+                      "hideDeliveryDescription": true,
                       "plural": true,
                       "isEdible": true,
                       "nutrition": 18,
@@ -8933,6 +9562,64 @@
                           "sugary coffee"
                         ]
                       }
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky shreddies",
+                    "description": "milky shreddies",
+                    "detailedDescription": "Shreddies... 'Cereal in the daytime?!' 'Wow, I've never heard of that before.'<br>They're going a bit soggy.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They have an oddly delicious malty smell to them.",
+                      "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of jamming a mouthful of soggy shreddies into your mouth but it's rather good."
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "shreddies"
+                    ]
+                  },
+                  {
+                    "object": "artefact",
+                    "name": "milky coco pops",
+                    "description": "milky coco pops",
+                    "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                    "attributes": {
+                      "weight": 0.3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isPowder": true,
+                      "canCollect": true,
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 25,
+                      "combinesWith": [
+                        "milk"
+                      ],
+                      "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                      "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                      "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                    },
+                    "synonyms": [
+                      "food",
+                      "cereal",
+                      "pops",
+                      "puffed rice",
+                      "coco",
+                      "brown milk",
+                      "chocolate milk",
+                      "chocolatey"
                     ]
                   }
                 ]
@@ -8978,6 +9665,7 @@
               "charges": 3,
               "chargeUnit": "spoonfull",
               "chargesDescription": "There's about $charges $chargeUnit left",
+              "hideDeliveryDescription": true,
               "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
               "plural": true,
               "affinityModifier": 0,
@@ -9009,6 +9697,7 @@
                   "requiredContainer": "cup",
                   "canCollect": true,
                   "charges": 1,
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 15,
@@ -9188,12 +9877,12 @@
       },
       {
         "object": "artefact",
-        "name": "glass",
-        "description": "drinking glass",
+        "name": "drinking glass",
+        "description": "glass",
         "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.3,
+          "weight": 0.25,
           "carryWeight": 0.8,
           "attackStrength": 2,
           "type": "container",
@@ -9210,12 +9899,12 @@
       },
       {
         "object": "artefact",
-        "name": "glass",
-        "description": "drinking glass",
+        "name": "drinking glass",
+        "description": "glass",
         "detailedDescription": "It's a pint glass. Perfect for cold drinks and beer.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.3,
+          "weight": 0.25,
           "carryWeight": 0.8,
           "attackStrength": 2,
           "type": "container",
@@ -9228,6 +9917,92 @@
           "glass",
           "pint glass",
           "beer glass"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "cereal box",
+        "description": "box",
+        "detailedDescription": "It's a typical branded cereal box. Hey - at least they buy the real stuff here.",
+        "attributes": {
+          "defaultAction": "open",
+          "weight": 0.2,
+          "carryWeight": 3,
+          "type": "container",
+          "canCollect": true,
+          "affinityModifier": 0,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "cereal packet",
+          "cereal pack",
+          "box"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "coco pops",
+            "description": "coco pops",
+            "detailedDescription": "Sugar, chocolate and puffed rice. That's all the food groups ticked right?",
+            "attributes": {
+              "weight": 2.5,
+              "type": "food",
+              "requiresContainer": true,
+              "isPowder": true,
+              "canCollect": true,
+              "charges": 11,
+              "chargeUnit": "serving",
+              "chargesDescription": "There's about $charges $chargeUnit here",
+              "plural": true,
+              "isEdible": true,
+              "nutrition": 20,
+              "combinesWith": [
+                "milk"
+              ],
+              "smell": "They smell sweet and chocolatey. More like cocoa powder rather than snacks though.",
+              "taste": "They're sweet, chocolatey and crunchy."
+            },
+            "synonyms": [
+              "food",
+              "cereal",
+              "pops",
+              "coco"
+            ],
+            "delivers": [
+              {
+                "object": "artefact",
+                "name": "milky coco pops",
+                "description": "milky coco pops",
+                "detailedDescription": "Sugar, chocolate, puffed rice and milk. They're starting to go a bit soggy and turn the milk brown.",
+                "attributes": {
+                  "weight": 0.3,
+                  "type": "food",
+                  "requiresContainer": true,
+                  "isPowder": true,
+                  "canCollect": true,
+                  "plural": true,
+                  "isEdible": true,
+                  "nutrition": 25,
+                  "combinesWith": [
+                    "milk"
+                  ],
+                  "smell": "They smell pretty appetising. Sweet and chocolatey.",
+                  "sound": "You put your ear to them. They make little muted snap, crackle and pop noises",
+                  "taste": "The coolness of the milk combines deliciously with the sweet chocolate of the coco pops. Tasty!"
+                },
+                "synonyms": [
+                  "food",
+                  "cereal",
+                  "pops",
+                  "puffed rice",
+                  "coco",
+                  "brown milk",
+                  "chocolate milk",
+                  "chocolatey"
+                ]
+              }
+            ]
+          }
         ]
       },
       {
@@ -9237,8 +10012,8 @@
         "detailedDescription": "It's a round, china cereal bowl.",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
+          "weight": 0.25,
+          "carryWeight": 0.3,
           "attackStrength": 1,
           "type": "container",
           "holdsLiquid": true,
@@ -9253,31 +10028,6 @@
           "plain round bowl",
           "round china bowl",
           "plain round china bowl"
-        ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "coco pops",
-            "description": "coco pops",
-            "detailedDescription": "They're going a bit soggy but still tasty.",
-            "attributes": {
-              "weight": 0.5,
-              "type": "food",
-              "requiresContainer": true,
-              "requiredContainer": "bowl",
-              "canCollect": true,
-              "charges": 1,
-              "plural": true,
-              "isEdible": true,
-              "nutrition": 20
-            },
-            "synonyms": [
-              "food",
-              "cereal",
-              "pops",
-              "coco"
-            ]
-          }
         ]
       },
       {
@@ -9321,6 +10071,7 @@
               "requiredContainer": "cup",
               "canCollect": true,
               "charges": 1,
+              "hideDeliveryDescription": true,
               "plural": true,
               "affinityModifier": 2,
               "isEdible": true,
@@ -9379,6 +10130,7 @@
               "requiredContainer": "cup",
               "canCollect": true,
               "charges": 1,
+              "hideDeliveryDescription": true,
               "plural": true,
               "affinityModifier": 2,
               "isEdible": true,
@@ -9438,6 +10190,7 @@
               "requiredContainer": "cup",
               "canCollect": true,
               "charges": 1,
+              "hideDeliveryDescription": true,
               "plural": true,
               "isEdible": true,
               "nutrition": 8,
@@ -9467,6 +10220,7 @@
                   "requiredContainer": "cup",
                   "canCollect": true,
                   "charges": 1,
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 15,
@@ -9528,6 +10282,7 @@
                   "requiredContainer": "cup",
                   "canCollect": true,
                   "charges": 1,
+                  "hideDeliveryDescription": true,
                   "plural": true,
                   "isEdible": true,
                   "nutrition": 18,
@@ -9714,6 +10469,7 @@
                         "isLiquid": true,
                         "requiredContainer": "syringe",
                         "canCollect": true,
+                        "hideDeliveryDescription": true,
                         "combinesDescription": " ",
                         "plural": true,
                         "affinityModifier": 0,
@@ -12676,6 +13432,7 @@
               "charges": 1,
               "chargeUnit": "drink",
               "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "hideDeliveryDescription": true,
               "plural": true,
               "isEdible": true,
               "combinesWith": [
@@ -15746,6 +16503,7 @@
         "attributes": {
           "weight": 100,
           "type": "scenery",
+          "hideDeliveryDescription": true,
           "customAction": "wash",
           "defaultResult": "You rinse your face and hands in the sink. You feel clean and refreshed.",
           "canDrawOn": true
@@ -15772,6 +16530,7 @@
               "charges": 1,
               "chargeUnit": "drink",
               "chargesDescription": "There's enough here for $charges $chargeUnit",
+              "hideDeliveryDescription": true,
               "plural": true,
               "isEdible": true,
               "combinesWith": [
@@ -15968,8 +16727,8 @@
         "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
+          "weight": 0.25,
+          "carryWeight": 0.3,
           "attackStrength": 1,
           "type": "container",
           "holdsLiquid": true,
@@ -15993,8 +16752,8 @@
         "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
+          "weight": 0.25,
+          "carryWeight": 0.3,
           "attackStrength": 1,
           "type": "container",
           "holdsLiquid": true,
@@ -16018,8 +16777,8 @@
         "detailedDescription": "It's a plain round china bowl",
         "attributes": {
           "extendedInventoryDescription": "There's $inventory in it.",
-          "weight": 0.5,
-          "carryWeight": 0.5,
+          "weight": 0.25,
+          "carryWeight": 0.3,
           "attackStrength": 1,
           "type": "container",
           "holdsLiquid": true,
@@ -16075,7 +16834,7 @@
               "requiresContainer": true,
               "requiredContainer": "bowl",
               "canCollect": true,
-              "charges": 6,
+              "charges": 12,
               "chargeUnit": "bowlful",
               "chargesDescription": "There's about $charges $chargeUnit of porridge left",
               "plural": true,
