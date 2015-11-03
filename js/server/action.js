@@ -1247,6 +1247,10 @@ exports.Action = function Action(player, map, fileManager) {
             };	
 
             if (description) {
+                //clean up fails
+                if (description.indexOf("$fail$") > -1) {
+                    description = description.replace("$fail$", "");
+                };
                 //if customAction redirects to another action...
                 if (description.indexOf("$action") > -1) {
                     var newVerb = description.replace("$action","").trim();

@@ -2457,12 +2457,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 
                 //issue #395 at this point, if artefact has multiple charges, figure out how much receiver can hold and split artefact.
-                if (artefact.willDivide()) {
+                if (artefact.willDivide() && receiver.getCarryWeight() > 0) {
                     var spaceToFill = receiver.getRemainingSpace();
                     var chargesRequired = Math.floor(spaceToFill / artefact.getChargeWeight());
-                    var newArtefact = artefact.split(chargesRequired, true);
+                    if (chargesRequired == 0) {
+                        return "There isn't enough room in " + receiver.getDisplayName() + " for " + artefact.getDisplayName()+".";
+                    };
+                    //we only perform a test split here
+                    var newArtefact = artefact.split(chargesRequired, false);
                     //if we have a new artefact at this point, we've split from the original.
-                    return self.put(verb, artefactName, "into", receiverName, requiredContainer, newArtefact);
+                    var putResult = self.put(verb, artefactName, "into", receiverName, requiredContainer, newArtefact);
+                    
+                    if (putResult.indexOf("$fail$") == -1) {
+                        //if successful, throw away the split part from the original
+                        artefact.split(chargesRequired, true);
+                    } else {
+                        putResult = putResult.replace("$fail$", "");
+                    };
+                    return putResult;
                 };
                     
                 if (artefact.isLiquid() || artefact.isPowder()) {
@@ -2480,7 +2492,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         if (artefactName == "blood") {
                             return "Hmm. You're a bit sick aren't you.<br>You pour " + artefactName + " " + splitword + " " + receiver.getDisplayName() + ".";
                         } else {
-                            return "It seems a bit wasteful if you ask me but it's your call...<br>You pour " + artefactName + " " + splitword + " " + receiver.getDisplayName() + ".";
+                            return "$fail$It seems a bit wasteful if you ask me but it's your call...<br>You pour " + artefactName + " " + splitword + " " + receiver.getDisplayName() + ".";
                         };
                     };
                 };                   
@@ -2592,7 +2604,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if receiving failed (or combined with something else)...
             if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
                 if (receiveResult.indexOf("$fail$") > -1) {
-                    receiveResult = receiveResult.substr(6);
+                    if (!artefactPreviouslyCollected) {
+                        //if artefact was passed in, the caller will clean up the $fail
+                        receiveResult = receiveResult.replace("$fail$","");
+                    };
                     
                     //return item (need to return to original container if possible)
                     if (originalInventory) {
