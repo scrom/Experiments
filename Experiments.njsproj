@@ -47,6 +47,7 @@
     <Content Include="data\brian-harris.json" />
     <Content Include="data\brick.json" />
     <Content Include="data\buenosaires.json" />
+    <Content Include="data\cake.json" />
     <Content Include="data\camelids.json" />
     <Content Include="data\cereal-box.json" />
     <Content Include="data\chairs.json" />

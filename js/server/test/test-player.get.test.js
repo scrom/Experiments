@@ -49,7 +49,7 @@ exports.tearDown = function (callback) {
 exports.canGetObject = function (test) {
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var expectedResult = "You get "+ a0.getDisplayName()+".";
+    var expectedResult = "You get an artefact of little consequence.";
     var actualResult = p0.get('get', a0.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -74,7 +74,7 @@ exports.canGetContainer = function (test) {
     var artefactDescription = container.getDescription();
     var artefactName = container.getName()
     container.receive(a1);
-    var expectedResult = "You get the container.";
+    var expectedResult = "You get a container.";
     var actualResult = p0.get('get', container.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -124,7 +124,7 @@ exports.canGetObjectFromOpenContainerInLocation = function (test) {
     container.receive(a1);
     var artefactDescription = 'a box';
     var artefactName = 'box'
-    var expectedResult = "You get the box.";
+    var expectedResult = "You get a box.";
     var actualResult = p0.get('get', a1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -184,7 +184,7 @@ exports.canGetHiddenObjectByNameFromOpenContainerInLocation = function (test) {
     container.moveOrOpen('open');  
     container.receive(a1);
     a1.hide();
-    var expectedResult = "You get the box.";
+    var expectedResult = "You get a box.";
     var actualResult = p0.get('get', a1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

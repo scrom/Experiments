@@ -12,7 +12,7 @@
       "canCollect": true,
       "charges": 10,
       "chargeUnit": "serving",
-      "chargesDescription": "There's about $charges $chargeUnit of milk here.",
+      "chargesDescription": "There's about $charges $chargeUnit of milk here",
       "hideDeliveryDescription":  true,
       "plural": true,
       "isEdible": true,

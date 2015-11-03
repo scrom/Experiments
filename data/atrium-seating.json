@@ -38,39 +38,7 @@
         "regtangular dining table"
       ],
       "inventory": [
-        {
-          "object": "artefact",
-          "name": "cake",
-          "description": "victoria sponge cake",
-          "detailedDescription": "Mmmm tasty <i>and</i> healthy.<br>Well, maybe not so healthy but it really <i>is</i> cake - no lie!<br>It's a pretty hefty cake.",
-          "attributes": {
-            "defaultAction": "eat",
-            "weight": 9,
-            "type": "food",
-            "position": "on",
-            "canCollect": true,
-            "charges": 12,
-            "chargeUnit": "slice",
-            "chargesDescription": "There's enough here for about $charges good-sized $chargeUnit",
-            "isEdible": true,
-            "nutrition": 15,
-            "taste": "It's fresh, sweet and moist with a layer of buttercream icing and jam.",
-            "smell": "You bend down and sniff at the cake. It doesn't smell of much except sugar and baking.<br>As this is obviously meant to be shared around, you try not to be too obvious about breathing all over it."
-          },
-          "synonyms": [
-            "slice",
-            "sponge cake",
-            "sponge",
-            "victoria cake",
-            "victoria sponge",
-            "victoria sponge cake",
-            "icing",
-            "buttercream",
-            "buttercream icing",
-            "jam",
-            "food"
-          ]
-        }
+        {"file": "cake"}
       ]
     },
     {

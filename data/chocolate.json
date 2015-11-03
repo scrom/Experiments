@@ -1,7 +1,7 @@
 ﻿{
     "object": "artefact",
     "name": "chocolate",
-    "description": "bar of chocolate",
+    "description": "chocolate",
     "detailedDescription": "Mmmm tasty and loaded with calories. This is the kind of wonderful milk chocolate that you can still only buy in the UK.<br>Purists may disagree but you think this is the best sort for comfort eating.",
     "attributes": {
       "defaultAction": "eat",

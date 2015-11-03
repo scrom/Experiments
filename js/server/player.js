@@ -1289,6 +1289,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //we'll only get this far if there is an object to collect note the object *could* be a live creature!
+            var splitItem = false;
 
             //override default "get" and its variants?
             var customVerb = verb;
@@ -1318,9 +1319,16 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 
                 if (!artefact.isCollectable()) {
-                    var randomReplies = ["You try in vain to " + verb + " " + artefact.getDisplayName() + " but just end up tired and annoyed.", artefact.getPrefix().toLowerCase() + " can't be picked up.", "Nope, that's not going to work for you, sorry."];
-                    var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    return randomReplies[randomIndex];                    
+                    if (!artefact.willDivide()) {
+                        var randomReplies = ["You try in vain to " + verb + " " + artefact.getDisplayName() + " but just end up tired and annoyed.", tools.initCap(artefact.getPrefix()) + " can't be picked up.", "Nope, that's not going to work for you, sorry."];
+                        var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        return randomReplies[randomIndex];
+                    };
+
+                    //we can split and return a piece instead...
+                    artefact = artefact.split(1, true);
+                    artefact.show();
+                    splitItem = true;               
                 };                
             };
 
@@ -1346,12 +1354,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return self.put("collect", artefactName, "into", suitableContainer.getName(), requiredContainer);
             };
         
-            var collectedArtefact = removeObjectFromLocation(artefactName);
+            var collectedArtefact;
+            if (!splitItem) {
+                collectedArtefact = removeObjectFromLocation(artefactName);
+            } else {
+                collectedArtefact = artefact;
+            };
             //note collectedArtefact and artefact are the same thing.
-            if (!(collectedArtefact)) { return  "Sorry, "+artefact.getPrefix().toLowerCase+" can't be picked up.";}; //just in case it fails for any other reason.
+            if (!(collectedArtefact)) { return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";}; //just in case it fails for any other reason.
         
             _inventory.add(collectedArtefact);
-            return "You "+verb+" "+collectedArtefact.getDisplayName()+".";          
+            return "You "+verb+" "+collectedArtefact.descriptionWithCorrectPrefix()+".";          
         };
 
         /*Allow player to get all available objects from a location or container*/

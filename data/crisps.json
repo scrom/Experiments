@@ -1,7 +1,7 @@
 ﻿{
     "object": "artefact",
     "name": "crisps",
-    "description": "packet of crisps",
+    "description": "crisps",
     "detailedDescription": "'Potato chips' to our friends in America.<br>Sadly the pink packet makes it clear these aren't Salt & Vinegar flavour but they'll do in an emergency.",
     "attributes": {
         "defaultAction": "eat",

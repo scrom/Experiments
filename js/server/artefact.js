@@ -429,7 +429,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     //normal plural case
                     return "some"+state+anItemDescription;
                 };
-            }; 
+            };
+            
             switch (anItemDescription.charAt(0).toLowerCase()) {
                 case "u":
                     if (anItemDescription.length == 1) {return "a"+state+"'"+anItemDescription+"'";};
@@ -781,7 +782,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
         
         //artefact only function at the moment
-        self.getSourceAttributes = function() {
+        self.getSourceAttributes = function () {
             return _sourceAttributes;
         }; 
 
@@ -1728,11 +1729,24 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
 
                 self.setWeight(newSourceWeight);
+
+                if (self.chargesRemaining() == 1) {
+                    //last piece remaining
+                    _collectable = true;
+                };
             };            
             
             
             //return a new (smaller) instance of self
-            var splitItem = new Artefact(self.getName(), self.getRawDescription(), self.getInitialDetailedDescription(), self.getSourceAttributes(), self.getLinkedExits(), self.getDeliveryItems());
+            var sourceAttributes = self.getSourceAttributes();
+            //as it's splittable, it should also be collectable (even if original object was not)
+            //@todo - check this is actually duplicating attributes - risky if not.
+            sourceAttributes.canCollect = true;
+            var rawDescription = self.getRawDescription();
+            if (self.getChargeUnit() != "charge") {
+                rawDescription = self.getChargeUnit() + " of " + rawDescription;
+            };
+            var splitItem = new Artefact(self.getName(), rawDescription, self.getInitialDetailedDescription(), sourceAttributes, self.getLinkedExits(), self.getDeliveryItems());
             splitItem.addSyns(self.getSyns());               
             splitItem.setCharges(chargeSize);
             splitItem.setWeight(newDestinationWeight);       
