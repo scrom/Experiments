@@ -7475,6 +7475,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -7488,7 +7489,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -7501,6 +7503,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -7520,7 +7523,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -7658,6 +7663,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -7671,7 +7677,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -7684,6 +7691,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -7703,7 +7711,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -7841,6 +7851,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -7854,7 +7865,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -7867,6 +7879,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -7886,7 +7899,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -8024,6 +8039,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -8037,7 +8053,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -8050,6 +8067,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -8069,7 +8087,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -8207,6 +8227,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -8220,7 +8241,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -8233,6 +8255,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -8252,7 +8275,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -8514,6 +8539,7 @@
                   "type": "food",
                   "requiresContainer": true,
                   "isPowder": true,
+                  "requiredContainer": "bowl",
                   "canCollect": true,
                   "plural": true,
                   "isEdible": true,
@@ -8527,7 +8553,8 @@
                 "synonyms": [
                   "food",
                   "cereal",
-                  "shreddies"
+                  "shreddies",
+                  "milky"
                 ]
               }
             ]
@@ -8842,6 +8869,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -8855,7 +8883,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -8868,6 +8897,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -8887,7 +8917,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -9025,6 +9057,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9038,7 +9071,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -9051,6 +9085,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9070,7 +9105,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -9208,6 +9245,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9221,7 +9259,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -9234,6 +9273,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9253,7 +9293,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -9391,6 +9433,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9404,7 +9447,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -9417,6 +9461,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9436,7 +9481,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -9574,6 +9621,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9587,7 +9635,8 @@
                     "synonyms": [
                       "food",
                       "cereal",
-                      "shreddies"
+                      "shreddies",
+                      "milky"
                     ]
                   },
                   {
@@ -9600,6 +9649,7 @@
                       "type": "food",
                       "requiresContainer": true,
                       "isPowder": true,
+                      "requiredContainer": "bowl",
                       "canCollect": true,
                       "plural": true,
                       "isEdible": true,
@@ -9619,7 +9669,9 @@
                       "coco",
                       "brown milk",
                       "chocolate milk",
-                      "chocolatey"
+                      "chocolatey",
+                      "milky",
+                      "coco pops"
                     ]
                   }
                 ]
@@ -9979,6 +10031,7 @@
                   "type": "food",
                   "requiresContainer": true,
                   "isPowder": true,
+                  "requiredContainer": "bowl",
                   "canCollect": true,
                   "plural": true,
                   "isEdible": true,
@@ -9998,7 +10051,9 @@
                   "coco",
                   "brown milk",
                   "chocolate milk",
-                  "chocolatey"
+                  "chocolatey",
+                  "milky",
+                  "coco pops"
                 ]
               }
             ]
