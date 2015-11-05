@@ -788,18 +788,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             //description
             if (synonym == self.getDescription().toLowerCase()) { 
-            //var desc = " "+self.getDescription()+" ";
-            //var paddedSyn = " "+synonym+" ";
-            //if (desc.indexOf(paddedSyn) >-1) { 
                 return true; 
-            };
-
-            //last try - concat all synonyms together into a single string and try a match.
-            synonym = " " + synonym.replace(/-/g, " ").trim() + " "; //remove any hyphens
-            var allSynsAsString = " " + (_synonyms.toString()).replace(/,/g, " ") + " "; //convert syns to string without commas
-            
-            if (allSynsAsString.indexOf(synonym) > -1) {
-                return true;
             };
 
             return false;

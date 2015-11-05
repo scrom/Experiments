@@ -701,46 +701,6 @@
                     "fresnch dressing",
                     "food"
                   ]
-                },
-                {
-                  "object": "artefact",
-                  "name": "roast",
-                  "description": "delicious roast carvery",
-                  "detailedDescription": "The team have outdone themselves. It's roast turkey with all the trimmings <i>and</i> yorkshire pudding.",
-                  "attributes": {
-                    "weight": 2,
-                    "type": "food",
-                    "requiresContainer": true,
-                    "requiredContainer": "plate",
-                    "canCollect": true,
-                    "charges": 10,
-                    "chargeUnit": "plateful",
-                    "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping so that everyone can eat and we can maintain our budget",
-                    "affinityModifier": 0,
-                    "isEdible": true,
-                    "nutrition": 40,
-                    "smell": "It's like new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
-                    "taste": "Amazing! A complete free roast dinner never tasted so good."
-                  },
-                  "synonyms": [
-                    "food",
-                    "delicious food",
-                    "delicious dinner",
-                    "roast carvery",
-                    "delicious roast carvery",
-                    "carvery",
-                    "delicious carvery",
-                    "delicious roast",
-                    "carvery dinner",
-                    "roast dinner",
-                    "roast turkey",
-                    "yorkshire",
-                    "yorkshire pud",
-                    "yorkshire pudding",
-                    "trimmings",
-                    "dinner",
-                    "lunch"
-                  ]
                 }
               ],
               "missions": [
@@ -767,33 +727,6 @@
                     "decreaseAffinityFor": "everyone",
                     "score": -25
                   }
-                }
-              ]
-            },
-            {
-              "name": "servery-main",
-              "description": "You're in the SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses. It looks like everyone descended on the canteen at the same time for lunch.",
-              "inventory": [
-                {
-                  "object": "artefact",
-                  "name": "smell of food",
-                  "description": "food",
-                  "detailedDescription": "You'll need to head to the serving area.",
-                  "attributes": {
-                    "type": "scenery",
-                    "subType": "intangible",
-                    "customAction": [
-                      "get",
-                      "find",
-                      "where is",
-                      "where"
-                    ],
-                    "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
-                    "smell": "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
-                  },
-                  "synonyms": [
-                    "food"
-                  ]
                 }
               ]
             }
@@ -835,9 +768,8 @@
             ]
           },
           "modifyLocationCreatures": {
-            "name": "all",
-            "destination": "servery-main",
-            "destinationDelay": 35
+            "name": "margaret sexton",
+            "destination": "servery-food-bar"
           }
         }
       },
@@ -863,6 +795,7 @@
                 "bowl",
                 "salad",
                 "roast",
+                "nut roast",
                 "plate",
                 "plate"
               ]
@@ -875,7 +808,14 @@
               ]
             }
           ],
-          "removeMission": "limitfoodportions",
+          "removeMissions": [
+            "limitfoodportions",
+            "lunchtime"
+          ],
+          "modifyLocationCreatures": {
+            "name": "margaret sexton",
+            "destination": "servery-kitchen"
+          },
           "removeObject": "vat"
         }
       },
@@ -3995,8 +3935,9 @@
             },
             "synonyms": [
               "bottle",
-              "glass vial",
-              "glass"
+              "small glass vial",
+              "glass",
+              "medical sample"
             ]
           },
           {
@@ -4041,11 +3982,11 @@
             "synonyms": [
               "food",
               "ration",
-              "rations",
               "dried food",
-              "dried rations",
-              "survival rations",
-              "survival food rations",
+              "long lasting dried food",
+              "dried ration",
+              "survival ration",
+              "survival food ration",
               "pack"
             ]
           },
@@ -17081,75 +17022,122 @@
             "object": "mission",
             "name": "lunchtime",
             "displayName": "get some lunch",
-            "description": "Margaret has your lunch ready",
+            "description": "Margaret has prepared a tasty roast for you.",
             "attributes": {
+              "type": "event",
               "parent": [
                 "tomatoesformargaret",
                 "startoflunch"
               ],
-              "missionObject": "margaret sexton",
-              "static": true,
-              "dialogue": [
-                "'Thanks for the help with the tomatoes earlier.'<br>'Lunch is ready when you are, would you like it now?'",
-                {
-                  "state": 1,
-                  "keywords": [
-                    "yes",
-                    "ok",
-                    "yup",
-                    "y"
-                  ],
-                  "response": "'Here you go!'",
-                  "nextState": 3
-                },
-                {
-                  "state": 1,
-                  "response": "'Maybe later then?'",
-                  "nextState": 2
-                },
-                {
-                  "state": 2,
-                  "response": "'How about that lunch now?'",
-                  "nextState": 1
-                }
-              ]
-            },
-            "failAttributes": {
-              "alive": false,
-              "time": 300
+              "missionObject": "player"
             },
             "conditionAttributes": {
-              "alive": true,
-              "conversationState": 3
+              "time": 1
             },
             "reward": {
-              "delivers": {
-                "object": "artefact",
-                "name": "lunch",
-                "description": "large plate of nut roast",
-                "detailedDescription": "It's got all the trimmings of a full roast dinner (even roasted tomatoes) and it's also veggie friendly.<br>A very hearty meal!",
-                "attributes": {
-                  "defaultAction": "eat",
-                  "weight": 1,
-                  "type": "food",
-                  "canCollect": true,
-                  "charges": 1,
-                  "isEdible": true,
-                  "nutrition": 45,
-                  "smell": "It's like a vegetarian new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
-                  "taste": "Amazing! A complete free roast dinner without meat never tasted so good."
+              "modifyLocations": [
+                {
+                  "name": "servery-food-bar",
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "roast",
+                      "description": "delicious roast carvery",
+                      "detailedDescription": "The team have outdone themselves. It's roast turkey with all the trimmings <i>and</i> yorkshire pudding.",
+                      "attributes": {
+                        "weight": 2,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "requiredContainer": "plate",
+                        "canCollect": true,
+                        "charges": 10,
+                        "chargeUnit": "plateful",
+                        "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping so that everyone can eat and we can maintain our budget",
+                        "affinityModifier": 0,
+                        "isEdible": true,
+                        "nutrition": 40,
+                        "smell": "It's like new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+                        "taste": "Amazing! A complete free roast dinner never tasted so good."
+                      },
+                      "synonyms": [
+                        "food",
+                        "delicious food",
+                        "delicious dinner",
+                        "roast carvery",
+                        "delicious roast carvery",
+                        "carvery",
+                        "delicious carvery",
+                        "delicious roast",
+                        "carvery dinner",
+                        "roast dinner",
+                        "roast turkey",
+                        "yorkshire",
+                        "yorkshire pud",
+                        "yorkshire pudding",
+                        "trimmings",
+                        "dinner",
+                        "lunch"
+                      ]
+                    },
+                    {
+                      "object": "artefact",
+                      "name": "nut roast",
+                      "description": "large plate of nut roast",
+                      "detailedDescription": "It's got all the trimmings of a full roast dinner (even roasted tomatoes) and it's also veggie friendly.<br>A very hearty meal!",
+                      "attributes": {
+                        "defaultAction": "eat",
+                        "weight": 1,
+                        "type": "food",
+                        "canCollect": true,
+                        "charges": 1,
+                        "isEdible": true,
+                        "nutrition": 45,
+                        "smell": "It's like a vegetarian new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+                        "taste": "Amazing! A complete free roast dinner without meat never tasted so good."
+                      },
+                      "synonyms": [
+                        "dinner",
+                        "food",
+                        "lunch"
+                      ]
+                    }
+                  ]
                 },
-                "synonyms": [
-                  "dinner",
-                  "food",
-                  "nut roast"
-                ]
+                {
+                  "name": "servery-main",
+                  "description": "You're in the SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses. It looks like everyone descended on the canteen at the same time for lunch.",
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "smell of food",
+                      "description": "food",
+                      "detailedDescription": "You'll need to head to the serving area.",
+                      "attributes": {
+                        "type": "scenery",
+                        "subType": "intangible",
+                        "customAction": [
+                          "get",
+                          "find",
+                          "where is",
+                          "where"
+                        ],
+                        "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
+                        "smell": "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
+                      },
+                      "synonyms": [
+                        "food"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "modifyLocationCreatures": {
+                "name": "all",
+                "destination": "servery-main",
+                "destinationDelay": 35
               },
               "score": 25,
-              "message": "Yay for you! Time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
-            },
-            "fail": {
-              "message": "Lunchtime's over. Margaret had prepared a tasty meal especially for you but you missed out."
+              "message": "It's time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
             }
           },
           {

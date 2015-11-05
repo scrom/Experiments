@@ -407,6 +407,7 @@ exports.spyReachingMachineRoomSetsDefaultResultOnServer = function (test) {
     m0.updateMissions(1, p0);
     
     var aServer = destination.getObject("server");
+    console.log(aServer.toString())
     
     var expectedResult = "$action install disk in server";
     var actualResult = aServer.getDefaultResult();
@@ -466,7 +467,7 @@ exports.installDiskMissionModifiesMultipleObjects = function (test) {
     var aConsole = machineRoom.getObject("console");
     var aServer = machineRoom.getObject("server");
     
-    var expectedResult = "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'...<br>...'book of summ!£*_+g...<br>...sacri+}[@: souls open _^* gate'...<br>...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br><br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building.|<--->|The servers look like they can be accessed via a console nearby.";
+    var expectedResult = "It's a really old-style green screen (or at least it's made to look like one).<br> It's continuously paging through data from somewhere.<br><br>You scan the contents as they run past and pick up the odd mangled word and phrase.<br>'...I 5_!£_ 6!£¬_$@th call for¬@£^ the C~#t of !£* R£@ G~#@'...<br>...'book of summ!£*_+g...<br>...sacri+}[@: souls open _^* gate'...<br>...'eternal ¬~@#'...<br><br>There's much more to this place than just a software company. If only you'd read the small print on your employment contract.<br><br>Let's assume not everyone here is a willing participant in this - and from what you can gather here, the consequences of whatever's going on are unlikely to be localised to just this building.|<--->|The servers look like they're connected to a console nearby.";
     var actualResult = aConsole.getDetailedDescription(0,m0,0) + "|<--->|"+ aServer.getDetailedDescription(0, m0, 0);
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
@@ -939,8 +940,8 @@ exports.canRepairProjectorWithBulbAndSkills = function (test) {
     for (var i = 0; i < missions.length; i++) {
         if (missions[i].getName() == "teachprojectorrepair") {
             missions[i].clearParent();
-        }        ;
-    }    ;
+        };
+    };
     
     var amanda = m0.getCreature('amanda');
     
