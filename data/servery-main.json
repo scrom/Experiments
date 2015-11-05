@@ -56,8 +56,6 @@
         "description": "plastic dining chairs",
         "detailedDescription": "They're stackable chairs that allow the entire space to be cleared for company-wide presentations.",
         "attributes": {
-          "type": "bed",
-          "weight": 40,
           "isBreakable": false,
           "customAction": [
             "stack",

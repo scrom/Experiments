@@ -16152,7 +16152,7 @@
     "object": "location",
     "name": "second-floor-seating-area-east",
     "displayName": "Rest area",
-    "description": "You're in the East end of the second floor seating area.<br>You could stand here for hours reading the giant mural of post-it notes trying to spot the duplicates.",
+    "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>The whole of one wall is taken up by a mural of giant post-it notes. You could stand here for hours reading them trying to spot the duplicates.",
     "exits": [
       {
         "object": "exit",
@@ -16189,7 +16189,7 @@
         "object": "artefact",
         "name": "wall",
         "description": "wall full of post-it notes",
-        "detailedDescription": "I see it! I can see the duplicate...<br>Oh. Nope, it's not.",
+        "detailedDescription": "I see it! I can see the duplicate...<br>Oh... No, it's not.",
         "attributes": {
           "weight": 280,
           "type": "scenery",
@@ -16245,6 +16245,50 @@
           "fire door",
           "exit"
         ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "comfy armchairs",
+        "detailedDescription": "They're small but comfortable armchairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "comfy chair",
+          "comfy armchair",
+          "comfortable chair",
+          "small armchair",
+          "small chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "small coffee table",
+        "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "coffee table",
+          "small table",
+          "small coffee table",
+          "wooden coffee table",
+          "small wooden coffee table",
+          "small wooden  table"
+        ]
       }
     ]
   },
@@ -16252,7 +16296,7 @@
     "object": "location",
     "name": "second-floor-seating-area-west",
     "displayName": "Rest area",
-    "description": "You're in the West end of the second floor seating area.",
+    "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>Teams from the second floor tend to use this area for reading and relaxing.",
     "exits": [
       {
         "object": "exit",
@@ -16274,6 +16318,52 @@
         "direction": "e",
         "source": "second-floor-seating-area-west",
         "destination": "second-floor-seating-area-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "comfy armchairs",
+        "detailedDescription": "They're small but comfortable armchairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "comfy chair",
+          "comfy armchair",
+          "comfortable chair",
+          "small armchair",
+          "small chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "small coffee table",
+        "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "coffee table",
+          "small table",
+          "small coffee table",
+          "wooden coffee table",
+          "small wooden coffee table",
+          "small wooden  table"
+        ]
       }
     ]
   },
@@ -17369,7 +17459,7 @@
         "detailedDescription": "They're stackable chairs that allow the entire space to be cleared for company-wide presentations.",
         "attributes": {
           "defaultAction": "rest",
-          "weight": 40,
+          "weight": 30,
           "type": "bed",
           "plural": true,
           "customAction": [
