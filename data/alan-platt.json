@@ -1,7 +1,7 @@
 ﻿{
     "object": "creature",
     "name": "alan platt",
-    "displayname": "Alan Platt",
+    "displayName": "Alan Platt",
     "description": "Alan Platt",
     "detailedDescription": "The master of Customer Delight.",
     "attributes": {

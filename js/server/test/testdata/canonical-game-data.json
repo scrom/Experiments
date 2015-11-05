@@ -3336,7 +3336,7 @@
       {
         "object": "creature",
         "name": "alan platt",
-        "displayName": "the alan platt",
+        "displayName": "Alan Platt",
         "description": "Alan Platt",
         "detailedDescription": "The master of Customer Delight.",
         "attributes": {
@@ -6990,7 +6990,7 @@
       {
         "object": "creature",
         "name": "amanda mansfield",
-        "displayName": "the amanda mansfield",
+        "displayName": "Amanda Mansfield",
         "description": "Amanda from IS",
         "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
         "attributes": {
@@ -12755,7 +12755,7 @@
       {
         "object": "creature",
         "name": "james moore",
-        "displayName": "the james moore",
+        "displayName": "James Moore",
         "description": "James Moore",
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
