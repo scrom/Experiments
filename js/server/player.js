@@ -179,7 +179,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //if (artefact.getType() != 'container') {return ""};
 
-            //@warning - potential bug here when dropping an object and causing it to be destroyed.
+            //@todo - potential bug here when dropping an object and causing it to be destroyed.
             //artefact may null because it's neither in the player nor location inventory.
             if (!(artefact)) return "";
 

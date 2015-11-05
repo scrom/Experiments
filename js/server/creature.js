@@ -757,14 +757,25 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.syn = function (synonym) {
+            if (!synonym) {
+                return false;
+            };
+
+            synonym = synonym.toLowerCase();
+
             //match by name first
             if (synonym == _name) {
                 return true; 
             }; 
 
             //match by displayName 
-            if (synonym == self.getDisplayName()) { 
+            if (synonym == self.getDisplayName().toLowerCase()) { 
                 return true; 
+            };
+
+            //match firstName
+            if (synonym == self.getFirstName().toLowerCase()) {
+                return true;
             }; 
 
             //ensure we have syns array
@@ -776,12 +787,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             //description
-            if (synonym == self.getDescription()) { 
+            if (synonym == self.getDescription().toLowerCase()) { 
             //var desc = " "+self.getDescription()+" ";
             //var paddedSyn = " "+synonym+" ";
             //if (desc.indexOf(paddedSyn) >-1) { 
                 return true; 
-            }; 
+            };
+
+            //last try - concat all synonyms together into a single string and try a match.
+            synonym = " " + synonym.replace(/-/g, " ").trim() + " "; //remove any hyphens
+            var allSynsAsString = " " + (_synonyms.toString()).replace(/,/g, " ") + " "; //convert syns to string without commas
+            
+            if (allSynsAsString.indexOf(synonym) > -1) {
+                return true;
+            };
 
             return false;
         };

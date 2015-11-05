@@ -761,13 +761,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return true; 
             };
             
-            if (synonym == "monitors") {
-                var debug = synonym.substr(synonym.length - 1);
-                var search = synonym.substr(0, synonym.length - 1);
-            };
-            
             if (synonym.substr(synonym.length-1) == "s") {
                 return self.syn(synonym.substr(0, synonym.length - 1));
+            };
+            
+            //last try - concat all synonyms together into a single string and try a match.
+            synonym = " "+synonym.replace(/-/g, " ").trim()+" "; //remove any hyphens
+            var allSynsAsString = " "+(_synonyms.toString()).replace(/,/g, " ") + " "; //convert syns to string without commas
+
+            if (allSynsAsString.indexOf(synonym ) > -1) {
+                return true;
             };
 
             return false;

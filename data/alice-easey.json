@@ -31,8 +31,8 @@
       },
       "synonyms": [
         "bottle",
-        "glass vial",
-        "glass"
+        "small glass vial",
+        "medical sample"
       ]
     },
     {
@@ -57,10 +57,7 @@
         "taste": "Ugh. This stuff will do the job in an emergency but it's a lot like filling your mouth with carboard and foam packing material. Dry, tasteless and uncomfortable."
       },
       "synonyms": [
-        "food",
-        "ration",
-        "rations",
-        "dried food",
+        "long lasting dried food",
         "dried rations",
         "survival rations",
         "survival food rations",
