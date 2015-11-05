@@ -4478,7 +4478,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.hit = function(verb, receiverName, artefactName){
-            //@todo - find an alternative for creature displayNames on responses here
             if (tools.stringIsEmpty(receiverName)){ return "You find yourself frantically lashing at thin air.";};
 
             var weapon;
@@ -4508,7 +4507,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //just check it's not *already* destroyed...
             if (receiver.isDestroyed()) {
-                return "Don't you think you've done enough damage already?<br>There's nothing of "+receiver.getDisplayName()+" left worth breaking.";
+                return "Don't you think you've done enough damage already?<br>There's not enough of "+receiver.getSuffix()+" left to do any more damage to.";
             };
 
             //regardless of whether this is successful, 
@@ -4525,6 +4524,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //build result...
             var resultString;
+            
+            var receiverDisplayName = receiver.getDisplayName();
 
             //initial dead/destroyed checks and affinity impact.
             if (receiver.getType() == "creature") {
@@ -4532,18 +4533,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 
                 //regardless of outcome, you're not making yourself popular
                 receiver.decreaseAffinity(1);
-            } else {
-                if (receiver.isDestroyed()) {return "There's not enough left to to any more damage to.";};     
+                
+                //firstname only works for creatures
+                receiverDisplayName = receiver.getFirstName();
             };
 
             //check if unarmed
             if (!(weapon)) {
                 if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
-                    resultString = "You jab wildly at "+receiver.getDisplayName()+" with your fingers whilst making savage noises.<br>"; 
+                    resultString = "You jab wildly at "+ receiverDisplayName+" with your fingers whilst making savage noises.<br>"; 
                 } else if (verb=='kick') {
-                    resultString = "You lash out at "+receiver.getDisplayName()+" but your footwork is lacking something.<br>";
+                    resultString = "You lash out at "+ receiverDisplayName +" but your footwork is lacking something.<br>";
                 } else {
-                    resultString = "You attempt a bare-knuckle fight with "+receiver.getDisplayName()+".<br>"; 
+                    resultString = "You attempt a bare-knuckle fight with "+ receiverDisplayName+".<br>"; 
                 };
 
                 if (receiver.getType() == "creature") {
@@ -4560,13 +4562,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     };
                 } else { //artefact
-                        resultString += "That hurt. ";
-                        if (verb=="punch" || verb=="kick" || verb == "slap" || verb == "smack") {
-                            resultString += "You haven't really mastered unarmed combat, you might want to use something as a weapon in future.<br>"; 
-                        } else {
-                            resultString += "If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
-                        };
-                        resultString += self.hurt(15);
+                    if (verb == 'nerf' || verb == 'shoot') {
+                        var randomReplies = ["", "", "You have to admit that was a bit of an odd thing to do. I hope you feel as foolish as you looked.", "I don't know what you think you're doing but it's not making you look good.", "I have an urge to hurl insults at you for that but I'll refrain for now."]
+                        var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        resultString +=  randomReplies[randomIndex];
+                        return resultString;
+                    };
+
+                    resultString += "That hurt. ";
+                    if (verb=="punch" || verb=="kick" || verb == "slap" || verb == "smack") {
+                        resultString += "You haven't really mastered unarmed combat, you might want to use something as a weapon in future.<br>"; 
+                    } else {
+                        resultString += "If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
+                    };
+                    resultString += self.hurt(15);
                 };
                 
                 return resultString;
@@ -4574,9 +4583,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())) {
-                resultString =  "You attack "+receiver.getDisplayName()+". Unfortunately you can't move "+weapon.getDisplayName()+" to use as a weapon.<br>";
+                resultString =  "You attack "+ receiverDisplayName+". Unfortunately you can't move "+weapon.getDisplayName()+" to use as a weapon.<br>";
                 if (receiver.getType() == "creature") {
-                    resultString += receiver.getDisplayName()+ "retaliates. ";
+                    resultString += tools.initCap(receiver.getPrefix())+ "retaliates. ";
                     resultString += receiver.hit(self,0.2); //return 20% damage
                 };
                 return resultString;
@@ -4584,10 +4593,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //need to validate that weapon will do some damage
             if (weapon.getAttackStrength()<1) {
-                resultString = "You attack "+receiver.getDisplayName()+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon.<br>";
+                resultString = "You attack "+ receiverDisplayName+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon.<br>";
                 resultString += weapon.bash();
                 if (receiver.getType() == "creature") {
-                    resultString += receiver.getDisplayName()+ "retaliates. ";
+                    resultString += tools.initCap(receiver.getPrefix())+ "retaliates. ";
                     resultString += receiver.hit(self,0.2); //return 20% damage
                 };
                 return resultString;
@@ -4598,7 +4607,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (randomInt == 0) { //1 in 7 chance of failure
                     weapon.consume();
                     weapon.consumeComponents();
-                    resultString = "You try to "+verb+" "+receiver.getDisplayName()+". Unfortunately your "+weapon.getName()+" jammed.";
+                    resultString = "You try to "+verb+" "+ receiverDisplayName+". Unfortunately your "+weapon.getName()+" jammed.";
                     var newRandomInt = Math.floor(Math.random() * 10);
                     if (newRandomInt == 0 && weapon.isBreakable()) { //further 10% chance of worse!
                         resultString +="<br>In attempting to clear the jam, it looks like you've damaged the firing mechanism.<br>You'll need to get "+ weapon.getPrefix().toLowerCase()+" fixed if you want to use it again.";
@@ -4655,18 +4664,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var tempResult = receiver.hurt(Math.floor(pointsToRemove), self);
             if (verb == "throw") {
-                tempResult = tempResult.replace(" "+receiver.getSuffix(), " "+receiver.getDisplayName());
+                tempResult = tempResult.replace(" "+receiver.getSuffix(), " "+ receiverDisplayName);
             };
 
             var resultString = tempResult;
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
                 if (verb == "throw") {
-                    resultString +=  "You "+verb+" "+weapon.getDisplayName()+" at "+receiver.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                    resultString +=  "You "+verb+" "+weapon.getDisplayName()+" at "+ receiverDisplayName+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 } else {
                     weapon.consume(2); //use up multiple charges!
                     weapon.consumeComponents(2);
-                    resultString +=  "You repeatedly "+verb+" "+receiver.getDisplayName()+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                    resultString +=  "You repeatedly "+verb+" "+ receiverDisplayName+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 };
             }; 
 
