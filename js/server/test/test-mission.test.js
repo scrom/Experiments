@@ -1078,9 +1078,6 @@ exports.clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMiss
     mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
     
     var resultString = m0.updateMissions(1, p0);
-    //the mission we're testing is dialogue-based. It's only activated through conversation.
-    var margaret = m0.getCreature("margaret sexton");
-    console.log(margaret.reply("hello", p0, null, m0));
     
     var expectedResult = true;
     var actualResult = childMission.isActive();
@@ -1132,6 +1129,70 @@ exports.clearingSingleParentForMissionWith2_OR_ParentsClearsAllParents = functio
 };
 
 exports.clearingSingleParentForMissionWith2_OR_ParentsClearsAllParents.meta = { traits: ["Mission Test", "Mission Parent Trait"], description: "Test that mission parents are correctly checked and cleared." };
+
+
+exports.lunchWillIncludeRoastIfTomatoesMissionIsCompleted = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var childMission = m0.getNamedMission("lunchtime");
+    var parentMission1 = m0.getNamedMission("tomatoesformargaret");
+    var parentMission2 = m0.getNamedMission("startoflunch");
+    
+    p0.addMission(childMission);
+
+    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
+    mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
+    mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+    
+    var resultString = m0.updateMissions(1, p0);
+    resultString = m0.updateMissions(2, p0);
+    
+    var foodbar = m0.getLocation("servery-food-bar");
+    var servery = m0.getLocation("servery-main");
+    var nutRoast = foodbar.getObject("nut roast");
+    var roast = foodbar.getObject("roast");
+    var smellObject = servery.getObject("smell of food");
+    var smell = smellObject.getSmell();
+    var expectedSmell = "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
+
+
+    var expectedResult = nutRoast.getName()+"||"+roast.getName()+"||"+expectedSmell;
+    var actualResult = "nut roast||"+"roast||"+smell;
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.lunchWillIncludeRoastIfTomatoesMissionIsCompleted.meta = { traits: ["Event Trait", "Mission Parent Trait", "Plot Trait"], description: "Test that lunch includes roast if tomatoes mission is completed." };
+
+exports.timedPlayerEventCanBeCompletedWithMessageToPlayer = function (test) {
+    var mc = new missionController.MissionController();
+    
+    var childMission = m0.getNamedMission("lunchtime");
+    var parentMission1 = m0.getNamedMission("tomatoesformargaret");
+    var parentMission2 = m0.getNamedMission("startoflunch");
+    
+    p0.addMission(childMission);
+    
+    //mission parents are cleared in missionController.initiateNewChildMissions - all we need the name of the completed mission and more general data
+    mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
+    mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+    
+    var resultString = m0.updateMissions(1, p0);
+    resultString = m0.updateMissions(2, p0);
+    var expectedResult = "<br>It's time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing.";
+    var actualResult = resultString;
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.timedPlayerEventCanBeCompletedWithMessageToPlayer.meta = { traits: ["Event Trait", "Mission Parent Trait", "Plot Trait"], description: "Test that lunch includes roast if tomatoes mission is completed." };
+
 
 exports.mapBuilderCanHandleBuildingAMissionWith_OR_ParentsDefined = function (test) {
     var mc = new missionController.MissionController();

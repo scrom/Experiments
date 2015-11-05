@@ -20,43 +20,14 @@
           { "file": "plate" },
           { "file": "bowl" },
           { "file": "bowl" },
-          { "file": "salad" },
-          { "file": "roast" }
+          { "file": "salad" }
         ],
-        "missions": [{"file": "mission-limitfoodportions"}]
-      },
-      {
-        "name": "servery-main",
-        "description": "You're in the SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses. It looks like everyone descended on the canteen at the same time for lunch.",
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "smell of food",
-            "description": "food",
-            "detailedDescription": "You'll need to head to the serving area.",
-            "attributes": {
-              "type": "scenery",
-              "subType": "intangible",
-              "customAction": [
-                "get",
-                "find",
-                "where is",
-                "where"
-              ],
-              "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
-              "smell": "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
-            },
-            "synonyms": [
-              "food"
-            ]
-          }
-        ]
+        "missions": [ { "file": "mission-limitfoodportions" } ]
       }
     ],
     "modifyLocationCreatures": {
-      "name": "all",
-      "destination": "servery-main",
-      "destinationDelay": 35
+      "name": "margaret sexton",
+      "destination": "servery-food-bar"
     },
     "modifyObject": {
       "name": "vat",

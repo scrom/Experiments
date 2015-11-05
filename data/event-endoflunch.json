@@ -11,12 +11,16 @@
     "time": 300
   },
   "reward": {
-    "removeMission": "limitfoodportions",
+    "removeMissions": [ "limitfoodportions", "lunchtime" ],
+    "modifyLocationCreatures": {
+      "name": "margaret sexton",
+      "destination": "servery-kitchen"
+    },
     "modifyLocations": [
       {
         "name": "servery-food-bar",
         "description": "You're in the SQL Servery serving area.<br>The kitchen team have cleared everything away for the day.<br>You'll need to raid the cereal supply or vending machine if you're hungry this afternoon.",
-        "remove": [ "bowl", "bowl", "salad", "roast", "plate", "plate" ]
+        "remove": [ "bowl", "bowl", "salad", "roast", "nut roast", "plate", "plate" ]
       },
       {
         "name": "servery-main",

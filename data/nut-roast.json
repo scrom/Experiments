@@ -1,0 +1,22 @@
+﻿{
+  "object": "artefact",
+  "name": "nut roast",
+  "description": "large plate of nut roast",
+  "detailedDescription": "It's got all the trimmings of a full roast dinner (even roasted tomatoes) and it's also veggie friendly.<br>A very hearty meal!",
+  "attributes": {
+    "defaultAction": "eat",
+    "weight": 1,
+    "type": "food",
+    "charges": 1,
+    "canCollect": true,
+    "isEdible": true,
+    "nutrition": 45,
+    "smell": "It's like a vegetarian new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+    "taste": "Amazing! A complete free roast dinner without meat never tasted so good."
+  },
+  "synonyms": [
+    "dinner",
+    "food",
+    "lunch"
+  ]
+}

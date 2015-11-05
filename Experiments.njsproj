@@ -206,6 +206,7 @@
     <Content Include="data\mocha.json" />
     <Content Include="data\mouse.json" />
     <Content Include="data\northwest-corridor-ground-floor.json" />
+    <Content Include="data\nut-roast.json" />
     <Content Include="data\office-front.json" />
     <Content Include="data\opportunities-central.json" />
     <Content Include="data\opportunities-cubbyhole.json" />
