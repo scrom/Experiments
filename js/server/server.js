@@ -12,8 +12,7 @@ exports.Server = function Server(anInterpreter) {
         var logger = require('morgan');
         var app = express();
 
-        var configObjectModule = require('./config');
-        var _config = new configObjectModule.Config();
+        var config = require('./config');
 
         var sanitiseString = function(aString) {
             return aString.replace(/[^a-zA-Z0-9 +-/%]+/g,"").toLowerCase().substring(0,255); //same as used for client but includes "/" and "%" as well
@@ -34,7 +33,7 @@ exports.Server = function Server(anInterpreter) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.write(_interpreter.translate(sanitisedRequestURL,config));
             response.end();
         });
 
@@ -42,7 +41,7 @@ exports.Server = function Server(anInterpreter) {
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.write(_interpreter.translate(sanitisedRequestURL,config));
             response.end();
         });
 
@@ -50,7 +49,7 @@ exports.Server = function Server(anInterpreter) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.write(_interpreter.translate(sanitisedRequestURL,config));
             response.end();
         });
 
@@ -58,7 +57,7 @@ exports.Server = function Server(anInterpreter) {
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,_config));
+            response.write(_interpreter.translate(sanitisedRequestURL,config));
             response.end();
         });
 
@@ -71,7 +70,7 @@ exports.Server = function Server(anInterpreter) {
                 response.end();
             };
 
-            _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
+            _interpreter.translate(sanitisedRequestURL,config, callbackFunction);
         });
 
         app.get('/load/*', function (request, response) {
@@ -82,7 +81,7 @@ exports.Server = function Server(anInterpreter) {
                 response.write(result);
                 response.end();
             };
-            _interpreter.translate(sanitisedRequestURL,_config, callbackFunction);
+            _interpreter.translate(sanitisedRequestURL,config, callbackFunction);
         });
         
         app.get('/quit/*', function (request, response) {
@@ -90,7 +89,7 @@ exports.Server = function Server(anInterpreter) {
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, { 'Content-type': 'text/plain' });
-            response.write(_interpreter.translate(sanitisedRequestURL, _config));
+            response.write(_interpreter.translate(sanitisedRequestURL, config));
             response.end();
 
         });
@@ -98,7 +97,7 @@ exports.Server = function Server(anInterpreter) {
         app.get('/image/*', function (request, response) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
-            var fileURL = _interpreter.translate(sanitisedRequestURL,_config);
+            var fileURL = _interpreter.translate(sanitisedRequestURL,config);
             if (fileURL) {
                 response.sendFile(fileURL);
             } else {
@@ -139,13 +138,13 @@ exports.Server = function Server(anInterpreter) {
             //response.writeHead(200, {'Content-type':'text/plain'});
             //response.write(_interpreter.getData(0));
             //response.end();
-            response.send(_interpreter.translate(sanitisedRequestURL,_config)); 
+            response.send(_interpreter.translate(sanitisedRequestURL,config)); 
         });
 
         //serve default dynamic
         app.get('*', function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
-            response.send(_interpreter.translate(sanitisedRequestURL,_config));
+            response.send(_interpreter.translate(sanitisedRequestURL,config));
         });
 
         //post handling
@@ -195,8 +194,8 @@ exports.Server = function Server(anInterpreter) {
        //initiate listening with port from config
        self.listen = function () {
             self = this;
-            app.listen(_config.port)
-            console.log(_objectName + ' '+_config.hostname+' listening on port ' + _config.port);
+            app.listen(config.port)
+            console.log(_objectName + ' '+config.hostname+' listening on port ' + config.port);
         };
 
         console.log(_objectName + ' created');
