@@ -942,6 +942,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //console.log('mission object retrieved. Checking condition attributes...');
+            //we don't bother to calculate this earlier as even if all success attributes are cleared, if any failure attribute is triggered as well, the failure takes precedent.
             var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
 
             //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
@@ -987,10 +988,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     return null; 
                 };                          
             };
-
-            //check the rest of the object attributes if they exist
+            
             //console.log('checking remaining attributes...');  
-            successCount += self.checkAttributes(missionObject, _conditionAttributes);
+            //check the rest of the object attributes if they exist (and if we're not already successful)
+            if (successCount < requiredSuccessCount) {
+                successCount += self.checkAttributes(missionObject, _conditionAttributes);
+            };
 
 
             //console.log('condition matches: '+successCount+" out of "+requiredSuccessCount);

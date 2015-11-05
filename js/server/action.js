@@ -1049,6 +1049,7 @@ exports.Action = function Action(player, map, fileManager) {
                         _ticks = 1;
                         description = _player.turn('turn', _object0,'out');
                         break;
+                    case 'reda':
                     case 'read':
                     case 'study':
                         _ticks = _baseTickSize*7; //studying takes time!
