@@ -248,7 +248,7 @@ exports.Map = function Map() {
             var location;
             if (modification) {
                 if (modification.name) {
-                    if (modification.name = "all") {
+                    if (modification.name == "all") {
                         location = self;
                     } else {
                         location = self.getLocation(modification.name);

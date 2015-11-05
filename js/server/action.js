@@ -1426,7 +1426,7 @@ exports.Action = function Action(player, map, fileManager) {
                     return _map.listAllMissions(_player);
                 };
             
-                if (_verb == '+activate') {
+                if (_verb == '+activate' || _verb == '+start') {
                     return _map.activateNamedMission(_object0, _player);
                 };
 

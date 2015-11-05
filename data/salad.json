@@ -2,7 +2,7 @@
   "object": "artefact",
   "name": "salad",
   "description": "selection of salad items",
-  "detailedDescription": "It's got mixed leaves, some cheese, beans, and beetroot. All with a French dressing.",
+  "detailedDescription": "It's got mixed leaves, some cheese, beans, tomatoes, and beetroot. All with a French dressing.",
   "attributes": {
     "defaultAction": "eat",
     "weight": 3,
@@ -30,6 +30,8 @@
     "mixed leaves",
     "cheese",
     "beans",
+    "tomato",
+    "tomatoes",
     "beetroot",
     "beets",
     "dressing",

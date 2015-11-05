@@ -12,9 +12,13 @@
   },
   "reward": {
     "removeMissions": [ "limitfoodportions", "lunchtime" ],
-    "modifyLocationCreatures": {
+    "modifyObject": {
       "name": "margaret sexton",
-      "destination": "servery-kitchen"
+      "attributes": {
+        "destinations": [ "atrium-seating" ],
+        "destinationDelay": 5,
+        "traveller":  true
+      }
     },
     "modifyLocations": [
       {

@@ -2,7 +2,7 @@
     "object": "artefact",
     "name": "milk bottle",
     "description": "bottle",
-    "detailedDescription": "It's a large milk bottle",
+    "detailedDescription": "It's a large milk bottle.",
     "attributes": {
         "extendedInventoryDescription": "There's $inventory in it.",
         "weight": 1,

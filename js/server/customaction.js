@@ -78,13 +78,13 @@ var self = module.exports = {
                 map.removeNamedMission(actionData.removeMissions[m], player);
             };
         };
+        if (actionData.modifyLocationCreatures) { map.modifyLocationCreatures(actionData.modifyLocationCreatures); }; //important! modify before remove and modify all before named items
         if (actionData.modifyObject) { map.modifyObject(actionData.modifyObject, player); };
         if (actionData.modifyObjects) {
             for (var m = 0; m < actionData.modifyObjects.length; m++) {
                 map.modifyObject(actionData.modifyObjects[m], player);
             };
         };
-        if (actionData.modifyLocationCreatures) { map.modifyLocationCreatures(actionData.modifyLocationCreatures); }; //important! modify before remove
         if (actionData.removeObject) { map.removeObject(actionData.removeObject, actionData.destination, player); };
         if (actionData.removeObjects) {
             for (var m = 0; m < actionData.removeObjects.length; m++) {

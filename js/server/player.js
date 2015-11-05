@@ -2382,7 +2382,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (artefactName == "all") { return "Sorry, you'll need to be more specific."; };
                                 
                 if (verb == "collect") {
-                    //try location first
+                    //try location first if collecting
                     artefact = getObjectFromLocation(artefactName);
                 };
                 if (!(artefact)) {
@@ -2498,6 +2498,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (!receiver.isLiquid() && !receiver.isPowder()) {
                         //@todo - should really trap if the liquid/powder was *not* in a container prior to this
                         var artefactChargesRemaining = artefact.consume();
+                        if (verb == "empty") {
+                            //we use them all up
+                            artefactChargesRemaining = 0;
+                        };
                         if (artefactChargesRemaining == 0) { removeObjectFromPlayerOrLocation(artefactName); };
                         if (receiver.syn("floor")) {
                             _currentLocation.addLiquid(artefactName)

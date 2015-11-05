@@ -575,7 +575,7 @@
           "modifyLocations": [
             {
               "name": "servery-food-bar",
-              "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
+              "description": "You're in the SQL Servery serving area and lunch should be being served.<br>It looks like they're not quite ready yet. Hopefully everything's ok.",
               "inventory": [
                 {
                   "object": "artefact",
@@ -662,114 +662,23 @@
                     "round china bowl",
                     "plain round china bowl"
                   ]
-                },
-                {
-                  "object": "artefact",
-                  "name": "salad",
-                  "description": "selection of salad items",
-                  "detailedDescription": "It's got mixed leaves, some cheese, beans, and beetroot. All with a French dressing.",
-                  "attributes": {
-                    "defaultAction": "eat",
-                    "weight": 3,
-                    "type": "food",
-                    "requiresContainer": true,
-                    "requiredContainer": "plate",
-                    "canCollect": true,
-                    "charges": 15,
-                    "chargeUnit": "plateful",
-                    "chargesDescription": "There's plenty of assorted salad items left but we'd prefer you only stuck to one plateful",
-                    "affinityModifier": 0,
-                    "isEdible": true,
-                    "nutrition": 23,
-                    "smell": "It smells fresh and (mostly) green It's better than you'd find in many restaurants.",
-                    "taste": "Hmm. Crisp and fresh. You're not sure if you're a huge fan of salad or not but it tastes as good as you'd hope a salad would really.."
-                  },
-                  "synonyms": [
-                    "salad selection",
-                    "selection",
-                    "selection of salad",
-                    "selection of salad items",
-                    "salad items",
-                    "salad",
-                    "leaves",
-                    "mixed leaves",
-                    "cheese",
-                    "beans",
-                    "beetroot",
-                    "beets",
-                    "dressing",
-                    "fresnch dressing",
-                    "food"
-                  ]
-                }
-              ],
-              "missions": [
-                {
-                  "object": "mission",
-                  "name": "limitfoodportions",
-                  "displayName": "Don't take too much food",
-                  "attributes": {
-                    "missionObject": "servery-food-bar",
-                    "static": true
-                  },
-                  "failAttributes": {
-                    "foodPortionCount": "<32"
-                  },
-                  "conditionAttributes": {
-                    "time": 450
-                  },
-                  "reward": {
-                    "message": ""
-                  },
-                  "fail": {
-                    "message": "Hey, stop that. Be reasonable with how much food you're taking. Everyone else needs to eat too.<br>As a basic guideline, It's soup & salad, soup & roast or salad & roast.",
-                    "affinityModifier": 1,
-                    "decreaseAffinityFor": "everyone",
-                    "score": -25
-                  }
                 }
               ]
             }
           ],
           "modifyObject": {
-            "name": "vat",
+            "name": "margaret sexton",
             "attributes": {
-              "description": "vat",
-              "detailedDescription": "It's a large stainless steel cooking vat",
-              "extendedInventoryDescription": "There's $inventory in it."
-            },
-            "inventory": [
-              {
-                "object": "artefact",
-                "name": "soup",
-                "description": "soup",
-                "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
-                "attributes": {
-                  "weight": 3,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "bowl",
-                  "canCollect": true,
-                  "charges": 12,
-                  "chargeUnit": "bowlful",
-                  "chargesDescription": "There's about $charges $chargeUnit left. For the benefit of everyone else, try to stick to just one portion though",
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15,
-                  "smell": "It has a lovely aromatic smell. A mix of both sweet and spicy.",
-                  "taste": "Yep, it's good."
-                },
-                "synonyms": [
-                  "soup",
-                  "food"
-                ]
-              }
-            ]
+              "destinations": [
+                "servery-food-bar"
+              ],
+              "destinationDelay": 75
+            }
           },
           "modifyLocationCreatures": {
-            "name": "margaret sexton",
-            "destination": "servery-food-bar"
+            "name": "all",
+            "destination": "servery-food-bar",
+            "destinationDelay": 5
           }
         }
       },
@@ -808,14 +717,20 @@
               ]
             }
           ],
+          "modifyObject": {
+            "name": "margaret sexton",
+            "attributes": {
+              "destinations": [
+                "atrium-seating"
+              ],
+              "destinationDelay": 5,
+              "traveller": true
+            }
+          },
           "removeMissions": [
             "limitfoodportions",
             "lunchtime"
           ],
-          "modifyLocationCreatures": {
-            "name": "margaret sexton",
-            "destination": "servery-kitchen"
-          },
           "removeObject": "vat"
         }
       },
@@ -7288,7 +7203,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -7476,7 +7391,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -7664,7 +7579,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -7852,7 +7767,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -8040,7 +7955,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -8682,7 +8597,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -8870,7 +8785,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -9058,7 +8973,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -9246,7 +9161,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -9434,7 +9349,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -17038,6 +16953,7 @@
               "modifyLocations": [
                 {
                   "name": "servery-food-bar",
+                  "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
                   "inventory": [
                     {
                       "object": "artefact",
@@ -17100,6 +17016,73 @@
                         "food",
                         "lunch"
                       ]
+                    },
+                    {
+                      "object": "artefact",
+                      "name": "salad",
+                      "description": "selection of salad items",
+                      "detailedDescription": "It's got mixed leaves, some cheese, beans, tomatoes, and beetroot. All with a French dressing.",
+                      "attributes": {
+                        "defaultAction": "eat",
+                        "weight": 3,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "requiredContainer": "plate",
+                        "canCollect": true,
+                        "charges": 15,
+                        "chargeUnit": "plateful",
+                        "chargesDescription": "There's plenty of assorted salad items left but we'd prefer you only stuck to one plateful",
+                        "affinityModifier": 0,
+                        "isEdible": true,
+                        "nutrition": 23,
+                        "smell": "It smells fresh and (mostly) green It's better than you'd find in many restaurants.",
+                        "taste": "Hmm. Crisp and fresh. You're not sure if you're a huge fan of salad or not but it tastes as good as you'd hope a salad would really.."
+                      },
+                      "synonyms": [
+                        "salad selection",
+                        "selection",
+                        "selection of salad",
+                        "selection of salad items",
+                        "salad items",
+                        "salad",
+                        "leaves",
+                        "mixed leaves",
+                        "cheese",
+                        "beans",
+                        "tomato",
+                        "tomatoes",
+                        "beetroot",
+                        "beets",
+                        "dressing",
+                        "fresnch dressing",
+                        "food"
+                      ]
+                    }
+                  ],
+                  "missions": [
+                    {
+                      "object": "mission",
+                      "name": "limitfoodportions",
+                      "displayName": "Don't take too much food",
+                      "attributes": {
+                        "missionObject": "servery-food-bar",
+                        "static": true
+                      },
+                      "failAttributes": {
+                        "foodPortionCount": "<33"
+                      },
+                      "conditionAttributes": {
+                        "time": 450
+                      },
+                      "reward": {
+                        "message": ""
+                      },
+                      "fail": {
+                        "message": "Hey, stop that. Be reasonable with how much food you're taking. Everyone else needs to eat too.<br>As a basic guideline, It's soup & salad, soup & roast or salad & roast.",
+                        "affinityModifier": 1,
+                        "decreaseAffinityFor": "everyone",
+                        "score": -25
+                      }
                     }
                   ]
                 },
@@ -17131,6 +17114,42 @@
                   ]
                 }
               ],
+              "modifyObject": {
+                "name": "vat",
+                "attributes": {
+                  "description": "vat",
+                  "detailedDescription": "It's a large stainless steel cooking vat",
+                  "extendedInventoryDescription": "There's $inventory in it."
+                },
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "soup",
+                    "description": "soup",
+                    "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "bowl",
+                      "canCollect": true,
+                      "charges": 12,
+                      "chargeUnit": "bowlful",
+                      "chargesDescription": "There's about $charges $chargeUnit left. For the benefit of everyone else, try to stick to just one portion though",
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "smell": "It has a lovely aromatic smell. A mix of both sweet and spicy.",
+                      "taste": "Yep, it's good."
+                    },
+                    "synonyms": [
+                      "soup",
+                      "food"
+                    ]
+                  }
+                ]
+              },
               "modifyLocationCreatures": {
                 "name": "all",
                 "destination": "servery-main",
@@ -17146,7 +17165,7 @@
             "displayName": "get some fresh tomatoes for Margaret",
             "description": "Margaret needs some fresh tomatoes.",
             "attributes": {
-              "parent": "waterfilsplants",
+              "parent": "endofbreakfast",
               "missionObject": "tomatoes",
               "destination": "margaret sexton",
               "static": true,
@@ -17208,10 +17227,8 @@
             },
             "reward": {
               "score": 125,
-              "affinityModifier": 1,
               "removeObject": "tomatoes",
-              "increaseAffinityFor": "everyone",
-              "message": "Margaret says 'Thankyou so much $player.'<br>'I'm sure everyone will appreciate the effort you've gone to to keep us all fed.'"
+              "message": "Margaret says 'Thankyou so much $player.'<br>'We can go ahead with lunch for everyone as planned.' 'I'll make sure there's a special roast waiting for you too!'"
             }
           }
         ]

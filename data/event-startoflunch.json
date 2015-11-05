@@ -14,31 +14,26 @@
     "modifyLocations": [
       {
         "name": "servery-food-bar",
-        "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
+        "description": "You're in the SQL Servery serving area and lunch should be being served.<br>It looks like they're not quite ready yet. Hopefully everything's ok.",
         "inventory": [
           { "file": "plate" },
           { "file": "plate" },
           { "file": "bowl" },
-          { "file": "bowl" },
-          { "file": "salad" }
-        ],
-        "missions": [ { "file": "mission-limitfoodportions" } ]
+          { "file": "bowl" }
+        ]
       }
     ],
     "modifyLocationCreatures": {
-      "name": "margaret sexton",
-      "destination": "servery-food-bar"
+      "name": "all",
+      "destination": "servery-food-bar",
+      "destinationDelay": 5
     },
     "modifyObject": {
-      "name": "vat",
+      "name": "margaret sexton",
       "attributes": {
-        "description": "vat",
-        "detailedDescription": "It's a large stainless steel cooking vat",
-        "extendedInventoryDescription": "There's $inventory in it."
-      },
-      "inventory": [
-        { "file": "soup" }
-      ]
+        "destinations": [ "servery-food-bar" ],
+        "destinationDelay": 75
+      }
     }
   }
 }

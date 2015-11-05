@@ -8,7 +8,7 @@
     "static": true
   },
   "failAttributes": {
-    "foodPortionCount": "<32"
+    "foodPortionCount": "<33"
   },
   "conditionAttributes": {
     "time": 450
