@@ -363,8 +363,15 @@ exports.spyReachingMachineRoomDeliversHardDiskToSpy = function (test) {
     planeCrash.processReward(m0, crashReward, p0);
     
     //start post-plane-crash event from spy manually
-    var spy = m0.getCreature('spy');
-    var event = spy.getMissions(true)[0];
+    var spy = m0.getCreature('jordan');
+    var missions = spy.getMissions(true);
+    var event;
+    for (var m = 0; m < missions.length; m++) {
+        if (missions[m].getName() == "jordanreachesmachineroom") {
+            event = missions[m];
+            break;
+        };
+    };
     event.clearParent();
     event.startTimer();
     
@@ -397,7 +404,14 @@ exports.spyReachingMachineRoomSetsDefaultResultOnServer = function (test) {
     
     //start post-plane-crash event from spy manually
     var spy = m0.getCreature('spy');
-    var event = spy.getMissions(true)[0];
+    var missions = spy.getMissions(true);
+    var event;
+    for (var m = 0; m < missions.length; m++) {
+        if (missions[m].getName() == "jordanreachesmachineroom") {
+            event = missions[m];
+            break;
+        };
+    };
     event.clearParent();
     event.startTimer();
     
@@ -484,8 +498,7 @@ exports.canGainHuntAttributeFromReadBookMission = function (test) {
     var book = m0.getObject('battered book');
     var inv = p0.getInventoryObject();
     inv.add(book);
-    p0.read("read", "battered book");
-    m0.updateMissions(1, p0);
+    p0.read("read", "battered book", m0);
     var resultString = p0.getHunt() - initialValue;
 
     var expectedResult = "2";
@@ -505,8 +518,7 @@ exports.canGainStealthAttributeFromReadBookMission = function (test) {
     var book = m0.getObject('black book');
     var inv = p0.getInventoryObject();
     inv.add(book);
-    p0.read("read", "black book");
-    m0.updateMissions(1, p0);
+    p0.read("read", "black book", m0);
     var resultString = p0.getStealth() - initialValue;
 
     var expectedResult = "4";
@@ -813,7 +825,7 @@ exports.canCompleteKillSpyMission = function (test) {
 
     var resultString = m0.updateMissions(1, p0);
 
-    var expectedResult = "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
+    var expectedResult = "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles.<br>";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -853,7 +865,7 @@ exports.canCompleteKillSpyMissionWhenSpyDiesBeforePlayerReachesThem = function (
     //var result = mission.checkState(inv, simon.getLocation(), m0);
     var resultString = m0.updateMissions(1, p0);
 
-    var expectedResult = "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles.";
+    var expectedResult = "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles.<br>";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -870,10 +882,9 @@ exports.canCompleteReadArticleMission = function (test) {
     m0.removeObject("solid article");
     var inventory = p0.getInventoryObject();
     inventory.add(book);
-
-    p0.read("read", "article");
-    var resultString = m0.updateMissions(1, p0);
-    var expectedResult = "<br>Congratulations. You've learned the basics on how to develop good software architecture.";
+    
+    var resultString = p0.read("read", "article", m0);
+    var expectedResult = "You read 'Learn on the Loo' article.<br><a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a><br>Congratulations. You've learned the basics on how to develop good software architecture.<br>";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -889,8 +900,7 @@ exports.canGainSkillsFromReadingManual = function (test) {
     var inventory = p0.getInventoryObject();
     inventory.add(book);
 
-    p0.read("read", "manual");
-    m0.updateMissions(1, p0);
+    p0.read("read", "manual", m0);
     var resultString = p0.getSkills();
     var expectedResult = "coffee machine";
     var actualResult = resultString
@@ -923,7 +933,7 @@ exports.canGetBulbFromAmandaTalkingMission = function (test) {
     p0.say("talk","ok","amanda");
     var resultString = m0.updateMissions(1, p0);
 
-    var expectedResult = "<br>Amanda hands you a projector bulb.";
+    var expectedResult = "<br>Amanda hands you a projector bulb.<br>";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: "+expectedResult);
@@ -959,7 +969,7 @@ exports.canRepairProjectorWithBulbAndSkills = function (test) {
     p0.setLocation(location);
     var resultString = p0.repair('repair','projector')
     
-    var expectedResult = "You fixed the projector and put the projector bulb you were carrying into it.<br><br>Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i>";
+    var expectedResult = "You fixed the projector and put the projector bulb you were carrying into it.<br><br>Great job! Next time there's a meeting in here, nobody will curse the previous occupants.<br>Curses can only lead to <i>bad things!</i><br>";
     var actualResult = resultString + m0.updateMissions(1, p0);
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
@@ -1014,8 +1024,8 @@ exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryI
     for (var i = 0; i < missions.length; i++) {
         if (missions[i].getName() == "teachprojectorrepair") {
             missions[i].clearParent();
-        }        ;
-    }    ;
+        };
+    };
     
     var amanda = m0.getCreature('amanda');
     
@@ -1032,7 +1042,7 @@ exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryI
     p0.say("talk", "ok", "amanda");
     var resultString = m0.updateMissions(1, p0);
     
-    var expectedResult = "<br>Amanda hands you a projector bulb.<br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
+    var expectedResult = "<br>Amanda hands you a projector bulb.<br><br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
@@ -1183,7 +1193,7 @@ exports.timedPlayerEventCanBeCompletedWithMessageToPlayer = function (test) {
     
     var resultString = m0.updateMissions(1, p0);
     resultString = m0.updateMissions(2, p0);
-    var expectedResult = "<br>It's time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing.";
+    var expectedResult = "<br>It's time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing.<br>";
     var actualResult = resultString;
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
@@ -1289,7 +1299,7 @@ exports.clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission = fu
     playerInventory.add(book);
     
     console.log("reading survival book");      
-    console.log(p0.read("read", "survival book"));
+    console.log(p0.read("read", "survival book", m0));
     console.log("update missions");
     console.log(mc.updateMissions(2, p0, m0));
     
@@ -1360,7 +1370,7 @@ exports.playerReachesCrashSiteEventCanBeCompleted = function (test) {
     playerInventory.add(book);
     
     console.log("reading survival book");
-    console.log(p0.read("read", "survival book"));
+    console.log(p0.read("read", "survival book", m0));
     console.log("update missions");
     console.log(mc.updateMissions(2, p0, m0));
     

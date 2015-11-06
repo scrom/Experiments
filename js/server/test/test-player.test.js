@@ -1421,7 +1421,7 @@ exports.deliberatelyBreakingBloodContainerLeavesBloodOnFloor = function (test) {
     console.log(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
     p0.breakOrDestroy('break',mug.getName());
-    var expectedResult = "You're not carrying anything that you can put the blood into.";
+    var expectedResult = "You're not carrying anything that you can collect the blood into.";
     var actualResult = p0.get('get',"blood");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
