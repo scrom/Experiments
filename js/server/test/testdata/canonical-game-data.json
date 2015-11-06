@@ -2091,7 +2091,7 @@
         "name": "zara sheldrake",
         "displayName": "Zara Sheldrake",
         "description": "Zara Sheldrake",
-        "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most qualified first-aiders.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
+        "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most experienced first-aider.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
         "attributes": {
           "weight": 105,
           "money": 20,
@@ -2273,7 +2273,8 @@
                     "yes",
                     "ok",
                     "yup",
-                    "y"
+                    "y",
+                    "sure"
                   ],
                   "response": "'Thanks $player.'",
                   "nextState": 3
@@ -2295,7 +2296,8 @@
                     "yes",
                     "ok",
                     "yup",
-                    "y"
+                    "y",
+                    "sure"
                   ],
                   "response": "'Excellent!'"
                 },
@@ -3599,7 +3601,8 @@
                     "yes",
                     "ok",
                     "yup",
-                    "y"
+                    "y",
+                    "sure"
                   ],
                   "response": "'Great! He's often hanging around the Customer Delight management area.'<br>'He's pretty friendly so as long as you've not upset him in any way (or taken anything else of his) you might be able to simply <i>ask</i> him for them.'",
                   "nextState": 3
@@ -3978,7 +3981,7 @@
             },
             "conditionAttributes": {
               "alive": true,
-              "conversationState": 2
+              "conversationState": 1
             },
             "reward": {
               "delivers": {
@@ -10677,7 +10680,7 @@
                     "type": "creature",
                     "carryWeight": 18,
                     "health": 225,
-                    "affinity": -1,
+                    "affinity": -2,
                     "canTravel": true,
                     "traveller": true,
                     "destinations": [
@@ -10686,8 +10689,7 @@
                     "avoiding": [
                       "bus"
                     ],
-                    "destinationDelay": 20,
-                    "imageName": "spy.jpg"
+                    "destinationDelay": 20
                   },
                   "inventory": [
                     {
@@ -10723,6 +10725,91 @@
                     "him"
                   ],
                   "missions": [
+                    {
+                      "object": "mission",
+                      "name": "jordanisbleeding",
+                      "displayName": "Jordan is mortally wounded",
+                      "attributes": {
+                        "type": "event",
+                        "missionObject": "jordan miller",
+                        "static": true
+                      },
+                      "conditionAttributes": {
+                        "bleeding": true
+                      },
+                      "reward": {
+                        "modifyObjects": [
+                          {
+                            "name": "jordan miller",
+                            "attributes": {
+                              "destinations": [
+                                "customer-delight-south-west"
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "object": "mission",
+                      "name": "jordandies",
+                      "displayName": "Alice receives a note from Jordan (somehow)",
+                      "attributes": {
+                        "type": "event",
+                        "missionObject": "jordan miller",
+                        "static": true
+                      },
+                      "conditionAttributes": {
+                        "dead": true
+                      },
+                      "reward": {
+                        "modifyObjects": [
+                          {
+                            "name": "alice easey",
+                            "inventory": [
+                              {
+                                "object": "artefact",
+                                "name": "handwritten note",
+                                "description": "handwritten note",
+                                "detailedDescription": "It's barely legible and spotted with blood.",
+                                "attributes": {
+                                  "defaultAction": "read",
+                                  "weight": 0.1,
+                                  "type": "book",
+                                  "canCollect": true,
+                                  "affinityModifier": 3
+                                },
+                                "synonyms": [
+                                  "note",
+                                  "letter",
+                                  "letter from jordan",
+                                  "alice letter",
+                                  "alices letter"
+                                ],
+                                "missions": [
+                                  {
+                                    "object": "mission",
+                                    "name": "readnotefromjordan",
+                                    "description": "Alice.<br>If you get this note then chances are I'm dead already. I've been bleeding for some time and stashed this in our regular contact spot.<br>I don't think I'm going to make it any further.<br>I know you don't necessarily trust $player yet but this may be our only hope.<br>You need to explain what's going on.<br>Hopefully between you, you'll find a way to turn this around before it's too late for everyone.<br><br>See you on the other side. (And take care!)<br>J.<br>",
+                                    "attributes": {
+                                      "missionObject": "handwritten note",
+                                      "static": true
+                                    },
+                                    "conditionAttributes": {
+                                      "isDestroyed": false,
+                                      "read": true
+                                    },
+                                    "reward": {
+                                      "message": "<br>It looks like things aren't quite as straightforward as they first seemed."
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
                     {
                       "object": "mission",
                       "name": "jordanreachesmachineroom",
@@ -12646,7 +12733,9 @@
                   "keywords": [
                     "yes",
                     "ok",
-                    "y"
+                    "yup",
+                    "y",
+                    "sure"
                   ],
                   "response": "'Great! I'll be somewhere around the office. Come and find me when you've got them.'",
                   "nextState": 2
