@@ -1058,7 +1058,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'study':
                         if (_verb == "reda") { _verb = "read"};
                         _ticks = _baseTickSize*7; //studying takes time!
-                        description = _player.read(_verb, _object0);
+                        description = _player.read(_verb, _object0, _map);
                         break;
                     case 'repair':
                     case 'mend':

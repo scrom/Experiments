@@ -3691,7 +3691,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
-        self.read = function(verb, artefactName) {
+        self.read = function(verb, artefactName, map) {
             var resultString = "";
 
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
@@ -3772,7 +3772,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         self.addMission(newMissions[i]);
                         artefact.removeMission(newMissions[i].getName());
                     };
-                    resultString+= newMissions[i].getDescription();
+                    resultString += newMissions[i].getDescription();
+                    resultString += map.updateMissions(0, self); //fix for issue #469 don't update timer but trigger an immediate mission update on read.
                 };
             };
             

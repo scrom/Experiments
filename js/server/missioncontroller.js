@@ -163,7 +163,7 @@ module.exports.MissionController = function MissionController() {
             if (missionReward.message) {
                 if (missionReward.message.length > 0) {
                     //console.log(missionReward.message);
-                    resultString += "<br>" + missionReward.message;
+                    resultString += "<br>" + missionReward.message + "<br>";
                 };
             };
                 
