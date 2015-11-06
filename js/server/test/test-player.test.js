@@ -1033,7 +1033,7 @@ exports.cannotGiveHighAffinityObjectToUnfriendlyCreature.meta = { traits: ["Play
 
 
 exports.canAskCreatureForObject = function (test) {
-    var expectedResult = "'Sure. Here you you.'<br>He hands you the box.";
+    var expectedResult = "'Sure. Here you go.'<br>He hands you the box.";
     var actualResult = p0.ask('ask',c0.getName(), 'box');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

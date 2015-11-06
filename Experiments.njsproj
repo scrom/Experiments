@@ -93,6 +93,8 @@
     <Content Include="data\event-endofbreakfast.json" />
     <Content Include="data\event-endofday.json" />
     <Content Include="data\event-endoflunch.json" />
+    <Content Include="data\event-jordandies.json" />
+    <Content Include="data\event-jordanisbleeding.json" />
     <Content Include="data\event-playerreachescrashsite.json" />
     <Content Include="data\event-startoflunch.json" />
     <Content Include="data\facilities-area.json" />
