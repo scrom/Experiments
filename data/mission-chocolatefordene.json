@@ -17,7 +17,8 @@
           "yes",
           "ok",
           "yup",
-          "y"
+          "y",          
+          "sure"
         ],
         "response": "'Thanks $player.'",
         "nextState": 3
@@ -39,7 +40,8 @@
           "yes",
           "ok",
           "yup",
-          "y"
+          "y",          
+          "sure"
         ],
         "response": "'Excellent!'"
       },

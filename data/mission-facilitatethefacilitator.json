@@ -15,7 +15,9 @@
         "keywords": [
           "yes",
           "ok",
-          "y"
+          "yup",
+          "y",          
+          "sure"
         ],
         "response": "'Great! I'll be somewhere around the office. Come and find me when you've got them.'",
         "nextState": 2

@@ -1347,7 +1347,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
     
                 if (!suitableContainer) {
-                    return "You're not carrying anything that you can put " + artefact.getDisplayName() + " into.";
+                    return "You're not carrying anything that you can collect " + artefact.getDisplayName() + " into.";
                 };
 
                 var requiredContainer = artefact.getRequiredContainer();
@@ -5537,7 +5537,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
         
         self.time = function (startHours, startMinutes) {
-            return "The time is " + tools.time(startHours, startMinutes, _totalTimeTaken) + ".";
+            if (!startHours) { startHours = 9; };
+            if (!startMinutes) { startMinutes = 0;};
+            return tools.time(startHours, startMinutes, _totalTimeTaken);
         };
 
         self.stats = function (map) {

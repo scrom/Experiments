@@ -1847,7 +1847,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             //@todo - add a random response here.
                 
-            return "'Sure. Here you you.'<br>"+tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
+            return "'Sure. Here you go.'<br>"+tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
         };
 
         self.sell = function (anObjectName, player) {
@@ -2545,11 +2545,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (!(keepFlag)) {                   
                     if (_missions[m].getMissionObjectName() == self.getName()) {
                         var conditionAttributes = _missions[m].getConditionAttributes();
-                        if (conditionAttributes["dead"]) {
+                        if (conditionAttributes.hasOwnProperty("dead")) {
                             if (conditionAttributes["dead"] == true) {
                                 missionsToKeep.push(_missions[m]);
                             };
-                        } else if (conditionAttributes["alive"]) {
+                        } else if (conditionAttributes.hasOwnProperty("alive")) {
                             if (conditionAttributes["alive"] == false) {
                                 missionsToKeep.push(_missions[m]);
                             };
@@ -2754,6 +2754,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return initialReply;
             };
             
+            var replyName = tools.initCap(self.getPrefix());
+            if (player.getLastCreatureSpokenTo() != self.getName()) {
+                replyName = self.getDisplayName();
+            };
+            
             var returnImage = "";
             if (_imageName) {
                 returnImage= "$image"+_imageName+"/$image";
@@ -2761,7 +2766,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             if (_currentLocation) {
                 if (locationName == _currentLocation.getName()) {
-                    return self.getDisplayName() + " says 'we're both here already.'" + returnImage;
+                    return replyName + " says 'we're both here already.'" + returnImage;
                 };
             };
             
@@ -2770,7 +2775,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (avoidIndex > -1) {
                 var randomReplies = ["Sorry $player, I can't go there at the moment.", "I'm too busy at the moment, give me a shout later.", "I've got more important things to do right now.", "I'd rather not if it's all the same to you."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                return self.getDisplayName() + " says '" + randomReplies[randomIndex] + "'" + returnImage;              
+                return replyName + " says '" + randomReplies[randomIndex] + "'" + returnImage;              
             };
 
             var destinationIndex = _destinations.indexOf(locationName);
@@ -2779,18 +2784,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (self.getNextDestination() == locationName) {
                     replyString = "'I'm on my way there now.'";
                 };
-                return self.getDisplayName()+" says "+replyString+returnImage;
+                return replyName+" says "+replyString+returnImage;
             };
 
             var location = map.getLocation(locationName);
             if (!(location)) {
                 var randomReplies = ["Sorry $player, I don't know where that is.", "I don't think there's a "+locationName+" anywhere around here.", "I think you might have the wrong place.", "Where's that? Are you sure you've got the name right."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+                return replyName+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };
 
             if ((!(_canTravel)) && (_affinity <5)) {
-                return self.getDisplayName()+" says 'Sorry $player, I need to stick around here at the moment. Maybe later?'"+returnImage;
+                return replyName+" says 'Sorry $player, I need to stick around here at the moment. Maybe later?'"+returnImage;
             };
 
             //can ask a creature with very high affinity to move from their location!
@@ -2808,10 +2813,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     randomReplies = ["OK.", "Okay. See you there?", "I'm on my way.", "I'll be over there shortly."];
                 };
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                return self.getDisplayName()+" says '"+randomReplies[randomIndex]+"'"+returnImage;
+                return replyName+" says '"+randomReplies[randomIndex]+"'"+returnImage;
             };
 
-            return self.getDisplayName()+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
+            return replyName+" needs a bit more of an incentive before you can order "+self.getSuffix()+" around.";
 
         };
 
@@ -2837,7 +2842,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //no dialogue
                     var rewardObject = _missions[i].getRewardObject();
                     if (rewardObject) {
-                        if (rewardObject.getName() == keyword) {return self.getDisplayName()+" says 'Sorry $player, there's still some work left to do before you can have that.'"+returnImage};
+                        if (rewardObject.getName() == keyword) {return tools.initCap(self.getPrefix())+" says 'Sorry $player, there's still some work left to do before you can have that.'"+returnImage};
                     };
                 };
             };
@@ -2847,11 +2852,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 if (_salesInventory.check(keyword)) {
                     var saleItem = _salesInventory.getObject(keyword);
-                    return tools.initCap(self.getDisplayName())+" says 'You're in luck!' 'I have "+saleItem.getSuffix()+" for sale right here.'"+returnImage;
+                    return tools.initCap(self.getPrefix())+" says 'You're in luck!' 'I have "+saleItem.getSuffix()+" for sale right here.'"+returnImage;
                 };
 
                 if (keyword == "help") {
-                    return tools.initCap(self.getDisplayName())+" says 'OK. Here's some things to try...'<br>'You can interact with most objects and characters using common verbs.'<br>'To pick up some basic (but useful) commands, type <i>help</i>.'<br>'If you're stuck, try to <i>'talk to'</i> a person.'<br>'You can gain vital information if you <i>'examine'</i> a person or item.'<br>'There are also potential benefits from <i>read</i>ing some items you may find.'<br>'If you're not popular, you may need to <i>'give'</i> a potentially desirable item <i>to</i> someone before they'll help you.'<br>";
+                    return tools.initCap(self.getPrefix())+" says 'OK. Here's some things to try...'<br>'You can interact with most objects and characters using common verbs.'<br>'To pick up some basic (but useful) commands, type <i>help</i>.'<br>'If you're stuck, try to <i>'talk to'</i> a person.'<br>'You can gain vital information if you <i>'examine'</i> a person or item.'<br>'There are also potential benefits from <i>read</i>ing some items you may find.'<br>'If you're not popular, you may need to <i>'give'</i> a potentially desirable item <i>to</i> someone before they'll help you.'<br>";
+                };
+                
+                if (keyword == "time") {
+                    return tools.initCap(self.getPrefix()) + " says 'Sure, it's " + player.time() + ".";
                 };
 
                 //if high affinity, try to find item for player
@@ -2859,7 +2868,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     return self.find(keyword, playerAggression, map);
                 };
 
-                return tools.initCap(self.getDisplayName())+" says '"+notFoundMessage(keyword, map)+"'"+returnImage;
+                return tools.initCap(self.getPrefix())+" says '"+notFoundMessage(keyword, map)+"'"+returnImage;
             };
 
             return null;
@@ -2989,16 +2998,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (stringStartsWith(remainderString, "you help ")) {
                             return self.replyToKeyword("help", player, map);
                         };
-                        if (stringStartsWith(remainderString, "you give ") || stringStartsWith(remainderString, "i have ")) {
+                        if (stringStartsWith(remainderString, "you give ") || stringStartsWith(remainderString, "i have ") || stringStartsWith(remainderString, "you tell ")) {
                             var artefactName = remainderString;
-                            artefactName = artefactName.replace("you give","");
-                            artefactName = artefactName.replace("i have","");
-                            artefactName = artefactName.replace(" the ","");
-                            artefactName = artefactName.replace(" them ","");
-                            artefactName = artefactName.replace(" those ","");
-                            artefactName = artefactName.replace(" some ","");
-                            artefactName = artefactName.replace(" a ","");
-                            artefactName = artefactName.replace(" your ","");
+                            artefactName = artefactName.replace("you give ", " ");
+                            artefactName = artefactName.replace("you tell ", " ");
+                            artefactName = artefactName.replace("i have ", " ");
+                            artefactName = artefactName.replace(" me ", " ");
+                            artefactName = artefactName.replace(" my ", " ");
+                            artefactName = artefactName.replace(" the "," ");
+                            artefactName = artefactName.replace(" them "," ");
+                            artefactName = artefactName.replace(" those "," ");
+                            artefactName = artefactName.replace(" some "," ");
+                            artefactName = artefactName.replace(" a "," ");
+                            artefactName = artefactName.replace(" your ", " ");
+                            artefactName = artefactName.trim();
                             //@todo trap "can you give x to y" here in future.
                             return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
                         };
@@ -3015,13 +3028,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     case 'do': //you/i think/know ??
                         if (stringStartsWith(remainderString, "you have ")) {
                             var artefactName = remainderString;
-                            artefactName = artefactName.replace("you have","");
-                            artefactName = artefactName.replace(" the ","");
-                            artefactName = artefactName.replace(" them ","");
-                            artefactName = artefactName.replace(" those ","");
-                            artefactName = artefactName.replace(" some ","");
-                            artefactName = artefactName.replace(" a ","");
-                            artefactName = artefactName.replace(" your ","");
+                            artefactName = artefactName.replace("you have "," ");
+                            artefactName = artefactName.replace(" the ", " ");
+                            artefactName = artefactName.replace(" me ", " ");
+                            artefactName = artefactName.replace(" my ", " ");
+                            artefactName = artefactName.replace(" them "," ");
+                            artefactName = artefactName.replace(" those "," ");
+                            artefactName = artefactName.replace(" some "," ");
+                            artefactName = artefactName.replace(" a "," ");
+                            artefactName = artefactName.replace(" your ", " ");
+                            artefactName = artefactName.trim();
                             return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
                         };
                     case 'will': //you/i /give/find/open/unlock

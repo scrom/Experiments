@@ -48,7 +48,8 @@
               "yes",
               "ok",
               "yup",
-              "y"
+              "y",
+              "sure"
             ],
             "response": "'Great! He's often hanging around the Customer Delight management area.'<br>'He's pretty friendly so as long as you've not upset him in any way (or taken anything else of his) you might be able to simply <i>ask</i> him for them.'",
             "nextState": 3

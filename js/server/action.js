@@ -456,6 +456,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'examin':
                     case 'examien':
                     case 'browse':
+                        if (_verb != "browse") { _verb = "examine";};
                         _player.setLastVerbUsed('examine');
                         if (_object0 && _object1) {
                             //e.g. "examine sugar in cup"
@@ -573,7 +574,8 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         //fall through...
                     case 'drpo': //common user typo
-                    case 'drop': //add support for "all" later
+                    case 'drop'://add support for "all" later
+                        if (_verb == "drpo") { _verb = "drop";};
                         if (_object0 && _splitWord && _object1) {
                             if (_splitWord == "in"||_splitWord == "into"||_splitWord == "in to") {
                                 description = _player.put(_verb, _object0, "into", _object1);
@@ -896,6 +898,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'takl':
                     case 'tslk':
                     case 'chat':
+                        if (_verb != "chat") { _verb = "talk";};
                         _ticks = 1;
                         //we assume "talk to x" - if "to" is missing, handle speech anyway.
                         if (tools.stringIsEmpty(_object1) && (!(tools.stringIsEmpty(_object0)))) {
@@ -1009,6 +1012,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'destroy':
                     case 'break':
                     case 'force':
+                        if (_verb == "destry") { _verb = "destroy";};
                         _object0 = " "+_object0+" ";
                         _object0 = _object0.replace(" open ", "").trim();
                         _object0 = _object0.replace(" into ", "").trim();
@@ -1018,7 +1022,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.breakOrDestroy(_verb, _object0);
                         break;
                     case 'kill':
-                        description = "Much as you may like to believe in instant karma. If you *have* to kill, you'll need to fight it out yourself."
+                        description = "Much as you may like to believe in instant karma. If you <b>have<b> to kill, you'll need to fight it out yourself."
                         break;
                     case 'on':
                     case 'off':
@@ -1052,6 +1056,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'reda':
                     case 'read':
                     case 'study':
+                        if (_verb == "reda") { _verb = "read"};
                         _ticks = _baseTickSize*7; //studying takes time!
                         description = _player.read(_verb, _object0);
                         break;
