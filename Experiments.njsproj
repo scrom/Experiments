@@ -42,6 +42,7 @@
     <Content Include="data\basin.json" />
     <Content Include="data\batteries.json" />
     <Content Include="data\bike-ambulance.json" />
+    <Content Include="data\book-of-summoning.json" />
     <Content Include="data\bottle-of-milk.json" />
     <Content Include="data\bowl.json" />
     <Content Include="data\brian-harris.json" />
@@ -58,6 +59,7 @@
     <Content Include="data\chris-smith.json" />
     <Content Include="data\chris-whitworth.json" />
     <Content Include="data\coco-pops.json" />
+    <Content Include="data\coffee-machine-manual.json" />
     <Content Include="data\coffee-machine.json" />
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />

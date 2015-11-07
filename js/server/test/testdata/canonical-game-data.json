@@ -13789,7 +13789,7 @@
             "detailedDescription": "It looks like it contains all Simon's plans.",
             "attributes": {
               "defaultAction": "read",
-              "weight": 5,
+              "weight": 2,
               "attackStrength": 5,
               "type": "book",
               "canCollect": true,

@@ -83,54 +83,7 @@
                         "html guide"
                     ]
                 },
-                {
-                    "object": "artefact",
-                    "name": "coffee machine manual",
-                    "description": "maintenance manual for the coffee machines",
-                    "detailedDescription": "It includes schematics and wiring diagrams for how to repair and maintain coffee machines.",
-                    "attributes": {
-                        "defaultAction": "read",
-                        "weight": 2,
-                        "attackStrength": 5,
-                        "type": "book",
-                        "canCollect": true,
-                        "affinityModifier": 0,
-                        "canDrawOn": true
-                    },
-                    "synonyms": [
-                        "manual",
-                        "book",
-                        "repair book",
-                        "maintenance book",
-                        "repair manual",
-                        "maintenance manual",
-                        "machine manual",
-                        "coffee machine book",
-                        "coffee machine repair manual",
-                        "coffee machine maintenance manual",
-                        "machine maintenance manual"
-                    ],
-                    "missions": [
-                        {
-                            "object": "mission",
-                            "name": "learntorepaircoffeemachine",
-                            "displayName": "repair the coffee machine",
-                            "description": "Blah blah blah wiring blah <i>lock</i>s blah coffee blah <i>beans</i> blah <i>milk</i> blah.<br><br> If something is broken and you have the right tools and/or skills you can try <i>repair</i>ing it.<br>Just don't go overboard and <i>destroy</i> anything you need and don't get caught <i>break</i>ing stuff deliberately.",
-                            "attributes": {
-                                "missionObject": "coffee machine manual",
-                                "static": true
-                            },
-                            "conditionAttributes": {
-                                "isDestroyed": false,
-                                "read": true
-                            },
-                            "reward": {
-                                "repairSkill": "coffee machine",
-                                "message": "<br>You've learned how to repair a coffee machine. That might be handy."
-                            }
-                        }
-                    ]
-                }
+                {"file": "coffee-machine-manual"}
             ]
         },
         {
