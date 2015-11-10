@@ -11203,6 +11203,7 @@
                     "time": 4
                   },
                   "reward": {
+                    "removeMission": "finddaveandroger",
                     "message": ""
                   }
                 }
