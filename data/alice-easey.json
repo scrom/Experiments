@@ -31,8 +31,9 @@
       },
       "synonyms": [
         "bottle",
-        "glass vial",
-        "glass"
+        "small glass vial",
+        "glass",
+        "medical sample"
       ]
     },
     {
@@ -59,11 +60,11 @@
       "synonyms": [
         "food",
         "ration",
-        "rations",
         "dried food",
-        "dried rations",
-        "survival rations",
-        "survival food rations",
+        "long lasting dried food",
+        "dried ration",
+        "survival ration",
+        "survival food ration",
         "pack"
       ]
     },

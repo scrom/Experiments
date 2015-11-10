@@ -4,7 +4,7 @@
     "description": "a3 sketch book",
     "detailedDescription": "It looks like it contains all Simon's plans.",
     "attributes": {
-        "weight": 5,
+        "weight": 2,
         "attackStrength": 5,
         "type": "book",
         "defaultAction": "read",

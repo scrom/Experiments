@@ -4,7 +4,7 @@
   "displayName": "get some fresh tomatoes for Margaret",
   "description": "Margaret needs some fresh tomatoes.",
   "attributes": {
-    "parent": "waterfilsplants",
+    "parent": "endofbreakfast",
     "missionObject": "tomatoes",
     "destination": "margaret sexton",
     "static": true,
@@ -66,9 +66,7 @@
   },
   "reward": {
     "score": 125,
-    "affinityModifier": 1,
     "removeObject": "tomatoes",
-    "increaseAffinityFor": "everyone",
-    "message": "Margaret says 'Thankyou so much $player.'<br>'I'm sure everyone will appreciate the effort you've gone to to keep us all fed.'"
+    "message": "Margaret says 'Thankyou so much $player.'<br>'We can go ahead with lunch for everyone as planned.' 'I'll make sure there's a special roast waiting for you too!'"
   }
 }

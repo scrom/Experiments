@@ -1,0 +1,24 @@
+﻿{
+  "object": "mission",
+  "name": "jordanisbleeding",
+  "displayName": "Jordan is mortally wounded",
+  "description": "",
+  "attributes": {
+    "type": "event",
+    "missionObject": "jordan miller",
+    "static": true
+  },
+  "conditionAttributes": {
+    "bleeding": true
+  },
+  "reward": {
+    "modifyObjects": [
+      {
+        "name": "jordan miller",
+        "attributes": {
+          "destinations": ["customer-delight-south-west" ]
+        }
+      }
+    ]
+  }
+}

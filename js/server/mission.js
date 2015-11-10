@@ -806,15 +806,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var successCount = 0;
             //and how many failed...
             var failCount = 0;
-
+            
             //before doing any additional processing, have we timed out?
-            if (_conditionAttributes["time"]) {                       
+            if (_conditionAttributes.hasOwnProperty("time")) {                       
                 if (self.getTimeTaken() >= _conditionAttributes["time"]) {
                     successCount++;
                 };                           
             };
             if (_failAttributes) {
-                if (_failAttributes["time"]) {                       
+                if (_failAttributes.hasOwnProperty("time")) {                       
                     if (self.getTimeTaken() >= _failAttributes["time"]) {
                         return self.timeExpired();
                     };                           
@@ -823,7 +823,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //and have we failed on conversation...
             if (_failAttributes) {
-                if (_failAttributes["conversationState"]) {    
+                if (_failAttributes.hasOwnProperty("conversationState")) {    
                     //have we got to a *specific* state?                   
                     if (_conversationState == _failAttributes["conversationState"]) {
                         return self.fail("failAttributes");
@@ -889,30 +889,30 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                        
             //check/fail if the mission object shouldn't be destroyed!
             if (missionObject.isDestroyed()) {
-                if ((!(_conditionAttributes["isDestroyed"])) || (_conditionAttributes["isDestroyed"] == false)){
+                if ((!(_conditionAttributes.hasOwnProperty("isDestroyed"))) || (_conditionAttributes["isDestroyed"] == false)){
                     return self.fail("destroyedObject", missionObject);
                 }; 
             };
 
             //is something critical dead?
             var failIfDead = false;
-            if (_conditionAttributes["dead"]) {
+            if (_conditionAttributes.hasOwnProperty("dead")) {
                 if (_conditionAttributes["dead"] != true) {
                     failIfDead = true;
                 };
             };
-            if (_conditionAttributes["alive"]) {
+            if (_conditionAttributes.hasOwnProperty("alive")) {
                 if (_conditionAttributes["alive"] == true) {
                     failIfDead = true;
                 };
             };
             if (_failAttributes) {
-                if (_failAttributes["dead"]) {
+                if (_failAttributes.hasOwnProperty("dead")) {
                     if (_failAttributes["dead"] == true) {
                         failIfDead = true;
                     };
                 };
-                if (_failAttributes["alive"]) {
+                if (_failAttributes.hasOwnProperty("alive")) {
                     if (_failAttributes["alive"] == false) {
                         failIfDead = true;
                     };
@@ -942,10 +942,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //console.log('mission object retrieved. Checking condition attributes...');
+            //we don't bother to calculate this earlier as even if all success attributes are cleared, if any failure attribute is triggered as well, the failure takes precedent.
             var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
 
             //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-            if (_conditionAttributes["contains"]) {
+            if (_conditionAttributes.hasOwnProperty("contains")) {
                 //console.log('checking contents...');                        
                 if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
                     successCount++;
@@ -956,7 +957,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-            if (_conditionAttributes["antibodies"]) {
+            if (_conditionAttributes.hasOwnProperty("antibodies")) {
                 //console.log('checking antibodies...');                        
                 if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
                     successCount++;
@@ -967,7 +968,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
-            if (_conditionAttributes["contagion"]) {
+            if (_conditionAttributes.hasOwnProperty("contagion")) {
                 //console.log('checking contagion...');                       
                 if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
                     successCount++;
@@ -978,7 +979,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //checkConversation - has conversation reached required state
-            if (_conditionAttributes["conversationState"]) {
+            if (_conditionAttributes.hasOwnProperty("conversationState")) {
                 //console.log('checking conversationState...');                        
                 if (_conversationState >= _conditionAttributes["conversationState"]) {
                     successCount++;
@@ -987,10 +988,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     return null; 
                 };                          
             };
-
-            //check the rest of the object attributes if they exist
+            
             //console.log('checking remaining attributes...');  
-            successCount += self.checkAttributes(missionObject, _conditionAttributes);
+            //check the rest of the object attributes if they exist (and if we're not already successful)
+            if (successCount < requiredSuccessCount) {
+                successCount += self.checkAttributes(missionObject, _conditionAttributes);
+            };
 
 
             //console.log('condition matches: '+successCount+" out of "+requiredSuccessCount);

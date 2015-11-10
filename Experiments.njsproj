@@ -42,6 +42,7 @@
     <Content Include="data\basin.json" />
     <Content Include="data\batteries.json" />
     <Content Include="data\bike-ambulance.json" />
+    <Content Include="data\book-of-summoning.json" />
     <Content Include="data\bottle-of-milk.json" />
     <Content Include="data\bowl.json" />
     <Content Include="data\brian-harris.json" />
@@ -58,6 +59,7 @@
     <Content Include="data\chris-smith.json" />
     <Content Include="data\chris-whitworth.json" />
     <Content Include="data\coco-pops.json" />
+    <Content Include="data\coffee-machine-manual.json" />
     <Content Include="data\coffee-machine.json" />
     <Content Include="data\coffee.json" />
     <Content Include="data\core-area-east.json" />
@@ -93,6 +95,8 @@
     <Content Include="data\event-endofbreakfast.json" />
     <Content Include="data\event-endofday.json" />
     <Content Include="data\event-endoflunch.json" />
+    <Content Include="data\event-jordandies.json" />
+    <Content Include="data\event-jordanisbleeding.json" />
     <Content Include="data\event-playerreachescrashsite.json" />
     <Content Include="data\event-startoflunch.json" />
     <Content Include="data\facilities-area.json" />
@@ -206,6 +210,7 @@
     <Content Include="data\mocha.json" />
     <Content Include="data\mouse.json" />
     <Content Include="data\northwest-corridor-ground-floor.json" />
+    <Content Include="data\nut-roast.json" />
     <Content Include="data\office-front.json" />
     <Content Include="data\opportunities-central.json" />
     <Content Include="data\opportunities-cubbyhole.json" />
@@ -426,6 +431,7 @@
     <Compile Include="js\server\test\test-mission.test.js" />
     <Compile Include="js\server\test\test-player.get.test.js" />
     <Compile Include="js\server\test\test-player.test.js" />
+    <Compile Include="js\server\test\test-tools.test.js" />
     <Compile Include="js\server\tools.js" />
     <Compile Include="js\server\test\stubs\stubFactory.js" />
   </ItemGroup>

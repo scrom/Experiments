@@ -248,7 +248,7 @@ exports.Map = function Map() {
             var location;
             if (modification) {
                 if (modification.name) {
-                    if (modification.name = "all") {
+                    if (modification.name == "all") {
                         location = self;
                     } else {
                         location = self.getLocation(modification.name);
@@ -819,7 +819,7 @@ exports.Map = function Map() {
         self.removeNamedMission = function (missionName, player) {
             var removed = _missionController.removeNamedMission(missionName, _locations, player);
             if (removed) {
-                //@todo - should probably re-parse remaining missions and clear parents of any that were dependent or remove those too as they won't be ocmpletable if left alone
+                //@todo - should probably re-parse remaining missions and clear parents of any that were dependent or remove those too as they won't be completable if left alone
                 _missionCount--;
             };
         };

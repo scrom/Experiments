@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "james moore",
-  "displayname": "James Moore",
+  "displayName": "James Moore",
   "description": "James Moore",
   "detailedDescription": "He pwns the Opportunities division.",
   "attributes": {

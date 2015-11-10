@@ -15,7 +15,7 @@
   },
   "conditionAttributes": {
     "alive": true,
-    "conversationState": 2
+    "conversationState": 1
   },
   "reward": {
     "delivers": {

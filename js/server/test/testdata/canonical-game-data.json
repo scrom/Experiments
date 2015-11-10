@@ -575,7 +575,7 @@
           "modifyLocations": [
             {
               "name": "servery-food-bar",
-              "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
+              "description": "You're in the SQL Servery serving area and lunch should be being served.<br>It looks like they're not quite ready yet. Hopefully everything's ok.",
               "inventory": [
                 {
                   "object": "artefact",
@@ -661,183 +661,24 @@
                     "plain round bowl",
                     "round china bowl",
                     "plain round china bowl"
-                  ]
-                },
-                {
-                  "object": "artefact",
-                  "name": "salad",
-                  "description": "selection of salad items",
-                  "detailedDescription": "It's got mixed leaves, some cheese, beans, and beetroot. All with a French dressing.",
-                  "attributes": {
-                    "defaultAction": "eat",
-                    "weight": 3,
-                    "type": "food",
-                    "requiresContainer": true,
-                    "requiredContainer": "plate",
-                    "canCollect": true,
-                    "charges": 15,
-                    "chargeUnit": "plateful",
-                    "chargesDescription": "There's plenty of assorted salad items left but we'd prefer you only stuck to one plateful",
-                    "affinityModifier": 0,
-                    "isEdible": true,
-                    "nutrition": 23,
-                    "smell": "It smells fresh and (mostly) green It's better than you'd find in many restaurants.",
-                    "taste": "Hmm. Crisp and fresh. You're not sure if you're a huge fan of salad or not but it tastes as good as you'd hope a salad would really.."
-                  },
-                  "synonyms": [
-                    "salad selection",
-                    "selection",
-                    "selection of salad",
-                    "selection of salad items",
-                    "salad items",
-                    "salad",
-                    "leaves",
-                    "mixed leaves",
-                    "cheese",
-                    "beans",
-                    "beetroot",
-                    "beets",
-                    "dressing",
-                    "fresnch dressing",
-                    "food"
-                  ]
-                },
-                {
-                  "object": "artefact",
-                  "name": "roast",
-                  "description": "delicious roast carvery",
-                  "detailedDescription": "The team have outdone themselves. It's roast turkey with all the trimmings <i>and</i> yorkshire pudding.",
-                  "attributes": {
-                    "weight": 2,
-                    "type": "food",
-                    "requiresContainer": true,
-                    "requiredContainer": "plate",
-                    "canCollect": true,
-                    "charges": 10,
-                    "chargeUnit": "plateful",
-                    "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping so that everyone can eat and we can maintain our budget",
-                    "affinityModifier": 0,
-                    "isEdible": true,
-                    "nutrition": 40,
-                    "smell": "It's like new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
-                    "taste": "Amazing! A complete free roast dinner never tasted so good."
-                  },
-                  "synonyms": [
-                    "food",
-                    "delicious food",
-                    "delicious dinner",
-                    "roast carvery",
-                    "delicious roast carvery",
-                    "carvery",
-                    "delicious carvery",
-                    "delicious roast",
-                    "carvery dinner",
-                    "roast dinner",
-                    "roast turkey",
-                    "yorkshire",
-                    "yorkshire pud",
-                    "yorkshire pudding",
-                    "trimmings",
-                    "dinner",
-                    "lunch"
-                  ]
-                }
-              ],
-              "missions": [
-                {
-                  "object": "mission",
-                  "name": "limitfoodportions",
-                  "displayName": "Don't take too much food",
-                  "attributes": {
-                    "missionObject": "servery-food-bar",
-                    "static": true
-                  },
-                  "failAttributes": {
-                    "foodPortionCount": "<32"
-                  },
-                  "conditionAttributes": {
-                    "time": 450
-                  },
-                  "reward": {
-                    "message": ""
-                  },
-                  "fail": {
-                    "message": "Hey, stop that. Be reasonable with how much food you're taking. Everyone else needs to eat too.<br>As a basic guideline, It's soup & salad, soup & roast or salad & roast.",
-                    "affinityModifier": 1,
-                    "decreaseAffinityFor": "everyone",
-                    "score": -25
-                  }
-                }
-              ]
-            },
-            {
-              "name": "servery-main",
-              "description": "You're in the SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses. It looks like everyone descended on the canteen at the same time for lunch.",
-              "inventory": [
-                {
-                  "object": "artefact",
-                  "name": "smell of food",
-                  "description": "food",
-                  "detailedDescription": "You'll need to head to the serving area.",
-                  "attributes": {
-                    "type": "scenery",
-                    "subType": "intangible",
-                    "customAction": [
-                      "get",
-                      "find",
-                      "where is",
-                      "where"
-                    ],
-                    "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
-                    "smell": "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
-                  },
-                  "synonyms": [
-                    "food"
                   ]
                 }
               ]
             }
           ],
           "modifyObject": {
-            "name": "vat",
+            "name": "margaret sexton",
             "attributes": {
-              "description": "vat",
-              "detailedDescription": "It's a large stainless steel cooking vat",
-              "extendedInventoryDescription": "There's $inventory in it."
-            },
-            "inventory": [
-              {
-                "object": "artefact",
-                "name": "soup",
-                "description": "soup",
-                "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
-                "attributes": {
-                  "weight": 3,
-                  "type": "food",
-                  "requiresContainer": true,
-                  "isLiquid": true,
-                  "requiredContainer": "bowl",
-                  "canCollect": true,
-                  "charges": 12,
-                  "chargeUnit": "bowlful",
-                  "chargesDescription": "There's about $charges $chargeUnit left. For the benefit of everyone else, try to stick to just one portion though",
-                  "plural": true,
-                  "isEdible": true,
-                  "nutrition": 15,
-                  "smell": "It has a lovely aromatic smell. A mix of both sweet and spicy.",
-                  "taste": "Yep, it's good."
-                },
-                "synonyms": [
-                  "soup",
-                  "food"
-                ]
-              }
-            ]
+              "destinations": [
+                "servery-food-bar"
+              ],
+              "destinationDelay": 75
+            }
           },
           "modifyLocationCreatures": {
             "name": "all",
-            "destination": "servery-main",
-            "destinationDelay": 35
+            "destination": "servery-food-bar",
+            "destinationDelay": 5
           }
         }
       },
@@ -863,6 +704,7 @@
                 "bowl",
                 "salad",
                 "roast",
+                "nut roast",
                 "plate",
                 "plate"
               ]
@@ -875,7 +717,20 @@
               ]
             }
           ],
-          "removeMission": "limitfoodportions",
+          "modifyObject": {
+            "name": "margaret sexton",
+            "attributes": {
+              "destinations": [
+                "atrium-seating"
+              ],
+              "destinationDelay": 5,
+              "traveller": true
+            }
+          },
+          "removeMissions": [
+            "limitfoodportions",
+            "lunchtime"
+          ],
           "removeObject": "vat"
         }
       },
@@ -2236,7 +2091,7 @@
         "name": "zara sheldrake",
         "displayName": "Zara Sheldrake",
         "description": "Zara Sheldrake",
-        "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most qualified first-aiders.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
+        "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most experienced first-aider.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
         "attributes": {
           "weight": 105,
           "money": 20,
@@ -2418,7 +2273,8 @@
                     "yes",
                     "ok",
                     "yup",
-                    "y"
+                    "y",
+                    "sure"
                   ],
                   "response": "'Thanks $player.'",
                   "nextState": 3
@@ -2440,7 +2296,8 @@
                     "yes",
                     "ok",
                     "yup",
-                    "y"
+                    "y",
+                    "sure"
                   ],
                   "response": "'Excellent!'"
                 },
@@ -3481,7 +3338,7 @@
       {
         "object": "creature",
         "name": "alan platt",
-        "displayName": "the alan platt",
+        "displayName": "Alan Platt",
         "description": "Alan Platt",
         "detailedDescription": "The master of Customer Delight.",
         "attributes": {
@@ -3744,7 +3601,8 @@
                     "yes",
                     "ok",
                     "yup",
-                    "y"
+                    "y",
+                    "sure"
                   ],
                   "response": "'Great! He's often hanging around the Customer Delight management area.'<br>'He's pretty friendly so as long as you've not upset him in any way (or taken anything else of his) you might be able to simply <i>ask</i> him for them.'",
                   "nextState": 3
@@ -3995,8 +3853,9 @@
             },
             "synonyms": [
               "bottle",
-              "glass vial",
-              "glass"
+              "small glass vial",
+              "glass",
+              "medical sample"
             ]
           },
           {
@@ -4041,11 +3900,11 @@
             "synonyms": [
               "food",
               "ration",
-              "rations",
               "dried food",
-              "dried rations",
-              "survival rations",
-              "survival food rations",
+              "long lasting dried food",
+              "dried ration",
+              "survival ration",
+              "survival food ration",
               "pack"
             ]
           },
@@ -4122,7 +3981,7 @@
             },
             "conditionAttributes": {
               "alive": true,
-              "conversationState": 2
+              "conversationState": 1
             },
             "reward": {
               "delivers": {
@@ -7134,7 +6993,7 @@
       {
         "object": "creature",
         "name": "amanda mansfield",
-        "displayName": "the amanda mansfield",
+        "displayName": "Amanda Mansfield",
         "description": "Amanda from IS",
         "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
         "attributes": {
@@ -7347,7 +7206,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -7535,7 +7394,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -7723,7 +7582,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -7911,7 +7770,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -8099,7 +7958,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -8741,7 +8600,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -8929,7 +8788,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -9117,7 +8976,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -9305,7 +9164,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -9493,7 +9352,7 @@
             "object": "artefact",
             "name": "milk bottle",
             "description": "bottle",
-            "detailedDescription": "It's a large milk bottle",
+            "detailedDescription": "It's a large milk bottle.",
             "attributes": {
               "extendedInventoryDescription": "There's $inventory in it.",
               "weight": 1,
@@ -10821,7 +10680,7 @@
                     "type": "creature",
                     "carryWeight": 18,
                     "health": 225,
-                    "affinity": -1,
+                    "affinity": -2,
                     "canTravel": true,
                     "traveller": true,
                     "destinations": [
@@ -10830,8 +10689,7 @@
                     "avoiding": [
                       "bus"
                     ],
-                    "destinationDelay": 20,
-                    "imageName": "spy.jpg"
+                    "destinationDelay": 20
                   },
                   "inventory": [
                     {
@@ -10867,6 +10725,91 @@
                     "him"
                   ],
                   "missions": [
+                    {
+                      "object": "mission",
+                      "name": "jordanisbleeding",
+                      "displayName": "Jordan is mortally wounded",
+                      "attributes": {
+                        "type": "event",
+                        "missionObject": "jordan miller",
+                        "static": true
+                      },
+                      "conditionAttributes": {
+                        "bleeding": true
+                      },
+                      "reward": {
+                        "modifyObjects": [
+                          {
+                            "name": "jordan miller",
+                            "attributes": {
+                              "destinations": [
+                                "customer-delight-south-west"
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "object": "mission",
+                      "name": "jordandies",
+                      "displayName": "Alice receives a note from Jordan (somehow)",
+                      "attributes": {
+                        "type": "event",
+                        "missionObject": "jordan miller",
+                        "static": true
+                      },
+                      "conditionAttributes": {
+                        "dead": true
+                      },
+                      "reward": {
+                        "modifyObjects": [
+                          {
+                            "name": "alice easey",
+                            "inventory": [
+                              {
+                                "object": "artefact",
+                                "name": "handwritten note",
+                                "description": "handwritten note",
+                                "detailedDescription": "It's barely legible and spotted with blood.",
+                                "attributes": {
+                                  "defaultAction": "read",
+                                  "weight": 0.1,
+                                  "type": "book",
+                                  "canCollect": true,
+                                  "affinityModifier": 3
+                                },
+                                "synonyms": [
+                                  "note",
+                                  "letter",
+                                  "letter from jordan",
+                                  "alice letter",
+                                  "alices letter"
+                                ],
+                                "missions": [
+                                  {
+                                    "object": "mission",
+                                    "name": "readnotefromjordan",
+                                    "description": "Alice.<br>If you get this note then chances are I'm dead already. I've been bleeding for some time and stashed this in our regular contact spot.<br>I don't think I'm going to make it any further.<br>I know you don't necessarily trust $player yet but this may be our only hope.<br>You need to explain what's going on.<br>Hopefully between you, you'll find a way to turn this around before it's too late for everyone.<br><br>See you on the other side. (And take care!)<br>J.<br>",
+                                    "attributes": {
+                                      "missionObject": "handwritten note",
+                                      "static": true
+                                    },
+                                    "conditionAttributes": {
+                                      "isDestroyed": false,
+                                      "read": true
+                                    },
+                                    "reward": {
+                                      "message": "<br>It looks like things aren't quite as straightforward as they first seemed."
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    },
                     {
                       "object": "mission",
                       "name": "jordanreachesmachineroom",
@@ -12790,7 +12733,9 @@
                   "keywords": [
                     "yes",
                     "ok",
-                    "y"
+                    "yup",
+                    "y",
+                    "sure"
                   ],
                   "response": "'Great! I'll be somewhere around the office. Come and find me when you've got them.'",
                   "nextState": 2
@@ -12899,7 +12844,7 @@
       {
         "object": "creature",
         "name": "james moore",
-        "displayName": "the james moore",
+        "displayName": "James Moore",
         "description": "James Moore",
         "detailedDescription": "He pwns the Opportunities division.",
         "attributes": {
@@ -13844,7 +13789,7 @@
             "detailedDescription": "It looks like it contains all Simon's plans.",
             "attributes": {
               "defaultAction": "read",
-              "weight": 5,
+              "weight": 2,
               "attackStrength": 5,
               "type": "book",
               "canCollect": true,
@@ -16296,7 +16241,7 @@
     "object": "location",
     "name": "second-floor-seating-area-east",
     "displayName": "Rest area",
-    "description": "You're in the East end of the second floor seating area.<br>You could stand here for hours reading the giant mural of post-it notes trying to spot the duplicates.",
+    "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>The whole of one wall is taken up by a mural of giant post-it notes. You could stand here for hours reading them trying to spot the duplicates.",
     "exits": [
       {
         "object": "exit",
@@ -16333,7 +16278,7 @@
         "object": "artefact",
         "name": "wall",
         "description": "wall full of post-it notes",
-        "detailedDescription": "I see it! I can see the duplicate...<br>Oh. Nope, it's not.",
+        "detailedDescription": "I see it! I can see the duplicate...<br>Oh... No, it's not.",
         "attributes": {
           "weight": 280,
           "type": "scenery",
@@ -16389,6 +16334,50 @@
           "fire door",
           "exit"
         ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "comfy armchairs",
+        "detailedDescription": "They're small but comfortable armchairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "comfy chair",
+          "comfy armchair",
+          "comfortable chair",
+          "small armchair",
+          "small chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "small coffee table",
+        "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "coffee table",
+          "small table",
+          "small coffee table",
+          "wooden coffee table",
+          "small wooden coffee table",
+          "small wooden  table"
+        ]
       }
     ]
   },
@@ -16396,7 +16385,7 @@
     "object": "location",
     "name": "second-floor-seating-area-west",
     "displayName": "Rest area",
-    "description": "You're in the West end of the second floor seating area.",
+    "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>Teams from the second floor tend to use this area for reading and relaxing.",
     "exits": [
       {
         "object": "exit",
@@ -16418,6 +16407,52 @@
         "direction": "e",
         "source": "second-floor-seating-area-west",
         "destination": "second-floor-seating-area-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "comfy armchairs",
+        "detailedDescription": "They're small but comfortable armchairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "comfy chair",
+          "comfy armchair",
+          "comfortable chair",
+          "small armchair",
+          "small chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "small coffee table",
+        "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "coffee table",
+          "small table",
+          "small coffee table",
+          "wooden coffee table",
+          "small wooden coffee table",
+          "small wooden  table"
+        ]
       }
     ]
   },
@@ -17081,75 +17116,226 @@
             "object": "mission",
             "name": "lunchtime",
             "displayName": "get some lunch",
-            "description": "Margaret has your lunch ready",
+            "description": "Margaret has prepared a tasty roast for you.",
             "attributes": {
+              "type": "event",
               "parent": [
                 "tomatoesformargaret",
                 "startoflunch"
               ],
-              "missionObject": "margaret sexton",
-              "static": true,
-              "dialogue": [
-                "'Thanks for the help with the tomatoes earlier.'<br>'Lunch is ready when you are, would you like it now?'",
-                {
-                  "state": 1,
-                  "keywords": [
-                    "yes",
-                    "ok",
-                    "yup",
-                    "y"
-                  ],
-                  "response": "'Here you go!'",
-                  "nextState": 3
-                },
-                {
-                  "state": 1,
-                  "response": "'Maybe later then?'",
-                  "nextState": 2
-                },
-                {
-                  "state": 2,
-                  "response": "'How about that lunch now?'",
-                  "nextState": 1
-                }
-              ]
-            },
-            "failAttributes": {
-              "alive": false,
-              "time": 300
+              "missionObject": "player"
             },
             "conditionAttributes": {
-              "alive": true,
-              "conversationState": 3
+              "time": 1
             },
             "reward": {
-              "delivers": {
-                "object": "artefact",
-                "name": "lunch",
-                "description": "large plate of nut roast",
-                "detailedDescription": "It's got all the trimmings of a full roast dinner (even roasted tomatoes) and it's also veggie friendly.<br>A very hearty meal!",
-                "attributes": {
-                  "defaultAction": "eat",
-                  "weight": 1,
-                  "type": "food",
-                  "canCollect": true,
-                  "charges": 1,
-                  "isEdible": true,
-                  "nutrition": 45,
-                  "smell": "It's like a vegetarian new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
-                  "taste": "Amazing! A complete free roast dinner without meat never tasted so good."
+              "modifyLocations": [
+                {
+                  "name": "servery-food-bar",
+                  "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "roast",
+                      "description": "delicious roast carvery",
+                      "detailedDescription": "The team have outdone themselves. It's roast turkey with all the trimmings <i>and</i> yorkshire pudding.",
+                      "attributes": {
+                        "weight": 2,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "requiredContainer": "plate",
+                        "canCollect": true,
+                        "charges": 10,
+                        "chargeUnit": "plateful",
+                        "chargesDescription": "There's about $charges $chargeUnit of everything left but we'd prefer you only stuck to one helping so that everyone can eat and we can maintain our budget",
+                        "affinityModifier": 0,
+                        "isEdible": true,
+                        "nutrition": 40,
+                        "smell": "It's like new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+                        "taste": "Amazing! A complete free roast dinner never tasted so good."
+                      },
+                      "synonyms": [
+                        "food",
+                        "delicious food",
+                        "delicious dinner",
+                        "roast carvery",
+                        "delicious roast carvery",
+                        "carvery",
+                        "delicious carvery",
+                        "delicious roast",
+                        "carvery dinner",
+                        "roast dinner",
+                        "roast turkey",
+                        "yorkshire",
+                        "yorkshire pud",
+                        "yorkshire pudding",
+                        "trimmings",
+                        "dinner",
+                        "lunch"
+                      ]
+                    },
+                    {
+                      "object": "artefact",
+                      "name": "nut roast",
+                      "description": "large plate of nut roast",
+                      "detailedDescription": "It's got all the trimmings of a full roast dinner (even roasted tomatoes) and it's also veggie friendly.<br>A very hearty meal!",
+                      "attributes": {
+                        "defaultAction": "eat",
+                        "weight": 1,
+                        "type": "food",
+                        "canCollect": true,
+                        "charges": 1,
+                        "isEdible": true,
+                        "nutrition": 45,
+                        "smell": "It's like a vegetarian new year and thanksgiving all rolled into one. The smell gives you a wonderful sense of well-being.",
+                        "taste": "Amazing! A complete free roast dinner without meat never tasted so good."
+                      },
+                      "synonyms": [
+                        "dinner",
+                        "food",
+                        "lunch"
+                      ]
+                    },
+                    {
+                      "object": "artefact",
+                      "name": "salad",
+                      "description": "selection of salad items",
+                      "detailedDescription": "It's got mixed leaves, some cheese, beans, tomatoes, and beetroot. All with a French dressing.",
+                      "attributes": {
+                        "defaultAction": "eat",
+                        "weight": 3,
+                        "type": "food",
+                        "requiresContainer": true,
+                        "requiredContainer": "plate",
+                        "canCollect": true,
+                        "charges": 15,
+                        "chargeUnit": "plateful",
+                        "chargesDescription": "There's plenty of assorted salad items left but we'd prefer you only stuck to one plateful",
+                        "affinityModifier": 0,
+                        "isEdible": true,
+                        "nutrition": 23,
+                        "smell": "It smells fresh and (mostly) green It's better than you'd find in many restaurants.",
+                        "taste": "Hmm. Crisp and fresh. You're not sure if you're a huge fan of salad or not but it tastes as good as you'd hope a salad would really.."
+                      },
+                      "synonyms": [
+                        "salad selection",
+                        "selection",
+                        "selection of salad",
+                        "selection of salad items",
+                        "salad items",
+                        "salad",
+                        "leaves",
+                        "mixed leaves",
+                        "cheese",
+                        "beans",
+                        "tomato",
+                        "tomatoes",
+                        "beetroot",
+                        "beets",
+                        "dressing",
+                        "fresnch dressing",
+                        "food"
+                      ]
+                    }
+                  ],
+                  "missions": [
+                    {
+                      "object": "mission",
+                      "name": "limitfoodportions",
+                      "displayName": "Don't take too much food",
+                      "attributes": {
+                        "missionObject": "servery-food-bar",
+                        "static": true
+                      },
+                      "failAttributes": {
+                        "foodPortionCount": "<33"
+                      },
+                      "conditionAttributes": {
+                        "time": 450
+                      },
+                      "reward": {
+                        "message": ""
+                      },
+                      "fail": {
+                        "message": "Hey, stop that. Be reasonable with how much food you're taking. Everyone else needs to eat too.<br>As a basic guideline, It's soup & salad, soup & roast or salad & roast.",
+                        "affinityModifier": 1,
+                        "decreaseAffinityFor": "everyone",
+                        "score": -25
+                      }
+                    }
+                  ]
                 },
-                "synonyms": [
-                  "dinner",
-                  "food",
-                  "nut roast"
+                {
+                  "name": "servery-main",
+                  "description": "You're in the SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses. It looks like everyone descended on the canteen at the same time for lunch.",
+                  "inventory": [
+                    {
+                      "object": "artefact",
+                      "name": "smell of food",
+                      "description": "food",
+                      "detailedDescription": "You'll need to head to the serving area.",
+                      "attributes": {
+                        "type": "scenery",
+                        "subType": "intangible",
+                        "customAction": [
+                          "get",
+                          "find",
+                          "where is",
+                          "where"
+                        ],
+                        "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
+                        "smell": "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
+                      },
+                      "synonyms": [
+                        "food"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "modifyObject": {
+                "name": "vat",
+                "attributes": {
+                  "description": "vat",
+                  "detailedDescription": "It's a large stainless steel cooking vat",
+                  "extendedInventoryDescription": "There's $inventory in it."
+                },
+                "inventory": [
+                  {
+                    "object": "artefact",
+                    "name": "soup",
+                    "description": "soup",
+                    "detailedDescription": "It's tasty and exotic - spicy butternut squash and coconut.",
+                    "attributes": {
+                      "weight": 3,
+                      "type": "food",
+                      "requiresContainer": true,
+                      "isLiquid": true,
+                      "requiredContainer": "bowl",
+                      "canCollect": true,
+                      "charges": 12,
+                      "chargeUnit": "bowlful",
+                      "chargesDescription": "There's about $charges $chargeUnit left. For the benefit of everyone else, try to stick to just one portion though",
+                      "plural": true,
+                      "isEdible": true,
+                      "nutrition": 15,
+                      "smell": "It has a lovely aromatic smell. A mix of both sweet and spicy.",
+                      "taste": "Yep, it's good."
+                    },
+                    "synonyms": [
+                      "soup",
+                      "food"
+                    ]
+                  }
                 ]
               },
+              "modifyLocationCreatures": {
+                "name": "all",
+                "destination": "servery-main",
+                "destinationDelay": 35
+              },
               "score": 25,
-              "message": "Yay for you! Time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
-            },
-            "fail": {
-              "message": "Lunchtime's over. Margaret had prepared a tasty meal especially for you but you missed out."
+              "message": "It's time to enjoy the wonders of our kitchen and the results of all your help so far.<br>The food they provide here is pretty amazing."
             }
           },
           {
@@ -17158,7 +17344,7 @@
             "displayName": "get some fresh tomatoes for Margaret",
             "description": "Margaret needs some fresh tomatoes.",
             "attributes": {
-              "parent": "waterfilsplants",
+              "parent": "endofbreakfast",
               "missionObject": "tomatoes",
               "destination": "margaret sexton",
               "static": true,
@@ -17220,10 +17406,8 @@
             },
             "reward": {
               "score": 125,
-              "affinityModifier": 1,
               "removeObject": "tomatoes",
-              "increaseAffinityFor": "everyone",
-              "message": "Margaret says 'Thankyou so much $player.'<br>'I'm sure everyone will appreciate the effort you've gone to to keep us all fed.'"
+              "message": "Margaret says 'Thankyou so much $player.'<br>'We can go ahead with lunch for everyone as planned.' 'I'll make sure there's a special roast waiting for you too!'"
             }
           }
         ]
@@ -17364,7 +17548,7 @@
         "detailedDescription": "They're stackable chairs that allow the entire space to be cleared for company-wide presentations.",
         "attributes": {
           "defaultAction": "rest",
-          "weight": 40,
+          "weight": 30,
           "type": "bed",
           "plural": true,
           "customAction": [

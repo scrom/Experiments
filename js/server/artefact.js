@@ -755,15 +755,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return true; 
             };
 
-            //description
-            //if (synonym == self.getDescription()) { 
-            if (" "+self.getDescription()+" ".indexOf(" "+synonym+" ") >-1) { 
+            //description - complete match
+            if (synonym == self.getDescription()) { 
                 return true; 
-            };
-            
-            if (synonym == "monitors") {
-                var debug = synonym.substr(synonym.length - 1);
-                var search = synonym.substr(0, synonym.length - 1);
             };
             
             if (synonym.substr(synonym.length-1) == "s") {
@@ -1203,14 +1197,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString = resultString.replace(_detailedDescription, "");
             } else {
                 if (_delivers.length > 0 && (!_hideDeliveryDescription)) {
-                    //split delivers items into what can currently be delivered and what can't
+                    //split "deliver"s items into what can currently be delivered and what can't
+                    //so that we can determine what to describe
                     var canDeliverList = [];
                     var sellsList = [];
                     var cannotDeliverList = [];
                     var combinesWithList = [];
                     for (var i = 0; i < _delivers.length; i++) {
-                        //@todo - this logic looks very odd for "combinesWith" - can't tell what it's doing.
-                        if (self.getCombinesWith().length>0) {combinesWithList.push(_delivers[i]); }
+                        if (self.getCombinesWith().length > 0) {
+                            //combine items don't "deliver" as such, they convert into other things
+                            combinesWithList.push(_delivers[i]);
+                        }
                         else if (self.canDeliver(_delivers[i].getName())) { 
                             if (_delivers[i].getPrice() > 0) {
                                 sellsList.push(_delivers[i]); 

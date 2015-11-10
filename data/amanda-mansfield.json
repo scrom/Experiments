@@ -1,7 +1,7 @@
 ﻿{
   "object": "creature",
   "name": "amanda mansfield",
-  "displayname": "Amanda Mansfield",
+  "displayName": "Amanda Mansfield",
   "description": "Amanda from IS",
   "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
   "attributes": {

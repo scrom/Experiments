@@ -8,15 +8,14 @@
     "template": "creature-male-l4",
     "attackStrength": 12,
     "type": "creature",
-    "affinity": -1,
+    "affinity": -2,
     "destinations": [
         "machine-room-east"
     ],
     "avoiding": [
         "bus"
     ],
-    "destinationDelay": 20,
-    "imageName": "spy.jpg"
+    "destinationDelay": 20
     },
     "inventory": [
         {"file": "emergency-first-aid-kit"}
@@ -29,11 +28,13 @@
         "him"
     ],
     "missions": [
-        {"file": "event-jordanreachesmachineroom"},
-        {"file": "mission-killthespy"},
-        {"file": "mission-stealsketchbook"},
-        {"file": "mission-vanarrival"},
-        {"file": "mission-stealvaluables"},
-        {"file": "mission-givetrusttokentoplayer"} 
+      {"file": "event-jordanisbleeding"},
+      {"file": "event-jordandies"},
+      {"file": "event-jordanreachesmachineroom"},
+      {"file": "mission-killthespy"},
+      {"file": "mission-stealsketchbook"},
+      {"file": "mission-vanarrival"},
+      {"file": "mission-stealvaluables"},
+      {"file": "mission-givetrusttokentoplayer"} 
     ]
 }

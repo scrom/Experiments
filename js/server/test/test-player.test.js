@@ -1033,7 +1033,7 @@ exports.cannotGiveHighAffinityObjectToUnfriendlyCreature.meta = { traits: ["Play
 
 
 exports.canAskCreatureForObject = function (test) {
-    var expectedResult = "'Sure. Here you you.'<br>He hands you the box.";
+    var expectedResult = "'Sure. Here you go.'<br>He hands you the box.";
     var actualResult = p0.ask('ask',c0.getName(), 'box');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1421,7 +1421,7 @@ exports.deliberatelyBreakingBloodContainerLeavesBloodOnFloor = function (test) {
     console.log(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
     p0.breakOrDestroy('break',mug.getName());
-    var expectedResult = "You're not carrying anything that you can put the blood into.";
+    var expectedResult = "You're not carrying anything that you can collect the blood into.";
     var actualResult = p0.get('get',"blood");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

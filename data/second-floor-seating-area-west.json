@@ -2,7 +2,7 @@
     "object": "location",
     "name": "second-floor-seating-area-west",
     "displayName": "Rest area",
-    "description": "You're in the West end of the second floor seating area.",
+    "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>Teams from the second floor tend to use this area for reading and relaxing.",
     "exits": [
       {
         "object": "exit",
@@ -24,6 +24,36 @@
         "direction": "e",
         "source": "second-floor-seating-area-west",
         "destination": "second-floor-seating-area-east"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "template": "chairs",
+        "description": "comfy armchairs",
+        "detailedDescription": "They're small but comfortable armchairs.",
+        "synonyms": [
+          "chair",
+          "comfy chair",
+          "comfy armchair",
+          "comfortable chair",
+          "small armchair",
+          "small chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "template": "table",
+        "description": "small coffee table",
+        "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
+        "synonyms": [
+          "coffee table",
+          "small table",
+          "small coffee table",
+          "wooden coffee table",
+          "small wooden coffee table",
+          "small wooden  table"
+        ]
       }
     ]
   }

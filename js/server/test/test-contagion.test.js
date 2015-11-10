@@ -155,9 +155,9 @@ exports.checkSlowContagionEscalationManifestsCorrectly = function (test) {
     c.enactSymptoms(cr);
 
     var minExpectedHealth = 6;
-    var expectedFrequency = 0.89;
+    var minExpectedFrequency = 0.75;
     var expectedEscalation = 0.07;
-    var expectedResult = "Health Increased: "+true+" Frequency:"+expectedFrequency+" Escalation:"+true;
+    var expectedResult = "Health Increased: "+true+" Frequency:"+true+" Escalation:"+true;
     console.log('rough expectedResult = {"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"communicability":0.5,"symptoms":[{"action":"hurt","health":9,"frequency":0.89,"escalation":0.0757317635324669}],"originalSymptoms":[{"action":"hurt","health":5,"frequency":0.05,"escalation":0.05}]}}');
 
     var resultAttributes =c.getCurrentAttributes();
@@ -168,8 +168,9 @@ exports.checkSlowContagionEscalationManifestsCorrectly = function (test) {
     var resultEscalation = Math.round(resultSymptoms[0].escalation*100)/100;
 
     var escalationComparison = resultEscalation>=expectedEscalation
-    var healthComparison = resultHealth>=minExpectedHealth;
-    var actualResult = "Health Increased: "+healthComparison+" Frequency:"+resultFrequency+" Escalation:"+escalationComparison;
+    var healthComparison = resultHealth >= minExpectedHealth;
+    var frequencyComparison = resultFrequency >= minExpectedFrequency;
+    var actualResult = "Health Increased: "+healthComparison+" Frequency:"+ frequencyComparison+" Escalation:"+escalationComparison;
     console.log('actualResult = '+c.toString());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);

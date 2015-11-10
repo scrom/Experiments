@@ -14,60 +14,26 @@
     "modifyLocations": [
       {
         "name": "servery-food-bar",
-        "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
+        "description": "You're in the SQL Servery serving area and lunch should be being served.<br>It looks like they're not quite ready yet. Hopefully everything's ok.",
         "inventory": [
           { "file": "plate" },
           { "file": "plate" },
           { "file": "bowl" },
-          { "file": "bowl" },
-          { "file": "salad" },
-          { "file": "roast" }
-        ],
-        "missions": [{"file": "mission-limitfoodportions"}]
-      },
-      {
-        "name": "servery-main",
-        "description": "You're in the SQL Servery. The smell of food and buzz of conversation are almost enough to overload your senses. It looks like everyone descended on the canteen at the same time for lunch.",
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "smell of food",
-            "description": "food",
-            "detailedDescription": "You'll need to head to the serving area.",
-            "attributes": {
-              "type": "scenery",
-              "subType": "intangible",
-              "customAction": [
-                "get",
-                "find",
-                "where is",
-                "where"
-              ],
-              "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
-              "smell": "It smells like roast dinner day. There's usually meat and vegetarian options.<br>Gotta love the free food in this place!"
-            },
-            "synonyms": [
-              "food"
-            ]
-          }
+          { "file": "bowl" }
         ]
       }
     ],
     "modifyLocationCreatures": {
       "name": "all",
-      "destination": "servery-main",
-      "destinationDelay": 35
+      "destination": "servery-food-bar",
+      "destinationDelay": 5
     },
     "modifyObject": {
-      "name": "vat",
+      "name": "margaret sexton",
       "attributes": {
-        "description": "vat",
-        "detailedDescription": "It's a large stainless steel cooking vat",
-        "extendedInventoryDescription": "There's $inventory in it."
-      },
-      "inventory": [
-        { "file": "soup" }
-      ]
+        "destinations": [ "servery-food-bar" ],
+        "destinationDelay": 75
+      }
     }
   }
 }

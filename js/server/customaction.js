@@ -6,17 +6,6 @@ var self = module.exports = {
         //console.log("Processing affinity modifiers from custom action");
         var affinityModifier = 1;
         if (actionData.affinityModifier) { affinityModifier = actionData.affinityModifier; };
-        if (actionData.increaseAffinityFor) {
-            if (actionData.increaseAffinityFor == "all" || actionData.increaseAffinityFor == "everyone") {
-                var creatures = map.getAllCreatures();
-                for (var c = 0; c < creatures.length; c++) {
-                    creatures[c].increaseAffinity(affinityModifier, true);
-                };
-            } else {
-                var creatureToIncrease = map.getCreature(actionData.increaseAffinityFor);
-                if (creatureToIncrease) { creatureToIncrease.increaseAffinity(affinityModifier, true); };
-            };
-        };
         if (actionData.decreaseAffinityFor) {
             if (actionData.decreaseAffinityFor == "all" || actionData.decreaseAffinityFor == "everyone") {
                 var creatures = map.getAllCreatures();
@@ -26,6 +15,18 @@ var self = module.exports = {
             } else {
                 var creatureToDecrease = map.getCreature(actionData.decreaseAffinityFor);
                 if (creatureToDecrease) { creatureToDecrease.decreaseAffinity(affinityModifier, true); };
+            };
+        };
+        //increase affinity after decreasing.
+        if (actionData.increaseAffinityFor) {
+            if (actionData.increaseAffinityFor == "all" || actionData.increaseAffinityFor == "everyone") {
+                var creatures = map.getAllCreatures();
+                for (var c = 0; c < creatures.length; c++) {
+                    creatures[c].increaseAffinity(affinityModifier, true);
+                };
+            } else {
+                var creatureToIncrease = map.getCreature(actionData.increaseAffinityFor);
+                if (creatureToIncrease) { creatureToIncrease.increaseAffinity(affinityModifier, true); };
             };
         };
     },
@@ -78,13 +79,13 @@ var self = module.exports = {
                 map.removeNamedMission(actionData.removeMissions[m], player);
             };
         };
+        if (actionData.modifyLocationCreatures) { map.modifyLocationCreatures(actionData.modifyLocationCreatures); }; //important! modify before remove and modify all before named items
         if (actionData.modifyObject) { map.modifyObject(actionData.modifyObject, player); };
         if (actionData.modifyObjects) {
             for (var m = 0; m < actionData.modifyObjects.length; m++) {
                 map.modifyObject(actionData.modifyObjects[m], player);
             };
         };
-        if (actionData.modifyLocationCreatures) { map.modifyLocationCreatures(actionData.modifyLocationCreatures); }; //important! modify before remove
         if (actionData.removeObject) { map.removeObject(actionData.removeObject, actionData.destination, player); };
         if (actionData.removeObjects) {
             for (var m = 0; m < actionData.removeObjects.length; m++) {
