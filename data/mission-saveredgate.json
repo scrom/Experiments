@@ -29,6 +29,7 @@
   "fail": {
     "score": -200,
     "affinityModifier": 2,
+    "activateMission":  "retrievedisk",
     "decreaseAffinityFor": "jordan miller",
     "increaseAffinityFor": "simon galbraith",
     "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."

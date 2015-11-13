@@ -234,6 +234,7 @@ exports.Action = function Action(player, map, fileManager) {
                         //need to ensure navigation still works with this one so only respond if there's words other than "i".
                         if (_object0 || _object1) {
                             if (_inConversationWith) {
+                                _ticks = 1;
                                 description = _player.say('say', _actionString, _inConversationWith, _map);
                                 _player.setLastVerbUsed('say');
                             } else {
@@ -244,6 +245,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'ok':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(true, _map);
                             } else {
@@ -257,6 +259,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'oh':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             description = _player.say('say', _actionString, _inConversationWith, _map);
                             _player.setLastVerbUsed('say');
                         } else {
@@ -267,6 +270,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'thankyou':
                     case 'thanks':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             description = _player.say('say', _actionString, _inConversationWith, _map);
                             _player.setLastVerbUsed('say');
                         } else {
@@ -276,6 +280,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'n':
                         if (_inConversationWith && _awaitingPlayerAnswer) {
+                            _ticks = 1;
                             description = _player.confirmOrDecline(false, _map);
                             if (tools.stringIsEmpty(description)) {
                                 description = _player.say('say', _actionString, _inConversationWith, _map);
@@ -286,6 +291,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'no':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(false, _map);
                                 if (tools.stringIsEmpty(description)) {
@@ -308,10 +314,12 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'y':
+                    case 'sure':
                         _verb = "yes";
                         _actionString = _verb + _actionString.substr(1);
                     case 'yes':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(true, _map);
                             } else {
@@ -427,6 +435,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'hunt':                               
                     case 'find': 
                         if (_inConversationWith) {
+                            _ticks = 1;
                             var objectToFind = _object0+_object1;
                             return "You ask "+_inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+_inConversationWith+" to find "+objectToFind);
                         } else { 
@@ -944,6 +953,7 @@ exports.Action = function Action(player, map, fileManager) {
                         _player.setLastVerbUsed('say');    
                         break;
                     case 'hi':
+                    case 'hey':
                         _ticks = 1;
                         if (_inConversationWith && !_object0) {
                             _object0 = _inConversationWith;
@@ -1509,6 +1519,7 @@ exports.Action = function Action(player, map, fileManager) {
         self.catchPlayerNotUnderstood = function () {
             try {
                 if (_inConversationWith) {
+                    _ticks = 1;
                     _player.setLastVerbUsed('say');
                     return _player.say('say', _actionString,_inConversationWith, _map);
                 };

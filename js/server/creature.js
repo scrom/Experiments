@@ -3719,7 +3719,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 };
                             
                                 if (showMoveToPlayer) {
-                                    visibleResultString += slipString;
+                                    visibleResultString += slipString+" ";
                                 };
 
                             };
