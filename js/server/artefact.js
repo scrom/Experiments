@@ -542,6 +542,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
 
         };
+        
+        self.play = function (verb) {
+            if (self.checkCustomAction(verb)) {
+                return self.getCustomActionResult(verb);
+            };
+
+            return "Try as you might, you just don't find playing with " + self.descriptionWithCorrectPrefix() + " as entertaining as you'd hoped.";
+        };
 
         self.getSmell = function() {
             return _smell;

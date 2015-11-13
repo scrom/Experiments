@@ -455,6 +455,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getImageName = function() {
             return _imageName;
         };
+        
+        self.play = function (verb, playerAggression, artefact) {
+            if (playerAggression > 0) {
+                return "Nobody's going to want to " + verb + " with you until you calm down a little.";
+            };
+            if (self.getSubType() == "animal") {
+                return self.rub();
+            };
+            if (_affinity < 0) {
+                return tools.initCap(self.getPrefix()) + " really doesn't want to " + verb + " with you."
+            } else if (_affinity < 2) {
+                return tools.initCap(self.getPrefix()) + " doesn't want to "+verb+"."
+            };
+
+            return tools.initCap(self.getPrefix()) + " says 'It might be fun but we don't have time for that right now $player.'"
+        };
 
         self.getSmell = function() {
             var resultString;

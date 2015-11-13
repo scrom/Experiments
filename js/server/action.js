@@ -1243,7 +1243,13 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'inject':
                         description = _player.inject(_object0, _object1);
                         break;
-                    case 'play': //generally a custom verb already
+                    case 'play':
+                        if (!_object0) {
+                            description = _player.play(_verb, _object1);
+                        } else {
+                            description = _player.play(_verb, _object0, _object1);
+                        };
+                        break;
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                
                     case 'call':  //see #243
                     case 'phone': //see #243

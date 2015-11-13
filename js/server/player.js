@@ -1156,7 +1156,29 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             return null;              
-        }; 	
+        };
+        
+        self.play = function (verb, artefactName, receiverName) {
+            var artefact = getObjectFromPlayerOrLocation(artefactName);
+            if (!(artefact)) {
+                return notFoundMessage(artefactName);
+            };
+            
+            var receiver;
+            if (receiverName) {
+                receiver = getObjectFromPlayerOrLocation(receiverName);
+                if (!(receiver)) {
+                    return notFoundMessage(receiverName);
+                };
+
+                return receiver.play(verb, self.getAggression(), artefact);
+            };
+                      
+            if (!receiverName) {
+                return artefact.play(verb, self.getAggression());
+            };
+
+        };
 
         self.use = function(verb, artefactName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
