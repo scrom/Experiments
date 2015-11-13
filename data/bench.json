@@ -1,0 +1,22 @@
+﻿{
+  "object": "artefact",
+  "name": "bench",
+  "description": "wooden bench",
+  "detailedDescription": "A comfortable spot to sit and rest for a while.",
+  "attributes": {
+    "defaultAction": "rest",
+    "weight": 80,
+    "carryWeight": 0.1,
+    "type": "bed",
+    "isBreakable": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "wooden bench",
+    "chair"
+  ],
+  "inventory": [
+    { "file": "lighter" },
+    { "file": "cigarettes" }
+  ]
+}

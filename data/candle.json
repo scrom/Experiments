@@ -1,0 +1,20 @@
+﻿{
+    "object": "artefact",
+    "name": "candle",
+    "description": "candle",
+    "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+    "attributes": {
+      "weight": 0.1,
+      "type": "light",
+      "canCollect": true,
+      "isBreakable": true,
+      "flammable": true,
+      "charges": 45,
+      "chargeUnit": "minute",
+      "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+      "burnRate": 0.3
+    },
+    "synonyms": [
+      "wick"
+    ]
+}

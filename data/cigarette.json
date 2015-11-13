@@ -1,0 +1,25 @@
+﻿{
+    "object": "artefact",
+    "name": "cigarette",
+    "description": "cigarette",
+    "detailedDescription": "A cancer stick as your folks used to call them.",
+    "attributes": {
+      "weight": 0.02,
+      "type": "junk",
+      "canCollect": true,
+      "isBreakable": true,
+      "flammable": true,
+      "charges": 15,
+      "burnRate": 2,
+      "chargesDescription": " ",
+      "customAction": [
+      "smoke"
+      ],
+      "defaultResult": "$action light"
+    },
+    "synonyms": [
+      "fag",
+      "smoke",
+      "cig"
+    ]
+}

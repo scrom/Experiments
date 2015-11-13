@@ -1776,17 +1776,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (tools.stringIsEmpty(secondArtefactName)) {
                 //attempt to get polish or sharpen object (if verbs match)
                 if (verb == "sharpen") {
-                    secondArtefact = _inventory.getObjectBySubType("sharpen");
+                    secondArtefact = _inventory.getObjectBySubType("sharpen", true);
                     if (!secondArtefact) {
-                        secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("sharpen");
+                        secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("sharpen", true);
                     };
                     splitWord = "with";
                     //fail if nothing to sharpen with
                     if (!secondArtefact) {return "You can't find anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
                 } else if (verb == "polish") {
-                    secondArtefact = _inventory.getObjectBySubType("buff");
+                    secondArtefact = _inventory.getObjectBySubType("buff", true);
                     if (!secondArtefact) {
-                        secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("buff");
+                        secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("buff", true);
                     };
                     splitWord = "with";
                     //fail if nothing to polish with
@@ -2174,15 +2174,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //Ensure we have a tool with a subtype of "clean" or "buff" - otherwise we can't clean things.
-            var cleanItem = _inventory.getObjectBySubType("clean");
+            var cleanItem = _inventory.getObjectBySubType("clean", true);
             if (!cleanItem) {
-                cleanItem = _currentLocation.getInventoryObject().getObjectBySubType("clean");
+                cleanItem = _currentLocation.getInventoryObject().getObjectBySubType("clean", true);
             };
             if (!cleanItem) {
-                cleanItem = _inventory.getObjectBySubType("buff");
+                cleanItem = _inventory.getObjectBySubType("buff", true);
             };
             if (!cleanItem) {
-                cleanItem = _currentLocation.getInventoryObject().getObjectBySubType("buff");
+                cleanItem = _currentLocation.getInventoryObject().getObjectBySubType("buff", true);
             };
 
             //fail if nothing to clean with
@@ -3157,6 +3157,40 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(hasSpokenBefore) && hasSpokenAfter) {_creaturesSpokenTo ++;};
                 return resultString;
         };
+        
+        self.ignite = function(verb, action, artefact) {
+            //we only get here if the thing we're trying to light is flammable/explosive and not already burning
+            if (artefact.chargesRemaining == 0) {
+                return "There's not enough of "+artefact.getSuffix()+" left to light."
+            };
+
+            var ignitionSourceIsInLocation = false;
+            var ignitionSource = _inventory.getObjectBySubType("fire", true);
+            if (!ignitionSource) {
+                ignitionSource = _currentLocation.getInventoryObject().getObjectBySubType("fire", true);
+                if (!ignitionSource) {
+                    //@todo - should also be able to light from anything flammable and burning
+                    return "You don't have anything to light " + artefact.getSuffix() + " with.";
+                };
+                ignitionSourceIsInLocation = true;
+            };
+            
+            var whoseItem = "your " + ignitionSource.getName() +".";
+            if (ignitionSourceIsInLocation) {
+                whoseItem = ignitionSource.descriptionWithCorrectPrefix()+ " you spotted nearby.";
+            };
+
+            var resultString = artefact.switchOnOrOff(verb, action, ignitionSource);
+            resultString += " with " + whoseItem;
+            var ignitionSourceChargesRemaining = ignitionSource.consume();
+            if (ignitionSourceChargesRemaining == 0) {
+                ignitionSourceChargesRemaining.discountPriceByPercent(100); //worthless
+                if (!ignitionSourceIsInLocation) {
+                    resultString += "<br>Your " + ignitionSource.getName() + " "+ignitionSource.getPossessiveSuffix()+" run out.<br>";
+                };
+            };
+            return resultString;
+        };
 
         self.turn = function(verb, artefactName, action) {
             //note artefact could be a creature!
@@ -3184,12 +3218,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {
                 return notFoundMessage(artefactName);
             };
+                        
+            //override default "light" etc.
+            if (artefact.checkCustomAction(verb)) {
+                return self.customAction(verb, artefactName);
+            };
 
             if (artefact.getSubType() == "intangible") {return "There's nothing to "+verb+" in "+artefact.getDisplayName()+".";};
 
             if (verb != "rotate") {
-                if (artefact.isSwitched()) { 
+                if (artefact.isSwitched() || artefact.isPoweredOn()) {
                     return artefact.switchOnOrOff(verb, action);  
+                };
+                if (artefact.isFlammable() || artefact.isExplosive()) {
+                    return self.ignite(verb, action, artefact);
                 };
             };
             
@@ -5278,7 +5320,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var originalDeathCount = _killedCount;
 
                 //inventory tick
-                resultString+=_inventory.tick();                               
+                resultString+=_inventory.tick(self);                               
 
                 //contagion?
                 if (_contagion.length >0) {

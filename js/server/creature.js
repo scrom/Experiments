@@ -3520,7 +3520,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString = "";
                 
                 //console.log("Creature tick: "+self.getName()+"...");
-                resultString += _inventory.tick();
+                resultString += _inventory.tick(self);
                 
                 resultString += closePreviouslyOpenedDoors(map);
                 
@@ -3993,12 +3993,30 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.isSwitched = function() {
             return false;
         };
+        
+        self.isBurning = function () {
+            return false;
+        };
+        
+        self.isFlammable = function () {
+            return false;
+        };
+        
+        self.isExplosive = function () {
+            return false;
+        };
 
         self.turn = function(verb, direction) {
             return self.switchOnOrOff(verb, direction);
         };
 
-        self.switchOnOrOff = function(verb, onOrOff) {
+        self.switchOnOrOff = function (verb, onOrOff) {
+            if (verb == "light" || verb == "ignite") {
+                if (self.isDead()) {
+                    return "I don't see anything in "+_genderPossessiveSuffix+" funeral plans that said "+_genderPrefix.toLowerCase()+" wanted to be cremated."
+                };
+                return "If you want to kill "+_genderSuffix+", at least do it honorably."
+            };
             return "That's really not a polite thing to do to "+_genderSuffix+".";
         };
 

@@ -809,7 +809,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                 self.reduceBlood();
                 
                 //tick inventory items
-                resultString += _inventory.tick();
+                resultString += _inventory.tick(self);
             };
             
             if (player && resultString.length > 0) {

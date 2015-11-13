@@ -512,16 +512,29 @@ exports.Action = function Action(player, map, fileManager) {
                         _object0 = _object0.replace(" down","");
 
                         if (originalObject0 != _object0) {
+                            _ticks = 1;
                             _verb = 'put down';
                             description = _player.drop(_verb, _object0, _map);
+                            break;
+                        };
+
+                        //next special case for put out
+                        if (_splitWord == "out") {
+                            if (!_object0) {
+                                _object0 = _object1;
+                            };
+                            _ticks = 1;
+                            description = _player.turn(_verb, _object0, 'out');
                             break;
                         };
 
                         //or fall through to normal "put"
                     case 'hide':
                     case 'balance':
+                    case 'place':
                         if (tools.positions.indexOf(_splitWord) > -1) {
                             //put or hide an item on/under/behind x
+                            _ticks = 3;
                             description = _player.position(_verb, _object0, _object1, _splitWord, tools.positions);
                             break;
                         };
@@ -1044,6 +1057,10 @@ exports.Action = function Action(player, map, fileManager) {
                         };                    
                         break;
                     case 'ignite':
+                    case 'burn'://see #299 - relies on having either an ignition source or something else already burning.
+                        //@todo implement proper burn support
+                        //description = _player.burn(_verb, _object0);
+                        //break;
                     case 'light':
                         _ticks = 1;
                         description = _player.turn('light', _object0, 'on');
@@ -1052,6 +1069,17 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'unlight':
                         _ticks = 1;
                         description = _player.turn('turn', _object0,'out');
+                        break;
+                    case 'blow':
+                        //special case for "blow out"
+                        if (_splitWord == "out") {
+                            if (!_object0) {
+                                _object0 = _object1;
+                            };
+                            _ticks = 1;
+                            description = _player.turn(_verb, _object0, 'out');
+                        };
+                        //@todo - handle blow up, on, over
                         break;
                     case 'reda':
                     case 'read':
@@ -1216,7 +1244,6 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.inject(_object0, _object1);
                         break;
                     case 'play': //generally a custom verb already
-                    case 'burn': //see #299 - relies on having either an ignition source or something else already burning.
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                
                     case 'call':  //see #243
                     case 'phone': //see #243
@@ -1253,6 +1280,7 @@ exports.Action = function Action(player, map, fileManager) {
             };	
 
             if (description) {
+                var tempDescription = "";
                 //clean up fails
                 if (description.indexOf("$fail$") > -1) {
                     description = description.replace("$fail$", "");

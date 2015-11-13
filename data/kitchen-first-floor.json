@@ -2,7 +2,7 @@
   "object": "location",
   "name": "kitchen-first-floor",
   "displayName": "First floor kitchen",
-  "description": "You're in a small, open kitchen area.<br>There's a small sink and fridge plus the usual array of small kitcheny-type things here.",
+  "description": "You're in a small, open kitchen area.<br>Although we encourage eveyone to go downstairs for coffe, this is here for a bit of extra convenience and has the usual array of kitcheny-type things.",
   "exits": [
     {
       "object": "exit",

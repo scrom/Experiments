@@ -8336,6 +8336,78 @@
               }
             ]
           }
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "box",
+            "description": "box of candles",
+            "detailedDescription": "It looks pretty old. Then again, the days of regular power cuts are over for most people in the UK.",
+            "attributes": {
+              "weight": 0.1,
+              "carryWeight": 0.5,
+              "type": "container",
+              "canCollect": true,
+              "isBreakable": true,
+              "position": "under"
+            },
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.5,
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.5,
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.5,
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              }
+            ]
+          }
         ]
       },
       {
@@ -8570,6 +8642,78 @@
                       "tomatoes"
                     ]
                   }
+                ]
+              }
+            ]
+          }
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "box",
+            "description": "box of candles",
+            "detailedDescription": "It looks pretty old. Then again, the days of regular power cuts are over for most people in the UK.",
+            "attributes": {
+              "weight": 0.1,
+              "carryWeight": 0.5,
+              "type": "container",
+              "canCollect": true,
+              "isBreakable": true,
+              "position": "under"
+            },
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.5,
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.5,
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.5,
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
                 ]
               }
             ]
@@ -11203,6 +11347,7 @@
                     "time": 4
                   },
                   "reward": {
+                    "removeMission": "finddaveandroger",
                     "message": ""
                   }
                 }
@@ -13643,7 +13788,7 @@
         "description": "whetstone",
         "detailedDescription": "Every text adventure needs a whetstone right?",
         "attributes": {
-          "weight": 0.5,
+          "weight": 0.4,
           "type": "tool",
           "subType": "sharpen",
           "canCollect": true,
@@ -13661,9 +13806,9 @@
         "object": "artefact",
         "name": "rag",
         "description": "dirty rag",
-        "detailedDescription": "It's slightly damp but handling it makes your hands feel oddly dry.",
+        "detailedDescription": "It's slightly damp but handling it makes your hands feel oddly dry and uncomfortable.",
         "attributes": {
-          "weight": 0.5,
+          "weight": 0.2,
           "type": "tool",
           "subType": "buff",
           "canCollect": true,
@@ -18009,6 +18154,176 @@
         "synonyms": [
           "wooden bench",
           "chair"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "lighter",
+            "description": "cigarette lighter",
+            "detailedDescription": "It's quite a nice old cigarette lighter. Someone must have lost or forgotten it.",
+            "attributes": {
+              "weight": 0.4,
+              "type": "tool",
+              "subType": "fire",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 25,
+              "chargeUnit": "gas",
+              "chargesDescription": "Annoyingly, it's impossible to tell how much gas there is left in it.",
+              "position": "on",
+              "customAction": [
+                "press",
+                "light",
+                "ignite",
+                "strike",
+                "refill",
+                "fill"
+              ],
+              "defaultResult": "You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty."
+            },
+            "synonyms": [
+              "old lighter",
+              "flint",
+              "cigarette lighter"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "pack",
+            "description": "cigarette packet",
+            "detailedDescription": "These days all the identifying information on these is obscured by health warnings, they could be anybody's and any brand.",
+            "attributes": {
+              "weight": 0.1,
+              "carryWeight": 0.1,
+              "type": "container",
+              "canCollect": true,
+              "isBreakable": true,
+              "position": "on"
+            },
+            "synonyms": [
+              "packet",
+              "cigarette pack",
+              "cigarette packet",
+              "fag packet"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 3,
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 3,
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 3,
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 3,
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 3,
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              }
+            ]
+          }
         ]
       }
     ]

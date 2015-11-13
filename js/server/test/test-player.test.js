@@ -3165,7 +3165,6 @@ exports.playerCanEmptyaBottleOfBlood = function (test) {
 };
 exports.playerCanEmptyaBottleOfBlood.meta = { traits: ["Player Test", "Blood Trait", "Kill Trait", "Liquid Trait"], description: "Test that a player can use blood from a fresh kill." };
 
-
 exports.duplicateItemsAreCollatedInPlayerInventoryDescription = function (test) {
     var item1 = new artefact.Artefact('item', 'box', 'just a box', breakableJunkAttributes, null);
     var item2 = new artefact.Artefact('item', 'box', 'just a box', breakableJunkAttributes, null);
@@ -3196,6 +3195,84 @@ exports.endGameTriggersCorrectMessage = function (test) {
 
 exports.endGameTriggersCorrectMessage.meta = { traits: ["Player Test", "End Game Trait"], description: "Test that game can be ended." };
 
+
+exports.playerCanTurnOnAPoweredItem = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = p0.endGame();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanTurnOnAPoweredItem.meta = { traits: ["Player Test", "Turn Trait", "Power Trait"], description: "Test that player can turn items on." };
+
+exports.playerCanTurnOffAPoweredItem = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = p0.endGame();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanTurnOffAPoweredItem.meta = { traits: ["Player Test", "Turn Trait", "Power Trait"], description: "Test that player can turn items off." };
+
+exports.playerCanIgniteAFlammableItemWithPersonalIgnitionSource = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = p0.endGame();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanIgniteAFlammableItemWithPersonalIgnitionSource.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Fire Trait"], description: "Test that player can ignite an item when carrying an ignition source." };
+
+exports.playerCanIgniteAFlammableItemWithLocationIgnitionSource = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = p0.endGame();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanIgniteAFlammableItemWithLocationIgnitionSource.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Fire Trait"], description: "Test that player can ignite an item when ignition source is in location." };
+
+exports.playerIgnitionSourceWillBurnOut = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = p0.endGame();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerIgnitionSourceWillBurnOut.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Fire Trait", "Consume Trait"], description: "Test that when igniting an item with a nearly expired ignition source, the source empties." };
+
+exports.playerCannotIgniteAFlammableItemWithExpiredIgnitionSource = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = p0.endGame();
+    //if (result) {actualResult = true;};
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCannotIgniteAFlammableItemWithExpiredIgnitionSource.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Fire Trait", "Charge Trait"], description: "Test that player cannot ignite an item when their ignition source is not working." };
 
 /*
 Methods needing testing:

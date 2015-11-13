@@ -548,10 +548,16 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
 
         //this one doesn't cascade to contents of other objects.
-        self.getObjectBySubType = function(anObjectSubType) {
-            
+        self.getObjectBySubType = function(anObjectSubType, returnOnlyWorkingItems) {         
            for(var index = _items.length-1; index >= 0; index--) {
-                if(_items[index].getSubType() == anObjectSubType  && (!(_items[index].isHidden()))) {
+                if (_items[index].getSubType() == anObjectSubType) {
+                    if (_items[index].isHidden()) { continue; };
+                    if (returnOnlyWorkingItems) {
+                        if (_items[index].isBroken()) { continue; };
+                        if (_items[index].isDestroyed()) { continue; };
+                        if (_items[index].chargesRemaining() == 0) { continue; };
+                        if (!_items[index].checkComponents()) { continue; };
+                    };
                     //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
                 };
@@ -815,12 +821,12 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             return suitableContainer;
         };
 
-        self.tick = function() {
+        self.tick = function(owner) {
             //iterate through each object and tick for each
             var resultString = "";
             for (var i=0;i<_items.length;i++) {
                 if (_items[i].getType() != "creature") {
-                    resultString += _items[i].tick();
+                    resultString += _items[i].tick(owner);
                 };
             };
             if (resultString.length >0) {resultString = "<br>"+resultString;};

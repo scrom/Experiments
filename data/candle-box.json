@@ -1,0 +1,20 @@
+﻿{
+  "object": "artefact",
+  "name": "box",
+  "description": "box of candles",
+  "detailedDescription": "It looks pretty old. Then again, the days of regular power cuts are over for most people in the UK.",
+  "attributes": {
+    "weight": 0.1,
+    "carryWeight": 0.5,
+    "hidden": "true",
+    "position": "under",
+    "type": "container",
+    "canCollect": true,
+    "isBreakable": true
+  },
+  "inventory": [
+    { "file": "candle" },
+    { "file": "candle" },
+    { "file": "candle" }
+  ]
+}
