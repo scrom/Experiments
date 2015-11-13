@@ -28,7 +28,8 @@ exports.Action = function Action(player, map, fileManager) {
         var _inConversationWith; //who is the player talking to?
 
 	    var objectName = "Action";
-        var _adverbs =  ['closely', 'carefully', 'cautiously', 'slowly', 'quickly', 'softly', 'loudly','noisily', 'gently', 'quietly','silently', 'tightly','losely']; //not split words but we need to trim these out and occasionally handle them.
+        var _adverbs = ['closely', 'carefully', 'cautiously', 'slowly', 'quickly', 'softly', 'loudly', 'noisily', 'gently', 'quietly', 'silently', 'tightly', 'losely', 'honorably', 'bravely']; //not split words but we need to trim these out and occasionally handle them.
+        var numerals = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         //private functions
 
 
@@ -60,7 +61,7 @@ exports.Action = function Action(player, map, fileManager) {
             var badWords = ["fuck"]; //put any bad language you want to filter in here
             var checkWord = aWord.substring(0,4);
             if (badWords.indexOf(checkWord)>-1) { 
-                 return aWord+" to you too. That's not very nice now, is it. Save that language for the office.";
+                 return "'"+tools.initCap(aWord)+"' to you too.<br>It's not so nice to be on the receiving end, is it.<br>Save that language for the office.";
             } else {return null;};
         };
 
@@ -81,7 +82,7 @@ exports.Action = function Action(player, map, fileManager) {
 
         /*
         for a passed in string, split it and return an array containing 0, 1 or 2 elements.
-        each elemet will be either an object or creature - we'll figure out which later.
+        each element will be either an object or creature - we'll figure out which later.
         we're using "split" and exiting on the first successful split so we'll only ever get a maximum of 2 objects
         we'll also only support one instance of each of these words - need to be cautious here
         */
@@ -1543,9 +1544,24 @@ exports.Action = function Action(player, map, fileManager) {
             self.convertActionToElements(_actionString); //extract object, description, json
 
             //trap selfreferencing objects early...
-            if ((_object0 == _object1)&&(_object0!="")) {
+            if ((_object0 == _object1) && (_object0!="")) {
                 description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.';
                 return description;
+            };
+            
+            if (_object0) {
+                var firstWord = _object0.split(" ")[0].trim();
+                if (numerals.indexOf(firstWord) > -1) {
+                    description = "Sorry. Although I'm reasonably smart I'm not able to deal with multiples of objects yet.";
+                    return description;
+                };
+            };
+            if (_object1) {
+                var firstWord = _object1.split(" ")[0].trim();
+                if (numerals.indexOf(firstWord) > -1) {
+                    description = "Sorry. Although I'm reasonably smart I'm not able to deal with multiples of objects yet.";
+                    return description;
+                };
             };
 
             //try to perform the player action
@@ -1567,12 +1583,12 @@ exports.Action = function Action(player, map, fileManager) {
             var swearing = swearCheck(_verb);
             if (swearing) {
                 description = swearing;
-                description = "Sorry, I take a hard line on verbal abuse and bad language..."+_player.kill();
+                description += "<br>Sorry, I take a hard line on verbal abuse and bad language...<br>"+_player.kill();
             };
 
             //final fall-through
             if (tools.stringIsEmpty(description)){
-                description = self.catchPlayerNotUnderstood(); //@bug: this might not work as it references "act"
+                description = self.catchPlayerNotUnderstood();
             } else {
                 //reset consecutive user errors
                 _failCount = 0; 
