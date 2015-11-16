@@ -10,7 +10,7 @@
         "initiateConversation": true,
         "static": true,
         "dialogue": [
-            "'Hi $player, I'm glad we all managed to survive the disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
+            "'$player, things are getting worse.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
             {
                 "state": 1,
                 "keywords": [
@@ -19,7 +19,7 @@
                     "yup",
                     "y"
                 ],
-                "response": "'Thanks $player. I think there's a spy somewhere in the building.'<br>'Track them down and investivate the situation.'",
+                "response": "'Good... I think there's a spy somewhere in the building.'<br>'Track them down and investivate the situation.'",
                 "nextState": 3
             },
             {
@@ -30,7 +30,7 @@
                     "not",
                     "not yet"
                 ],
-                "response": "Refusing a polite but important request from your CEO probably isn't wise.<br>'Well, when you're ready to do something useful, you know where I am.'",
+                "response": "Refusing a polite but important request from your CEO probably isn't wise.<br>'Well, when you're ready to actually do something useful, you know where I am.'",
                 "nextState": 2
             },
             {
@@ -70,8 +70,7 @@
     },
     "conditionAttributes": {
         "isDestroyed": false,
-        "isBroken": false,
-        "isDamaged": false
+        "isBroken": false
     },
     "reward": {
         "affinityModifier": 2,

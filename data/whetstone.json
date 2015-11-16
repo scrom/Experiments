@@ -1,0 +1,20 @@
+﻿{
+  "object": "artefact",
+  "name": "whetstone",
+  "description": "whetstone",
+  "detailedDescription": "Every text adventure needs a whetstone right?",
+  "attributes": {
+    "weight": 0.4,
+    "type": "tool",
+    "subType": "sharpen",
+    "canCollect": true,
+    "isBreakable": true,
+    "charges": 10,
+    "chargeUnit": "item",
+    "chargesDescription": "It's pretty worn out. There's enough of it left to sharpen about $charges $chargeUnit"
+  },
+  "synonyms": [
+    "stone",
+    "whet"
+  ]
+}

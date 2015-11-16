@@ -45,27 +45,6 @@
           "spare pieces hardware"
         ]
       },
-      {
-        "object": "artefact",
-        "name": "screwdriver",
-        "description": "large flat-headed screwdriver",
-        "detailedDescription": "It's too large for working on electronics but I'm sure it has other uses.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 0.1,
-          "attackStrength": 15,
-          "type": "tool",
-          "subType": "sharp",
-          "canCollect": true,
-          "affinityModifier": 2,
-          "unlocks": "cubicle door"
-        },
-        "synonyms": [
-          "flat scredriver",
-          "large screwdriver",
-          "large flat-head screwdriver",
-          "flat-head screwdriver"
-        ]
-      }
+      {"file": "screwdriver"}
     ]
   }

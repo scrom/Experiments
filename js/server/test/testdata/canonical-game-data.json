@@ -7171,7 +7171,7 @@
     "object": "location",
     "name": "kitchen-first-floor",
     "displayName": "First floor kitchen",
-    "description": "You're in a small, open kitchen area.<br>There's a small sink and fridge plus the usual array of small kitcheny-type things here.",
+    "description": "You're in a small, open kitchen area.<br>Although we encourage eveyone to go downstairs for coffe, this is here for a bit of extra convenience and has the usual array of kitcheny-type things.",
     "exits": [
       {
         "object": "exit",
@@ -8245,7 +8245,6 @@
         "detailedDescription": "It's a sink! With running water too. Who'd've thought it.<br>Although we generally expect people to clean up after themselves; the less considerate dump their crockery in here too.",
         "attributes": {
           "weight": 100,
-          "type": "scenery",
           "hideDeliveryDescription": true,
           "customAction": "wash",
           "defaultResult": "You rinse your hands in the sink."
@@ -8332,6 +8331,85 @@
                       "tomatoes"
                     ]
                   }
+                ]
+              }
+            ]
+          }
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "box",
+            "description": "box of candles",
+            "detailedDescription": "It looks pretty old. Then again, the days of regular power cuts are over for most people in the UK.",
+            "attributes": {
+              "weight": 0.1,
+              "carryWeight": 0.5,
+              "type": "container",
+              "canCollect": true,
+              "isBreakable": true,
+              "hidden": true,
+              "position": "under"
+            },
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.3,
+                  "chargeUnit": "minute",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.3,
+                  "chargeUnit": "minute",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.3,
+                  "chargeUnit": "minute",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
                 ]
               }
             ]
@@ -8483,7 +8561,6 @@
         "detailedDescription": "It's a sink! With running water too. Who'd've thought it.<br>Although we generally expect people to clean up after themselves; the less considerate dump their crockery in here too.",
         "attributes": {
           "weight": 100,
-          "type": "scenery",
           "hideDeliveryDescription": true,
           "customAction": "wash",
           "defaultResult": "You rinse your hands in the sink."
@@ -8570,6 +8647,85 @@
                       "tomatoes"
                     ]
                   }
+                ]
+              }
+            ]
+          }
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "box",
+            "description": "box of candles",
+            "detailedDescription": "It looks pretty old. Then again, the days of regular power cuts are over for most people in the UK.",
+            "attributes": {
+              "weight": 0.1,
+              "carryWeight": 0.5,
+              "type": "container",
+              "canCollect": true,
+              "isBreakable": true,
+              "hidden": true,
+              "position": "under"
+            },
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.3,
+                  "chargeUnit": "minute",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.3,
+                  "chargeUnit": "minute",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "candle",
+                "description": "candle",
+                "detailedDescription": "It's a plain, white candle. Just like the ones everyone's parents have hiding, unused, under the sink at home.",
+                "attributes": {
+                  "weight": 0.1,
+                  "type": "light",
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 45,
+                  "burnRate": 0.3,
+                  "chargeUnit": "minute",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "flammable": true
+                },
+                "synonyms": [
+                  "wick"
                 ]
               }
             ]
@@ -10880,7 +11036,6 @@
                       "name": "killthespy",
                       "displayName": "kill the spy",
                       "attributes": {
-                        "parent": "saveredgate",
                         "missionObject": "jordan miller"
                       },
                       "conditionAttributes": {
@@ -10888,7 +11043,7 @@
                       },
                       "reward": {
                         "score": 50,
-                        "message": "Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
+                        "message": "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
                       }
                     },
                     {
@@ -13644,7 +13799,7 @@
         "description": "whetstone",
         "detailedDescription": "Every text adventure needs a whetstone right?",
         "attributes": {
-          "weight": 0.5,
+          "weight": 0.4,
           "type": "tool",
           "subType": "sharpen",
           "canCollect": true,
@@ -13662,9 +13817,9 @@
         "object": "artefact",
         "name": "rag",
         "description": "dirty rag",
-        "detailedDescription": "It's slightly damp but handling it makes your hands feel oddly dry.",
+        "detailedDescription": "It's slightly damp but handling it makes your hands feel oddly dry and uncomfortable.",
         "attributes": {
-          "weight": 0.5,
+          "weight": 0.2,
           "type": "tool",
           "subType": "buff",
           "canCollect": true,
@@ -13848,7 +14003,7 @@
               "initiateConversation": true,
               "static": true,
               "dialogue": [
-                "'Hi $player, I'm glad we all managed to survive the disaster.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
+                "'$player, things are getting worse.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
                 {
                   "state": 1,
                   "keywords": [
@@ -13857,7 +14012,7 @@
                     "yup",
                     "y"
                   ],
-                  "response": "'Thanks $player. I think there's a spy somewhere in the building.'<br>'Track them down and investivate the situation.'",
+                  "response": "'Good... I think there's a spy somewhere in the building.'<br>'Track them down and investivate the situation.'",
                   "nextState": 3
                 },
                 {
@@ -13868,7 +14023,7 @@
                     "not",
                     "not yet"
                   ],
-                  "response": "Refusing a polite but important request from your CEO probably isn't wise.<br>'Well, when you're ready to do something useful, you know where I am.'",
+                  "response": "Refusing a polite but important request from your CEO probably isn't wise.<br>'Well, when you're ready to actually do something useful, you know where I am.'",
                   "nextState": 2
                 },
                 {
@@ -13908,8 +14063,7 @@
             },
             "conditionAttributes": {
               "isDestroyed": false,
-              "isBroken": false,
-              "isDamaged": false
+              "isBroken": false
             },
             "reward": {
               "affinityModifier": 2,
@@ -18010,6 +18164,181 @@
         "synonyms": [
           "wooden bench",
           "chair"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "lighter",
+            "description": "cigarette lighter",
+            "detailedDescription": "It's quite a nice old cigarette lighter. Someone must have lost or forgotten it.",
+            "attributes": {
+              "weight": 0.4,
+              "type": "tool",
+              "subType": "fire",
+              "canCollect": true,
+              "isBreakable": true,
+              "charges": 25,
+              "chargeUnit": "gas",
+              "chargesDescription": "Annoyingly, it's impossible to tell how much gas there is left in it.",
+              "position": "on",
+              "customAction": [
+                "press",
+                "light",
+                "ignite",
+                "strike",
+                "refill",
+                "fill"
+              ],
+              "defaultResult": "You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty."
+            },
+            "synonyms": [
+              "old lighter",
+              "flint",
+              "cigarette lighter"
+            ]
+          },
+          {
+            "object": "artefact",
+            "name": "pack",
+            "description": "cigarette packet",
+            "detailedDescription": "These days all the identifying information on cigarette packets is obscured by health warnings, they could be anybody's and any brand.<br>They're bad for your heath - but you know that already, right?",
+            "attributes": {
+              "weight": 0.1,
+              "carryWeight": 0.1,
+              "type": "container",
+              "canCollect": true,
+              "isBreakable": true,
+              "position": "on"
+            },
+            "synonyms": [
+              "packet",
+              "cigarette pack",
+              "cigarette packet",
+              "fag packet"
+            ],
+            "inventory": [
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 2,
+                  "chargesDescription": " ",
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 2,
+                  "chargesDescription": " ",
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 2,
+                  "chargesDescription": " ",
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 2,
+                  "chargesDescription": " ",
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              },
+              {
+                "object": "artefact",
+                "name": "cigarette",
+                "description": "cigarette",
+                "detailedDescription": "A cancer stick as your folks used to call them.",
+                "attributes": {
+                  "weight": 0.02,
+                  "canCollect": true,
+                  "isBreakable": true,
+                  "charges": 15,
+                  "burnRate": 2,
+                  "chargesDescription": " ",
+                  "flammable": true,
+                  "customAction": [
+                    "smoke"
+                  ],
+                  "defaultResult": "$action light"
+                },
+                "synonyms": [
+                  "fag",
+                  "smoke",
+                  "cig"
+                ]
+              }
+            ]
+          }
         ]
       }
     ]
@@ -18939,6 +19268,7 @@
         "fail": {
           "score": -200,
           "affinityModifier": 2,
+          "activateMission": "retrievedisk",
           "decreaseAffinityFor": "jordan miller",
           "increaseAffinityFor": "simon galbraith",
           "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."

@@ -991,3 +991,51 @@ exports.readABookWithContentButNoMissionsReturnsContent = function (test) {
 };
 
 exports.readABookWithContentButNoMissionsReturnsContent.meta = { traits: ["Artefact Test", "Read Trait"], description: "Test that a player can read a book." };
+
+exports.canSwitchOnPoweredItem = function (test) {
+
+    var expectedResult = "xxx";
+    var actualResult = artefact.read("read", "comic");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canSwitchOnPoweredItem.meta = { traits: ["Artefact Test", "Power Trait", "Switch Trait"], description: "Test that a powered item can be switched on." };
+
+exports.canSwitchOnFlammableItem = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = artefact.read("read", "comic");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canSwitchOnFlammableItem.meta = { traits: ["Artefact Test", "Power Trait", "Fire Trait"], description: "Test that a flammable item can be lit." };
+
+exports.flammableItemWillBurnOut = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = artefact.read("read", "comic");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.flammableItemWillBurnOut.meta = { traits: ["Artefact Test", "Power Trait", "Consume Trait"], description: "Test that a flammable item will burn out over time." };
+
+exports.poweredItemWillConsumePower = function (test) {
+    
+    var expectedResult = "xxx";
+    var actualResult = artefact.read("read", "comic");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.poweredItemWillConsumePower.meta = { traits: ["Artefact Test", "Power Trait", "Consume Trait"], description: "Test that a powered item will consume charges." };

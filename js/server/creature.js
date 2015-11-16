@@ -455,6 +455,22 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getImageName = function() {
             return _imageName;
         };
+        
+        self.play = function (verb, playerAggression, artefact) {
+            if (playerAggression > 0) {
+                return "Nobody's going to want to " + verb + " with you until you calm down a little.";
+            };
+            if (self.getSubType() == "animal") {
+                return self.rub();
+            };
+            if (_affinity < 0) {
+                return tools.initCap(self.getPrefix()) + " really doesn't want to " + verb + " with you."
+            } else if (_affinity < 2) {
+                return tools.initCap(self.getPrefix()) + " doesn't want to "+verb+"."
+            };
+
+            return tools.initCap(self.getPrefix()) + " says 'It might be fun but we don't have time for that right now $player.'"
+        };
 
         self.getSmell = function() {
             var resultString;
@@ -3520,7 +3536,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString = "";
                 
                 //console.log("Creature tick: "+self.getName()+"...");
-                resultString += _inventory.tick();
+                resultString += _inventory.tick(self);
                 
                 resultString += closePreviouslyOpenedDoors(map);
                 
@@ -3703,7 +3719,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 };
                             
                                 if (showMoveToPlayer) {
-                                    visibleResultString += slipString;
+                                    visibleResultString += slipString+" ";
                                 };
 
                             };
@@ -3993,12 +4009,30 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.isSwitched = function() {
             return false;
         };
+        
+        self.isBurning = function () {
+            return false;
+        };
+        
+        self.isFlammable = function () {
+            return false;
+        };
+        
+        self.isExplosive = function () {
+            return false;
+        };
 
         self.turn = function(verb, direction) {
             return self.switchOnOrOff(verb, direction);
         };
 
-        self.switchOnOrOff = function(verb, onOrOff) {
+        self.switchOnOrOff = function (verb, onOrOff) {
+            if (verb == "light" || verb == "ignite") {
+                if (self.isDead()) {
+                    return "I don't see anything in "+_genderPossessiveSuffix+" funeral plans that said "+_genderPrefix.toLowerCase()+" wanted to be cremated."
+                };
+                return "If you want to kill "+_genderSuffix+", at least do it honorably."
+            };
             return "That's really not a polite thing to do to "+_genderSuffix+".";
         };
 

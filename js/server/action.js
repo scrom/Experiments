@@ -28,7 +28,8 @@ exports.Action = function Action(player, map, fileManager) {
         var _inConversationWith; //who is the player talking to?
 
 	    var objectName = "Action";
-        var _adverbs =  ['closely', 'carefully', 'cautiously', 'slowly', 'quickly', 'softly', 'loudly','noisily', 'gently', 'quietly','silently', 'tightly','losely']; //not split words but we need to trim these out and occasionally handle them.
+        var _adverbs = ['closely', 'carefully', 'cautiously', 'slowly', 'quickly', 'softly', 'loudly', 'noisily', 'gently', 'quietly', 'silently', 'tightly', 'losely', 'honorably', 'bravely']; //not split words but we need to trim these out and occasionally handle them.
+        var numerals = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         //private functions
 
 
@@ -60,7 +61,7 @@ exports.Action = function Action(player, map, fileManager) {
             var badWords = ["fuck"]; //put any bad language you want to filter in here
             var checkWord = aWord.substring(0,4);
             if (badWords.indexOf(checkWord)>-1) { 
-                 return aWord+" to you too. That's not very nice now, is it. Save that language for the office.";
+                 return "'"+tools.initCap(aWord)+"' to you too.<br>It's not so nice to be on the receiving end, is it.<br>Save that language for the office.";
             } else {return null;};
         };
 
@@ -81,7 +82,7 @@ exports.Action = function Action(player, map, fileManager) {
 
         /*
         for a passed in string, split it and return an array containing 0, 1 or 2 elements.
-        each elemet will be either an object or creature - we'll figure out which later.
+        each element will be either an object or creature - we'll figure out which later.
         we're using "split" and exiting on the first successful split so we'll only ever get a maximum of 2 objects
         we'll also only support one instance of each of these words - need to be cautious here
         */
@@ -233,6 +234,7 @@ exports.Action = function Action(player, map, fileManager) {
                         //need to ensure navigation still works with this one so only respond if there's words other than "i".
                         if (_object0 || _object1) {
                             if (_inConversationWith) {
+                                _ticks = 1;
                                 description = _player.say('say', _actionString, _inConversationWith, _map);
                                 _player.setLastVerbUsed('say');
                             } else {
@@ -243,6 +245,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'ok':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(true, _map);
                             } else {
@@ -256,6 +259,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'oh':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             description = _player.say('say', _actionString, _inConversationWith, _map);
                             _player.setLastVerbUsed('say');
                         } else {
@@ -266,6 +270,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'thankyou':
                     case 'thanks':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             description = _player.say('say', _actionString, _inConversationWith, _map);
                             _player.setLastVerbUsed('say');
                         } else {
@@ -275,6 +280,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'n':
                         if (_inConversationWith && _awaitingPlayerAnswer) {
+                            _ticks = 1;
                             description = _player.confirmOrDecline(false, _map);
                             if (tools.stringIsEmpty(description)) {
                                 description = _player.say('say', _actionString, _inConversationWith, _map);
@@ -285,6 +291,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'no':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(false, _map);
                                 if (tools.stringIsEmpty(description)) {
@@ -307,10 +314,12 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'y':
+                    case 'sure':
                         _verb = "yes";
                         _actionString = _verb + _actionString.substr(1);
                     case 'yes':
                         if (_inConversationWith) {
+                            _ticks = 1;
                             if (_awaitingPlayerAnswer) {
                                 description = _player.confirmOrDecline(true, _map);
                             } else {
@@ -426,6 +435,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'hunt':                               
                     case 'find': 
                         if (_inConversationWith) {
+                            _ticks = 1;
                             var objectToFind = _object0+_object1;
                             return "You ask "+_inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+_inConversationWith+" to find "+objectToFind);
                         } else { 
@@ -512,16 +522,29 @@ exports.Action = function Action(player, map, fileManager) {
                         _object0 = _object0.replace(" down","");
 
                         if (originalObject0 != _object0) {
+                            _ticks = 1;
                             _verb = 'put down';
                             description = _player.drop(_verb, _object0, _map);
+                            break;
+                        };
+
+                        //next special case for put out
+                        if (_splitWord == "out") {
+                            if (!_object0) {
+                                _object0 = _object1;
+                            };
+                            _ticks = 1;
+                            description = _player.turn(_verb, _object0, 'out');
                             break;
                         };
 
                         //or fall through to normal "put"
                     case 'hide':
                     case 'balance':
+                    case 'place':
                         if (tools.positions.indexOf(_splitWord) > -1) {
                             //put or hide an item on/under/behind x
+                            _ticks = 3;
                             description = _player.position(_verb, _object0, _object1, _splitWord, tools.positions);
                             break;
                         };
@@ -930,6 +953,7 @@ exports.Action = function Action(player, map, fileManager) {
                         _player.setLastVerbUsed('say');    
                         break;
                     case 'hi':
+                    case 'hey':
                         _ticks = 1;
                         if (_inConversationWith && !_object0) {
                             _object0 = _inConversationWith;
@@ -1044,6 +1068,10 @@ exports.Action = function Action(player, map, fileManager) {
                         };                    
                         break;
                     case 'ignite':
+                    case 'burn'://see #299 - relies on having either an ignition source or something else already burning.
+                        //@todo implement proper burn support
+                        //description = _player.burn(_verb, _object0);
+                        //break;
                     case 'light':
                         _ticks = 1;
                         description = _player.turn('light', _object0, 'on');
@@ -1052,6 +1080,17 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'unlight':
                         _ticks = 1;
                         description = _player.turn('turn', _object0,'out');
+                        break;
+                    case 'blow':
+                        //special case for "blow out"
+                        if (_splitWord == "out") {
+                            if (!_object0) {
+                                _object0 = _object1;
+                            };
+                            _ticks = 1;
+                            description = _player.turn(_verb, _object0, 'out');
+                        };
+                        //@todo - handle blow up, on, over
                         break;
                     case 'reda':
                     case 'read':
@@ -1215,8 +1254,13 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'inject':
                         description = _player.inject(_object0, _object1);
                         break;
-                    case 'play': //generally a custom verb already
-                    case 'burn': //see #299 - relies on having either an ignition source or something else already burning.
+                    case 'play':
+                        if (!_object0) {
+                            description = _player.play(_verb, _object1);
+                        } else {
+                            description = _player.play(_verb, _object0, _object1);
+                        };
+                        break;
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                
                     case 'call':  //see #243
                     case 'phone': //see #243
@@ -1253,6 +1297,7 @@ exports.Action = function Action(player, map, fileManager) {
             };	
 
             if (description) {
+                var tempDescription = "";
                 //clean up fails
                 if (description.indexOf("$fail$") > -1) {
                     description = description.replace("$fail$", "");
@@ -1474,6 +1519,7 @@ exports.Action = function Action(player, map, fileManager) {
         self.catchPlayerNotUnderstood = function () {
             try {
                 if (_inConversationWith) {
+                    _ticks = 1;
                     _player.setLastVerbUsed('say');
                     return _player.say('say', _actionString,_inConversationWith, _map);
                 };
@@ -1509,9 +1555,24 @@ exports.Action = function Action(player, map, fileManager) {
             self.convertActionToElements(_actionString); //extract object, description, json
 
             //trap selfreferencing objects early...
-            if ((_object0 == _object1)&&(_object0!="")) {
+            if ((_object0 == _object1) && (_object0!="")) {
                 description = 'Are you a tester?<br> You try to make the '+_object0+' interact with itself but you grow tired and bored quite quickly.';
                 return description;
+            };
+            
+            if (_object0) {
+                var firstWord = _object0.split(" ")[0].trim();
+                if (numerals.indexOf(firstWord) > -1) {
+                    description = "Sorry. Although I'm reasonably smart I'm not able to deal with multiples of objects yet.";
+                    return description;
+                };
+            };
+            if (_object1) {
+                var firstWord = _object1.split(" ")[0].trim();
+                if (numerals.indexOf(firstWord) > -1) {
+                    description = "Sorry. Although I'm reasonably smart I'm not able to deal with multiples of objects yet.";
+                    return description;
+                };
             };
 
             //try to perform the player action
@@ -1533,12 +1594,12 @@ exports.Action = function Action(player, map, fileManager) {
             var swearing = swearCheck(_verb);
             if (swearing) {
                 description = swearing;
-                description = "Sorry, I take a hard line on verbal abuse and bad language..."+_player.kill();
+                description += "<br>Sorry, I take a hard line on verbal abuse and bad language...<br>"+_player.kill();
             };
 
             //final fall-through
             if (tools.stringIsEmpty(description)){
-                description = self.catchPlayerNotUnderstood(); //@bug: this might not work as it references "act"
+                description = self.catchPlayerNotUnderstood();
             } else {
                 //reset consecutive user errors
                 _failCount = 0; 

@@ -1,0 +1,32 @@
+﻿{
+  "object": "artefact",
+  "name": "lighter",
+  "description": "cigarette lighter",
+  "detailedDescription": "It's quite a nice old cigarette lighter. Someone must have lost or forgotten it.",
+  "attributes": {
+    "weight": 0.4,
+    "type": "tool",
+    "subType": "fire",
+    "position": "on",
+    "canCollect": true,
+    "isBreakable": true,
+    "charges": 25,
+    "chargeUnit": "gas",
+    "chargesDescription": "Annoyingly, it's impossible to tell how much gas there is left in it.",
+    "customAction": [
+      "press",
+      "light",
+      "ignite",
+      "strike",
+      "refill",
+      "fill"
+    ],
+    "defaultResult": "You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty."
+
+  },
+  "synonyms": [
+    "old lighter",
+    "flint",
+    "cigarette lighter"
+  ]
+}

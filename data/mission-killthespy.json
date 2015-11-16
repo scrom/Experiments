@@ -3,7 +3,6 @@
     "name": "killthespy",
     "displayName": "kill the spy",
     "attributes": {
-        "parent": "saveredgate",
         "missionObject": "jordan miller"
     },
     "conditionAttributes": {
@@ -11,6 +10,6 @@
     },
     "reward": {
         "score": 50,
-        "message": "Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
+        "message": "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
     }
 }

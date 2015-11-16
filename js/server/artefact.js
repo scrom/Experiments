@@ -45,6 +45,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _chargeUnit = "";
         var _chargesDescription = "";
         var _switched = false;
+        var _flammable = false;
+        var _explosive = false;
         var _on = false;
         var _edible = false;
         var _chewed = false;
@@ -247,6 +249,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.switched != undefined) {
                 if (artefactAttributes.switched== true || artefactAttributes.switched == "true") { _switched = true;};
             };
+            if (artefactAttributes.flammable != undefined) {
+                if (artefactAttributes.flammable == true || artefactAttributes.flammable == "true") { _flammable = true; };
+            };
+            if (artefactAttributes.explosive != undefined) {
+                if (artefactAttributes.explosive == true || artefactAttributes.explosive == "true") { _explosive = true; };
+            };
             if (artefactAttributes.isOn != undefined) {
                 if (artefactAttributes.isOn== true || artefactAttributes.isOn == "true") { _on = true;};
             };
@@ -347,7 +355,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (type == "tool") {
-                var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean"];
+                var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean","fire"];
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.log(_name+' subtype validated: '+subType);
             };
@@ -378,7 +386,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 _edible = true;
             };
-
             
         };
 
@@ -535,6 +542,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
 
         };
+        
+        self.play = function (verb) {
+            if (self.checkCustomAction(verb)) {
+                return self.getCustomActionResult(verb);
+            };
+
+            return "Try as you might, you just don't find playing with " + self.descriptionWithCorrectPrefix() + " as entertaining as you'd hoped.";
+        };
 
         self.getSmell = function() {
             return _smell;
@@ -599,6 +614,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.saleUnit = _saleUnit;            
             currentAttributes.checkComponents = self.checkComponents();
             currentAttributes.switched = _switched;
+            currentAttributes.flammable = _flammable;
+            currentAttributes.explosive = _explosive;
             currentAttributes.isOn = _on;
             currentAttributes.isEdible = _edible;
             currentAttributes.nutrition = _nutrition;
@@ -696,7 +713,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.sharpened != 0) { saveAttributes.sharpened = artefactAttributes.sharpened; };
             if (artefactAttributes.polished != 0) { saveAttributes.polished = artefactAttributes.polished; };
             if (artefactAttributes.price != 0) { saveAttributes.price = artefactAttributes.price; };
-            if (artefactAttributes.switched) {saveAttributes.switched = true;};
+            if (artefactAttributes.switched) { saveAttributes.switched = true; };
+            if (artefactAttributes.flammable) { saveAttributes.flammable = true; };
+            if (artefactAttributes.explosive) { saveAttributes.explosive = true; };
             if (artefactAttributes.isOn) {saveAttributes.isOn = true;};
             if (artefactAttributes.hidden && artefactAttributes.type != "scenery") {saveAttributes.hidden = true;};
             if (artefactAttributes.position != "" && artefactAttributes.position != undefined) { saveAttributes.position = artefactAttributes.position; };            
@@ -1294,7 +1313,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     tempDescription = tempDescription.replace("$charges",self.chargesRemaining());
 
                     //set output
-                    resultString += "<br>"+tempDescription+".";
+                    if (tempDescription.length > 1) {
+                        resultString += "<br>" + tempDescription + ".";
+                    };
 
                 } else {
                     resultString += "<br>There are "+self.chargesRemaining()+" uses remaining."
@@ -1989,9 +2010,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.hasPower = function() {
-            if (!(_switched)) {return false;};
-            if (_broken||_destroyed) {return false;};
-            if (_charges ==0) {return false;}; //we use -1 to mean unlimited
+            if (!(_switched) && !(_flammable) && !(_explosive)) {return false;};
+            if (_broken || _destroyed) {return false;};
+            if (_charges == 0) {return false;}; //we use -1 to mean unlimited
             if (!(self.checkComponents())) {return false;};
             //console.log(self.getDisplayName()+" has power.");
             return true;
@@ -2005,9 +2026,24 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //console.log(self.getDisplayName()+" is switched off.");
             return false;
         };
+        
+        self.isBurning = function () {
+            if ((_flammable||_explosive) && _on) {
+                return true;
+            };
+            return false;
+        };
 
         self.isSwitched = function() {
             return _switched;
+        };
+               
+        self.isFlammable = function () {
+            return _flammable;
+        };
+             
+        self.isExplosive = function () {
+            return _explosive;
         };
 
         self.turn = function(verb, direction) {
@@ -2016,15 +2052,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return "You attempt to "+verb+" "+self.getDisplayName()+direction+". Nothing of interest happens.";
             };
             return self.getDescriptivePrefix()+" fixed in place, there's no obvious way to "+verb+" "+self.getSuffix()+".";
-        };
+        };        
 
-        self.switchOnOrOff = function(verb, onOrOff) {
+        self.switchOnOrOff = function(verb, onOrOff, ignitionSource) {
             if (_broken||self.isDestroyed()) {return tools.initCap(_itemDescriptivePrefix)+" broken.";};
-            if (!(_switched)) {return "There's no obvious way to "+verb+" "+_itemSuffix+" on or off.";};
+            if (!(_switched) && !(_flammable) && !(_explosive)) {
+                var resultString = "There's no obvious way to " + verb + " " + _itemSuffix;
+                if (verb != "light") {
+                    resultString += " " + onOrOff;
+                };
+                return resultString + ".";
+            };
             if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked, you'll need to find a way into "+_itemSuffix+" first.";};
             if (!(self.hasPower())) {
                 var resultString = tools.initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
-                if (!(self.checkComponents())) {resultString +=" "+tools.initCap(_itemDescriptivePrefix)+" missing something.";};
+                if (!(self.checkComponents())) { resultString += " " + tools.initCap(_itemDescriptivePrefix) + " missing something."; };
+                if (_flammable) { resultString = tools.initCap(_itemDescriptivePrefix) + " all burned out.";}
                 return resultString;
             };
 
@@ -2038,29 +2081,45 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             switch(onOrOff) {
                 case "on":
-                    if (_on) {return tools.initCap(_itemDescriptivePrefix)+" already on.";}; 
+                    if (_on) {
+                        if (_flammable) {
+                            return tools.initCap(_itemDescriptivePrefix) + " already burning.";
+                        };
+                        return tools.initCap(_itemDescriptivePrefix) + " already " + onOrOff + ".";
+                    }; 
                     break;
                 case "start":
                     if (_on) {return tools.initCap(_itemDescriptivePrefix)+" already running.";}; 
                     break;
                 case "off":
-                    if (!(_on)) {return tools.initCap(_itemDescriptivePrefix)+" already off.";};
-                    break;
-                case "out":
-                    if (!(_on)) {return tools.initCap(_itemDescriptivePrefix)+" already out.";};
+                case "out":                    
+                    if (!(_on)) {
+                        if (_flammable) {
+                            return tools.initCap(_itemDescriptivePrefix) + " not lit.";
+                        };
+                        return tools.initCap(_itemDescriptivePrefix) + " already " + onOrOff + ".";
+                    };
                     break;
                 default:
                     null; 
             };
-
-            _on = (!(_on)); //toggle switch 
-            var resultString ="You "+verb+" "+self.getDisplayName();
-            if (verb == 'light' || verb == 'ignite' || verb == 'start' || verb == 'stop') {resultString+= ".";}
-            else { 
-                if (_on) {resultString+= " on.";} 
-                else {resultString+= " off.";};
+            
+            if (_flammable && !(_on)) {
+                if (!ignitionSource) {
+                    return "You don't have anything to light "+self.getSuffix()+ "with."
+                };
             };
 
+            _on = (!(_on)); //toggle switch 
+            var resultString = "You " + verb + " " + self.descriptionWithCorrectPrefix();
+            if (verb != "light" && verb != "ignite" && verb != "start" && verb != "stop") {
+                if (_on) {resultString+= " on";} 
+                else {resultString+= " "+onOrOff;};
+            };
+            
+            if (!ignitionSource) {
+                resultString += ".";
+            };
             return resultString;
         };
 
@@ -3126,11 +3185,22 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory;
         };
 
-        self.tick = function () {
+        self.tick = function (owner) {
             //if turned on and "burnRate" set, decrement charges on self and/or contents.
             //for those turned on (or ticking), decrement relevant stats
             //not implemented yet
             var resultString = "";
+            var ownerString = "A nearby";  //owner is location
+            if (owner.getType() == "player") {
+                ownerString = "Your";
+            } else if (owner.getType() == "creature") {
+                ownerString = owner.getFirstName();
+                ownerString += "'";
+                if (ownerString.slice(-2) != "s'") {
+                    ownerString += "s";
+                };
+            };
+
             var usedItem; 
             if (_on) {
                 if (_burnRate >0) {
@@ -3152,8 +3222,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (usedItem) {
                     _on = false;
                     var usedItemString = usedItem.getName();
-                    if (usedItemString != self.getName()) {usedItemString = self.getName()+" "+usedItem.getName();};
-                    resultString += "Your "+usedItemString+" "+usedItem.hasPlural()+" run out.<br>"
+                    var runOutString = " run out";
+                    if (usedItemString != self.getName()) { usedItemString = self.getName() + " " + usedItem.getName(); };
+                    if (usedItem.isFlammable()) {
+                        runOutString = " burned out";
+                        var ownerInventory = owner.getInventoryObject();
+                        ownerInventory.remove(usedItemString, false);
+                    };
+
+                    resultString += ownerString+ " " + usedItemString + " " + usedItem.hasPlural() + runOutString + ".<br>";
                 };
             };
             

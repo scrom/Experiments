@@ -1,0 +1,27 @@
+﻿{
+  "object": "artefact",
+  "name": "pack",
+  "description": "cigarette packet",
+  "detailedDescription": "These days all the identifying information on cigarette packets is obscured by health warnings, they could be anybody's and any brand.<br>They're bad for your heath - but you know that already, right?",
+  "attributes": {
+    "weight": 0.1,
+    "carryWeight": 0.1,
+    "position": "on",
+    "type": "container",
+    "canCollect": true,
+    "isBreakable": true
+  },
+  "synonyms": [
+    "packet",
+    "cigarette pack",
+    "cigarette packet",
+    "fag packet"
+  ],
+  "inventory": [
+    { "file": "cigarette" },
+    { "file": "cigarette" },
+    { "file": "cigarette" },
+    { "file": "cigarette" },
+    { "file": "cigarette" }
+  ]
+}

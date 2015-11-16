@@ -74,6 +74,9 @@ var self = module.exports = {
         if (actionData.removeMission) {
             map.removeNamedMission(actionData.removeMission, player);
         };
+        if (actionData.activateMission) {
+            map.activateNamedMission(actionData.activateMission, player);
+        };
         if (actionData.removeMissions) {
             for (var m = 0; m < actionData.removeMissions.length; m++) {
                 map.removeNamedMission(actionData.removeMissions[m], player);
