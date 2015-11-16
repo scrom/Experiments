@@ -1079,7 +1079,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'extinguish':
                     case 'unlight':
                         _ticks = 1;
-                        description = _player.turn('turn', _object0,'out');
+                        description = _player.turn('extinguish', _object0,'out');
                         break;
                     case 'blow':
                         //special case for "blow out"

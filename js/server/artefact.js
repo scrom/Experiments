@@ -386,6 +386,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 _edible = true;
             };
+
+            if (type == "light") {
+                //all lights are marked as "switched". May not need power though
+                var validLightSubTypes = ["", "electric", "natural", "burn"];
+                if (validLightSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
+                _switched = true;
+            };
             
         };
 
@@ -2078,6 +2085,20 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (verb == "stop") {
                 onOrOff = "off";
             };
+            
+            if (verb == "extinguish") {
+                if (_flammable || _explosive) {
+                    if (self.getWeight() <= 1) {
+                        //player can blow out small items but not large ones
+                        verb = "blow";
+                    } else {
+                        verb = "put";
+                    };
+                } else if (_switched) {
+                    verb = "turn";
+                };
+
+            };
 
             switch(onOrOff) {
                 case "on":
@@ -2112,7 +2133,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             _on = (!(_on)); //toggle switch 
             var resultString = "You " + verb + " " + self.descriptionWithCorrectPrefix();
-            if (verb != "light" && verb != "ignite" && verb != "start" && verb != "stop") {
+            if (verb != "extinguish" && verb != "light" && verb != "ignite" && verb != "start" && verb != "stop") {
                 if (_on) {resultString+= " on";} 
                 else {resultString+= " "+onOrOff;};
             };
