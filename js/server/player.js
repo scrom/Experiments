@@ -3211,16 +3211,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.chargesRemaining == 0) {
                 return "There's not enough of "+artefact.getSuffix()+" left to light."
             };
-
-            var ignitionSourceIsInLocation = false;
-            var ignitionSource = _inventory.getObjectBySubType("fire", true);
-            if (!ignitionSource) {
-                ignitionSource = _currentLocation.getInventoryObject().getObjectBySubType("fire", true);
+            
+            if (action != "off" && action != "out" && action != "stop") {
+                var ignitionSourceIsInLocation = false;
+                var ignitionSource = _inventory.getObjectBySubType("fire", true);
                 if (!ignitionSource) {
-                    //@todo - should also be able to light from anything flammable and burning
-                    return "You don't have anything to light " + artefact.getSuffix() + " with.";
+                    ignitionSource = _currentLocation.getInventoryObject().getObjectBySubType("fire", true);
+                    if (!ignitionSource) {
+                        //@todo - should also be able to light from anything flammable and burning
+                        return "You don't have anything to light " + artefact.getSuffix() + " with.";
+                    };
+                    ignitionSourceIsInLocation = true;
                 };
-                ignitionSourceIsInLocation = true;
             };
             
             if (!(_inventory.check(artefact.getName(), true, false, true))) {
@@ -3239,19 +3241,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return "You'll need to have " + artefact.getSuffix() + " directly to hand first, not tucked away inside "+ containerName +".";
                 };
             };
-          
-            var whoseItem = "your " + ignitionSource.getName() +".";
-            if (ignitionSourceIsInLocation) {
-                whoseItem = ignitionSource.descriptionWithCorrectPrefix()+ " you spotted nearby.";
-            };
 
             var resultString = artefact.switchOnOrOff(verb, action, ignitionSource);
-            resultString += " with " + whoseItem;
-            var ignitionSourceChargesRemaining = ignitionSource.consume();
-            if (ignitionSourceChargesRemaining == 0) {
-                ignitionSourceChargesRemaining.discountPriceByPercent(100); //worthless
-                if (!ignitionSourceIsInLocation) {
-                    resultString += "<br>Your " + ignitionSource.getName() + " "+ignitionSource.getPossessiveSuffix()+" run out.<br>";
+            if (ignitionSource) {                
+                var whoseItem = "your " + ignitionSource.getName() + ".";
+                if (ignitionSourceIsInLocation) {
+                    whoseItem = ignitionSource.descriptionWithCorrectPrefix() + " you spotted nearby.";
+                };
+                resultString += " with " + whoseItem;
+                var ignitionSourceChargesRemaining = ignitionSource.consume();
+                if (ignitionSourceChargesRemaining == 0) {
+                    ignitionSourceChargesRemaining.discountPriceByPercent(100); //worthless
+                    if (!ignitionSourceIsInLocation) {
+                        resultString += "<br>Your " + ignitionSource.getName() + " " + ignitionSource.getPossessiveSuffix() + " run out.<br>";
+                    };
                 };
             };
             return resultString;

@@ -395,7 +395,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //all lights are marked as "switched". May not need power though
                 var validLightSubTypes = ["", "electric", "natural", "burn"];
                 if (validLightSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
-                _switched = true;
+                if (subType == "" || subType == "electric") {
+                    _switched = true;
+                };
             };
             
         };
@@ -1054,7 +1056,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                     //object is not hidden or positioned
                     if (inventoryItem.requiresContainer()) {
-                        resultString = self.descriptionWithCorrectPrefix();
                         resultString += " of " + inventoryItem.getRawDescription();
                     };
                 };
@@ -1315,7 +1316,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.chargesRemaining() == 0) {
                 resultString += "<br>"+tools.initCap(self.getDescriptivePrefix())+" all used up.";
             }
-            else if (self.chargesRemaining() >1) { //we don't report when there's only a single use left.
+            else if (self.chargesRemaining() > 1) { //we don't report when there's only a single use left.
+                var lineBreak = "<br>";
+                if (!_switched) {
+                    if (_on && (self.isFlammable() || self.isExplosive())) {
+                        resultString += "<br>" + tools.initCap(self.getDescriptivePrefix()) + " burning away quite happily. ";
+                        lineBreak = "";
+                    };
+                };
                 //if (_detailedDescription.indexOf('$') >-1) {//we have custom placeholders in the description
                 if (_chargesDescription.length>0) { //we have a custom description
 
@@ -1327,15 +1335,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     //replace substitution variables if set
                     var tempDescription = _chargesDescription;
                     tempDescription = tempDescription.replace("$chargeUnit",tempUnits);
-                    tempDescription = tempDescription.replace("$charges",self.chargesRemaining());
+                    tempDescription = tempDescription.replace("$charges",Math.ceil(self.chargesRemaining()));
 
                     //set output
                     if (tempDescription.length > 1) {
-                        resultString += "<br>" + tempDescription + ".";
+                        resultString += lineBreak + tempDescription + ".";
                     };
 
                 } else {
-                    resultString += "<br>There are "+self.chargesRemaining()+" uses remaining."
+                    resultString += lineBreak+"There are "+self.chargesRemaining()+" uses remaining."
                 };
             };
 
@@ -2133,14 +2141,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     null; 
             };
             
-            if (_flammable && !(_on)) {
+            if (_flammable && !(_on) && (onOrOff != "off" || onOrOff != "out" || onOrOff != "stop" )) {
                 if (!ignitionSource) {
                     return "You don't have anything to light "+self.getSuffix()+ "with."
                 };
             };
 
             _on = (!(_on)); //toggle switch 
-            var resultString = "You " + verb + " " + self.descriptionWithCorrectPrefix();
+            var resultString = "You " + verb + " " + self.getDisplayName();
             if (verb != "extinguish" && verb != "light" && verb != "ignite" && verb != "start" && verb != "stop") {
                 if (_on) {resultString+= " on";} 
                 else {resultString+= " "+onOrOff;};

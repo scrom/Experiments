@@ -6,12 +6,13 @@
     "attributes": {
       "weight": 0.1,
       "type": "light",
+      "subType": "burn",
       "canCollect": true,
       "isBreakable": true,
       "flammable": true,
       "charges": 45,
       "chargeUnit": "minute",
-      "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+      "chargesDescription": "It'll burn for roughly $charges $chargeUnit",
       "burnRate": 0.3
     },
     "synonyms": [

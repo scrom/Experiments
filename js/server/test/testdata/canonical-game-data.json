@@ -8360,6 +8360,7 @@
                 "attributes": {
                   "weight": 0.1,
                   "type": "light",
+                  "subType": "burn",
                   "canCollect": true,
                   "isBreakable": true,
                   "charges": 45,
@@ -8380,6 +8381,7 @@
                 "attributes": {
                   "weight": 0.1,
                   "type": "light",
+                  "subType": "burn",
                   "canCollect": true,
                   "isBreakable": true,
                   "charges": 45,
@@ -8400,6 +8402,7 @@
                 "attributes": {
                   "weight": 0.1,
                   "type": "light",
+                  "subType": "burn",
                   "canCollect": true,
                   "isBreakable": true,
                   "charges": 45,
@@ -8676,6 +8679,7 @@
                 "attributes": {
                   "weight": 0.1,
                   "type": "light",
+                  "subType": "burn",
                   "canCollect": true,
                   "isBreakable": true,
                   "charges": 45,
@@ -8696,6 +8700,7 @@
                 "attributes": {
                   "weight": 0.1,
                   "type": "light",
+                  "subType": "burn",
                   "canCollect": true,
                   "isBreakable": true,
                   "charges": 45,
@@ -8716,6 +8721,7 @@
                 "attributes": {
                   "weight": 0.1,
                   "type": "light",
+                  "subType": "burn",
                   "canCollect": true,
                   "isBreakable": true,
                   "charges": 45,
