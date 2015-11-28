@@ -2722,30 +2722,47 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
-        self.drink = function(aPlayer) {
-            if (self.getSubType() == "intangible") {return "You gulp around trying to get a mouthful of "+self.getName()+".<br>After leaping around like a guppy out of water for a while, you decide to give up.";}
-            if ((!self.isOpen()) && self.opens()) {return "You'll need to open "+self.getSuffix()+" up first.";};
-            if (self.isDestroyed()) {return "There's nothing left to drink.";};
+        self.drink = function (consumer) {
+            var s = "";
+            if (consumer.getType() != "player") {
+                s = "s";
+            };
+
+            if (self.getSubType() == "intangible") {return consumer.getPrefix()+" gulp"+s+" around trying to get a mouthful of "+self.getName()+".<br>After leaping around like a guppy out of water for a while, "+ consumer.getPrefix().toLowerCase()+" decide"+s+" to give up.";}
+            if ((!self.isOpen()) && self.opens()) {return consumer.getPrefix() +"'ll need to open "+self.getSuffix()+" up first.";};
+            if (self.isDestroyed()) {return "There's nothing left for "+consumer.getSuffix()+" to drink.";};
             if(_edible && _liquid)  {
-                var drankAll = " ";
-                if (self.chargesRemaining() >0) {
-                    _charges--;
+                
+                var originalCharges = self.chargesRemaining();
+                var chargesRemaining = originalCharges;
+                
+                var amount = " ";
+                
+                if (chargesRemaining > 0) {
+                    chargesRemaining = self.consume();
                 };
-                if (self.chargesRemaining() ==0) {
+                if (chargesRemaining == 0) {
                     _weight = 0;
-                    drankAll = " all ";
+                } else if (chargesRemaining > 0) {
+                    if (self.willDivide()) {
+                        //decrease weight
+                        var originalWeight = self.getWeight();
+                        var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
+                        self.setWeight(newWeight);
+                    };
+                    amount = " some of ";
                 };
-                var resultString = "You drink"+drankAll+self.getDisplayName()+". "
+                var resultString = tools.initCap(consumer.getPrefix()) + " drink" + s + amount + self.getDisplayName()+". ";
                 if (_nutrition >=0) {
-                    aPlayer.recover(_nutrition);
+                    consumer.recover(_nutrition);
                         var randomReplies = ["You feel better for a drink.", "Tasty. Much better!", "That hit the spot.", "That quenched your thirst."];
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
                         resultString +=randomReplies[randomIndex];
                 } else { //nutrition is negative
-                    resultString += aPlayer.hurt(_nutrition*-1);
-                    resultString += "That wasn't a good idea.";
+                    resultString += "That wasn't a good idea. ";
+                    resultString += consumer.hurt(_nutrition * -1);
                 };
-                resultString += self.transmit(aPlayer, "bite");
+                resultString += self.transmit(consumer, "bite");
                 return resultString;
             };
 
@@ -2768,21 +2785,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };            
 
             if (self.getSubType() == "intangible") {return "Nope, that's not going to work for "+consumer.getSuffix()+".";}
-            if ((!self.isOpen()) && self.opens()) {return tools.initCap(consumer.getPrefix())+"'ll need to open "+self.getSuffix()+" up first";};
+            if ((!self.isOpen()) && self.opens()) {return tools.initCap(consumer.getPrefix())+"'ll need to open "+self.getSuffix()+" up first.";};
             if (self.isDestroyed()) {return "There's nothing left to chew on.";};
-            if ((!(_chewed)) || (_edible && self.chargesRemaining() !=0))  {
+            if ((!(_chewed)) || (_edible && self.chargesRemaining() != 0)) {
                 _chewed = true; 
                 if (self.isEdible()) {
+                    
                     var originalCharges = self.chargesRemaining();
                     var chargesRemaining = originalCharges;
-
-                    var eatenAll = " ";
+                    
+                    var amount = " ";
                     if (chargesRemaining >0) {
                         chargesRemaining = self.consume();
                     };
                     if (chargesRemaining == 0) {
                         _weight = 0;
-                        eatenAll = " all ";
                     } else if (chargesRemaining > 0) {
                         if (self.willDivide()) {
                             //decrease weight
@@ -2790,9 +2807,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
                             self.setWeight(newWeight);
                         };
-                        eatenAll = " some of ";
+                        amount = " some of ";
                     };
-                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+eatenAll+self.getDisplayName();
+                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s + amount+ self.getDisplayName();
                     if (_nutrition >=0) {
                         consumer.recover(_nutrition);
                         var randomReplies;

@@ -1758,8 +1758,8 @@ exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood = function (test) 
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "He eats all the slab";
-    var actual = c0.receive(food, p0).substr(0,20);
+    var expected = "He eats the slab";
+    var actual = c0.receive(food, p0).substr(0,16);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
     test.equal(actual, expected);

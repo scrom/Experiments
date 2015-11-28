@@ -753,7 +753,7 @@ exports.canDrinkToxicFood = function (test) {
     l0.addObject(poison);
     p0.get('get', poison.getName());
     p0.increaseTimeSinceDrinking(100);
-    var expectedResult = "You drink the poison. You feel weaker. That wasn't a good idea.";
+    var expectedResult = "You drink the poison. That wasn't a good idea. You feel weaker. ";
     var actualResult = p0.drink('drink','poison');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -786,7 +786,7 @@ exports.eatLiquidAutomaticallyDrinksInstead = function (test) {
     l0.addObject(poison);
     p0.get('get', poison.getName());
     p0.increaseTimeSinceDrinking(75);   
-    var expectedResult = "You drink the poison. You feel weaker. That wasn't a good idea.";
+    var expectedResult = "You drink the poison. That wasn't a good idea. You feel weaker. ";
     var actualResult = p0.eat('eat', 'poison');
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
