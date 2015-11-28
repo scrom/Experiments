@@ -2511,7 +2511,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             return tools.initCap(artefact.getDescriptivePrefix())+" already hidden.";
                         };
                     } else {
-                        return "There's already "+ artefact.descriptionWithCorrectPrefix()+" in "+receiver.getDisplayName()+".";
+                        var receiverInventory = receiver.getInventoryObject();                   
+                        return "There's already "+ receiverInventory.quantifyNamedObject(artefact.getName())+" in "+receiver.getSuffix()+".";
                     };
                 };
 
