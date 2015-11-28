@@ -289,6 +289,25 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         //if not in conversation and expecting a reply, they're navigating.
                         break;
+                    case 'because':
+                    case 'cause':
+                    case 'coz':
+                    case 'cuz':
+                        if (_inConversationWith) {
+                            _ticks = 1;
+                            description = _player.say('say', _actionString, _inConversationWith, _map);
+                            _player.setLastVerbUsed('say');
+                        } else {
+                            _ticks = 0;
+                            if (_awaitingPlayerAnswer == true) {
+                                description = "Whatever.";
+                                _awaitingPlayerAnswer = false;
+                            } else {
+                                description = "Let's move on shall we?";
+                                _awaitingPlayerAnswer = true;
+                            };
+                        };
+                        break;
                     case 'no':
                         if (_inConversationWith) {
                             _ticks = 1;

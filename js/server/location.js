@@ -509,11 +509,11 @@ exports.Location = function Location(name, displayName, description, attributes)
                     "canCollect": true,
                     "plural": true,
                     "charges": 1,
-                    "chargeUnit": "drink",
-                    "chargesDescription": "There's enough here for $charges $chargeUnit",
+                    "chargesDescription": " ",
                     "customAction": null,
                     "defaultResult": "",
-                    "smell": "It smells metallic and fresh. You fight your gag-reflex at the thought of recent death here."
+                    "smell": "It smells metallic and fresh. You fight your gag-reflex at the thought of recent death here.",
+                    "taste": "It's slightly sticky and tangy with a burned metallic aftertaste.<br>Hey, hang on. Why are you tasting blood?"
                 };
 
                 if (_blood <=9) {
