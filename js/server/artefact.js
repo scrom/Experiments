@@ -141,6 +141,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.healthPercent = function () {
             return 100;
         };
+        
+        self.isPlural = function () {
+            return _plural;
+        };
 
         self.hasPlural = function() {
             if (_plural) {
@@ -420,6 +424,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     } else {
                         state = " chewed ";
                     };  
+                };
+                
+                if (self.chargesRemaining() == 1) {
+                    if (self.getChargeUnit() != "charge") {
+                        anItemDescription = self.getChargeUnit() + " of " + anItemDescription;
+                    };
                 };
 
             };
@@ -1739,14 +1749,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var originalWeight = self.getWeight();
             var originalCharges = self.chargesRemaining();
 
-            var newDestinationWeight = Math.round((originalWeight / originalCharges) * chargeSize * 10) / 10;
+            var newDestinationWeight = Math.round((originalWeight / originalCharges) * chargeSize * 100) / 100;
             
             //we sometimes call artefact.split to test a result - in these cases we don't want to remove it from the original 
             if (removeSplitPart) {
                 self.consume(chargeSize);
                 
                 //set new weights rounded to 1 decimal place
-                var newSourceWeight = Math.round((originalWeight / originalCharges) * self.chargesRemaining() * 10) / 10;
+                var newSourceWeight = Math.round((originalWeight / originalCharges) * self.chargesRemaining() * 100) / 100;
                 if (originalWeight < newSourceWeight + newDestinationWeight) {
                     //catch rounding issues
                     var reduceSourceWeightBy = (newSourceWeight + newDestinationWeight) - originalWeight;
@@ -1768,9 +1778,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //@todo - check this is actually duplicating attributes - risky if not.
             sourceAttributes.canCollect = true;
             var rawDescription = self.getRawDescription();
-            if (self.getChargeUnit() != "charge") {
-                rawDescription = self.getChargeUnit() + " of " + rawDescription;
-            };
+
             var splitItem = new Artefact(self.getName(), rawDescription, self.getInitialDetailedDescription(), sourceAttributes, self.getLinkedExits(), self.getDeliveryItems());
             splitItem.addSyns(self.getSyns());               
             splitItem.setCharges(chargeSize);
@@ -1810,7 +1818,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             } else if (anObjectChargesRemaining > 0) {
                 var newWeight = anObject.getWeight();
                 //new weight rounded to 1 decimal place
-                newWeight = Math.round((newWeight/originalArtefactCharges)*anObjectChargesRemaining*10)/10;
+                newWeight = Math.round((newWeight/originalArtefactCharges)*anObjectChargesRemaining*100)/100;
             };
 
             //if we don't have a delivery item...
@@ -2191,7 +2199,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (components[i].willDivide()) {
                     //decrease weight of component
                     var originalWeight = components[i].getWeight();
-                    var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 10) / 10;
+                    var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
                     components[i].setWeight(newWeight);
                 };
                 if (chargesRemaining == 0) {
@@ -2779,7 +2787,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         if (self.willDivide()) {
                             //decrease weight
                             var originalWeight = self.getWeight();
-                            var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 10) / 10;
+                            var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
                             self.setWeight(newWeight);
                         };
                         eatenAll = " some of ";
@@ -2925,7 +2933,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var suitableContainer = playerInventory.getSuitableContainer(objectToGive);
 
             //fallback option, is there a container in the location itself?
-            if (!(suitableContainer)) {suitableContainer = locationInventory.getSuitableContainer(objectToGive);};
+            if (!(suitableContainer)) {
+                if (locationInventory) {
+                    suitableContainer = locationInventory.getSuitableContainer(objectToGive);
+                };
+            };
     
             if (requiresContainer && (!(suitableContainer))) { return "Sorry. You need something (suitable) to carry "+objectToGive.getDisplayName()+" in.";};
 
@@ -2970,7 +2982,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                 //automatically collect the container if possible
                 if (playerInventory.canCarry(suitableContainer)) {
-                    locationInventory.remove(suitableContainer.getName());
+                    if (locationInventory) {
+                        locationInventory.remove(suitableContainer.getName());
+                    };
                     playerInventory.add(suitableContainer);
                     
                     return resultString ;
@@ -3058,7 +3072,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         _inventory.remove(newReceiver.getName());
                         _inventory.add(newObject);
                         resultString = "You add " + anObject.getDisplayName() + " to " + self.getDisplayName() + ".<br>";
-                        return resultString + tools.initCap(self.getDisplayName()) + " now contains " + newObject.getDescription() + ".";
+                        return resultString + tools.initCap(self.getDisplayName()) + " now contains " + newObject.descriptionWithCorrectPrefix() + ".";
                     } else {
                         resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getDisplayName() + " to " + newReceiver.getDisplayName();
                         resultString += " in " + self.getDisplayName() + " but you need something else to put " + newObject.getPrefix().toLowerCase() + " in.<br>"

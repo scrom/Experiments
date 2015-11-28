@@ -112,7 +112,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (playerArtefact) { return playerArtefact; };
             
             var locationObject = getObjectFromLocation(objectName, verb);
-            if (locationObject) { return locationObject; }            ;
+            if (locationObject) { return locationObject; };
 
             //we've not found it - try again but wildcard?
         };
@@ -1297,8 +1297,33 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 
                 //does the player already have one? We try this last assuming that player may want more than one
                 if (_inventory.check(artefactName)) {
-                    var inventoryObject = _inventory.getObject(artefactName);
-                    return "You're carrying " + inventoryObject.getSuffix() + " already.";
+                    var inventoryItem = _inventory.getObject(artefactName);
+                    var inventoryItemName = inventoryItem.getName();
+                    //the player has it, is it in a box?...
+                    if (!(_inventory.objectIsDirectlyAccessible(inventoryItemName))) {
+                        var container = _inventory.getOwnerFor(inventoryItemName);
+                        var containerName = "your container";
+                        if (container) {
+                            containerName = "your " + container.getName();            
+                            if (inventoryItem.requiresContainer()) {
+                                return "You have " + _inventory.quantifyNamedObject(inventoryItemName) + "in "+ containerName +" already.";
+                            };
+                            
+                            if (inventoryItem.isCollectable()) {                                
+
+                                if (inventoryItem.isComponentOf(container.getName())) {
+                                    if (container.hasPower()) { self.switchOnOrOff('switch', 'off'); }; //kill the power
+                                };
+
+                                container.removeObject(inventoryItemName);
+                                _inventory.add(inventoryItem);
+
+                                return "You take " + inventoryItem.getDescription() + " from " + containerName + ".";
+                            };
+                        };
+                    };
+
+                    return "You're carrying " + _inventory.quantifyNamedObject(inventoryItemName) + " already.";
                 };
                 
                 //are we trying a "get all X"...
@@ -3197,6 +3222,23 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 ignitionSourceIsInLocation = true;
             };
             
+            if (!(_inventory.check(artefact.getName(), true, false, true))) {
+                //is this an object player should be carrying to light? (we guess this by weight)
+                if (artefact.getWeight() < 1) {
+                    return "You'll need to pick " + artefact.getSuffix() + " up first.";
+                };
+            } else {
+                //the player has it, is it in a box?...
+                if (!(_inventory.objectIsDirectlyAccessible(artefact.getName()))) {
+                    var container = _inventory.getOwnerFor(artefact.getName());
+                    var containerName = "a container";
+                    if (container) {
+                        containerName = container.descriptionWithCorrectPrefix();
+                    };
+                    return "You'll need to have " + artefact.getSuffix() + " directly to hand first, not tucked away inside "+ containerName +".";
+                };
+            };
+          
             var whoseItem = "your " + ignitionSource.getName() +".";
             if (ignitionSourceIsInLocation) {
                 whoseItem = ignitionSource.descriptionWithCorrectPrefix()+ " you spotted nearby.";

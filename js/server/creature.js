@@ -3987,7 +3987,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getChargeWeight = function () {
             if (!self.willDivide()) { return self.getWeight(); };
             if (_charges < 1) { return self.getWeight(); };
-            return Math.round((self.getWeight() / self.chargesRemaining()) * 10) / 10;
+            return Math.round((self.getWeight() / self.chargesRemaining()) * 100) / 100;
         };
         
         self.willDivide = function () {

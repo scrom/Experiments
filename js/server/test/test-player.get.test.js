@@ -85,13 +85,13 @@ exports.canGetContainer = function (test) {
 exports.canGetContainer.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can get a container-type object." };
 
 
-exports.cannotGetObjectFromOpenContainerInInventoryAlreadyExists = function (test) {
+exports.canGetObjectFromOpenContainerInInventory = function (test) {
     container.moveOrOpen('open');    
     container.receive(a1);
     p0.get('get', container.getName());
     var artefactDescription = 'an artefact of little consequence';
     var artefactName = 'artefact'
-    var expectedResult = "You're carrying it already.";
+    var expectedResult = "You take a box from your container.";
     var actualResult = p0.get('get', a1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -99,7 +99,7 @@ exports.cannotGetObjectFromOpenContainerInInventoryAlreadyExists = function (tes
     test.done();
 };
 
-exports.cannotGetObjectFromOpenContainerInInventoryAlreadyExists.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot re-get an object from an open container they're carrying." };
+exports.canGetObjectFromOpenContainerInInventory.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can get an object from an open container they're carrying." };
 
 exports.cannotGetObjectFromClosedContainerInInventory = function (test) {
     container.receive(a1);

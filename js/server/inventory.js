@@ -149,13 +149,22 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     if (charges > 0 && saleUnit > 0) {
                         unitCount = Math.floor(Math.round((charges*100)/(saleUnit*100)));
                     };
+                    
+                    var rawDescription = items[i].getRawDescription();
+                    if (charges == 1) {
+                        if (items[i].getChargeUnit() != "charge") {
+                            rawDescription = items[i].getChargeUnit() + " of " + rawDescription;
+                        };
+                    };
+
                     //@todo - want to use items[i].getDescription() instead of raw description if it's a container of x - e.g. bottle of milk
-                    itemList[itemString] = { "description": items[i].getDescription(), "rawDescription": items[i].getRawDescription(), "price": items[i].getPrice(), "count": unitCount };
+                    itemList[itemString] = { "description": items[i].getDescription(), "rawDescription": rawDescription, "price": items[i].getPrice(), "count": unitCount };
                 };
             };
 
             for (var key in itemList) {
                 if (itemList[key].count > 1) {
+                    //note this uses raw description, not modified one
                     itemList[key].description = tools.pluraliseDescription(itemList[key].rawDescription, itemList[key].count);
                 };
                 finalList.push({ "description": itemList[key].description, "price": itemList[key].price, "count": itemList[key].count });
@@ -293,58 +302,63 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
     
         self.remove = function(anObjectName, searchCreatures) {
-                var localInventory = self.getAllObjects(true);               
-                for(var index = localInventory.length-1; index >= 0; index--) {
-                    //find by name first
-                    if (localInventory[index].getName() == anObjectName) {
-                        var returnObject = _items[index];
-                        localInventory.splice(index,1);
-                        //console.log(anObjectName+" removed from "+_ownerName+" inventory");
-                        returnObject.show();
-                        return returnObject;
+            var localInventory = self.getAllObjects(true);
+            //loop through top level items only first.           
+            for (var index = localInventory.length - 1; index >= 0; index--) {
+                //find by name first
+                if (localInventory[index].getName() == anObjectName) {
+                    var returnObject = _items[index];
+                    localInventory.splice(index, 1);
+                    //console.log(anObjectName+" removed from "+_ownerName+" inventory");
+                    returnObject.show();
+                    return returnObject;
+                };
+            };
+            
+            //if not already removed, remove nested object
+            for (var index = localInventory.length - 1; index >= 0; index--) {
+                if(((localInventory[index].getType() != 'creature') || searchCreatures) && (!(localInventory[index].isLocked()))) {
+                    if (localInventory[index].isOpen()) {
+                        //only remove from open, unlocked containers - this way we know the player has discovered them
+                        var containerInventory = localInventory[index].getInventoryObject()
+                        var object = containerInventory.remove(anObjectName);
                     };
-                    if(((localInventory[index].getType() != 'creature') || searchCreatures) && (!(localInventory[index].isLocked()))) {
-                        if (localInventory[index].isOpen()) {
-                            //only remove from open, unlocked containers - this way we know the player has discovered them
-                            var containerInventory = localInventory[index].getInventoryObject()
-                            var object = containerInventory.remove(anObjectName);
-                        };
+                    if (object) {
+                        object.show();
+                        return object;
+                    };
+                            
+                    if (localInventory[index].getType() == 'creature') {
+                        var salesInventory = localInventory[index].getSalesInventoryObject();
+                        object = salesInventory.remove(anObjectName);
                         if (object) {
                             object.show();
-                            return object;
+                            return object
                         };
-                            
-                        if (localInventory[index].getType() == 'creature') {
-                            var salesInventory = localInventory[index].getSalesInventoryObject();
-                            object = salesInventory.remove(anObjectName);
-                            if (object) {
-                                object.show();
-                                return object
-                            };
-                        };
-                    } else if (localInventory[index].isLocked()) {
-                        var objects = localInventory[index].getInventoryObject().getPositionedObjects(false);
-                        for (var o=0;o<objects.length;o++) {
-                            if (objects[o].getName() == anObjectName) {
-                                return objects[o];
-                            };
+                    };
+                } else if (localInventory[index].isLocked()) {
+                    var objects = localInventory[index].getInventoryObject().getPositionedObjects(false);
+                    for (var o=0;o<objects.length;o++) {
+                        if (objects[o].getName() == anObjectName) {
+                            return objects[o];
                         };
                     };
                 };
+            };
 
-                //find by synonym if not already returned.
-                for(var index = localInventory.length-1; index >= 0; index--) {
-                    if (localInventory[index].syn(anObjectName)) {
-                        var returnObject = _items[index];
-                        localInventory.splice(index,1);
-                        //console.log(anObjectName+" removed from "+_ownerName+" inventory");
-                        returnObject.show();
-                        return returnObject;
-                    };
+            //find by synonym if not already returned.
+            for(var index = localInventory.length-1; index >= 0; index--) {
+                if (localInventory[index].syn(anObjectName)) {
+                    var returnObject = _items[index];
+                    localInventory.splice(index,1);
+                    //console.log(anObjectName+" removed from "+_ownerName+" inventory");
+                    returnObject.show();
+                    return returnObject;
                 };
+            };
 
-                //console.log(_ownerName+" is not carrying "+anObjectName);
-                return null;
+            //console.log(_ownerName+" is not carrying "+anObjectName);
+            return null;
         };
     
         self.check = function(anObjectName, ignoreSynonyms, searchCreatures, ignoreScenery) {
@@ -420,6 +434,47 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
             return resultString;
         };
+        
+        self.countNamedObject = function (objectName) {
+            var allItems = self.getAllObjects();
+            var count = 0;
+            for (var i = 0; i < allItems.length; i++) {
+                if (allItems[i].getName() == objectName) {
+                    count++;
+                };
+            };
+            return count;
+        };
+        
+        self.quantifyNamedObject = function (objectName) {
+            var allItems = self.getAllObjects();
+            var count = 0;
+            for (var i = 0; i < allItems.length; i++) {
+                if (allItems[i].getName() == objectName) {
+                    if (allItems[i].getType() != "creature") {
+                        if (allItems[i].isPlural()) {
+                            return "some";
+                        };
+                    };
+                    count++;
+                };
+            };
+            var returnString = "some";
+            switch (count) {
+                case 1:
+                    return "one";
+                    break;
+                case 2:
+                    return "a couple";
+                    break;
+                case 3:
+                    return "a few";
+                    break
+                default:
+                    return "plenty";
+            };
+            return returnString;            
+        };
 
         self.getRandomObject = function() {
             var items = self.getAllObjects();
@@ -464,6 +519,18 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 //we didn't find what we're looking for yet.
                 return false; //different return type!
             };
+        };
+        
+        self.objectIsDirectlyAccessible = function (anObjectName) {
+            //checks that an object is directly accessible from *this* inventory.
+            //e.g. not inside something else
+            //work backwards from most recently added item
+            for (var index = _items.length - 1; index >= 0; index--) {
+                if (_items[index].getName() == anObjectName) {
+                    return true;
+                };
+            };
+            return false;           
         };
 
         //recursively gets objects in other objects
