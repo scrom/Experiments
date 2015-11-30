@@ -209,7 +209,7 @@ exports.Action = function Action(player, map, fileManager) {
             var description = "";
 
             var lastVerbUsed = _player.getLastVerbUsed();
-            if (lastVerbUsed == "say"||lastVerbUsed == "ask"||lastVerbUsed == "talk" || lastVerbUsed == "chat") {
+            if (lastVerbUsed == "say"||lastVerbUsed == "ask"||lastVerbUsed == "talk" || lastVerbUsed == "chat" || lastVerbUsed == "speak") {
                 _inConversationWith = _player.getLastCreatureSpokenTo();
             } else {
                 _inConversationWith = null;
@@ -924,7 +924,9 @@ exports.Action = function Action(player, map, fileManager) {
                         _ticks = 1;
                         description = _player.wave(_verb, _object0, _object1);
                         break;
+                    case 'touch':
                     case 'stroke':
+                    case 'feel':
                     case 'pet':
                     case 'rub':
                     case 'polish':
@@ -940,6 +942,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'takl':
                     case 'tslk':
                     case 'chat':
+                    case 'speak':
                         if (_verb != "chat") { _verb = "talk";};
                         _ticks = 1;
                         //we assume "talk to x" - if "to" is missing, handle speech anyway.
@@ -1291,8 +1294,8 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'untie':
                     case 'undo':
                     case 'tighten': //may also need to support "do up"? 
-                    case 'touch': // see #270 - either activate something (like press) - or return a texture description
-                    case 'feel': // see #270 - either activate something (like press) - or return a texture description
+                    //case 'touch': // see #270 - either activate something (like press) - or return a texture description
+                    //case 'feel': // see #270 - either activate something (like press) - or return a texture description
                     case 'cast': //see #18
                     case 'summon': //see #18
                     default:
