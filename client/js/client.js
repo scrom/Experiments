@@ -134,19 +134,20 @@ function Client(aServerHost, aServerPort, aUi) {
     //generic client request
     var request = function(someUserInput) {
         var inputString = sanitiseString(someUserInput);
-        if (inputString.indexOf("load") >-1) {
-            var fileName = inputString.replace("load ","");
+        inputString += " ";
+        if (inputString.indexOf("load ") == 0) {
+            var fileName = inputString.replace("load ","").trim();
             loadGame(fileName);
         } else if
-            (inputString.indexOf("restore") >-1) {
-            var fileName = inputString.replace("restore ","");
+            (inputString.indexOf("restore ") == 0) {
+            var fileName = inputString.replace("restore ","").trim();
             loadGame(fileName);            
-        } else if (inputString.indexOf("save") >-1) {
-            saveGame();
-        } else if (inputString.indexOf("quit") > -1) {
+        } else if (inputString == "save " || inputString == "save game ") {
+            saveGame(); 
+        } else if (inputString == "quit " || inputString == "quit game " ) {
             quitGame();
         } else {
-            if (username == ''){
+            if (username == ""){
                 if (!(inputString)) {inputString = ""};
                 if (inputString.trim() == "") {
                     ui.setState("I don't play with strangers.<br>You need to tell me who you are if you want to play with me.<br>Please type in your name and press &lt;enter> (on your keyboard) to start.");
