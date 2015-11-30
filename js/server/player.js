@@ -3116,7 +3116,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
             };
             if (verb == "find") {return givers[0].find(artefactName, _aggression, map);};
-            if (verb == "repair") {return givers[0].repair(artefactName, self);};
+            if (verb == "repair" || verb == "fix" || verb == "mend") {return givers[0].repair(artefactName, self);};
 
             if (tools.stringIsEmpty(artefactName)){ return verb+" "+givers[0].getDisplayName()+" for what?";};
 

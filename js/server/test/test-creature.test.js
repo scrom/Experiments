@@ -714,10 +714,10 @@ exports.neutralCreatureWillNotFindForPlayer = function (test) {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
-    var expected = "When was the last time you did something for it?<br>It pays to be nice to others.";
+    var expected = "When was the last time you did something for it?<br>It pays to be nice to others.<br>";
     var playerAggression = 0;
     var findResult = c0.find("simon g", playerAggression, m)
-    var actual = findResult.substr(findResult.indexOf("<br>")+4); //exclude initial random reply
+    var actual = findResult.substr(findResult.indexOf("<br>")+8); //exclude initial random reply
     console.log("expected: "+expected);
     console.log("actual: "+actual);
     test.equal(actual, expected);

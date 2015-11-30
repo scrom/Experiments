@@ -455,8 +455,9 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'find': 
                         if (_inConversationWith) {
                             _ticks = 1;
-                            var objectToFind = _object0+_object1;
-                            return "You ask "+_inConversationWith+" to find "+objectToFind+".<br>"+self.processAction('ask '+_inConversationWith+" to find "+objectToFind);
+                            var objectToFind = _object0 + _object1;
+                            _player.setLastVerbUsed('say');    
+                            return player.say("say", "find " + objectToFind, _inConversationWith, _map);
                         } else { 
                             _ticks = _baseTickSize * 2;
                             if (!(_object0)) {_object0 = _object1};                                     

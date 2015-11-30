@@ -8366,7 +8366,7 @@
                   "charges": 45,
                   "burnRate": 0.3,
                   "chargeUnit": "minute",
-                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit",
                   "flammable": true
                 },
                 "synonyms": [
@@ -8387,7 +8387,7 @@
                   "charges": 45,
                   "burnRate": 0.3,
                   "chargeUnit": "minute",
-                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit",
                   "flammable": true
                 },
                 "synonyms": [
@@ -8408,7 +8408,7 @@
                   "charges": 45,
                   "burnRate": 0.3,
                   "chargeUnit": "minute",
-                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit",
                   "flammable": true
                 },
                 "synonyms": [
@@ -8685,7 +8685,7 @@
                   "charges": 45,
                   "burnRate": 0.3,
                   "chargeUnit": "minute",
-                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit",
                   "flammable": true
                 },
                 "synonyms": [
@@ -8706,7 +8706,7 @@
                   "charges": 45,
                   "burnRate": 0.3,
                   "chargeUnit": "minute",
-                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit",
                   "flammable": true
                 },
                 "synonyms": [
@@ -8727,7 +8727,7 @@
                   "charges": 45,
                   "burnRate": 0.3,
                   "chargeUnit": "minute",
-                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit.",
+                  "chargesDescription": "It'll burn for roughly $charges $chargeUnit",
                   "flammable": true
                 },
                 "synonyms": [
@@ -11637,6 +11637,8 @@
               "red book",
               "red gate book",
               "book red gate",
+              "book of redgate",
+              "book redgate",
               "borg"
             ],
             "missions": [
