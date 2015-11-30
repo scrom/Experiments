@@ -691,6 +691,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'eat':
                     case 'lick':
                     case 'taste':
+                        _ticks = 1;
                         if (_object1) {description = _player.eat(_verb+" "+_splitWord,_object1);}
                         else {description = _player.eat(_verb, _object0);};
                         break;
