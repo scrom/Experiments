@@ -2947,7 +2947,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "good evening":  
                     randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];                  
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
+                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+"'";
                     break;
                 case "bye":
                 case "goodbye":
@@ -2958,11 +2958,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     var notSpokenString = "";
                     if (!(_spokenToPlayer)) {
-                       notSpokenString = "<br>"+self.getPrefix()+" mutters to "+self.getSuffix()+"self. 'Odd, I'm sure we've not actually spoken to each other properly yet.'";
+                       notSpokenString = "<br>"+tools.initCap(self.getPrefix())+" mutters to "+self.getSuffix()+"self. 'Odd, I'm sure we've not actually spoken to each other properly yet.'";
                     };
 
                     //note - we exit early - shortcircuit before mission dialogue
-                    return tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
+                    return tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
                     break;
                 case "ok":
                 case "y":
@@ -2973,7 +2973,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "affirmatory":
                     randomReplies = ["Great", "OK $player", "OK"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 case "no":
                 case "n":
@@ -2988,7 +2988,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "negatory":
                     randomReplies = ["Maybe another time then", "OK $player", "OK", "Fair enough", "That's fine $player"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 case "thanks":
                 case "thankyou":
@@ -2996,7 +2996,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "cheers":
                     randomReplies = ["My pleasure", "Happy to help", "Good luck", "No problem $player"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 default:
                     break;
@@ -3029,11 +3029,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.replace(" your ", " ");
                             artefactName = artefactName.trim();
                             //@todo trap "can you give x to y" here in future.
-                            return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
+                            return "You ask "+self.getFirstName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
                         };
                     case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
                         if (remainderString == "sorry") {
-                            return tools.initCap(self.getDisplayName())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
+                            return tools.initCap(self.getPrefix())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
                             break;
                         };
                     case 'who': //is/are [character]
@@ -3054,8 +3054,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.replace(" a "," ");
                             artefactName = artefactName.replace(" your ", " ");
                             artefactName = artefactName.trim();
-                            return "You ask "+self.getDisplayName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
+                            return "You ask "+self.getFirstName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
                         };
+                        //note, no break here!
                     case 'will': //you/i /give/find/open/unlock
                  /*       if (stringStartsWith(remainderString, "you help ")) {
                             //player.ask (find?)
@@ -3070,10 +3071,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //player.ask (give)
                         };
                         break;
-                 */
+                  */
                     case 'pardon': // [me - apology] / [please repeat last thing] 
                         console.log("*** Unhandled player speech - first Word:'"+firstWord+"', remainder:'"+remainderString+"'");                      
-                        return tools.initCap(self.getDisplayName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
+                        return tools.initCap(self.getFirstName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
                         break;
                 };
             };
@@ -3117,9 +3118,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (response.length == 0) {
+                //did they just use a noun that's in the game?
+                if (!artefactName) {
+                    artefactName = someSpeech;
+                };
+                if (artefactName) {
+                    if (_currentLocation.objectExists(artefactName, false, false, true)) {
+                        return tools.initCap(self.getPrefix()) + " says 'I'm sure I saw something like that near here recently.'";
+                    };
+                    if (map.checkExists(artefactName)) {
+                        return "You ask " + self.getFirstName() + " for " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
+                    };
+                };
                 randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying.", "I don't think I can help you at the moment. Have you tried typing <i>help</i>?"];
                 randomIndex = Math.floor(Math.random() * randomReplies.length);
-                response += tools.initCap(self.getDisplayName())+" says '"+randomReplies[randomIndex]+"'";
+                response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+"'";
             };
 
             if (!(_spokenToPlayer)) {_spokenToPlayer = true;};

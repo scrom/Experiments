@@ -1069,7 +1069,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.breakOrDestroy(_verb, _object0);
                         break;
                     case 'kill':
-                        description = "Much as you may like to believe in instant karma. If you <b>have<b> to kill, you'll need to fight it out yourself."
+                        description = "Much as you may like to believe in instant karma. If you <b>have</b> to kill, you'll need to fight it out yourself."
                         break;
                     case 'on':
                     case 'off':
@@ -1545,6 +1545,13 @@ exports.Action = function Action(player, map, fileManager) {
                     _ticks = 1;
                     _player.setLastVerbUsed('say');
                     return _player.say('say', _actionString,_inConversationWith, _map);
+                };
+
+                if (!_object0 && !_object1) {
+                    _object0 = _verb;
+                };         
+                if (map.checkExists(_object0)) {
+                    return "What do you want to do with '"+ _object0+ "'?<br>You'll need to be a little clearer."
                 };
 
                 _ticks = 0;
