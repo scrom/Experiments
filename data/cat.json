@@ -5,21 +5,25 @@
     "description": "small tabby cat",
     "detailedDescription": "It looks like a stray. I think it's hungry.",
     "attributes": {
-        "weight": 3,
-        "attackStrength": 6,
-        "type": "animal",
-        "health": 25,
-        "affinity": -1,
-        "canTravel": true,
-        "traveller": true,
-        "avoiding": [
-            "office-front",
-            "atrium",
-            "east-end-south-corridor-ground-floor",
-            "first-floor-fire-escape"
-        ],
-        "smell": "As you bend down and sniff the cat, it lashes out at you.",
-        "sound": "Meow."
+      "weight": 3,
+      "attackStrength": 6,
+      "type": "animal",
+      "health": 25,
+      "affinity": -1,
+      "canTravel": true,
+      "traveller": true,
+      "avoiding": [
+          "office-front",
+          "atrium",
+          "east-end-south-corridor-ground-floor",
+          "first-floor-fire-escape"
+      ],
+      "smell": "As you bend down and sniff the cat, it lashes out at you.",
+      "sound": "Meow.",
+      "customAction": [
+        "get", "catch"
+			],
+			"defaultResult": "As you reach down to pick the cat up it turns, lashes out at you and backs away out of your reach.<br>I don't think it wants to be picked up."
     },
     "synonyms": [
         "it",

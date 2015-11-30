@@ -11299,12 +11299,19 @@
                               "description": "small grey mouse",
                               "detailedDescription": "It looks like a house mouse. I wonder what it's doing here.",
                               "attributes": {
+                                "customAction": [
+                                  "get",
+                                  "catch"
+                                ],
+                                "defaultResult": "No matter how hard to try to catch the mouse it always seems to move out of your reach just in time.",
                                 "weight": 1,
                                 "type": "animal",
                                 "health": 10,
                                 "affinity": -1,
                                 "canTravel": true,
-                                "traveller": true
+                                "traveller": true,
+                                "smell": "It's scurrying around too much to get close enough to smell it.",
+                                "sound": "Squeeeeeek!"
                               },
                               "synonyms": [
                                 "it",
@@ -18126,6 +18133,11 @@
         "description": "small tabby cat",
         "detailedDescription": "It looks like a stray. I think it's hungry.",
         "attributes": {
+          "customAction": [
+            "get",
+            "catch"
+          ],
+          "defaultResult": "As you reach down to pick the cat up it turns, lashes out at you and backs away out of your reach.<br>I don't think it wants to be picked up.",
           "weight": 3,
           "attackStrength": 6,
           "type": "animal",

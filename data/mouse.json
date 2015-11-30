@@ -10,7 +10,13 @@
     "health": 10,
     "affinity": -1,
     "canTravel": true,
-    "traveller": true
+    "traveller": true,
+    "smell": "It's scurrying around too much to get close enough to smell it.",
+    "sound": "Squeeeeeek!",
+    "customAction": [
+			"get", "catch"
+		],
+		"defaultResult": "No matter how hard to try to catch the mouse it always seems to move out of your reach just in time."
   },
   "synonyms": [
     "it",

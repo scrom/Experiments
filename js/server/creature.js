@@ -16,6 +16,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _detailedDescription = detailedDescription;
         var _sourceAttributes = attributes; //so we can clone etc.
         var _synonyms = [];
+        var _defaultAction = "examine";
+        var _defaultResult = null;
+        var _customAction = null;
         var _gender = "unknown"; //default
         var _genderPrefix = "It"; //default
         var _genderSuffix = "it"; //default
@@ -115,6 +118,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.type != undefined) {_type = creatureAttributes.type;};
             
             //if (creatureAttributes.synonyms != undefined) { _synonyms = creatureAttributes.synonyms;};
+            if (creatureAttributes.defaultAction != undefined) { _defaultAction = creatureAttributes.defaultAction; };
+            if (creatureAttributes.defaultResult != undefined) { _defaultResult = creatureAttributes.defaultResult; };
+            if (creatureAttributes.customAction != undefined) { _customAction = creatureAttributes.customAction; };
             if (creatureAttributes.carryWeight != undefined) {_inventory.setCarryWeight(creatureAttributes.carryWeight);};
             if (creatureAttributes.nutrition != undefined) { _nutrition = creatureAttributes.nutrition; };
             if (creatureAttributes.price != undefined) { _price = creatureAttributes.price; };
@@ -469,6 +475,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return tools.initCap(self.getPrefix()) + " doesn't want to "+verb+"."
             };
 
+            if (self.checkCustomAction(verb)) {
+                return self.getCustomActionResult(verb);
+            };
+
             return tools.initCap(self.getPrefix()) + " says 'It might be fun but we don't have time for that right now $player.'"
         };
 
@@ -579,20 +589,46 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        self.checkCustomAction = function(verb) {
-            return false; 
+        self.checkCustomAction = function (verb) {
+            if (verb == "get" || verb == "catch") {
+                //custom actions for "get" only apply when alive - for now
+                if (self.isDead()) {
+                    return false;
+                };
+            };
+            //console.log("custom action: "+_customAction+" verb:"+verb);
+            if (_customAction == verb) {
+                return true;
+            };
+            if (_customAction) {
+                if (_customAction.indexOf(verb) > -1) {
+                    return true;
+                };
+            };
+            return false;
+        };
+        
+        self.getDefaultAction = function () {
+            return _defaultAction;
+        };
+        
+        self.getDefaultResult = function () {
+            return _defaultResult;
         };
 
         self.getCustomActionResult = function (verb) {
-            return null;
-        };
+            //at the moment we only suppport "defaultResult" - so we don't use "verb"
+            var resultString = self.getDefaultResult();
+            if (resultString) {
+                if (!(resultString.indexOf("$action") > -1)) {
+                    //if we're *not* redirecting to an alternate verb
+                    resultString += "$result";
+                };
+            } else {
+                resultString = "";
+            };
+            return resultString;
 
-        self.getDefaultAction = function() {
-            return "examine";
-        };
-
-        self.getDefaultResult = function() {
-            return null;
         };
 
         self.getReturnDirection = function() {
@@ -622,6 +658,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var currentAttributes = {};
 
             //currentAttributes.synonyms = _synonyms;
+            currentAttributes.defaultAction = _defaultAction;
+            currentAttributes.defaultResult = _defaultResult;
+            currentAttributes.customAction = _customAction;
+
             currentAttributes.dislikes = _dislikes;
             currentAttributes.health = _hitPoints;
             if (_hitPoints > 0) {
@@ -702,7 +742,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getAttributesToSave = function() {
             var saveAttributes = {};
             var creatureAttributes = self.getCurrentAttributes();
-         
+            
+            if (creatureAttributes.defaultAction != "examine") { saveAttributes.defaultAction = creatureAttributes.defaultAction; };
+            if (creatureAttributes.customAction != undefined) { saveAttributes.customAction = creatureAttributes.customAction; };
+            if (creatureAttributes.defaultResult != undefined) { saveAttributes.defaultResult = creatureAttributes.defaultResult; };
+                     
             if (creatureAttributes.nutrition != 20) { saveAttributes.nutrition = creatureAttributes.nutrition;};
             if (creatureAttributes.price != 0) { saveAttributes.price = creatureAttributes.price;};
             if (creatureAttributes.weight != 0) {saveAttributes.weight = creatureAttributes.weight;};
@@ -1462,7 +1506,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
         
         self.shake = function (verb) {
-            if (self.isDead()) { return _genderPrefix + "'s dead. All the shaking in the world won't rouse "+_genderSuffix+"." };
+            if (self.isDead()) { return _genderPrefix + "'s dead. All the shaking in the world won't rouse " + _genderSuffix + "." };
+            if (self.checkCustomAction(verb)) {
+                return self.getCustomActionResult(verb);
+            };
+
             if (self.getSubType() != "animal") {
                 if (_affinity >= -1) {
                     self.decreaseAffinity(1);
