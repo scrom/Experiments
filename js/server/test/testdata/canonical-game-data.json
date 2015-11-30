@@ -11987,7 +11987,7 @@
         "object": "artefact",
         "name": "mirror",
         "description": "bathroom mirror",
-        "detailedDescription": "Something about this view toubles you.",
+        "detailedDescription": "Something about this view troubles you.",
         "attributes": {
           "type": "scenery"
         },
