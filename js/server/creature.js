@@ -1762,8 +1762,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //attempt to steal...
             //will randomly return 0 to 5 by default(<20% chance of success)
             var successDivider = 5; 
-            if (self.getSubType() == 'friendly') {successDivider = 9;}; //only ~10% chance of success when stealing from a friend
-            if (self.isDead()) {successDivider = 0;}; //guaranteed success if dead.
+            if (self.getSubType() == 'friendly') {successDivider = 8;}; //reduced chance of success when stealing from a friend
+            if (self.isDead()) { successDivider = 0; }; //guaranteed success if dead.
+            if (verb == "mug") {
+                //note player gets a 15% surprise attack bonus
+                if (player.getAttackStrength(verb) >= self.getAttackStrength() * 0.85) {                   
+                    //50% chance of success
+                    successDivider = 2;
+                } else {
+                    //very unlikely
+                    successDivider = 10;
+                };
+            };
             var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
             //console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
 
@@ -1782,9 +1792,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //mugging
                 if (verb == "mug") {
-                     self.decreaseAffinity(1); //significant affinity hit
+                     self.decreaseAffinity(1); //additional affinity hit
                      resultString += self.hurt((player.getAttackStrength(verb)*0.75),player)+"<br>";
-                     if (self.getSubType() == "friendly" && _friendlyAttackCount <2) {
+                     if (self.getSubType() == "friendly" && _friendlyAttackCount < 2) {
+                         //player has to be really determined to upset if mugging friends
                          return resultString;
                      };
                 };
