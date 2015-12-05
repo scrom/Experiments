@@ -66,11 +66,10 @@
     {
       "object": "artefact",
       "template": "mirror",
+      "description": "lift mirror",
       "detailedDescription": "With the white/blue-ish dark LED light, the full-length view of yourself and the enclosed space the view is making you uncomfortable.<br>This mirror seems to shed pounds from you leaving you looking gaunt, aging and unwell.",
       "synonyms": [
         "lift mirror",
-        "self",
-        "yourself",
         "full mirror"
       ]
     }

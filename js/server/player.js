@@ -3662,7 +3662,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
 
-                if (!artefact) {
+                if (!artefact) {                    
+                    if (self.syn(artefactName)) {
+                        return self.status();
+                    };
+
                     if (!container) {
                         container = containerName;
                     };

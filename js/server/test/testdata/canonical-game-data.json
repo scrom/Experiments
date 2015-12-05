@@ -6063,7 +6063,14 @@
           "type": "scenery"
         },
         "synonyms": [
-          "bathroom mirror"
+          "bathroom mirror",
+          "wall mirror",
+          "reflection",
+          "view",
+          "self",
+          "myself",
+          "yourself",
+          "me"
         ]
       },
       {
@@ -6756,7 +6763,14 @@
           "type": "scenery"
         },
         "synonyms": [
-          "bathroom mirror"
+          "bathroom mirror",
+          "wall mirror",
+          "reflection",
+          "view",
+          "self",
+          "myself",
+          "yourself",
+          "me"
         ]
       },
       {
@@ -11898,16 +11912,20 @@
       {
         "object": "artefact",
         "name": "mirror",
-        "description": "bathroom mirror",
+        "description": "lift mirror",
         "detailedDescription": "With the white/blue-ish dark LED light, the full-length view of yourself and the enclosed space the view is making you uncomfortable.<br>This mirror seems to shed pounds from you leaving you looking gaunt, aging and unwell.",
         "attributes": {
           "type": "scenery"
         },
         "synonyms": [
           "lift mirror",
+          "full mirror",
+          "reflection",
+          "view",
           "self",
+          "myself",
           "yourself",
-          "full mirror"
+          "me"
         ]
       }
     ]
@@ -12011,17 +12029,20 @@
       {
         "object": "artefact",
         "name": "mirror",
-        "description": "bathroom mirror",
+        "description": "lift mirror",
         "detailedDescription": "Something about this view troubles you.",
         "attributes": {
           "type": "scenery"
         },
         "synonyms": [
           "lift mirror",
-          "self",
-          "yourself",
           "full mirror",
-          "view"
+          "reflection",
+          "view",
+          "self",
+          "myself",
+          "yourself",
+          "me"
         ]
       }
     ]
@@ -12106,16 +12127,20 @@
       {
         "object": "artefact",
         "name": "mirror",
-        "description": "bathroom mirror",
+        "description": "lift mirror",
         "detailedDescription": "With the white/blue-ish dark LED light, the full-length view of yourself and the enclosed space the view is making you uncomfortable.<br>This mirror seems to shed pounds from you leaving you looking gaunt, aging and unwell.<br><br>Hang on! Is that your eyes playing tricks on you or did the mirror just shimmer and your reflection move on its own?",
         "attributes": {
           "type": "scenery"
         },
         "synonyms": [
           "lift mirror",
+          "full mirror",
+          "reflection",
+          "view",
           "self",
+          "myself",
           "yourself",
-          "full mirror"
+          "me"
         ],
         "inventory": [
           {
@@ -16695,7 +16720,14 @@
           "type": "scenery"
         },
         "synonyms": [
-          "bathroom mirror"
+          "bathroom mirror",
+          "wall mirror",
+          "reflection",
+          "view",
+          "self",
+          "myself",
+          "yourself",
+          "me"
         ]
       },
       {
