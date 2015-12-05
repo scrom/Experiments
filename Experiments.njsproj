@@ -220,6 +220,7 @@
     <Content Include="data\mocha.json" />
     <Content Include="data\morpheus-chair.json" />
     <Content Include="data\mouse.json" />
+    <Content Include="data\network-switch.json" />
     <Content Include="data\northwest-corridor-ground-floor.json" />
     <Content Include="data\nut-roast.json" />
     <Content Include="data\office-front.json" />

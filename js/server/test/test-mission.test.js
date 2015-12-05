@@ -1042,7 +1042,7 @@ exports.playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryI
     p0.say("talk", "ok", "amanda");
     var resultString = m0.updateMissions(1, p0);
     
-    var expectedResult = "<br>Amanda hands you a projector bulb.<br><br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
+    var expectedResult = "<br>Amanda hands you a projector bulb.<br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
     var actualResult = resultString
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);

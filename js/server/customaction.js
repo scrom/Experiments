@@ -34,6 +34,15 @@ var self = module.exports = {
     //support more custom actions
     processCustomAction: function (map, actionData, player) {
         var resultString = "";
+        
+        //start with message if set
+        if (actionData.message) {
+            if (actionData.message.length > 0) {
+                //console.log(actionData.message);
+                resultString += actionData.message + "<br>";
+            };
+        };               
+
         if (actionData.endGame) {
             //game over?
             if (actionData.endGame == true) { return player.endGame(); };

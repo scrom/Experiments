@@ -1,0 +1,27 @@
+﻿{
+  "object": "artefact",
+  "name": "wires",
+  "description": "wires",
+  "detailedDescription": "Blinky blink blink, whirrrr, hum, blink.<br>It's just your typical network hardware. It's cool that you can get to it though.",
+  "attributes": {
+    "type": "scenery",
+    "customAction": [
+      "get",
+      "play"
+    ],
+    "defaultResult": {
+      "message": "You poke and pull at the wires whilst inwardly grinning to yourself at the fun you think you're having at others' expense.<br>As you tug away, the lights around you flicker and you receive a painful electric shock.<br>Sometimes I wonder if you're as smart as you think you are.",
+      "health": -10
+    }
+
+  },
+    "synonyms": [
+      "switch",
+      "network switch",
+      "wire",
+      "wiring",
+      "loom",
+      "wiring loom",
+      "light"
+    ]
+  }

@@ -3,6 +3,7 @@
 exports.Action = function Action(player, map, fileManager) {
     try{
         var tools = require('./tools.js');
+        var customAction = require('./customaction.js');
 	    var self = this; //closure so we don't lose this reference in callbacks
         var _resultString = '';
         var _resultJson = '';
@@ -1321,6 +1322,14 @@ exports.Action = function Action(player, map, fileManager) {
             };	
 
             if (description) {
+                //if result of player action is a custom action...
+                if (!tools.stringIsEmpty(description)) {
+                    if (typeof (description) == 'object') {
+                        //normal type is "string" so this is something else.
+                        description = customAction.processCustomAction(_map, description, _player);
+                    };
+                };
+
                 var tempDescription = "";
                 //clean up fails
                 if (description.indexOf("$fail$") > -1) {
@@ -1609,7 +1618,7 @@ exports.Action = function Action(player, map, fileManager) {
             //try to perform the player action
             if (tools.stringIsEmpty(description)) {
                 description = self.performPlayerAction();
-            };
+            };           
             
             //navigation
             if (tools.stringIsEmpty(description)) {

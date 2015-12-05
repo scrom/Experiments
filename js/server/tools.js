@@ -64,7 +64,10 @@ var self = module.exports= {
     },
     
     //convert an object "literal" (my bad terminology) to a string
-    literalToString: function(literal) {
+    literalToString: function (literal) {
+        if (typeof (literal) != 'object') {
+            return literal;
+        };
         var resultString = '{';
         var counter = 0;
         for (var key in literal) {

@@ -551,9 +551,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //at the moment we only suppport "defaultResult" - so we don't use "verb"
             var resultString = self.getDefaultResult();
             if (resultString) {
-                if (!(resultString.indexOf("$action") > -1)) {
-                    //if we're *not* redirecting to an alternate verb
-                    resultString += "$result";
+                if (typeof (resultString) == "string") {
+                    if (!(resultString.indexOf("$action") > -1)) {
+                        //if we're *not* redirecting to an alternate verb
+                        resultString += "$result";
+                    };
                 };
             } else {
                 resultString = ""; 

@@ -105,6 +105,12 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     var template = _data[artefactData.attributes.template];
                     artefactData.attributes = self.buildFromTemplate(template, artefactData.attributes);
                 };
+                if (artefactData.attributes.defaultResult) {
+                    if (typeof (artefactData.attributes.defaultResult) == 'object') {
+                        //we have a custom action that uses the same process as mission reward mechanism
+                        artefactData.attributes.defaultResult = self.unpackReward(artefactData.attributes.defaultResult);
+                    };
+                };
             };
 
             try {
@@ -214,6 +220,12 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (creatureData.attributes.template) {
                     var template = _data[creatureData.attributes.template];
                     creatureData.attributes = self.buildFromTemplate(template, creatureData.attributes);
+                };
+                if (creatureData.attributes.defaultResult) {
+                    if (typeof (creatureData.attributes.defaultResult) == 'object') {
+                        //we have a custom action that uses the same process as mission reward mechanism
+                        creatureData.attributes.defaultResult = self.unpackReward(creatureData.attributes.defaultResult);
+                    };
                 };
             };                       
 

@@ -18,5 +18,8 @@
         "source": "servery-south-west",
         "destination": "servery-main"
       }
+    ],
+    "inventory": [
+      {"file": "network-switch"}
     ]
   }

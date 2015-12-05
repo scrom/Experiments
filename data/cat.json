@@ -21,9 +21,13 @@
       "smell": "As you bend down and sniff the cat, it lashes out at you.",
       "sound": "Meow.",
       "customAction": [
-        "get", "catch"
-			],
-			"defaultResult": "As you reach down to pick the cat up it turns, lashes out at you and backs away out of your reach.<br>I don't think it wants to be picked up."
+        "get",
+        "catch"
+      ],
+      "defaultResult": {
+        "message": "As you reach down to pick the cat up it turns, lashes out at you and backs away out of your reach.<br>I don't think it wants to be picked up.",
+        "health": -2
+      }
     },
     "synonyms": [
         "it",
