@@ -17,7 +17,11 @@
       "zombie"
     ],
     "combinesDescription": " ",
-    "combinesWith": "syringe"
+    "combinesWith": "syringe",
+    "customAction": [
+      "eat", "drink", "lick", "taste", "chew", "nibble", "bite", "feast"
+    ],
+    "defaultResult": "That's a remarkably sensible idea but it won't do you much good. Zombieism is transferred through the blood stream, not the digestive system."
   },
   "synonyms": [
     "antivenom",

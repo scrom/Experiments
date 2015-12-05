@@ -882,16 +882,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return false;
                     break;
                 case "projectile":
-                    if (verb == "smash"||verb == "stab"|| verb == "bash"|| verb == "hit") {return false;};
+                    if (verb == "smash"||verb == "stab"|| verb == "bash"|| verb == "hit" || verb == "cut") {return false;};
                     break;
                 case "blunt":
-                    if (verb == "nerf"||verb == "shoot"||verb == "stab") {return false;};
+                    if (verb == "nerf"||verb == "shoot"||verb == "stab" || verb == "cut") {return false;};
                     break;
                 case "sharp":
                     if (verb == "nerf"||verb == "shoot") {return false;};
                     break;
                 default:
-                    if (verb == "nerf"||verb == "shoot"||verb == "stab") {return false;};
+                    if (verb == "nerf"||verb == "shoot"||verb == "stab" || verb == "cut") {return false;};
                     break;
             };
             return true;
@@ -2738,6 +2738,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 s = "s";
             };
 
+            if (self.checkCustomAction("drink")) {
+                return self.getCustomActionResult("drink");
+            };
+
             if (self.getSubType() == "intangible") {return consumer.getPrefix()+" gulp"+s+" around trying to get a mouthful of "+self.getName()+".<br>After leaping around like a guppy out of water for a while, "+ consumer.getPrefix().toLowerCase()+" decide"+s+" to give up.";}
             if ((!self.isOpen()) && self.opens()) {return consumer.getPrefix() +"'ll need to open "+self.getSuffix()+" up first.";};
             if (self.isDestroyed()) {return "There's nothing left for "+consumer.getSuffix()+" to drink.";};
@@ -2783,6 +2787,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var s = "";
             if (consumer.getType() != "player") {
                 s = "s";
+            };
+            
+            if (self.checkCustomAction(verb)) {
+                return self.getCustomActionResult(verb);
             };
 
             if (verb == "lick" || verb == "taste") {

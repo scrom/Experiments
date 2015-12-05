@@ -690,6 +690,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'bite':
                     case 'chew':
                     case 'feast':
+                    case 'nibble':
                     case 'eat':
                     case 'lick':
                     case 'taste':
@@ -708,6 +709,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'smash':
                     case 'bash':
                     case 'stab':
+                    case 'cut':
                     case 'hurt':
                     case 'hit':
                     case 'slap':

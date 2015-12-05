@@ -927,6 +927,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             return missions;
         };
+        
+        self.increaseAggression = function (changeBy) {
+            //creatures only have affinity, not aggression
+            //this is here as many areas that player interacts can also be hit by creatures
+            return true;
+        };
 
         self.increaseAffinity = function(changeBy, isPermanent) {
             if (!(self.isDead())) {
@@ -2442,7 +2448,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "Interesting idea but "+_genderDescriptivePrefix + " not really designed for personal medical use."
         };
 
-        self.drink = function(aPlayer) {
+        self.drink = function (consumer) {          
+            if (self.checkCustomAction("drink")) {
+                return self.getCustomActionResult("drink");
+            };            
             return _genderPrefix+"'d get stuck in your throat if you tried."
         };
 
@@ -2463,7 +2472,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString+"<br>";
         };
 
-        self.eat = function (verb, player) {
+        self.eat = function (verb, consumer) {
+            //@todo - although consumer is passed in, all the responses assume consumer is "you" (the player)
+            if (self.checkCustomAction(verb)) {
+                return self.getCustomActionResult(verb);
+            };
             
             if (verb == "lick" || verb == "taste") {
                 var taste = self.getTaste();
@@ -2478,24 +2491,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(self.isEdible())){
                 if (self.isDead()) {
                     resultString += "You sink your teeth into "+_genderSuffix+" but gag at the thought of eating corpses. "
-                    resultString += player.hurt(3, self);
-                    resultString += self.transmit(player, "bite");
+                    resultString += consumer.hurt(3, self);
+                    resultString += self.transmit(consumer, "bite");
                     return resultString;
                 };
                 
                 //they're alive!
                 self.decreaseAffinity(1);
 
-                var playerContagion = player.getContagion();
-                var playerAntibodies = player.getAntibodies();
-                if (playerContagion.length == 0 && playerAntibodies.length == 0) {
+                var consumerContagion = consumer.getContagion();
+                var consumerAntibodies = consumer.getAntibodies();
+                if (consumerContagion.length == 0 && consumerAntibodies.length == 0) {
                    
                     if (self.getContagion().length > 0 || self.getAntibodies().length > 0 || self.getSubType() == "animal") {
                         resultString = "You try biting " + self.getFirstName() + " but " + _genderPrefix.toLowerCase() + " dodges out of your way and bites you back.";
-                        //bites player (base attack strength / 4 - not with weapon)
-                        //@todo - possible bug - if player is killed here, death may not be properly reported.
-                        player.hurt(Math.floor(_attackStrength / 4), self);
-                        resultString += self.transmit(player, "bite");
+                        //bites consumer (base attack strength / 4 - not with weapon)
+                        //@todo - possible bug - if consumer is killed here, death may not be properly reported.
+                        consumer.hurt(Math.floor(_attackStrength / 4), self);
+                        resultString += self.transmit(consumer, "bite");
                     } else {
                         if (self.getSubType() == "friendly") {
                             var randomReplies = ["'Hey!' " + _genderPrefix.toLowerCase()+" says.", tools.initCap(_genderPrefix) + " grimaces and pushes you away.", tools.initCap(_genderPrefix)+" says 'Stop that $player!'", "<br><i>You seriously need to keep yourself in check</i>.", tools.initCap(_genderPrefix) + " says 'Back off, freak!'", tools.initCap(_genderPrefix) + " slaps you around the face. 'Back off!'", tools.initCap(_genderPrefix) + " edges away from you nervously."];
@@ -2509,21 +2522,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 } else {
                     resultString = "You sink your teeth into " + self.getFirstName() + ". ";
-                    player.increaseAggression(1); //slowly increase aggression
+                    consumer.increaseAggression(1); //slowly increase aggression
 
-                    var hurtString = self.hurt(8); //player injures creature - we deliberately don't pass player in as attacker here though.
+                    var hurtString = self.hurt(8); //consumer injures creature - we deliberately don't pass consumer in as attacker here though.
                     hurtString = hurtString.replace(self.getDisplayName() + " is", tools.initCap(_genderDescriptivePrefix));
                     
                     var biteBackString = "";
                     if (!self.isDead()) {
                         biteBackString = "<br>"+ _genderPrefix + " struggles free and bites you back.<br>";
-                        //bites player (base attack strength / 4 - not with weapon)
-                        //@todo - possible bug - if player is killed here, death may not be properly reported.
-                        player.hurt(Math.floor(_attackStrength / 4), self);
+                        //bites consumer (base attack strength / 4 - not with weapon)
+                        //@todo - possible bug - if consumer is killed here, death may not be properly reported.
+                        consumer.hurt(Math.floor(_attackStrength / 4), self);
                     };
 
                     resultString += biteBackString + hurtString;
-                    resultString += self.transmit(player, "bite");
+                    resultString += self.transmit(consumer, "bite");
 
                 };
 
@@ -2551,18 +2564,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             resultString = "You tear into the raw flesh of "+self.getDisplayName()+".<br>"
 
             if (_nutrition >0) {
-                player.recover(_nutrition);
+                consumer.recover(_nutrition);
                 resultString += "That was pretty messy but you actually managed to get some nutrition out of "+_genderSuffix+".";
             } else { //nutrition is zero or negative
                 resultString += "Dead "+self.getName()+" really doesn't taste so great. ";
                 if (_nutrition < 0) {
-                    resultString += player.hurt(_nutrition*-1);
+                    resultString += consumer.hurt(_nutrition*-1);
                 };
             };
 
             if (self.getSubType() == "friendly") { resultString += "<br>It's a bit of a sick thing to do if you ask me."; };
 
-            resultString += self.transmit(player, "bite");
+            resultString += self.transmit(consumer, "bite");
             return resultString;
 
          }; 

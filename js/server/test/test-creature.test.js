@@ -1686,7 +1686,7 @@ exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharg
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "The creature grabs the slab of sugary goodness with his teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
+    var expected = "He grabs the slab of sugary goodness with his teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -1704,7 +1704,7 @@ exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBeh
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "The creature pulls at the slab of sugary goodness, chews a small piece off to eat and leaves the remainder on the floor for later.";
+    var expected = "He pulls at the slab of sugary goodness, chews a small piece off to eat and leaves the remainder on the floor for later.";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -1722,7 +1722,7 @@ exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll =
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "The creature pulls at the slab of sugary goodness and devours it all noisily in front of you.";
+    var expected = "He pulls at the slab of sugary goodness and devours it all noisily in front of you.";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -1739,7 +1739,7 @@ exports.receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood = function (test) 
     var c0 = new creature.Creature('creature','beastie', 'an animal',{weight:10, attackStrength:50, gender:'male', type:'animal', carryWeight:50, health:100, maxHealth:150});
     var l = new location.Location("room","a room", false, true, 0);
     c0.go(null,l); 
-    var expected = "The creature sniffs at the slab of sugary goodness, makes a disgruntled snort and turns away.<br>You leave it on the ground in case he comes back later.";
+    var expected = "He sniffs at the slab of sugary goodness, makes a disgruntled snort and turns away.<br>You leave it on the ground in case he comes back later.";
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
@@ -2141,7 +2141,7 @@ exports.deneWontEatMissionChocolateEvenWhenHungry = function (test) {
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
  
-    var expected = "Dene Boulton takes a chocolate.";
+    var expected = "Dene takes a chocolate.";
     var actual = c0.receive(chocolate, p0);
     console.log("expected:" + expected);
     console.log("actual:" + actual);

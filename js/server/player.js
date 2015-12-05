@@ -793,6 +793,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.getDisplayName = function() {
             return "you";
         };
+        
+        self.syn = function (synonym) {
+            var syns = ["self", "me", "myself", _username, "player", "moi", "arm", "leg", "my arm", "my leg", "my"];
+            if (syns.indexOf(synonym) > -1) { return true; }
+            return false;            
+        };
 
         self.setAggression = function(aggressionLevel) {
             _aggression = aggressionLevel;
@@ -4630,7 +4636,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
-            if (!(receiver)) {return notFoundMessage(receiverName);};
+            if (!(receiver)) {
+                if (self.syn(receiverName)) {
+                    return "I know things might seem desperate at times but that's not going to help you. I recommend you get some qualified professional support."
+                };
+                return notFoundMessage(receiverName);
+            };
 
             if (receiver.getSubType() == "intangible") {return "You lash frantically at the air around you before realising how foolish you look.<br>It's ok, I don't think anyone was watching.";}; 
 
@@ -5121,15 +5132,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!artefactName) {
                 return "Inject what into whom?"
             };
-            var selfNames = ["self", "me", "player", "myself", "arm", "leg", "my arm", "my leg", "my"];
-            if (selfNames.indexOf(artefactName) > -1) {
+            if (self.syn(artefactName)) {
                 //swap names
                 var tempName = receiverName;
                 receiverName = artefactName;
                 artefactName = tempName;
             };
             if (receiverName) {
-                if (selfNames.indexOf(receiverName) == -1) {
+                if (!self.syn(receiverName)) {
                     return "You're not qualified enough to perform invasive sterile medical procedures on others. By all means feel free to harm yourself if you have to though."
                 };
             };

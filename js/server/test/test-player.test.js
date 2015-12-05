@@ -817,6 +817,20 @@ exports.canInjectAVaccineIntoSelf = function (test) {
 
 exports.canInjectAVaccineIntoSelf.meta = { traits: ["Player Test", "Inject Trait", "Action Trait", "Contagion Trait"], description: "Test that player can inject a vaccine." };
 
+exports.cannotDrinkVenom = function (test) {
+    var venomData = { file: "venom" };
+    var venom = mb.buildArtefact(venomData);
+    l0.addObject(venom);
+    var expectedResult = "That's a remarkably sensible idea but it won't do you much good. Zombieism is transferred through the blood stream, not the digestive system.$result";
+    var actualResult = p0.drink('drink', 'venom');
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotDrinkVenom.meta = { traits: ["Player Test", "Drink Trait", "Action Trait", "Contagion Trait"], description: "Test that player cannot drink zombie venom and received correct message." };
+
 
 exports.injectingAVaccineProvidesAntibodies = function (test) {
     var supportFromAlice = m0.getNamedMission("supportfromalice");
