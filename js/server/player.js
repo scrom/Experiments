@@ -3119,7 +3119,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "repair" || verb == "fix" || verb == "mend") {return givers[0].repair(artefactName, self);};
 
             if (tools.stringIsEmpty(artefactName)){ return verb+" "+givers[0].getDisplayName()+" for what?";};
-
+            
+            //@todo if a particular verb hasn't been handled, it'll be left in the artefactName here - fix this
             var artefact = (getObjectFromLocation(artefactName)||givers[0].getObject(artefactName));
             if (!(artefact)) {
                 //does the creature have dialogue instead?
