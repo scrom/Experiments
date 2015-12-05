@@ -1182,7 +1182,8 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>Hmm. It seems we have a budding occultist here.<br>You might be getting ahead of yourself a bit."
+          "aggression": 3,
+          "message": "<br>Hmm. It seems we have a budding occultist here.<br>You might be getting ahead of yourself a bit. Don't be surprised if people are little edgy around you for a while."
         }
       },
       {
@@ -1202,7 +1203,8 @@
         },
         "reward": {
           "score": 5,
-          "message": "<br>I'm really not comfortable with your behaviour.<br>Blood and pentagrams are a bit of a worrying mix for an office environment."
+          "aggression": 5,
+          "message": "<br>I'm really not comfortable with your behaviour (and nor is anyone else around here).<br>Blood and pentagrams are a bit of a worrying mix for an office environment."
         }
       },
       {
