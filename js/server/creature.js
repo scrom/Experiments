@@ -3055,7 +3055,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "good evening":  
                     randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];                  
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+"'";
+                    response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+"'";
                     break;
                 case "bye":
                 case "goodbye":
@@ -3067,11 +3067,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     var notSpokenString = "";
                     if (!(_spokenToPlayer)) {
-                       notSpokenString = "<br>"+tools.initCap(self.getPrefix())+" mutters to "+self.getSuffix()+"self. 'Odd, I'm sure we've not actually spoken to each other properly yet.'";
+                       notSpokenString = "<br>"+tools.initCap(self.getFirstName())+" mutters to "+self.getSuffix()+"self. 'Odd, I'm sure we've not actually spoken to each other properly yet.'";
                     };
 
                     //note - we exit early - shortcircuit before mission dialogue
-                    return tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
+                    return tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+".'"+notSpokenString;
                     break;
                 case "ok":
                 case "y":
@@ -3083,7 +3083,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "affirmatory":
                     randomReplies = ["Great", "OK $player", "OK"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 case "no":
                 case "n":
@@ -3098,7 +3098,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "negatory":
                     randomReplies = ["Maybe another time then", "OK $player", "OK", "Fair enough", "That's fine $player"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 case "thanks":
                 case "thankyou":
@@ -3106,7 +3106,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "cheers":
                     randomReplies = ["My pleasure", "Happy to help", "Good luck", "No problem $player"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
-                    response += tools.initCap(self.getPrefix())+" says '"+randomReplies[randomIndex]+".'";
+                    response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 default:
                     break;
@@ -3177,7 +3177,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
                     case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
                         if (remainderString == "sorry") {
-                            return tools.initCap(self.getPrefix())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
+                            return tools.initCap(self.getFirstName())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
                             break;
                         };
                     case 'who': //is/are [character]
