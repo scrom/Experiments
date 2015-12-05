@@ -1368,9 +1368,14 @@
           "type": "scenery",
           "combinesWith": [
             "water"
-          ]
+          ],
+          "customAction": "climb",
+          "defaultResult": "You grab hold of the tree and attempt to climb it but the bark is too slippery and you fail to find any suitable handholds."
         },
         "synonyms": [
+          "crown",
+          "green crown",
+          "leaves",
           "large tree",
           "potted tree",
           "large potted tree",

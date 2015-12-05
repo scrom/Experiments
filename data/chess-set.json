@@ -1,0 +1,24 @@
+﻿{
+  "object": "artefact",
+  "name": "chess set",
+  "description": "chess set",
+  "detailedDescription": "It's a cheapish generic wooden chess set.",
+  "attributes": {
+    "weight": 2,
+    "type": "treasure",
+    "canCollect": true,
+    "isBreakable": true,
+    "price": 5,
+    "canDrawOn": true,
+    "customAction": [
+      "play"
+    ],
+    "defaultResult": "You briefly consider a game of chess with youself but decide there's more productive things you should be doing with your time."
+  },
+  "synonyms": [
+    "board",
+    "set",
+    "chess board",
+    "chess"
+  ]
+}

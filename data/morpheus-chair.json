@@ -1,0 +1,43 @@
+﻿{
+  "object": "artefact",
+  "name": "chair",
+  "description": "red leather chair",
+  "detailedDescription": "You expect to find Morpheus sitting in it. It's surprisingly comfortable.",
+  "attributes": {
+    "defaultAction": "rest",
+    "weight": 80,
+    "carryWeight": 0.1,
+    "type": "bed",
+    "isBreakable": true,
+    "imageName": "morpheuschair.jpg",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "red chair",
+    "leather chair",
+    "red leather chair",
+    "morpheus chair",
+    "seat"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "key",
+      "description": "door key",
+      "detailedDescription": "It doesn't look familiar.",
+      "attributes": {
+        "defaultAction": "open",
+        "weight": 0.1,
+        "type": "key",
+        "canCollect": true,
+        "affinityModifier": -1,
+        "hidden": true,
+        "unlocks": "lawyer door"
+      },
+      "synonyms": [
+        "lawyer key",
+        "door key"
+      ]
+    }
+  ]
+}

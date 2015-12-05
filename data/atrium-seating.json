@@ -21,69 +21,9 @@
     }
   ],
   "inventory": [
-    {
-      "object": "artefact",
-      "template": "table",
-      "description": "large dining table",
-      "detailedDescription": "It's a modern, rectangular dining table.",
-      "attributes": {
-        "isBreakable": false
-      },
-      "synonyms": [
-        "dining table",
-        "large table",
-        "large dining table",
-        "modern dining table",
-        "modern rectangular dining table",
-        "regtangular dining table"
-      ],
-      "inventory": [
-        {"file": "cake"}
-      ]
-    },
-    {
-      "object": "artefact",
-      "name": "tree",
-      "description": "large tree",
-      "detailedDescription": "It's an ornamental evergreen variety.<br>The twisted trunks spiral up about 25 feet into a carefully manicured crown of green.",
-      "attributes": {
-        "weight": 300,
-        "type": "scenery",
-        "combinesWith": [
-          "water"
-        ]
-      },
-      "synonyms": [
-        "large tree",
-        "potted tree",
-        "large potted tree",
-        "plant"
-      ]
-    },
-    {
-      "object": "artefact",
-      "name": "chess set",
-      "description": "chess set",
-      "detailedDescription": "It's a cheapish generic wooden chess set.",
-      "attributes": {
-        "weight": 2,
-        "type": "treasure",
-        "canCollect": true,
-        "isBreakable": true,
-        "price": 5,
-        "canDrawOn": true,
-        "customAction": [
-          "play"
-        ],
-        "defaultResult": "You briefly consider a game of chess with youself but decide there's more productive things you should be doing with your time."
-      },
-      "synonyms": [
-        "board",
-        "set",
-        "chess board",
-        "chess"
-      ]
-    },
+    {"file": "dining-table"},
+    {"file": "tree"},
+    {"file": "chess-set"},
     {
       "object": "artefact",
       "template": "window",
@@ -92,77 +32,7 @@
         "viewDestination": "lawyer-lobby"
       }
     },
-    {
-      "object": "artefact",
-      "name": "lawyer door",
-      "description": "door leading south",
-      "detailedDescription": "Peering through the window you see serious people in suits looking busy and important.",
-      "attributes": {
-        "defaultAction": "open",
-        "weight": 200,
-        "type": "door",
-        "canOpen": true,
-        "lockable": true,
-        "locked": true,
-        "canDrawOn": true
-      },
-      "linkedexits": [
-        {
-          "object": "exit",
-          "longname": "South",
-          "direction": "s",
-          "source": "atrium-seating",
-          "destination": "lawyer-lobby",
-          "hidden": true
-        }
-      ],
-      "synonyms": [
-        "lawyer exit",
-        "door"
-      ]
-    },
-    {
-      "object": "artefact",
-      "name": "chair",
-      "description": "red leather chair",
-      "detailedDescription": "You expect to find Morpheus sitting in it. It's surprisingly comfortable.",
-      "attributes": {
-        "defaultAction": "rest",
-        "weight": 80,
-        "carryWeight": 0.1,
-        "type": "bed",
-        "isBreakable": true,
-        "imageName": "morpheuschair.jpg",
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "red chair",
-        "leather chair",
-        "red leather chair",
-        "morpheus chair",
-        "seat"
-      ],
-      "inventory": [
-        {
-          "object": "artefact",
-          "name": "key",
-          "description": "door key",
-          "detailedDescription": "It doesn't look familiar.",
-          "attributes": {
-            "defaultAction": "open",
-            "weight": 0.1,
-            "type": "key",
-            "canCollect": true,
-            "affinityModifier": -1,
-            "hidden": true,
-            "unlocks": "lawyer door"
-          },
-          "synonyms": [
-            "lawyer key",
-            "door key"
-          ]
-        }
-      ]
-    }   
+    {"file": "lawyer-door"},
+    {"file": "morpheus-chair"}
   ]
   }

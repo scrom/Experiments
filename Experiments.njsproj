@@ -57,6 +57,7 @@
     <Content Include="data\cereal-box.json" />
     <Content Include="data\chairs.json" />
     <Content Include="data\charred-comic.json" />
+    <Content Include="data\chess-set.json" />
     <Content Include="data\chocolate.json" />
     <Content Include="data\chris-george.json" />
     <Content Include="data\chris-moore.json" />
@@ -88,6 +89,7 @@
     <Content Include="data\dave-convery.json" />
     <Content Include="data\daves-desk.json" />
     <Content Include="data\dene-boulton.json" />
+    <Content Include="data\dining-table.json" />
     <Content Include="data\east-bike-racks.json" />
     <Content Include="data\east-car-park-corner.json" />
     <Content Include="data\east-car-park.json" />
@@ -156,6 +158,7 @@
     <Content Include="data\kitchen-first-floor.json" />
     <Content Include="data\kitchen-ground-floor.json" />
     <Content Include="data\latte.json" />
+    <Content Include="data\lawyer-door.json" />
     <Content Include="data\lawyer-lobby.json" />
     <Content Include="data\library.json" />
     <Content Include="data\lift-first-floor.json" />
@@ -215,6 +218,7 @@
     <Content Include="data\mission-vanarrival.json" />
     <Content Include="data\mission-waterfilsplants.json" />
     <Content Include="data\mocha.json" />
+    <Content Include="data\morpheus-chair.json" />
     <Content Include="data\mouse.json" />
     <Content Include="data\northwest-corridor-ground-floor.json" />
     <Content Include="data\nut-roast.json" />
@@ -340,6 +344,7 @@
     <Content Include="data\top-fire-escape.json" />
     <Content Include="data\torch.json" />
     <Content Include="data\traffic-jam-meeting-room.json" />
+    <Content Include="data\tree.json" />
     <Content Include="data\tyre-tracks.json" />
     <Content Include="data\van.json" />
     <Content Include="data\vat.json" />

@@ -1,0 +1,29 @@
+﻿{
+  "object": "artefact",
+  "name": "lawyer door",
+  "description": "door leading south",
+  "detailedDescription": "Peering through the window you see serious people in suits looking busy and important.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "lockable": true,
+    "locked": true,
+    "canDrawOn": true
+  },
+  "linkedexits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "atrium-seating",
+      "destination": "lawyer-lobby",
+      "hidden": true
+    }
+  ],
+  "synonyms": [
+    "lawyer exit",
+    "door"
+  ]
+}

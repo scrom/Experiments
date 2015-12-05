@@ -1,0 +1,20 @@
+﻿{
+  "object": "artefact",
+  "template": "table",
+  "description": "large dining table",
+  "detailedDescription": "It's a modern, rectangular dining table.",
+  "attributes": {
+    "isBreakable": false
+  },
+  "synonyms": [
+    "dining table",
+    "large table",
+    "large dining table",
+    "modern dining table",
+    "modern rectangular dining table",
+    "regtangular dining table"
+  ],
+  "inventory": [
+    { "file": "cake" }
+  ]
+}

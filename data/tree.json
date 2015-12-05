@@ -1,0 +1,24 @@
+﻿{
+  "object": "artefact",
+  "name": "tree",
+  "description": "large tree",
+  "detailedDescription": "It's an ornamental evergreen variety.<br>The twisted trunks spiral up about 25 feet into a carefully manicured crown of green.",
+  "attributes": {
+    "weight": 300,
+    "type": "scenery",
+    "customAction": "climb",
+    "defaultResult": "You grab hold of the tree and attempt to climb it but the bark is too slippery and you fail to find any suitable handholds.",
+    "combinesWith": [
+      "water"
+    ]
+  },
+  "synonyms": [
+    "crown",
+    "green crown",
+    "leaves",
+    "large tree",
+    "potted tree",
+    "large potted tree",
+    "plant"
+  ]
+}
