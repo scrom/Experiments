@@ -1511,6 +1511,25 @@ exports.SmashLiquidContainerLosesContents = function (test) {
 exports.SmashLiquidContainerLosesContents.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Smash Trait", "Liquid Trait"], description: "Test that a player can hit a liquid container with a weapon they're carrying." };
 
 
+exports.ThrowingAPreviouslyBrokenObjectReturnsSensibleMessage = function (test) {
+    var lumpAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: false, isLiquid: false };
+    var lump = new artefact.Artefact('lump', 'lump', "Development fuel.", lumpAttributes, null);
+    
+    var openBreakableContainerAttributes = { weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
+    var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    mug.receive(lump);
+    mug.break("break", true);
+    l0.addObject(mug);
+    var expectedResult = "You throw the coffee mug at the wall.<br>It feels good in a gratuitously violent, wasteful sort of way...<br>It wasn't exactly the most durable item around here.<br>Its contents are scattered on the floor.";
+    var actualResult = p0.hit("throw", "wall", mug.getName());
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.ThrowingAPreviouslyBrokenObjectReturnsSensibleMessage.meta = { traits: ["Player Test", "Action Trait", "Artefact Trait", "Hit Trait", "Throw Trait"], description: "Test that a player can throw a broken object and destroy it." };
+
 
 exports.hittingUnbreakableArtefactReturnsSensibleMessage = function (test) {
     p0.get('get', weapon.getName());

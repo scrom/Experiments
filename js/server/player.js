@@ -4766,10 +4766,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 
                 return resultString;
             };
+            
+            //we use this lots and displayName will change if the weapon is damaged or broken
+            var weaponName = weapon.getDisplayName();
 
             //need to validate that artefact is a weapon (or at least is mobile)
             if (!(weapon.isCollectable())) {
-                resultString =  "You attack "+ receiverDisplayName+". Unfortunately you can't move "+weapon.getDisplayName()+" to use as a weapon.<br>";
+                resultString =  "You attack "+ receiverDisplayName+". Unfortunately you can't move "+ weaponName +" to use as a weapon.<br>";
                 if (receiver.getType() == "creature") {
                     resultString += tools.initCap(receiver.getPrefix())+ "retaliates. ";
                     resultString += receiver.hit(self,0.2); //return 20% damage
@@ -4779,7 +4782,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //need to validate that weapon will do some damage
             if (weapon.getAttackStrength()<1) {
-                resultString = "You attack "+ receiverDisplayName+". Unfortunately "+weapon.getDisplayName()+" is useless as a weapon.<br>";
+                resultString = "You attack "+ receiverDisplayName+". Unfortunately "+ weaponName +" is useless as a weapon.<br>";
                 resultString += weapon.bash();
                 if (receiver.getType() == "creature") {
                     resultString += tools.initCap(receiver.getPrefix())+ "retaliates. ";
@@ -4857,11 +4860,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
                 if (verb == "throw") {
-                    resultString +=  "You "+verb+" "+weapon.getDisplayName()+" at "+ receiverDisplayName+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                    resultString +=  "You "+verb+" "+ weaponName +" at "+ receiverDisplayName+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 } else {
                     weapon.consume(2); //use up multiple charges!
                     weapon.consumeComponents(2);
-                    resultString +=  "You repeatedly "+verb+" "+ receiverDisplayName+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
+                    resultString +=  "You repeatedly "+verb+" "+ receiverDisplayName+" with "+ weaponName +".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 };
             }; 
             
@@ -4878,27 +4881,31 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (weapon.isBreakable() && (weapon.getSubType() != "projectile" || verb == "throw")) {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
-                        resultString +="<br>Oh dear. You destroyed "+weapon.getDisplayName()+". "+weapon.getDescriptivePrefix()+" not the most durable of weapons.";
+                        var ohDear = "<br>Oh dear. You destroyed the " + weapon.getName() + ", " + weapon.getSuffix() + " wasn't the most durable of weapons.";
+                        if (verb == "throw") {
+                            ohDear = "..<br>"+tools.initCap(weapon.getPrefix())+" wasn't exactly the most durable item around here.";
+                        };
+                        resultString += ohDear;
                         resultString += emptyContentsOfContainer(weapon.getName());
                         //remove destroyed item
                         _destroyedObjects.push(weapon);
                         removeObjectFromPlayerOrLocation(artefactName);                    
                     } else if (weapon.isBroken()) {
-                        resultString += "<br>You broke "+weapon.getDisplayName()+".";
+                        resultString += "<br>You broke "+ weaponName +".";
                         resultString += weapon.drain(_currentLocation);   
                     } else {
-                        resultString +="<br>You damaged "+weapon.getDisplayName()+".";
+                        resultString +="<br>You damaged "+ weaponName +".";
                     };
                 };
                 if (!weapon.isDestroyed() && verb != "throw") {
                     if (chargesRemaining == 0) {
-                        resultString +="<br>You used up all the "+weapon.getChargeUnit()+"s in "+weapon.getDisplayName()+".";
+                        resultString +="<br>You used up all the "+weapon.getChargeUnit()+"s in "+ weaponName +".";
                     };
                     if (componentChargesRemaining == 0) {
                         var consumedItems = weapon.getConsumedComponents();
                         if (consumedItems.length > 0) {
                             var usedItem = consumedItems[0];
-                            resultString +="<br>You used up all the "+usedItem.getName()+" "+usedItem.getChargeUnit()+"s in "+weapon.getDisplayName()+".";
+                            resultString +="<br>You used up all the "+usedItem.getName()+" "+usedItem.getChargeUnit()+"s in "+ weaponName +".";
                         };
                         //remove consumed items.
                         for (var c=0;c<consumedItems.length;c++) {_inventory.remove(consumedItems[c].getName());};
