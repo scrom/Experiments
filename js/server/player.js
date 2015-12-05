@@ -1400,7 +1400,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
     
                 if (!suitableContainer) {
-                    return "You're not carrying anything that you can collect " + artefact.getDisplayName() + " into.";
+                    return "You're not carrying anything that you can collect the " + artefact.getName() + " into.";
                 };
 
                 var requiredContainer = artefact.getRequiredContainer();

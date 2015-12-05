@@ -1,6 +1,6 @@
 ﻿{
   "object": "artefact",
-  "name": "pool",
+  "name": "venom",
   "description": "pool of zombie venom",
   "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
   "attributes": {
@@ -29,7 +29,7 @@
     "zombie venom",
     "zombie venom antibodies",
     "zombie antibodies",
-    "venom",
+    "pool",
     "sample",
     "zombie"
   ],
