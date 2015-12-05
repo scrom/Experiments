@@ -467,7 +467,7 @@ exports.movingWhenExhaustedTakesThreeTimesAsLong.meta = { traits: ["Player Test"
 exports.movingWhenExhaustedTellsPlayer = function (test) {
     p0.increaseTimeSinceResting(250);
     //p0.reduceHitPoints(6);
-    var expectedResult = "<br>You're exhausted.<br>You feel weaker. ";
+    var expectedResult = "<br>You're exhausted.<br>";
     
     var ticks = p0.calculateTicks(1);
     var actualResult = p0.tick(ticks, m0);

@@ -89,7 +89,7 @@ exports.Action = function Action(player, map, fileManager) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['in with', 'with my', 'with', 'into my', 'into', 'in to my', 'in my', 'in to', 'onto my', 'onto', 'on to my', 'on to', 'on top of my', 'on top of', 'to my', 'to', 'from my', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'in', 'out', 'is', 'are', 'my', 'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over']; //the words we'll try to split on.
+            var splitWordArray = ['in with', 'with my', 'with', 'into my', 'into', 'in to my', 'in my', 'in to', 'onto my', 'onto', 'on to my', 'on to', 'on top of my', 'on top of', 'to my', 'to', 'from my', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'off of', 'in', 'out', 'is', 'are', 'my', 'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over']; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid substring oddities
                 if (objectPair != aString) { //split successful
@@ -1159,8 +1159,8 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'jump':
                         _ticks = 1;
                         var index = tools.positions.indexOf(_splitWord);
-                        if (!_object0 && _object1 && (0 <= index && index < tools.onIndex)) {
-                            //player is trying "jump on or jump over"
+                        if (!_object0 && _object1 && ((0 <= index && index < tools.onIndex) || _splitWord == "off" || _splitWord == "off of" )) {
+                            //player is trying "jump on, over or off of"
                             description = _player.goObject(_verb, _splitWord, _object1, _map);
                         } else if (_object0) {
                             description = _player.goObject(_verb, "over", _object0, _map);

@@ -18170,7 +18170,10 @@
             "get",
             "catch"
           ],
-          "defaultResult": "As you reach down to pick the cat up it turns, lashes out at you and backs away out of your reach.<br>I don't think it wants to be picked up.",
+          "defaultResult": {
+            "message": "As you reach down to pick the cat up it turns, lashes out at you and backs away out of your reach.<br>I don't think it wants to be picked up.",
+            "health": -2
+          },
           "weight": 3,
           "attackStrength": 6,
           "type": "animal",

@@ -4175,16 +4175,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             var index = tools.positions.indexOf(splitWord);
+            if (splitWord == "off" || splitWord == "off of") {
+                index = 5; //fake a match with "over"
+            };
             if (0 <= index && index < tools.onIndex) {
                 //if not default scenery
                 if (_currentLocation.defaultScenery().indexOf(artefact.getName()) == -1 && artefact.getType() != "door") {
-                    if (splitWord == "over" && verb == "jump") {
+                    if ( index >= 5 && verb == "jump") {
                         //50% chance of serious injury
                         var randomInt = Math.floor(Math.random() * 2);
                         if (randomInt != 0) {
-                            self.hurt(65);
                             artefact.break();
-                            return "You take a short run up, leap into the air and catch your ankle on "+artefact.getDisplayName()+".<br>You fall heavily face-down on the floor, it feels like you broke something serious.";
+                            return "You take a short run up, leap into the air and catch your ankle on "+artefact.getDisplayName()+".<br>You fall heavily face-down on the floor. "+ self.hurt(65);
                         };
                         return "You take a short run up, prepare to leap into the air and then decide it's not such a wise thing to do."
                     };
@@ -4201,7 +4203,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     } else {
                         var resultString = "You clamber onto "+artefact.getDisplayName()+" but "+ artefact.getPrefix().toLowerCase()+" can't hold your weight. ";
                         resultString += artefact.break();
-                        resultString += "<br>You tumble to the floor and twist your ankle. Ouch!<br>";
+                        resultString += "<br>You tumble to the floor and twist your ankle.<br>";
                         resultString += self.hurt(8);
                         return resultString;
                     };
@@ -4594,7 +4596,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 return "";
             };
-            return "You feel weaker. ";
+
+            if (pointsToRemove > 50) {
+                return "It feels like you've damaged something serious. ";
+            } else if (pointsToRemove >= 15) {
+                return "You feel weaker. ";
+            };
+            return "";
         };
 
         self.hit = function(verb, receiverName, artefactName){
