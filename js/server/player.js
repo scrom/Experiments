@@ -4154,6 +4154,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(artefact)) {
                 return "You'll need to explore and find your way there yourself I'm afraid.";
             };
+            
+            //custom action support here...
+            if (artefact.checkCustomAction(verb)) {
+                return self.customAction(verb, artefactName);
+            };
 
             if (artefact.getType() == "creature") {
                 return "I don't think "+artefact.getPrefix().toLowerCase()+"'ll appreciate that.";
