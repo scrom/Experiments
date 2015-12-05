@@ -147,6 +147,7 @@ function Client(aServerHost, aServerPort, aUi) {
         } else if (inputString == "quit " || inputString == "quit game " ) {
             quitGame();
         } else {
+            inputString = inputString.trim();
             if (username == ""){
                 if (!(inputString)) {inputString = ""};
                 if (inputString.trim() == "") {
