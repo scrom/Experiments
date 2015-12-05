@@ -4,6 +4,8 @@ var location = require('../location.js');
 var inventory = require('../inventory.js');
 var player = require('../player.js');
 var map = require('../map.js');
+var mapBuilder = require('../mapbuilder.js');
+var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
 var a0;
 var attributes = null;
 var aName = 'name';
@@ -994,8 +996,9 @@ exports.readABookWithContentButNoMissionsReturnsContent.meta = { traits: ["Artef
 
 exports.canSwitchOnPoweredItem = function (test) {
 
-    var expectedResult = "xxx";
-    var actualResult = artefact.read("read", "comic");
+    var torch = mb.buildArtefact({ "file": "torch" });
+    var expectedResult = "You turn the emergency torch on.";
+    var actualResult = torch.switchOnOrOff("turn", "on");
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -1005,9 +1008,10 @@ exports.canSwitchOnPoweredItem = function (test) {
 exports.canSwitchOnPoweredItem.meta = { traits: ["Artefact Test", "Power Trait", "Switch Trait"], description: "Test that a powered item can be switched on." };
 
 exports.canSwitchOnFlammableItem = function (test) {
-    
-    var expectedResult = "xxx";
-    var actualResult = artefact.read("read", "comic");
+    var candle = mb.buildArtefact({ "file": "candle" });
+    var lighter = mb.buildArtefact({ "file": "lighter" });
+    var expectedResult = "You light the candle";
+    var actualResult = candle.switchOnOrOff("light", "", lighter);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -1018,8 +1022,18 @@ exports.canSwitchOnFlammableItem.meta = { traits: ["Artefact Test", "Power Trait
 
 exports.flammableItemWillBurnOut = function (test) {
     
-    var expectedResult = "xxx";
-    var actualResult = artefact.read("read", "comic");
+    var candle = mb.buildArtefact({ "file": "candle" });
+    var lighter = mb.buildArtefact({ "file": "lighter" });
+    candle.switchOnOrOff("light", "", lighter);
+    var expectedResult = "A nearby candle has burned out.<br>";
+    var actualResult;
+    var loopcount = 0;
+    while (!(actualResult) && loopcount < 151) {
+        actualResult = candle.tick();
+        loopcount++;
+    };
+    //console.log(loopcount);
+    //console.log(candle.getDetailedDescription());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -1030,8 +1044,18 @@ exports.flammableItemWillBurnOut.meta = { traits: ["Artefact Test", "Power Trait
 
 exports.poweredItemWillConsumePower = function (test) {
     
-    var expectedResult = "xxx";
-    var actualResult = artefact.read("read", "comic");
+    var torch = mb.buildArtefact({ "file": "torch" });
+    var initialCharge = torch.consumeComponents(0);
+    torch.switchOnOrOff("light", "");
+    var expectedResult = "3.2";
+    var loopcount = 0;
+    while (!(actualResult) && loopcount < 15) {
+        torch.tick();
+        loopcount++;
+    };
+    var actualResult = initialCharge - torch.consumeComponents(0);
+    //console.log(torch.chargesRemaining());
+    console.log(torch.getDetailedDescription());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);

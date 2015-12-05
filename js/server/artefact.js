@@ -2145,7 +2145,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
             if (_flammable && !(_on) && (onOrOff != "off" || onOrOff != "out" || onOrOff != "stop" )) {
                 if (!ignitionSource) {
-                    return "You don't have anything to light "+self.getSuffix()+ "with."
+                    return "You don't have anything to light "+self.getSuffix()+ " with."
                 };
             };
 
@@ -3261,16 +3261,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //not implemented yet
             var resultString = "";
             var ownerString = "A nearby";  //owner is location
-            if (owner.getType() == "player") {
-                ownerString = "Your";
-            } else if (owner.getType() == "creature") {
-                ownerString = owner.getFirstName();
-                ownerString += "'";
-                if (ownerString.slice(-2) != "s'") {
-                    ownerString += "s";
+            if (owner) {
+                if (owner.getType() == "player") {
+                    ownerString = "Your";
+                } else if (owner.getType() == "creature") {
+                    ownerString = owner.getFirstName();
+                    ownerString += "'";
+                    if (ownerString.slice(-2) != "s'") {
+                        ownerString += "s";
+                    };
                 };
             };
-
             var usedItem; 
             if (_on) {
                 if (_burnRate >0) {
@@ -3296,8 +3297,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (usedItemString != self.getName()) { usedItemString = self.getName() + " " + usedItem.getName(); };
                     if (usedItem.isFlammable()) {
                         runOutString = " burned out";
-                        var ownerInventory = owner.getInventoryObject();
-                        ownerInventory.remove(usedItemString, false);
+                        if (owner) {
+                            var ownerInventory = owner.getInventoryObject();
+                            ownerInventory.remove(usedItemString, false);
+                        };
                     };
 
                     resultString += ownerString+ " " + usedItemString + " " + usedItem.hasPlural() + runOutString + ".<br>";
