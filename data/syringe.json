@@ -11,7 +11,7 @@
     "canCollect": true,
     "affinityModifier": 0,
     "combinesDescription": " ",
-    "combinesWith": "pool",
+    "combinesWith": "venom",
     "isBreakable": true
   },
   "synonyms": [

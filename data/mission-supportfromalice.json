@@ -23,7 +23,7 @@
       "template": "syringe",
       "attributes": {
         "combinesDescription": " ",
-        "combinesWith": "pool"
+        "combinesWith": "venom"
       },
       "delivers": [ { "file": "zombie-vaccine" } ]
     },

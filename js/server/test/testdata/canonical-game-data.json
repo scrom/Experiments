@@ -2173,7 +2173,7 @@
                   "isBreakable": true,
                   "combinesDescription": " ",
                   "affinityModifier": 0,
-                  "combinesWith": "pool"
+                  "combinesWith": "venom"
                 },
                 "synonyms": [
                   "hypo",
@@ -4005,7 +4005,7 @@
                   "isBreakable": true,
                   "combinesDescription": " ",
                   "affinityModifier": 0,
-                  "combinesWith": "pool"
+                  "combinesWith": "venom"
                 },
                 "synonyms": [
                   "hypo",
@@ -4032,7 +4032,7 @@
                       "isBreakable": true,
                       "combinesDescription": " ",
                       "affinityModifier": 0,
-                      "combinesWith": "pool",
+                      "combinesWith": "venom",
                       "customAction": "inject"
                     },
                     "synonyms": [
@@ -10612,7 +10612,7 @@
                             "isBreakable": true,
                             "combinesDescription": " ",
                             "affinityModifier": 0,
-                            "combinesWith": "pool",
+                            "combinesWith": "venom",
                             "customAction": "inject"
                           },
                           "synonyms": [
