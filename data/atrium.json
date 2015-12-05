@@ -55,6 +55,7 @@
           "subType": "intangible",
           "customAction": [
             "get",
+            "check",
             "find",
             "where is",
             "where"
