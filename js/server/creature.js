@@ -3053,7 +3053,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "good morning":
                 case "good afternoon":
                 case "good evening":  
-                    randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];                  
+                    randomReplies = ["Hi $player.", "Hey $player.", "Can I help you?", "Hello $player.", "Hello.", "Hi."];
+                    if (self.getAffinity() < 1) {
+                        randomReplies.push("Yes, what is it?");
+                    };
+                    if (self.getAffinity() > 2) {
+                        randomReplies.push("Heyyyy, how's it going?");
+                        randomReplies.push("Alright $player, how goes?");
+                    };                            
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+"'";
                     break;
@@ -3063,7 +3070,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "goodnight":
                 case "good night":
                 case "good-night":
-                    randomReplies = ["Bye $player", "Goodbye $player", "See you round $player", "Seeya", "See you later"];
+                    randomReplies = ["Bye $player", "Goodbye $player", "See you round $player", "See you later"];
+                    if (self.getAffinity() > 2) {
+                        randomReplies.push("Seeya");
+                        randomReplies.push("Ciao");
+                    };    
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     var notSpokenString = "";
                     if (!(_spokenToPlayer)) {
@@ -3109,6 +3120,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+".'";
                     break;
                 default:
+                    if (self.syn(someSpeech)) {
+                        return self.reply("hi", player, keyword, map);
+                    };
                     break;
             };
 
@@ -3260,7 +3274,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
                 if (artefactName) {
                     if (_currentLocation.objectExists(artefactName, false, false, true)) {
-                        return tools.initCap(self.getPrefix()) + " says 'I'm sure I saw something like that near here recently.'";
+                        var object = _currentLocation.getObject(artefactName, false, false);
+                        if (object.getType() == "creature") {
+                            if (object.getSubType() == "friendly") {
+                                if (object.getDisplayName() != self.getDisplayName()) {
+                                    return tools.initCap(self.getFirstName()) + " says 'Hey, " + object.getFirstName() + ".'<br>'$player here wants to talk to you when you've got a minute.'";
+                                };
+                            };
+                        };
+
+                        return tools.initCap(self.getPrefix()) + " says 'I'm sure " + object.getDescriptivePrefix() + " around here somewhere.'";
                     };
                     if (map.checkExists(artefactName)) {
                         return "You ask " + self.getFirstName() + " for " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
@@ -4132,6 +4155,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.chargesRemaining = function() {
             return Math.round(_charges*100)/100;
         };
+        
+        self.getChargeUnit = function () {
+            return "charge";
+        };        
         
         self.getChargeWeight = function () {
             if (!self.willDivide()) { return self.getWeight(); };

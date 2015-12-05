@@ -182,7 +182,7 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.slipLevel = function() {
             var slipCount = 0;
-            if (_blood >8) {slipCount++;};
+            if (_blood >7) {slipCount++;};
             var floor = _inventory.getObject("floor", true, false, false);
             
             if (floor) {slipCount += floor.countLiquid();};
@@ -194,7 +194,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (!reduceBy) {reduceBy = 1};
             if (_blood >0) {
                 _blood = _blood - reduceBy;
-                if (_blood < 9) {
+                if (_blood < 8) {
                     //if we have a floor object...
                     var floor = _inventory.getObject("floor", true, false, false);
                     if (floor) {
@@ -516,7 +516,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                     "taste": "It's slightly sticky and tangy with a burned metallic aftertaste.<br>Hey, hang on. Why are you tasting blood?"
                 };
 
-                if (_blood <=9) {
+                if (_blood <8) {
                     //must be freshly spilled only to be able to collect.
                     bloodAttributes.type = "scenery";
                     bloodAttributes.canCollect = false;
@@ -632,7 +632,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (_blood <=0) {
                 return "";
             } 
-            else if (_blood >= 9) {
+            else if (_blood >= 8) {
                 return "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.";
             } else if (_blood > 5) {
                 return "<br>You notice splatters of blood in the area. It looks like someone or something's been bleeding here.";
@@ -804,9 +804,12 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
             
             var resultString = "";
+            if (time > 0) {
+                var reduceBloodByQuantity = Math.max(time / (tools.baseTickSize * 2), 1)
+                self.reduceBlood(reduceBloodByQuantity);
+            };
             for (var t = 0; t < time; t++) {
                 //decrease blood in location (if any there)
-                self.reduceBlood();
                 
                 //tick inventory items
                 resultString += _inventory.tick(self);

@@ -844,6 +844,7 @@ exports.injectingAVaccineProvidesAntibodies = function (test) {
     console.log(p0.examine("examine", "syringe", null, m0));
     console.log(p0.get('get', venom.getName()));
     console.log(p0.inject('venom', 'self'));
+    console.log(p0.inject('venom', 'self')); //often fails to take on first attempt.
     var expectedResult = true;
     var actualResult = p0.hasAntibodies("zombie");
     console.log("Expected: " + expectedResult);

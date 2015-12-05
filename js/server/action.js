@@ -427,6 +427,10 @@ exports.Action = function Action(player, map, fileManager) {
                         //trap a few junk words - will return "look" with no object. 
                         var junkWords = ["exits", "objects", "artefacts", "creatures", "artifacts"]
                         if (junkWords.indexOf(_object0) > -1) { _object0 = null; };
+                        if (!_object0 && !_object1) {
+                            //if just looking around, use a little less time.
+                            _ticks = 1;
+                        };
                         if (_object0 && _object1) {
                             //e.g. "examine sugar in cup"
                             description = _player.examine(_verb, _object0, _object1, _map);
