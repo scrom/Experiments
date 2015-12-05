@@ -1352,7 +1352,7 @@ exports.hittingLiquidContainerWhenArmedLosesLiquidContents = function (test) {
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', weapon.getName());
-    var expectedResult = "You broke it!<br>The coffee that was in the coffee mug slowly trickles away.";
+    var expectedResult = "You broke it!<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('hit',mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1373,7 +1373,7 @@ exports.throwingLiquidContainerLosesLiquidContents = function (test) {
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
-    var expectedResult = "You throw the coffee mug. You broke it!<br>The coffee that was in the coffee mug slowly trickles away.";
+    var expectedResult = "You throw the coffee mug. You broke it!<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.drop('throw',mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1414,7 +1414,7 @@ exports.deliberatelyBreakingLiquidContainerLosesLiquidContents = function (test)
     l0.addObject(mug);
     console.log(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
-    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You broke it!<br>The coffee that was in the coffee mug slowly trickles away.";
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You broke it!<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.breakOrDestroy('break',mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1479,7 +1479,7 @@ exports.UsingLiquidContainerAsWeaponTwiceLosesLiquidContents = function (test) {
     console.log(p0.examine("examine","mug"));
     console.log(p0.get('get', weapon.getName()));
     console.log(p0.hit('hit',weapon.getName(), mug.getName()));
-    var expectedResult = "You repeatedly hit the mighty sword with the coffee mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the coffee mug.<br>The coffee that was in the coffee mug slowly trickles away.";
+    var expectedResult = "You repeatedly hit the mighty sword with the coffee mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the coffee mug.<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('hit',weapon.getName(), mug.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1500,7 +1500,7 @@ exports.SmashLiquidContainerLosesContents = function (test) {
     l0.addObject(mug);
     l0.removeObject("sword");
     console.log(p0.examine("examine", "mug"));
-    var expectedResult = "You repeatedly beat the coffee mug against the floor and manage to smash it along with spilling its contents.<br>The coffee that was in it slowly trickles away.";
+    var expectedResult = "You repeatedly beat the coffee mug against the floor and manage to destroy it. <br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('smash', mug.getName());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);

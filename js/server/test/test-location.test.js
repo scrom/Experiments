@@ -177,13 +177,13 @@ exports.freshBloodInLocationIsCollectable = function (test) {
 };
 exports.freshBloodInLocationIsCollectable.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
-exports.freshBloodInLocationIsNotCollectableAfter1Tick = function (test) {
+exports.freshBloodInLocationIsNotCollectableAfter9Ticks = function (test) {
     
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     c0.go(null, l0);
     c0.kill();
-    l0.tick(1);
+    l0.tick(9);
     var blood = l0.getObject("blood");
     
     var expected = false;
@@ -193,15 +193,15 @@ exports.freshBloodInLocationIsNotCollectableAfter1Tick = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.freshBloodInLocationIsNotCollectableAfter1Tick.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.freshBloodInLocationIsNotCollectableAfter9Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
-exports.bloodInLocationDecaysAfter2Ticks = function (test) {
+exports.bloodInLocationDecaysAfter9Ticks = function (test) {
     
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     c0.go(null, l0);
     c0.kill();
-    l0.tick(2);
+    l0.tick(9);
     
     var expected = "<br>You notice splatters of blood in the area. It looks like someone or something's been bleeding here.";
     var actual = l0.describeBlood();
@@ -210,16 +210,16 @@ exports.bloodInLocationDecaysAfter2Ticks = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.bloodInLocationDecaysAfter2Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.bloodInLocationDecaysAfter9Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
 
-exports.bloodInLocationOlderThan2TicksCannotBeCollected = function (test) {
+exports.bloodInLocationOlderThan9TicksCannotBeCollected = function (test) {
     
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     c0.go(null, l0);
     c0.kill();
-    l0.tick(2);
+    l0.tick(9);
     var blood = l0.getObject("blood");
     
     var expected = false;
@@ -229,16 +229,16 @@ exports.bloodInLocationOlderThan2TicksCannotBeCollected = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.bloodInLocationOlderThan2TicksCannotBeCollected.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.bloodInLocationOlderThan9TicksCannotBeCollected.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
 
-exports.bloodInLocationFadesAfter5Ticks = function (test) {
+exports.bloodInLocationFadesAfter20Ticks = function (test) {
     
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     c0.go(null, l0);
     c0.kill();
-    l0.tick(5);
+    l0.tick(20);
     
     var expected = "<br>There are fading signs of blood or violence here.";
     var actual = l0.describeBlood();
@@ -247,15 +247,15 @@ exports.bloodInLocationFadesAfter5Ticks = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.bloodInLocationFadesAfter5Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.bloodInLocationFadesAfter20Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
-exports.bloodInLocationRemainsAsTraceAfter9Ticks = function (test) {
+exports.bloodInLocationRemainsAsTraceAfter36Ticks = function (test) {
     
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     c0.go(null, l0);
     c0.kill();
-    l0.tick(9);
+    l0.tick(36);
     
     var expected = "<br>You notice an oddly familiar metallic tang in the air.";
     var actual = l0.describeBlood();
@@ -264,16 +264,16 @@ exports.bloodInLocationRemainsAsTraceAfter9Ticks = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.bloodInLocationRemainsAsTraceAfter9Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.bloodInLocationRemainsAsTraceAfter36Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
 
-exports.bloodInLocationIsGoneAfter10Ticks = function (test) {
+exports.bloodInLocationIsGoneAfter40Ticks = function (test) {
     
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     c0.go(null, l0);
     c0.kill();
-    l0.tick(10);
+    l0.tick(40);
     
     var expected = "";
     var actual = l0.describeBlood();
@@ -282,16 +282,16 @@ exports.bloodInLocationIsGoneAfter10Ticks = function (test) {
     test.equal(actual, expected);
     test.done();
 };
-exports.bloodInLocationIsGoneAfter10Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.bloodInLocationIsGoneAfter40Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
-exports.previouslyRetrievedbloodInLocationIsNoLongerAvailableAfter10Ticks = function (test) {
+exports.previouslyRetrievedbloodInLocationIsNoLongerAvailableAfter40Ticks = function (test) {
     
     var c0 = new creature.Creature('creature', 'a beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     c0.go(null, l0);
     c0.kill();
     l0.getObject("blood");
-    l0.tick(10);
+    l0.tick(40);
     var blood = l0.getObject("blood");
     var expected = false;
     var actual = false;
@@ -304,7 +304,7 @@ exports.previouslyRetrievedbloodInLocationIsNoLongerAvailableAfter10Ticks = func
     test.equal(actual, expected);
     test.done();
 };
-exports.previouslyRetrievedbloodInLocationIsNoLongerAvailableAfter10Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+exports.previouslyRetrievedbloodInLocationIsNoLongerAvailableAfter40Ticks.meta = { traits: ["Location Test", "Blood Trait", "Tick Trait"], description: "Test that a freshly killed creature leaves blood in location." };
 
 
 exports.aNearlyDeadCreatureBleedsAndLeavesBloodInLocation = function (test) {

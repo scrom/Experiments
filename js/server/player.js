@@ -4681,6 +4681,35 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //firstname only works for creatures
                 receiverDisplayName = receiver.getFirstName();
             };
+            
+            //private function for procesing receiver damage...
+            var processReceiverDamage = function (receiver, resultString, deliberateAction) {
+                if (receiver.isDestroyed()) {
+                    //wilful destruction of objects increases aggression further...
+                    //note creatures return false for isDestroyed - we check "isDead" for those
+                    self.increaseAggression(1);
+                    _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
+                    resultString += receiver.drain(_currentLocation);
+                    resultString += emptyContentsOfContainer(receiver.getName());
+                    removeObjectFromPlayerOrLocation(receiver.getName());
+                    _destroyedObjects.push(receiver);
+                    if (!deliberateAction) {
+                        resultString = "Oops. " + resultString;
+                    };
+                } else if (receiver.isBroken()) {
+                    resultString += receiver.drain(_currentLocation);
+                };
+                
+                if (receiver.isDead()) {
+                    //killing creatures increases aggression further...
+                    //note artefacts return false for isDead - we check "isDestroyed" for those
+                    self.increaseAggression(1);
+                    _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
+                    _killedCreatures.push(receiver.getName());
+                };
+
+                return resultString;
+            };
 
             //check if unarmed
             if (!(weapon)) {
@@ -4689,7 +4718,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 } else if (verb=='kick') {
                     resultString = "You lash out at "+ receiverDisplayName +" but your footwork is lacking something.<br>";
                 } else {
-                    resultString = "You attempt a bare-knuckle fight with "+ receiverDisplayName+".<br>"; 
+                    if ((verb != "smash" && verb != "bash") || (!receiver.isCollectable()) ) {
+                        resultString = "You attempt a bare-knuckle fight with " + receiverDisplayName + ".<br>";
+                    } else if (verb == "smash" || verb == "bash") {
+                        resultString = "You repeatedly beat " + receiverDisplayName + " against the floor"
+                        var destroyString = receiver.destroy(true);
+                        if (destroyString.indexOf("You destroyed ") == 0) {
+                            destroyString = " and manage to destroy " + receiver.getPrefix().toLowerCase() + ". ";
+                        } else {
+                            destroyString = ". " + destroyString + " ";
+                        };
+                        resultString += destroyString;
+                        resultString = processReceiverDamage(receiver, resultString, true);
+                        return resultString;
+                    };
                 };
 
                 if (receiver.getType() == "creature") {
@@ -4822,27 +4864,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     resultString +=  "You repeatedly "+verb+" "+ receiverDisplayName+" with "+weapon.getDisplayName()+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 };
             }; 
-
-            if (receiver.isDestroyed()) { 
-                //wilful destruction of objects increases aggression further...
-                //note creatures return false for isDestroyed - we check "isDead" for those
-                self.increaseAggression(1);
-                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());
-                resultString += emptyContentsOfContainer(receiver.getName());
-                removeObjectFromPlayerOrLocation(receiver.getName());
-                _destroyedObjects.push(receiver);
-                resultString = "Oops. "+resultString; 
-            } else if (receiver.isBroken()) {
-                resultString += receiver.drain(_currentLocation);  
-            }; 
-
-            if (receiver.isDead()) {
-                //killing creatures increases aggression further...
-                //note artefacts return false for isDead - we check "isDestroyed" for those
-                self.increaseAggression(1); 
-                _currentLocation.reduceLocalFriendlyCreatureAffinity(1, receiver.getName());    
-                _killedCreatures.push(receiver.getName());          
-            };
+            
+            resultString = processReceiverDamage(receiver, resultString);
 
             //did you use something fragile/consumable as a weapon?
             var chargesRemaining = -1

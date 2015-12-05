@@ -1032,7 +1032,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             var wasWere = "was";
             if (liquids.length >1) {wasWere = "were";};
-            resultString += " that "+wasWere+" in "+self.getDisplayName()+" slowly trickles away.";
+            resultString += " that "+wasWere+" in "+self.getSuffix()+" slowly trickles away.";
             return resultString;
         };
 
