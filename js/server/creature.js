@@ -1251,9 +1251,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             
-            if (_affinity > 0 && _autoRepair) {
+            if (_affinity >= 0 && _autoRepair) {
                 var artefact = _currentLocation.getObject(_autoRepair);
                 if (artefact) {
+                    player.setLastCreatureSpokenTo(self.getName());
                     resultString += "<br>'Hey $player, let's get this all sorted for you then.'<br>'Hang on a second'...<br>";
                     resultString += self.getFirstName() + " pokes around for a while at the " + artefact.getName()+".<br>";
                     resultString += "'OK, There you go. All fixed.'<br>"
@@ -1638,10 +1639,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (!(self.canRepair(artefact))) {
                 resultString = "'Sorry, that's not something I can fix for you I'm afraid.'";
-                if (_affinity > 0) {
+                player.setLastCreatureSpokenTo(self.getName());
+                var randomInt = Math.floor(Math.random() * 3);
+                if (_affinity > 0 || randomInt == 0) {
                     var recommendedRepairer = map.getSkilledCreature(artefact);
                     if (recommendedRepairer) {
-                        resultString += "<br>'Have you tried asking "+ recommendedRepairer.getDisplayName() +" yet?'"
+                        resultString += "<br>'Have you tried asking "+ recommendedRepairer.getDisplayName() +"?'"
                     };
                 };
                 return resultString;
