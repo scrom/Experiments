@@ -1174,12 +1174,17 @@ exports.Action = function Action(player, map, fileManager) {
                             description = "You jump up and down repeatedly on the spot.<br>Other than making you feel slightly foolish and out of breath, nothing happens.";
                         };
                         break;
-                    case 'good':
                     case 'who':
                     case 'what':
                     case 'when':
                     case 'why':
                     case 'how':
+                        if (!_inConversationWith) {
+                            _ticks = 0;
+                            description = tools.initCap(_verb)+" indeed...<br><br>Only <i>you</i> have the power to find out all there is to know here.";
+                            break;
+                        };
+                    case 'good':
                     case 'pardon':
                     case 'sorry':
                         _ticks = 1;
