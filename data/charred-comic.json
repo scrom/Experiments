@@ -2,7 +2,7 @@
   "object": "artefact",
   "name": "charred book",
   "description": "book with charred pages",
-  "detailedDescription": "It looks like the tattered and charred remnants of a very rare graphic novel.<br>It could be a clue.",
+  "detailedDescription": "It looks like the tattered and charred remnants of a very rare graphic novel.",
   "attributes": {
     "defaultAction": "read",
     "weight": 1,
@@ -10,7 +10,7 @@
     "canCollect": true,
     "affinityModifier": 0,
     "price": 15,
-    "defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something.",
+    "defaultResult": "Yawn... It follows the typical mass-market comic book plot.<br>Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it could be worth something.",
     "canDrawOn": true
   },
   "synonyms": [

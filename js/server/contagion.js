@@ -199,7 +199,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                     var randomIndex = Math.floor(Math.random() * randomReplies.length);
                     contagionString = contagionString.replace("bites you", randomReplies[randomIndex]);
                 
-                } else if (_previousContagionString.indexOf("bites") > -1) {
+                } else if (_previousContagionString.indexOf("bites") > -1 && carrier.getName() != "player") {
                     //identical result (surprisingly common)
                     var randomReplies = ["sinks " + carrier.getPossessiveSuffix() + " teeth into", "chomps on"];
                     var randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -290,12 +290,16 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                             //(a bit like getting tired or running out of time)
                             //we shuffle the creatures array beforehand so that the selected creature to be bitten first may vary.
                             if (carrier.getType() == "player") {
-                                var randomMessage = ["You seem to have been infected with something nasty", "You don't seem fully in control of your actions", "You're really not feeling right", "You twitch and jerk uncontrollably"];
+                                var randomMessage = ["You seem to have been infected with something nasty", "", "You don't seem fully in control of your actions", "", "You're really not feeling right", "You twitch and jerk uncontrollably"];
                                 var randomIndex = Math.floor(Math.random() * randomMessage.length);
-                                resultString += "<br><br>" + randomMessage[randomIndex] + "."
+                                if (randomMessage[randomIndex].length > 0) {
+                                    resultString += "<br>" + randomMessage[randomIndex] + "."
+                                } else {
+                                    resultString += "<br>";
+                                };
                                 //bite a random creature (just one)
                                 randomIndex = Math.floor(Math.random() * victims.length);
-                                resultString += "<br>" + carrier.eat("bite", victims[randomIndex].getName());
+                                resultString += " " + carrier.eat("bite", victims[randomIndex].getName());
                             } else {
                                 for (var c = 0; c < victims.length; c++) {
                                     var randomAttack = Math.floor(Math.random() * (Math.ceil(c / 2) * frequency));

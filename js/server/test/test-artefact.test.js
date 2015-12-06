@@ -978,13 +978,13 @@ exports.readABoringBookGivesRelevantMessage.meta = { traits: ["Artefact Test", "
 
 
 exports.readABookWithContentButNoMissionsReturnsContent = function (test) {
-    var bookAttributes = {weight: 1, type: "book", canCollect: true, "defaultAction": "read", "price": 15,"canDrawOn": true,"defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something."};
+    var bookAttributes = {weight: 1, type: "book", canCollect: true, "defaultAction": "read", "price": 15,"canDrawOn": true,"defaultResult": "Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it could be worth something."};
     var comic = new artefact.Artefact('comic', 'book with charred pages', "It looks like the tattered and charred remnants of a very rare comic book.<br>It could be a clue.",bookAttributes, null);
     var p0 = new player.Player({carryWeight:25},null,null);
     var inv = p0.getInventoryObject();
     var _inventory = p0.getInventoryObject();
     inv.add(comic);
-    var expectedResult = "You read the book with charred pages.<br>Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it might be worth something.$result";
+    var expectedResult = "You read the book with charred pages.<br>Normal person has bad experience, becomes superhero. Rich person has bereavment, becomes evil genuis nemesis.<br>The usual.<br>Even in its current state, this one looks rare so it could be worth something.$result";
     var actualResult = p0.read("read", "comic");
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

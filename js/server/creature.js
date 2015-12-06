@@ -3723,9 +3723,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return null;
         };
         
-        self.enactContagion = function (player, playerLocationName) {
+        self.enactContagion = function (player, playerLocationName, tickCount) {
             var resultString = "";
-            if (_contagion.length > 0) {
+            if (_contagion.length > 0 && (Math.floor(tickCount / tools.baseTickSize) == (tickCount / tools.baseTickSize))) {
                 for (var c = 0; c < _contagion.length; c++) {
                     var playerToInfect;
                     if (playerLocationName == _currentLocation.getName()) {
@@ -3761,6 +3761,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var visiblyHealedWithKit = false;
             
             var localDisplayName = tools.initCap(self.getDisplayName()); //we use this lots.
+            var localFirstName = tools.initCap(self.getFirstName()); //we use this lots.
             var localDescriptivePrefix = tools.initCap(self.getDescriptivePrefix()); //and replace it with this
             var localPrefix = tools.initCap(self.getPrefix()); //and replace it with this
 
@@ -3970,7 +3971,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 //contagion?
                 var enactedContagion = false;
-                var contagionString = self.enactContagion(player, playerLocation); //may return 2 sentences starting with self.getDisplayName() etc. - per tick
+                var contagionString = self.enactContagion(player, playerLocation, t); //may return 2 sentences starting with self.getDisplayName() etc. - per tick
                 if (contagionString.length > 0) {
                     enactedContagion = true;
                 };
@@ -3981,12 +3982,21 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (visibleResultString.indexOf(localDisplayName) > -1 
                         || contagionString.lastIndexOf(localDisplayName) > localDisplayName.length) {
                         
-                        var tempKeep = contagionString.slice(0, contagionString.indexOf(localDisplayName) + localDisplayName.length);
-                        contagionString = contagionString.slice(contagionString.indexOf(localDisplayName) + localDisplayName.length);
+                        var tempKeep = "";
+                        if (contagionString.indexOf(localDisplayName) > -1) {
+                            var tempKeep = contagionString.slice(0, contagionString.indexOf(localDisplayName) + localDisplayName.length);
+                            contagionString = contagionString.slice(contagionString.indexOf(localDisplayName) + localDisplayName.length);
+                        } else if (contagionString.indexOf(localFirstName) > -1) {
+                            var tempKeep = contagionString.slice(0, contagionString.indexOf(localFirstName) + localFirstName.length);
+                            contagionString = contagionString.slice(contagionString.indexOf(localFirstName) + localFirstName.length);                            
+                        };
+
                         //we've already used their name once or more. Don't use it again.
                         //catch both "x bites y" and "x is injured"
                         contagionString = contagionString.replace(localDisplayName, localPrefix);
                         contagionString = contagionString.replace(localDisplayName, localPrefix);
+                        contagionString = contagionString.replace(localFirstName, localPrefix);
+                        contagionString = contagionString.replace(localFirstName, localPrefix);
                         contagionString = contagionString.replace(localPrefix + " is ", localDescriptivePrefix + " ");
                         
                         if (visibleResultString.indexOf(localDisplayName) > -1) {

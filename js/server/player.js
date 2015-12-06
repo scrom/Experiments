@@ -3673,7 +3673,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString += artefact.getDetailedDescription(_aggression, map, minSize); //we pass aggression in here in case it's a creature
 
             if (artefact.getType() == "book") {
-                resultString += "<br>"+artefact.getPrefix()+" might be worth a <i>read</i>.";
+                if (!artefact.isRead()) {
+                    resultString += "<br>" + artefact.getPrefix() + " might be worth a <i>read</i>.";
+                };
                 return resultString;
             };
 
