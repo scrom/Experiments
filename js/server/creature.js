@@ -1910,6 +1910,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         return resultString;
                     };
                     self.decreaseAffinity(objectToGive.getAffinityModifier());
+                    
+                    //stolen goods are less desirable
+                    objectToGive.reduceAffinityModifer();
+                    objectToGive.reduceAffinityModifer();
+
                     resultString += "You manage to steal "+objectToGive.descriptionWithCorrectPrefix()+" from "+self.getFirstName()+".";  
                     return resultString;                 
                 };

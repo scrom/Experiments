@@ -11103,7 +11103,7 @@
                               "yup",
                               "y"
                             ],
-                            "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+                            "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> it or <i>mug</i> him if it's easier), I'll make it worth your while.'",
                             "nextState": 3
                           },
                           {
