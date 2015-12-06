@@ -729,7 +729,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.hit(_verb, _object0, _object1);
                         break;
                     case 'pay':
-                        description = _player.pay(_verb, _object0, _object1);
+                        description = _player.pay(_verb, _object0, _object1, _map);
                         break;
                     case 'buy':
                         description = _player.buy(_verb, _object0, _object1);

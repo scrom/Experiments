@@ -76,6 +76,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _contagion = [];
         var _antibodies = [];
         var _repairSkills = [];
+        var _autoRepair;
         var _nextAction = {};
 
 
@@ -727,7 +728,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                
             currentAttributes.contagion = _contagion;                     
             currentAttributes.antibodies = _antibodies;  
-            currentAttributes.repairSkills = _repairSkills;  
+            currentAttributes.repairSkills = _repairSkills;
+            currentAttributes.autoRepair = _autoRepair;  
                 
             currentAttributes.originalType = _originalType;
             currentAttributes.originalBaseAffinity = _originalBaseAffinity;
@@ -798,7 +800,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };                
             };                
             if (creatureAttributes.antibodies.length>0) {saveAttributes.antibodies = creatureAttributes.antibodies;};     
-            if (creatureAttributes.repairSkills.length>0) {saveAttributes.repairSkills = creatureAttributes.repairSkills;};   
+            if (creatureAttributes.repairSkills.length > 0) { saveAttributes.repairSkills = creatureAttributes.repairSkills; };
+            if (creatureAttributes.autoRepair != undefined) { saveAttributes.autoRepair = creatureAttributes.autoRepair; };   
     
             if (creatureAttributes.originalType != creatureAttributes.type) {saveAttributes.originalType = creatureAttributes.originalType;};     
             if (creatureAttributes.originalBaseAffinity != creatureAttributes.baseAffinity) {saveAttributes.originalBaseAffinity = creatureAttributes.originalBaseAffinity;};     
@@ -1194,6 +1197,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isBleeding()) {
                 return "";
             };
+            var hasActed = false;
             var resultString = "";
             if (_affinity >= 3 && self.getSubType() != "animal") {
                 if (player.isBleeding()) {
@@ -1223,11 +1227,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 _inventory.remove(medicalArtefact.getName());
                             };
                         };
+
+                        hasActed = true;
                     }; 
                 };
             };
 
-            if (_affinity >= 5) {
+            if (_affinity >= 5 && !hasActed) {
                 //if there's any *hostile* creatures that this creature dislikes (or aren't friendly), attack them...
                 //note, if they "dislike" the creature, they'll take one hit and then probably flee (and reduce affinity)
                 var creatures = _currentLocation.getCreatures();
@@ -1237,10 +1243,24 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //turn on delay
                             _currentDelay = 0;
 
-                            resultString += "<br>"+self.getDisplayName()+" attacks "+creatures[i].getDisplayName()+".<br>"+self.hit(creatures[i],1);
+                            resultString += "<br>" + self.getDisplayName() + " attacks " + creatures[i].getDisplayName() + ".<br>" + self.hit(creatures[i], 1);
+
+                            hasActed = true;
                         };
                     };    
                 };
+            };
+            
+            if (_affinity > 0 && _autoRepair) {
+                var artefact = _currentLocation.getObject(_autoRepair);
+                if (artefact) {
+                    resultString += "<br>'Hey $player, let's get this all sorted for you then.'<br>'Hang on a second'...<br>";
+                    resultString += self.getFirstName() + " pokes around for a while at the " + artefact.getName()+".<br>";
+                    resultString += "'OK, There you go. All fixed.'<br>"
+                    resultString += artefact.repair(self);
+                    _autoRepair = null;
+                    hasActed = true;
+                };              
             };
 
             return resultString;
@@ -1554,7 +1574,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return 0;
         };
 
-        self.sellRepair = function(artefactName, player) {
+        self.sellRepair = function(artefactName, player, map) {
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
             if (!artefact) { return "'"+notFoundMessage(artefactName)+"'";};
             var repairCost = artefact.getRepairCost();
@@ -1566,7 +1586,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 resultString = "You pay "+_genderSuffix+" &pound;"+repairCost.toFixed(2)+".<br>";
             };
 
-            return resultString+self.repair(artefactName, player, true);
+            return resultString+self.repair(artefactName, player, true, map);
         };
         
         self.addSkill = function (skill) {
@@ -1588,7 +1608,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return false;
         };
 
-        self.repair = function(artefactName, player, paid) {
+        self.repair = function(artefactName, player, paid, map) {
             if (self.getSubType() == "animal") {return +_genderDescriptivePrefix+" an animal, I don't think "+_genderSuffix+" can help you here.";};
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
@@ -1599,15 +1619,50 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString = "";
 
             if (tools.stringIsEmpty(artefactName)){ return verb+" what?"};
-
+            
+            var localArtefact = false;
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
-            if (!(artefact)) {return "'"+notFoundMessage(artefactName)+"'";};
+            if (artefact) {
+                localArtefact = true;
+            };
+            if (!(artefact)) {
+                artefact = map.getObject(artefactName);
+            };
+            if (!(artefact)) {
+                return "'" + notFoundMessage(artefactName) + "'";
+            };
+            
+            if (localArtefact) {
+                if (!(artefact.isBroken()) && !(artefact.isDamaged()) && !(artefact.isChewed())) { return tools.initCap(artefact.getDescriptivePrefix()) + " not broken or damaged."; }; //this will catch creatures
+            };
 
-            if (!(artefact.isBroken()) && !(artefact.isDamaged()) && !(artefact.isChewed())) {return tools.initCap(artefact.getDescriptivePrefix())+" not broken or damaged.";}; //this will catch creatures
-
-            if (!(self.canRepair(artefact))) {return "'Sorry, that's not something I can fix for you I'm afraid.'";};
+            if (!(self.canRepair(artefact))) {
+                resultString = "'Sorry, that's not something I can fix for you I'm afraid.'";
+                if (_affinity > 0) {
+                    var recommendedRepairer = map.getSkilledCreature(artefact);
+                    if (recommendedRepairer) {
+                        resultString += "<br>'Have you tried asking "+ recommendedRepairer.getDisplayName() +" yet?'"
+                    };
+                };
+                return resultString;
+            };
             
             var repairCost = artefact.getRepairCost();
+            
+            if (!localArtefact) {
+                if (_affinity > 1 && repairCost == 0) {
+                    var destination = map.getObjectLocationName(artefact.getName());
+                    if (destination) {
+                        self.setDestination(destination, true);
+                        _autoRepair = artefact.getName();
+                        return "'I'll wander over and take a look shortly.'<br>'I'll need your help over there though.'"
+                    };
+                };
+                return "'" + notFoundMessage(artefactName) + "'";
+            };
+            
+            //it's nearby and they can repair it...
+            
             if (repairCost >0 && !paid) {
                 self.setNextAction(false, "Well, you know where to come if you change your mind."); 
                 self.setNextAction(true, "$action pay "+self.getName()+" to repair "+artefactName); 
@@ -3719,7 +3774,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //if creature is hostile, collect available weapons
                 if (self.isHostile(playerAggression)) {
                     resultString += self.collectBestAvailableWeapon(); // may return sentence with <br>+self.getDisplayName()
-                };
+                };                
                 
                 //if creature is in same location as player, fight or flee...
                 if (playerLocation == _currentLocation.getName()) {

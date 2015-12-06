@@ -2898,7 +2898,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
-        self.pay = function(verb, creatureName, remainderString) {
+        self.pay = function(verb, creatureName, remainderString, map) {
             var firstWord = remainderString.substr(0,remainderString.indexOf(" ")).trim();
             var artefactName = remainderString;
             switch (firstWord) {
@@ -2908,13 +2908,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     artefactName = remainderString.replace(firstWord+" ", "");
             };
             if (artefactName != remainderString) {
-                return self.buyRepair(artefactName, creatureName);
+                return self.buyRepair(artefactName, creatureName, map);
             };
 
             return self.buy(verb, artefactName, creatureName);
         };
 
-        self.buyRepair = function(artefactName, creatureName) {
+        self.buyRepair = function(artefactName, creatureName, map) {
             var creature = _currentLocation.getObject(creatureName);
             if (creature) {
                 if (creature.getType() != "creature") {
@@ -2923,7 +2923,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             } else {
                 return notFoundMessage(creatureName);
             };
-            return creature.sellRepair(artefactName, self);
+            return creature.sellRepair(artefactName, self, map);
         };
 
         self.buy = function (verb, artefactName, giverName) {
@@ -3119,7 +3119,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
             };
             if (verb == "find") {return givers[0].find(artefactName, _aggression, map);};
-            if (verb == "repair" || verb == "fix" || verb == "mend") {return givers[0].repair(artefactName, self);};
+            if (verb == "repair" || verb == "fix" || verb == "mend") {return givers[0].repair(artefactName, self, false, map);};
 
             if (tools.stringIsEmpty(artefactName)){ return verb+" "+givers[0].getDisplayName()+" for what?";};
             

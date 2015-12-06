@@ -575,6 +575,20 @@ exports.Map = function Map() {
             };
             return null;
         };
+        
+        self.getObjectLocationName = function (objectName) {
+            //note, this *won't* find objects delivered by a mission or delivered by another object.
+            //it *will* retrieve creatures
+            
+            //loop through each location and location inventory. 
+            //Get object (by synonym)
+            //return when found
+            for (var i = 0; i < _locations.length; i++) {
+                var object = _locations[i].getObject(objectName);
+                if (object) { return _locations[i].getName() };
+            };
+            return null;
+        };
 
         self.globalAffinityChange = function() {
             null;
@@ -600,6 +614,16 @@ exports.Map = function Map() {
            
         self.getCreatures = function () {
             return self.getAllCreatures();
+        };
+        
+        self.getSkilledCreature = function (artefact) {
+            var creatures = self.getAllCreatures();
+            for (var c = 0; c < creatures.length; c++) {
+                if (creatures[c].isDead()) { continue; };
+                if (creatures[c].canRepair(artefact)) {
+                    return creatures[c];
+                }
+            };
         };
 
         self.gatherAntibodyStats = function(creatures) {
