@@ -3151,7 +3151,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (requiredContainer == self.getName()) {
                         _inventory.remove(newReceiver.getName());
                         _inventory.add(newObject);
-                        resultString = "You add " + anObject.getDisplayName() + " to " + self.getDisplayName() + ".<br>";
+                        resultString = "You add the " + anObject.getName() + " to " + self.getDisplayName() + ".<br>";
                         return resultString + tools.initCap(self.getDisplayName()) + " now contains " + newObject.descriptionWithCorrectPrefix() + ".";
                     } else {
                         resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getDisplayName() + " to " + newReceiver.getDisplayName();
@@ -3161,10 +3161,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (self.canCarry(newObject)) {
                         _inventory.remove(newReceiver.getName());
                         _inventory.add(newObject);
-                        resultString = "You add " + anObject.getDisplayName() + " to " + self.getDisplayName() + ".<br>";
+                        resultString = "You add the " + anObject.getName() + " to " + self.getDisplayName() + ".<br>";
                         return resultString + self.getDisplayName() + " now contains " + newObject.getDescription() + ".";
                     } else {
-                        resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getDisplayName() + " to " + newReceiver.getDisplayName();
+                        resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getName() + " to " + newReceiver.getDisplayName();
                         resultString += " in " + self.getDisplayName() + " but you need something else to put " + newObject.getPrefix().toLowerCase() + " in.<br>"
                     };
 
@@ -3179,7 +3179,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (inventoryLiquidOrPowder) {
                     if (inventoryLiquidOrPowder.getName() != anObject.getName()) {
                         //we're mixing 2 liquids that shouldn't combine.
-                        resultString = "$fail$You attempt to add " + anObject.getDisplayName() + " to " + self.getDisplayName();
+                        resultString = "$fail$You attempt to add " + anObject.getName() + " to " + self.getDisplayName();
                         return resultString + " but decide "+self.getPrefix().toLowerCase()+" won't really mix well with " + inventoryLiquidOrPowder.getDisplayName() + " that's already in there.";
                     } else {
                         //this is a liquid with the same name - is is comparable

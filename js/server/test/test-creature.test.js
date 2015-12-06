@@ -2111,7 +2111,7 @@ exports.CreatureWillEnactContagion = function (test) {
     c0.go(null, l0);
         
 
-    var expectedResult = " The creature lurches in a spasm of pain and bites you. <br>It ";
+    var expectedResult = " The creature lurches in a spasm of pain and bites you. <br>";
     var fullResult = c0.tick(2, m1, p0);
     var actualResult = fullResult.substr(0, expectedResult.length);
     console.log(fullResult);

@@ -1050,7 +1050,7 @@ exports.playerDeathFromContagionReturnsExpectedStringResult = function (test) {
     var con = new contagion.Contagion("death", "deathness", { "communicability": 1, "transmission": "bite", "symptoms": [{ "action": "hurt", "health": "3", "frequency": 1 }], "duration": -1 });
     p0.setContagion(con);
     var expectedResult = "<br><br>You collapse in a pool of weeping pus.<br>That was unfortunate. It looks like you were overcome by the death contagion or something equally nasty.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
-    var actualResult = p0.tick(18, m0); //oddly, this triggers bleeding to death - not directly contagion - but good enough.
+    var actualResult = p0.tick(36, m0); //oddly, this triggers bleeding to death - not directly contagion - but good enough.
     console.log(p0.health());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -1688,7 +1688,7 @@ exports.cannotGetLiquidIntoContainerAlreadyContainingLiquidThatDoesntCombine = f
     console.log(bottle.receive(rum));
     console.log(p0.acceptItem(bottle));
 
-    var expectedResult = "You attempt to add the soup to the bottle but decide it won't really mix well with the rum that's already in there.";
+    var expectedResult = "You attempt to add soup to the bottle but decide it won't really mix well with the rum that's already in there.";
     var actualResult = p0.get('get', soup.getName());
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
