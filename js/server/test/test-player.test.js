@@ -575,8 +575,8 @@ exports.movingWhenVeryTiredWarnsPlayer = function (test) {
     p0.get('get', bed.getName());
     p0.increaseTimeSinceResting(224);
     //p0.reduceHitPoints(6);
-    var expectedResult = "<br>You need to <i>rest</i>. <br>You're struggling to keep up with those around you. ";
-    var actualResult = p0.tick(1, m0);
+    var expectedResult = "You're struggling to keep up with those around you. ";
+    var actualResult = p0.tick(1, m0).substr(-52);
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -963,6 +963,58 @@ exports.playerDeathFromExhaustionReturnsExpectedStringResult = function (test) {
 
 exports.playerDeathFromExhaustionReturnsExpectedStringResult.meta = { traits: ["Player Test", "Health Trait", "Kill Trait", "Exhaustion Trait"], description: "Test that a killed player receiving a hit is returned to start with appropriate message." };
 
+exports.playerIsWarnedTheyAreStarving = function (test) {
+    p0.increaseTimeSinceEating(300); //new player hunger starts at 500 
+    var expectedResult = "<br>You're starving. ";
+    var actualResult = p0.tick(1, m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerIsWarnedTheyAreStarving.meta = { traits: ["Player Test", "Hunger Trait"], description: "Test that a player receives appropriate status warning." };
+
+exports.playerIsWarnedTheyAreGasping = function (test) {
+    p0.increaseTimeSinceDrinking(300); 
+    var expectedResult = "<br>You urgently need something to drink. ";
+    var actualResult = p0.tick(1, m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerIsWarnedTheyAreGasping.meta = { traits: ["Player Test", "Thirst Trait"], description: "Test that a player receives appropriate status warning." };
+
+exports.playerIsWarnedTheyAreExhausted = function (test) {
+    p0.increaseTimeSinceResting(250); 
+    var expectedResult = "<br>You're exhausted.<br>";
+    var actualResult = p0.tick(1, m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerIsWarnedTheyAreExhausted.meta = { traits: ["Player Test", "Rest Trait"], description: "Test that a player receives appropriate status warning." };
+
+exports.playerIsWarnedTheyAreTiredThirstyAndHungry = function (test) {
+    p0.increaseTimeSinceEating(250);
+    p0.increaseTimeSinceDrinking(350);
+    p0.increaseTimeSinceResting(250); 
+    var expectedResult = "<br>You're starving. <br>You urgently need something to drink. <br>You're exhausted.<br>";
+    var actualResult = p0.tick(1, m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerIsWarnedTheyAreTiredThirstyAndHungry.meta = { traits: ["Player Test", "Hunger Trait", "Thirst Trait", "Rest Trait"], description: "Test that a player receives appropriate status warning." };
+
+
+
 
 exports.playerDeathFromStarvationReturnsExpectedStringResult = function (test) {
     p0.increaseTimeSinceEating(200); //new player hunger starts at 500 
@@ -1036,7 +1088,7 @@ exports.canGiveHighAffinityObjectToFriendlyCreature.meta = { traits: ["Player Te
 exports.cannotGiveHighAffinityObjectToUnfriendlyCreature = function (test) {
     l0.addObject(a1);
     p0.get(a1.getName());
-    var expectedResult = "Sorry, the evil is unwilling to accept gifts from you at the moment.";
+    var expectedResult = "The evil is unwilling to accept gifts from you at the moment.";
     var actualResult = p0.give('give',a1.getName(), c1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1569,7 +1621,7 @@ exports.hittingContainerArtefactTwiceWhenArmedUsuallyDamagesContents = function 
         };
     };
     var expectedResult;
-    var expectedResult1 = "It's broken";
+    var expectedResult1 = "It's broken.";
     var expectedResult2 = "a somewhat fragile drinking vessel It shows signs of being dropped or abused.";
     var actualResult = p0.examine("examine", "glass");
     if (actualResult == expectedResult1) {
@@ -3231,23 +3283,99 @@ exports.endGameTriggersCorrectMessage.meta = { traits: ["Player Test", "End Game
 
 
 exports.playerCanTurnOnAPoweredItem = function (test) {
-    
-    var expectedResult = "xxx";
-    var actualResult = p0.endGame();
-    //if (result) {actualResult = true;};
+    var torch = mb.buildArtefact({ "file": "torch" });
+    p0.acceptItem(torch);
+    var expectedResult = "You switch the emergency torch on.";
+    var actualResult = p0.turn("switch", "torch", "on");
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
     test.done();
 };
 
-exports.playerCanTurnOnAPoweredItem.meta = { traits: ["Player Test", "Turn Trait", "Power Trait"], description: "Test that player can turn items on." };
+exports.playerCanTurnOnAPoweredItem.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Component Trait"], description: "Test that player can turn items on." };
+
+exports.playerCannotTurnOnAPoweredItemWithNoPower = function (test) {
+    var torch = mb.buildArtefact({ "file": "torch" });
+    p0.acceptItem(torch);
+    torch.consumeComponents(100);
+    var expectedResult = "It's dead, there's no sign of power. You'll need to check it over carefully.";
+    var actualResult = p0.turn("switch", "torch", "on");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    console.log(p0.examine("check", "torch", null, m0));
+    console.log(p0.examine("check", "batteries", null, m0));
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCannotTurnOnAPoweredItemWithNoPower.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Component Trait"], description: "Test that player can turn items on." };
+
+
+exports.playerCanExamineADeadTorchAndBatteriesToFindWhatsWrong = function (test) {
+    var torch = mb.buildArtefact({ "file": "torch" });
+    p0.acceptItem(torch);
+    torch.consumeComponents(100);
+    var expectedResult = "It contains some torch batteries.<br>It's not working."+ "|***|"+ "They're pretty chunky but fairly old-looking.<br>They're all used up.";
+    var actualResult = p0.examine("check", "torch", null, m0) + "|***|"+ p0.examine("check", "batteries", null, m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerCanExamineADeadTorchAndBatteriesToFindWhatsWrong.meta = { traits: ["Player Test", "Examine Trait", "Power Trait", "Component Trait"], description: "Test that player can turn items on." };
+
+
+exports.playerReceivesMessageWhenTurningOnAPoweredItemThatIsAlreadyOn = function (test) {
+    var torch = mb.buildArtefact({ "file": "torch" });
+    p0.acceptItem(torch);
+    p0.turn("switch", "torch", "on");
+    var expectedResult = "It's already on.";
+    var actualResult = p0.turn("switch", "torch", "on");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerReceivesMessageWhenTurningOnAPoweredItemThatIsAlreadyOn.meta = { traits: ["Player Test", "Turn Trait", "Power Trait"], description: "Test that player can turn items on." };
+
+exports.playerReceivesMessageWhenTurningOffAPoweredItemThatIsAlreadyOff = function (test) {
+    var torch = mb.buildArtefact({ "file": "torch" });
+    p0.acceptItem(torch);
+    var expectedResult = "It's already off.";
+    var actualResult = p0.turn("switch", "torch", "off");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerReceivesMessageWhenTurningOffAPoweredItemThatIsAlreadyOff.meta = { traits: ["Player Test", "Turn Trait", "Power Trait"], description: "Test that player can turn items on." };
+
+exports.playerReceivesMessageWhenTurningOffAPoweredItemThatIsAlreadyOffAndHasNoPower = function (test) {
+    var torch = mb.buildArtefact({ "file": "torch" });
+    p0.acceptItem(torch);
+    torch.consumeComponents(100);
+    var expectedResult = "It's already off.";
+    var actualResult = p0.turn("switch", "torch", "off");
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.playerReceivesMessageWhenTurningOffAPoweredItemThatIsAlreadyOffAndHasNoPower.meta = { traits: ["Player Test", "Turn Trait", "Power Trait"], description: "Test that player can turn items on." };
+
 
 exports.playerCanTurnOffAPoweredItem = function (test) {
     
-    var expectedResult = "xxx";
-    var actualResult = p0.endGame();
-    //if (result) {actualResult = true;};
+    var torch = mb.buildArtefact({ "file": "torch" });
+    p0.acceptItem(torch);
+    p0.turn("switch", "torch", "on");
+    var expectedResult = "You switch the emergency torch off.";
+    var actualResult = p0.turn("switch", "torch", "off");
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -3256,10 +3384,15 @@ exports.playerCanTurnOffAPoweredItem = function (test) {
 
 exports.playerCanTurnOffAPoweredItem.meta = { traits: ["Player Test", "Turn Trait", "Power Trait"], description: "Test that player can turn items off." };
 
-exports.playerCanIgniteAFlammableItemWithPersonalIgnitionSource = function (test) {
-    
-    var expectedResult = "xxx";
-    var actualResult = p0.endGame();
+exports.playerCanIgniteAFlammableItemWithPersonalIgnitionSource = function (test) {    
+    var candle = mb.buildArtefact({ "file": "candle" });
+    var lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    p0.get("get", "lighter");
+    var expectedResult = "You light the candle with your lighter.";
+    var actualResult = p0.turn('light', "candle", 'on');
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -3270,9 +3403,13 @@ exports.playerCanIgniteAFlammableItemWithPersonalIgnitionSource = function (test
 exports.playerCanIgniteAFlammableItemWithPersonalIgnitionSource.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Fire Trait"], description: "Test that player can ignite an item when carrying an ignition source." };
 
 exports.playerCanIgniteAFlammableItemWithLocationIgnitionSource = function (test) {
-    
-    var expectedResult = "xxx";
-    var actualResult = p0.endGame();
+    var candle = mb.buildArtefact({ "file": "candle" });
+    var lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    var expectedResult = "You light the candle with a cigarette lighter you spotted nearby.";
+    var actualResult = p0.turn('light', "candle", 'on');
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
@@ -3283,10 +3420,20 @@ exports.playerCanIgniteAFlammableItemWithLocationIgnitionSource = function (test
 exports.playerCanIgniteAFlammableItemWithLocationIgnitionSource.meta = { traits: ["Player Test", "Turn Trait", "Power Trait", "Fire Trait"], description: "Test that player can ignite an item when ignition source is in location." };
 
 exports.playerIgnitionSourceWillBurnOut = function (test) {
-    
-    var expectedResult = "xxx";
-    var actualResult = p0.endGame();
-    //if (result) {actualResult = true;};
+    var candle = mb.buildArtefact({ "file": "candle" });
+    var lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    p0.get("get", "lighter");
+    var expectedResult = "You light the candle with your lighter.<br>Your lighter has run out.<br>";
+    var actualResult = p0.turn('light', "candle", 'on');
+    var loopCount = 0;
+    while (actualResult == "You light the candle with your lighter." && loopCount < 30) {
+        p0.turn('extinguish', "candle", 'out');
+        actualResult = p0.turn('light', "candle", 'on');
+        loopCount++;
+    };
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
     test.equal(actualResult, expectedResult);
@@ -3297,8 +3444,15 @@ exports.playerIgnitionSourceWillBurnOut.meta = { traits: ["Player Test", "Turn T
 
 exports.playerCannotIgniteAFlammableItemWithExpiredIgnitionSource = function (test) {
     
-    var expectedResult = "xxx";
-    var actualResult = p0.endGame();
+    var candle = mb.buildArtefact({ "file": "candle" });
+    var lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    p0.get("get", "lighter");
+    lighter.consume(25);
+    var expectedResult = "You don't have anything to light it with.";
+    var actualResult = p0.turn('light', "candle", 'on');
     //if (result) {actualResult = true;};
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);

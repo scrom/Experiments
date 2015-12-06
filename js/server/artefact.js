@@ -634,6 +634,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.combinesDescription = _combinesDescription;
             currentAttributes.saleUnit = _saleUnit;            
             currentAttributes.checkComponents = self.checkComponents();
+            currentAttributes.checkComponentsExist = self.checkComponentsExist();
             currentAttributes.switched = _switched;
             currentAttributes.flammable = _flammable;
             currentAttributes.explosive = _explosive;
@@ -857,6 +858,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             _sourceAttributes = attributes;
             processAttributes(attributes);
         };
+        
+        self.getOriginalDisplayName = function () {
+            if (tools.isProperNoun(_initialDescription) || _initialDescription.substr(0, 4).toLowerCase() == "the " || _initialDescription.substr(0, 1) == "'") {
+                return _initialDescription;
+            };
+            return "the " + _initialDescription;
+        };        
 
         self.getDisplayName = function () {
             if (tools.isProperNoun(_description) || _description.substr(0, 4).toLowerCase() == "the " || _description.substr(0, 1) == "'") {
@@ -1185,10 +1193,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var inventoryIsVisible = true;
             
             if (_lockable && (_locked)) {
-                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " locked.";
+                if (!self.isBroken()) {
+                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " locked.";
+                };
                 inventoryIsVisible = false;
             } else if (_opens && (!(_open))) {
-                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " closed.";
+                if (!self.isBroken()) {
+                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " closed.";
+                };
                 inventoryIsVisible = false;
             };
             
@@ -1223,17 +1235,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //remove original description if it's not working.
             if (_switched) {
                 if (!(self.hasPower())) {
-                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " not working.";
                     resultString = resultString.replace(_detailedDescription, "");
+                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " not working.";
                 } else {
                     if (!(self.isPoweredOn())) {
-                        resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " switched off.";
                         resultString = resultString.replace(_detailedDescription, "");
+                        resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " switched off.";
                     };
                 };
-            } else if (!(self.checkComponents())) {
-                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " missing something.";
+            } else if (self.isBroken()) {
                 resultString = resultString.replace(_detailedDescription, "");
+                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " broken.";           
+            } else if (!(self.checkComponentsExist())) {
+                resultString = resultString.replace(_detailedDescription, "");
+                resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " missing something.";
+            } else if (!(self.checkComponents())) {
+                resultString = resultString.replace(_detailedDescription, "");
+                resultString += "<br>It looks like everything's there but there's still something wrong with "+_itemSuffix+".";
             } else {
                 if (_delivers.length > 0 && (!_hideDeliveryDescription)) {
                     //split "deliver"s items into what can currently be delivered and what can't
@@ -1246,15 +1264,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         if (self.getCombinesWith().length > 0) {
                             //combine items don't "deliver" as such, they convert into other things
                             combinesWithList.push(_delivers[i]);
-                        }
-                        else if (self.canDeliver(_delivers[i].getName())) { 
+                        } else if (self.canDeliver(_delivers[i].getName())) { 
                             if (_delivers[i].getPrice() > 0) {
                                 sellsList.push(_delivers[i]); 
                             } else {
                                 canDeliverList.push(_delivers[i]); 
                             };
-                        }
-                        else { cannotDeliverList.push(_delivers[i]); };
+                        } else { cannotDeliverList.push(_delivers[i]); };
 
                     };
 
@@ -1301,10 +1317,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
                     //return what cannot be delivered
                     if (cannotDeliverList.length > 0) {
-                        resultString += "<br>When properly set up and working " + _itemPrefix.toLowerCase();
+                        resultString += "<br>With the right additional items " + _itemPrefix.toLowerCase()+ " can";
                         if (canDeliverList.length > 0) { resultString += " also" };
 
-                        resultString += " delivers ";
+                        resultString += " deliver ";
                         for (var i = 0; i < cannotDeliverList.length; i++) {
                             resultString += tools.listSeparator(i, cannotDeliverList.length);
                             resultString += cannotDeliverList[i].getName();
@@ -1367,16 +1383,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
 
-            if (_imageName) {
-                resultString += "$image"+_imageName+"/$image";
-            };
-
             if (_initialDetailedDescription == "There's nothing of interest here." && resultString.length > _initialDetailedDescription.length) {
                 resultString = resultString.replace(_initialDetailedDescription+"<br>","");
                 resultString = resultString.replace(_initialDetailedDescription+" ","");
             };
 
-            if (resultString.substr(0,4) == "<br>") {resultString = resultString.substr(4);}; //trim opening line break if needed.
+            if (resultString.substr(0, 4) == "<br>") { resultString = resultString.substr(4); }; //trim opening line break if needed.
+            
+            if (_imageName) {
+                resultString += "$image" + _imageName + "/$image";
+            };
+
             return resultString;
         };
 
@@ -2037,7 +2054,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.hasPower = function() {
             if (!(_switched) && !(_flammable) && !(_explosive)) {return false;};
             if (_broken || _destroyed) {return false;};
-            if (_charges == 0) {return false;}; //we use -1 to mean unlimited
+            if (_charges == 0) { return false; }; //we use -1 to mean unlimited
             if (!(self.checkComponents())) {return false;};
             //console.log(self.getDisplayName()+" has power.");
             return true;
@@ -2089,12 +2106,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return resultString + ".";
             };
             if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked, you'll need to find a way into "+_itemSuffix+" first.";};
-            if (!(self.hasPower())) {
-                var resultString = tools.initCap(_itemDescriptivePrefix)+" dead, there's no sign of power.";
-                if (!(self.checkComponents())) { resultString += " " + tools.initCap(_itemDescriptivePrefix) + " missing something."; };
-                if (_flammable) { resultString = tools.initCap(_itemDescriptivePrefix) + " all burned out.";}
-                return resultString;
-            };
 
             if (verb == "start") {
                 onOrOff = "start";
@@ -2116,6 +2127,17 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     verb = "turn";
                 };
 
+            };
+
+            if (!(self.hasPower()) && (onOrOff == "on" || onOrOff == "start")) {
+                var resultString = tools.initCap(_itemDescriptivePrefix) + " dead, there's no sign of power.";
+                if (!(self.checkComponentsExist())) {
+                    resultString += " " + tools.initCap(_itemDescriptivePrefix) + " missing something.";
+                } else if (!(self.checkComponents())) {
+                    resultString += " You'll need to check "+_itemSuffix+" over carefully.";
+                };
+                if (_flammable) { resultString = tools.initCap(_itemDescriptivePrefix) + " all burned out."; }
+                return resultString;
             };
 
             switch(onOrOff) {
@@ -2186,7 +2208,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return Math.round(_charges*100)/100; //deliberately works but does nothing if charges are -ve
         };
 
-        self.consumeItem = function(anObject) {
+        self.consumeItem = function (anObject) {
             var anObjectChargesRemaining = anObject.consume(); 
             if (anObjectChargesRemaining == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
         };
@@ -2212,7 +2234,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
                     components[i].setWeight(newWeight);
                 };
-                if (chargesRemaining == 0) {
+                //remove item if it's completely consumable
+                if (chargesRemaining == 0 && (components[i].isLiquid() || components[i].isPowder() || components[i].getType() == "food")) {
                     _inventory.remove(components[i].getName());
                 };
                 if (chargesRemaining >-1 ) {
@@ -2221,7 +2244,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
                 };
             };
-
+            
             return minChargesRemaining;
         };
 
@@ -2236,6 +2259,18 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             return consumedItems;
         };
+        
+        self.checkComponentsExist = function (someComponents) {
+            var components = [];
+            components = components.concat(_inventory.getComponents(self.getName(), true));
+            //if we have some optionally passed in components, consider those too.
+            if (someComponents) {
+                components = components.concat(someComponents);
+            };
+
+            if (components.length >= _requiredComponentCount) { return true; }; //we have everything we need yet.
+            return false;
+        };        
 
         self.checkComponents = function(someComponents) {
             if (self.isDestroyed()) {return false;};
@@ -2371,7 +2406,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
                     
                 } else {
-                    resultString += _itemDescriptivePrefix.toLowerCase()+" still missing something.";
+                    if (!(self.checkComponentsExist())) {
+                        resultString += _itemDescriptivePrefix.toLowerCase() + " still missing something.";
+                    } else {
+                        resultString += " there's still something else wrong with " + _itemSuffix + ".";
+                    }
                 };
             };
 
@@ -2457,7 +2496,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
                 var numberOfMissionsToRemove = _missions.length - missionsToKeep.length;
                 if (numberOfMissionsToRemove > 0) {
-                    resultString += "<br>Unfortunately you needed "+self.getDisplayName()+".<br>";
+                    resultString += "<br>Unfortunately you needed "+self.getOriginalDisplayName()+". ";
                     resultString += "You're welcome to carry on and see how well you do without "+_itemSuffix+" though."
 
                     _missions = missionsToKeep;
@@ -2885,8 +2924,14 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             //do we have all the components needed to work?
-            if (!(self.checkComponents())) {
+            if (!(self.checkComponentsExist())) {
                 //console.log(self.getName() + " doesn't have all the required components to run");
+                return false;
+            };
+            
+            //is everything intact and charged?
+            if (!(self.checkComponents())) {
+                //console.log(self.getName() + " something's wrong with a component somewhere");
                 return false;
             };
             

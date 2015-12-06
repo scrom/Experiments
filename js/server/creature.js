@@ -867,6 +867,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.getSyns = function () {
             return _synonyms;
         };
+           
+        self.getOriginalDisplayName = function () {
+            return _displayName;
+        };   
 
         self.getDisplayName = function() {
             return _displayName;
@@ -4230,6 +4234,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.consumeItem = function(anObject) {
             var anObjectChargesRemaining = anObject.consume();
             if (anObjectChargesRemaining == 0) { _inventory.remove(anObject.getName());}; //we throw the object consumed away if empty (for now).
+        };
+        
+        self.checkComponentsExist = function () {
+            return true;
         };
 
         self.checkComponents = function() {

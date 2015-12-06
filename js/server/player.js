@@ -2882,8 +2882,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "feed" && artefact.getType() != "food" && artefact.getType() != "creature") {return "I don't think that's a reasonable thing to do.";};
             if (receiver.isDead()) { return  tools.initCap(receiver.getPrefix())+"'s dead. Gifts won't help "+receiver.getSuffix()+" now.";};
             if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment, sorry.";};
-            //@todo - find an alternative for creature displayName on this response
-            if (!(receiver.willAcceptGift(_aggression, artefact))) { return  "Sorry, "+receiver.getDisplayName()+" is unwilling to accept gifts from you at the moment.";};
+            if (!(receiver.willAcceptGift(_aggression, artefact))) { return  tools.initCap(receiver.getFirstName())+" is unwilling to accept gifts from you at the moment.";};
             if (verb == "feed" && receiver.getSubType() != "animal") {return "You should probably just <i>give</i> "+artefact.getDisplayName()+" to "+receiver.getSuffix()+".";};
 
             //we know they *can* carry it...
@@ -2984,8 +2983,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var buyer = getObjectFromPlayerOrLocation(buyerName);
             if (!(buyer)) { return "There's nobody called " + buyerName + " nearby."; };
 
-            //@todo - find an alternative for creature displayName on this response
-            if (buyer.getType() != 'creature') { return buyer.getDisplayName() + " can't buy anything." };
+            if (buyer.getType() != 'creature') { return buyer.getFirstName() + " can't buy anything." };
 
             return buyer.buy(objectToGive, self);
         };
@@ -3004,8 +3002,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return self.steal(verb, artefactName, giverName);
                 };
 
-                //@todo - find an alternative for creature displayName on this response
-                return "You'll need to be a little more specific. Do you want to <i>buy</i> or <i>steal</i> from "+giver.getDisplayName()+"?<br>(Or should you simply <i>ask</i> "+giver.getSuffix()+" instead?)";
+                return "You'll need to be a little more specific. Do you want to <i>buy</i> or <i>steal</i> from "+giver.getFirstName()+"?<br>(Or should you simply <i>ask</i> "+giver.getSuffix()+" instead?)";
 
             }  else {
                 return self.remove(verb, artefactName, giverName);
@@ -3133,7 +3130,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var creatureResponse = givers[0].replyToKeyword(artefactName, self, map);
                 if (creatureResponse) {return creatureResponse;};
 
-                //@todo - find an alternative for creature displayName on this response
                 return givers[0].notFoundMessage(artefactName);
             };  
             
@@ -3258,9 +3254,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += " with " + whoseItem;
                 var ignitionSourceChargesRemaining = ignitionSource.consume();
                 if (ignitionSourceChargesRemaining == 0) {
-                    ignitionSourceChargesRemaining.discountPriceByPercent(100); //worthless
+                    ignitionSource.discountPriceByPercent(100); //worthless
                     if (!ignitionSourceIsInLocation) {
-                        resultString += "<br>Your " + ignitionSource.getName() + " " + ignitionSource.getPossessiveSuffix() + " run out.<br>";
+                        resultString += "<br>Your " + ignitionSource.getName() + " " + ignitionSource.hasPlural() + " run out.<br>";
                     };
                 };
             };
@@ -3743,8 +3739,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_hunt >= 1) {
                 exit = _currentLocation.getExitWithBestTrace(creatureName,map, _inventory);
             };
-            //@todo - find an alternative for creature displayName on this response
-            if (!(exit)) { return "There's no sign that " + creature.getDisplayName() + " has been near here recently."; };
+
+            if (!(exit)) { return "There's no sign that " + creature.getFirstName() + " has been near here recently."; };
             self.increaseHuntCount(1);
             var resultString = "After thorough investigation, you determine your best bet is to try <i>" + exit.getLongName() + "</i> from here.";
             return resultString;
@@ -4341,6 +4337,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (direct == "out") {return self.unRide("exit");};
                     return "Your "+_riding.getName()+" has run out of "+_riding.getChargeUnit()+".<br>"
                 } else if (!(_riding.checkComponents())) {
+                    //@todo - should also trap checkComponentsExist here
                     if (direct == "out") {return self.unRide("exit");};
                     var consumedComponents = _riding.getConsumedComponents();
                     if (consumedComponents.length >0) {
@@ -4457,6 +4454,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (_riding.chargesRemaining() == 0) {
                     resultString += "Your "+_riding.getName()+" has run out of "+_riding.getChargeUnit()+".<br>"
                 } else if (!(_riding.checkComponents())) {
+                    //@todo - should also trap checkComponentsExist here
                     var consumedComponents = _riding.getConsumedComponents();
                     if (consumedComponents.length >0) {
                         resultString += "Your "+_riding.getName()+" has run out of ";
@@ -4596,7 +4594,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (_hitPoints <=0) {return self.kill();};
             
-            //@todo - add some more random alternatives to "you feel weaker" - tricky as the cause of "hurt" may be violence or bleeding
             if (attacker) {
                 if (pointsToRemove > 35) {
                     return "That really hurt. You really can't take many more hits like that. "
@@ -5133,7 +5130,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
                     if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
                     //can't eat unless hungry if health is nearly full.
-                    if ((_timeSinceEating < _maxMovesUntilHungry - (_maxMovesUntilHungry/6)) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+                    if ((_timeSinceEating < _maxMovesUntilHungry - (_maxMovesUntilHungry/5)) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
                 };
             };
             self.transmit(artefact, "bite");
@@ -5490,13 +5487,31 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
             var afflictionString = "";
-            if (self.isStarving()) { afflictionString+="<br>You're starving. ";}
-            else if (self.isHungry()) { afflictionString+="<br>You're hungry.";}
-            else if (_timeSinceEating == _maxMovesUntilHungry-(Math.floor(Math.random() * 10))) { afflictionString+="<br>Your stomach just growled.";};
+            if (self.isStarving()) {
+                afflictionString += "<br>You're starving. ";
+            } else if (self.isHungry()) {
+                var randomReplies = ["", "You need to <i>eat</i> soon.", "", "You're hungry.", "", "", "", "Is that food I smell?", "", ""]
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                if (randomReplies[randomIndex].length > 0) {
+                    afflictionString += "<br>";
+                };
+                afflictionString += randomReplies[randomIndex] + " ";
+            } else if (_timeSinceEating == _maxMovesUntilHungry - (Math.floor(Math.random() * 10))) {
+                afflictionString += "<br>Your stomach just growled.";
+            };
             
-            if (self.isGasping()) { afflictionString += "<br>You urgently need something to drink. "; }
-            else if (self.isThirsty()) { afflictionString += "<br>You're thirsty."; }
-            else if (_timeSinceDrinking == _maxMovesUntilThirsty - (Math.floor(Math.random() * 10))) { afflictionString += "<br>Your mouth is feeling a little dry."; };
+            if (self.isGasping()) {
+                afflictionString += "<br>You urgently need something to drink. ";
+            } else if (self.isThirsty()) {
+                var randomReplies = ["", "You're thirsty.", "", ""]
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                if (randomReplies[randomIndex].length > 0) {
+                    afflictionString += "<br>";
+                };
+                afflictionString += randomReplies[randomIndex] + " ";
+            } else if (_timeSinceDrinking == _maxMovesUntilThirsty - (Math.floor(Math.random() * 10))) {
+                afflictionString += "<br>Your mouth is feeling a little dry.";
+            };
             
             if (self.isExhausted()) {
                 if (_timeSinceResting == _maxMovesUntilTired + _additionalMovesUntilExhausted) {
@@ -5504,10 +5519,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 } else {
                     afflictionString += "<br>You're exhausted.<br>";
                 };
-            } 
-            else if (self.isTired()) {
-                //@todo make this more varied
-                afflictionString += "<br>You need to <i>rest</i>. ";
+            } else if (self.isTired()) {
+                var randomReplies = ["", "You need to <i>rest</i>.", "", "You need to find somewhere to <i>sit</i> for a while.", "Your legs are feeling tired.", "", "Your feet are dragging, how long has it been since you last took a break?", ""]
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                if (randomReplies[randomIndex].length > 0) {
+                    afflictionString += "<br>";
+                };
+                afflictionString += randomReplies[randomIndex]+" ";
                 //console.log("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
                 if (_timeSinceResting == Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2))) {
                     afflictionString += "<br>You're struggling to keep up with those around you. ";

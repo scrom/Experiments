@@ -6362,7 +6362,7 @@
             "object": "artefact",
             "name": "batteries",
             "description": "torch batteries",
-            "detailedDescription": "Shine a light on the world.",
+            "detailedDescription": "They're pretty chunky but fairly old-looking.",
             "attributes": {
               "weight": 1,
               "canCollect": true,
@@ -10134,7 +10134,7 @@
         "detailedDescription": "Given the right ingredients it makes a variety of coffees.",
         "attributes": {
           "defaultAction": "get coffee from machine",
-          "extendedInventoryDescription": "It's fully loaded with ",
+          "extendedInventoryDescription": "It's stocked up with ",
           "weight": 151,
           "carryWeight": 15,
           "holdsLiquid": true,
@@ -10471,7 +10471,6 @@
             "object": "mission",
             "name": "beans",
             "displayName": "get the coffee machine working",
-            "description": "Before you can get any coffee, this machine needs beans.",
             "attributes": {
               "missionObject": "coffee machine",
               "static": true
@@ -16365,7 +16364,7 @@
             "object": "artefact",
             "name": "batteries",
             "description": "torch batteries",
-            "detailedDescription": "Shine a light on the world.",
+            "detailedDescription": "They're pretty chunky but fairly old-looking.",
             "attributes": {
               "weight": 1,
               "canCollect": true,

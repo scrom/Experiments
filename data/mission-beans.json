@@ -2,7 +2,6 @@
     "object": "mission",
     "name": "beans",
     "displayName": "get the coffee machine working",
-    "description": "Before you can get any coffee, this machine needs beans.",
     "attributes": {
         "missionObject": "coffee machine",
         "static": true

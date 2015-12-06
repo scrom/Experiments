@@ -317,17 +317,17 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                         message += "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";
                         break;
                     case "destroyedObject":
-                        message += "<br>You failed to "+self.getDisplayName()+". "+tools.initCap(failObject.getDisplayName())+" has been destroyed.";
+                        message += "<br>You failed to "+self.getDisplayName()+". "+tools.initCap(failObject.getOriginalDisplayName())+" has been destroyed.";
                         break;
                     case "destroyedDestination":
-                        message += "<br>Oh dear. You can no longer " + self.getDisplayName() + ". " + tools.initCap(failObject.getDisplayName()) + " has been destroyed.";
+                        message += "<br>Oh dear. You can no longer " + self.getDisplayName() + ". " + tools.initCap(failObject.getOriginalDisplayName()) + " has been destroyed.";
                         break;
                     case "killedObject":
                     case "killedMissionObject":
-                        message += "<br>Hmm, that's bad. You can no longer " + self.getDisplayName() + ". " + tools.initCap(failObject.getDisplayName()) + " is dead.";
+                        message += "<br>Hmm, that's bad. You can no longer " + self.getDisplayName() + ". " + tools.initCap(failObject.getOriginalDisplayName()) + " is dead.";
                         break;
                     case "destroyedSource":
-                        message += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getDisplayName()+" but it's been destroyed.";
+                        message += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getOriginalDisplayName()+" but it's been destroyed.";
                         break;
                 };
             };

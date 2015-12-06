@@ -2,7 +2,7 @@
 "object": "artefact",
 "name": "batteries",
 "description": "torch batteries",
-"detailedDescription": "Shine a light on the world.",
+"detailedDescription": "They're pretty chunky but fairly old-looking.",
 "attributes": {
     "weight": 1,
     "canCollect": true,
