@@ -5446,7 +5446,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString+=_inventory.tick(self);                               
 
                 //contagion?
-                if (_contagion.length >0) {
+                if (_contagion.length >0 && (Math.floor(t / tools.baseTickSize) == t / tools.baseTickSize)) {
                     for (var c=0; c<_contagion.length;c++) {
                         resultString += _contagion[c].enactSymptoms(self, _currentLocation);
                         if (originalDeathCount < _killedCount) {
