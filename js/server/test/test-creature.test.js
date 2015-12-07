@@ -2169,6 +2169,26 @@ exports.otherCreatureWillStillEatChocolate = function (test) {
 };
 exports.otherCreatureWillStillEatChocolate.meta = { traits: ["Creature Test", "Receive Trait", "Mission Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
 
+exports.creatureDescriptionIncludesSalesInventory = function (test) {
+    
+    var m0 = new map.Map();
+    //l0 = new location.Location('home', 'home', 'a home location');
+   
+    var seller = mb.buildCreature({ "file": "ice-cream-man" });
+    //var p0 = new player.Player({ username: "player" }, m0, mb);
+    //p0.setStartLocation(l0);
+    //p0.setLocation(l0);    
+    //seller.go(null, m.getLocation('home'));
+   
+    var expected = "A random guy who occasionally has ice cream for sale.<br>He has 15 99 flake ice creams (price: &pound;3.50 each) for sale.<br><br>He wants to <i>talk</i> to you about something.$imageicecreamman.jpg/$image";
+    var actual = seller.getDetailedDescription(0, m0, 0);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureDescriptionIncludesSalesInventory.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature reports their sales inventory correctly" };
+
 
 /*
 Methods needing testing:

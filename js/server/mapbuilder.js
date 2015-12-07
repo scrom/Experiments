@@ -207,6 +207,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             //console.log('Building Creature: '+creatureData.name);
             var usingTemplate = false;
             if (creatureData) {
+                //construct from file first if needed
+                //build from file before template
+                if (creatureData.file) {
+                    creatureData = self.buildFromFile(_data[creatureData.file]);
+                };
                 //start with template if defined
                 if (creatureData.template) {
                     usingTemplate = true;
