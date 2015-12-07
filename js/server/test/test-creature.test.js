@@ -30,7 +30,6 @@ var removeAllDoorsInMap = function(map) {
 exports.setUp = function (callback) {
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
-    console.log("artefact setup:"+a0);
     callback(); 
 };
 
@@ -93,7 +92,6 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
     var anotherArtefactDescription = 'second artefact of little consequence';
     var artefactName = 'artefact'
     var anotherArtefactName = 'another artefact'
-    console.log('checking a0: '+a0.getDetailedDescription());
     var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',junkAttributes, null);
                                     //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, [a0,a1]);
@@ -2188,6 +2186,52 @@ exports.creatureDescriptionIncludesSalesInventory = function (test) {
     test.done();
 };
 exports.creatureDescriptionIncludesSalesInventory.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature reports their sales inventory correctly" };
+
+exports.creatureCanSellItemToPlayer = function (test) {
+    
+    var m0 = new map.Map();
+    var l0 = new location.Location('home', 'home', 'a home location');
+    m0.addLocation(l0);
+    
+    var seller = mb.buildCreature({ "file": "ice-cream-man" });
+    var p0 = new player.Player({ username: "player" }, m0, mb);
+    p0.setStartLocation(l0);
+    p0.setLocation(l0);    
+    seller.go(null, m0.getLocation('home'));
+    
+    var expected = "The ice cream man sells you a 99 flake ice cream.";
+    var actual = seller.sell("ice cream", p0);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureCanSellItemToPlayer.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature can sell an item to player" };
+
+exports.creatureSellingItemReducesInventory = function (test) {
+    
+    var m0 = new map.Map();
+    var l0 = new location.Location('home', 'home', 'a home location');
+    m0.addLocation(l0);
+    
+    var seller = mb.buildCreature({ "file": "ice-cream-man" });
+    var p0 = new player.Player({ username: "player" }, m0, mb);
+    p0.setStartLocation(l0);
+    p0.setLocation(l0);    
+    seller.go(null, m0.getLocation('home'));
+    
+    var salesInventory = seller.getSalesInventoryObject();
+    var originalInventorySize = salesInventory.getWeight();
+    seller.sell("ice cream", p0);
+    var newInventorySize = salesInventory.getWeight();
+    var expected = 1;
+    var actual = originalInventorySize - newInventorySize;
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureSellingItemReducesInventory.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature selling an item to player reduces remaining inventory" };
 
 
 /*

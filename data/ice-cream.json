@@ -9,8 +9,6 @@
               "type": "food",
               "canCollect": true,
               "charges": 1,
-              "chargeUnit": "99 flake ice cream",
-              "chargesDescription": "$charges $chargeUnit",
               "saleUnit": 1,
               "affinityModifier": 5,
               "isEdible": true,

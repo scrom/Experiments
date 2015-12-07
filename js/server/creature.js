@@ -1912,8 +1912,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     self.decreaseAffinity(objectToGive.getAffinityModifier());
                     
                     //stolen goods are less desirable
-                    objectToGive.reduceAffinityModifer();
-                    objectToGive.reduceAffinityModifer();
+                    objectToGive.reduceAffinityModifier();
+                    objectToGive.reduceAffinityModifier();
 
                     resultString += "You manage to steal "+objectToGive.descriptionWithCorrectPrefix()+" from "+self.getFirstName()+".";  
                     return resultString;                 
