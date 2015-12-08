@@ -4,7 +4,6 @@
   "displayName": "water filippa's plants",
   "description": "Filippa wants her tomato plants watered.",
   "attributes": {
-    "parent": "latte",
     "missionObject": "healthy tomato plants",
     "destination": "customer-delight-west",
     "static": true,
