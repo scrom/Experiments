@@ -627,9 +627,13 @@ exports.Map = function Map() {
             };
         };
         
-        self.getObjectLocationName = function (objectName, includeHiddenObjects, searchCreatures) {
+        self.getObjectLocationName = function (objectName, includeHiddenObjects, minObjectSize, searchCreatures) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it *will* retrieve creatures
+            
+            if (!minObjectSize) {
+                minObjectSize = 0;
+            };
             
             //loop through each location and location inventory. 
             //Get object (by synonym)
@@ -638,7 +642,9 @@ exports.Map = function Map() {
                 var object = _locations[i].getObject(objectName, false, searchCreatures);
                 if (object) {
                     if ((!object.isHidden()) || includeHiddenObjects) {
-                        return _locations[i].getName()
+                        if (object.getWeight() >= minObjectSize) {
+                            return _locations[i].getName()
+                        };
                     };
                 };
             };

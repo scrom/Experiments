@@ -4178,7 +4178,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     desiredLocationName = desiredLocation.getName();
                 };
                 if (!desiredLocationName) {
-                    desiredLocationName = map.getObjectLocationName(artefactName);
+                    desiredLocationName = map.getObjectLocationName(artefactName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
                 };
                 if (desiredLocationName) {
                     var path = map.lineOfSightPathToDestination(desiredLocationName, _currentLocation, _currentLocation);
