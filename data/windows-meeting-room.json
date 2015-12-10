@@ -64,9 +64,17 @@
             ]
         },
         {
-            "object": "artefact",
-            "template": "table",
-            "detailedDescription": "It's a plain white melamine meeting room table."
+          "object": "artefact",
+          "template": "table",
+          "detailedDescription": "It's a plain white melamine meeting room table.",
+          "synonyms": [
+            "plain table",
+            "meeting room table",
+            "plain white table",
+            "white table",
+            "plain white melamine meeting room table",
+            "white melamine table"
+          ]
         },
         {
             "object": "artefact",

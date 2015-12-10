@@ -109,10 +109,7 @@
         "blue pen"
       ]
     },
-    {
-      "object": "artefact",
-      "template": "table"
-    },
+    {"file": "table"},
     {
       "object": "artefact",
       "template": "chairs",

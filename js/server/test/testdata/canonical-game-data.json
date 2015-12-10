@@ -1755,7 +1755,9 @@
           "defaultResult": "It's best to leave them here."
         },
         "synonyms": [
-          "chair"
+          "chair",
+          "office chair",
+          "standard office chair"
         ]
       }
     ]
@@ -4745,7 +4747,9 @@
           "defaultResult": "It's best to leave them here."
         },
         "synonyms": [
-          "chair"
+          "chair",
+          "office chair",
+          "standard office chair"
         ]
       }
     ]
@@ -6260,7 +6264,7 @@
     "object": "location",
     "name": "fishing",
     "displayName": "'Fishing' meeting room",
-    "description": "You're in the Fishing meeting room. Now you <i>really</i> know how a goldfish feels.<br>You feel you're being watched.",
+    "description": "You're in the slightly dingy and sparsely furninshed 'Fishing' meeting room. It's long, narrow and has glass walls on 2 sides.<br>Peering back outside you can see the facilities team area.<br>Now you <i>really</i> know how a goldfish feels.",
     "exits": [
       {
         "object": "exit",
@@ -6268,6 +6272,85 @@
         "direction": "n",
         "source": "fishing",
         "destination": "facilities-area"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "window",
+        "description": "window",
+        "detailedDescription": "Yep. That's where the facilities team sits",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "isBreakable": true,
+          "canDrawOn": true,
+          "viewDestination": "facilities-area"
+        },
+        "synonyms": [
+          "glass",
+          "outside",
+          "wall",
+          "glass wall",
+          "facilities team area"
+        ],
+        "inventory": [
+          {
+            "object": "artefact",
+            "name": "facilities",
+            "description": "facilities team",
+            "detailedDescription": "You press your face to the glass and squint.<br>Is there anyone there?",
+            "attributes": {
+              "type": "scenery",
+              "subType": "intangible"
+            },
+            "synonyms": [
+              "team",
+              "facilities team"
+            ]
+          }
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "pair of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "office chair",
+          "standard office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a plain white melamine meeting room table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "plain table",
+          "meeting room table",
+          "plain white table",
+          "white table",
+          "plain white melamine meeting room table",
+          "white melamine table"
+        ]
       }
     ]
   },
@@ -15459,7 +15542,9 @@
           "defaultResult": "It's best to leave them here."
         },
         "synonyms": [
-          "chair"
+          "chair",
+          "office chair",
+          "standard office chair"
         ]
       }
     ]
@@ -19529,7 +19614,12 @@
           "canDrawOn": true
         },
         "synonyms": [
-          "desk"
+          "plain table",
+          "meeting room table",
+          "plain white table",
+          "white table",
+          "plain white melamine meeting room table",
+          "white melamine table"
         ]
       },
       {
@@ -19549,7 +19639,9 @@
           "defaultResult": "Sorry, they belong in here."
         },
         "synonyms": [
-          "chair"
+          "chair",
+          "office chair",
+          "standard office chair"
         ]
       }
     ]
