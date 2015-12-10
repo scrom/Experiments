@@ -385,7 +385,9 @@
             "check",
             "find",
             "where is",
-            "where"
+            "wheres",
+            "where",
+            "go"
           ],
           "defaultResult": "You'll need to learn to fend for yourself eventually.<br>Try heading <i>East</i> from here."
         },
@@ -8566,7 +8568,7 @@
   {
     "object": "location",
     "name": "kitchen-ground-floor",
-    "displayName": "Atrium kitchen",
+    "displayName": "Kitchen",
     "description": "You're in the atrium kitchen. This is the main hub of activity for staff refreshments outside mealtimes.<br>Some years ago there was a coffee machine on each floor but they were all removed to encourage serendipity.<br>Although at the time many people complained, It's just something everybody's used to now.",
     "exits": [
       {

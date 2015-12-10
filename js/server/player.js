@@ -4153,9 +4153,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.setReturnDirection = function(direction) {
             _returnDirection = direction;
             return _returnDirection;
-        };
+        };                
 
-        self.goObject = function(verb, splitWord, artefactName, map) {
+        self.goObject = function (verb, splitWord, artefactName, map) {
+            if (verb == "head") {
+                verb = "go";
+            };
             if (tools.stringIsEmpty(artefactName)){ return verb+" where?";};
 
             var artefact = getObjectFromLocation(artefactName);
@@ -4168,6 +4171,26 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (!(artefact)) {
+                //can player see artefact/location from where they're standing?
+                var desiredLocation = map.getLocation(artefactName, true);
+                var desiredLocationName;
+                if (desiredLocation) {
+                    desiredLocationName = desiredLocation.getName();
+                };
+                if (!desiredLocationName) {
+                    desiredLocationName = map.getObjectLocationName(artefactName);
+                };
+                if (desiredLocationName) {
+                    var path = map.lineOfSightPathToDestination(desiredLocationName, _currentLocation, _currentLocation);
+                    if (path) {
+                        //path found
+                        var direction = tools.directions[tools.directions.indexOf(path[0]) + 1];
+                        var toThe = "";
+                        if (tools.directions.indexOf(direction) < 12) { toThe = "to the "; };
+                        if (tools.directions.indexOf(direction) < 8) { direction = tools.initCap(direction); };
+                        return "You'll need to head "+toThe+direction+" from here."
+                    };
+                };
                 return "You'll need to explore and find your way there yourself I'm afraid.";
             };
             
@@ -4177,6 +4200,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (artefact.getType() == "creature") {
+                if (verb == "go") {
+                    return tools.initCap(artefact.getDescriptivePrefix()) + " right here.";
+                };
                 return "I don't think "+artefact.getPrefix().toLowerCase()+"'ll appreciate that.";
             };
 
@@ -4237,11 +4263,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             }; 
             
-            var injury = "";
             if (artefact.getViewLocation() && (artefact.isBroken() || artefact.isDestroyed())) {
-                injury = " without doing yourself fatal harm (which would make the effort somewhat pointless)"
+                return "You can't see any way to " + verb + " " + splitWord + " there without doing yourself fatal harm (which would make the effort somewhat pointless)."
             };
-            return "You can't see any way to "+verb+" "+splitWord+" there"+injury+"."
+            
+            if (artefact) {
+                if (artefact.getSubType() != "intangible") {
+                    return tools.initCap(artefact.getDescriptivePrefix()) + " right here.";
+                };
+            };            
+
+            return "You can't see any way to "+verb+" "+splitWord+" there."
 
         };
 

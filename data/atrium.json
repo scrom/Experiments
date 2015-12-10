@@ -58,7 +58,9 @@
             "check",
             "find",
             "where is",
-            "where"
+            "wheres",
+            "where",
+            "go"
           ],
           "defaultResult": "You'll need to learn to fend for yourself eventually.<br>Try heading <i>East</i> from here."
         },
