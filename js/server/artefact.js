@@ -2129,7 +2129,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             };
 
-            if (!(self.hasPower()) && (onOrOff == "on" || onOrOff == "start")) {
+            if (!(self.hasPower()) && (onOrOff == "on" || onOrOff == "start" || onOrOff == " on and off ")) {
                 var resultString = tools.initCap(_itemDescriptivePrefix) + " dead, there's no sign of power.";
                 if (!(self.checkComponentsExist())) {
                     resultString += " " + tools.initCap(_itemDescriptivePrefix) + " missing something.";
@@ -2140,7 +2140,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return resultString;
             };
 
-            switch(onOrOff) {
+            switch (onOrOff) {
+                case "on and off":
+                case "off and on":
+                    if (_switched) {
+                        return "You must work in IT!<br>Whilst power cycling hardware sometimes helps in the real world, nothing here is quite that simple.";
+                    } else {
+                        return "You must work in IT!<br>In this particular case however, I can promise you that'll make no difference at all and just wastes time.";
+                    };
+                    break;
                 case "on":
                     if (_on) {
                         if (_flammable) {
@@ -2731,7 +2739,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.reply = function(someSpeech, player, keyword, map) {
-            if (self.isDestroyed()) {return "The remaining fragments of inanimate spirit from "+self.getDisplayName()+" ignore you.";};
+            if (self.isDestroyed()) { return "The remaining fragments of inanimate spirit from " + self.getDisplayName() + " ignore you."; };
+            if (self.getSubType() == "intangible") {return "You call into the aether but receive no response."}
             return tools.initCap(_itemDescriptivePrefix)+" quietly aware of the sound of your voice but "+self.showsPlural()+" no sign of response.";
         };
 
@@ -3262,9 +3271,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.unlock = function(aKey, locationName) {
-            if (self.isDestroyed()||_broken) {
-                _locked = false;
-                return tools.initCap(_itemDescriptivePrefix)+" broken. No need to unlock "+_itemSuffix+".";
+            if (self.isDestroyed() || _broken) {
+                if (self.isDestroyed()) {
+                    _locked = false;
+                    return tools.initCap(_itemDescriptivePrefix) + " just wreckage. Not much point in being locked now, is there? " + _itemSuffix + ".";
+                } else if (!_locked) {
+                    return tools.initCap(_itemDescriptivePrefix) + " broken. No need to unlock " + _itemSuffix + ".";
+                };
             };
             if (!(_lockable)) {return _itemPrefix+" "+doesPlural()+" have a lock.";};
             if (_locked) {

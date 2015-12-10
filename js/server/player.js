@@ -2135,6 +2135,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
             if (!(receiver)) {
+                if (receiverName != receiverName.replace(self.getName(), "")) {
+                    //has player decided to write their name
+                    receiverName = receiverName.replace(self.getName(), "").trim();
+                    receiver = getObjectFromPlayerOrLocation(receiverName);
+                }
+            };
+            if (!(receiver)) {
                 return notFoundMessage(receiverName);
             };
 
@@ -3269,7 +3276,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {
-                if (artefactName == "left"||artefactName == "right") {
+                if (artefactName == "left"||artefactName == "right" || artefactName == "l"||artefactName == "r") {
                     return "If you're exploring, try entering compass directions instead. E.g. <i>'go North'</i>.";
                 };
 

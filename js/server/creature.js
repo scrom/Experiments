@@ -1972,7 +1972,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             var affinityModifier = objectToGive.getAffinityModifier();
             if (!(self.willShare(playerAggression, affinityModifier))) {  
-                player.setLastCreatureSpokenTo("");
+                player.setLastCreatureSpokenTo();
                 return _genderPrefix+" doesn't want to share "+objectToGive.getDisplayName()+" with you.";
             };
  
@@ -3196,6 +3196,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if we've not already responded...
             if (response.length == 0) {
                 var firstWord = someSpeech.trim().substring(0, someSpeech.indexOf(" "));
+                if (firstWord.substr(firstWord.length - 1) == "s") {
+                    firstWord = firstWord.substr(0, firstWord.length - 1);
+                };
                 var remainderString = someSpeech.substring(someSpeech.indexOf(" ")).trim();
                 var stringStartsWith = function(string, startsWith) {
                     return string.indexOf(startsWith) == 0;
