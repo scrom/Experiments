@@ -16,6 +16,8 @@
       }
     ],
     "inventory": [
+      { "file": "chairs" },
+      { "file": "table" },
       {
         "object": "artefact",
         "name": "plain key",

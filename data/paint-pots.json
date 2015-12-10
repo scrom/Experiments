@@ -13,6 +13,8 @@
       }
     ],
     "inventory": [
+      { "file": "chairs" },
+      { "file": "table" },
       {
         "object": "artefact",
         "name": "folder",
@@ -35,7 +37,7 @@
           "book"
         ],
         "missions": [
-          {"file": "mission-workingwithothers"}
+          { "file": "mission-workingwithothers" }
         ]
       }
     ]

@@ -1,0 +1,29 @@
+﻿{
+"object": "artefact",
+"name": "wii",
+"description": "Wii U",
+"detailedDescription": "It's a Wii U. The only game played on it here is Super Mariokart - but hey, what else do you need?",
+"attributes": {
+    "weight": 6,
+    "type": "treasure",
+    "canCollect": true,
+    "isBreakable": true,
+    "price": 30,
+    "customAction": "play",
+    "defaultResult": "Brum. Bruuuum. BRRRRUUUUUUM!<br>After a few minutes of button-mashing alone you think it's probably time to go and do something useful instead."
+},
+"synonyms": [
+    "console",
+    "wii",
+    "u",
+    "games console",
+    "game",
+    "wii u",
+  "mario",
+  "kart",
+  "mariokart",
+  "super mario",
+  "super mariokart",
+  "super mario kart"
+]
+}

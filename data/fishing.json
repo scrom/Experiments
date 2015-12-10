@@ -16,7 +16,7 @@
           {
         "object": "artefact",
         "template": "window",
-        "detailedDescription": "Yep. That's where the facilities team sits",
+        "detailedDescription": "Yep. That's where the facilities team sits.",
             "attributes": {
               "viewDestination": "facilities-area"
             },

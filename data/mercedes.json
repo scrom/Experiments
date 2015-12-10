@@ -2,14 +2,34 @@
     "object": "location",
     "name": "mercedes",
     "displayName": "Mercedes meeting room",
-    "description": "You're in the Mercedes meeting room. An odd-shaped room that's rarely used by any but the locals.",
-    "exits": [
+    "description": "You're in the Mercedes meeting room. It's a small, odd-shaped room that's rarely used by anyone but the locals.<br>In fact these days it's used more than anything else for raucous games of Mariokart.<br>The lack of seating in here ensures people don't camp out for too long though.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "mercedes",
+      "destination": "core-area-west"
+    }
+  ],
+    "inventory": [
       {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "mercedes",
-        "destination": "core-area-west"
-      }
+        "object": "artefact",
+        "name": "tv",
+        "template": "flat-screen",
+        "description": "giant TV screen",
+        "detailedDescription": "It's a 40 inch screen used solely for gaming.",
+        "attributes": {
+          "type": "junk",
+          "isBreakable": false
+        },
+        "synonyms": [
+          "television",
+          "giant tv",
+          "giant screen",
+          "giant tv screen"
+        ]
+      },
+      {"file": "wii"}
     ]
   }

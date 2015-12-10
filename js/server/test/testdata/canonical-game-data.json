@@ -5120,7 +5120,7 @@
     "object": "location",
     "name": "enterprise-meeting-room",
     "displayName": "Enterpri(z)e meeting room",
-    "description": "You're in the Enterprise meeting room. You peer through the window at the people coming and going from the office.",
+    "description": "You're in the Enterprise meeting room. Mostly it's just another meeting room. Like most rooms at the front of the building it offers a great opportunity to peer through the window at the people coming and going from the office.",
     "exits": [
       {
         "object": "exit",
@@ -5144,9 +5144,49 @@
           "viewDestination": "office-front"
         },
         "synonyms": [
-          "glass",
+          "people",
           "windows",
           "outside"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "pair of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "office chair",
+          "standard office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a plain circular meeting room table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "plain table",
+          "meeting room table",
+          "plain circular table",
+          "plain circular meeting room table",
+          "circular table"
         ]
       }
     ]
@@ -6279,7 +6319,7 @@
         "object": "artefact",
         "name": "window",
         "description": "window",
-        "detailedDescription": "Yep. That's where the facilities team sits",
+        "detailedDescription": "Yep. That's where the facilities team sits.",
         "attributes": {
           "weight": 280,
           "type": "scenery",
@@ -7241,8 +7281,8 @@
   {
     "object": "location",
     "name": "jellyfish-meeting-room",
-    "displayName": "Jellyfish meeting room",
-    "description": "You're in Jellyfish meeting room. The carpet in here is a rather vivid green.<br>Through the window to the north you can see the main office stairs I wonder who's trying not to spill their coffee today.",
+    "displayName": "Jellyfish",
+    "description": "You're in the 'Jellyfish' meeting room. The carpet in here is a rather vivid green and the walls are a tasteful wipe-clean pale blue.<br>It's a not-to-subtle under-sea kindof theme.<br>Through the window to the north you can see the main office stairs.<br>You ponder who's going to spill their coffee out there today.",
     "exits": [
       {
         "object": "exit",
@@ -7253,6 +7293,51 @@
       }
     ],
     "inventory": [
+      {
+        "object": "artefact",
+        "name": "floor",
+        "description": "office carpet",
+        "detailedDescription": "It's bright green. Not really the colour of the sea floor but it lightens the place up a bit.",
+        "attributes": {
+          "type": "scenery",
+          "customAction": [
+            "pee",
+            "urinate",
+            "piss",
+            "shit",
+            "crap"
+          ],
+          "defaultResult": "As you undo your trousers and squat, you consider the implication of your actions and decide you don't feel like being sacked today.<br>Repeat after me, 'I am <i>not</i> the phantom pooper.'<br>Time to tidy yourself up and learn to behave like a reasonable person.",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "ground",
+          "carpet"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "wall",
+        "description": "walls",
+        "detailedDescription": "They're pale-blue and wipe-clean to act as a useful 'whiteboard' space.",
+        "attributes": {
+          "weight": 280,
+          "type": "scenery",
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "walls",
+          "blue",
+          "pale blue",
+          "pale blue wall",
+          "blue wall",
+          "wipe clean wall",
+          "wipe clean blue wall",
+          "space",
+          "whiteboard",
+          "whitebaord"
+        ]
+      },
       {
         "object": "artefact",
         "name": "window",
@@ -7269,6 +7354,42 @@
           "glass",
           "windows",
           "outside"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "set of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "office chair",
+          "standard office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a standard wood-effect office desk/table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "desk"
         ]
       }
     ]
@@ -12448,7 +12569,7 @@
     "object": "location",
     "name": "mercedes",
     "displayName": "Mercedes meeting room",
-    "description": "You're in the Mercedes meeting room. An odd-shaped room that's rarely used by any but the locals.",
+    "description": "You're in the Mercedes meeting room. It's a small, odd-shaped room that's rarely used by anyone but the locals.<br>In fact these days it's used more than anything else for raucous games of Mariokart.<br>The lack of seating in here ensures people don't camp out for too long though.",
     "exits": [
       {
         "object": "exit",
@@ -12456,6 +12577,59 @@
         "direction": "s",
         "source": "mercedes",
         "destination": "core-area-west"
+      }
+    ],
+    "inventory": [
+      {
+        "object": "artefact",
+        "name": "tv",
+        "description": "giant TV screen",
+        "detailedDescription": "It's a 40 inch screen used solely for gaming.",
+        "attributes": {
+          "weight": 51,
+          "switched": true,
+          "isOn": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "television",
+          "giant tv",
+          "giant screen",
+          "giant tv screen",
+          "flat panel",
+          "flat-panel screen",
+          "flat panel screen",
+          "monitor"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "wii",
+        "description": "Wii U",
+        "detailedDescription": "It's a Wii U. The only game played on it here is Super Mariokart - but hey, what else do you need?",
+        "attributes": {
+          "weight": 6,
+          "type": "treasure",
+          "canCollect": true,
+          "isBreakable": true,
+          "price": 30,
+          "customAction": "play",
+          "defaultResult": "Brum. Bruuuum. BRRRRUUUUUUM!<br>After a few minutes of button-mashing alone you think it's probably time to go and do something useful instead."
+        },
+        "synonyms": [
+          "console",
+          "wii",
+          "u",
+          "games console",
+          "game",
+          "wii u",
+          "mario",
+          "kart",
+          "mariokart",
+          "super mario",
+          "super mariokart",
+          "super mario kart"
+        ]
       }
     ]
   },
@@ -13542,6 +13716,42 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "chairs",
+        "description": "set of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "office chair",
+          "standard office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a standard wood-effect office desk/table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "desk"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "folder",
         "description": "document folder",
         "detailedDescription": "Leafing through the contents, it appears to be folder of notes on working effectively with others.",
@@ -13615,6 +13825,63 @@
           "glass",
           "windows",
           "outside"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "chairs",
+        "description": "set of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "office chair",
+          "standard office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a standard wood-effect office desk/table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "desk"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "equipment",
+        "description": "recording equipment",
+        "detailedDescription": "It's basically a microphone and miniature mixing desk.",
+        "attributes": {
+          "weight": 6,
+          "type": "scenery",
+          "defaultResult": "You have absolutely no idea how this works. Leave it alone."
+        },
+        "synonyms": [
+          "equipment",
+          "record",
+          "recording",
+          "microphone",
+          "desk",
+          "mix",
+          "mixing",
+          "mixing desk"
         ]
       }
     ]
@@ -13839,6 +14106,42 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "chairs",
+        "description": "set of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "office chair",
+          "standard office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a standard wood-effect office desk/table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "desk"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "plain key",
         "description": "plain key",
         "detailedDescription": "Just a plain key.",
@@ -13989,6 +14292,42 @@
     "inventory": [
       {
         "object": "artefact",
+        "name": "chairs",
+        "description": "set of office chairs",
+        "detailedDescription": "They're just standard office chairs.",
+        "attributes": {
+          "defaultAction": "rest",
+          "weight": 30,
+          "type": "bed",
+          "isBreakable": true,
+          "plural": true,
+          "customAction": [
+            "get"
+          ],
+          "defaultResult": "It's best to leave them here."
+        },
+        "synonyms": [
+          "chair",
+          "office chair",
+          "standard office chair"
+        ]
+      },
+      {
+        "object": "artefact",
+        "name": "table",
+        "description": "plain rectangular table",
+        "detailedDescription": "It's a standard wood-effect office desk/table.",
+        "attributes": {
+          "weight": 120,
+          "isBreakable": true,
+          "canDrawOn": true
+        },
+        "synonyms": [
+          "desk"
+        ]
+      },
+      {
+        "object": "artefact",
         "name": "projector",
         "description": "projector",
         "detailedDescription": "It makes that happy, warm humming sound that only an old projector can give you.",
@@ -14003,7 +14342,10 @@
         },
         "synonyms": [
           "old projector",
-          "broken projector"
+          "broken projector",
+          "equipment",
+          "av",
+          "av equipment"
         ],
         "missions": [
           {
