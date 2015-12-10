@@ -4188,7 +4188,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         var toThe = "";
                         if (tools.directions.indexOf(direction) < 12) { toThe = "to the "; };
                         if (tools.directions.indexOf(direction) < 8) { direction = tools.initCap(direction); };
-                        return "You'll need to head "+toThe+direction+" from here."
+                        return "From a quick peer around it looks like you'll need to head "+toThe+direction+" from here."
                     };
                 };
                 return "You'll need to explore and find your way there yourself I'm afraid.";
