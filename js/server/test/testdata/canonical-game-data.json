@@ -522,6 +522,23 @@
     "missions": [
       {
         "object": "mission",
+        "name": "latte",
+        "displayName": "get yourself a latte",
+        "description": "It's your first day in the office. Check in with Vic at reception and then head to the kitchen to get yourself fuelled up for the day with a latte.",
+        "attributes": {
+          "missionObject": "latte",
+          "destination": "player"
+        },
+        "conditionAttributes": {
+          "isDestroyed": false
+        },
+        "reward": {
+          "score": 75,
+          "message": "<br>Congratulations, you managed to get your latte. That was somewhat more effort than expected though.<br><br>Still, no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
+        }
+      },
+      {
+        "object": "mission",
         "name": "endofbreakfast",
         "displayName": "breakfast time is over",
         "attributes": {
@@ -1265,23 +1282,6 @@
         "reward": {
           "score": -150,
           "message": "<br>Yeah...<br>...about all that money you've made.<br>That level of dishonesty will get you fired pretty much immediately."
-        }
-      },
-      {
-        "object": "mission",
-        "name": "latte",
-        "displayName": "get yourself a latte",
-        "description": "It's your first day in the office. Check in with Vic at reception and then head to the kitchen to get yourself fuelled up for the day with a latte.",
-        "attributes": {
-          "missionObject": "latte",
-          "destination": "player"
-        },
-        "conditionAttributes": {
-          "isDestroyed": false
-        },
-        "reward": {
-          "score": 75,
-          "message": "<br>Congratulations, you managed to get your latte. That was somewhat more effort than expected though.<br><br>Still, no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
         }
       }
     ]
@@ -11034,7 +11034,7 @@
                                 "object": "artefact",
                                 "name": "hard disk",
                                 "description": "hard disk",
-                                "detailedDescription": "Our IS team are pretty handy with these things.",
+                                "detailedDescription": "It's a server hard disk. This one looks like it's seen better days.<br>Our IS team are pretty handy with these things though.",
                                 "attributes": {
                                   "weight": 0.75,
                                   "attackStrength": 5,
@@ -15088,7 +15088,7 @@
         "name": "alex freeman",
         "displayName": "Alex Freeman",
         "description": "Alex Freeman",
-        "detailedDescription": "Can haz mor Accountz.",
+        "detailedDescription": "Can haz mor Accountz. Alex is one of our account sales managers.",
         "attributes": {
           "weight": 140,
           "money": 50,
@@ -15136,7 +15136,7 @@
         "name": "james king",
         "displayName": "James King",
         "description": "James King",
-        "detailedDescription": "He sells SQL Monitor like a mo'fo'.",
+        "detailedDescription": "He sells SQL Monitor like a mo'fo' and loves pirate stories.",
         "attributes": {
           "weight": 120,
           "money": 20,
@@ -18892,8 +18892,7 @@
           "carryWeight": 15,
           "health": 120,
           "canTravel": true,
-          "traveller": true,
-          "imageName": "chrisallen.jpg"
+          "traveller": true
         },
         "inventory": [
           {

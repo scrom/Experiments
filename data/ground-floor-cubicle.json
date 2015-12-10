@@ -41,49 +41,6 @@
         "object": "artefact",
         "template": "toilet-brush"
       },
-      {
-        "object": "artefact",
-        "name": "article on solid design principles",
-        "description": "'Learn on the Loo' article",
-        "detailedDescription": "It's entitled 'Do Me a SOLID' (that's a terrible pun for an article in a toilet, right?)<br>and describes SOLID coding principles (something this game doesn't always adhere to very well).",
-        "attributes": {
-          "defaultAction": "read",
-          "weight": 3,
-          "attackStrength": 5,
-          "type": "book",
-          "canCollect": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "solid article",
-          "article",
-          "lotl",
-          "learn on the loo",
-          "learn on the loo article",
-          "loo article",
-          "learn article"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "lotlsolid",
-            "displayName": "read the lotl SOLID article",
-            "description": "<a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
-            "attributes": {
-              "missionObject": "article on solid design principles",
-              "static": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": false,
-              "read": true
-            },
-            "reward": {
-              "score": 20,
-              "repairSkill": "architecture",
-              "message": "Congratulations. You've learned the basics on how to develop good software architecture."
-            }
-          }
-        ]
-      }
+      {"file": "solid-article"}
     ]
   }

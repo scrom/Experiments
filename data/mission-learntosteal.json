@@ -1,0 +1,19 @@
+﻿{
+  "object": "mission",
+  "name": "learntosteal",
+  "displayName": "improve your stealing skills",
+  "description": "In any office environment you must exercise caution. Even trusted colleagues may be less scrupulous than you think, don't be a victim and above all, keep your <i>money</i> hidden.<br>It appears less scrupulous players might be tempted to <i>steal</i> from their colleagues.<br>Worse still, there's even been reports of <i>mug</i>gings in rare circumstances!",
+  "attributes": {
+    "missionObject": "black book",
+    "static": true
+  },
+  "conditionAttributes": {
+    "isDestroyed": false,
+    "read": true
+  },
+  "reward": {
+    "repairSkill": "theft",
+    "stealth": 4,
+    "message": "You've learned some new <i>steal</i>th skills. Best use them wisely."
+  }
+}

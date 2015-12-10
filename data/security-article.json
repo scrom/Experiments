@@ -1,0 +1,26 @@
+﻿{
+  "object": "artefact",
+  "name": "article on software security",
+  "description": "'Learn on the Loo' article",
+  "detailedDescription": "It's entitled 'Take security in your STRIDE'.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 3,
+    "attackStrength": 5,
+    "type": "book",
+    "canCollect": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "security article",
+    "article",
+    "lotl",
+    "learn on the loo",
+    "learn on the loo article",
+    "loo article",
+    "learn article"
+  ],
+  "missions": [
+    {"file": "mission-lotlsecurity"}
+  ]
+}

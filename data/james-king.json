@@ -1,0 +1,22 @@
+﻿{
+  "object": "creature",
+  "name": "james king",
+  "displayName": "James King",
+  "description": "James King",
+  "detailedDescription": "He sells SQL Monitor like a mo'fo' and loves pirate stories.",
+  "attributes": {
+      "template": "creature-male-l3",
+      "imageName": "jamesking.jpg"
+  },
+  "inventory": [
+      {"file": "keyfob"}
+  ],
+  "synonyms": [
+    "james",
+    "james k",
+    "jk",
+    "king",
+    "jim",
+    "him"
+  ]
+}

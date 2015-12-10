@@ -1,0 +1,36 @@
+﻿{
+  "object": "artefact",
+  "name": "battered book",
+  "description": "battered leather-bound book",
+  "detailedDescription": "The texture of the cover gives you a slightly uncomfortable feeling.<br>The flyleaf simply says 'To Neil'. Further inspection reveals a heavily faded title; 'O&nbsp;  H nt&nbsp; g Hu&nbsp; ns'.<br>Odd.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 2,
+    "attackStrength": 5,
+    "type": "book",
+    "canCollect": true,
+    "affinityModifier": -1,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "manual",
+    "book",
+    "battered",
+    "hunting book",
+    "human book",
+    "hunting manual",
+    "on hunting humans",
+    "hunting humans",
+    "hunting humans book",
+    "battered leather-bound book",
+    "battered leather bound book",
+    "battered leatherbound book",
+    "leather-bound book",
+    "leather bound book",
+    "leatherbound book",
+    "leather book"
+  ],
+  "missions": [
+    {"file": "mission-hunthumans"}
+  ]
+}

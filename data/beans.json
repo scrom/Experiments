@@ -1,0 +1,27 @@
+﻿{
+  "object": "artefact",
+  "name": "beans",
+  "description": "coffee beans",
+  "detailedDescription": "Development fuel. Almost enough to last a day here.",
+  "attributes": {
+    "weight": 5,
+    "type": "food",
+    "nutrition": 1,
+    "attackStrength": 5,
+    "requiresContainer": true,
+    "canCollect": true,
+    "charges": 20,
+    "chargeUnit": "cup",
+    "chargesDescription": "There's enough for about $charges $chargeUnit of coffee",
+    "plural": true,
+    "affinityModifier": 0,
+    "componentOf": [
+      "coffee machine"
+    ],
+    "smell": "They smell like pretty good quality coffee.",
+    "taste": "They're bitter, crunchy and pretty low in nutritional value"
+  },
+  "synonyms": [
+    "coffee beans"
+  ]
+}

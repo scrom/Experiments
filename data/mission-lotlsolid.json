@@ -1,0 +1,19 @@
+﻿{
+  "object": "mission",
+  "name": "lotlsolid",
+  "displayName": "read the lotl SOLID article",
+  "description": "<a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
+  "attributes": {
+    "missionObject": "article on solid design principles",
+    "static": true
+  },
+  "conditionAttributes": {
+    "isDestroyed": false,
+    "read": true
+  },
+  "reward": {
+    "score": 20,
+    "repairSkill": "architecture",
+    "message": "Congratulations. You've learned the basics on how to develop good software architecture."
+  }
+}

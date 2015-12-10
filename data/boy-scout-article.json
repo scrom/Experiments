@@ -1,0 +1,26 @@
+﻿{
+  "object": "artefact",
+  "name": "article on the boy scout principle",
+  "description": "'Learn on the Loo' article",
+  "detailedDescription": "It's entitled 'The Boy Scout Rule'.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 3,
+    "attackStrength": 5,
+    "type": "book",
+    "canCollect": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "boy scout article",
+    "article",
+    "lotl",
+    "learn on the loo",
+    "learn on the loo article",
+    "loo article",
+    "learn article"
+  ],
+  "missions": [
+    {"file": "mission-lotlboyscout"}
+  ]
+}

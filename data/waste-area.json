@@ -27,58 +27,7 @@
         }
     ],
     "inventory": [
-        {
-            "object": "creature",
-            "name": "pawel jonczak",
-            "displayName": "Pawel Jonczak",
-            "description": "Pawel Jonczak",
-            "detailedDescription": "He's one of the hidden heroes of our catering team.",
-            "attributes": {
-                "template": "creature-male-l3",
-                "destinations": [
-                    "servery-kitchen",
-                    "rubbish-bins",
-                    "servery-kitchen",
-                    "smoking-area"
-                ],
-                "avoiding": [
-                    "first-floor-fire-escape"
-                ],
-                "loops": -1,
-                "loopDelay": 9,
-                "destinationDelay": 5,
-                "imageName": "paweljonczak.jpg"
-            },
-            "inventory": [
-                
-                {"file": "keyfob"},
-                {
-                    "object": "artefact",
-                    "name": "gate key",
-                    "description": "gate key",
-                    "detailedDescription": "This looks like the key to the waste area gate.",
-                    "attributes": {
-                        "defaultAction": "open",
-                        "weight": 0.1,
-                        "type": "key",
-                        "canCollect": true,
-                        "affinityModifier": 2,
-                        "unlocks": "waste gate"
-                    },
-                    "synonyms": [
-                        "waste key",
-                        "key"
-                    ]
-                }
-            ],
-            "synonyms": [
-                "pawel",
-                "pavel",
-                "pj",
-                "jonczak",
-                "pawel j"
-            ]
-        },
+        {"file": "pawel-jonczak"},
         {
             "object": "artefact",
             "name": "waste gate",

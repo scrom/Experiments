@@ -21,23 +21,6 @@
         "sketch book"
     ],
     "missions": [
-        {
-        "object": "mission",
-        "name": "readsimonsplans",
-        "displayName": "read simon's sketchbook",
-        "description": "After thumbing through a few pages of revenue and budget forecasts you stumble onto something odd.<br><br>There's a sketch of the building's floorplan but the rear fire escape area doesn't quite look right.<br>Significantly more disturbing are the annotations.<br>You can easily distinguish a series of ornate pentagrams marked on one location but can't decipher the handwriting alongside them.<br>You manage to make out a few letters at best... 'R_t___ o_ __mmo_in_'.<br><br>This can't be good.",
-        "attributes": {
-            "missionObject": "sketchbook",
-            "static": true
-        },
-        "conditionAttributes": {
-            "isDestroyed": false,
-            "read": true
-        },
-        "reward": {
-            "score": 40,
-            "message": "It looks like Simon's company expansion plans aren't within normal company health parameters."
-        }
-        }
+        {"file": "mission-readsimonsplans"}
     ]
 }

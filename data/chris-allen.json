@@ -1,0 +1,20 @@
+﻿{
+  "object": "creature",
+  "name": "chris allen",
+  "displayName": "Chris Allen",
+  "description": "Chris Allen",
+  "detailedDescription": "Support and music skills. What more could you need?",
+  "attributes": {
+      "template": "creature-male-l3"
+  },
+  "inventory": [
+      {"file": "keyfob"}
+  ],
+  "synonyms": [
+    "chris",
+    "chris a",
+    "ca",
+    "allen",
+    "him"
+  ]
+}

@@ -1,0 +1,19 @@
+﻿{
+    "object": "mission",
+    "name": "hunthumans",
+    "displayName": "learn how to hunt humans",
+    "description": "... 'In s&nbsp; king nd tr&nbsp; k ng your qu&nbsp;&nbsp; y, it s &nbsp;mp rt nt to be aw re  &nbsp;f scent.<br>&nbsp;he &nbsp;atura&nbsp; t ail &nbsp;f ph rom nes, decays over time.<br> Where a sc&nbsp; t is suf&nbsp; cien &nbsp;y fr&nbsp; h, on&nbsp; may <i>h#nt</i> &nbsp;r <i>f$nd</i> the b st dir ctio&nbsp;&nbsp; n wh ch to fo lo '...<br><br>Wow, this is really badly degraded. I'm sure there's something really useful hiding in here if you can just figure it out.",
+    "attributes": {
+        "missionObject": "battered book",
+        "static": true
+    },
+    "conditionAttributes": {
+        "isDestroyed": false,
+        "read": true
+    },
+    "reward": {
+        "repairSkill": "hunt",
+        "hunt": 2,
+        "message": "<br>You feel like you've learned something really valuable but still need to work out exactly how to use the skills you've just gained."
+    }
+}

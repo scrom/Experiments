@@ -49,70 +49,7 @@
         "object": "artefact",
         "template": "toilet-brush"
       },
-      {
-        "object": "artefact",
-        "name": "guardian newspaper",
-        "description": "copy of today's Guardian newspaper",
-        "detailedDescription": "Middle class pulp propaganda trash.",
-        "attributes": {
-          "defaultAction": "read",
-          "weight": 1,
-          "attackStrength": 2,
-          "type": "book",
-          "canCollect": true,
-          "defaultResult": "Blah blah government... blah scandal blah crucial blah liberal blah economics etc.",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "guardian",
-          "newspaper",
-          "news",
-          "paper"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "article on the boy scout principle",
-        "description": "'Learn on the Loo' article",
-        "detailedDescription": "It's entitled 'The Boy Scout Rule'.",
-        "attributes": {
-          "defaultAction": "read",
-          "weight": 3,
-          "attackStrength": 5,
-          "type": "book",
-          "canCollect": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "boy scout article",
-          "article",
-          "lotl",
-          "learn on the loo",
-          "learn on the loo article",
-          "loo article",
-          "learn article"
-        ],
-        "missions": [
-          {
-            "object": "mission",
-            "name": "lotlboyscout",
-            "displayName": "read LOTL boy scout article",
-            "description": "<a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
-            "attributes": {
-              "missionObject": "article on the boy scout principle",
-              "static": true
-            },
-            "conditionAttributes": {
-              "isDestroyed": false,
-              "read": true
-            },
-            "reward": {
-              "score": 20,
-              "repairSkill": "clean code",
-              "message": "Congratulations. You've learned a simple approach to keeping code clean."
-            }
-          }
-        ]
-      }
+      {"file": "newspaper"},
+      {"file": "boy-scout-article"}
     ]
   }
