@@ -586,7 +586,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             };
         };
 
-        self.buildLocation = function(locationData) {
+        self.buildLocation = function (locationData) {
+            if (locationData.file) {
+                locationData = self.buildFromFile(_data[locationData.file]);
+            };
             try {
                 if (_map.getLocation(locationData.name)) {console.log("DATA QUALITY WARNING: duplicate location name '"+locationData.name+"'.");};
                 if (locationData.attributes) {

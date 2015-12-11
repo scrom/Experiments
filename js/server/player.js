@@ -461,8 +461,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         //public member functions
 
         self.toString = function() {
-            var resultString = '{"object":"'+_objectName+'","username":"'+_username+'"';
-            resultString += ',"currentLocation":"'+_currentLocation.getName()+'"';
+            var resultString = '{"object":"' + _objectName + '","username":"' + _username + '"';
+            if (_currentLocation) {
+                resultString += ',"currentLocation":"' + _currentLocation.getName() + '"';
+            };
             resultString += ',"health":'+_hitPoints;
             if (_maxHitPoints != 100) { resultString += ',"maxHealth":' + _maxHitPoints; };
             if (_baseAttackStrength != 5) { resultString += ',"baseAttackStrength":' + _baseAttackStrength; };
@@ -581,8 +583,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!_active) { resultString += ',"active":' + _active; };
             if (_bleeding) {resultString += ',"bleeding":'+_bleeding;};
             if (_bleedingHealthThreshold != 50) {resultString += ',"bleedingHealthThreshold":'+_bleedingHealthThreshold;};
-
-            resultString += ',"startLocation":"'+_startLocation.getName()+'"';
+            
+            if (_startLocation) {
+                resultString += ',"startLocation":"' + _startLocation.getName() + '"';
+            };
 
             if (_returnDirection) {resultString += ',"returnDirection":"'+_returnDirection+'"';};
             if (_lastCreatureSpokenTo) {resultString += ',"lastCreatureSpokenTo":"'+_lastCreatureSpokenTo+'"';};
