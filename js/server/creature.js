@@ -463,12 +463,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _imageName;
         };
         
-        self.play = function (verb, playerAggression, artefact) {
+        self.play = function (verb, player, artefact) {
+            var playerAggression = player.getAggression()
             if (playerAggression > 0) {
                 return "Nobody's going to want to " + verb + " with you until you calm down a little.";
             };
             if (self.getSubType() == "animal") {
-                return self.rub();
+                return self.rub(null, player);
             };
             if (_affinity < 0) {
                 return tools.initCap(self.getPrefix()) + " really doesn't want to " + verb + " with you."
@@ -1501,12 +1502,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _inventory.canCarry(anObject);
         };
 
-        self.wave = function(anObject) {
+        self.wave = function(anObject, player) {
             //we may wave this at another object or creature
             return "Nothing happens.";
         };
 
-        self.rub = function(anObject) {
+        self.rub = function(anObject, player) {
             if (self.isDead()) {return _genderPrefix+"'s dead. I'm not sure that's an appropriate thing to do to corpses."};
             if (self.getSubType() != "animal" || _affinity <0) {
                 if (_affinity >=-1) {
@@ -1538,7 +1539,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         };
         
-        self.shake = function (verb) {
+        self.shake = function (verb, player) {
             if (self.isDead()) { return _genderPrefix + "'s dead. All the shaking in the world won't rouse " + _genderSuffix + "." };
             if (self.checkCustomAction(verb)) {
                 return self.getCustomActionResult(verb);

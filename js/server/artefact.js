@@ -564,7 +564,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         };
         
-        self.play = function (verb) {
+        self.play = function (verb, player, artefact) {
             if (self.checkCustomAction(verb)) {
                 return self.getCustomActionResult(verb);
             };
@@ -1943,13 +1943,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _inventory.remove(anObjectName);
         };
 
-        self.wave = function(anObject) {
+        self.wave = function(anObject, player) {
             if (self.isDestroyed()) {return "There's nothing left of "+_itemSuffix+".";};
             //we may wave this at another object or creature
             return "Nothing happens.";
         };
 
-        self.rub = function(anObject) {
+        self.rub = function(anObject, player) {
             if (self.isDestroyed()) {return "There's nothing left of "+_itemSuffix+".";};
             if (anObject) {
 
@@ -1992,7 +1992,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Nothing happens.";
         };
         
-        self.shake = function (verb) {
+        self.shake = function (verb, player) {
             if (self.isDestroyed()) { return "There's nothing left of " + _itemSuffix + "."; };
             
             if (self.checkCustomAction(verb)) {

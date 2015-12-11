@@ -1177,11 +1177,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return notFoundMessage(receiverName);
                 };
 
-                return receiver.play(verb, self.getAggression(), artefact);
+                return receiver.play(verb, self, artefact);
             };
                       
             if (!receiverName) {
-                return artefact.play(verb, self.getAggression());
+                return artefact.play(verb, self);
             };
 
         };
@@ -1770,7 +1770,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             resultString+=". ";
 
-            resultString+= firstArtefact.wave(secondArtefact);
+            resultString+= firstArtefact.wave(secondArtefact, self);
 
             resultString += "<br>Your arms get tired and you feel slightly awkward.";   
 
@@ -1794,7 +1794,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //build return string
             resultString += " " + artefact.getDisplayName()+ ". ";
             
-            var shakeResult = artefact.shake(verb);
+            var shakeResult = artefact.shake(verb, self);
             if (shakeResult == "") {
                 resultString += "<br>Your arms get tired and you feel slightly awkward.";
             };
@@ -1875,7 +1875,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return "That's not going to do anything useful.";
             };
 
-            resultString+= "<br>"+firstArtefact.rub(secondArtefact); 
+            resultString+= "<br>"+firstArtefact.rub(secondArtefact, self); 
 
             if (secondArtefact) {
                 if (secondArtefact.chargesRemaining() == 0) {
