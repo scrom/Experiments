@@ -3109,9 +3109,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             someSpeech = someSpeech.replace(" please ","");
             someSpeech = someSpeech.trim();
 
-            switch(someSpeech) {
-                case "":
-                    if (keyword) { break; }; //we're here through a mission keyword
+            switch (someSpeech) {
                 case "seriously":
                 case "whatever":
                 case "dude":
@@ -3123,7 +3121,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     response += tools.initCap(self.getFirstName()) + " says '" + randomReplies[randomIndex] + ".'";
-                    break;                    
+                    break;  
+                case "":
+                    if (keyword) { break; }; //we're here through a mission keyword                  
                 case "hi":
                 case "yo":
                 case "hello":
