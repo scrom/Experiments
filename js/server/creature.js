@@ -3241,6 +3241,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         response += "'OK.'";
                         break;
                     case "no":
+                    case "well":
                     case "yes":
                     case "i":
                     case "im":
