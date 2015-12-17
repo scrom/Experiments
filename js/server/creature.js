@@ -3104,15 +3104,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(someSpeech)) {someSpeech = "";}; //handle nulls before attempting toLowerCase
             
             //a bit of input cleanup...
+            someSpeech = someSpeech.toLowerCase();
             someSpeech = " "+someSpeech+" ";
             someSpeech = someSpeech.replace(" please ","");
             someSpeech = someSpeech.trim();
-            someSpeech = someSpeech.toLowerCase();
 
             switch(someSpeech) {
                 case "":
-                    if (keyword) {break;}; //we're here through a mission keyword
+                    if (keyword) { break; }; //we're here through a mission keyword
+                case "seriously":
+                case "whatever":
+                case "dude":
+                    randomReplies = ["True", "Yep", "Seriously", "Indeed"];
+                    if (self.getAffinity() < 1) {
+                        randomReplies.push("What-ever");
+                        randomReplies.push("Meh");
+                        randomReplies.push("Get over it");
+                    };
+                    randomIndex = Math.floor(Math.random() * randomReplies.length);
+                    response += tools.initCap(self.getFirstName()) + " says '" + randomReplies[randomIndex] + ".'";
+                    break;                    
                 case "hi":
+                case "yo":
                 case "hello":
                 case "ahoy":
                 case "morning":
@@ -3159,6 +3172,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "yarp":
                 case "yep":
                 case "affirmative":
+                case "great":
+                case "cool":
+                case "excellent":
+                case "awesome":
                 case "affirmatory":
                     randomReplies = ["Great", "OK $player", "OK"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -3220,7 +3237,23 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
 
                 switch (firstWord) {
-                    case 'find':
+                    case "":
+                        response += "'OK.'";
+                        break;
+                    case "no":
+                    case "yes":
+                    case "i":
+                    case "im":
+                    case "you":
+                    case "it":
+                    case "but":
+                    case "because":
+                        randomReplies = ["Fair enough.", "That sounds like fun.", "OK.", "Really?", "I see.", "And why's that?", "And how will that help you?", "Well, good luck with that.", "Is there something specific you need?"];
+                        randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        response += "'" + randomReplies[randomIndex] + "'";
+                        break;
+                    case 'where': //"where" is actually handled in action.js
+                    case 'find': //"find" should already have been trapped as a forst word too
                     case 'give':
                     case 'ask':
                     case 'say':
@@ -3260,17 +3293,41 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             //@todo trap "can you give x to y" here in future.
                             return "You ask " + self.getFirstName() + " to repair " + artefactName + ".<br>" + player.ask("repair", self.getName(), artefactName, map);
                         };
-                    case 'sorry': // [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
+                    case 'sorry':// [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
                         if (remainderString == "sorry") {
-                            return tools.initCap(self.getFirstName())+" says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
+                            return tools.initCap(self.getFirstName()) + " says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
                             break;
                         };
+                    case 'why'://is/are/do
+                        if ((!(remainderString == remainderString.replace(" you", ""))) || remainderString == "that" || remainderString == "is that") {
+                            return tools.initCap(self.getFirstName()) + " says 'Well, it's just a thing, you know.'";
+                        };
+
                     case 'who': //is/are [character]
                     case 'what': //is/are/can (see can) [object]
-                    case 'when': //is/are/can (see can)/will [event happen][character arrive be at x]
-                    case 'why': //is/are/do
-                    case 'how': //is/are/can/will/many/much/about
-                    case 'do': //you/i think/know ??
+                        if (!(remainderString == remainderString.replace(" you do", ""))) {
+                            return tools.initCap(self.getFirstName()) + " says 'I'm just doing stuff, being busy, that kinda thing.'<br>'How about you?'";
+                        } else if (!(remainderString == remainderString.replace(" you", ""))) {
+                            return tools.initCap(self.getFirstName()) + " says 'I'm "+self.getFirstName()+".'<br>'Is there anything you need?'";
+                        };
+                    case 'when'://is/are/can (see can)/will [event happen][character arrive be at x]
+                        if (!(remainderString == remainderString.replace(" you", ""))) {
+                            return tools.initCap(self.getFirstName()) + " says 'I'll be around somewhere.'";
+                        };
+                    case 'how'://is/are/can/will/many/much/about
+                        if (stringStartsWith(remainderString, "is ") || stringStartsWith(remainderString, "are ")) {
+                            if (remainderString == remainderString.replace(" you", "")) {
+                                return tools.initCap(self.getFirstName()) + " says 'Good question.'<br>'I'd love to help you but I'm afraid I just don't know.'<br>'You'll need to work it out yourself.'";
+                            } else {
+                                return tools.initCap(self.getFirstName()) + " says 'I'm good thanks.'";
+                            };
+                        };
+                        if (remainderString == "you" || remainderString == "things" || remainderString == "goes") {
+                            return tools.initCap(self.getFirstName()) + " says 'I'm doing OK, all things considered.'";
+                        };
+                    case 'would': 
+                    case 'have':
+                    case 'do': //you/i think/know/want ??
                         if (stringStartsWith(remainderString, "have ")) {
                             var artefactName = remainderString;
                             artefactName = artefactName.replace("have "," ");
