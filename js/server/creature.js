@@ -1620,7 +1620,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             var resultString = "";
 
-            if (tools.stringIsEmpty(artefactName)){ return verb+" what?"};
+            if (tools.stringIsEmpty(artefactName)){ return tools.initCap(verb)+" what?"};
             
             var localArtefact = false;
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
@@ -2975,7 +2975,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return replyName+" says "+replyString+returnImage;
             };
 
-            var location = map.getLocation(locationName);
+            var location = map.getLocation(locationName, true);
             if (!(location)) {
                 var randomReplies = ["Sorry $player, I don't know where that is.", "I don't think there's a "+locationName+" anywhere around here.", "I think you might have the wrong place.", "Where's that? Are you sure you've got the name right."];
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -3206,7 +3206,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     break;
                 default:
                     if (self.syn(someSpeech)) {
+                        player.setLastCreatureSpokenTo(self.getName());
                         return self.reply("hi", player, keyword, map);
+                    };
+                    var talkingToOtherObject = _currentLocation.getObject(someSpeech, false, false);
+                    if (talkingToOtherObject) {
+                        if (talkingToOtherObject.getType() == "creature") {
+                            return talkingToOtherObject.reply(someSpeech, player, keyword, map);
+                        } else {
+                            return tools.initCap(self.getFirstName()) + " says 'Ooh, <i>'"+ someSpeech+"'</i>. Very clever of you'<br>'Now, what did you want?'"
+                        };
                     };
                     break;
             };
@@ -3238,7 +3247,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 switch (firstWord) {
                     case "":
-                        response += "'OK.'";
+                        if (keyword) { break; }; //we're here through a mission keyword          
+                        randomReplies = ["Fair enough.", "OK.", "Really?", "I see.", "Well, good luck with that.", "Is there something specific you need?", "I'm not sure I can help you there."];
+                        randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        response += tools.initCap(self.getFirstName()) + " says '" + randomReplies[randomIndex] + "'";
                         break;
                     case "no":
                     case "well":
@@ -3269,6 +3281,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         remainderString = firstWord + " " + remainderString;
                         firstWord = "can";
                     case 'can'://you/i help/give/say/ask/get/fetch/find/have [me] /object
+                    case 'will'://same as "can"
+                    //@todo - add "open/unlock" here as requests
                         if (stringStartsWith(remainderString, "find ")) {
                             artefactName = artefactName.replace("find ", " ");
                             return "You ask " + self.getFirstName() + " to find " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
@@ -3293,6 +3307,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.trim();
                             //@todo trap "can you give x to y" here in future.
                             return "You ask " + self.getFirstName() + " to repair " + artefactName + ".<br>" + player.ask("repair", self.getName(), artefactName, map);
+                       };
+
+                        if (stringStartsWith(remainderString, "wait ")) {
+                            return "You ask " + self.getFirstName() + " to wait.<br>" + player.ask("wait", self.getName(), null, map);
+                        };
+                        if (stringStartsWith(remainderString, "go ")) {
+                            var artefactName = remainderString;
+                            artefactName = artefactName.replace("go ", " ");
+                            artefactName = artefactName.replace(" to ", " ");
+                            artefactName = artefactName.replace(" the ", " ");
+                            artefactName = artefactName.trim();
+                            return "You ask " + self.getFirstName() + " to go to "+ artefactName + ".<br>"+ player.ask("go", self.getName(), artefactName, map);
                         };
                     case 'sorry':// [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
                         if (remainderString == "sorry") {
@@ -3328,29 +3354,58 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         };
                     case 'would': 
                     case 'have':
-                    case 'do': //you/i think/know/want ??
+                    case 'do'://you/i think/know/want ??
                         if (stringStartsWith(remainderString, "have ")) {
                             var artefactName = remainderString;
-                            artefactName = artefactName.replace("have "," ");
+                            artefactName = artefactName.replace("have ", " ");
                             artefactName = artefactName.trim();
-                            return "You ask "+self.getFirstName()+" for "+artefactName+".<br>"+player.ask("ask", self.getName(), artefactName, map);
+                            return "You ask " + self.getFirstName() + " for " + artefactName + ".<br>" + player.ask("ask", self.getName(), artefactName, map);
+                        };
+                        if (stringStartsWith(remainderString, "know where ")) {
+                            var artefactName = remainderString;
+                            artefactName = artefactName.replace("know where ", "");
+                            artefactName = artefactName.trim();
+                            if (stringStartsWith(artefactName, "the ")) {
+                                artefactName = artefactName.replace("the ", "");
+                            };
+                            if (stringStartsWith(artefactName, "i can find ")) {
+                                artefactName = artefactName.replace("i can find ", "");
+                            };
+                            if (stringStartsWith(artefactName, "i might find ")) {
+                                artefactName = artefactName.replace("i might find ", "");
+                            };
+                            if (stringStartsWith(artefactName, "theres ")) {
+                                artefactName = artefactName.replace("theres ", "");
+                            };
+                            if (stringStartsWith(artefactName, "some ")) {
+                                artefactName = artefactName.replace("some ", "");
+                            };
+                            if (stringStartsWith(artefactName, "any ")) {
+                                artefactName = artefactName.replace("any ", "");
+                            };
+                            artefactName = artefactName.trim();
+                            if (artefactName.substr(-3) == " is") {
+                                artefactName = artefactName.replace(" is", "");
+                            };
+                            if (artefactName.substr(-4) == " are") {
+                                artefactName = artefactName.replace(" are", "");
+                            };
+                            if (artefactName.substr(-7) == " may be") {
+                                artefactName = artefactName.replace(" may be", "");
+                            };
+                            if (artefactName.substr(-8) == " will be") {
+                                artefactName = artefactName.replace(" will be", "");
+                            };
+                            if (artefactName.substr(-9) == " could be") {
+                                artefactName = artefactName.replace(" could be", "");
+                            };
+                            if (artefactName.substr(-9) == " might be") {
+                                artefactName = artefactName.replace(" might be", "");
+                            };
+
+                            return "You ask " + self.getFirstName() + " to find " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
                         };
                         //note, no break here!
-                    case 'will': //you/i /give/find/open/unlock
-                 /*       if (stringStartsWith(remainderString, "you help ")) {
-                            //player.ask (find?)
-                        };
-                        if (stringStartsWith(remainderString, "you wait ")) {
-                            //player.ask (wait)
-                        };
-                        if (stringStartsWith(remainderString, "you go ")) {
-                            //player.ask (go)
-                        };
-                        if (stringStartsWith(remainderString, "you give ")) {
-                            //player.ask (give)
-                        };
-                        break;
-                  */
                     case 'pardon': // [me - apology] / [please repeat last thing] 
                         console.log("*** Unhandled player speech - first Word:'"+firstWord+"', remainder:'"+remainderString+"'");                      
                         return tools.initCap(self.getFirstName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
