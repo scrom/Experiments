@@ -22,7 +22,7 @@
       "attributes": {
         "weight": 0.1,
         "type": "key",
-        "affinityModifier": -1,
+        "affinityModifier": -999,
         "canCollect": true,
         "unlocks": "office door"
       },

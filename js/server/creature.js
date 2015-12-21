@@ -1808,7 +1808,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if player is peaceful but creature is very low affinity, 
             //cannot give a single gift of affinity impact enough to transform their response.
             //this still leaves bad situations recoverable but at a high cost
-            if (self.isDead()) {return false;};
+            if (self.isDead()) { return false; };
+            if (affinityModifier >= 99 || affinityModifier <= -99) { return false; }; // some objects just cannot be given
             if (_affinity <-5) {return false;};
             if ((_affinity <=-4) && (0-affinityModifier<=_affinity)) {return false;};
             if ((_affinity <-1) && (playerAggression>1)) {return false;};
@@ -3089,7 +3090,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         };
 
-        self.reply = function(someSpeech,player, keyword, map) {
+        self.reply = function (someSpeech, player, keyword, map) {
+            var originalSpeech = someSpeech;
             var playerAggression = player.getAggression();
             var initialReply = self.initialReplyString(playerAggression);
             if (initialReply) {
@@ -3199,6 +3201,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "thanks":
                 case "thankyou":
                 case "thank you":
+                case "thx":
+                case "ta":
                 case "cheers":
                     randomReplies = ["My pleasure", "Happy to help", "Good luck", "No problem $player"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -3223,10 +3227,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if we've not already responded...
             if (response.length == 0) {
                 var firstWord = someSpeech.trim().substring(0, someSpeech.indexOf(" "));
+                var remainderString = "";
                 if (firstWord.substr(firstWord.length - 1) == "s") {
                     firstWord = firstWord.substr(0, firstWord.length - 1);
                 };
-                var remainderString = someSpeech.substring(someSpeech.indexOf(" ")).trim();
+                if (firstWord == "") {
+                    firstWord = someSpeech.trim();
+                } else {
+                    remainderString = someSpeech.substring(someSpeech.indexOf(" ")).trim();
+                };
                 var stringStartsWith = function(string, startsWith) {
                     return string.indexOf(startsWith) == 0;
                 };
@@ -3239,6 +3248,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 artefactName = artefactName.replace(" some ", " ");
                 artefactName = artefactName.replace(" a ", " ");
                 artefactName = artefactName.replace(" your ", " ");
+                artefactName = artefactName.replace(" here ", " ");
                 artefactName = artefactName.trim();
                 
                 if (stringStartsWith(remainderString, "you ")) {
@@ -3247,10 +3257,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 switch (firstWord) {
                     case "":
-                        if (keyword) { break; }; //we're here through a mission keyword          
-                        randomReplies = ["Fair enough.", "OK.", "Really?", "I see.", "Well, good luck with that.", "Is there something specific you need?", "I'm not sure I can help you there."];
-                        randomIndex = Math.floor(Math.random() * randomReplies.length);
-                        response += tools.initCap(self.getFirstName()) + " says '" + randomReplies[randomIndex] + "'";
+                        if (keyword) { break; }; //we're here through a mission keyword        
+                        console.log("*** Unhandled player speech (point 1) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");
                         break;
                     case "no":
                     case "well":
@@ -3320,8 +3328,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.trim();
                             return "You ask " + self.getFirstName() + " to go to "+ artefactName + ".<br>"+ player.ask("go", self.getName(), artefactName, map);
                         };
-                    case 'sorry':// [standalone apology] / [? see pardon] / [loop back tow ho/what/etc]
-                        if (remainderString == "sorry") {
+                    case 'pardon': // [me - apology] / [please repeat last thing] 
+                    case 'sorry':// [standalone apology] / [? see pardon] / [loop back to who/what/etc]
+                        if (remainderString == "sorry" || remainderString == "pardon me") {
                             return tools.initCap(self.getFirstName()) + " says 'You should know better. I accept your apology for now but I suggest you back off for a while.'";
                             break;
                         };
@@ -3405,9 +3414,20 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                             return "You ask " + self.getFirstName() + " to find " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
                         };
+
                         //note, no break here!
-                    case 'pardon': // [me - apology] / [please repeat last thing] 
-                        console.log("*** Unhandled player speech - first Word:'"+firstWord+"', remainder:'"+remainderString+"'");                      
+                    case 'take': //@todo - test if "take" is ever reachable - I have a feeling it's not (and shouldn't ever be)
+                        //handle "a", "some"
+                        if (stringStartsWith(remainderString, "a ") || stringStartsWith(remainderString, "some ") || stringStartsWith(remainderString, "the ") || stringStartsWith(remainderString, "this ")) {
+                            var artefactName = remainderString;
+                            artefactName = artefactName.replace("a ", " ");
+                            artefactName = artefactName.replace("some ", " ");
+                            artefactName = artefactName.replace("the ", " ");
+                            artefactName = artefactName.replace("this ", " ");
+                            artefactName = artefactName.trim();
+                            return player.give("offer", artefactName, self.getName());
+                        };
+                        console.log("*** Unhandled player speech (point 2) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");                        
                         return tools.initCap(self.getFirstName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
                         break;
                 };
@@ -3473,7 +3493,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         return "You ask " + self.getFirstName() + " for " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
                     };
                 };
-                randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying.", "I don't think I can help you at the moment. Have you tried typing <i>help</i>?"];
+                console.log("*** Unhandled player speech (point 3) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");     
+                randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying.", "I don't think I can help you at the moment. Have you tried typing <i>help</i>?", "Is there something specific you need?", "I'm not sure I can help you there."];
                 randomIndex = Math.floor(Math.random() * randomReplies.length);
                 response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+"'";
             };

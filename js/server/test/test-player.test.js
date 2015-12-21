@@ -1098,7 +1098,7 @@ exports.canGiveHighAffinityObjectToFriendlyCreature.meta = { traits: ["Player Te
 exports.cannotGiveHighAffinityObjectToUnfriendlyCreature = function (test) {
     l0.addObject(a1);
     p0.get(a1.getName());
-    var expectedResult = "The evil is unwilling to accept gifts from you at the moment.";
+    var expectedResult = "It's not willing to accept gifts from you at the moment.";
     var actualResult = p0.give('give',a1.getName(), c1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);

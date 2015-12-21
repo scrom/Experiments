@@ -2893,7 +2893,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb == "feed" && artefact.getType() != "food" && artefact.getType() != "creature") {return "I don't think that's a reasonable thing to do.";};
             if (receiver.isDead()) { return  tools.initCap(receiver.getPrefix())+"'s dead. Gifts won't help "+receiver.getSuffix()+" now.";};
             if (!(receiver.canCarry(artefact)) && receiver.getSubType() != "animal") { return  tools.initCap(artefact.getDescriptivePrefix())+" too heavy for "+receiver.getSuffix()+" at the moment, sorry.";};
-            if (!(receiver.willAcceptGift(_aggression, artefact))) { return  tools.initCap(receiver.getFirstName())+" is unwilling to accept gifts from you at the moment.";};
+            if (!(receiver.willAcceptGift(_aggression, artefact))) {
+                //@todo issues #107 and #351 - loop back to creature for reasins here.
+                var affinityModifier = artefact.getAffinityModifier();
+                if (affinityModifier >= 99 || affinityModifier <= -99) {
+                    return tools.initCap(receiver.getPrefix()) + " doesn't want "+artefact.getSuffix()+".";
+                };
+                return tools.initCap(receiver.getDescriptivePrefix()) + " not willing to accept gifts from you at the moment.";
+            };
             if (verb == "feed" && receiver.getSubType() != "animal") {return "You should probably just <i>give</i> "+artefact.getDisplayName()+" to "+receiver.getSuffix()+".";};
 
             //we know they *can* carry it...
